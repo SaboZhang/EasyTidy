@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<UserControl
+    x:Class="EasyTidy.Views.TrayIconView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:EasyTidy.Views"
+    xmlns:converters="using:EasyTidy.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:tb="using:H.NotifyIcon">
+
+    <UserControl.Resources>
+        <converters:BoolToImageSourceConverter
+            x:Key="BoolToImageSourceConverter"
+            FalseImage="ms-appx:///Assets/Inactive.ico"
+            TrueImage="ms-appx:///Assets/Red.ico"/>
+    </UserControl.Resources>
+    <tb:TaskbarIcon
+        x:Name="TrayIcon"
+        x:FieldModifier="public"
+        ContextMenuMode="SecondWindow"
+        IconSource="{x:Bind IsWindowVisible, Converter={StaticResource BoolToImageSourceConverter}}"
+        LeftClickCommand="{x:Bind ShowHideWindowCommand}"
+        NoLeftClickDelay="True"
+        ToolTipText="ToolTip">
+
+        <tb:TaskbarIcon.ContextFlyout>
+            <MenuFlyout AreOpenCloseAnimationsEnabled="False">
+                <MenuFlyoutItem
+                    Command="{x:Bind ShowHideWindowCommand}"
+                    Text="停止监控"/>
+                <MenuFlyoutItem
+                    Command="{x:Bind ShowHideWindowCommand}"
+                    Text="执行一次"/>
+                <MenuFlyoutItem
+                    Command="{x:Bind ShowHideWindowCommand}"
+                    Text="偏好设置"/>
+                <MenuFlyoutItem
+                    Command="{x:Bind ShowHideWindowCommand}"
+                    Text="显示/隐藏界面"/>
+                <MenuFlyoutSeparator/>
+                <MenuFlyoutItem
+                    Command="{x:Bind RestartApplicationCommand}"
+                    Text="重启应用"/>
+                <MenuFlyoutItem
+                    Command="{x:Bind ExitApplicationCommand}"
+                    Text="退出程序"/>
+            </MenuFlyout>
+        </tb:TaskbarIcon.ContextFlyout>
+    </tb:TaskbarIcon>
+</UserControl>

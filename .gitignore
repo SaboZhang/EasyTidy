@@ -1,0 +1,12 @@
+bin/
+obj/
+.vs/
+*.user
+.idea/
+
+packages/
+
+.DS_Store
+
+
+publish/
