@@ -11,3 +11,5 @@ global using Microsoft.UI.Xaml.Navigation;
 global using WinUICommunity;
 global using static EasyTidy.Common.AppHelper;
 global using System;
+global using System.Collections.Generic;
+global using static EasyTidy.Log.LogService;

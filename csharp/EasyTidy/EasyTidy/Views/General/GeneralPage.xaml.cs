@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using EasyTidy.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -22,6 +23,7 @@ namespace EasyTidy.Views;
 /// </summary>
 public sealed partial class GeneralPage : Page
 {
+    public GeneralViewModel ViewModel { get; set;}
     public GeneralPage()
     {
         this.InitializeComponent();

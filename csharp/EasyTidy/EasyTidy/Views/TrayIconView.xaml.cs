@@ -66,6 +66,7 @@ public sealed partial class TrayIconView : UserControl
     [RelayCommand]
     public void RestartApplication()
     {
+        Logger.Info("Restarting application");
         App._mutex.ReleaseMutex();
         var appPath = Environment.ProcessPath;
         Process.Start(appPath);

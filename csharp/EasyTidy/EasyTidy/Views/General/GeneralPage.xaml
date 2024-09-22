@@ -6,7 +6,7 @@
     xmlns:local="using:EasyTidy.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:wuc="using:WinUICommunity"
+    xmlns:wuc="using:WinUICommunity" xmlns:ic="using:Microsoft.Xaml.Interactions.Core" xmlns:i="using:Microsoft.Xaml.Interactivity"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -90,24 +90,37 @@
                                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                                IsTextSelectionEnabled="True"
                                                TextAlignment="Right"
-                                               TextTrimming="CharacterEllipsis" />
-                                    <Button Content="&#xe8da;" Visibility="Collapsed"
-                                            FontFamily="{ThemeResource SymbolThemeFontFamily}">
+                                               TextTrimming="CharacterEllipsis"
+                                               Text="{x:Bind ViewModel.FloderPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <Button Content="&#xe8da;"
+                                            Visibility="{x:Bind ViewModel.PathTypeSelectedIndex, Mode=TwoWay, Converter={StaticResource BoolToVisibilityConverter}}"
+                                            FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                            Command="{x:Bind ViewModel.SelectPathCommand }">
                                         <ToolTipService.ToolTip>
                                             <ToolTip>
                                                 <TextBlock Text="Select folder" />
                                             </ToolTip>
                                         </ToolTipService.ToolTip>
                                     </Button>
-                                    <ComboBox PlaceholderText="选择备份方式" Width="140">
-                                        <x:String>本地备份</x:String>
-                                        <x:String>WebDAV</x:String>
+                                    <ComboBox PlaceholderText="选择备份方式" Width="140"
+                                              SelectedItem="{x:Bind ViewModel.CmbPathTypeSelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                        <i:Interaction.Behaviors>
+                                            <ic:EventTriggerBehavior EventName="SelectionChanged">
+                                                <ic:EventTriggerBehavior.Actions>
+                                                    <ic:InvokeCommandAction Command="{x:Bind ViewModel.SelectPathTypeCommand}" />
+                                                </ic:EventTriggerBehavior.Actions>
+                                            </ic:EventTriggerBehavior>
+                                        </i:Interaction.Behaviors>
+                                        <ComboBoxItem Content="本地"
+                                                      Tag="Local" />
+                                        <ComboBoxItem Content="WebDav"
+                                                      Tag="WebDav" />
                                     </ComboBox>
                                 </StackPanel>
                             </wuc:SettingsCard>
                             <wuc:SettingsCard HorizontalContentAlignment="Left"
                                               ContentAlignment="Vertical"
-                                              Visibility="Collapsed">
+                                              Visibility="{x:Bind ViewModel.WebDavIsShow, Mode=TwoWay, Converter={StaticResource BoolToVisibilityConverter}}">
                                 <wuc:SettingsCard.Resources>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="FontSize" Value="14" />
