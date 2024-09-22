@@ -6,9 +6,10 @@
     xmlns:local="using:EasyTidy.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:wuc="using:WinUICommunity" xmlns:ic="using:Microsoft.Xaml.Interactions.Core" xmlns:i="using:Microsoft.Xaml.Interactivity"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    xmlns:wuc="using:WinUICommunity"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    mc:Ignorable="d">
 
     <wuc:SettingsPageControl ModuleDescription="EasyTidy是一款开源的，专业的文件管理工具，旨在为用户提供高效、便捷的文件分类整理解决方案。通过自定义设置，用户可以实现自动整理、定时整理、实时整理以及手动整理等多种整理方式，以满足不同场景下的文件管理需求。由作者用 ♥ 制作。"
                              ModuleImageSource="ms-appx:///Assets/Modules/PT.png"
@@ -102,8 +103,13 @@
                                             </ToolTip>
                                         </ToolTipService.ToolTip>
                                     </Button>
-                                    <ComboBox PlaceholderText="选择备份方式" Width="140"
-                                              SelectedItem="{x:Bind ViewModel.CmbPathTypeSelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                    <ComboBox PlaceholderText="选择备份方式"
+                                              Width="140"
+                                              x:Name="CmbPathType"
+                                              SelectionChangedTrigger="Always"
+                                              SelectionChanged="CmbPathType_SelectionChanged"
+                                              SelectedItem="{x:Bind ViewModel.CmbPathTypeSelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                              SelectedValue="{x:Bind ViewModel.CmbPathTypeSelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                         <i:Interaction.Behaviors>
                                             <ic:EventTriggerBehavior EventName="SelectionChanged">
                                                 <ic:EventTriggerBehavior.Actions>

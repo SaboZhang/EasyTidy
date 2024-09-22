@@ -58,6 +58,7 @@ public partial class App : Application
             return json;
         });
 
+        services.AddTransient<GeneralViewModel>();
         services.AddTransient<MainViewModel>();
         services.AddTransient<GeneralSettingViewModel>();
         services.AddTransient<ThemeSettingViewModel>();

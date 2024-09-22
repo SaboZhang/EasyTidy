@@ -1,17 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace EasyTidy.ViewModels;
+
 public partial class GeneralViewModel : ObservableRecipient
 {
     [ObservableProperty]
     private object cmbPathTypeSelectedItem;
 
     [ObservableProperty]
-    private bool pathTypeSelectedIndex;
+    private bool pathTypeSelectedIndex = false;
 
     [ObservableProperty]
     private bool webDavIsShow = false;
