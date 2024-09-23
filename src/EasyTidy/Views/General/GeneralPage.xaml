@@ -106,21 +106,20 @@
                                     <ComboBox PlaceholderText="选择备份方式"
                                               Width="140"
                                               x:Name="CmbPathType"
-                                              SelectionChangedTrigger="Always"
                                               SelectionChanged="CmbPathType_SelectionChanged"
-                                              SelectedItem="{x:Bind ViewModel.CmbPathTypeSelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                              SelectedValue="{x:Bind ViewModel.CmbPathTypeSelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                                        <i:Interaction.Behaviors>
+                                              ItemsSource="{x:Bind ViewModel.BackupTypes}">
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Converter={StaticResource EnumDisplayNameConverter}}" />
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                        <!-- <i:Interaction.Behaviors>
                                             <ic:EventTriggerBehavior EventName="SelectionChanged">
                                                 <ic:EventTriggerBehavior.Actions>
                                                     <ic:InvokeCommandAction Command="{x:Bind ViewModel.SelectPathTypeCommand}" />
                                                 </ic:EventTriggerBehavior.Actions>
                                             </ic:EventTriggerBehavior>
-                                        </i:Interaction.Behaviors>
-                                        <ComboBoxItem Content="本地"
-                                                      Tag="Local" />
-                                        <ComboBoxItem Content="WebDav"
-                                                      Tag="WebDav" />
+                                        </i:Interaction.Behaviors> -->
                                     </ComboBox>
                                 </StackPanel>
                             </wuc:SettingsCard>

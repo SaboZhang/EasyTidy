@@ -1,14 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EasyTidy.Model;
 
 namespace EasyTidy.ViewModels;
 
 public partial class GeneralViewModel : ObservableRecipient
 {
-    [ObservableProperty]
-    private object cmbPathTypeSelectedItem;
 
     [ObservableProperty]
     private bool pathTypeSelectedIndex = false;
@@ -20,17 +21,21 @@ public partial class GeneralViewModel : ObservableRecipient
     public string floderPath;
 
 
+    [ObservableProperty]
+    private IList<BackupType> backupTypes = Enum.GetValues(typeof(BackupType)).Cast<BackupType>().ToList();
+
+
     [RelayCommand]
-    private Task OnSelectPathType()
+    private Task OnSelectPathType(object sender)
     {
-        var cmb = (CmbPathTypeSelectedItem as ComboBoxItem)?.Tag.ToString();
-        switch (cmb)
+        var backupType = sender as ComboBox;
+        switch (backupType.SelectedItem)
         {
-            case "Local":
+            case BackupType.Local:
                 PathTypeSelectedIndex = true;
                 WebDavIsShow = false;
                 break;
-            case "WebDav":
+            case BackupType.WebDav:
                 PathTypeSelectedIndex = false;
                 WebDavIsShow = true;
                 break;

@@ -23,9 +23,7 @@ namespace EasyTidy.Views;
 /// </summary>
 public sealed partial class GeneralPage : Page
 {
-    public event EventHandler<RoutedEventArgs> Click;
 
-    //public object CmbPathTypeSelectedItem;
     public GeneralViewModel ViewModel { get; set;}
     public GeneralPage()
     {
@@ -37,39 +35,11 @@ public sealed partial class GeneralPage : Page
 
     //private void General_Loaded(object sender, RoutedEventArgs e)
     //{
-    //    if (CmbPathTypeSelectedItem != null)
-    //    {
-    //        CmbPathType.SelectedItem = CmbPathType.Items.FirstOrDefault(x => ((ComboBoxItem)x).Tag.ToString() == CmbPathTypeSelectedItem.ToString());
-    //    }
-    //    else
-    //    {
-    //        CmbPathType.SelectedIndex = 0;
-    //    }
+    //    CmbPathType.SelectedIndex = 0;
     //}
-
-    private void SelectLocation_Click(object sender, RoutedEventArgs e)
-    {
-        Click?.Invoke(this, e);
-    }
 
     private void CmbPathType_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-
-        var cmb = CmbPathType.Tag.ToString();
-        switch (cmb)
-        {
-            case "Local":
-                ViewModel.PathTypeSelectedIndex = true;
-                ViewModel.WebDavIsShow = false;
-                break;
-            case "WebDav":
-                ViewModel.PathTypeSelectedIndex = false;
-                ViewModel.WebDavIsShow = true;
-                break;
-            default:
-                ViewModel.PathTypeSelectedIndex = false;
-                ViewModel.WebDavIsShow = false;
-                break;
-        }
+        ViewModel.SelectPathTypeCommand.Execute(sender);
     }
 }
