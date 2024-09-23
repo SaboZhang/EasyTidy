@@ -1,0 +1,221 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows10.0.22621.0</TargetFramework>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+    <RootNamespace>EasyTidy</RootNamespace>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <Platforms>x86;x64</Platforms>
+    <RuntimeIdentifiers Condition="$([MSBuild]::GetTargetFrameworkVersion('$(TargetFramework)')) &gt;= 8">win-x86;win-x64</RuntimeIdentifiers>
+    <RuntimeIdentifiers Condition="$([MSBuild]::GetTargetFrameworkVersion('$(TargetFramework)')) &lt; 8">win10-x86;win10-x64</RuntimeIdentifiers>
+    <PublishProfile>win-$(Platform).pubxml</PublishProfile>
+    <UseWinUI>true</UseWinUI>
+    <EnableMsixTooling>true</EnableMsixTooling>
+    <Version>1.0.0</Version>
+    <ImplicitUsings>true</ImplicitUsings>
+    <SuportedOSPlatformsVersion>10.0.22621.0</SuportedOSPlatformsVersion>
+    <WindowsSdkPackageVersion>10.0.22621.45</WindowsSdkPackageVersion>
+    <LangVersion>Latest</LangVersion>
+    <ApplicationIcon>Assets\icon.ico</ApplicationIcon>
+    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+    <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
+    <WindowsPackageType>None</WindowsPackageType>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="Assets\**\*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Strings\**\*.resw">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="Assets\Fluent\auto.png" />
+    <Content Remove="Assets\Fluent\auto.svg" />
+    <Content Remove="Assets\Fluent\autoScrollView.png" />
+    <Content Remove="Assets\Fluent\autoSuggestBox.png" />
+    <Content Remove="Assets\Fluent\awake.png" />
+    <Content Remove="Assets\Fluent\behaviors.png" />
+    <Content Remove="Assets\Fluent\canvas.png" />
+    <Content Remove="Assets\Fluent\colorPicker.png" />
+    <Content Remove="Assets\Fluent\commandBar.png" />
+    <Content Remove="Assets\Fluent\contentDialog.png" />
+    <Content Remove="Assets\Fluent\dataGrid.png" />
+    <Content Remove="Assets\Fluent\divider.png" />
+    <Content Remove="Assets\Fluent\extensions.png" />
+    <Content Remove="Assets\Fluent\fancyZones.png" />
+    <Content Remove="Assets\Fluent\fileExplorerPreview.png" />
+    <Content Remove="Assets\Fluent\frame.png" />
+    <Content Remove="Assets\Fluent\general.png" />
+    <Content Remove="Assets\Fluent\gooey.png" />
+    <Content Remove="Assets\Fluent\gravatar.png" />
+    <Content Remove="Assets\Fluent\imageResizer.png" />
+    <Content Remove="Assets\Fluent\keyboardManager.png" />
+    <Content Remove="Assets\Fluent\language.png" />
+    <Content Remove="Assets\Fluent\loading.png" />
+    <Content Remove="Assets\Fluent\logo.png" />
+    <Content Remove="Assets\Fluent\morph.png" />
+    <Content Remove="Assets\Fluent\navigationView.png" />
+    <Content Remove="Assets\Fluent\notification.png" />
+    <Content Remove="Assets\Fluent\oneDrive.png" />
+    <Content Remove="Assets\Fluent\optionsPageControl.png" />
+    <Content Remove="Assets\Fluent\pagerControl.png" />
+    <Content Remove="Assets\Fluent\particle.png" />
+    <Content Remove="Assets\Fluent\powerRename.png" />
+    <Content Remove="Assets\Fluent\powerToys.png" />
+    <Content Remove="Assets\Fluent\powerToysRun.png" />
+    <Content Remove="Assets\Fluent\print.png" />
+    <Content Remove="Assets\Fluent\progressBar.png" />
+    <Content Remove="Assets\Fluent\segmented.png" />
+    <Content Remove="Assets\Fluent\settingsControl.png" />
+    <Content Remove="Assets\Fluent\shield.png" />
+    <Content Remove="Assets\Fluent\shortcutGuide.png" />
+    <Content Remove="Assets\Fluent\styles.png" />
+    <Content Remove="Assets\Fluent\switchPresenter.png" />
+    <Content Remove="Assets\Fluent\tint.png" />
+    <Content Remove="Assets\Fluent\tintOpacity.png" />
+    <Content Remove="Assets\Fluent\uniformGrid.png" />
+    <Content Remove="Assets\Fluent\watermark.png" />
+    <Content Remove="Assets\Fluent\window.png" />
+    <Content Remove="Assets\Inactive.ico" />
+    <Content Remove="Assets\LockScreenLogo.scale-200.png" />
+    <Content Remove="Assets\Red.ico" />
+    <Content Remove="Assets\SplashScreen.scale-200.png" />
+    <Content Remove="Assets\Square150x150Logo.scale-200.png" />
+    <Content Remove="Assets\Square44x44Logo.scale-200.png" />
+    <Content Remove="Assets\StoreLogo.png" />
+    <Content Remove="Assets\Wide310x150Logo.scale-200.png" />
+    <Content Remove="Strings\zh-CN\Resources.resw" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Views\Automatic\AutomaticPage.xaml" />
+    <None Remove="Views\FileExplorer\FileExplorerPage.xaml" />
+    <None Remove="Views\Filters\FiltersPage.xaml" />
+    <None Remove="Views\General\GeneralPage.xaml" />
+    <None Remove="Views\NotificationView.xaml" />
+    <None Remove="Views\TrayIconView.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Manifest Include="$(ApplicationManifest)" />
+  </ItemGroup>
+  <!-- 
+    Defining the "Msix" ProjectCapability here allows the Single-project MSIX Packaging
+    Tools extension to be activated for this project even if the Windows App SDK Nuget
+    package has not yet been restored.
+  -->
+  <ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
+    <ProjectCapability Include="Msix" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
+    <PackageReference Include="CommunityToolkit.WinUI.UI.Controls.Markdown" Version="7.1.2" />
+    <PackageReference Include="H.NotifyIcon.WinUI" Version="2.1.3" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240829007" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.9" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="WinUICommunity.Components" Version="6.9.0" />
+    <PackageReference Include="WinUICommunity.Core" Version="6.9.0" />
+    <PackageReference Include="WinUICommunity.LandingPages" Version="6.9.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EasyTidy.Log\EasyTidy.Log.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Assets\icon.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\icon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\Inactive.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\LockScreenLogo.scale-200.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\Red.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\SplashScreen.scale-200.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\Square150x150Logo.scale-200.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\Square44x44Logo.scale-200.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\StoreLogo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\Wide310x150Logo.scale-200.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Themes\Fonts\LXGWWenKai-Regular.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Themes\Fonts\PingFangSC-Regular.otf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Page Update="Views\NotificationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\TrayIconView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\Filters\FiltersPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\FileExplorer\FileExplorerPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\Automatic\AutomaticPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\General\GeneralPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <!-- 
+    Defining the "HasPackageAndPublishMenuAddedByProject" property here allows the Solution 
+    Explorer "Package and Publish" context menu entry to be enabled for this project even if 
+    the Windows App SDK Nuget package has not yet been restored.
+  -->
+  <PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
+    <HasPackageAndPublishMenu>true</HasPackageAndPublishMenu>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+</Project>

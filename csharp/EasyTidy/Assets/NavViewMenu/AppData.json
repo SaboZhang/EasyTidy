@@ -1,0 +1,48 @@
+﻿{
+  "Groups": [
+    {
+      "UniqueId": "EasyTidy",
+      "Title": "EasyTidy",
+      "ImagePath": "ms-appx:///Assets/icon.png",
+      "ImageIconPath": "ms-appx:///Assets/icon.png",
+      "IsSpecialSection": false,
+      "HideGroup": false,
+      "ShowItemsWithoutGroup": true,
+      "IsExpanded": false,
+      "Items": [
+        {
+          "UniqueId": "EasyTidy.Views.GeneralPage",
+          "Title": "常规",
+          "Subtitle": "EasyTidy",
+          "ImagePath": "ms-appx:///Assets/Fluent/general.png",
+          "ImageIconPath": "ms-appx:///Assets/Fluent/general.png",
+          "HideItem": true
+        },
+        {
+          "UniqueId": "EasyTidy.Views.AutomaticPage",
+          "Title": "自动",
+          "Subtitle": "Automatic",
+          "ImagePath": "ms-appx:///Assets/Fluent/auto.png",
+          "ImageIconPath": "ms-appx:///Assets/Fluent/auto.png",
+          "IsUpdated": true
+        },
+        {
+          "UniqueId": "EasyTidy.Views.FiltersPage",
+          "Title": "过滤器",
+          "Subtitle": "Filters",
+          "ImagePath": "ms-appx:///Assets/Fluent/Filters.png",
+          "ImageIconPath": "ms-appx:///Assets/Fluent/Filters.png",
+          "IsUpdated": true
+        },
+        {
+          "UniqueId": "EasyTidy.Views.FileExplorerPage",
+          "Title": "文件管理",
+          "Subtitle": "FileExplorer",
+          "ImagePath": "ms-appx:///Assets/Fluent/fileExplorerPreview.png",
+          "ImageIconPath": "ms-appx:///Assets/Fluent/fileExplorerPreview.png",
+          "IsUpdated": true
+        }
+      ]
+    }
+  ]
+}
