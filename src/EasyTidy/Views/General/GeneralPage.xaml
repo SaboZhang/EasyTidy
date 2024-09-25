@@ -56,7 +56,7 @@
                     </wuc:SettingsCard>
                     <wuc:SettingsCard Description="启动时检查更新" Header="检查更新">
                         <wuc:SettingsCard.HeaderIcon>
-                            <FontIcon Glyph="&#xED1A;" />
+                            <FontIcon Glyph="&#xECC5;" />
                         </wuc:SettingsCard.HeaderIcon>
                         <ToggleSwitch IsOn="{x:Bind ViewModel.IsStartupCheck, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </wuc:SettingsCard>

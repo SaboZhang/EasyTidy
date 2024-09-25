@@ -115,6 +115,18 @@ public partial class App : Application
         };
 
         CurrentWindow.Activate();
+        if ((bool)Settings.GeneralConfig.IsStartupCheck)
+        {
+            try
+            {
+                Settings.LastUpdateCheck = DateTime.Now.ToShortDateString();
+                var update = await UpdateHelper.CheckUpdateAsync("SaboZhang", "Organize", new Version(Current.AppVersion));
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.ToString());
+            }
+        }
         await DynamicLocalizerHelper.InitializeLocalizer("zh-CN", "en-US");
     }
 
