@@ -11,6 +11,7 @@ namespace EasyTidy.ViewModels;
 
 public partial class GeneralViewModel : ObservableRecipient
 {
+    #region 字段、属性
 
     [ObservableProperty]
     private bool pathTypeSelectedIndex = false;
@@ -144,6 +145,8 @@ public partial class GeneralViewModel : ObservableRecipient
         }
     }
 
+    #endregion
+
 
     [RelayCommand]
     private Task OnSelectPathType(object sender)
@@ -184,7 +187,7 @@ public partial class GeneralViewModel : ObservableRecipient
         }
     }
 
-    public void NotifyPropertyChanged([CallerMemberName] string propertyName = null, bool reDoBackupDryRun = true)
+    private void NotifyPropertyChanged([CallerMemberName] string propertyName = null, bool reDoBackupDryRun = true)
     {
         
         // Notify UI of property change
