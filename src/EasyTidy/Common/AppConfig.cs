@@ -1,4 +1,5 @@
-﻿using Nucs.JsonSettings;
+﻿using EasyTidy.Model;
+using Nucs.JsonSettings;
 using Nucs.JsonSettings.Modulation;
 
 namespace EasyTidy.Common;
@@ -14,4 +15,7 @@ public class AppConfig : JsonSettings, IVersionable
     public virtual NavigationViewPaneDisplayMode NavigationViewPaneDisplayMode { get; set; } = NavigationViewPaneDisplayMode.Left;
 
     // Docs: https://github.com/Nucs/JsonSettings
+
+    public virtual ConfigModel? GeneralConfig { get; set; } = InitialConfig();
+
 }
