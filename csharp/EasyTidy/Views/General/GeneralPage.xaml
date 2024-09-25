@@ -32,19 +32,19 @@
                         <wuc:SettingsCard.HeaderIcon>
                             <FontIcon Glyph="&#xEC50;" />
                         </wuc:SettingsCard.HeaderIcon>
-                        <ToggleSwitch IsOn="True" />
+                        <ToggleSwitch IsOn="{x:Bind ViewModel.SubFolder, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </wuc:SettingsCard>
                     <wuc:SettingsCard Description="忽略正在被其他应用程序使用的文件" Header="使用中的文件">
                         <wuc:SettingsCard.HeaderIcon>
                             <FontIcon Glyph="&#xE8F6;" />
                         </wuc:SettingsCard.HeaderIcon>
-                        <ToggleSwitch IsOn="True" />
+                        <ToggleSwitch IsOn="{x:Bind ViewModel.FileInUse, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </wuc:SettingsCard>
                     <wuc:SettingsCard Description="忽略无关的文件或者文件夹以及系统文件文件夹" Header="无关文件">
                         <wuc:SettingsCard.HeaderIcon>
                             <FontIcon Glyph="&#xE8F6;" />
                         </wuc:SettingsCard.HeaderIcon>
-                        <ToggleSwitch IsOn="True" />
+                        <ToggleSwitch IsOn="{x:Bind ViewModel.IrrelevantFiles, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </wuc:SettingsCard>
                 </wuc:SimpleSettingsGroup>
                 <wuc:SimpleSettingsGroup Header="应用设置" >
@@ -52,7 +52,7 @@
                         <wuc:SettingsCard.HeaderIcon>
                             <FontIcon Glyph="&#xE7E8;" />
                         </wuc:SettingsCard.HeaderIcon>
-                        <ToggleSwitch IsOn="True" />
+                        <ToggleSwitch IsOn="{x:Bind ViewModel.IsStartup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </wuc:SettingsCard>
                     <wuc:SettingsCard Description="隐藏系统托盘的图标" Header="隐藏图标">
                         <wuc:SettingsCard.HeaderIcon>
@@ -64,7 +64,7 @@
                         <wuc:SettingsCard.HeaderIcon>
                             <FontIcon Glyph="&#xEE47;" />
                         </wuc:SettingsCard.HeaderIcon>
-                        <ToggleSwitch IsOn="True" />
+                        <ToggleSwitch IsOn="{x:Bind ViewModel.Minimize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </wuc:SettingsCard>
                 </wuc:SimpleSettingsGroup>
                 <wuc:SimpleSettingsGroup Header="备份/还原" Visibility="Visible" >

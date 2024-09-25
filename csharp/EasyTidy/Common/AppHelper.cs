@@ -1,4 +1,6 @@
-﻿using Nucs.JsonSettings;
+﻿using EasyTidy.Model;
+using EasyTidy.Util;
+using Nucs.JsonSettings;
 using Nucs.JsonSettings.Autosave;
 using Nucs.JsonSettings.Fluent;
 using Nucs.JsonSettings.Modulation;
@@ -12,5 +14,47 @@ public static partial class AppHelper
                                .WithVersioning(VersioningResultAction.RenameAndLoadDefault)
                                .LoadNow()
                                .EnableAutosave();
+
+    /// <summary>
+    ///     初始化自启动
+    /// </summary>
+    /// <param name="isStartup"></param>
+    private static void StartupOperate(bool isStartup)
+    {
+        if (isStartup)
+        {
+            if (!ShortcutUtil.IsStartup())
+                ShortcutUtil.SetStartup();
+        }
+        else
+        {
+            ShortcutUtil.UnSetStartup();
+        }
+    }
+
+    public static ConfigModel InitialConfig()
+    {
+        return new ConfigModel
+        {
+            Minimize = Settings?.GeneralConfig.Minimize ?? false,
+            IrrelevantFiles = Settings?.GeneralConfig.IrrelevantFiles ?? false,
+            FileInUse = Settings?.GeneralConfig.FileInUse ?? false,
+            SubFolder = Settings?.GeneralConfig.SubFolder ?? false,
+            IsStartup = Settings?.GeneralConfig.IsStartup ?? false
+        };
+    }
+
+    public static void UpdateCurConfig(GeneralViewModel viewModel)
+    {
+
+        Settings.GeneralConfig.Minimize = viewModel.Minimize;
+        Settings.GeneralConfig.IrrelevantFiles = viewModel.IrrelevantFiles;
+        Settings.GeneralConfig.FileInUse = viewModel.FileInUse;
+        Settings.GeneralConfig.SubFolder = viewModel.SubFolder;
+        Settings.GeneralConfig.IsStartup = viewModel.IsStartup;
+        StartupOperate(viewModel.IsStartup);
+        Settings.GeneralConfig = Settings.GeneralConfig;
+
+    }
 }
 

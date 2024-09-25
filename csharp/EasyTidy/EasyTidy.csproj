@@ -131,6 +131,7 @@
   <ItemGroup>
     <ProjectReference Include="..\EasyTidy.Log\EasyTidy.Log.csproj" />
     <ProjectReference Include="..\EasyTidy.Model\EasyTidy.Model.csproj" />
+    <ProjectReference Include="..\EasyTidy.Util\EasyTidy.Util.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Assets\icon.ico">
