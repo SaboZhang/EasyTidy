@@ -54,11 +54,11 @@
                         </wuc:SettingsCard.HeaderIcon>
                         <ToggleSwitch IsOn="{x:Bind ViewModel.IsStartup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </wuc:SettingsCard>
-                    <wuc:SettingsCard Description="隐藏系统托盘的图标" Header="隐藏图标">
+                    <wuc:SettingsCard Description="启动时检查更新" Header="检查更新">
                         <wuc:SettingsCard.HeaderIcon>
                             <FontIcon Glyph="&#xED1A;" />
                         </wuc:SettingsCard.HeaderIcon>
-                        <ToggleSwitch IsOn="True" />
+                        <ToggleSwitch IsOn="{x:Bind ViewModel.IsStartupCheck, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </wuc:SettingsCard>
                     <wuc:SettingsCard Description="启动时最小化到通知区域" Header="最小化">
                         <wuc:SettingsCard.HeaderIcon>

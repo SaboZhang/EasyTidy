@@ -122,6 +122,26 @@ public partial class GeneralViewModel : ObservableRecipient
             }
         }
     }
+
+    private bool? _isStartupCheck;
+
+    public bool IsStartupCheck
+    {
+        get
+        {
+            return (bool)(_isStartupCheck ?? CurConfig.IsStartupCheck);
+        }
+
+        set
+        {
+            if (_isStartupCheck != value)
+            {
+                _isStartupCheck = value;
+                CurConfig.IsStartupCheck = value;
+                NotifyPropertyChanged();
+            }
+        }
+    }
     /// <summary>
     ///     是否开机启动
     /// </summary>

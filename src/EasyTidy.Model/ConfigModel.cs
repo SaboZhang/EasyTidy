@@ -20,4 +20,6 @@ public class ConfigModel
     public bool? IrrelevantFiles { get; set; } = false;
 
     public bool? Minimize { get; set; } = false;
+
+    public bool? IsStartupCheck { get; set;} = false;
 }

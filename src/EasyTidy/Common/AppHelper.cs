@@ -40,7 +40,8 @@ public static partial class AppHelper
             IrrelevantFiles = Settings?.GeneralConfig.IrrelevantFiles ?? false,
             FileInUse = Settings?.GeneralConfig.FileInUse ?? false,
             SubFolder = Settings?.GeneralConfig.SubFolder ?? false,
-            IsStartup = Settings?.GeneralConfig.IsStartup ?? false
+            IsStartup = Settings?.GeneralConfig.IsStartup ?? false,
+            IsStartupCheck = Settings?.GeneralConfig.IsStartupCheck ?? false
         };
     }
 
@@ -52,6 +53,7 @@ public static partial class AppHelper
         Settings.GeneralConfig.FileInUse = viewModel.FileInUse;
         Settings.GeneralConfig.SubFolder = viewModel.SubFolder;
         Settings.GeneralConfig.IsStartup = viewModel.IsStartup;
+        Settings.GeneralConfig.IsStartupCheck = viewModel.IsStartupCheck;
         StartupOperate(viewModel.IsStartup);
         Settings.GeneralConfig = Settings.GeneralConfig;
 
