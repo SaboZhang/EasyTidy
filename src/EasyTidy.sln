@@ -14,7 +14,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyTidy.Log", "EasyTidy.Lo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyTidy.Model", "EasyTidy.Model\EasyTidy.Model.csproj", "{2A9E80F1-4C02-4B6E-8907-17EFFC6AF3D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyTidy.Util", "EasyTidy.Util\EasyTidy.Util.csproj", "{B9F29073-5424-4991-9A4B-8A9EDCA0187B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyTidy.Util", "EasyTidy.Util\EasyTidy.Util.csproj", "{B9F29073-5424-4991-9A4B-8A9EDCA0187B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -103,6 +103,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
+		RESX_SortFileContentOnSave = False
 		SolutionGuid = {EB9E585A-14A0-48D9-9D85-A56F72F4D785}
 	EndGlobalSection
 EndGlobal

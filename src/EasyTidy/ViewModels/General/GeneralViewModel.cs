@@ -11,7 +11,7 @@ namespace EasyTidy.ViewModels;
 
 public partial class GeneralViewModel : ObservableRecipient
 {
-    #region 字段、属性
+    #region 字段 & 属性
 
     [ObservableProperty]
     private bool pathTypeSelectedIndex = false;
@@ -196,7 +196,7 @@ public partial class GeneralViewModel : ObservableRecipient
     {
         try
         {
-            var folder = await FileAndFolderPickerHelper.PickSingleFolderAsync(App.CurrentWindow);
+            var folder = await FileAndFolderPickerHelper.PickSingleFolderAsync(App.MainWindow);
             FloderPath = folder?.Path ?? (WebDavIsShow ? "WebDAV" : "");
 
         }

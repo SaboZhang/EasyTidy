@@ -120,4 +120,13 @@
   <data name="Automatic" xml:space="preserve">
     <value>Automatic</value>
   </data>
+  <data name="FileExplorer" xml:space="preserve">
+    <value>FileExplorer</value>
+  </data>
+  <data name="Filters" xml:space="preserve">
+    <value>Filters</value>
+  </data>
+  <data name="Backup" xml:space="preserve">
+    <value>Backup</value>
+  </data>
 </root>

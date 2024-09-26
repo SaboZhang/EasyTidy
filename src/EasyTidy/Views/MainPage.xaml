@@ -51,7 +51,6 @@
             x:Name="NavView"
             Grid.Row="1"
             IsBackButtonVisible="Collapsed"
-            FontFamily="{StaticResource PingFang SC}"
             IsPaneToggleButtonVisible="False">
             <NavigationView.AutoSuggestBox>
                 <AutoSuggestBox Name="autoSuggestBox"

@@ -38,7 +38,7 @@ public sealed partial class TrayIconView : UserControl
     [RelayCommand]
     public void ShowHideWindow()
     {
-        var window = App.CurrentWindow;
+        var window = App.MainWindow;
         if (window == null)
         {
             return;
@@ -60,7 +60,7 @@ public sealed partial class TrayIconView : UserControl
     {
         App.HandleClosedEvents = false;
         TrayIcon.Dispose();
-        App.CurrentWindow?.Close();
+        App.MainWindow?.Close();
     }
 
     [RelayCommand]
@@ -72,6 +72,6 @@ public sealed partial class TrayIconView : UserControl
         Process.Start(appPath);
         App.HandleClosedEvents = false;
         TrayIcon.Dispose();
-        App.CurrentWindow?.Close();
+        App.MainWindow?.Close();
     }
 }

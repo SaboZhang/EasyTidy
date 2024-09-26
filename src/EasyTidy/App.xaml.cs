@@ -9,7 +9,7 @@ public partial class App : Application
 {
     public static Mutex _mutex = null;
 
-    public static Window CurrentWindow = Window.Current;
+    public static Window MainWindow = Window.Current;
     public IServiceProvider Services { get; }
     public new static App Current => (App)Application.Current;
     public string AppVersion { get; set; } = AssemblyInfoHelper.GetAssemblyVersion();
@@ -90,31 +90,31 @@ public partial class App : Application
             Environment.Exit(0);
         }
 
-        CurrentWindow = new Window();
+        MainWindow = new Window();
 
-        CurrentWindow.AppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
-        CurrentWindow.AppWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
+        MainWindow.AppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
+        MainWindow.AppWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
 
-        if (CurrentWindow.Content is not Frame rootFrame)
+        if (MainWindow.Content is not Frame rootFrame)
         {
-            CurrentWindow.Content = rootFrame = new Frame();
+            MainWindow.Content = rootFrame = new Frame();
         }
 
         rootFrame.Navigate(typeof(MainPage));
 
-        CurrentWindow.Title = CurrentWindow.AppWindow.Title = $"{AppName} v{AppVersion}";
-        CurrentWindow.AppWindow.SetIcon("Assets/icon.ico");
+        MainWindow.Title = MainWindow.AppWindow.Title = $"{AppName} v{AppVersion}";
+        MainWindow.AppWindow.SetIcon("Assets/icon.ico");
 
-        CurrentWindow.Closed += (sender, args) =>
+        MainWindow.Closed += (sender, args) =>
         {
             if (HandleClosedEvents)
             {
                 args.Handled = true;
-                CurrentWindow.Hide();
+                MainWindow.Hide();
             }
         };
 
-        CurrentWindow.Activate();
+        MainWindow.Activate();
         if ((bool)Settings.GeneralConfig.IsStartupCheck)
         {
             try
@@ -127,7 +127,7 @@ public partial class App : Application
                 Logger.Error(ex.ToString());
             }
         }
-        await DynamicLocalizerHelper.InitializeLocalizer("zh-CN", "en-US");
+        // await DynamicLocalizerHelper.InitializeLocalizer("zh-CN", "en-US");
     }
 
     private void OnClosed(object sender, WindowEventArgs args)

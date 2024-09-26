@@ -29,7 +29,7 @@ public sealed partial class GeneralPage : Page
     {
         ViewModel = App.GetService<GeneralViewModel>();
         this.InitializeComponent();
-        XamlRoot = App.CurrentWindow.Content.XamlRoot;
+        XamlRoot = App.MainWindow.Content.XamlRoot;
         //Loaded += General_Loaded;
     }
 
