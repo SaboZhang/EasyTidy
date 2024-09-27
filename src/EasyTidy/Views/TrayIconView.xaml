@@ -23,7 +23,7 @@
         IconSource="{x:Bind IsWindowVisible, Converter={StaticResource BoolToImageSourceConverter}}"
         LeftClickCommand="{x:Bind ShowHideWindowCommand}"
         NoLeftClickDelay="True"
-        ToolTipText="ToolTip">
+        ToolTipText="EasyTidy">
 
         <tb:TaskbarIcon.ContextFlyout>
             <MenuFlyout AreOpenCloseAnimationsEnabled="False">
@@ -34,7 +34,7 @@
                     Command="{x:Bind ShowHideWindowCommand}"
                     Text="执行一次"/>
                 <MenuFlyoutItem
-                    Command="{x:Bind ShowHideWindowCommand}"
+                    Command="{x:Bind ShowSettingsCommand}"
                     Text="偏好设置"/>
                 <MenuFlyoutItem
                     Command="{x:Bind ShowHideWindowCommand}"

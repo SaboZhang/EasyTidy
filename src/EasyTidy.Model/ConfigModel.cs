@@ -22,4 +22,10 @@ public class ConfigModel
     public bool? Minimize { get; set; } = false;
 
     public bool? IsStartupCheck { get; set;} = false;
+
+    public bool? EmptyFiles { get; set; } = true;
+
+    public bool? HiddenFiles { get; set; } = false;
+
+    public FileOperationType FileOperationType { get; set; } = FileOperationType.Skip;
 }

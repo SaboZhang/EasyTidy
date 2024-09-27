@@ -21,3 +21,19 @@ public enum BackupType
     [Display(Name = "WebDav")]
     WebDav
 }
+
+public enum FileOperationType
+{
+
+    [Display(Name = "跳过")] Skip,
+
+    [Display(Name = "覆盖")] Override,
+
+    [Display(Name = "如果较新则覆盖")] OverwriteIfNewer,
+
+    [Display(Name = "如果大小不同则覆盖")] OverrideIfSizesDiffer,
+
+    [Display(Name = "重命名(01)")] ReNameAppend,
+
+    [Display(Name = "重命名-当前日期")] ReNameAddDate
+}

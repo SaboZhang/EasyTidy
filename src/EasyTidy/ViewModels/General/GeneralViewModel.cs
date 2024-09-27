@@ -13,6 +13,11 @@ public partial class GeneralViewModel : ObservableRecipient
 {
     #region 字段 & 属性
 
+    /// <summary>
+    ///     当前配置实例
+    /// </summary>
+    private static ConfigModel? CurConfig = Settings.GeneralConfig;
+
     [ObservableProperty]
     private bool pathTypeSelectedIndex = false;
 
@@ -22,14 +27,20 @@ public partial class GeneralViewModel : ObservableRecipient
     [ObservableProperty]
     public string floderPath;
 
+    /// <summary>
+    ///     文件冲突操作方式
+    /// </summary>
+    [ObservableProperty]
+    private IList<FileOperationType> fileOperationTypes = Enum.GetValues(typeof(FileOperationType)).Cast<FileOperationType>().ToList();
 
     [ObservableProperty]
-    private IList<BackupType> backupTypes = Enum.GetValues(typeof(BackupType)).Cast<BackupType>().ToList();
+    private FileOperationType _operationType = CurConfig.FileOperationType;
 
     /// <summary>
-    ///     当前配置实例
+    ///     备份类型
     /// </summary>
-    private ConfigModel? CurConfig = Settings.GeneralConfig;
+    [ObservableProperty]
+    private IList<BackupType> backupTypes = Enum.GetValues(typeof(BackupType)).Cast<BackupType>().ToList();
 
     /// <summary>
     /// 是否处理子文件夹
@@ -165,11 +176,62 @@ public partial class GeneralViewModel : ObservableRecipient
         }
     }
 
+    /// <summary>
+    ///     是否处理空文件或者空文件夹
+    /// </summary>
+    private bool? _emptyFiles;
+
+    public bool EmptyFiles
+    {
+        get
+        {
+            return (bool)(_emptyFiles ?? CurConfig.EmptyFiles);
+        }
+
+        set
+        {
+            if (_emptyFiles != value)
+            {
+                _emptyFiles = value;
+                CurConfig.EmptyFiles = value;
+                NotifyPropertyChanged();
+            }
+        }
+    }
+
+    /// <summary>
+    ///     是否处理隐藏文件
+    /// </summary>
+    private bool? _isHiddenFiles;
+
+    public bool HiddenFiles
+    {
+        get
+        {
+            return (bool)(_isHiddenFiles ?? CurConfig.HiddenFiles);
+        }
+
+        set
+        {
+            if (_isHiddenFiles != value)
+            {
+                _isHiddenFiles = value;
+                CurConfig.HiddenFiles = value;
+                NotifyPropertyChanged();
+            }
+        }
+    }
+
     #endregion
 
+    [RelayCommand]
+    private void OnFileOperationTypeChanged(object sender)
+    {
+        UpdateCurConfig(this);
+    }
 
     [RelayCommand]
-    private Task OnSelectPathType(object sender)
+    private void OnSelectPathType(object sender)
     {
         var backupType = sender as ComboBox;
         switch (backupType.SelectedItem)
@@ -187,8 +249,6 @@ public partial class GeneralViewModel : ObservableRecipient
                 WebDavIsShow = false;
                 break;
         }
-
-        return Task.CompletedTask;
     }
 
     [RelayCommand]

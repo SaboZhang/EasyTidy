@@ -36,7 +36,22 @@ public sealed partial class TrayIconView : UserControl
     }
 
     [RelayCommand]
-    public void ShowHideWindow()
+    private void ShowSettings()
+    {
+        var window = App.MainWindow;
+        if (window == null)
+        {
+            return;
+        }
+        window.Show();
+        IsWindowVisible = window.Visible;
+    }
+
+    /// <summary>
+    /// Shows or hides the main window
+    /// </summary>
+    [RelayCommand]
+    private void ShowHideWindow()
     {
         var window = App.MainWindow;
         if (window == null)
@@ -55,16 +70,22 @@ public sealed partial class TrayIconView : UserControl
         IsWindowVisible = window.Visible;
     }
 
+    /// <summary>
+    /// Exits the application
+    /// </summary>
     [RelayCommand]
-    public void ExitApplication()
+    private void ExitApplication()
     {
         App.HandleClosedEvents = false;
         TrayIcon.Dispose();
         App.MainWindow?.Close();
     }
 
+    /// <summary>
+    /// Restarts the application
+    /// </summary>
     [RelayCommand]
-    public void RestartApplication()
+    private void RestartApplication()
     {
         Logger.Info("Restarting application");
         App._mutex.ReleaseMutex();

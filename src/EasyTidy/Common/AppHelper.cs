@@ -41,7 +41,10 @@ public static partial class AppHelper
             FileInUse = Settings?.GeneralConfig.FileInUse ?? false,
             SubFolder = Settings?.GeneralConfig.SubFolder ?? false,
             IsStartup = Settings?.GeneralConfig.IsStartup ?? false,
-            IsStartupCheck = Settings?.GeneralConfig.IsStartupCheck ?? false
+            IsStartupCheck = Settings?.GeneralConfig.IsStartupCheck ?? false,
+            EmptyFiles = Settings?.GeneralConfig.EmptyFiles ?? true,
+            HiddenFiles = Settings?.GeneralConfig.HiddenFiles ?? false,
+            FileOperationType = Settings?.GeneralConfig.FileOperationType ?? FileOperationType.Skip
         };
     }
 
@@ -54,6 +57,9 @@ public static partial class AppHelper
         Settings.GeneralConfig.SubFolder = viewModel.SubFolder;
         Settings.GeneralConfig.IsStartup = viewModel.IsStartup;
         Settings.GeneralConfig.IsStartupCheck = viewModel.IsStartupCheck;
+        Settings.GeneralConfig.FileOperationType = viewModel.OperationType;
+        Settings.GeneralConfig.EmptyFiles = viewModel.EmptyFiles;
+        Settings.GeneralConfig.HiddenFiles = viewModel.HiddenFiles;
         StartupOperate(viewModel.IsStartup);
         Settings.GeneralConfig = Settings.GeneralConfig;
 
