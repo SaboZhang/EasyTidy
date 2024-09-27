@@ -1,7 +1,6 @@
 ﻿using EasyTidy.Log;
 using H.NotifyIcon;
 using Microsoft.Windows.AppNotifications;
-using System.Windows;
 
 namespace EasyTidy;
 
@@ -133,7 +132,8 @@ public partial class App : Application
     private void OnClosed(object sender, WindowEventArgs args)
     {
         // 记录日志
-        if (Logger != null && !HandleClosedEvents) {
+        if (Logger != null && !HandleClosedEvents)
+        {
             Logger.Info($"{AppName}_{AppVersion} Closed...\n");
             LogService.UnRegister();
         }

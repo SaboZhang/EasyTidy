@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
+﻿using EasyTidy.Model;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using EasyTidy.Model;
 
 namespace EasyTidy.ViewModels;
 
@@ -269,13 +263,13 @@ public partial class GeneralViewModel : ObservableRecipient
 
     private void NotifyPropertyChanged([CallerMemberName] string propertyName = null, bool reDoBackupDryRun = true)
     {
-        
+
         // Notify UI of property change
         OnPropertyChanged(propertyName);
 
         Logger.Info($"GeneralViewModel: NotifyPropertyChanged {propertyName}");
 
         UpdateCurConfig(this);
-        
+
     }
 }

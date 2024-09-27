@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EasyTidy.Model;
+﻿namespace EasyTidy.Model;
 
 public class ConfigModel
 {
@@ -21,7 +15,7 @@ public class ConfigModel
 
     public bool? Minimize { get; set; } = false;
 
-    public bool? IsStartupCheck { get; set;} = false;
+    public bool? IsStartupCheck { get; set; } = false;
 
     public bool? EmptyFiles { get; set; } = true;
 
