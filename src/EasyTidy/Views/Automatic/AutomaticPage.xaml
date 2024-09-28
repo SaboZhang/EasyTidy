@@ -61,7 +61,8 @@
                         <wuc:SettingsCard.HeaderIcon>
                             <FontIcon Glyph="&#xED28;"/>
                         </wuc:SettingsCard.HeaderIcon>
-                        <Button Content="配置"/>
+                        <Button Content="配置"
+                                Command="{x:Bind ViewModel.PlanExecutionCommand}"/>
                     </wuc:SettingsCard>
 
                 </wuc:SimpleSettingsGroup>
@@ -73,55 +74,68 @@
                         <wuc:SettingsExpander.Items>
                             <wuc:SettingsCard Header="任务选择">
                                 <StackPanel Orientation="Horizontal">
-                                    <ComboBox PlaceholderText="选择要关联的任务">
-                                        <ComboBoxItem>
-                                            <ListView SelectionMode="Multiple"
-                                                      MaxHeight="320">
-                                                <x:String>Task1</x:String>
-                                                <x:String>Task2</x:String>
-                                                <x:String>Task3</x:String>
-                                                <x:String>Task4</x:String>
-                                                <x:String>Task5</x:String>
-                                                <!-- <ListView.ItemTemplate>
-                                                    <DataTemplate>
-                                                        <Grid>
-                                                            <Grid.RowDefinitions>
-                                                                <RowDefinition Height="*"/>
-                                                                <RowDefinition Height="*"/>
-                                                            </Grid.RowDefinitions>
-                                                            <Grid.ColumnDefinitions>
-                                                                <ColumnDefinition Width="Auto"/>
-                                                                <ColumnDefinition Width="*"/>
-                                                            </Grid.ColumnDefinitions>
-                                                            <Ellipse x:Name="Ellipse"
-                                                                     Grid.RowSpan="2"
-                                                                     Width="32"
-                                                                     Height="32"
-                                                                     Margin="6"
-                                                                     VerticalAlignment="Center"
-                                                                     HorizontalAlignment="Center"
-                                                                     Fill="{ThemeResource SystemControlBackgroundBaseMediumBrush}"/>
-                                                            <TextBlock Grid.Column="1"
-                                                                       Text="{x:Bind Name}"
-                                                                       x:Phase="1"
-                                                                       Style="{ThemeResource BaseTextBlockStyle}"
-                                                                       Margin="12,6,0,0"/>
-                                                            <TextBlock  Grid.Column="1"
-                                                                        Grid.Row="1"
-                                                                        Text="{x:Bind Company}"
-                                                                        x:Phase="2"
-                                                                        Style="{ThemeResource BodyTextBlockStyle}"
-                                                                        Margin="12,0,0,6"/>
-                                                        </Grid>
+                                    <Button x:Name="SelectButton"
+                                            Content="选择任务"
+                                            Command="{x:Bind ViewModel.SelectTaskCommand}">
+                                        <Button.Resources>
+                                            <TeachingTip x:Name="TaskSelect"
+                                                         Title="选择任务"
+                                                         Target="{x:Bind SelectButton}"
+                                                         IsOpen="{x:Bind ViewModel.IsOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                         PreferredPlacement="Top"
+                                                         MaxHeight="380">
+                                                <TeachingTip.HeroContent>
+                                                    <ListView SelectionMode="Multiple"
+                                                              MaxHeight="320">
+                                                        <x:String>Task1</x:String>
+                                                        <x:String>Task2</x:String>
+                                                        <x:String>Task3</x:String>
+                                                        <x:String>Task4</x:String>
+                                                        <x:String>Task5</x:String>
+                                                        <!-- <ListView.ItemTemplate>
+                                                            <DataTemplate>
+                                                                <Grid>
+                                                                    <Grid.RowDefinitions>
+                                                                        <RowDefinition Height="*"/>
+                                                                        <RowDefinition Height="*"/>
+                                                                    </Grid.RowDefinitions>
+                                                                    <Grid.ColumnDefinitions>
+                                                                        <ColumnDefinition Width="Auto"/>
+                                                                        <ColumnDefinition Width="*"/>
+                                                                    </Grid.ColumnDefinitions>
+                                                                    <Ellipse x:Name="Ellipse"
+                                                                             Grid.RowSpan="2"
+                                                                             Width="32"
+                                                                             Height="32"
+                                                                             Margin="6"
+                                                                             VerticalAlignment="Center"
+                                                                             HorizontalAlignment="Center"
+                                                                             Fill="{ThemeResource SystemControlBackgroundBaseMediumBrush}"/>
+                                                                    <TextBlock Grid.Column="1"
+                                                                               Text="{x:Bind Name}"
+                                                                               x:Phase="1"
+                                                                               Style="{ThemeResource BaseTextBlockStyle}"
+                                                                               Margin="12,6,0,0"/>
+                                                                    <TextBlock  Grid.Column="1"
+                                                                                Grid.Row="1"
+                                                                                Text="{x:Bind Company}"
+                                                                                x:Phase="2"
+                                                                                Style="{ThemeResource BodyTextBlockStyle}"
+                                                                                Margin="12,0,0,6"/>
+                                                                </Grid>
 
-                                                    </DataTemplate>
-                                                </ListView.ItemTemplate> -->
-                                            </ListView>
+                                                            </DataTemplate>
+                                                        </ListView.ItemTemplate> -->
+                                                    </ListView>
+                                                </TeachingTip.HeroContent>
+                                            </TeachingTip>
+                                        </Button.Resources>
+                                    </Button>
 
-                                        </ComboBoxItem>
-                                    </ComboBox>
                                     <CheckBox Margin="10,0,0,0">是否单独配置</CheckBox>
-                                    <Button Content="自定义" Margin="5,0,0,0"/>
+                                    <Button Content="自定义"
+                                            Margin="5,0,0,0"
+                                            Command="{x:Bind ViewModel.CustomConfigCommand}"/>
                                 </StackPanel>
                             </wuc:SettingsCard>
                         </wuc:SettingsExpander.Items>
@@ -129,13 +143,19 @@
                     </wuc:SettingsExpander>
 
                 </wuc:SimpleSettingsGroup>
-
+                <StackPanel Orientation="Horizontal"
+                            Spacing="8"
+                            HorizontalAlignment="Right">
+                    <Button Content="撤销配置"
+                            HorizontalAlignment="Center"
+                            Margin="0,10,0,0"/>
+                    <Button Content="保存配置"
+                            HorizontalAlignment="Center"
+                            Margin="0,10,0,0"/>
+                </StackPanel>
             </StackPanel>
         </wuc:SettingsPageControl.ModuleContent>
 
-
     </wuc:SettingsPageControl>
-
-
 
 </Page>

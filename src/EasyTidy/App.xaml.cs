@@ -65,6 +65,7 @@ public partial class App : Application
         services.AddTransient<AboutUsSettingViewModel>();
         services.AddTransient<SettingsViewModel>();
         services.AddTransient<BreadCrumbBarViewModel>();
+        services.AddTransient<AutomaticViewModel>();
 
         return services.BuildServiceProvider();
     }

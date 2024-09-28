@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentDialog
+    x:Class="EasyTidy.Views.ContentDialogs.CustomConfigContentDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:EasyTidy.Views.ContentDialogs"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:wuc="using:WinUICommunity"
+    mc:Ignorable="d"
+    CornerRadius="{ThemeResource OverlayCornerRadius}"
+    DefaultButton="Primary">
+
+    <StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="选择任务"
+                       Margin="0,5,0,0"/>
+            <ListView Margin="226,0,0,0"
+                      SelectionMode="Multiple">
+                <x:String>1,2,3</x:String>
+                <x:String>2,3,4</x:String>
+                <x:String>3,4,5</x:String>
+            </ListView>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal"
+                    Spacing="8">
+            <TextBlock Text="文件更改时"
+                       Margin="0,8,0,0"/>
+            <ToggleSwitch IsOn="False"
+                          Margin="38,-1,0,0"/>
+            <TextBlock Text="延迟："
+                       Margin="-78,8,0,0"/>
+            <TextBox IsEnabled="True"
+                     Margin="0,0,0,0"
+                     MinWidth="160"/>
+            <TextBlock Text="秒"
+                       Margin="0,8,0,0"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal"
+                    Spacing="8">
+            <TextBlock Text="EasyTidy启动时："
+                       Margin="0,8,0,0"/>
+            <ToggleSwitch IsOn="True"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal"
+                    Spacing="8">
+            <TextBlock Text="定时执行"
+                       Margin="0,10,0,0"/>
+            <ToggleSwitch IsOn="False"
+                          Margin="52,-1,0,0"/>
+            <TextBlock Text="每："
+                       Margin="-78,10,0,0"/>
+            <TimePicker ClockIdentifier="24HourClock"
+                        IsEnabled="False"
+                        Margin="-60,0,0,0"/>
+        </StackPanel>
+        <wuc:Divider/>
+        <StackPanel Margin="0,-10,0,0" >
+            <TextBlock Text="按照计划"/>
+            <StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            Spacing="20"
+                            Margin="0,10,0,0">
+                    <TextBlock Text="分钟"
+                               Margin="0,5,0,0"/>
+                    <TextBox x:Name="Minutes"
+                             Margin="88,0,0,0"
+                             MinWidth="120"/>
+                    <TextBlock Text="(0 to 59)"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            Margin="0,10,0,0"
+                            Spacing="20">
+                    <TextBlock Text="小时"
+                               Margin="0,5,0,0"/>
+                    <TextBox Margin="88,0,0,0"
+                             MinWidth="120"/>
+                    <TextBlock Text="(0 to 23)"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            Spacing="20"
+                            Margin="0,10,0,0">
+                    <TextBlock Text="每个星期的第几天"
+                               Margin="0,5,0,0"/>
+                    <TextBox Margin="4,0,0,0"
+                             MinWidth="120"/>
+                    <TextBlock Text="(0=周日 to 6=周六)"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            Spacing="20"
+                            Margin="0,10,0,0">
+                    <TextBlock Text="每个月第几天"
+                               Margin="0,5,0,0"/>
+                    <TextBox Margin="32,0,0,0"
+                             MinWidth="120"/>
+                    <TextBlock Text="(1 to 31)"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            Spacing="20"
+                            Margin="0,10,0,0">
+                    <TextBlock Text="月份"
+                               Margin="0,5,0,0"/>
+                    <TextBox Margin="88,0,0,0"
+                             MinWidth="120"/>
+                    <TextBlock Text="(1 to 12)"/>
+                </StackPanel>
+                <wuc:Divider/>
+                <StackPanel Orientation="Horizontal"
+                            Spacing="20">
+                    <TextBlock Text="CRON 表达式"
+                               Margin="0,5,0,0"/>
+                    <TextBox Margin="32,0,0,0"
+                             MinWidth="120"/>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+    </StackPanel>
+</ContentDialog>
