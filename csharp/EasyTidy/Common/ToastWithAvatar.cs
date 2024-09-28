@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Windows.AppNotifications;
+﻿using Microsoft.Windows.AppNotifications;
 
 namespace EasyTidy.Common;
 public class ToastWithAvatar

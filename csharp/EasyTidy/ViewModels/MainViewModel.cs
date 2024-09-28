@@ -5,7 +5,7 @@ public partial class MainViewModel : ObservableObject, ITitleBarAutoSuggestBoxAw
     public MainViewModel(IJsonNavigationViewService jsonNavigationViewService, IThemeService themeService)
     {
         JsonNavigationViewService = jsonNavigationViewService;
-        themeService.Initialize(App.CurrentWindow);
+        themeService.Initialize(App.MainWindow);
         themeService.ConfigBackdrop();
         themeService.ConfigElementTheme();
     }

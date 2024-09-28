@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EasyTidy.Log;
+﻿namespace EasyTidy.Log;
 public class LogService
 {
 #if true
-   
+
     public static void Register(string name = "", LogLevel minLevel = LogLevel.Debug)
     {
         _logger = name.ToLower() switch

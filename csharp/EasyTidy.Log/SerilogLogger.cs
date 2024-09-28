@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Serilog;
 using Serilog.Core;
 using Serilog.Events;
-using Serilog;
+using System;
 
 namespace EasyTidy.Log;
 public class SerilogLogger : BaseLogger

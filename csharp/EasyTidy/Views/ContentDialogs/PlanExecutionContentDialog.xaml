@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentDialog
+    x:Class="EasyTidy.Views.ContentDialogs.PlanExecutionContentDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:EasyTidy.Views.ContentDialogs"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:wuc="using:WinUICommunity"
+    CornerRadius="{ThemeResource OverlayCornerRadius}"
+    DefaultButton="Primary"
+    mc:Ignorable="d">
+
+    <StackPanel>
+        <TextBlock Text="时间单位匹配下方的值时，将会运行；" Margin="0,20,0,5"/>
+        <TextBlock Text="支持CRON表达式，CRON表达式优先级高于前5项的值" Margin="0,0,0,20"/>
+        <StackPanel Orientation="Horizontal" 
+                    Spacing="20"
+                    Margin="0,10,0,0">
+            <TextBlock Text="分钟"
+                       Margin="0,5,0,0"/>
+            <TextBox x:Name="Minutes"
+                     Margin="88,0,0,0"
+                     MinWidth="120"/>
+            <TextBlock Text="(0 to 59)"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal"
+                    Margin="0,10,0,0"
+                    Spacing="20">
+            <TextBlock Text="小时"
+                       Margin="0,5,0,0"/>
+            <TextBox Margin="88,0,0,0"
+                     MinWidth="120"/>
+            <TextBlock Text="(0 to 23)"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" 
+                    Spacing="20"
+                    Margin="0,10,0,0">
+            <TextBlock Text="每个星期的第几天"
+                       Margin="0,5,0,0"/>
+            <TextBox Margin="4,0,0,0"
+                     MinWidth="120"/>
+            <TextBlock Text="(0=周日 to 6=周六)"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" 
+                    Spacing="20"
+                    Margin="0,10,0,0">
+            <TextBlock Text="每个月第几天"
+                       Margin="0,5,0,0"/>
+            <TextBox Margin="32,0,0,0"
+                     MinWidth="120"/>
+            <TextBlock Text="(1 to 31)"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" 
+                    Spacing="20"
+                    Margin="0,10,0,0">
+            <TextBlock Text="月份"
+                       Margin="0,5,0,0"/>
+            <TextBox Margin="88,0,0,0"
+                     MinWidth="120"/>
+            <TextBlock Text="(1 to 12)"/>
+        </StackPanel>
+        <wuc:Divider />
+        <StackPanel Orientation="Horizontal" 
+                    Spacing="20">
+            <TextBlock Text="CRON 表达式"
+                       Margin="0,5,0,0"/>
+            <TextBox Margin="32,0,0,0"
+                     MinWidth="120"/>
+        </StackPanel>
+        <TextBlock Text="（空字符串）匹配任何值" 
+                   Margin="0,40,0,20"/>
+        <TextBlock Text="Val1,Val2,...,ValN 匹配值列表" 
+                   Margin="0,-20,0,20"/>
+        <TextBlock Text="n1-n2 匹配n1到n2的值范围" 
+                   Margin="0,-20,0,20"/>
+        <TextBlock Text="n1-n2/n3 与步骤n3匹配范围n1到n2" 
+                   Margin="0,-20,0,20"/>
+        <TextBlock Text="示列：分钟=15 小时=03 月份=3-10/3 每个星期的第几天=1,3,5任务将会在" 
+                   Margin="0,-20,0,20"/>
+        <TextBlock Text="3，6，9月的每周1，3，5早上3点15分运行。" 
+                   Margin="0,-20,0,20"/>
+    </StackPanel>
+</ContentDialog>

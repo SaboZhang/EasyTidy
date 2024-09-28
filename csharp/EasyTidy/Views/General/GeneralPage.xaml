@@ -16,66 +16,100 @@
                              ModuleTitle="常规"
                              SecondaryLinksHeader="Related information">
         <wuc:SettingsPageControl.ModuleContent>
-            <StackPanel wuc:PanelAttach.ChildrenTransitions="Default" Orientation="Vertical">
-                <wuc:SimpleSettingsGroup Margin="0,-32,0,0" Header="文件处理">
-                    <wuc:SettingsCard Description="自动处理冲突的选项" Header="处理冲突">
+            <StackPanel wuc:PanelAttach.ChildrenTransitions="Default"
+                        Orientation="Vertical">
+                <wuc:SimpleSettingsGroup Margin="0,-32,0,0"
+                                         Header="文件处理">
+                    <wuc:SettingsCard Description="自动处理冲突的选项"
+                                      Header="处理冲突">
                         <wuc:SettingsCard.HeaderIcon>
-                            <FontIcon Glyph="&#xE7BA;" />
+                            <FontIcon Glyph="&#xE7BA;"/>
                         </wuc:SettingsCard.HeaderIcon>
-                        <ComboBox SelectedIndex="0">
-                            <ComboBoxItem>Option 1</ComboBoxItem>
-                            <ComboBoxItem>Option 2</ComboBoxItem>
-                            <ComboBoxItem>Option 3</ComboBoxItem>
+                        <ComboBox PlaceholderText="冲突处理方式"
+                                  x:Name="FileConflictResolution"
+                                  ItemsSource="{x:Bind ViewModel.FileOperationTypes}"
+                                  SelectedItem="{x:Bind ViewModel.OperationType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Converter={StaticResource EnumDisplayNameConverter}}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                            <i:Interaction.Behaviors>
+                                <ic:EventTriggerBehavior EventName="SelectionChanged">
+                                    <ic:EventTriggerBehavior.Actions>
+                                        <ic:InvokeCommandAction Command="{x:Bind ViewModel.FileOperationTypeChangedCommand}"/>
+                                    </ic:EventTriggerBehavior.Actions>
+                                </ic:EventTriggerBehavior>
+                            </i:Interaction.Behaviors>
                         </ComboBox>
                     </wuc:SettingsCard>
-                    <wuc:SettingsCard Description="处理文件夹，但不扫描文件夹内" Header="子文件夹">
+                    <wuc:SettingsCard Description="处理文件夹，但不扫描文件夹内"
+                                      Header="子文件夹">
                         <wuc:SettingsCard.HeaderIcon>
-                            <FontIcon Glyph="&#xEC50;" />
+                            <FontIcon Glyph="&#xEC50;"/>
                         </wuc:SettingsCard.HeaderIcon>
-                        <ToggleSwitch IsOn="{x:Bind ViewModel.SubFolder, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <ToggleSwitch IsOn="{x:Bind ViewModel.SubFolder, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </wuc:SettingsCard>
-                    <wuc:SettingsCard Description="忽略正在被其他应用程序使用的文件" Header="使用中的文件">
+                    <wuc:SettingsCard Description="忽略正在被其他应用程序使用的文件"
+                                      Header="使用中的文件">
                         <wuc:SettingsCard.HeaderIcon>
-                            <FontIcon Glyph="&#xE8F6;" />
+                            <FontIcon Glyph="&#xE8F6;"/>
                         </wuc:SettingsCard.HeaderIcon>
-                        <ToggleSwitch IsOn="{x:Bind ViewModel.FileInUse, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <ToggleSwitch IsOn="{x:Bind ViewModel.FileInUse, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </wuc:SettingsCard>
-                    <wuc:SettingsCard Description="忽略无关的文件或者文件夹以及系统文件文件夹" Header="无关文件">
+                    <wuc:SettingsCard Description="忽略无关的文件或者文件夹以及系统文件文件夹"
+                                      Header="无关文件">
                         <wuc:SettingsCard.HeaderIcon>
-                            <FontIcon Glyph="&#xE8F6;" />
+                            <FontIcon Glyph="&#xE8F6;"/>
                         </wuc:SettingsCard.HeaderIcon>
-                        <ToggleSwitch IsOn="{x:Bind ViewModel.IrrelevantFiles, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <ToggleSwitch IsOn="{x:Bind ViewModel.IrrelevantFiles, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </wuc:SettingsCard>
-                </wuc:SimpleSettingsGroup>
-                <wuc:SimpleSettingsGroup Header="应用设置" >
-                    <wuc:SettingsCard Description="系统启动时启动EasyTidy" Header="自动启动">
+                    <wuc:SettingsCard Description="忽略大小为0的文件或者空文件夹" Header="空文件">
                         <wuc:SettingsCard.HeaderIcon>
-                            <FontIcon Glyph="&#xE7E8;" />
+                            <FontIcon Glyph="&#xE838;"/>
                         </wuc:SettingsCard.HeaderIcon>
-                        <ToggleSwitch IsOn="{x:Bind ViewModel.IsStartup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <ToggleSwitch IsOn="{x:Bind ViewModel.EmptyFiles, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </wuc:SettingsCard>
-                    <wuc:SettingsCard Description="隐藏系统托盘的图标" Header="隐藏图标">
+                    <wuc:SettingsCard Description="忽略隐藏的文件" Header="隐藏文件">
                         <wuc:SettingsCard.HeaderIcon>
-                            <FontIcon Glyph="&#xED1A;" />
+                            <FontIcon Glyph="&#xEC25;"/>
                         </wuc:SettingsCard.HeaderIcon>
-                        <ToggleSwitch IsOn="True" />
-                    </wuc:SettingsCard>
-                    <wuc:SettingsCard Description="启动时最小化到通知区域" Header="最小化">
-                        <wuc:SettingsCard.HeaderIcon>
-                            <FontIcon Glyph="&#xEE47;" />
-                        </wuc:SettingsCard.HeaderIcon>
-                        <ToggleSwitch IsOn="{x:Bind ViewModel.Minimize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <ToggleSwitch IsOn="{x:Bind ViewModel.HiddenFiles, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </wuc:SettingsCard>
                 </wuc:SimpleSettingsGroup>
-                <wuc:SimpleSettingsGroup Header="备份/还原" Visibility="Visible" >
+                <wuc:SimpleSettingsGroup Header="应用设置">
+                    <wuc:SettingsCard Description="系统启动时启动EasyTidy"
+                                      Header="自动启动">
+                        <wuc:SettingsCard.HeaderIcon>
+                            <FontIcon Glyph="&#xE7E8;"/>
+                        </wuc:SettingsCard.HeaderIcon>
+                        <ToggleSwitch IsOn="{x:Bind ViewModel.IsStartup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </wuc:SettingsCard>
+                    <wuc:SettingsCard Description="启动时检查更新"
+                                      Header="检查更新">
+                        <wuc:SettingsCard.HeaderIcon>
+                            <FontIcon Glyph="&#xECC5;"/>
+                        </wuc:SettingsCard.HeaderIcon>
+                        <ToggleSwitch IsOn="{x:Bind ViewModel.IsStartupCheck, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </wuc:SettingsCard>
+                    <wuc:SettingsCard Description="启动时最小化到通知区域"
+                                      Header="最小化">
+                        <wuc:SettingsCard.HeaderIcon>
+                            <FontIcon Glyph="&#xEE47;"/>
+                        </wuc:SettingsCard.HeaderIcon>
+                        <ToggleSwitch IsOn="{x:Bind ViewModel.Minimize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </wuc:SettingsCard>
+                </wuc:SimpleSettingsGroup>
+                <wuc:SimpleSettingsGroup Header="备份/还原"
+                                         Visibility="Visible">
                     <wuc:SettingsExpander Header="备份和还原设置"
                                           Description="如果有需要，EasyTidy将自动重启，勾选自动备份将在每次软件启动时进行备份"
                                           HeaderIcon="{wuc:FontIcon FontFamily={StaticResource SymbolThemeFontFamily},
                           Glyph=&#xE777;}">
                         <StackPanel Orientation="Horizontal"
                                     Spacing="8">
-                            <Button Content="备份" />
-                            <Button Content="还原" />
+                            <Button Content="备份"/>
+                            <Button Content="还原"/>
                             <CheckBox Content="自动备份"/>
                         </StackPanel>
                         <wuc:SettingsExpander.Items>
@@ -99,7 +133,7 @@
                                             Command="{x:Bind ViewModel.SelectPathCommand }">
                                         <ToolTipService.ToolTip>
                                             <ToolTip>
-                                                <TextBlock Text="Select folder" />
+                                                <TextBlock Text="Select folder"/>
                                             </ToolTip>
                                         </ToolTipService.ToolTip>
                                     </Button>
@@ -110,7 +144,7 @@
                                               ItemsSource="{x:Bind ViewModel.BackupTypes}">
                                         <ComboBox.ItemTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="{Binding Converter={StaticResource EnumDisplayNameConverter}}" />
+                                                <TextBlock Text="{Binding Converter={StaticResource EnumDisplayNameConverter}}"/>
                                             </DataTemplate>
                                         </ComboBox.ItemTemplate>
                                         <!-- <i:Interaction.Behaviors>
@@ -128,37 +162,42 @@
                                               Visibility="{x:Bind ViewModel.WebDavIsShow, Mode=TwoWay, Converter={StaticResource BoolToVisibilityConverter}}">
                                 <wuc:SettingsCard.Resources>
                                     <Style TargetType="TextBlock">
-                                        <Setter Property="FontSize" Value="14" />
+                                        <Setter Property="FontSize"
+                                                Value="14"/>
                                     </Style>
                                 </wuc:SettingsCard.Resources>
 
-                                <Grid Margin="0,12,0,6" ColumnSpacing="8" >
+                                <Grid Margin="0,12,0,6"
+                                      ColumnSpacing="8">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
 
                                     <TextBlock Grid.Row="0"
-                                               Text="地址:" />
+                                               Text="地址:"/>
                                     <TextBox Grid.Row="0"
                                              Grid.Column="1"
-                                             Width="480" Margin="0,-8,0,15" />
+                                             Width="480"
+                                             Margin="0,-8,0,15"/>
 
                                     <TextBlock Grid.Row="1"
-                                               Text="用户名:" />
+                                               Text="用户名:"/>
                                     <TextBox Grid.Row="1"
                                              Grid.Column="1"
-                                             Width="480" Margin="0,-8,0,15"/>
+                                             Width="480"
+                                             Margin="0,-8,0,15"/>
                                     <TextBlock Grid.Row="2"
-                                               Text="密码:" />
+                                               Text="密码:"/>
                                     <PasswordBox Grid.Row="2"
                                                  Grid.Column="1"
-                                                 Width="480" Margin="0,-8,0,15"/>
+                                                 Width="480"
+                                                 Margin="0,-8,0,15"/>
                                 </Grid>
                             </wuc:SettingsCard>
                             <wuc:SettingsCard HorizontalContentAlignment="Left"
@@ -166,46 +205,47 @@
                                               Header="备份信息">
                                 <wuc:SettingsCard.Resources>
                                     <Style TargetType="TextBlock">
-                                        <Setter Property="FontSize" Value="12" />
+                                        <Setter Property="FontSize"
+                                                Value="12"/>
                                     </Style>
                                 </wuc:SettingsCard.Resources>
                                 <Grid Margin="0,0,0,6"
                                       ColumnSpacing="8">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
-                                    <TextBlock Text="状态:" />
+                                    <TextBlock Text="状态:"/>
                                     <TextBlock Grid.Column="1"
                                                Foreground="{ThemeResource TextFillColorSecondaryBrush}">
-                                        <Run />
+                                        <Run/>
                                         <Hyperlink TextDecorations="Underline">
-                                            <Run Text="刷新" />
+                                            <Run Text="刷新"/>
                                         </Hyperlink>
                                     </TextBlock>
 
                                     <TextBlock Grid.Row="1"
-                                               Text="文件名:" />
+                                               Text="文件名:"/>
                                     <TextBlock Grid.Row="1"
                                                Grid.Column="1"
-                                               Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
 
                                     <TextBlock Grid.Row="2"
-                                               Text="源计算机:" />
+                                               Text="源计算机:"/>
                                     <TextBlock Grid.Row="2"
                                                Grid.Column="1"
-                                               Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
                                     <TextBlock Grid.Row="3"
-                                               Text="创建于:" />
+                                               Text="创建于:"/>
                                     <TextBlock Grid.Row="3"
                                                Grid.Column="1"
-                                               Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
                                 </Grid>
                             </wuc:SettingsCard>
                         </wuc:SettingsExpander.Items>
@@ -214,17 +254,17 @@
                 </wuc:SimpleSettingsGroup>
                 <InfoBar Title="结果"
                          IsClosable="False"
-                         IsOpen="True" />
+                         IsOpen="True"/>
 
             </StackPanel>
         </wuc:SettingsPageControl.ModuleContent>
         <wuc:SettingsPageControl.PrimaryLinks>
             <wuc:PageLink Link="https://aka.ms/powertoys"
-                  Text="使用文档" />
+                          Text="使用文档"/>
             <wuc:PageLink Link="https://aka.ms/powerToysReportBug"
-                  Text="报告BUG" />
+                          Text="报告BUG"/>
             <wuc:PageLink Link="https://aka.ms/powerToysRequestFeature"
-                  Text="申请功能" />
+                          Text="申请功能"/>
         </wuc:SettingsPageControl.PrimaryLinks>
 
     </wuc:SettingsPageControl>

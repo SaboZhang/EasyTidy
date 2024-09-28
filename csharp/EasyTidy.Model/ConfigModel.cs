@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EasyTidy.Model;
+﻿namespace EasyTidy.Model;
 
 public class ConfigModel
 {
@@ -20,4 +14,12 @@ public class ConfigModel
     public bool? IrrelevantFiles { get; set; } = false;
 
     public bool? Minimize { get; set; } = false;
+
+    public bool? IsStartupCheck { get; set; } = false;
+
+    public bool? EmptyFiles { get; set; } = true;
+
+    public bool? HiddenFiles { get; set; } = false;
+
+    public FileOperationType FileOperationType { get; set; } = FileOperationType.Skip;
 }

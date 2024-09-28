@@ -1,7 +1,6 @@
 ﻿using EasyTidy.Log;
 using H.NotifyIcon;
 using Microsoft.Windows.AppNotifications;
-using System.Windows;
 
 namespace EasyTidy;
 
@@ -9,7 +8,7 @@ public partial class App : Application
 {
     public static Mutex _mutex = null;
 
-    public static Window CurrentWindow = Window.Current;
+    public static Window MainWindow = Window.Current;
     public IServiceProvider Services { get; }
     public new static App Current => (App)Application.Current;
     public string AppVersion { get; set; } = AssemblyInfoHelper.GetAssemblyVersion();
@@ -46,7 +45,7 @@ public partial class App : Application
         this.InitializeComponent();
     }
 
-    private static IServiceProvider ConfigureServices()
+    private static ServiceProvider ConfigureServices()
     {
         var services = new ServiceCollection();
         services.AddSingleton<IThemeService, ThemeService>();
@@ -66,6 +65,7 @@ public partial class App : Application
         services.AddTransient<AboutUsSettingViewModel>();
         services.AddTransient<SettingsViewModel>();
         services.AddTransient<BreadCrumbBarViewModel>();
+        services.AddTransient<AutomaticViewModel>();
 
         return services.BuildServiceProvider();
     }
@@ -90,38 +90,51 @@ public partial class App : Application
             Environment.Exit(0);
         }
 
-        CurrentWindow = new Window();
+        MainWindow = new Window();
 
-        CurrentWindow.AppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
-        CurrentWindow.AppWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
+        MainWindow.AppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
+        MainWindow.AppWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
 
-        if (CurrentWindow.Content is not Frame rootFrame)
+        if (MainWindow.Content is not Frame rootFrame)
         {
-            CurrentWindow.Content = rootFrame = new Frame();
+            MainWindow.Content = rootFrame = new Frame();
         }
 
         rootFrame.Navigate(typeof(MainPage));
 
-        CurrentWindow.Title = CurrentWindow.AppWindow.Title = $"{AppName} v{AppVersion}";
-        CurrentWindow.AppWindow.SetIcon("Assets/icon.ico");
+        MainWindow.Title = MainWindow.AppWindow.Title = $"{AppName} v{AppVersion}";
+        MainWindow.AppWindow.SetIcon("Assets/icon.ico");
 
-        CurrentWindow.Closed += (sender, args) =>
+        MainWindow.Closed += (sender, args) =>
         {
             if (HandleClosedEvents)
             {
                 args.Handled = true;
-                CurrentWindow.Hide();
+                MainWindow.Hide();
             }
         };
 
-        CurrentWindow.Activate();
-        await DynamicLocalizerHelper.InitializeLocalizer("zh-CN", "en-US");
+        MainWindow.Activate();
+        if ((bool)Settings.GeneralConfig.IsStartupCheck)
+        {
+            try
+            {
+                Settings.LastUpdateCheck = DateTime.Now.ToShortDateString();
+                var update = await UpdateHelper.CheckUpdateAsync("SaboZhang", "Organize", new Version(Current.AppVersion));
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.ToString());
+            }
+        }
+        // await DynamicLocalizerHelper.InitializeLocalizer("zh-CN", "en-US");
     }
 
     private void OnClosed(object sender, WindowEventArgs args)
     {
         // 记录日志
-        if (Logger != null && !HandleClosedEvents) {
+        if (Logger != null && !HandleClosedEvents)
+        {
             Logger.Info($"{AppName}_{AppVersion} Closed...\n");
             LogService.UnRegister();
         }

@@ -20,7 +20,7 @@
         },
         {
           "UniqueId": "EasyTidy.Views.AutomaticPage",
-          "Title": "自动",
+          "Title": "自动化",
           "Subtitle": "Automatic",
           "ImagePath": "ms-appx:///Assets/Fluent/auto.png",
           "ImageIconPath": "ms-appx:///Assets/Fluent/auto.png",
