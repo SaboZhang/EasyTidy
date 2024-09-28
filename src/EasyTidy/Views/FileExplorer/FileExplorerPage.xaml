@@ -6,10 +6,14 @@
     xmlns:local="using:EasyTidy.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    xmlns:wuc="using:WinUICommunity"
+    mc:Ignorable="d">
 
-    <Grid>
+    <wuc:SettingsPageControl 
+        x:Name="settingsControl"
+        ModuleDescription="用户可添加文件处理任务，并能够对其执行方式进行专业设置，包括选择自动执行、仅执行一次，亦或是创建桌面快捷方式、添加备份任务等操作。"
+        ModuleTitle="任务管理"
+        ModuleImageSource="ms-appx:///Assets/Modules/FileTask.png">
 
-    </Grid>
+    </wuc:SettingsPageControl>
 </Page>
