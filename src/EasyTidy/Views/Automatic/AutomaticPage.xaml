@@ -26,11 +26,12 @@
                         </wuc:SettingsCard.HeaderIcon>
                         <StackPanel Orientation="Horizontal"
                                     Spacing="8">
-                            <ToggleSwitch IsOn="False"/>
+                            <ToggleSwitch x:Name="FileChange" 
+                                          IsOn="{x:Bind ViewModel.IsFileChange, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             <TextBlock Text="延迟："
                                        Margin="20,8,0,0"/>
-                            <NumberBox Value="1"
-                                       IsEnabled="False"/>
+                            <NumberBox Value="0"
+                                       IsEnabled="{x:Bind ViewModel.IsFileChange, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             <TextBlock Text="秒"
                                        Margin="0,8,0,0"/>
                         </StackPanel>
@@ -40,7 +41,8 @@
                         <wuc:SettingsCard.HeaderIcon>
                             <FontIcon Glyph="&#xE7E8;"/>
                         </wuc:SettingsCard.HeaderIcon>
-                        <ToggleSwitch IsOn="True"/>
+                        <ToggleSwitch x:Name="StartupExecution" 
+                                      IsOn="{x:Bind ViewModel.IsStartupExecution, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </wuc:SettingsCard>
                     <wuc:SettingsCard Description="根据设定的时间定期执行"
                                       Header="定期执行">
@@ -49,11 +51,12 @@
                         </wuc:SettingsCard.HeaderIcon>
                         <StackPanel Orientation="Horizontal"
                                     Spacing="8">
-                            <ToggleSwitch IsOn="False"/>
+                            <ToggleSwitch x:Name="RegularTaskRunning" 
+                                          IsOn="{x:Bind ViewModel.RegularTaskRunning, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             <TextBlock Text="每："
                                        Margin="20,8,0,0"/>
                             <TimePicker ClockIdentifier="24HourClock"
-                                        IsEnabled="False"/>
+                                        IsEnabled="{x:Bind ViewModel.RegularTaskRunning, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         </StackPanel>
                     </wuc:SettingsCard>
                     <wuc:SettingsCard Description="根据设定的计划进行周期性执行"
@@ -61,8 +64,14 @@
                         <wuc:SettingsCard.HeaderIcon>
                             <FontIcon Glyph="&#xED28;"/>
                         </wuc:SettingsCard.HeaderIcon>
-                        <Button Content="配置"
-                                Command="{x:Bind ViewModel.PlanExecutionCommand}"/>
+                        <StackPanel Orientation="Horizontal"
+                                    Spacing="8">
+                            <ToggleSwitch x:Name="OnScheduleExecution" 
+                                          IsOn="{x:Bind ViewModel.OnScheduleExecution, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <Button Content="配置"
+                                    Command="{x:Bind ViewModel.PlanExecutionCommand}"
+                                    IsEnabled="{x:Bind ViewModel.OnScheduleExecution, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
                     </wuc:SettingsCard>
 
                 </wuc:SimpleSettingsGroup>
@@ -132,10 +141,15 @@
                                         </Button.Resources>
                                     </Button>
 
-                                    <CheckBox Margin="10,0,0,0">是否单独配置</CheckBox>
+                                    <CheckBox x:Name="FeatureIndependentConfigFlag" 
+                                              Margin="10,0,0,0"     
+                                              IsChecked="{x:Bind ViewModel.FeatureIndependentConfigFlag, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                        是否单独配置
+                                    </CheckBox>
                                     <Button Content="自定义"
                                             Margin="5,0,0,0"
-                                            Command="{x:Bind ViewModel.CustomConfigCommand}"/>
+                                            Command="{x:Bind ViewModel.CustomConfigCommand}"
+                                            IsEnabled="{x:Bind ViewModel.FeatureIndependentConfigFlag, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 </StackPanel>
                             </wuc:SettingsCard>
                         </wuc:SettingsExpander.Items>
