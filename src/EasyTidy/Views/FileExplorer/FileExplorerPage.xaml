@@ -14,6 +14,27 @@
         ModuleDescription="用户可添加文件处理任务，并能够对其执行方式进行专业设置，包括选择自动执行、仅执行一次，亦或是创建桌面快捷方式、添加备份任务等操作。"
         ModuleTitle="任务管理"
         ModuleImageSource="ms-appx:///Assets/Modules/FileTask.png">
+        <wuc:SettingsPageControl.ModuleContent>
+            <StackPanel>
+                <wuc:SettingsCard x:Name="AddTask"
+                                  Header="添加任务"
+                                  Description="添加文件自动整理的任务">
+                    <wuc:SettingsCard.HeaderIcon>
+                        <FontIcon Glyph="&#xE7C4;" />
+                    </wuc:SettingsCard.HeaderIcon>
+                    <StackPanel>
+                        <Button Content="添加任务" 
+                                x:Name="TaskButton"
+                                Style="{StaticResource AccentButtonStyle}"
+                                Command="{x:Bind ViewModel.AddTaskClickCommand}"/>
+                    </StackPanel>
+                </wuc:SettingsCard>
+                <StackPanel>
+                    <TextBlock x:Name="TaskList" TextWrapping="Wrap" />
+                    <Button x:Name="DeleteTask" Content="删除任务" />
+                </StackPanel>
+            </StackPanel>
+        </wuc:SettingsPageControl.ModuleContent>
 
     </wuc:SettingsPageControl>
 </Page>

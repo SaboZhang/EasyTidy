@@ -26,7 +26,7 @@
                         </wuc:SettingsCard.HeaderIcon>
                         <StackPanel Orientation="Horizontal"
                                     Spacing="8">
-                            <ToggleSwitch x:Name="FileChange" 
+                            <ToggleSwitch x:Name="FileChange"
                                           IsOn="{x:Bind ViewModel.IsFileChange, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             <TextBlock Text="延迟："
                                        Margin="20,8,0,0"/>
@@ -41,7 +41,7 @@
                         <wuc:SettingsCard.HeaderIcon>
                             <FontIcon Glyph="&#xE7E8;"/>
                         </wuc:SettingsCard.HeaderIcon>
-                        <ToggleSwitch x:Name="StartupExecution" 
+                        <ToggleSwitch x:Name="StartupExecution"
                                       IsOn="{x:Bind ViewModel.IsStartupExecution, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </wuc:SettingsCard>
                     <wuc:SettingsCard Description="根据设定的时间定期执行"
@@ -51,7 +51,7 @@
                         </wuc:SettingsCard.HeaderIcon>
                         <StackPanel Orientation="Horizontal"
                                     Spacing="8">
-                            <ToggleSwitch x:Name="RegularTaskRunning" 
+                            <ToggleSwitch x:Name="RegularTaskRunning"
                                           IsOn="{x:Bind ViewModel.RegularTaskRunning, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             <TextBlock Text="每："
                                        Margin="20,8,0,0"/>
@@ -66,8 +66,8 @@
                         </wuc:SettingsCard.HeaderIcon>
                         <StackPanel Orientation="Horizontal"
                                     Spacing="8">
-                            <ToggleSwitch x:Name="OnScheduleExecution" 
-                                          IsOn="{x:Bind ViewModel.OnScheduleExecution, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <ToggleSwitch x:Name="OnScheduleExecution"
+                                          IsOn="{x:Bind ViewModel.OnScheduleExecution, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             <Button Content="配置"
                                     Command="{x:Bind ViewModel.PlanExecutionCommand}"
                                     IsEnabled="{x:Bind ViewModel.OnScheduleExecution, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
@@ -85,14 +85,14 @@
                                 <StackPanel Orientation="Horizontal">
                                     <Button x:Name="SelectButton"
                                             Content="选择任务"
-                                            Command="{x:Bind ViewModel.SelectTaskCommand}">
+                                            Command="{x:Bind ViewModel.SelectTaskCommand}"
+                                            CommandParameter="{Binding ElementName=SelectButton}">
                                         <Button.Resources>
                                             <TeachingTip x:Name="TaskSelect"
                                                          Title="选择任务"
                                                          Target="{x:Bind SelectButton}"
-                                                         IsOpen="{x:Bind ViewModel.IsOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                         PreferredPlacement="Top"
-                                                         MaxHeight="380">
+                                                         IsOpen="{x:Bind ViewModel.GlobalIsOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                         PreferredPlacement="Bottom">
                                                 <TeachingTip.HeroContent>
                                                     <ListView SelectionMode="Multiple"
                                                               MaxHeight="320">
@@ -141,8 +141,8 @@
                                         </Button.Resources>
                                     </Button>
 
-                                    <CheckBox x:Name="FeatureIndependentConfigFlag" 
-                                              Margin="10,0,0,0"     
+                                    <CheckBox x:Name="FeatureIndependentConfigFlag"
+                                              Margin="10,0,0,0"
                                               IsChecked="{x:Bind ViewModel.FeatureIndependentConfigFlag, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                         是否单独配置
                                     </CheckBox>

@@ -31,3 +31,16 @@ public enum FileOperationType
 
     [Display(Name = "重命名-当前日期")] ReNameAddDate
 }
+
+public enum OperationMode
+{
+
+    [Display(Name = "移动")] Move,
+
+    [Display(Name = "复制")] Copy,
+
+    [Display(Name = "删除")] Delete,
+
+    [Display(Name = "重命名")] Rename
+
+}

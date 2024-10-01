@@ -115,7 +115,23 @@ public partial class AutomaticViewModel : ObservableRecipient
     public bool _featureIndependentConfigFlag = false;
 
     [ObservableProperty]
-    public bool isOpen = false;
+    public bool _globalIsOpen = false;
+
+    [ObservableProperty]
+    public bool _customIsOpen = false;
+
+    [ObservableProperty]
+    public bool _customFileChange = false;
+
+    [ObservableProperty]
+    public bool _customStartupExecution = false;
+
+    [ObservableProperty]
+    public bool _customRegularTaskRunning = false;
+
+    [ObservableProperty]
+    public bool _customOnScheduleExecution = false;
+
 
     [RelayCommand]
     private async Task OnPlanExecution()
@@ -138,6 +154,7 @@ public partial class AutomaticViewModel : ObservableRecipient
         var dialog = new CustomConfigContentDialog
         {
             ViewModel = this,
+            Title = "自定义配置",
             PrimaryButtonText = "保存",
             CloseButtonText = "取消",
         };
@@ -146,9 +163,22 @@ public partial class AutomaticViewModel : ObservableRecipient
     }
 
     [RelayCommand]
-    private void OnSelectTask()
+    private void OnSelectTask(object parameter)
     {
-        IsOpen = true;
+        var item = parameter as Button;
+        var name = item.Name;
+        if (string.Equals(name, "SelectButton", StringComparison.OrdinalIgnoreCase))
+        {
+            GlobalIsOpen = true;
+            CustomIsOpen = false;
+        }
+
+        if (string.Equals(name, "CustomTaskList", StringComparison.OrdinalIgnoreCase))
+        {
+            GlobalIsOpen = false;
+            CustomIsOpen = true;
+        }
+
     }
 
     private void NotifyPropertyChanged([CallerMemberName] string propertyName = null, bool reDoBackupDryRun = true)

@@ -19,7 +19,7 @@
                               Command="{x:Bind ViewModel.GoToSettingPageCommand}"
                               CommandParameter="{Binding ElementName=ThemeSetting}"
                               Description="Explore the different ways to customize the appearance and behavior of your app. You can change the material, theme, accent, and more options to suit your style and preference."
-                              Header="Appearance &amp; behavior"
+                              Header="行为和动画"
                               HeaderIcon="{wuc:BitmapIcon Source=Assets/Fluent/theme.png}"
                               IsClickEnabled="True"
                               Tag="ThemeSettingPage" />
@@ -27,7 +27,7 @@
                               Command="{x:Bind ViewModel.GoToSettingPageCommand}"
                               CommandParameter="{Binding ElementName=AppUpdateSetting}"
                               Description="Check for Updates"
-                              Header="Update App"
+                              Header="检查更新"
                               HeaderIcon="{wuc:BitmapIcon Source=Assets/Fluent/update.png}"
                               IsClickEnabled="True"
                               Tag="AppUpdateSettingPage" />
@@ -35,7 +35,7 @@
                               Command="{x:Bind ViewModel.GoToSettingPageCommand}"
                               CommandParameter="{Binding ElementName=AboutSetting}"
                               Description="About EasyTidy and Developer"
-                              Header="About us"
+                              Header="关于"
                               HeaderIcon="{wuc:BitmapIcon Source=Assets/Fluent/info.png}"
                               IsClickEnabled="True"
                               Tag="AboutUsSettingPage" />
