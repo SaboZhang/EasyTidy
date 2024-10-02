@@ -7,8 +7,12 @@ namespace EasyTidy.Views;
 /// </summary>
 public sealed partial class FiltersPage : Page
 {
+    public FilterViewModel ViewModel { get; set; }
+
     public FiltersPage()
     {
+        ViewModel = App.GetService<FilterViewModel>();
         this.InitializeComponent();
+        XamlRoot = App.MainWindow.Content.XamlRoot;
     }
 }

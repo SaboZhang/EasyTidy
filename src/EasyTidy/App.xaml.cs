@@ -67,6 +67,7 @@ public partial class App : Application
         services.AddTransient<BreadCrumbBarViewModel>();
         services.AddTransient<AutomaticViewModel>();
         services.AddTransient<FileExplorerViewModel>();
+        services.AddTransient<FilterViewModel>();
 
         return services.BuildServiceProvider();
     }

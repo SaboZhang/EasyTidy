@@ -138,6 +138,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Views\Automatic\AutomaticPage.xaml" />
+    <None Remove="Views\ContentDialogs\AddFilterContentDialog.xaml" />
     <None Remove="Views\ContentDialogs\AddTaskContentDialog.xaml" />
     <None Remove="Views\ContentDialogs\CustomConfigContentDialog.xaml" />
     <None Remove="Views\ContentDialogs\PlanExecutionContentDialog.xaml" />
@@ -215,6 +216,9 @@
     <None Update="Themes\Fonts\PingFangSC-Regular.otf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Page Update="Views\ContentDialogs\AddFilterContentDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Views\ContentDialogs\AddTaskContentDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
