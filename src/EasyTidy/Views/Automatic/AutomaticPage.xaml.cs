@@ -14,4 +14,10 @@ public sealed partial class AutomaticPage : Page
         this.InitializeComponent();
         XamlRoot = App.MainWindow.Content.XamlRoot;
     }
+
+    private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        ViewModel.TaskListACV.Refresh();
+        ViewModel.SelectedItemChangedCommand.Execute(sender);
+    }
 }

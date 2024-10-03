@@ -20,6 +20,8 @@ public sealed partial class AddTaskContentDialog : ContentDialog
 
     public string TaskTarget { get; set; }
 
+    public bool EnabledFlag { get; set; } = true;
+
     public AddTaskContentDialog()
     {
         ViewModel = App.GetService<FileExplorerViewModel>();

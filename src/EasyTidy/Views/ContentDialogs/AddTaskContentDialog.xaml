@@ -98,5 +98,15 @@
                     Content="选择"
                     Command="{x:Bind ViewModel.SelectTargetPathCommand}"/>
         </StackPanel>
+        <StackPanel x:Name="TaskEnablePanel"
+                    Orientation="Horizontal"
+                    Spacing="8"
+                    Margin="0,20,0,0">
+            <TextBlock x:Name="TaskEnableTitle"
+                       Text="是否启用："
+                       Margin="0,8,16,0"/>
+            <ToggleSwitch x:Name="EnableSwitch"
+                          IsOn="{x:Bind EnabledFlag, Mode=TwoWay}"/>
+        </StackPanel>
     </StackPanel>
 </ContentDialog>

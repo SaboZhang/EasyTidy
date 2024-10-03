@@ -17,11 +17,6 @@ public partial class FileExplorerViewModel : ObservableRecipient
         this.themeService = themeService;
     }
 
-    public FileExplorerViewModel()
-    {
-        _ = OnPageLoaded();
-    }
-
     [ObservableProperty]
     private IList<OperationMode> operationModes = Enum.GetValues(typeof(OperationMode)).Cast<OperationMode>().ToList();
 
@@ -50,7 +45,8 @@ public partial class FileExplorerViewModel : ObservableRecipient
             ViewModel = this,
             Title = "添加任务",
             PrimaryButtonText = "保存",
-            CloseButtonText = "取消"
+            CloseButtonText = "取消",
+            TaskTarget = string.Empty
         };
         dialog.PrimaryButtonClick += OnAddTaskPrimaryButton;
 
@@ -59,19 +55,41 @@ public partial class FileExplorerViewModel : ObservableRecipient
 
     private async void OnAddTaskPrimaryButton(ContentDialog sender, ContentDialogButtonClickEventArgs args)
     {
-        var dialog = sender as AddTaskContentDialog;
-        await using var db = new AppDbContext();
-        await db.FileExplorer.AddAsync(new FileExplorerTable
+        IsActive = true;
+        try
         {
-            TaskName = dialog.TaskName,
-            TaskRule = dialog.TaskRule,
-            TaskSource = string.IsNullOrEmpty(TaskSource) ? Environment.GetFolderPath(Environment.SpecialFolder.Desktop) : TaskSource,
-            Shortcut = dialog.Shortcut,
-            TaskTarget = TaskTarget,
-            OperationMode = SelectedOperationMode,
-            IsEnabled = true
-        });
-        await db.SaveChangesAsync();
+            var dialog = sender as AddTaskContentDialog;
+            await using var db = new AppDbContext();
+            await db.FileExplorer.AddAsync(new FileExplorerTable
+            {
+                TaskName = dialog.TaskName,
+                TaskRule = dialog.TaskRule,
+                TaskSource = string.IsNullOrEmpty(TaskSource) ? Environment.GetFolderPath(Environment.SpecialFolder.Desktop) : TaskSource,
+                Shortcut = dialog.Shortcut,
+                TaskTarget = TaskTarget,
+                OperationMode = SelectedOperationMode,
+                IsEnabled = dialog.EnabledFlag
+            });
+            await db.SaveChangesAsync();
+            await OnPageLoaded();
+            IsActive = false;
+            Growl.Success(new GrowlInfo
+            {
+                Message = "添加成功",
+                ShowDateTime = false
+            });
+        }
+        catch (Exception ex)
+        {
+            IsActive = false;
+            Growl.Error(new GrowlInfo
+            {
+                Message = "添加失败",
+                ShowDateTime = false
+            });
+            Logger.Error($"FileExplorerViewModel: OnAddTaskClick 异常信息 {ex}");
+        }
+
     }
 
     [RelayCommand]
@@ -145,7 +163,6 @@ public partial class FileExplorerViewModel : ObservableRecipient
     [RelayCommand]
     private async Task OnUpdateTask(object dataContext)
     {
-        IsActive = true;
         try
         {
             if (dataContext != null)
@@ -176,7 +193,7 @@ public partial class FileExplorerViewModel : ObservableRecipient
                     oldTask.Shortcut = dialog.Shortcut;
                     oldTask.TaskTarget = TaskTarget;
                     oldTask.OperationMode = SelectedOperationMode;
-                    oldTask.IsEnabled = true;
+                    oldTask.IsEnabled = dialog.EnabledFlag;
                     await db.SaveChangesAsync();
                     await OnPageLoaded();
                     Growl.Success(new GrowlInfo
@@ -199,14 +216,14 @@ public partial class FileExplorerViewModel : ObservableRecipient
                 ShowDateTime = false
             });
             Logger.Error($"ServerViewModel: OnUpdateTask 异常信息 {ex}");
-            IsActive = false;
         }
-        IsActive = false;
+
     }
 
     [RelayCommand]
     private async Task OnDeleteTask(object dataContext)
     {
+        IsActive = true;
         try
         {
             if (dataContext != null)
@@ -235,7 +252,9 @@ public partial class FileExplorerViewModel : ObservableRecipient
                 ShowDateTime = false
             });
             Logger.Error($"ServerViewModel: OnDeleteTask 异常信息 {ex}");
+            IsActive = false;
         }
+        IsActive = false;
     }
 
     [RelayCommand]
@@ -280,7 +299,7 @@ public partial class FileExplorerViewModel : ObservableRecipient
                 await OnPageLoaded();
                 Growl.Success(new GrowlInfo
                 {
-                    Message = "修改成功",
+                    Message = "禁用成功",
                     ShowDateTime = false
                 });
             }
@@ -289,12 +308,13 @@ public partial class FileExplorerViewModel : ObservableRecipient
         {
             Growl.Error(new GrowlInfo
             {
-                Message = "修改失败",
+                Message = "禁用失败",
                 ShowDateTime = false
             });
             Logger.Error($"ServerViewModel: OnIsEnableTask 异常信息 {ex}");
             IsActive = false;
         }
+        IsActive = false;
 
     }
 }

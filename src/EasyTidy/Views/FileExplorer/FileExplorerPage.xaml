@@ -48,7 +48,7 @@
                         <TextBlock x:Name="TaskList"
                                    TextWrapping="Wrap"
                                    Text="任务列表"
-                                   Margin="0,20,0,0"/>
+                                   Margin="0,20,20,0"/>
                         <StackPanel>
                             <ListView ItemsSource="{x:Bind ViewModel.TaskListACV, Mode=TwoWay}"
                                       HorizontalContentAlignment="Stretch">

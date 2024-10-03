@@ -6,9 +6,20 @@
     xmlns:local="using:EasyTidy.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:wuc="using:WinUICommunity"
+    xmlns:wuc="using:WinUICommunity" 
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core" 
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:model="using:EasyTidy.Model"
     mc:Ignorable="d">
 
+    <i:Interaction.Behaviors>
+        <ic:EventTriggerBehavior EventName="Loaded">
+            <ic:EventTriggerBehavior.Actions>
+                <ic:InvokeCommandAction Command="{x:Bind ViewModel.PageLoadedCommand}"/>
+            </ic:EventTriggerBehavior.Actions>
+        </ic:EventTriggerBehavior>
+    </i:Interaction.Behaviors>
+    
     <wuc:SettingsPageControl
         x:Name="settingsControl"
         ModuleDescription="自动化模块能够对文件和文件夹的变动进行监控。依据自定义设置以及与之关联的文件处理任务，该模块可自动执行相应的操作。"
@@ -66,11 +77,11 @@
                         </wuc:SettingsCard.HeaderIcon>
                         <StackPanel Orientation="Horizontal"
                                     Spacing="8">
-                            <ToggleSwitch x:Name="OnScheduleExecution"
+                            <ToggleSwitch x:Name="OnScheduleExecutionSwitch"
                                           IsOn="{x:Bind ViewModel.OnScheduleExecution, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             <Button Content="配置"
                                     Command="{x:Bind ViewModel.PlanExecutionCommand}"
-                                    IsEnabled="{x:Bind ViewModel.OnScheduleExecution, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    IsEnabled="{x:Bind ViewModel.OnScheduleExecution, Mode=OneWay}"/>
                         </StackPanel>
                     </wuc:SettingsCard>
 
@@ -95,53 +106,21 @@
                                                          PreferredPlacement="Bottom">
                                                 <TeachingTip.HeroContent>
                                                     <ListView SelectionMode="Multiple"
-                                                              MaxHeight="320">
-                                                        <x:String>Task1</x:String>
-                                                        <x:String>Task2</x:String>
-                                                        <x:String>Task3</x:String>
-                                                        <x:String>Task4</x:String>
-                                                        <x:String>Task5</x:String>
-                                                        <!-- <ListView.ItemTemplate>
-                                                            <DataTemplate>
-                                                                <Grid>
-                                                                    <Grid.RowDefinitions>
-                                                                        <RowDefinition Height="*"/>
-                                                                        <RowDefinition Height="*"/>
-                                                                    </Grid.RowDefinitions>
-                                                                    <Grid.ColumnDefinitions>
-                                                                        <ColumnDefinition Width="Auto"/>
-                                                                        <ColumnDefinition Width="*"/>
-                                                                    </Grid.ColumnDefinitions>
-                                                                    <Ellipse x:Name="Ellipse"
-                                                                             Grid.RowSpan="2"
-                                                                             Width="32"
-                                                                             Height="32"
-                                                                             Margin="6"
-                                                                             VerticalAlignment="Center"
-                                                                             HorizontalAlignment="Center"
-                                                                             Fill="{ThemeResource SystemControlBackgroundBaseMediumBrush}"/>
-                                                                    <TextBlock Grid.Column="1"
-                                                                               Text="{x:Bind Name}"
-                                                                               x:Phase="1"
-                                                                               Style="{ThemeResource BaseTextBlockStyle}"
-                                                                               Margin="12,6,0,0"/>
-                                                                    <TextBlock  Grid.Column="1"
-                                                                                Grid.Row="1"
-                                                                                Text="{x:Bind Company}"
-                                                                                x:Phase="2"
-                                                                                Style="{ThemeResource BodyTextBlockStyle}"
-                                                                                Margin="12,0,0,6"/>
-                                                                </Grid>
-
+                                                              MaxHeight="320"
+                                                              ItemsSource="{x:Bind ViewModel.TaskListACV, Mode=TwoWay}"
+                                                              SelectionChanged="ListView_SelectionChanged">
+                                                        <ListView.ItemTemplate>
+                                                            <DataTemplate x:DataType="model:FileExplorerTable">
+                                                                <TextBlock Text="{x:Bind TaskName}"/>
                                                             </DataTemplate>
-                                                        </ListView.ItemTemplate> -->
+                                                        </ListView.ItemTemplate>
                                                     </ListView>
                                                 </TeachingTip.HeroContent>
                                             </TeachingTip>
                                         </Button.Resources>
                                     </Button>
 
-                                    <CheckBox x:Name="FeatureIndependentConfigFlag"
+                                    <CheckBox x:Name="FeatureIndependentConfigFlagCheckBox"
                                               Margin="10,0,0,0"
                                               IsChecked="{x:Bind ViewModel.FeatureIndependentConfigFlag, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                         是否单独配置
@@ -149,7 +128,7 @@
                                     <Button Content="自定义"
                                             Margin="5,0,0,0"
                                             Command="{x:Bind ViewModel.CustomConfigCommand}"
-                                            IsEnabled="{x:Bind ViewModel.FeatureIndependentConfigFlag, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                            IsEnabled="{x:Bind ViewModel.FeatureIndependentConfigFlag, Mode=OneWay}"/>
                                 </StackPanel>
                             </wuc:SettingsCard>
                         </wuc:SettingsExpander.Items>
