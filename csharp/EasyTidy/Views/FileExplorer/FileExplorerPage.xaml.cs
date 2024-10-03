@@ -7,8 +7,31 @@ namespace EasyTidy.Views;
 /// </summary>
 public sealed partial class FileExplorerPage : Page
 {
+    public FileExplorerViewModel ViewModel { get; set; }
     public FileExplorerPage()
     {
+        ViewModel = App.GetService<FileExplorerViewModel>();
         this.InitializeComponent();
+        XamlRoot = App.MainWindow.Content.XamlRoot;
+    }
+
+    private void EditButton_Click(object sender, RoutedEventArgs e)
+    {
+        ViewModel.UpdateTaskCommand.Execute((sender as Button).DataContext);
+    }
+
+    private void DeleteButton_Click(object sender, RoutedEventArgs e)
+    {
+        ViewModel.DeleteTaskCommand.Execute((sender as Button).DataContext);
+    }
+
+    private void RunButton_Click(object sender, RoutedEventArgs e)
+    {
+        ViewModel.ExecuteTaskCommand.Execute((sender as Button).DataContext);
+    }
+
+    private void IsEnableButton_Click(object sender, RoutedEventArgs e)
+    {
+        ViewModel.IsEnableTaskCommand.Execute((sender as Button).DataContext);
     }
 }

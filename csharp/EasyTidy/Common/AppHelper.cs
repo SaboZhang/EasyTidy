@@ -64,5 +64,14 @@ public static partial class AppHelper
         Settings.GeneralConfig = Settings.GeneralConfig;
 
     }
+
+    public static void UpdateCurConfig(AutomaticViewModel viewModel)
+    {
+        Settings.AutomaticConfig.IsFileChange = viewModel.IsFileChange;
+        Settings.AutomaticConfig.IsStartupExecution = viewModel.IsStartupExecution;
+        Settings.AutomaticConfig.RegularTaskRunning = viewModel.RegularTaskRunning;
+        Settings.AutomaticConfig.OnScheduleExecution = viewModel.OnScheduleExecution;
+        Settings.AutomaticConfig = Settings.AutomaticConfig;
+    }
 }
 

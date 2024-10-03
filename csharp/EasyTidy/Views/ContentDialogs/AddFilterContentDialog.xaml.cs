@@ -6,13 +6,13 @@ namespace EasyTidy.Views.ContentDialogs;
 /// <summary>
 /// An empty page that can be used on its own or navigated to within a Frame.
 /// </summary>
-public sealed partial class CustomConfigContentDialog : ContentDialog
+public sealed partial class AddFilterContentDialog : ContentDialog
 {
-    public AutomaticViewModel ViewModel { get; set; }
+    public FilterViewModel ViewModel { get; set; }
 
-    public CustomConfigContentDialog()
+    public AddFilterContentDialog()
     {
-        ViewModel = App.GetService<AutomaticViewModel>();
+        ViewModel = App.GetService<FilterViewModel>();
         this.InitializeComponent();
         XamlRoot = App.MainWindow.Content.XamlRoot;
         RequestedTheme = ViewModel.themeService.GetElementTheme();

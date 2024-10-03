@@ -17,56 +17,56 @@
         <StackPanel Orientation="Horizontal" 
                     Spacing="20"
                     Margin="0,10,0,0">
-            <TextBlock Text="分钟"
+            <TextBlock Text="分钟："
                        Margin="0,5,0,0"/>
             <TextBox x:Name="Minutes"
                      Margin="88,0,0,0"
-                     MinWidth="120"/>
+                     MinWidth="200"/>
             <TextBlock Text="(0 to 59)"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal"
                     Margin="0,10,0,0"
                     Spacing="20">
-            <TextBlock Text="小时"
+            <TextBlock Text="小时："
                        Margin="0,5,0,0"/>
             <TextBox Margin="88,0,0,0"
-                     MinWidth="120"/>
+                     MinWidth="200"/>
             <TextBlock Text="(0 to 23)"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal" 
                     Spacing="20"
                     Margin="0,10,0,0">
-            <TextBlock Text="每个星期的第几天"
+            <TextBlock Text="每个星期的第几天："
                        Margin="0,5,0,0"/>
             <TextBox Margin="4,0,0,0"
-                     MinWidth="120"/>
+                     MinWidth="200"/>
             <TextBlock Text="(0=周日 to 6=周六)"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal" 
                     Spacing="20"
                     Margin="0,10,0,0">
-            <TextBlock Text="每个月第几天"
+            <TextBlock Text="每个月第几天："
                        Margin="0,5,0,0"/>
             <TextBox Margin="32,0,0,0"
-                     MinWidth="120"/>
+                     MinWidth="200"/>
             <TextBlock Text="(1 to 31)"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal" 
                     Spacing="20"
                     Margin="0,10,0,0">
-            <TextBlock Text="月份"
+            <TextBlock Text="月份："
                        Margin="0,5,0,0"/>
             <TextBox Margin="88,0,0,0"
-                     MinWidth="120"/>
+                     MinWidth="200"/>
             <TextBlock Text="(1 to 12)"/>
         </StackPanel>
         <wuc:Divider />
         <StackPanel Orientation="Horizontal" 
                     Spacing="20">
-            <TextBlock Text="CRON 表达式"
+            <TextBlock Text="CRON 表达式："
                        Margin="0,5,0,0"/>
             <TextBox Margin="32,0,0,0"
-                     MinWidth="120"/>
+                     MinWidth="200"/>
         </StackPanel>
         <TextBlock Text="（空字符串）匹配任何值" 
                    Margin="0,40,0,20"/>

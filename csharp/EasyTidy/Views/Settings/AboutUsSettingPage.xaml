@@ -28,9 +28,9 @@
                 <wuc:SettingsExpander.Items>
                     <wuc:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Left">
                         <StackPanel Orientation="Vertical" Spacing="5">
-                            <TextBlock Text="Related Links" />
-                            <HyperlinkButton Content="Source Code" NavigateUri="https://github.com/SaboZhang/Organize" />
-                            <HyperlinkButton Content="Release Notes" NavigateUri="https://github.com/SaboZhang/Organize/releases" />
+                            <TextBlock Text="相关链接" />
+                            <HyperlinkButton Content="源代码" NavigateUri="https://github.com/SaboZhang/Organize" />
+                            <HyperlinkButton Content="发行说明" NavigateUri="https://github.com/SaboZhang/Organize/releases" />
                         </StackPanel>
                     </wuc:SettingsCard>
                 </wuc:SettingsExpander.Items>

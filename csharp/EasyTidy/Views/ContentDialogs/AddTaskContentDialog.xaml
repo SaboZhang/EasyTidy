@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentDialog
+    x:Class="EasyTidy.Views.ContentDialogs.AddTaskContentDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:EasyTidy.Views.ContentDialogs"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    CornerRadius="{ThemeResource OverlayCornerRadius}"
+    DefaultButton="Primary">
+
+    <StackPanel>
+        <StackPanel x:Name="TaskNamePanel"
+                    Orientation="Horizontal"
+                    Spacing="8"
+                    Margin="0,10,0,0">
+            <TextBlock x:Name="TaskTitle"
+                       Text="任务名称："
+                       Margin="0,5,0,0"/>
+            <TextBox x:Name="TaskNameBox"
+                     PlaceholderText="请输入任务名称"
+                     Margin="14,0,0,0"
+                     MinWidth="240"
+                     Text="{x:Bind TaskName, Mode=TwoWay}"/>
+        </StackPanel>
+        <StackPanel x:Name="TaskRulePanel"
+                    Orientation="Horizontal"
+                    Spacing="8"
+                    Margin="0,20,0,0">
+            <TextBlock x:Name="TaskRuleTitle"
+                       Text="处理规则："
+                       Margin="0,5,0,0"/>
+            <TextBox x:Name="TaskRuleBox"
+                     PlaceholderText="请输入处理规则/正则"
+                     Margin="14,0,0,0"
+                     Width="240"
+                     Text="{x:Bind TaskRule, Mode=TwoWay}"/>
+            <Button x:Name="RuleButton"
+                    Content="规则示列"/>
+            <Button x:Name="FilterButton"
+                    Content="筛选器"/>
+        </StackPanel>
+        <StackPanel x:Name="TaskOperatePanel"
+                    Orientation="Horizontal"
+                    Spacing="8"
+                    Margin="0,20,0,0">
+            <TextBlock x:Name="TaskOperateTitle"
+                       Text="操作方式："
+                       Margin="0,5,0,0"/>
+            <ComboBox x:Name="TaskOperateList"
+                      ItemsSource="{x:Bind ViewModel.OperationModes}"
+                      SelectedItem="{x:Bind ViewModel.SelectedOperationMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      PlaceholderText="请选择操作方式"
+                      Margin="14,0,0,0"
+                      Width="240">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Converter={StaticResource EnumDisplayNameConverter}}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </StackPanel>
+        <StackPanel x:Name="TaskSourcePanel"
+                    Orientation="Horizontal"
+                    Spacing="8"
+                    Margin="0,20,0,0">
+            <TextBlock x:Name="TaskSourceTitle"
+                       Text="源文件夹："
+                       Margin="0,5,0,0"/>
+            <TextBox x:Name="Source"
+                     PlaceholderText="请选择文件夹，默认为桌面"
+                     Margin="14,0,0,0"
+                     Width="240"
+                     Text="{x:Bind ViewModel.TaskSource, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     IsEnabled="False"/>
+            <Button x:Name="SourceButton"
+                    Content="选择"
+                    Command="{x:Bind ViewModel.SelectSourcePathCommand}"/>
+            <CheckBox x:Name="CreateShortcut"
+                      Content="快捷方式"
+                      IsChecked="{x:Bind Shortcut, Mode=TwoWay}">
+            </CheckBox>
+        </StackPanel>
+        <StackPanel x:Name="TaskTargetPanel"
+                    Orientation="Horizontal"
+                    Spacing="8"
+                    Margin="0,20,0,0">
+            <TextBlock x:Name="TaskTargetTitle"
+                       Text="目标文件夹："
+                       Margin="0,5,0,0"/>
+            <TextBox x:Name="Target"
+                     PlaceholderText="请选择文件夹"
+                     Width="240"
+                     Text="{x:Bind ViewModel.TaskTarget, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     IsEnabled="False"/>
+            <Button x:Name="TargetButton"
+                    Content="选择"
+                    Command="{x:Bind ViewModel.SelectTargetPathCommand}"/>
+        </StackPanel>
+        <StackPanel x:Name="TaskEnablePanel"
+                    Orientation="Horizontal"
+                    Spacing="8"
+                    Margin="0,20,0,0">
+            <TextBlock x:Name="TaskEnableTitle"
+                       Text="是否启用："
+                       Margin="0,8,16,0"/>
+            <ToggleSwitch x:Name="EnableSwitch"
+                          IsOn="{x:Bind EnabledFlag, Mode=TwoWay}"/>
+        </StackPanel>
+    </StackPanel>
+</ContentDialog>

@@ -18,4 +18,5 @@ public class AppConfig : JsonSettings, IVersionable
 
     public virtual ConfigModel? GeneralConfig { get; set; } = InitialConfig();
 
+    public virtual AutomaticConfigModel? AutomaticConfig { get; set; } = new();
 }

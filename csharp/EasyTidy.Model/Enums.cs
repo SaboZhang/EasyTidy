@@ -16,6 +16,9 @@ public enum BackupType
     WebDav
 }
 
+/// <summary>
+/// 重名文件处理方式
+/// </summary>
 public enum FileOperationType
 {
 
@@ -30,4 +33,20 @@ public enum FileOperationType
     [Display(Name = "重命名(01)")] ReNameAppend,
 
     [Display(Name = "重命名-当前日期")] ReNameAddDate
+}
+
+/// <summary>
+/// 文件操作模式
+/// </summary>
+public enum OperationMode
+{
+
+    [Display(Name = "移动")] Move,
+
+    [Display(Name = "复制")] Copy,
+
+    [Display(Name = "删除")] Delete,
+
+    [Display(Name = "重命名")] Rename
+
 }

@@ -1,5 +1,4 @@
 ﻿using H.NotifyIcon;
-using H.NotifyIcon.Core;
 using System.Diagnostics;
 
 // To learn more about WinUI, the WinUI project structure,

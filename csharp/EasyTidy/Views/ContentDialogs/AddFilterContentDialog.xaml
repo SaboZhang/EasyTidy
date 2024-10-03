@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentDialog
+    x:Class="EasyTidy.Views.ContentDialogs.AddFilterContentDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:EasyTidy.Views.ContentDialogs"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:wuc="using:WinUICommunity"
+    mc:Ignorable="d"
+    CornerRadius="{ThemeResource OverlayCornerRadius}"
+    DefaultButton="Primary">
+
+    <StackPanel>
+        <wuc:Divider Content="属性"
+                HorizontalContentAlignment="Left"/>
+        <StackPanel x:Name="SizePropertyStackPanel"
+                    Orientation="Horizontal"
+                    Spacing="8">
+            <CheckBox Content="文件大小："/>
+            <ComboBox x:Name="SizeComboBox"
+                      Width="78"
+                      SelectedIndex="0">
+                <ComboBoxItem Content=">"/>
+                <ComboBoxItem Content="="/>
+                <ComboBoxItem Content="&lt;"/>
+            </ComboBox>
+            <TextBox x:Name="SizeTextBox"
+                     Width="120"
+                     InputScope="Number"/>
+            <ComboBox x:Name="SizeUnitComboBox"
+                      Width="78">
+                <ComboBoxItem Content="字节"/>
+                <ComboBoxItem Content="KB"/>
+                <ComboBoxItem Content="MB"/>
+                <ComboBoxItem Content="GB"/>
+            </ComboBox>
+        </StackPanel>
+        <StackPanel x:Name="CreatePropertyStackPanel"
+                    Orientation="Horizontal"
+                    Spacing="8"
+                    Margin="0,10,0,0">
+            <CheckBox Content="创建时间："/>
+            <ComboBox x:Name="CreateDateComboBox"
+                      Width="78"
+                      SelectedIndex="0">
+                <ComboBoxItem Content=">"/>
+                <ComboBoxItem Content="="/>
+                <ComboBoxItem Content="&lt;"/>
+            </ComboBox>
+            <TextBox x:Name="CreateDateTextBox"
+                     Width="120"
+                     InputScope="Number"/>
+            <ComboBox x:Name="CreateDateUnitComboBox"
+                      Width="78">
+                <ComboBoxItem Content="秒"/>
+                <ComboBoxItem Content="分钟"/>
+                <ComboBoxItem Content="小时"/>
+                <ComboBoxItem Content="天"/>
+                <ComboBoxItem Content="月"/>
+                <ComboBoxItem Content="年"/>
+            </ComboBox>
+        </StackPanel>
+        <StackPanel x:Name="EditPropertyStackPanel"
+                    Orientation="Horizontal"
+                    Spacing="8"
+                    Margin="0,10,0,0">
+            <CheckBox Content="修改时间："/>
+            <ComboBox x:Name="EditDateComboBox"
+                      Width="78"
+                      SelectedIndex="0">
+                <ComboBoxItem Content=">"/>
+                <ComboBoxItem Content="="/>
+                <ComboBoxItem Content="&lt;"/>
+            </ComboBox>
+            <TextBox x:Name="EditDateTextBox"
+                     Width="120"
+                     InputScope="Number"/>
+            <ComboBox x:Name="EditDateUnitComboBox"
+                      Width="78">
+                <ComboBoxItem Content="秒"/>
+                <ComboBoxItem Content="分钟"/>
+                <ComboBoxItem Content="小时"/>
+                <ComboBoxItem Content="天"/>
+                <ComboBoxItem Content="月"/>
+                <ComboBoxItem Content="年"/>
+            </ComboBox>
+        </StackPanel>
+        <StackPanel x:Name="VisitPropertyStackPanel"
+                    Orientation="Horizontal"
+                    Spacing="8"
+                    Margin="0,10,0,0">
+            <CheckBox Content="访问时间："/>
+            <ComboBox x:Name="VisitDateComboBox"
+                      Width="78"
+                      SelectedIndex="0">
+                <ComboBoxItem Content=">"/>
+                <ComboBoxItem Content="="/>
+                <ComboBoxItem Content="&lt;"/>
+            </ComboBox>
+            <TextBox x:Name="VisitDateTextBox"
+                     Width="120"
+                     InputScope="Number"/>
+            <ComboBox x:Name="VisitDateUnitComboBox"
+                      Width="78">
+                <ComboBoxItem Content="秒"/>
+                <ComboBoxItem Content="分钟"/>
+                <ComboBoxItem Content="小时"/>
+                <ComboBoxItem Content="天"/>
+                <ComboBoxItem Content="月"/>
+                <ComboBoxItem Content="年"/>
+            </ComboBox>
+        </StackPanel>
+        <wuc:Divider Content="特性"
+                HorizontalContentAlignment="Left"/>
+        <StackPanel x:Name="ArchiveStackPanel"
+                    Orientation="Horizontal"
+                    Spacing="8">
+            <CheckBox Content="存档："/>
+            <ComboBox x:Name="ArchiveComboBox"
+                      Width="78">
+                <ComboBoxItem Content="是"/>
+                <ComboBoxItem Content="否"/>
+            </ComboBox>
+            <CheckBox Content="隐藏："/>
+            <ComboBox x:Name="HidenComboBox"
+                      Width="78">
+                <ComboBoxItem Content="是"/>
+                <ComboBoxItem Content="否"/>
+            </ComboBox>
+        </StackPanel>
+        <StackPanel x:Name="RadyOnlyStackPanel"
+                    Orientation="Horizontal"
+                    Spacing="8"
+                    Margin="0,10,0,0">
+            <CheckBox Content="只读："/>
+            <ComboBox x:Name="RadyOnlyComboBox"
+                      Width="78">
+                <ComboBoxItem Content="是"/>
+                <ComboBoxItem Content="否"/>
+            </ComboBox>
+            <CheckBox Content="系统："/>
+            <ComboBox x:Name="SystemComboBox"
+                      Width="78">
+                <ComboBoxItem Content="是"/>
+                <ComboBoxItem Content="否"/>
+            </ComboBox>
+        </StackPanel>
+        <StackPanel x:Name="TempStackPanel"
+                    Orientation="Horizontal"
+                    Spacing="8"
+                    Margin="0,10,0,0">
+            <CheckBox Content="临时："/>
+            <ComboBox x:Name="TempComboBox"
+                      Width="78">
+                <ComboBoxItem Content="是"/>
+                <ComboBoxItem Content="否"/>
+            </ComboBox>
+        </StackPanel>
+        <wuc:Divider Content="其他"
+                HorizontalContentAlignment="Left"/>
+        <StackPanel x:Name="OtherStackPanel"
+                    Orientation="Horizontal"
+                    Spacing="8">
+            <CheckBox Content="包含的文件："/>
+            <TextBox x:Name="OtherTextBox"
+                     Width="120"/>
+        </StackPanel>
+        <StackPanel x:Name="ContentStackPanel"
+                    Orientation="Horizontal"
+                    Spacing="8"
+                    Margin="0,10,0,0">
+            <CheckBox Content="文件内容："/>
+            <ComboBox x:Name="ContentComboBox"
+                      Width="352">
+                <ComboBoxItem Content="至少一个单词"/>
+                <ComboBoxItem Content="至少一个单词（区分大小写）"/>
+                <ComboBoxItem Content="以随意的顺序的所有单词"/>
+                <ComboBoxItem Content="以随意的顺序的所有单词（区分大小写）"/>
+                <ComboBoxItem Content="正则表达式"/>
+                <ComboBoxItem Content="字符串"/>
+                <ComboBoxItem Content="字符串（区分大小写）"/>
+            </ComboBox>
+        </StackPanel>
+        <TextBox x:Name="ContentTextBox"
+                 Width="480"
+                 Margin="0,10,0,0"
+                 HorizontalAlignment="Left"/>
+    </StackPanel>
+</ContentDialog>

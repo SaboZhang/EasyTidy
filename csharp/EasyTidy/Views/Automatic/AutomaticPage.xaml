@@ -6,9 +6,20 @@
     xmlns:local="using:EasyTidy.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:wuc="using:WinUICommunity"
+    xmlns:wuc="using:WinUICommunity" 
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core" 
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:model="using:EasyTidy.Model"
     mc:Ignorable="d">
 
+    <i:Interaction.Behaviors>
+        <ic:EventTriggerBehavior EventName="Loaded">
+            <ic:EventTriggerBehavior.Actions>
+                <ic:InvokeCommandAction Command="{x:Bind ViewModel.PageLoadedCommand}"/>
+            </ic:EventTriggerBehavior.Actions>
+        </ic:EventTriggerBehavior>
+    </i:Interaction.Behaviors>
+    
     <wuc:SettingsPageControl
         x:Name="settingsControl"
         ModuleDescription="自动化模块能够对文件和文件夹的变动进行监控。依据自定义设置以及与之关联的文件处理任务，该模块可自动执行相应的操作。"
@@ -26,11 +37,12 @@
                         </wuc:SettingsCard.HeaderIcon>
                         <StackPanel Orientation="Horizontal"
                                     Spacing="8">
-                            <ToggleSwitch IsOn="False"/>
+                            <ToggleSwitch x:Name="FileChange"
+                                          IsOn="{x:Bind ViewModel.IsFileChange, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             <TextBlock Text="延迟："
                                        Margin="20,8,0,0"/>
-                            <NumberBox Value="1"
-                                       IsEnabled="False"/>
+                            <NumberBox Value="0"
+                                       IsEnabled="{x:Bind ViewModel.IsFileChange, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             <TextBlock Text="秒"
                                        Margin="0,8,0,0"/>
                         </StackPanel>
@@ -40,7 +52,8 @@
                         <wuc:SettingsCard.HeaderIcon>
                             <FontIcon Glyph="&#xE7E8;"/>
                         </wuc:SettingsCard.HeaderIcon>
-                        <ToggleSwitch IsOn="True"/>
+                        <ToggleSwitch x:Name="StartupExecution"
+                                      IsOn="{x:Bind ViewModel.IsStartupExecution, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </wuc:SettingsCard>
                     <wuc:SettingsCard Description="根据设定的时间定期执行"
                                       Header="定期执行">
@@ -49,11 +62,12 @@
                         </wuc:SettingsCard.HeaderIcon>
                         <StackPanel Orientation="Horizontal"
                                     Spacing="8">
-                            <ToggleSwitch IsOn="False"/>
+                            <ToggleSwitch x:Name="RegularTaskRunning"
+                                          IsOn="{x:Bind ViewModel.RegularTaskRunning, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             <TextBlock Text="每："
                                        Margin="20,8,0,0"/>
                             <TimePicker ClockIdentifier="24HourClock"
-                                        IsEnabled="False"/>
+                                        IsEnabled="{x:Bind ViewModel.RegularTaskRunning, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         </StackPanel>
                     </wuc:SettingsCard>
                     <wuc:SettingsCard Description="根据设定的计划进行周期性执行"
@@ -61,8 +75,14 @@
                         <wuc:SettingsCard.HeaderIcon>
                             <FontIcon Glyph="&#xED28;"/>
                         </wuc:SettingsCard.HeaderIcon>
-                        <Button Content="配置"
-                                Command="{x:Bind ViewModel.PlanExecutionCommand}"/>
+                        <StackPanel Orientation="Horizontal"
+                                    Spacing="8">
+                            <ToggleSwitch x:Name="OnScheduleExecutionSwitch"
+                                          IsOn="{x:Bind ViewModel.OnScheduleExecution, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <Button Content="配置"
+                                    Command="{x:Bind ViewModel.PlanExecutionCommand}"
+                                    IsEnabled="{x:Bind ViewModel.OnScheduleExecution, Mode=OneWay}"/>
+                        </StackPanel>
                     </wuc:SettingsCard>
 
                 </wuc:SimpleSettingsGroup>
@@ -76,66 +96,39 @@
                                 <StackPanel Orientation="Horizontal">
                                     <Button x:Name="SelectButton"
                                             Content="选择任务"
-                                            Command="{x:Bind ViewModel.SelectTaskCommand}">
+                                            Command="{x:Bind ViewModel.SelectTaskCommand}"
+                                            CommandParameter="{Binding ElementName=SelectButton}">
                                         <Button.Resources>
                                             <TeachingTip x:Name="TaskSelect"
                                                          Title="选择任务"
                                                          Target="{x:Bind SelectButton}"
-                                                         IsOpen="{x:Bind ViewModel.IsOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                         PreferredPlacement="Top"
-                                                         MaxHeight="380">
+                                                         IsOpen="{x:Bind ViewModel.GlobalIsOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                         PreferredPlacement="Bottom">
                                                 <TeachingTip.HeroContent>
                                                     <ListView SelectionMode="Multiple"
-                                                              MaxHeight="320">
-                                                        <x:String>Task1</x:String>
-                                                        <x:String>Task2</x:String>
-                                                        <x:String>Task3</x:String>
-                                                        <x:String>Task4</x:String>
-                                                        <x:String>Task5</x:String>
-                                                        <!-- <ListView.ItemTemplate>
-                                                            <DataTemplate>
-                                                                <Grid>
-                                                                    <Grid.RowDefinitions>
-                                                                        <RowDefinition Height="*"/>
-                                                                        <RowDefinition Height="*"/>
-                                                                    </Grid.RowDefinitions>
-                                                                    <Grid.ColumnDefinitions>
-                                                                        <ColumnDefinition Width="Auto"/>
-                                                                        <ColumnDefinition Width="*"/>
-                                                                    </Grid.ColumnDefinitions>
-                                                                    <Ellipse x:Name="Ellipse"
-                                                                             Grid.RowSpan="2"
-                                                                             Width="32"
-                                                                             Height="32"
-                                                                             Margin="6"
-                                                                             VerticalAlignment="Center"
-                                                                             HorizontalAlignment="Center"
-                                                                             Fill="{ThemeResource SystemControlBackgroundBaseMediumBrush}"/>
-                                                                    <TextBlock Grid.Column="1"
-                                                                               Text="{x:Bind Name}"
-                                                                               x:Phase="1"
-                                                                               Style="{ThemeResource BaseTextBlockStyle}"
-                                                                               Margin="12,6,0,0"/>
-                                                                    <TextBlock  Grid.Column="1"
-                                                                                Grid.Row="1"
-                                                                                Text="{x:Bind Company}"
-                                                                                x:Phase="2"
-                                                                                Style="{ThemeResource BodyTextBlockStyle}"
-                                                                                Margin="12,0,0,6"/>
-                                                                </Grid>
-
+                                                              MaxHeight="320"
+                                                              ItemsSource="{x:Bind ViewModel.TaskListACV, Mode=TwoWay}"
+                                                              SelectionChanged="ListView_SelectionChanged">
+                                                        <ListView.ItemTemplate>
+                                                            <DataTemplate x:DataType="model:FileExplorerTable">
+                                                                <TextBlock Text="{x:Bind TaskName}"/>
                                                             </DataTemplate>
-                                                        </ListView.ItemTemplate> -->
+                                                        </ListView.ItemTemplate>
                                                     </ListView>
                                                 </TeachingTip.HeroContent>
                                             </TeachingTip>
                                         </Button.Resources>
                                     </Button>
 
-                                    <CheckBox Margin="10,0,0,0">是否单独配置</CheckBox>
+                                    <CheckBox x:Name="FeatureIndependentConfigFlagCheckBox"
+                                              Margin="10,0,0,0"
+                                              IsChecked="{x:Bind ViewModel.FeatureIndependentConfigFlag, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                        是否单独配置
+                                    </CheckBox>
                                     <Button Content="自定义"
                                             Margin="5,0,0,0"
-                                            Command="{x:Bind ViewModel.CustomConfigCommand}"/>
+                                            Command="{x:Bind ViewModel.CustomConfigCommand}"
+                                            IsEnabled="{x:Bind ViewModel.FeatureIndependentConfigFlag, Mode=OneWay}"/>
                                 </StackPanel>
                             </wuc:SettingsCard>
                         </wuc:SettingsExpander.Items>
