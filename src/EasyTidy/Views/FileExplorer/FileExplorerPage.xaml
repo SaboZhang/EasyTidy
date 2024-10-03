@@ -7,34 +7,171 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:wuc="using:WinUICommunity"
+    xmlns:model="using:EasyTidy.Model"
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
     mc:Ignorable="d">
 
-    <wuc:SettingsPageControl 
-        x:Name="settingsControl"
-        ModuleDescription="用户可添加文件处理任务，并能够对其执行方式进行专业设置，包括选择自动执行、仅执行一次，亦或是创建桌面快捷方式、添加备份任务等操作。"
-        ModuleTitle="任务管理"
-        ModuleImageSource="ms-appx:///Assets/Modules/FileTask.png">
-        <wuc:SettingsPageControl.ModuleContent>
-            <StackPanel>
-                <wuc:SettingsCard x:Name="AddTask"
-                                  Header="添加任务"
-                                  Description="添加文件自动整理的任务">
-                    <wuc:SettingsCard.HeaderIcon>
-                        <FontIcon Glyph="&#xE7C4;" />
-                    </wuc:SettingsCard.HeaderIcon>
-                    <StackPanel>
-                        <Button Content="添加任务" 
-                                x:Name="TaskButton"
-                                Style="{StaticResource AccentButtonStyle}"
-                                Command="{x:Bind ViewModel.AddTaskClickCommand}"/>
-                    </StackPanel>
-                </wuc:SettingsCard>
-                <StackPanel>
-                    <TextBlock x:Name="TaskList" TextWrapping="Wrap" />
-                    <Button x:Name="DeleteTask" Content="删除任务" />
-                </StackPanel>
-            </StackPanel>
-        </wuc:SettingsPageControl.ModuleContent>
+    <i:Interaction.Behaviors>
+        <ic:EventTriggerBehavior EventName="Loaded">
+            <ic:EventTriggerBehavior.Actions>
+                <ic:InvokeCommandAction Command="{x:Bind ViewModel.PageLoadedCommand}"/>
+            </ic:EventTriggerBehavior.Actions>
+        </ic:EventTriggerBehavior>
+    </i:Interaction.Behaviors>
 
-    </wuc:SettingsPageControl>
+    <StackPanel x:Name="root">
+        <StackPanel x:Name="Growl"
+                    MinWidth="340" 
+                    wuc:Growl.GrowlParent="True" />
+        <wuc:SettingsPageControl
+            x:Name="settingsControl"
+            ModuleDescription="用户可添加文件处理任务，并能够对其执行方式进行专业设置，包括选择自动执行、仅执行一次，亦或是创建桌面快捷方式、添加备份任务等操作。"
+            ModuleTitle="任务管理"
+            ModuleImageSource="ms-appx:///Assets/Modules/FileTask.png">
+            <wuc:SettingsPageControl.ModuleContent>
+                <StackPanel>
+                    <wuc:SettingsCard x:Name="AddTask"
+                                      Header="添加任务"
+                                      Description="添加文件自动整理的任务">
+                        <wuc:SettingsCard.HeaderIcon>
+                            <FontIcon Glyph="&#xE7C4;"/>
+                        </wuc:SettingsCard.HeaderIcon>
+                        <StackPanel>
+                            <Button Content="添加任务"
+                                    x:Name="TaskButton"
+                                    Style="{StaticResource AccentButtonStyle}"
+                                    Command="{x:Bind ViewModel.AddTaskClickCommand}"/>
+                        </StackPanel>
+                    </wuc:SettingsCard>
+                    <StackPanel>
+                        <TextBlock x:Name="TaskList"
+                                   TextWrapping="Wrap"
+                                   Text="任务列表"
+                                   Margin="0,20,0,0"/>
+                        <StackPanel>
+                            <ListView ItemsSource="{x:Bind ViewModel.TaskListACV, Mode=TwoWay}"
+                                      HorizontalContentAlignment="Stretch">
+                                <ListView.Header>
+                                    <Grid Padding="16,12"
+                                          ColumnSpacing="16">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="60"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="200"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="ID"
+                                                   HorizontalAlignment="Left"
+                                                   VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="1"
+                                                   Text="操作类型"
+                                                   VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="2"
+                                                   Text="源文件夹"
+                                                   VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="3"
+                                                   Text="目标文件夹"
+                                                   VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="4"
+                                                   Text="桌面快捷方式"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Center"/>
+                                        <TextBlock Grid.Column="5"
+                                                   Text="是否启用"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Center"/>
+                                        <TextBlock Grid.Column="6"
+                                                   Text="操作"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"/>
+                                    </Grid>
+                                </ListView.Header>
+                                <ListView.ItemTemplate>
+                                    <DataTemplate x:DataType="model:FileExplorerTable">
+                                        <Grid ColumnSpacing="16">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="60"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="200"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Text="{x:Bind ID}"
+                                                       VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Column="1"
+                                                       Text="{x:Bind TaskName}"
+                                                       VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Column="2"
+                                                       Text="{x:Bind TaskSource}"
+                                                       VerticalAlignment="Center"
+                                                       ToolTipService.ToolTip="{x:Bind TaskSource}"/>
+                                            <TextBlock Grid.Column="3"
+                                                       Text="{x:Bind TaskTarget}"
+                                                       VerticalAlignment="Center"
+                                                       ToolTipService.ToolTip="{x:Bind TaskTarget}"/>
+                                            <TextBlock Grid.Column="4"
+                                                       Text="{x:Bind Shortcut, Mode=TwoWay, Converter={StaticResource BoolToStringConverter}}"
+                                                       VerticalAlignment="Center"
+                                                       HorizontalAlignment="Center"/>
+                                            <TextBlock Grid.Column="5"
+                                                       Text="{x:Bind IsEnabled, Mode=TwoWay, Converter={StaticResource BoolToStringConverter}}"
+                                                       VerticalAlignment="Center"
+                                                       HorizontalAlignment="Center"/>
+                                            <StackPanel HorizontalAlignment="Center"
+                                                        Orientation="Horizontal"
+                                                        Spacing="8"
+                                                        Grid.Column="6">
+                                                <Button x:Name="EditButton"
+                                                        Content="{wuc:BitmapIcon Source=Assets/Fluent/edit.png}"
+                                                        Style="{StaticResource SubtleButtonStyle}"
+                                                        DataContext="{x:Bind}"
+                                                        Width="42"
+                                                        Height="42"
+                                                        ToolTipService.ToolTip="编辑"
+                                                        Click="EditButton_Click"/>
+                                                <Button x:Name="DeleteButton"
+                                                        Content="{wuc:BitmapIcon Source=Assets/Fluent/delete.png}"
+                                                        Style="{StaticResource SubtleButtonStyle}"
+                                                        DataContext="{x:Bind}"
+                                                        Width="42"
+                                                        Height="42"
+                                                        ToolTipService.ToolTip="删除"
+                                                        Click="DeleteButton_Click"/>
+                                                <Button x:Name="RunButton"
+                                                        Content="{wuc:BitmapIcon Source=Assets/Fluent/run.png}"
+                                                        Style="{StaticResource SubtleButtonStyle}"
+                                                        DataContext="{x:Bind}"
+                                                        Width="42"
+                                                        Height="42"
+                                                        ToolTipService.ToolTip="执行一次"
+                                                        Click="RunButton_Click"/>
+                                                <Button x:Name="IsEnableButton"
+                                                        Content="{wuc:BitmapIcon Source=Assets/Fluent/isanble.png}"
+                                                        Style="{StaticResource SubtleButtonStyle}"
+                                                        DataContext="{x:Bind}"
+                                                        Width="42"
+                                                        Height="42"
+                                                        ToolTipService.ToolTip="是否禁用"
+                                                        Click="IsEnableButton_Click"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+            </wuc:SettingsPageControl.ModuleContent>
+        </wuc:SettingsPageControl>
+        <wuc:LoadingIndicator x:Name="Load"
+                              Mode="Arcs"
+                              IsActive="{x:Bind ViewModel.IsActive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+    </StackPanel>
 </Page>

@@ -24,6 +24,17 @@ namespace EasyTidy.Views.ContentDialogs;
 public sealed partial class AddTaskContentDialog : ContentDialog
 {
     public FileExplorerViewModel ViewModel { get; set; }
+
+    public string TaskName { get; set; }
+
+    public string TaskRule { get; set; }
+
+    public string TaskSource { get; set; }
+
+    public bool Shortcut { get; set; }
+
+    public string TaskTarget { get; set; }
+
     public AddTaskContentDialog()
     {
         ViewModel = App.GetService<FileExplorerViewModel>();

@@ -26,4 +26,6 @@ public class AppDbContext : DbContext
         var dbFile = @$"{DirPath}\EasyTidy.db";
         optionsBuilder.UseSqlite($"Data Source={dbFile}");
     }
+
+    public DbSet<FileExplorerTable> FileExplorer { get; set; }
 }
