@@ -4,12 +4,7 @@ using EasyTidy.Util;
 using EasyTidy.Views.ContentDialogs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.UI.Dispatching;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EasyTidy.ViewModels;
 
@@ -85,7 +80,7 @@ public partial class FileExplorerViewModel : ObservableRecipient
         try
         {
             var folder = await FileAndFolderPickerHelper.PickSingleFolderAsync(App.MainWindow);
-            TaskSource = folder?.Path ?? "";
+            TaskSource = folder?.Path ?? Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
         }
         catch (Exception ex)
@@ -131,13 +126,14 @@ public partial class FileExplorerViewModel : ObservableRecipient
                             item.TaskSource = "桌面";
                         }
                     }
-                    TaskList = new (await db.FileExplorer.ToListAsync());
+                    TaskList = new(await db.FileExplorer.ToListAsync());
                     TaskListACV = new AdvancedCollectionView(TaskList, true);
                     TaskListACV.SortDescriptions.Add(new SortDescription("ID", SortDirection.Ascending));
                 });
             });
-            
-        }catch(Exception ex)
+
+        }
+        catch (Exception ex)
         {
             IsActive = false;
             Logger.Error($"ServerViewModel: OnPageLoad 异常信息 {ex}");
@@ -231,7 +227,7 @@ public partial class FileExplorerViewModel : ObservableRecipient
                 });
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Growl.Error(new GrowlInfo
             {
@@ -243,9 +239,29 @@ public partial class FileExplorerViewModel : ObservableRecipient
     }
 
     [RelayCommand]
-    private void OnExecuteTask()
+    private async Task OnExecuteTask(object dataContext)
     {
+        IsActive = true;
+        try
+        {
+            if (dataContext != null)
+            {
+                var task = dataContext as FileExplorerTable;
+                await using var db = new AppDbContext();
 
+            }
+        }
+        catch (Exception ex)
+        {
+            Growl.Error(new GrowlInfo
+            {
+                Message = "执行失败",
+                ShowDateTime = false
+            });
+            Logger.Error($"ServerViewModel: OnExecuteTask 异常信息 {ex}");
+            IsActive = false;
+        }
+        IsActive = false;
     }
 
     [RelayCommand]

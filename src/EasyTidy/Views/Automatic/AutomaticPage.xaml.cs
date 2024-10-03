@@ -7,7 +7,7 @@ namespace EasyTidy.Views;
 /// </summary>
 public sealed partial class AutomaticPage : Page
 {
-    public AutomaticViewModel ViewModel { get; set;}
+    public AutomaticViewModel ViewModel { get; set; }
     public AutomaticPage()
     {
         ViewModel = App.GetService<AutomaticViewModel>();

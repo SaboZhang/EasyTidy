@@ -1,11 +1,6 @@
 ﻿using EasyTidy.Model;
 using EasyTidy.Views.ContentDialogs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EasyTidy.ViewModels;
 
@@ -18,7 +13,7 @@ public partial class AutomaticViewModel : ObservableRecipient
 
     public AutomaticViewModel()
     {
-        
+
     }
 
     public IThemeService themeService;

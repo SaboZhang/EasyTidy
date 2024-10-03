@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EasyTidy.Model;
+﻿namespace EasyTidy.Model;
 
 public class AutomaticConfigModel
 {
-    public bool IsFileChange { get; set;} = false;
+    public bool IsFileChange { get; set; } = false;
 
     public bool IsStartupExecution { get; set; } = false;
 

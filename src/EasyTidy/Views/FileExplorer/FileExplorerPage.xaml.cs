@@ -7,7 +7,7 @@ namespace EasyTidy.Views;
 /// </summary>
 public sealed partial class FileExplorerPage : Page
 {
-    public FileExplorerViewModel ViewModel { get; set;}
+    public FileExplorerViewModel ViewModel { get; set; }
     public FileExplorerPage()
     {
         ViewModel = App.GetService<FileExplorerViewModel>();
