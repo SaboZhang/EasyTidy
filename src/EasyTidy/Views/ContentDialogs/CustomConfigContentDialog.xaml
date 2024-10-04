@@ -7,6 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:wuc="using:WinUICommunity"
+    xmlns:model="using:EasyTidy.Model"
     mc:Ignorable="d"
     CornerRadius="{ThemeResource OverlayCornerRadius}"
     DefaultButton="Primary">
@@ -29,13 +30,15 @@
                                      IsOpen="{x:Bind ViewModel.CustomIsOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                      PreferredPlacement="Bottom">
                             <TeachingTip.HeroContent>
-                                <ListView SelectionMode="Multiple"
-                                          MaxHeight="320">
-                                    <x:String>Task1</x:String>
-                                    <x:String>Task2</x:String>
-                                    <x:String>Task3</x:String>
-                                    <x:String>Task4</x:String>
-                                    <x:String>Task5</x:String>
+                                <ListView x:Name="CustomListView"
+                                          SelectionMode="Multiple"
+                                          MaxHeight="320"
+                                          ItemsSource="{x:Bind ViewModel.TaskListACV, Mode=TwoWay}">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate x:DataType="model:FileExplorerTable">
+                                            <TextBlock Text="{x:Bind TaskName}"/>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
                                 </ListView>
                             </TeachingTip.HeroContent>
                         </TeachingTip>

@@ -27,7 +27,7 @@ public partial class FileExplorerViewModel : ObservableRecipient
     private string _taskSource = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
     [ObservableProperty]
-    private string _taskTarget;
+    private string _taskTarget = string.Empty;
 
     private readonly DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
 
@@ -104,7 +104,7 @@ public partial class FileExplorerViewModel : ObservableRecipient
         catch (Exception ex)
         {
             TaskSource = "";
-            Logger.Error($"ServerViewModel: OnSelectMediaPath 异常信息 {ex}");
+            Logger.Error($"FileExplorerViewModel: OnSelectMediaPath 异常信息 {ex}");
         }
     }
 
@@ -120,7 +120,7 @@ public partial class FileExplorerViewModel : ObservableRecipient
         catch (Exception ex)
         {
             TaskTarget = "";
-            Logger.Error($"ServerViewModel: OnSelectMediaPath 异常信息 {ex}");
+            Logger.Error($"FileExplorerViewModel: OnSelectMediaPath 异常信息 {ex}");
         }
     }
 
@@ -154,7 +154,7 @@ public partial class FileExplorerViewModel : ObservableRecipient
         catch (Exception ex)
         {
             IsActive = false;
-            Logger.Error($"ServerViewModel: OnPageLoad 异常信息 {ex}");
+            Logger.Error($"FileExplorerViewModel: OnPageLoad 异常信息 {ex}");
         }
 
         IsActive = false;
@@ -215,7 +215,7 @@ public partial class FileExplorerViewModel : ObservableRecipient
                 Message = "修改失败",
                 ShowDateTime = false
             });
-            Logger.Error($"ServerViewModel: OnUpdateTask 异常信息 {ex}");
+            Logger.Error($"FileExplorerViewModel: OnUpdateTask 异常信息 {ex}");
         }
 
     }
@@ -251,7 +251,7 @@ public partial class FileExplorerViewModel : ObservableRecipient
                 Message = "删除失败",
                 ShowDateTime = false
             });
-            Logger.Error($"ServerViewModel: OnDeleteTask 异常信息 {ex}");
+            Logger.Error($"FileExplorerViewModel: OnDeleteTask 异常信息 {ex}");
             IsActive = false;
         }
         IsActive = false;
@@ -277,7 +277,7 @@ public partial class FileExplorerViewModel : ObservableRecipient
                 Message = "执行失败",
                 ShowDateTime = false
             });
-            Logger.Error($"ServerViewModel: OnExecuteTask 异常信息 {ex}");
+            Logger.Error($"FileExplorerViewModel: OnExecuteTask 异常信息 {ex}");
             IsActive = false;
         }
         IsActive = false;
@@ -311,7 +311,7 @@ public partial class FileExplorerViewModel : ObservableRecipient
                 Message = "禁用失败",
                 ShowDateTime = false
             });
-            Logger.Error($"ServerViewModel: OnIsEnableTask 异常信息 {ex}");
+            Logger.Error($"FileExplorerViewModel: OnIsEnableTask 异常信息 {ex}");
             IsActive = false;
         }
         IsActive = false;

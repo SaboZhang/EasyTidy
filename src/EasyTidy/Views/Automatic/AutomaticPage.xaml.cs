@@ -15,9 +15,13 @@ public sealed partial class AutomaticPage : Page
         XamlRoot = App.MainWindow.Content.XamlRoot;
     }
 
-    private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    private void TaskSelect_CloseButtonClick(TeachingTip sender, object args)
     {
-        ViewModel.TaskListACV.Refresh();
         ViewModel.SelectedItemChangedCommand.Execute(sender);
+    }
+
+    private void TaskListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+
     }
 }

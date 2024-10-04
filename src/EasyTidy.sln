@@ -16,6 +16,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyTidy.Model", "EasyTidy.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyTidy.Util", "EasyTidy.Util\EasyTidy.Util.csproj", "{B9F29073-5424-4991-9A4B-8A9EDCA0187B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyTidy.Service", "EasyTidy.Service\EasyTidy.Service.csproj", "{40FD2F8A-6F50-4385-87E4-D5BB89740FFA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -98,12 +100,28 @@ Global
 		{B9F29073-5424-4991-9A4B-8A9EDCA0187B}.Release|x64.Build.0 = Release|Any CPU
 		{B9F29073-5424-4991-9A4B-8A9EDCA0187B}.Release|x86.ActiveCfg = Release|Any CPU
 		{B9F29073-5424-4991-9A4B-8A9EDCA0187B}.Release|x86.Build.0 = Release|Any CPU
+		{40FD2F8A-6F50-4385-87E4-D5BB89740FFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40FD2F8A-6F50-4385-87E4-D5BB89740FFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40FD2F8A-6F50-4385-87E4-D5BB89740FFA}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{40FD2F8A-6F50-4385-87E4-D5BB89740FFA}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{40FD2F8A-6F50-4385-87E4-D5BB89740FFA}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{40FD2F8A-6F50-4385-87E4-D5BB89740FFA}.Debug|x64.Build.0 = Debug|Any CPU
+		{40FD2F8A-6F50-4385-87E4-D5BB89740FFA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{40FD2F8A-6F50-4385-87E4-D5BB89740FFA}.Debug|x86.Build.0 = Debug|Any CPU
+		{40FD2F8A-6F50-4385-87E4-D5BB89740FFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40FD2F8A-6F50-4385-87E4-D5BB89740FFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40FD2F8A-6F50-4385-87E4-D5BB89740FFA}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{40FD2F8A-6F50-4385-87E4-D5BB89740FFA}.Release|ARM64.Build.0 = Release|Any CPU
+		{40FD2F8A-6F50-4385-87E4-D5BB89740FFA}.Release|x64.ActiveCfg = Release|Any CPU
+		{40FD2F8A-6F50-4385-87E4-D5BB89740FFA}.Release|x64.Build.0 = Release|Any CPU
+		{40FD2F8A-6F50-4385-87E4-D5BB89740FFA}.Release|x86.ActiveCfg = Release|Any CPU
+		{40FD2F8A-6F50-4385-87E4-D5BB89740FFA}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		RESX_SortFileContentOnSave = False
 		SolutionGuid = {EB9E585A-14A0-48D9-9D85-A56F72F4D785}
+		RESX_SortFileContentOnSave = False
 	EndGlobalSection
 EndGlobal

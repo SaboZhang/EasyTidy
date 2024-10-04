@@ -28,7 +28,7 @@
         <tb:TaskbarIcon.ContextFlyout>
             <MenuFlyout AreOpenCloseAnimationsEnabled="False">
                 <MenuFlyoutItem
-                    Command="{x:Bind ShowHideWindowCommand}"
+                    Command="{x:Bind StopWatcherCommand}"
                     Text="停止监控"/>
                 <MenuFlyoutItem
                     Command="{x:Bind ShowHideWindowCommand}"

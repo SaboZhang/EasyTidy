@@ -23,4 +23,8 @@ public class AppDbContext : DbContext
     }
 
     public DbSet<FileExplorerTable> FileExplorer { get; set; }
+
+    public DbSet<ScheduleTable> Schedule { get; set; }
+
+    public DbSet<AutomaticTable> Automatic { get; set; }
 }
