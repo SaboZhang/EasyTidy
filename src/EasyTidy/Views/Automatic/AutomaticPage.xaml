@@ -144,7 +144,9 @@
                     </wuc:SimpleSettingsGroup>
                     <StackPanel Orientation="Horizontal"
                                 Spacing="8"
-                                HorizontalAlignment="Right">
+                                HorizontalAlignment="Right"
+                                Visibility="{x:Bind ViewModel.NotFeatureIndependentConfigFlag, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 
+                        Converter={StaticResource BoolToVisibilityConverter}}">
                         <Button Content="撤销配置"
                                 HorizontalAlignment="Center"
                                 Margin="0,10,0,0"/>

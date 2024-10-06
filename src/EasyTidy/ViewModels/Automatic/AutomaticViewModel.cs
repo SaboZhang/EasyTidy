@@ -114,8 +114,25 @@ public partial class AutomaticViewModel : ObservableRecipient
     /// <summary>
     /// 是否单独配置标识
     /// </summary>
+    private bool _featureIndependentConfigFlag = false;
+
+    public bool FeatureIndependentConfigFlag
+    {
+        get => _featureIndependentConfigFlag;
+        set
+        {
+            if (_featureIndependentConfigFlag != value)
+            {
+                _featureIndependentConfigFlag = value;
+                NotFeatureIndependentConfigFlag = !value;
+                OnPropertyChanged();
+            }
+        }
+
+    }
+
     [ObservableProperty]
-    public bool _featureIndependentConfigFlag = false;
+    public bool _notFeatureIndependentConfigFlag = true;
 
     [ObservableProperty]
     public bool _globalIsOpen = false;
@@ -178,6 +195,7 @@ public partial class AutomaticViewModel : ObservableRecipient
             var dialog = sender as PlanExecutionContentDialog;
             if (dialog.HasErrors)
             {
+                args.Cancel = true;
                 return;
             }
             await db.Schedule.AddAsync(new ScheduleTable
