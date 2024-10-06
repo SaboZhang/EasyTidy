@@ -4,7 +4,9 @@ using EasyTidy.Util;
 using EasyTidy.Views.ContentDialogs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.UI.Dispatching;
+using System.Collections;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace EasyTidy.ViewModels;
@@ -142,7 +144,7 @@ public partial class AutomaticViewModel : ObservableRecipient
     private readonly DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
 
     [ObservableProperty]
-    private ObservableCollection<FileExplorerTable> _selectedTaskList = new();
+    private ObservableCollection<FileExplorerTable> _selectedTaskList = [];
 
     [ObservableProperty]
     private string _delaySeconds = "5";
@@ -162,10 +164,39 @@ public partial class AutomaticViewModel : ObservableRecipient
             CloseButtonText = "取消",
             ThemeService = themeService
         };
+        dialog.PrimaryButtonClick += OnOnAddPlanPrimaryButton;
 
         await dialog.ShowAsync();
 
     }
+
+    private async void OnOnAddPlanPrimaryButton(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+    {
+        try
+        {
+            await using var db = new AppDbContext();
+            var dialog = sender as PlanExecutionContentDialog;
+            if (dialog.HasErrors)
+            {
+                return;
+            }
+            await db.Schedule.AddAsync(new ScheduleTable
+            {
+                Minutes = dialog.Minute,
+                Hours = dialog.Hour,
+                WeeklyDayNumber = dialog.DayOfWeek,
+                DailyInMonthNumber = dialog.DayOfMonth,
+                Monthly = dialog.MonthlyDay,
+                CronExpression = dialog.CronExpression
+            });
+            await db.SaveChangesAsync();
+        }
+        catch (Exception ex)
+        {
+            Logger.Error($"添加自定义配置失败：{ex}");
+        }
+    }
+
 
     [RelayCommand]
     private async Task OnCustomConfig()
@@ -181,6 +212,7 @@ public partial class AutomaticViewModel : ObservableRecipient
         await dialog.ShowAsync();
     }
 
+    
     [RelayCommand]
     private void OnSelectTask(object parameter)
     {
@@ -291,6 +323,11 @@ public partial class AutomaticViewModel : ObservableRecipient
             {
                 dateValue = new DateTime(dateValue.Year, dateValue.Month, dateValue.Day, 0, 0, 0);
             }
+            ScheduleTable schedule = null;
+            if (OnScheduleExecution)
+            {
+                schedule = await db.Schedule.OrderByDescending(x => x.ID).FirstOrDefaultAsync();
+            }
             AutomaticTable automatic = new()
             {
                 IsFileChange = IsFileChange,
@@ -300,7 +337,7 @@ public partial class AutomaticViewModel : ObservableRecipient
                 Minutes = dateValue.Minute.ToString(),
                 OnScheduleExecution = OnScheduleExecution,
                 IsStartupExecution = IsStartupExecution,
-                Schedule = null,
+                Schedule = schedule,
                 FileExplorerList = list
             };
             await db.Automatic.AddAsync(automatic);

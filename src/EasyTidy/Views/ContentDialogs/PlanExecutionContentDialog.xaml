@@ -11,6 +11,14 @@
     DefaultButton="Primary"
     mc:Ignorable="d">
 
+    <ContentDialog.Resources>
+        <DataTemplate x:Key="ValidationTemplate"
+              x:DataType="x:String">
+            <TextBlock Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+               Text="{x:Bind}" />
+        </DataTemplate>
+    </ContentDialog.Resources>
+
     <StackPanel>
         <TextBlock Text="时间单位匹配下方的值时，将会运行；" Margin="0,20,0,5"/>
         <TextBlock Text="支持CRON表达式，CRON表达式优先级高于前5项的值" Margin="0,0,0,20"/>
@@ -21,7 +29,8 @@
                        Margin="0,5,0,0"/>
             <TextBox x:Name="Minutes"
                      Margin="88,0,0,0"
-                     MinWidth="200"/>
+                     MinWidth="200"
+                     Text="{x:Bind Minute, Mode=TwoWay}"/>
             <TextBlock Text="(0 to 59)"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal"
@@ -30,7 +39,8 @@
             <TextBlock Text="小时："
                        Margin="0,5,0,0"/>
             <TextBox Margin="88,0,0,0"
-                     MinWidth="200"/>
+                     MinWidth="200"
+                     Text="{x:Bind Hour, Mode=TwoWay}"/>
             <TextBlock Text="(0 to 23)"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal" 
@@ -39,7 +49,8 @@
             <TextBlock Text="每个星期的第几天："
                        Margin="0,5,0,0"/>
             <TextBox Margin="4,0,0,0"
-                     MinWidth="200"/>
+                     MinWidth="200"
+                     Text="{x:Bind DayOfWeek, Mode=TwoWay}"/>
             <TextBlock Text="(0=周日 to 6=周六)"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal" 
@@ -48,7 +59,8 @@
             <TextBlock Text="每个月第几天："
                        Margin="0,5,0,0"/>
             <TextBox Margin="32,0,0,0"
-                     MinWidth="200"/>
+                     MinWidth="200"
+                     Text="{x:Bind DayOfMonth, Mode=TwoWay}"/>
             <TextBlock Text="(1 to 31)"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal" 
@@ -57,7 +69,8 @@
             <TextBlock Text="月份："
                        Margin="0,5,0,0"/>
             <TextBox Margin="88,0,0,0"
-                     MinWidth="200"/>
+                     MinWidth="200"
+                     Text="{x:Bind MonthlyDay, Mode=TwoWay}"/>
             <TextBlock Text="(1 to 12)"/>
         </StackPanel>
         <wuc:Divider />
@@ -65,9 +78,14 @@
                     Spacing="20">
             <TextBlock Text="CRON 表达式："
                        Margin="0,5,0,0"/>
-            <TextBox Margin="32,0,0,0"
-                     MinWidth="200"/>
+            <TextBox Margin="32,0,0,0" Name="CronExpressionBox"
+                     MinWidth="200"
+                     Text="{x:Bind CronExpression, Mode=TwoWay}"
+                     Style="{StaticResource ValidatingTextBoxStyle}"
+                     wuc:Validation.ValidationPropertyName="CronExpression"
+                     wuc:Validation.ValidationProvider="{x:Bind}"/>
         </StackPanel>
+        
         <TextBlock Text="（空字符串）匹配任何值" 
                    Margin="0,40,0,20"/>
         <TextBlock Text="Val1,Val2,...,ValN 匹配值列表" 

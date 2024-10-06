@@ -10,6 +10,22 @@ public sealed partial class CustomConfigContentDialog : ContentDialog
 {
     public AutomaticViewModel ViewModel { get; set; }
 
+    public string Delay { get; set; }
+
+    public string Execution { get; set; }
+
+    public string SelectedTime { get; set; } = DateTime.Now.ToString("HH:mm");
+
+    public string MonthlyDay { get; set; }
+
+    public string DayOfMonth { get; set; }
+
+    public string DayOfWeek { get; set; }
+
+    public string Hour { get; set; }
+
+    public string Minute { get; set; }
+
     public CustomConfigContentDialog()
     {
         ViewModel = App.GetService<AutomaticViewModel>();

@@ -22,8 +22,8 @@
 
     <StackPanel x:Name="root">
         <StackPanel x:Name="Growl"
-                    MinWidth="340" 
-                    wuc:Growl.GrowlParent="True" />
+                    MinWidth="340"
+                    wuc:Growl.GrowlParent="True"/>
         <wuc:SettingsPageControl
             x:Name="settingsControl"
             ModuleDescription="用户可添加文件处理任务，并能够对其执行方式进行专业设置，包括选择自动执行、仅执行一次，亦或是创建桌面快捷方式、添加备份任务等操作。"
@@ -49,9 +49,13 @@
                                    TextWrapping="Wrap"
                                    Text="任务列表"
                                    Margin="0,20,20,0"/>
+                        <wuc:LoadingIndicator x:Name="Load"
+                                              Mode="Arcs"
+                                              IsActive="{x:Bind ViewModel.IsActive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         <StackPanel>
                             <ListView ItemsSource="{x:Bind ViewModel.TaskListACV, Mode=TwoWay}"
-                                      HorizontalContentAlignment="Stretch">
+                                      HorizontalContentAlignment="Stretch"
+                                      Height="600">
                                 <ListView.Header>
                                     <Grid Padding="16,12"
                                           ColumnSpacing="16">
@@ -169,9 +173,6 @@
                 </StackPanel>
             </wuc:SettingsPageControl.ModuleContent>
         </wuc:SettingsPageControl>
-        <wuc:LoadingIndicator x:Name="Load"
-                              Mode="Arcs"
-                              IsActive="{x:Bind ViewModel.IsActive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
     </StackPanel>
 </Page>
