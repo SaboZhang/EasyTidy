@@ -211,7 +211,7 @@ public partial class AutomaticViewModel : ObservableRecipient
         }
         catch (Exception ex)
         {
-            Logger.Error($"添加自定义配置失败：{ex}");
+            Logger.Error($"添加时间表失败：{ex}");
         }
     }
 
@@ -227,9 +227,46 @@ public partial class AutomaticViewModel : ObservableRecipient
             CloseButtonText = "取消",
         };
 
+        dialog.PrimaryButtonClick += OnAddCustomConfigPrimaryButton;
+
         await dialog.ShowAsync();
     }
 
+    private async void OnAddCustomConfigPrimaryButton(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+    {
+        try
+        {
+            await using var db = new AppDbContext();
+            var dialog = sender as CustomConfigContentDialog;
+            if (dialog.HasErrors)
+            {
+                args.Cancel = true;
+                return;
+            }
+
+            await db.Automatic.AddAsync(new AutomaticTable{
+                IsFileChange = CustomFileChange,
+                IsStartupExecution = CustomStartupExecution,
+                RegularTaskRunning = CustomRegularTaskRunning,
+                OnScheduleExecution = CustomOnScheduleExecution,
+                DelaySeconds = dialog.Delay,
+                Schedule = new ScheduleTable
+                {
+                    Minutes = dialog.Minute,
+                    Hours = dialog.Hour,
+                    WeeklyDayNumber = dialog.DayOfWeek,
+                    DailyInMonthNumber = dialog.DayOfMonth,
+                    Monthly = dialog.MonthlyDay,
+                    CronExpression = dialog.Expression
+                }
+
+            });
+        }
+        catch (Exception ex)
+        {
+            Logger.Error($"添加自定义配置失败：{ex}");
+        }
+    }
     
     [RelayCommand]
     private void OnSelectTask(object parameter)
