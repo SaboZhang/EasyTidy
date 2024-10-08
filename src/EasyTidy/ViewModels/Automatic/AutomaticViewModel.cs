@@ -244,6 +244,19 @@ public partial class AutomaticViewModel : ObservableRecipient
                 return;
             }
 
+            List<FileExplorerTable> list = [];
+
+            foreach (var item in SelectedTaskList)
+            {
+                var update = await db.FileExplorer.Where(x => x.ID == item.ID && item.IsRelated == false).FirstOrDefaultAsync();
+                if (update != null)
+                {
+                    update.IsRelated = true;
+                    db.Entry(update).State = EntityState.Modified;
+                    list.Add(update);
+                }
+            }
+
             await db.Automatic.AddAsync(new AutomaticTable{
                 IsFileChange = CustomFileChange,
                 IsStartupExecution = CustomStartupExecution,
@@ -258,7 +271,8 @@ public partial class AutomaticViewModel : ObservableRecipient
                     DailyInMonthNumber = dialog.DayOfMonth,
                     Monthly = dialog.MonthlyDay,
                     CronExpression = dialog.Expression
-                }
+                },
+                FileExplorerList = list
 
             });
         }
@@ -338,6 +352,7 @@ public partial class AutomaticViewModel : ObservableRecipient
                 var listViews = dataContext as TeachingTip;
                 var listView = listViews.HeroContent as ListView;
                 var items = listView.SelectedItems;
+                SelectedTaskList.Clear();
                 foreach (var item in items)
                 {
                     FileExplorerTable task = item as FileExplorerTable;

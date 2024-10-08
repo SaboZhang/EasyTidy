@@ -36,7 +36,8 @@
                                      Title="任务列表"
                                      Target="{x:Bind CustomTaskList}"
                                      IsOpen="{x:Bind ViewModel.CustomIsOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                     PreferredPlacement="Bottom">
+                                     PreferredPlacement="Bottom"
+                                     CloseButtonClick="CustomTaskSelect_CloseButtonClick">
                             <TeachingTip.HeroContent>
                                 <ListView x:Name="CustomListView"
                                           SelectionMode="Multiple"

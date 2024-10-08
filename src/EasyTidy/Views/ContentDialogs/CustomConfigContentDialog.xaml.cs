@@ -301,4 +301,9 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
 
         OnErrorsChanged(key);
     }
+
+    private void CustomTaskSelect_CloseButtonClick(TeachingTip sender, object args)
+    {
+        ViewModel.SelectedItemChangedCommand.Execute(sender);
+    }
 }
