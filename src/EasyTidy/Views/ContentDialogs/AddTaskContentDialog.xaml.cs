@@ -23,6 +23,7 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
             if (_groupName != value)
             {
                 _groupName = value;
+                ValidateGroupName(_groupName);
                 OnPropertyChanged();
             }
         }
