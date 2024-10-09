@@ -27,4 +27,7 @@ public class AppDbContext : DbContext
     public DbSet<ScheduleTable> Schedule { get; set; }
 
     public DbSet<AutomaticTable> Automatic { get; set; }
+
+    public DbSet<TaskGroupTable> TaskGroup { get; set; }
+
 }

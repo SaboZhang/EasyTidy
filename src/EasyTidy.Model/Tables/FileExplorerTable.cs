@@ -28,4 +28,6 @@ public class FileExplorerTable
     /// </summary>
     public bool IsRelated { get; set; } = false; 
 
+    public TaskGroupTable GroupName { get; set; }
+
 }

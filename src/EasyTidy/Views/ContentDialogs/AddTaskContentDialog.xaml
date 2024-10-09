@@ -7,10 +7,39 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    xmlns:wuc="using:WinUICommunity"
     CornerRadius="{ThemeResource OverlayCornerRadius}"
     DefaultButton="Primary">
 
+    <ContentDialog.Resources>
+        <DataTemplate x:Key="ValidationTemplate"
+                  x:DataType="x:String">
+            <TextBlock Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+                   Text="{x:Bind}"/>
+        </DataTemplate>
+    </ContentDialog.Resources>
+    
     <StackPanel>
+        <StackPanel x:Name="TaskGroupPanel"
+                    Orientation="Horizontal"
+                    Spacing="8"
+                    Margin="0,10,0,0">
+            <TextBlock x:Name="TaskGroupName"
+                       Text="任务组名："
+                       Margin="0,5,0,0"/>
+            <ComboBox x:Name="TaskGroupNameBox"
+                      PlaceholderText="请输入或选择组名"
+                      Margin="14,0,0,0"
+                      MinWidth="240"
+                      Text="{x:Bind GroupName, Mode=TwoWay}"
+                      IsEditable="True"
+                      ItemsSource="{x:Bind ViewModel.GroupList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      SelectedItem="{x:Bind ViewModel.SelectedGroupName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      wuc:Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
+                      wuc:Validation.ValidationPropertyName="GroupName"
+                      wuc:Validation.ValidationProvider="{x:Bind}"
+                      Style="{StaticResource ValidatingTextBoxStyle}"/>
+        </StackPanel>
         <StackPanel x:Name="TaskNamePanel"
                     Orientation="Horizontal"
                     Spacing="8"
@@ -49,7 +78,7 @@
                        Text="操作方式："
                        Margin="0,5,0,0"/>
             <ComboBox x:Name="TaskOperateList"
-                      ItemsSource="{x:Bind ViewModel.OperationModes}"
+                      ItemsSource="{x:Bind ViewModel.OperationModes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                       SelectedItem="{x:Bind ViewModel.SelectedOperationMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                       PlaceholderText="请选择操作方式"
                       Margin="14,0,0,0"

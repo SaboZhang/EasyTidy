@@ -35,7 +35,13 @@ public partial class FileExplorerViewModel : ObservableRecipient
     public ObservableCollection<FileExplorerTable> _taskList;
 
     [ObservableProperty]
+    public List<string> _groupList;
+
+    [ObservableProperty]
     public AdvancedCollectionView _taskListACV;
+
+    [ObservableProperty]
+    private string _selectedGroupName;
 
     [RelayCommand]
     private async Task OnAddTaskClick(object sender)
@@ -60,15 +66,25 @@ public partial class FileExplorerViewModel : ObservableRecipient
         {
             var dialog = sender as AddTaskContentDialog;
             await using var db = new AppDbContext();
+            if (SelectedOperationMode == OperationMode.Delete)
+            {
+                TaskSource = string.Empty;
+            }
             await db.FileExplorer.AddAsync(new FileExplorerTable
             {
                 TaskName = dialog.TaskName,
                 TaskRule = dialog.TaskRule,
-                TaskSource = string.IsNullOrEmpty(TaskSource) ? Environment.GetFolderPath(Environment.SpecialFolder.Desktop) : TaskSource,
+                TaskSource = TaskSource,
                 Shortcut = dialog.Shortcut,
                 TaskTarget = TaskTarget,
                 OperationMode = SelectedOperationMode,
-                IsEnabled = dialog.EnabledFlag
+                IsEnabled = dialog.EnabledFlag,
+                GroupName = await db.TaskGroup.AnyAsync(x => x.GroupName == SelectedGroupName)
+                ? await db.TaskGroup.Where(x => x.GroupName == SelectedGroupName).FirstOrDefaultAsync() 
+                : new TaskGroupTable
+                {
+                    GroupName = dialog.GroupName
+                }
             });
             await db.SaveChangesAsync();
             await OnPageLoaded();
@@ -136,7 +152,7 @@ public partial class FileExplorerViewModel : ObservableRecipient
                 dispatcherQueue.TryEnqueue(async () =>
                 {
                     await using var db = new AppDbContext();
-                    var list = await db.FileExplorer.ToListAsync();
+                    var list = await db.FileExplorer.Include(x => x.GroupName).ToListAsync();
                     foreach (var item in list)
                     {
                         if (item.TaskSource == Environment.GetFolderPath(Environment.SpecialFolder.Desktop))
@@ -144,7 +160,8 @@ public partial class FileExplorerViewModel : ObservableRecipient
                             item.TaskSource = "桌面";
                         }
                     }
-                    TaskList = new(await db.FileExplorer.ToListAsync());
+                    GroupList = new(list.Select(x => x.GroupName.GroupName).ToList());
+                    TaskList = new(list);
                     TaskListACV = new AdvancedCollectionView(TaskList, true);
                     TaskListACV.SortDescriptions.Add(new SortDescription("ID", SortDirection.Ascending));
                 });
@@ -172,7 +189,7 @@ public partial class FileExplorerViewModel : ObservableRecipient
                     ViewModel = this,
                     Title = "修改",
                     PrimaryButtonText = "保存",
-                    CloseButtonText = "取消"
+                    CloseButtonText = "取消",
                 };
 
                 var task = dataContext as FileExplorerTable;
@@ -182,11 +199,17 @@ public partial class FileExplorerViewModel : ObservableRecipient
                 dialog.TaskTarget = task.TaskTarget;
                 dialog.Shortcut = task.Shortcut;
                 SelectedOperationMode = task.OperationMode;
+                dialog.GroupName = task.GroupName.GroupName;
 
                 dialog.PrimaryButtonClick += async (s, e) =>
                 {
+                    if (dialog.HasErrors)
+                    {
+                        e.Cancel = true;
+                        return;
+                    }
                     await using var db = new AppDbContext();
-                    var oldTask = await db.FileExplorer.Where(x => x.ID == task.ID).FirstOrDefaultAsync();
+                    var oldTask = await db.FileExplorer.Include(x => x.GroupName).Where(x => x.ID == task.ID).FirstOrDefaultAsync();
                     oldTask.TaskName = dialog.TaskName;
                     oldTask.TaskRule = dialog.TaskRule;
                     oldTask.TaskSource = TaskSource;
@@ -194,6 +217,7 @@ public partial class FileExplorerViewModel : ObservableRecipient
                     oldTask.TaskTarget = TaskTarget;
                     oldTask.OperationMode = SelectedOperationMode;
                     oldTask.IsEnabled = dialog.EnabledFlag;
+                    oldTask.GroupName.GroupName = dialog.GroupName;
                     await db.SaveChangesAsync();
                     await OnPageLoaded();
                     Growl.Success(new GrowlInfo
