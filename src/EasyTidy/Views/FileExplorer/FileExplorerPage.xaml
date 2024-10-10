@@ -37,11 +37,25 @@
                         <wuc:SettingsCard.HeaderIcon>
                             <FontIcon Glyph="&#xE7C4;"/>
                         </wuc:SettingsCard.HeaderIcon>
-                        <StackPanel>
+                        <StackPanel Orientation="Horizontal"
+                                    Spacing="10">
                             <Button Content="添加任务"
                                     x:Name="TaskButton"
                                     Style="{StaticResource AccentButtonStyle}"
                                     Command="{x:Bind ViewModel.AddTaskClickCommand}"/>
+                            <ComboBox x:Name="GroupNameComboBox"
+                                      PlaceholderText="按分组选择"
+                                      ItemsSource="{x:Bind ViewModel.GroupNameList, Mode=OneWay}"
+                                      SelectedItem="{x:Bind ViewModel.SelectedGroupName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      ToolTipService.ToolTip="按分组筛选">
+                                <i:Interaction.Behaviors>
+                                    <ic:EventTriggerBehavior EventName="SelectionChanged">
+                                        <ic:EventTriggerBehavior.Actions>
+                                            <ic:InvokeCommandAction Command="{x:Bind ViewModel.GroupNameChangedCommand}"/>
+                                        </ic:EventTriggerBehavior.Actions>
+                                    </ic:EventTriggerBehavior>
+                                </i:Interaction.Behaviors>
+                            </ComboBox>
                         </StackPanel>
                     </wuc:SettingsCard>
                     <StackPanel>
@@ -53,7 +67,7 @@
                                               Mode="Arcs"
                                               IsActive="{x:Bind ViewModel.IsActive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         <StackPanel>
-                            <ListView ItemsSource="{x:Bind ViewModel.TaskListACV, Mode=TwoWay}"
+                            <ListView ItemsSource="{x:Bind ViewModel.TaskListACV, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       HorizontalContentAlignment="Stretch"
                                       Height="600">
                                 <ListView.Header>

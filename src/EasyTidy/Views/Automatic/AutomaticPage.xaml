@@ -98,9 +98,36 @@
                                               IsExpanded="True">
                             <wuc:SettingsExpander.Items>
                                 <wuc:SettingsCard Header="任务选择">
-                                    <StackPanel Orientation="Horizontal">
+                                    <StackPanel Orientation="Horizontal"
+                                                Spacing="8">
+                                        <Button x:Name="GroupButton"
+                                                Content="任务组"
+                                                Command="{x:Bind ViewModel.SelectTaskCommand}"
+                                                CommandParameter="{Binding ElementName=GroupButton}">
+                                            <Button.Resources>
+                                                <TeachingTip x:Name="GroupTaskSelect"
+                                                             Title="选择任务组"
+                                                             Target="{x:Bind GroupButton}"
+                                                             IsOpen="{x:Bind ViewModel.GroupGlobalIsOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                             PreferredPlacement="Bottom"
+                                                             CloseButtonClick="GroupTaskSelect_CloseButtonClick">
+                                                    <TeachingTip.HeroContent>
+                                                        <ListView x:Name="GroupTaskListView"
+                                                                  SelectionMode="Multiple"
+                                                                  MaxHeight="320"
+                                                                  ItemsSource="{x:Bind ViewModel.TaskGroupListACV, Mode=TwoWay}">
+                                                            <ListView.ItemTemplate>
+                                                                <DataTemplate x:DataType="model:TaskGroupTable">
+                                                                    <TextBlock Text="{x:Bind GroupName}"/>
+                                                                </DataTemplate>
+                                                            </ListView.ItemTemplate>
+                                                        </ListView>
+                                                    </TeachingTip.HeroContent>
+                                                </TeachingTip>
+                                            </Button.Resources>
+                                        </Button>
                                         <Button x:Name="SelectButton"
-                                                Content="选择任务"
+                                                Content="单个任务"
                                                 Command="{x:Bind ViewModel.SelectTaskCommand}"
                                                 CommandParameter="{Binding ElementName=SelectButton}">
                                             <Button.Resources>
@@ -127,12 +154,10 @@
                                         </Button>
 
                                         <CheckBox x:Name="FeatureIndependentConfigFlagCheckBox"
-                                                  Margin="10,0,0,0"
                                                   IsChecked="{x:Bind ViewModel.FeatureIndependentConfigFlag, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                             是否单独配置
                                         </CheckBox>
                                         <Button Content="自定义"
-                                                Margin="5,0,0,0"
                                                 Command="{x:Bind ViewModel.CustomConfigCommand}"
                                                 IsEnabled="{x:Bind ViewModel.FeatureIndependentConfigFlag, Mode=OneWay}"/>
                                     </StackPanel>
@@ -145,7 +170,7 @@
                     <StackPanel Orientation="Horizontal"
                                 Spacing="8"
                                 HorizontalAlignment="Right"
-                                Visibility="{x:Bind ViewModel.NotFeatureIndependentConfigFlag, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 
+                                Visibility="{x:Bind ViewModel.NotFeatureIndependentConfigFlag, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
                         Converter={StaticResource BoolToVisibilityConverter}}">
                         <Button Content="撤销配置"
                                 HorizontalAlignment="Center"

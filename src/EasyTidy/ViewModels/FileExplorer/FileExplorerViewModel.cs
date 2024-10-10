@@ -38,6 +38,9 @@ public partial class FileExplorerViewModel : ObservableRecipient
     public List<string> _groupList;
 
     [ObservableProperty]
+    public List<string> _groupNameList;
+
+    [ObservableProperty]
     public AdvancedCollectionView _taskListACV;
 
     [ObservableProperty]
@@ -160,7 +163,10 @@ public partial class FileExplorerViewModel : ObservableRecipient
                             item.TaskSource = "桌面";
                         }
                     }
-                    GroupList = new(list.Select(x => x.GroupName.GroupName).ToList());
+                    GroupList = new(list.Select(x => x.GroupName.GroupName).Distinct().ToList());
+                    var newList = list.Select(x => x.GroupName.GroupName).Distinct().ToList();
+                    newList.Insert(0, "全部");
+                    GroupNameList = new(newList);
                     TaskList = new(list);
                     TaskListACV = new AdvancedCollectionView(TaskList, true);
                     TaskListACV.SortDescriptions.Add(new SortDescription("ID", SortDirection.Ascending));
@@ -340,6 +346,44 @@ public partial class FileExplorerViewModel : ObservableRecipient
         }
         IsActive = false;
 
+    }
+
+    [RelayCommand]
+    private async Task OnGroupNameChanged()
+    {
+        IsActive = true;
+        try
+        {
+            var list = await Task.Run(async () =>
+            {
+                await using var db = new AppDbContext();
+                var query = SelectedGroupName == "全部"
+                ? db.FileExplorer.Include(x => x.GroupName)
+                : db.FileExplorer.Include(x => x.GroupName).Where(x => x.GroupName.GroupName == SelectedGroupName);
+
+                var resultList = await query.ToListAsync();
+
+                foreach (var item in resultList)
+                {
+                    if (item.TaskSource == Environment.GetFolderPath(Environment.SpecialFolder.Desktop))
+                    {
+                        item.TaskSource = "桌面";
+                    }
+                }
+
+                return resultList;
+            });
+
+            TaskList = new(list);
+            TaskListACV = new AdvancedCollectionView(TaskList, true);
+            TaskListACV.SortDescriptions.Add(new SortDescription("ID", SortDirection.Ascending));
+        }
+        catch (Exception ex) 
+        { 
+            Logger.Error($"{ex.Message}");
+            IsActive = false;
+        }
+        IsActive = false;
     }
 }
 

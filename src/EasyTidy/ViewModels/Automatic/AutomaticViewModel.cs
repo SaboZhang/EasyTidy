@@ -138,6 +138,12 @@ public partial class AutomaticViewModel : ObservableRecipient
     public bool _globalIsOpen = false;
 
     [ObservableProperty]
+    public bool _groupGlobalIsOpen = false;
+
+    [ObservableProperty]
+    public bool _customGroupIsOpen = false;
+
+    [ObservableProperty]
     public bool _customIsOpen = false;
 
     [ObservableProperty]
@@ -157,6 +163,12 @@ public partial class AutomaticViewModel : ObservableRecipient
 
     [ObservableProperty]
     public AdvancedCollectionView _taskListACV;
+
+    [ObservableProperty]
+    public ObservableCollection<TaskGroupTable> _taskGroupList;
+
+    [ObservableProperty]
+    public AdvancedCollectionView _taskGroupListACV;
 
     private readonly DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
 
@@ -291,12 +303,30 @@ public partial class AutomaticViewModel : ObservableRecipient
         {
             GlobalIsOpen = true;
             CustomIsOpen = false;
+            GroupGlobalIsOpen = false;
+            CustomGroupIsOpen = false;
         }
 
         if (string.Equals(name, "CustomTaskList", StringComparison.OrdinalIgnoreCase))
         {
             GlobalIsOpen = false;
             CustomIsOpen = true;
+            GroupGlobalIsOpen = false;
+            CustomGroupIsOpen = false;
+        }
+        if (string.Equals(name, "GroupButton", StringComparison.OrdinalIgnoreCase))
+        {
+            GlobalIsOpen = false;
+            CustomIsOpen = false;
+            GroupGlobalIsOpen = true;
+            CustomGroupIsOpen = false;
+        }
+        if (string.Equals(name, "CustomGroupButton", StringComparison.OrdinalIgnoreCase))
+        {
+            GlobalIsOpen = false;
+            CustomIsOpen = false;
+            GroupGlobalIsOpen = false;
+            CustomGroupIsOpen = true;
         }
 
     }
@@ -325,10 +355,14 @@ public partial class AutomaticViewModel : ObservableRecipient
                 dispatcherQueue.TryEnqueue(async () =>
                 {
                     await using var db = new AppDbContext();
-                    var list = await db.FileExplorer.Where(f => f.IsRelated == false).ToListAsync();
+                    var list = await db.FileExplorer.Include(x =>x.GroupName).Where(f => f.IsRelated == false).ToListAsync();
                     TaskList = new(list);
                     TaskListACV = new AdvancedCollectionView(TaskList, true);
                     TaskListACV.SortDescriptions.Add(new SortDescription("ID", SortDirection.Ascending));
+                    var groupList = await db.TaskGroup.ToListAsync();
+                    TaskGroupList = new(groupList);
+                    TaskGroupListACV = new AdvancedCollectionView(TaskGroupList, true);
+                    TaskGroupListACV.SortDescriptions.Add(new SortDescription("Id", SortDirection.Ascending));
                 });
             });
 

@@ -25,7 +25,9 @@
                     Spacing="48">
             <TextBlock Text="选择任务："
                        Margin="0,5,0,0"/>
-            <StackPanel HorizontalAlignment="Left">
+            <StackPanel HorizontalAlignment="Left"
+                        Orientation="Horizontal"
+                        Spacing="20">
                 <Button x:Name="CustomTaskList"
                         Content="任务列表"
                         Command="{x:Bind ViewModel.SelectTaskCommand}"
@@ -53,10 +55,37 @@
                         </TeachingTip>
                     </Button.Resources>
                 </Button>
+                <Button x:Name="CustomGroupButton"
+                        Content="选择任务组"
+                        Command="{x:Bind ViewModel.SelectTaskCommand}"
+                        CommandParameter="{Binding ElementName=CustomGroupButton}">
+                    <Button.Resources>
+                        <TeachingTip x:Name="CustomGroupTaskSelect"
+                                     Title="选择任务组"
+                                     Target="{x:Bind CustomGroupButton}"
+                                     IsOpen="{x:Bind ViewModel.CustomGroupIsOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                     PreferredPlacement="Bottom"
+                                     CloseButtonClick="CustomGroupTaskSelect_CloseButtonClick">
+                            <TeachingTip.HeroContent>
+                                <ListView x:Name="CustomGroupTaskListView"
+                                          SelectionMode="Multiple"
+                                          MaxHeight="320"
+                                          ItemsSource="{x:Bind ViewModel.TaskGroupListACV, Mode=TwoWay}">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate x:DataType="model:TaskGroupTable">
+                                            <TextBlock Text="{x:Bind GroupName}"/>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </TeachingTip.HeroContent>
+                        </TeachingTip>
+                    </Button.Resources>
+                </Button>
             </StackPanel>
         </StackPanel>
         <StackPanel Orientation="Horizontal"
-                    Spacing="8">
+                    Spacing="8"
+                    Margin="0,10,0,0">
             <TextBlock Text="文件更改时"
                        Margin="0,8,0,0"/>
             <ToggleSwitch IsOn="{x:Bind ViewModel.CustomFileChange, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -186,7 +215,8 @@
                              wuc:Validation.ValidationPropertyName="Expression"
                              wuc:Validation.ValidationProvider="{x:Bind}"
                              Style="{StaticResource ValidatingTextBoxStyle}"/>
-                    <TextBlock Height="48" Margin="8"/>
+                    <TextBlock Height="48"
+                            Margin="8"/>
                 </StackPanel>
             </StackPanel>
         </StackPanel>
