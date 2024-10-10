@@ -54,7 +54,7 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
         var errors = new List<string>(1);
         if (string.IsNullOrWhiteSpace(groupName))
         {
-            errors.Add("组名不能为空");
+            errors.Add("缁勫悕涓嶈兘涓虹┖");
         }
         SetErrors("GroupName", errors);
     }
