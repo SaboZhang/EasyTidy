@@ -123,10 +123,9 @@
                        Text="目标文件夹："
                        Margin="0,5,0,0"/>
             <TextBox x:Name="Target"
-                     PlaceholderText="请选择文件夹"
+                     PlaceholderText="请选择或输入文件夹"
                      Width="240"
-                     Text="{x:Bind ViewModel.TaskTarget, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                     IsEnabled="False"/>
+                     Text="{x:Bind ViewModel.TaskTarget, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             <Button x:Name="TargetButton"
                     Content="选择"
                     Command="{x:Bind ViewModel.SelectTargetPathCommand}"/>

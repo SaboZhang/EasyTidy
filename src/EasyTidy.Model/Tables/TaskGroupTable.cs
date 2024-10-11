@@ -16,6 +16,6 @@ public class TaskGroupTable
 
     public string GroupName { get; set; }
 
-    public bool IsUsed { get; set; }
+    public bool IsUsed { get; set; } = false;
 
 }
