@@ -162,11 +162,12 @@ public partial class FileExplorerViewModel : ObservableRecipient
                         {
                             item.TaskSource = "桌面";
                         }
-                    }
+                    }  
                     GroupList = new(list.Select(x => x.GroupName.GroupName).Distinct().ToList());
                     var newList = list.Select(x => x.GroupName.GroupName).Distinct().ToList();
                     newList.Insert(0, "全部");
                     GroupNameList = new(newList);
+                    SelectedGroupName = "全部";
                     TaskList = new(list);
                     TaskListACV = new AdvancedCollectionView(TaskList, true);
                     TaskListACV.SortDescriptions.Add(new SortDescription("ID", SortDirection.Ascending));

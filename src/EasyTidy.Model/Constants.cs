@@ -9,6 +9,7 @@ public static class Constants
     public static readonly string AppName = AssemblyInfoHelper.GetAppInfo().Name;
     public static readonly string RootDirectoryPath = Path.Combine(PathHelper.GetLocalFolderPath(), AppName);
     public static readonly string AppConfigPath = Path.Combine(RootDirectoryPath, "AppConfig.json");
+    public static readonly string CommonAppConfigPath = Path.Combine(RootDirectoryPath, "CommonAppConfig.json");
     public static readonly string LogDirectoryPath = Path.Combine(RootDirectoryPath, "Log");
     public static readonly string LogFilePath = Path.Combine(LogDirectoryPath, "Log.txt");
 

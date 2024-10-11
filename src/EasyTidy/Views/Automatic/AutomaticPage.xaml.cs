@@ -27,6 +27,6 @@ public sealed partial class AutomaticPage : Page
 
     private void GroupTaskSelect_CloseButtonClick(TeachingTip sender, object args)
     {
-        ViewModel.SelectedItemChangedCommand.Execute(sender);
+        ViewModel.SelectGroupItemChangedCommand.Execute(sender);
     }
 }

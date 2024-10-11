@@ -1,11 +1,13 @@
-﻿namespace EasyTidy.ViewModels;
+﻿using EasyTidy.Model;
+
+namespace EasyTidy.ViewModels;
 public partial class MainViewModel : ObservableObject, ITitleBarAutoSuggestBoxAware
 {
     public IJsonNavigationViewService JsonNavigationViewService;
     public MainViewModel(IJsonNavigationViewService jsonNavigationViewService, IThemeService themeService)
     {
         JsonNavigationViewService = jsonNavigationViewService;
-        themeService.Initialize(App.MainWindow);
+        themeService.Initialize(App.MainWindow, true, Constants.CommonAppConfigPath);
         themeService.ConfigBackdrop();
         themeService.ConfigElementTheme();
     }

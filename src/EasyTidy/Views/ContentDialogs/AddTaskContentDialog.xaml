@@ -27,10 +27,14 @@
             <TextBlock x:Name="TaskGroupName"
                        Text="任务组名："
                        Margin="0,5,0,0"/>
-            <ComboBox x:Name="TaskGroupNameBox"
-                      PlaceholderText="请输入或选择组名"
-                      Margin="14,0,0,0"
-                      MinWidth="240"
+            <TextBox x:Name="TaskGroupNameBox" 
+                     Text="{x:Bind GroupName, Mode=TwoWay}"
+                     MinWidth="240"
+                     Margin="14,0,0,0"
+                     PlaceholderText="请输入或者选择"/>
+            <ComboBox x:Name="TaskGroupNameComboBox"
+                      PlaceholderText="选择组名"
+                      Width="Auto"
                       Text="{x:Bind GroupName, Mode=TwoWay}"
                       IsEditable="True"
                       ItemsSource="{x:Bind ViewModel.GroupList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"

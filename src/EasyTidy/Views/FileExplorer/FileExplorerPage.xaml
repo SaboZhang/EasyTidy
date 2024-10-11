@@ -86,7 +86,7 @@
                                                    HorizontalAlignment="Left"
                                                    VerticalAlignment="Center"/>
                                         <TextBlock Grid.Column="1"
-                                                   Text="操作类型"
+                                                   Text="任务名称"
                                                    VerticalAlignment="Center"/>
                                         <TextBlock Grid.Column="2"
                                                    Text="源文件夹"

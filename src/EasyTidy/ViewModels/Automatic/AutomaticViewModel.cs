@@ -176,6 +176,9 @@ public partial class AutomaticViewModel : ObservableRecipient
     private ObservableCollection<FileExplorerTable> _selectedTaskList = [];
 
     [ObservableProperty]
+    private ObservableCollection<TaskGroupTable> _selectedGroupTaskList = [];
+
+    [ObservableProperty]
     private string _delaySeconds = "5";
 
     [ObservableProperty]
@@ -299,36 +302,37 @@ public partial class AutomaticViewModel : ObservableRecipient
     {
         var item = parameter as Button;
         var name = item.Name;
-        if (string.Equals(name, "SelectButton", StringComparison.OrdinalIgnoreCase))
-        {
-            GlobalIsOpen = true;
-            CustomIsOpen = false;
-            GroupGlobalIsOpen = false;
-            CustomGroupIsOpen = false;
-        }
 
-        if (string.Equals(name, "CustomTaskList", StringComparison.OrdinalIgnoreCase))
+        switch (name)
         {
-            GlobalIsOpen = false;
-            CustomIsOpen = true;
-            GroupGlobalIsOpen = false;
-            CustomGroupIsOpen = false;
+            case "SelectButton":
+                GlobalIsOpen = true;
+                GroupGlobalIsOpen = false;
+                break;
+            case "GroupButton":
+                GlobalIsOpen = false;
+                GroupGlobalIsOpen = true;
+                break;
         }
-        if (string.Equals(name, "GroupButton", StringComparison.OrdinalIgnoreCase))
-        {
-            GlobalIsOpen = false;
-            CustomIsOpen = false;
-            GroupGlobalIsOpen = true;
-            CustomGroupIsOpen = false;
-        }
-        if (string.Equals(name, "CustomGroupButton", StringComparison.OrdinalIgnoreCase))
-        {
-            GlobalIsOpen = false;
-            CustomIsOpen = false;
-            GroupGlobalIsOpen = false;
-            CustomGroupIsOpen = true;
-        }
+    }
 
+    [RelayCommand]
+    private void OnCustomSelectTask(object parameter)
+    {
+        var item = parameter as Button;
+        var name = item.Name;
+
+        switch (name)
+        {
+            case "CustomTaskList":
+                CustomIsOpen = true;
+                CustomGroupIsOpen = false;
+                break;
+            case "CustomGroupButton":
+                CustomIsOpen = false;
+                CustomGroupIsOpen = true;
+                break;
+        }
     }
 
     private void NotifyPropertyChanged([CallerMemberName] string propertyName = null, bool reDoBackupDryRun = true)
@@ -359,7 +363,7 @@ public partial class AutomaticViewModel : ObservableRecipient
                     TaskList = new(list);
                     TaskListACV = new AdvancedCollectionView(TaskList, true);
                     TaskListACV.SortDescriptions.Add(new SortDescription("ID", SortDirection.Ascending));
-                    var groupList = await db.TaskGroup.ToListAsync();
+                    var groupList = await db.TaskGroup.Where(x => x.IsUsed == false).ToListAsync();
                     TaskGroupList = new(groupList);
                     TaskGroupListACV = new AdvancedCollectionView(TaskGroupList, true);
                     TaskGroupListACV.SortDescriptions.Add(new SortDescription("Id", SortDirection.Ascending));
@@ -403,6 +407,31 @@ public partial class AutomaticViewModel : ObservableRecipient
     }
 
     [RelayCommand]
+    private async Task OnSelectGroupItemChanged(object dataContext)
+    {
+        try
+        {
+            if (dataContext != null)
+            {
+                var listViews = dataContext as TeachingTip;
+                var listView = listViews.HeroContent as ListView;
+                var items = listView.SelectedItems;
+                SelectedGroupTaskList.Clear();
+                foreach (var item in items)
+                {
+                    TaskGroupTable task = item as TaskGroupTable;
+                    SelectedGroupTaskList.Add(task);
+                }
+                await OnPageLoaded();
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.Error($"AutomaticViewModel: OnSelectGroupItemChanged 异常信息 {ex}");
+        }
+    }
+
+    [RelayCommand]
     private async Task OnSaveTaskConfig()
     {
         IsActive = true;
@@ -416,10 +445,23 @@ public partial class AutomaticViewModel : ObservableRecipient
                 if (update != null)
                 {
                     update.IsRelated = true;
-                    db.Entry(update).State = EntityState.Modified;
                     list.Add(update);
                 }
             }
+            foreach (var item in SelectedGroupTaskList)
+            {
+                var updates = await db.FileExplorer.Include(x => x.GroupName).Where(x => x.GroupName.Id == item.Id).ToListAsync();
+                if (updates != null)
+                {
+                    list.AddRange(updates.Select(fileExplorer =>
+                    {
+                        fileExplorer.IsRelated = true;
+                        fileExplorer.GroupName.IsUsed = true;
+                        return fileExplorer;
+                    }));
+                }
+            }
+            db.FileExplorer.UpdateRange(list);
             await db.SaveChangesAsync();
             await OnPageLoaded();
             DateTime dateValue = DateTime.Parse(SelectTaskTime);

@@ -30,7 +30,7 @@
                         Spacing="20">
                 <Button x:Name="CustomTaskList"
                         Content="任务列表"
-                        Command="{x:Bind ViewModel.SelectTaskCommand}"
+                        Command="{x:Bind ViewModel.CustomSelectTaskCommand}"
                         HorizontalAlignment="Right"
                         CommandParameter="{Binding ElementName=CustomTaskList}">
                     <Button.Resources>
@@ -57,7 +57,7 @@
                 </Button>
                 <Button x:Name="CustomGroupButton"
                         Content="选择任务组"
-                        Command="{x:Bind ViewModel.SelectTaskCommand}"
+                        Command="{x:Bind ViewModel.CustomSelectTaskCommand}"
                         CommandParameter="{Binding ElementName=CustomGroupButton}">
                     <Button.Resources>
                         <TeachingTip x:Name="CustomGroupTaskSelect"
