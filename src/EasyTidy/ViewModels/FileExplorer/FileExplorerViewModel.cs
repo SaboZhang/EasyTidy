@@ -64,7 +64,6 @@ public partial class FileExplorerViewModel : ObservableRecipient
 
     private async void OnAddTaskPrimaryButton(ContentDialog sender, ContentDialogButtonClickEventArgs args)
     {
-        IsActive = true;
         try
         {
             var dialog = sender as AddTaskContentDialog;
@@ -91,7 +90,6 @@ public partial class FileExplorerViewModel : ObservableRecipient
             });
             await db.SaveChangesAsync();
             await OnPageLoaded();
-            IsActive = false;
             Growl.Success(new GrowlInfo
             {
                 Message = "添加成功",
@@ -100,7 +98,6 @@ public partial class FileExplorerViewModel : ObservableRecipient
         }
         catch (Exception ex)
         {
-            IsActive = false;
             Growl.Error(new GrowlInfo
             {
                 Message = "添加失败",
