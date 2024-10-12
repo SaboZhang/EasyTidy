@@ -35,10 +35,10 @@ public partial class FileExplorerViewModel : ObservableRecipient
     public ObservableCollection<FileExplorerTable> _taskList;
 
     [ObservableProperty]
-    public List<string> _groupList;
+    public List<string> _groupList = new();
 
     [ObservableProperty]
-    public List<string> _groupNameList;
+    public List<string> _groupNameList = new();
 
     [ObservableProperty]
     public AdvancedCollectionView _taskListACV;
