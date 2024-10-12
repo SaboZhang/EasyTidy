@@ -28,8 +28,34 @@
             <StackPanel HorizontalAlignment="Left"
                         Orientation="Horizontal"
                         Spacing="20">
+                <Button x:Name="CustomGroupButton"
+                        Content="任务组"
+                        Command="{x:Bind ViewModel.CustomSelectTaskCommand}"
+                        CommandParameter="{Binding ElementName=CustomGroupButton}">
+                    <Button.Resources>
+                        <TeachingTip x:Name="CustomGroupTaskSelect"
+                                     Title="选择任务组"
+                                     Target="{x:Bind CustomGroupButton}"
+                                     IsOpen="{x:Bind ViewModel.CustomGroupIsOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                     PreferredPlacement="Bottom"
+                                     CloseButtonClick="CustomGroupTaskSelect_CloseButtonClick">
+                            <TeachingTip.HeroContent>
+                                <ListView x:Name="CustomGroupTaskListView"
+                                          SelectionMode="Multiple"
+                                          MaxHeight="320"
+                                          ItemsSource="{x:Bind ViewModel.TaskGroupListACV, Mode=TwoWay}">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate x:DataType="model:TaskGroupTable">
+                                            <TextBlock Text="{x:Bind GroupName}"/>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </TeachingTip.HeroContent>
+                        </TeachingTip>
+                    </Button.Resources>
+                </Button>
                 <Button x:Name="CustomTaskList"
-                        Content="任务列表"
+                        Content="单个任务"
                         Command="{x:Bind ViewModel.CustomSelectTaskCommand}"
                         HorizontalAlignment="Right"
                         CommandParameter="{Binding ElementName=CustomTaskList}">
@@ -48,32 +74,6 @@
                                     <ListView.ItemTemplate>
                                         <DataTemplate x:DataType="model:FileExplorerTable">
                                             <TextBlock Text="{x:Bind TaskName}"/>
-                                        </DataTemplate>
-                                    </ListView.ItemTemplate>
-                                </ListView>
-                            </TeachingTip.HeroContent>
-                        </TeachingTip>
-                    </Button.Resources>
-                </Button>
-                <Button x:Name="CustomGroupButton"
-                        Content="选择任务组"
-                        Command="{x:Bind ViewModel.CustomSelectTaskCommand}"
-                        CommandParameter="{Binding ElementName=CustomGroupButton}">
-                    <Button.Resources>
-                        <TeachingTip x:Name="CustomGroupTaskSelect"
-                                     Title="选择任务组"
-                                     Target="{x:Bind CustomGroupButton}"
-                                     IsOpen="{x:Bind ViewModel.CustomGroupIsOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                     PreferredPlacement="Bottom"
-                                     CloseButtonClick="CustomGroupTaskSelect_CloseButtonClick">
-                            <TeachingTip.HeroContent>
-                                <ListView x:Name="CustomGroupTaskListView"
-                                          SelectionMode="Multiple"
-                                          MaxHeight="320"
-                                          ItemsSource="{x:Bind ViewModel.TaskGroupListACV, Mode=TwoWay}">
-                                    <ListView.ItemTemplate>
-                                        <DataTemplate x:DataType="model:TaskGroupTable">
-                                            <TextBlock Text="{x:Bind GroupName}"/>
                                         </DataTemplate>
                                     </ListView.ItemTemplate>
                                 </ListView>
@@ -216,7 +216,7 @@
                              wuc:Validation.ValidationProvider="{x:Bind}"
                              Style="{StaticResource ValidatingTextBoxStyle}"/>
                     <TextBlock Height="48"
-                            Margin="8"/>
+                               Margin="8"/>
                 </StackPanel>
             </StackPanel>
         </StackPanel>

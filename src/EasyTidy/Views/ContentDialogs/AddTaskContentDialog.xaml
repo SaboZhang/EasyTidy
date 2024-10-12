@@ -31,18 +31,18 @@
                      Text="{x:Bind GroupName, Mode=TwoWay}"
                      MinWidth="240"
                      Margin="14,0,0,0"
-                     PlaceholderText="请输入或者选择"/>
+                     PlaceholderText="请输入或者选择"
+                     wuc:Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
+                     wuc:Validation.ValidationPropertyName="GroupName"
+                     wuc:Validation.ValidationProvider="{x:Bind}"
+                     Style="{StaticResource ValidatingTextBoxStyle}"/>
             <ComboBox x:Name="TaskGroupNameComboBox"
                       PlaceholderText="选择组名"
                       Width="Auto"
                       Text="{x:Bind GroupName, Mode=TwoWay}"
                       IsEditable="True"
                       ItemsSource="{x:Bind ViewModel.GroupList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                      SelectedItem="{x:Bind ViewModel.SelectedGroupName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                      wuc:Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
-                      wuc:Validation.ValidationPropertyName="GroupName"
-                      wuc:Validation.ValidationProvider="{x:Bind}"
-                      Style="{StaticResource ValidatingTextBoxStyle}"/>
+                      SelectedItem="{x:Bind ViewModel.SelectedGroupName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
         <StackPanel x:Name="TaskNamePanel"
                     Orientation="Horizontal"
