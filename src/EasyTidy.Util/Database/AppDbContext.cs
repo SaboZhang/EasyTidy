@@ -30,4 +30,6 @@ public class AppDbContext : DbContext
 
     public DbSet<TaskGroupTable> TaskGroup { get; set; }
 
+    public DbSet<FilterTable> Filters { get; set; }
+
 }

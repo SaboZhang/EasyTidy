@@ -9,6 +9,9 @@ public sealed partial class FiltersPage : Page
 {
     public FilterViewModel ViewModel { get; set; }
 
+    /// <summary>
+    /// Initializes a new instance of the FiltersPage class.
+    /// </summary>
     public FiltersPage()
     {
         ViewModel = App.GetService<FilterViewModel>();

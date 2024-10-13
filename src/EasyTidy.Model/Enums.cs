@@ -50,3 +50,48 @@ public enum OperationMode
     [Display(Name = "重命名")] Rename
 
 }
+
+public enum YesOrNo
+{
+    [Display(Name = "否")] No,
+
+    [Display(Name = "是")] Yes,
+}
+
+public enum DateUnit
+{
+    [Display(Name ="秒")] Second,
+
+    [Display(Name ="分钟")] Minute,
+
+    [Display(Name = "小时")] Hour,
+
+    [Display(Name = "天")] Day,
+
+    [Display(Name = "月")] Month,
+
+    [Display(Name = "年")] Year
+}
+
+public enum ComparisonResult
+{
+    [Display(Name = ">")]
+    GreaterThan,
+
+    [Display(Name = "=")]
+    Equal,
+
+    [Display(Name = "<")]
+    LessThan,
+}
+
+public enum SizeUnit
+{
+    [Display(Name = "字节")] Byte,
+
+    [Display(Name = "KB")] Kilobyte,
+
+    [Display(Name = "MB")] Megabyte,
+
+    [Display(Name = "GB")] Gigabyte
+}

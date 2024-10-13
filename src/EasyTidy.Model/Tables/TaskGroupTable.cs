@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EasyTidy.Model;
 
-[Table("TaskGroupTable")]
+[Table("TaskGroup")]
 public class TaskGroupTable
 {
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]

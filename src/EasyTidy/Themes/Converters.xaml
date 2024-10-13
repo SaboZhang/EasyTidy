@@ -7,6 +7,7 @@
     <cover:EnumDisplayNameConverter x:Key="EnumDisplayNameConverter"/>
     <cover:EnumToVisibilityConverter x:Key="EnumToVisibilityConverter" />
     <cover:BoolToStringConverter x:Key="BoolToStringConverter" />
+    <cover:StringToBoolConverter x:Key="StringToBoolConverter" />
 
     <converter:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     
