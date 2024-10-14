@@ -47,7 +47,9 @@ public enum OperationMode
 
     [Display(Name = "删除")] Delete,
 
-    [Display(Name = "重命名")] Rename
+    [Display(Name = "重命名")] Rename,
+
+    [Display(Name = "回收站")] RecycleBin
 
 }
 

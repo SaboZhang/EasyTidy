@@ -16,6 +16,8 @@ public partial class FilterViewModel : ObservableRecipient
         this.themeService = themeService;
     }
 
+    private readonly DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
+
     public IThemeService themeService;
 
     [ObservableProperty]
@@ -29,6 +31,38 @@ public partial class FilterViewModel : ObservableRecipient
 
     [ObservableProperty]
     private IList<SizeUnit> sizeUnits = Enum.GetValues(typeof(SizeUnit)).Cast<SizeUnit>().ToList();
+
+    [ObservableProperty]
+    public ObservableCollection<FilterTable> _filtersList;
+
+    [ObservableProperty]
+    public AdvancedCollectionView _filtersListACV;
+
+    private async Task OnPageLoaded()
+    {
+        IsActive = true;
+        try
+        {
+            await Task.Run(() =>
+            {
+                dispatcherQueue.TryEnqueue(async () =>
+                {
+                    await using var db = new AppDbContext();
+                    // 查询所有过滤器
+                    var list = await db.Filters.ToListAsync();
+                    FiltersList = new(list);
+                    FiltersListACV = new AdvancedCollectionView(FiltersList, true);
+                    FiltersListACV.SortDescriptions.Add(new SortDescription("Id", SortDirection.Ascending));
+                });
+            });
+        }
+        catch (Exception ex)
+        {
+            Logger.Error($"FilterViewModel 初始化加载失败：{ex}");
+            IsActive = false;
+        }
+        IsActive = false;
+    }
 
     [RelayCommand]
     private async Task OnAddFilterClickedAsync()
