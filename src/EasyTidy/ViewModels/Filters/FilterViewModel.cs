@@ -1,6 +1,10 @@
-﻿using EasyTidy.Model;
+﻿using CommunityToolkit.WinUI.UI;
+using EasyTidy.Model;
 using EasyTidy.Util;
 using EasyTidy.Views.ContentDialogs;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.UI.Dispatching;
+using System.Collections.ObjectModel;
 
 namespace EasyTidy.ViewModels;
 
@@ -38,6 +42,7 @@ public partial class FilterViewModel : ObservableRecipient
     [ObservableProperty]
     public AdvancedCollectionView _filtersListACV;
 
+    [RelayCommand]
     private async Task OnPageLoaded()
     {
         IsActive = true;
@@ -50,6 +55,12 @@ public partial class FilterViewModel : ObservableRecipient
                     await using var db = new AppDbContext();
                     // 查询所有过滤器
                     var list = await db.Filters.ToListAsync();
+                    foreach (var item in list)
+                    {
+                        item.CharacterValue = item.BuildCharacterValue();
+                        item.AttributeValue = item.BuildAttributeValue();
+                        item.OtherValue = item.BuildOtherValue();
+                    }
                     FiltersList = new(list);
                     FiltersListACV = new AdvancedCollectionView(FiltersList, true);
                     FiltersListACV.SortDescriptions.Add(new SortDescription("Id", SortDirection.Ascending));

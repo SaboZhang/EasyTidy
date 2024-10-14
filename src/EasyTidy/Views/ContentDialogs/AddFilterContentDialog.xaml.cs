@@ -2,6 +2,8 @@
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
 using EasyTidy.Model;
+using System.Collections;
+using System.ComponentModel;
 
 namespace EasyTidy.Views.ContentDialogs;
 
@@ -13,7 +15,7 @@ public sealed partial class AddFilterContentDialog : ContentDialog
     public FilterViewModel ViewModel { get; set; }
 
     public string FilterName { get; set; }
-    public bool IsSizeSelected { get; set; }
+    public bool IsSizeSelected { get; set; } = false;
     public ComparisonResult SizeOperator { get; set; }
     public string? SizeValue { get; set; } = null;
     public SizeUnit SizeUnit { get; set; }
@@ -62,4 +64,5 @@ public sealed partial class AddFilterContentDialog : ContentDialog
         XamlRoot = App.MainWindow.Content.XamlRoot;
         RequestedTheme = ViewModel.themeService.GetElementTheme();
     }
+
 }

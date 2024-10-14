@@ -11,6 +11,7 @@ namespace EasyTidy.Model;
 [Table("Filters")]
 public class FilterTable
 {
+
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
     public string FilterName { get; set; }
@@ -57,21 +58,11 @@ public class FilterTable
     public string ContentOperator { get; set; }
     public string ContentValue { get; set; }
 
-    [NotMapped]
-    private string _characterValue;
     // Character 相关字段
     [NotMapped]
-    public virtual string CharacterValue 
-    { 
-        get { return _characterValue; }
-        set 
-        {
-            _characterValue = value;
-            BuildCharacterValue();
-        }
-    }
+    public virtual string CharacterValue { get; set; }
 
-    private void BuildCharacterValue()
+    public string BuildCharacterValue()
     {
         StringBuilder sb = new();
         bool isFirst = true;
@@ -93,24 +84,14 @@ public class FilterTable
             AppendCondition(sb, ref isFirst, $"访问时间：{EnumHelper.GetDisplayName(VisitDateOperator)} = {VisitDateValue} {EnumHelper.GetDisplayName(VisitDateUnit)}");
         }
 
-        CharacterValue = sb.ToString();
+        return sb.ToString();
     }
 
     // Attribute 相关字段
     [NotMapped]
-    private string _attributeValue;
-    [NotMapped]
-    public virtual string AttributeValue 
-    { 
-        get { return _attributeValue; }
-        set
-        {
-            _attributeValue = value;
-            BuildAttributeValue();
-        }
-    }
+    public virtual string AttributeValue { get; set; }
 
-    private void BuildAttributeValue()
+    public string BuildAttributeValue()
     {
         StringBuilder sb = new();
         bool isFirst = true;
@@ -136,24 +117,14 @@ public class FilterTable
             AppendCondition(sb, ref isFirst, $"临时 = {EnumHelper.GetDisplayName(TempValue)}");
         }
 
-        AttributeValue = sb.ToString();
+        return sb.ToString();
     }
 
     // Other 相关字段
     [NotMapped]
-    private string _otherValue;
-    [NotMapped]
-    public virtual string OtherValue 
-    { 
-        get { return _otherValue; }
-        set
-        {
-            _otherValue = value;
-            BuildOtherValue();
-        }
-    }
+    public virtual string OtherValue { get; set; }
 
-    private void BuildOtherValue()
+    public string BuildOtherValue()
     {
         StringBuilder sb = new();
         bool isFirst = true;
@@ -167,14 +138,14 @@ public class FilterTable
             AppendCondition(sb, ref isFirst, $"文件内容：{ContentOperator} = {ContentValue}");
         }
 
-        OtherValue = sb.ToString();
+        return sb.ToString();
     }
 
     private static void AppendCondition(StringBuilder sb, ref bool isFirst, string condition)
     {
         if (!isFirst)
         {
-            sb.Append("| ");
+            sb.Append(" | ");
         }
         isFirst = false;
         sb.Append(condition);
