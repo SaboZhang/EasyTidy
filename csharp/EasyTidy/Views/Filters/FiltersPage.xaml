@@ -7,31 +7,143 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    xmlns:wuc="using:WinUICommunity">
+    xmlns:wuc="using:WinUICommunity"
+    xmlns:model="using:EasyTidy.Model" 
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core" 
+    xmlns:i="using:Microsoft.Xaml.Interactivity">
 
-    <wuc:SettingsPageControl 
+    <i:Interaction.Behaviors>
+        <ic:EventTriggerBehavior EventName="Loaded">
+            <ic:EventTriggerBehavior.Actions>
+                <ic:InvokeCommandAction Command="{x:Bind ViewModel.PageLoadedCommand}"/>
+            </ic:EventTriggerBehavior.Actions>
+        </ic:EventTriggerBehavior>
+    </i:Interaction.Behaviors>
+    
+    <wuc:SettingsPageControl
         x:Name="settingsControl"
         ModuleDescription="轻松地添加需要过滤的文件，实现对特定文件的精准管理。通过增加文件处理规则，你能够自定义文件的处理方式，满足个性化的需求。同时，还可以利用正则表达式强大的模式匹配功能，进一步细化文件的筛选和处理逻辑，让文件管理更加高效、智能。无论是排除特定类型的文件，还是对符合特定模式的文件进行特殊处理，都能在这里轻松实现。"
         ModuleTitle="过滤器"
         ModuleImageSource="ms-appx:///Assets/Modules/Filters.png">
         <wuc:SettingsPageControl.ModuleContent>
             <StackPanel>
-                <wuc:SettingsCard x:Name="AddTask"
-                          Header="添加过滤器"
-                          Description="添加自定义附加的过滤器">
+                <wuc:SettingsCard x:Name="AddFilterCard"
+                                  Header="添加过滤器"
+                                  Description="添加自定义附加的过滤器">
                     <wuc:SettingsCard.HeaderIcon>
-                        <FontIcon Glyph="&#xE71C;" />
+                        <FontIcon Glyph="&#xE71C;"/>
                     </wuc:SettingsCard.HeaderIcon>
                     <StackPanel>
-                        <Button Content="添加过滤器" 
-                        x:Name="TaskButton"
-                        Style="{StaticResource AccentButtonStyle}"
-                        Command="{x:Bind ViewModel.AddFilterClickedCommand}"/>
+                        <Button Content="添加过滤器"
+                                x:Name="FiltersButton"
+                                Style="{StaticResource AccentButtonStyle}"
+                                Command="{x:Bind ViewModel.AddFilterClickedCommand}"/>
                     </StackPanel>
                 </wuc:SettingsCard>
                 <StackPanel>
-                    <TextBlock x:Name="TaskList" TextWrapping="Wrap" />
-                    <Button x:Name="DeleteTask" Content="删除任务" />
+                    <TextBlock x:Name="FiltersList"
+                               TextWrapping="Wrap"
+                               Text="过滤器列表"
+                               Margin="0,20,20,0"/>
+                    <wuc:LoadingIndicator x:Name="Load"
+                                          Mode="Arcs"
+                                          IsActive="{x:Bind ViewModel.IsActive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <StackPanel x:Name="List">
+                        <ListView x:Name="FiltersListView"
+                                  Height="600"
+                                  HorizontalContentAlignment="Stretch"
+                                  ItemsSource="{x:Bind ViewModel.FiltersListACV, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <ListView.Header>
+                                <Grid Padding="16,12"
+                                      ColumnSpacing="16">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="40"/>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="100"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="ID"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Column="1"
+                                               Text="过滤器名称"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Center"/>
+                                    <TextBlock Grid.Column="2"
+                                               Text="属性"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Center"/>
+                                    <TextBlock Grid.Column="3"
+                                               Text="特性"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Center"/>
+                                    <TextBlock Grid.Column="4"
+                                               Text="其他"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Center"/>
+                                    <TextBlock Grid.Column="5"
+                                               Text="操作"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"/>
+                                </Grid>
+                            </ListView.Header>
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="model:FilterTable">
+                                    <Grid ColumnSpacing="16">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="40"/>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="100"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{x:Bind Id}"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="1"
+                                                   Text="{x:Bind FilterName, Mode=TwoWay}"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Center"/>
+                                        <TextBlock Grid.Column="2"
+                                                   Text="{x:Bind AttributeValue, Mode=TwoWay}"
+                                                   VerticalAlignment="Center"
+                                                   ToolTipService.ToolTip="{x:Bind AttributeValue}"/>
+                                        <TextBlock Grid.Column="3"
+                                                   Text="{x:Bind CharacterValue, Mode=TwoWay}"
+                                                   VerticalAlignment="Center"
+                                                   ToolTipService.ToolTip="{x:Bind CharacterValue}"/>
+                                        <TextBlock Grid.Column="4"
+                                                   Text="{x:Bind OtherValue, Mode=TwoWay}"
+                                                   VerticalAlignment="Center"/>
+                                        <StackPanel HorizontalAlignment="Center"
+                                                    Orientation="Horizontal"
+                                                    Spacing="8"
+                                                    Grid.Column="5">
+                                            <Button x:Name="EditButton"
+                                                    Content="{wuc:BitmapIcon Source=Assets/Fluent/edit.png}"
+                                                    Style="{StaticResource SubtleButtonStyle}"
+                                                    DataContext="{x:Bind}"
+                                                    Width="42"
+                                                    Height="42"
+                                                    ToolTipService.ToolTip="编辑"
+                                                    Click="EditButton_Click"/>
+                                            <Button x:Name="DeleteButton"
+                                                    Content="{wuc:BitmapIcon Source=Assets/Fluent/delete.png}"
+                                                    Style="{StaticResource SubtleButtonStyle}"
+                                                    DataContext="{x:Bind}"
+                                                    Width="42"
+                                                    Height="42"
+                                                    ToolTipService.ToolTip="删除"
+                                                    Click="DeleteButton_Click"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackPanel>
                 </StackPanel>
             </StackPanel>
         </wuc:SettingsPageControl.ModuleContent>

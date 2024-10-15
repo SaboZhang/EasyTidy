@@ -80,4 +80,17 @@ public sealed partial class TrayIconView : UserControl
         TrayIcon.Dispose();
         App.MainWindow?.Close();
     }
+
+    /// <summary>
+    /// Stops the file watcher
+    /// </summary>
+    [RelayCommand]
+    private void StopWatcher()
+    {
+        Settings.AutomaticConfig.RegularTaskRunning = false;
+        Settings.Save();
+        ToastWithAvatar.Instance.ScenarioName = "停止监视";
+        ToastWithAvatar.Instance.Description = "EasyTidy停止监视成功";
+        ToastWithAvatar.Instance.SendToast();
+    }
 }

@@ -22,8 +22,8 @@
 
     <StackPanel x:Name="root">
         <StackPanel x:Name="Growl"
-                    MinWidth="340" 
-                    wuc:Growl.GrowlParent="True" />
+                    MinWidth="340"
+                    wuc:Growl.GrowlParent="True"/>
         <wuc:SettingsPageControl
             x:Name="settingsControl"
             ModuleDescription="用户可添加文件处理任务，并能够对其执行方式进行专业设置，包括选择自动执行、仅执行一次，亦或是创建桌面快捷方式、添加备份任务等操作。"
@@ -37,11 +37,25 @@
                         <wuc:SettingsCard.HeaderIcon>
                             <FontIcon Glyph="&#xE7C4;"/>
                         </wuc:SettingsCard.HeaderIcon>
-                        <StackPanel>
+                        <StackPanel Orientation="Horizontal"
+                                    Spacing="10">
                             <Button Content="添加任务"
                                     x:Name="TaskButton"
                                     Style="{StaticResource AccentButtonStyle}"
                                     Command="{x:Bind ViewModel.AddTaskClickCommand}"/>
+                            <ComboBox x:Name="GroupNameComboBox"
+                                      PlaceholderText="按分组选择"
+                                      ItemsSource="{x:Bind ViewModel.GroupNameList, Mode=OneWay}"
+                                      SelectedItem="{x:Bind ViewModel.SelectedGroupName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      ToolTipService.ToolTip="按分组筛选">
+                                <i:Interaction.Behaviors>
+                                    <ic:EventTriggerBehavior EventName="SelectionChanged">
+                                        <ic:EventTriggerBehavior.Actions>
+                                            <ic:InvokeCommandAction Command="{x:Bind ViewModel.GroupNameChangedCommand}"/>
+                                        </ic:EventTriggerBehavior.Actions>
+                                    </ic:EventTriggerBehavior>
+                                </i:Interaction.Behaviors>
+                            </ComboBox>
                         </StackPanel>
                     </wuc:SettingsCard>
                     <StackPanel>
@@ -49,9 +63,13 @@
                                    TextWrapping="Wrap"
                                    Text="任务列表"
                                    Margin="0,20,20,0"/>
+                        <wuc:LoadingIndicator x:Name="Load"
+                                              Mode="Arcs"
+                                              IsActive="{x:Bind ViewModel.IsActive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         <StackPanel>
-                            <ListView ItemsSource="{x:Bind ViewModel.TaskListACV, Mode=TwoWay}"
-                                      HorizontalContentAlignment="Stretch">
+                            <ListView ItemsSource="{x:Bind ViewModel.TaskListACV, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      HorizontalContentAlignment="Stretch"
+                                      Height="600">
                                 <ListView.Header>
                                     <Grid Padding="16,12"
                                           ColumnSpacing="16">
@@ -68,7 +86,7 @@
                                                    HorizontalAlignment="Left"
                                                    VerticalAlignment="Center"/>
                                         <TextBlock Grid.Column="1"
-                                                   Text="操作类型"
+                                                   Text="任务名称"
                                                    VerticalAlignment="Center"/>
                                         <TextBlock Grid.Column="2"
                                                    Text="源文件夹"
@@ -169,9 +187,6 @@
                 </StackPanel>
             </wuc:SettingsPageControl.ModuleContent>
         </wuc:SettingsPageControl>
-        <wuc:LoadingIndicator x:Name="Load"
-                              Mode="Arcs"
-                              IsActive="{x:Bind ViewModel.IsActive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
     </StackPanel>
 </Page>

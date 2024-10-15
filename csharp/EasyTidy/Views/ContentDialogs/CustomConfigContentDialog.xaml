@@ -7,19 +7,56 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:wuc="using:WinUICommunity"
+    xmlns:model="using:EasyTidy.Model"
     mc:Ignorable="d"
     CornerRadius="{ThemeResource OverlayCornerRadius}"
     DefaultButton="Primary">
+
+    <ContentDialog.Resources>
+        <DataTemplate x:Key="ValidationTemplate"
+                      x:DataType="x:String">
+            <TextBlock Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+                       Text="{x:Bind}"/>
+        </DataTemplate>
+    </ContentDialog.Resources>
 
     <StackPanel>
         <StackPanel Orientation="Horizontal"
                     Spacing="48">
             <TextBlock Text="选择任务："
                        Margin="0,5,0,0"/>
-            <StackPanel HorizontalAlignment="Left">
+            <StackPanel HorizontalAlignment="Left"
+                        Orientation="Horizontal"
+                        Spacing="20">
+                <Button x:Name="CustomGroupButton"
+                        Content="任务组"
+                        Command="{x:Bind ViewModel.CustomSelectTaskCommand}"
+                        CommandParameter="{Binding ElementName=CustomGroupButton}">
+                    <Button.Resources>
+                        <TeachingTip x:Name="CustomGroupTaskSelect"
+                                     Title="选择任务组"
+                                     Target="{x:Bind CustomGroupButton}"
+                                     IsOpen="{x:Bind ViewModel.CustomGroupIsOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                     PreferredPlacement="Bottom"
+                                     CloseButtonClick="CustomGroupTaskSelect_CloseButtonClick">
+                            <TeachingTip.HeroContent>
+                                <ListView x:Name="CustomGroupTaskListView"
+                                          SelectionMode="Multiple"
+                                          MaxHeight="320"
+                                          ItemsSource="{x:Bind ViewModel.TaskGroupListACV, Mode=TwoWay}">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate x:DataType="model:TaskGroupTable">
+                                            <TextBlock Text="{x:Bind GroupName}"/>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </TeachingTip.HeroContent>
+                        </TeachingTip>
+                    </Button.Resources>
+                </Button>
                 <Button x:Name="CustomTaskList"
-                        Content="任务列表"
-                        Command="{x:Bind ViewModel.SelectTaskCommand}"
+                        Content="单个任务"
+                        Command="{x:Bind ViewModel.CustomSelectTaskCommand}"
                         HorizontalAlignment="Right"
                         CommandParameter="{Binding ElementName=CustomTaskList}">
                     <Button.Resources>
@@ -27,15 +64,18 @@
                                      Title="任务列表"
                                      Target="{x:Bind CustomTaskList}"
                                      IsOpen="{x:Bind ViewModel.CustomIsOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                     PreferredPlacement="Bottom">
+                                     PreferredPlacement="Bottom"
+                                     CloseButtonClick="CustomTaskSelect_CloseButtonClick">
                             <TeachingTip.HeroContent>
-                                <ListView SelectionMode="Multiple"
-                                          MaxHeight="320">
-                                    <x:String>Task1</x:String>
-                                    <x:String>Task2</x:String>
-                                    <x:String>Task3</x:String>
-                                    <x:String>Task4</x:String>
-                                    <x:String>Task5</x:String>
+                                <ListView x:Name="CustomListView"
+                                          SelectionMode="Multiple"
+                                          MaxHeight="280"
+                                          ItemsSource="{x:Bind ViewModel.TaskListACV, Mode=TwoWay}">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate x:DataType="model:FileExplorerTable">
+                                            <TextBlock Text="{x:Bind TaskName}"/>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
                                 </ListView>
                             </TeachingTip.HeroContent>
                         </TeachingTip>
@@ -44,16 +84,23 @@
             </StackPanel>
         </StackPanel>
         <StackPanel Orientation="Horizontal"
-                    Spacing="8">
+                    Spacing="8"
+                    Margin="0,10,0,0">
             <TextBlock Text="文件更改时"
                        Margin="0,8,0,0"/>
             <ToggleSwitch IsOn="{x:Bind ViewModel.CustomFileChange, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                           Margin="38,-1,0,0"/>
             <TextBlock Text="延迟："
                        Margin="-78,8,0,0"/>
-            <TextBox IsEnabled="{x:Bind ViewModel.CustomFileChange, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            <TextBox x:Name="DelayBox"
+                     IsEnabled="{x:Bind ViewModel.CustomFileChange, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      Margin="0,0,0,0"
-                     MinWidth="160"/>
+                     MinWidth="160"
+                     Text="{x:Bind Delay, Mode=TwoWay}"
+                     wuc:Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
+                     wuc:Validation.ValidationPropertyName="Delay"
+                     wuc:Validation.ValidationProvider="{x:Bind}"
+                     Style="{StaticResource ValidatingTextBoxStyle}"/>
             <TextBlock Text="秒"
                        Margin="0,8,0,0"/>
         </StackPanel>
@@ -73,7 +120,8 @@
                        Margin="-78,10,0,0"/>
             <TimePicker ClockIdentifier="24HourClock"
                         IsEnabled="{x:Bind ViewModel.CustomRegularTaskRunning, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        Margin="-60,0,0,0"/>
+                        Margin="-60,0,0,0"
+                        SelectedTime="{x:Bind SelectedTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
         <wuc:Divider/>
         <StackPanel Margin="0,-10,0,0">
@@ -84,9 +132,14 @@
                             Margin="0,10,0,0">
                     <TextBlock Text="分钟"
                                Margin="0,5,0,0"/>
-                    <TextBox x:Name="Minutes"
+                    <TextBox x:Name="MinuteBox"
                              Margin="88,0,0,0"
-                             MinWidth="120"/>
+                             MinWidth="180"
+                             Text="{x:Bind Minute, Mode=TwoWay}"
+                             wuc:Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
+                             wuc:Validation.ValidationPropertyName="Minute"
+                             wuc:Validation.ValidationProvider="{x:Bind}"
+                             Style="{StaticResource ValidatingTextBoxStyle}"/>
                     <TextBlock Text="(0 to 59)"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal"
@@ -94,8 +147,14 @@
                             Spacing="20">
                     <TextBlock Text="小时"
                                Margin="0,5,0,0"/>
-                    <TextBox Margin="88,0,0,0"
-                             MinWidth="120"/>
+                    <TextBox x:Name="HourBox"
+                             Margin="88,0,0,0"
+                             MinWidth="180"
+                             Text="{x:Bind Hour, Mode=TwoWay}"
+                             wuc:Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
+                             wuc:Validation.ValidationPropertyName="Hour"
+                             wuc:Validation.ValidationProvider="{x:Bind}"
+                             Style="{StaticResource ValidatingTextBoxStyle}"/>
                     <TextBlock Text="(0 to 23)"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal"
@@ -103,8 +162,14 @@
                             Margin="0,10,0,0">
                     <TextBlock Text="每个星期的第几天"
                                Margin="0,5,0,0"/>
-                    <TextBox Margin="4,0,0,0"
-                             MinWidth="120"/>
+                    <TextBox x:Name="DayOfWeekBox"
+                             Margin="4,0,0,0"
+                             MinWidth="180"
+                             Text="{x:Bind DayOfWeek, Mode=TwoWay}"
+                             wuc:Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
+                             wuc:Validation.ValidationPropertyName="DayOfWeek"
+                             wuc:Validation.ValidationProvider="{x:Bind}"
+                             Style="{StaticResource ValidatingTextBoxStyle}"/>
                     <TextBlock Text="(0=周日 to 6=周六)"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal"
@@ -112,8 +177,14 @@
                             Margin="0,10,0,0">
                     <TextBlock Text="每个月第几天"
                                Margin="0,5,0,0"/>
-                    <TextBox Margin="32,0,0,0"
-                             MinWidth="120"/>
+                    <TextBox x:Name="DayOfMonthBox"
+                             Margin="32,0,0,0"
+                             MinWidth="180"
+                             Text="{x:Bind DayOfMonth, Mode=TwoWay}"
+                             wuc:Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
+                             wuc:Validation.ValidationPropertyName="DayOfMonth"
+                             wuc:Validation.ValidationProvider="{x:Bind}"
+                             Style="{StaticResource ValidatingTextBoxStyle}"/>
                     <TextBlock Text="(1 to 31)"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal"
@@ -121,8 +192,14 @@
                             Margin="0,10,0,0">
                     <TextBlock Text="月份"
                                Margin="0,5,0,0"/>
-                    <TextBox Margin="88,0,0,0"
-                             MinWidth="120"/>
+                    <TextBox x:Name="MonthlyDayBox"
+                             Margin="88,0,0,0"
+                             MinWidth="180"
+                             Text="{x:Bind MonthlyDay, Mode=TwoWay}"
+                             wuc:Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
+                             wuc:Validation.ValidationPropertyName="MonthlyDay"
+                             wuc:Validation.ValidationProvider="{x:Bind}"
+                             Style="{StaticResource ValidatingTextBoxStyle}"/>
                     <TextBlock Text="(1 to 12)"/>
                 </StackPanel>
                 <wuc:Divider/>
@@ -130,8 +207,16 @@
                             Spacing="20">
                     <TextBlock Text="CRON 表达式"
                                Margin="0,5,0,0"/>
-                    <TextBox Margin="32,0,0,0"
-                             MinWidth="120"/>
+                    <TextBox x:Name="ExpressionBox"
+                             Margin="32,0,0,0"
+                             MinWidth="180"
+                             Text="{x:Bind Expression, Mode=TwoWay}"
+                             wuc:Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
+                             wuc:Validation.ValidationPropertyName="Expression"
+                             wuc:Validation.ValidationProvider="{x:Bind}"
+                             Style="{StaticResource ValidatingTextBoxStyle}"/>
+                    <TextBlock Height="48"
+                               Margin="8"/>
                 </StackPanel>
             </StackPanel>
         </StackPanel>

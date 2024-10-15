@@ -4,7 +4,9 @@ using EasyTidy.Util;
 using EasyTidy.Views.ContentDialogs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.UI.Dispatching;
+using System.Collections;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace EasyTidy.ViewModels;
@@ -112,11 +114,34 @@ public partial class AutomaticViewModel : ObservableRecipient
     /// <summary>
     /// 是否单独配置标识
     /// </summary>
+    private bool _featureIndependentConfigFlag = false;
+
+    public bool FeatureIndependentConfigFlag
+    {
+        get => _featureIndependentConfigFlag;
+        set
+        {
+            if (_featureIndependentConfigFlag != value)
+            {
+                _featureIndependentConfigFlag = value;
+                NotFeatureIndependentConfigFlag = !value;
+                OnPropertyChanged();
+            }
+        }
+
+    }
+
     [ObservableProperty]
-    public bool _featureIndependentConfigFlag = false;
+    public bool _notFeatureIndependentConfigFlag = true;
 
     [ObservableProperty]
     public bool _globalIsOpen = false;
+
+    [ObservableProperty]
+    public bool _groupGlobalIsOpen = false;
+
+    [ObservableProperty]
+    public bool _customGroupIsOpen = false;
 
     [ObservableProperty]
     public bool _customIsOpen = false;
@@ -139,7 +164,25 @@ public partial class AutomaticViewModel : ObservableRecipient
     [ObservableProperty]
     public AdvancedCollectionView _taskListACV;
 
+    [ObservableProperty]
+    public ObservableCollection<TaskGroupTable> _taskGroupList;
+
+    [ObservableProperty]
+    public AdvancedCollectionView _taskGroupListACV;
+
     private readonly DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
+
+    [ObservableProperty]
+    private ObservableCollection<FileExplorerTable> _selectedTaskList = [];
+
+    [ObservableProperty]
+    private ObservableCollection<TaskGroupTable> _selectedGroupTaskList = [];
+
+    [ObservableProperty]
+    private string _delaySeconds = "5";
+
+    [ObservableProperty]
+    private string _selectTaskTime = DateTime.Now.ToString("HH:mm");
 
 
     [RelayCommand]
@@ -153,10 +196,40 @@ public partial class AutomaticViewModel : ObservableRecipient
             CloseButtonText = "取消",
             ThemeService = themeService
         };
+        dialog.PrimaryButtonClick += OnOnAddPlanPrimaryButton;
 
         await dialog.ShowAsync();
 
     }
+
+    private async void OnOnAddPlanPrimaryButton(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+    {
+        try
+        {
+            await using var db = new AppDbContext();
+            var dialog = sender as PlanExecutionContentDialog;
+            if (dialog.HasErrors)
+            {
+                args.Cancel = true;
+                return;
+            }
+            await db.Schedule.AddAsync(new ScheduleTable
+            {
+                Minutes = dialog.Minute,
+                Hours = dialog.Hour,
+                WeeklyDayNumber = dialog.DayOfWeek,
+                DailyInMonthNumber = dialog.DayOfMonth,
+                Monthly = dialog.MonthlyDay,
+                CronExpression = dialog.CronExpression
+            });
+            await db.SaveChangesAsync();
+        }
+        catch (Exception ex)
+        {
+            Logger.Error($"添加时间表失败：{ex}");
+        }
+    }
+
 
     [RelayCommand]
     private async Task OnCustomConfig()
@@ -169,26 +242,97 @@ public partial class AutomaticViewModel : ObservableRecipient
             CloseButtonText = "取消",
         };
 
+        dialog.PrimaryButtonClick += OnAddCustomConfigPrimaryButton;
+
         await dialog.ShowAsync();
     }
 
+    private async void OnAddCustomConfigPrimaryButton(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+    {
+        try
+        {
+            await using var db = new AppDbContext();
+            var dialog = sender as CustomConfigContentDialog;
+            if (dialog.HasErrors)
+            {
+                args.Cancel = true;
+                return;
+            }
+
+            List<FileExplorerTable> list = [];
+
+            foreach (var item in SelectedTaskList)
+            {
+                var update = await db.FileExplorer.Where(x => x.ID == item.ID && item.IsRelated == false).FirstOrDefaultAsync();
+                if (update != null)
+                {
+                    update.IsRelated = true;
+                    db.Entry(update).State = EntityState.Modified;
+                    list.Add(update);
+                }
+            }
+
+            await db.Automatic.AddAsync(new AutomaticTable{
+                IsFileChange = CustomFileChange,
+                IsStartupExecution = CustomStartupExecution,
+                RegularTaskRunning = CustomRegularTaskRunning,
+                OnScheduleExecution = CustomOnScheduleExecution,
+                DelaySeconds = dialog.Delay,
+                Schedule = new ScheduleTable
+                {
+                    Minutes = dialog.Minute,
+                    Hours = dialog.Hour,
+                    WeeklyDayNumber = dialog.DayOfWeek,
+                    DailyInMonthNumber = dialog.DayOfMonth,
+                    Monthly = dialog.MonthlyDay,
+                    CronExpression = dialog.Expression
+                },
+                FileExplorerList = list
+
+            });
+        }
+        catch (Exception ex)
+        {
+            Logger.Error($"添加自定义配置失败：{ex}");
+        }
+    }
+    
     [RelayCommand]
     private void OnSelectTask(object parameter)
     {
         var item = parameter as Button;
         var name = item.Name;
-        if (string.Equals(name, "SelectButton", StringComparison.OrdinalIgnoreCase))
-        {
-            GlobalIsOpen = true;
-            CustomIsOpen = false;
-        }
 
-        if (string.Equals(name, "CustomTaskList", StringComparison.OrdinalIgnoreCase))
+        switch (name)
         {
-            GlobalIsOpen = false;
-            CustomIsOpen = true;
+            case "SelectButton":
+                GlobalIsOpen = true;
+                GroupGlobalIsOpen = false;
+                break;
+            case "GroupButton":
+                GlobalIsOpen = false;
+                GroupGlobalIsOpen = true;
+                break;
         }
+    }
 
+    [RelayCommand]
+    private void OnCustomSelectTask(object parameter)
+    {
+        var item = parameter as Button;
+        var name = item.Name;
+
+        switch (name)
+        {
+            case "CustomTaskList":
+                CustomIsOpen = true;
+                CustomGroupIsOpen = false;
+                break;
+            case "CustomGroupButton":
+                CustomIsOpen = false;
+                CustomGroupIsOpen = true;
+                break;
+        }
     }
 
     private void NotifyPropertyChanged([CallerMemberName] string propertyName = null, bool reDoBackupDryRun = true)
@@ -197,7 +341,7 @@ public partial class AutomaticViewModel : ObservableRecipient
         // Notify UI of property change
         OnPropertyChanged(propertyName);
 
-        Logger.Info($"GeneralViewModel: NotifyPropertyChanged {propertyName}");
+        Logger.Info($"AutomaticViewModel: NotifyPropertyChanged {propertyName}");
 
         UpdateCurConfig(this);
 
@@ -215,17 +359,14 @@ public partial class AutomaticViewModel : ObservableRecipient
                 dispatcherQueue.TryEnqueue(async () =>
                 {
                     await using var db = new AppDbContext();
-                    var list = await db.FileExplorer.ToListAsync();
-                    foreach (var item in list)
-                    {
-                        if (item.TaskSource == Environment.GetFolderPath(Environment.SpecialFolder.Desktop))
-                        {
-                            item.TaskSource = "桌面";
-                        }
-                    }
-                    TaskList = new(await db.FileExplorer.ToListAsync());
+                    var list = await db.FileExplorer.Include(x =>x.GroupName).Where(f => f.IsRelated == false).ToListAsync();
+                    TaskList = new(list);
                     TaskListACV = new AdvancedCollectionView(TaskList, true);
                     TaskListACV.SortDescriptions.Add(new SortDescription("ID", SortDirection.Ascending));
+                    var groupList = await db.TaskGroup.Where(x => x.IsUsed == false).ToListAsync();
+                    TaskGroupList = new(groupList);
+                    TaskGroupListACV = new AdvancedCollectionView(TaskGroupList, true);
+                    TaskGroupListACV.SortDescriptions.Add(new SortDescription("Id", SortDirection.Ascending));
                 });
             });
 
@@ -233,7 +374,7 @@ public partial class AutomaticViewModel : ObservableRecipient
         catch (Exception ex)
         {
             IsActive = false;
-            Logger.Error($"ServerViewModel: OnPageLoad 异常信息 {ex}");
+            Logger.Error($"AutomaticViewModel: OnPageLoad 异常信息 {ex}");
         }
 
         IsActive = false;
@@ -246,16 +387,126 @@ public partial class AutomaticViewModel : ObservableRecipient
         {
             if (dataContext != null)
             {
-                var item = dataContext as ListView;
-                var items = item.SelectedItems;
-                var s = item.SelectedItem as FileExplorerTable;
-                await using var db = new AppDbContext();
+                var listViews = dataContext as TeachingTip;
+                var listView = listViews.HeroContent as ListView;
+                var items = listView.SelectedItems;
+                SelectedTaskList.Clear();
+                foreach (var item in items)
+                {
+                    FileExplorerTable task = item as FileExplorerTable;
+                    SelectedTaskList.Add(task);
+                }
+                await OnPageLoaded();
             }
         }
         catch (Exception ex)
         {
-            Logger.Error($"ServerViewModel: OnSelectedItemChanged 异常信息 {ex}");
+            Logger.Error($"AutomaticViewModel: OnSelectedItemChanged 异常信息 {ex}");
         }
+
+    }
+
+    [RelayCommand]
+    private async Task OnSelectGroupItemChanged(object dataContext)
+    {
+        try
+        {
+            if (dataContext != null)
+            {
+                var listViews = dataContext as TeachingTip;
+                var listView = listViews.HeroContent as ListView;
+                var items = listView.SelectedItems;
+                SelectedGroupTaskList.Clear();
+                foreach (var item in items)
+                {
+                    TaskGroupTable task = item as TaskGroupTable;
+                    SelectedGroupTaskList.Add(task);
+                }
+                await OnPageLoaded();
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.Error($"AutomaticViewModel: OnSelectGroupItemChanged 异常信息 {ex}");
+        }
+    }
+
+    [RelayCommand]
+    private async Task OnSaveTaskConfig()
+    {
+        IsActive = true;
+        try
+        {
+            await using var db = new AppDbContext();
+            List<FileExplorerTable> list = [];
+            foreach (var item in SelectedTaskList)
+            {
+                var update = await db.FileExplorer.Where(x => x.ID == item.ID && item.IsRelated == false).FirstOrDefaultAsync();
+                if (update != null)
+                {
+                    update.IsRelated = true;
+                    list.Add(update);
+                }
+            }
+            foreach (var item in SelectedGroupTaskList)
+            {
+                var updates = await db.FileExplorer.Include(x => x.GroupName).Where(x => x.GroupName.Id == item.Id).ToListAsync();
+                if (updates != null)
+                {
+                    list.AddRange(updates.Select(fileExplorer =>
+                    {
+                        fileExplorer.IsRelated = true;
+                        fileExplorer.GroupName.IsUsed = true;
+                        return fileExplorer;
+                    }));
+                }
+            }
+            db.FileExplorer.UpdateRange(list);
+            await db.SaveChangesAsync();
+            await OnPageLoaded();
+            DateTime dateValue = DateTime.Parse(SelectTaskTime);
+            if (!RegularTaskRunning)
+            {
+                dateValue = new DateTime(dateValue.Year, dateValue.Month, dateValue.Day, 0, 0, 0);
+            }
+            ScheduleTable schedule = null;
+            if (OnScheduleExecution)
+            {
+                schedule = await db.Schedule.OrderByDescending(x => x.ID).FirstOrDefaultAsync();
+            }
+            AutomaticTable automatic = new()
+            {
+                IsFileChange = IsFileChange,
+                DelaySeconds = DelaySeconds,
+                RegularTaskRunning = RegularTaskRunning,
+                Hourly = dateValue.Hour.ToString(),
+                Minutes = dateValue.Minute.ToString(),
+                OnScheduleExecution = OnScheduleExecution,
+                IsStartupExecution = IsStartupExecution,
+                Schedule = schedule,
+                FileExplorerList = list
+            };
+            await db.Automatic.AddAsync(automatic);
+            await db.SaveChangesAsync();
+            await OnPageLoaded();
+            Growl.Success(new GrowlInfo
+            {
+                Message = "保存成功",
+                ShowDateTime = false
+            });
+        }
+        catch (Exception ex)
+        {
+            Growl.Error(new GrowlInfo
+            {
+                Message = "保存失败",
+                ShowDateTime = false
+            });
+            Logger.Error($"AutomaticViewModel: OnSaveTaskConfig 异常信息 {ex}");
+            IsActive = false;
+        }
+
+        IsActive = false;
 
     }
 

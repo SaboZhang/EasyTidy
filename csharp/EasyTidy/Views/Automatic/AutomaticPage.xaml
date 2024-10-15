@@ -6,8 +6,8 @@
     xmlns:local="using:EasyTidy.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:wuc="using:WinUICommunity" 
-    xmlns:ic="using:Microsoft.Xaml.Interactions.Core" 
+    xmlns:wuc="using:WinUICommunity"
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:model="using:EasyTidy.Model"
     mc:Ignorable="d">
@@ -19,136 +19,175 @@
             </ic:EventTriggerBehavior.Actions>
         </ic:EventTriggerBehavior>
     </i:Interaction.Behaviors>
-    
-    <wuc:SettingsPageControl
-        x:Name="settingsControl"
-        ModuleDescription="自动化模块能够对文件和文件夹的变动进行监控。依据自定义设置以及与之关联的文件处理任务，该模块可自动执行相应的操作。"
-        ModuleTitle="自动化"
-        ModuleImageSource="ms-appx:///Assets/Modules/Auto.png">
-        <wuc:SettingsPageControl.ModuleContent>
-            <StackPanel wuc:PanelAttach.ChildrenTransitions="Default"
-                        Orientation="Vertical">
-                <wuc:SimpleSettingsGroup Margin="0,-32,0,0"
-                                         Header="自动分析（全局）">
-                    <wuc:SettingsCard Description="文件自动处理选项"
-                                      Header="文件更改时">
-                        <wuc:SettingsCard.HeaderIcon>
-                            <FontIcon Glyph="&#xF0E4;"/>
-                        </wuc:SettingsCard.HeaderIcon>
-                        <StackPanel Orientation="Horizontal"
-                                    Spacing="8">
-                            <ToggleSwitch x:Name="FileChange"
-                                          IsOn="{x:Bind ViewModel.IsFileChange, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock Text="延迟："
-                                       Margin="20,8,0,0"/>
-                            <NumberBox Value="0"
-                                       IsEnabled="{x:Bind ViewModel.IsFileChange, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock Text="秒"
-                                       Margin="0,8,0,0"/>
-                        </StackPanel>
-                    </wuc:SettingsCard>
-                    <wuc:SettingsCard Description="EasyTidy启动时执行一次"
-                                      Header="启动时">
-                        <wuc:SettingsCard.HeaderIcon>
-                            <FontIcon Glyph="&#xE7E8;"/>
-                        </wuc:SettingsCard.HeaderIcon>
-                        <ToggleSwitch x:Name="StartupExecution"
-                                      IsOn="{x:Bind ViewModel.IsStartupExecution, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    </wuc:SettingsCard>
-                    <wuc:SettingsCard Description="根据设定的时间定期执行"
-                                      Header="定期执行">
-                        <wuc:SettingsCard.HeaderIcon>
-                            <FontIcon Glyph="&#xE916;"/>
-                        </wuc:SettingsCard.HeaderIcon>
-                        <StackPanel Orientation="Horizontal"
-                                    Spacing="8">
-                            <ToggleSwitch x:Name="RegularTaskRunning"
-                                          IsOn="{x:Bind ViewModel.RegularTaskRunning, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock Text="每："
-                                       Margin="20,8,0,0"/>
-                            <TimePicker ClockIdentifier="24HourClock"
-                                        IsEnabled="{x:Bind ViewModel.RegularTaskRunning, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        </StackPanel>
-                    </wuc:SettingsCard>
-                    <wuc:SettingsCard Description="根据设定的计划进行周期性执行"
-                                      Header="按照计划">
-                        <wuc:SettingsCard.HeaderIcon>
-                            <FontIcon Glyph="&#xED28;"/>
-                        </wuc:SettingsCard.HeaderIcon>
-                        <StackPanel Orientation="Horizontal"
-                                    Spacing="8">
-                            <ToggleSwitch x:Name="OnScheduleExecutionSwitch"
-                                          IsOn="{x:Bind ViewModel.OnScheduleExecution, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <Button Content="配置"
-                                    Command="{x:Bind ViewModel.PlanExecutionCommand}"
-                                    IsEnabled="{x:Bind ViewModel.OnScheduleExecution, Mode=OneWay}"/>
-                        </StackPanel>
-                    </wuc:SettingsCard>
 
-                </wuc:SimpleSettingsGroup>
-                <wuc:SimpleSettingsGroup Header="任务关联">
-                    <wuc:SettingsExpander Header="配置任务"
-                                          HeaderIcon="{wuc:FontIcon FontFamily={StaticResource SymbolThemeFontFamily}, Glyph=&#xEA65;}"
-                                          Description="将配置的任务与全局计划关联，或者单独配置"
-                                          IsExpanded="True">
-                        <wuc:SettingsExpander.Items>
-                            <wuc:SettingsCard Header="任务选择">
-                                <StackPanel Orientation="Horizontal">
-                                    <Button x:Name="SelectButton"
-                                            Content="选择任务"
-                                            Command="{x:Bind ViewModel.SelectTaskCommand}"
-                                            CommandParameter="{Binding ElementName=SelectButton}">
-                                        <Button.Resources>
-                                            <TeachingTip x:Name="TaskSelect"
-                                                         Title="选择任务"
-                                                         Target="{x:Bind SelectButton}"
-                                                         IsOpen="{x:Bind ViewModel.GlobalIsOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                         PreferredPlacement="Bottom">
-                                                <TeachingTip.HeroContent>
-                                                    <ListView SelectionMode="Multiple"
-                                                              MaxHeight="320"
-                                                              ItemsSource="{x:Bind ViewModel.TaskListACV, Mode=TwoWay}"
-                                                              SelectionChanged="ListView_SelectionChanged">
-                                                        <ListView.ItemTemplate>
-                                                            <DataTemplate x:DataType="model:FileExplorerTable">
-                                                                <TextBlock Text="{x:Bind TaskName}"/>
-                                                            </DataTemplate>
-                                                        </ListView.ItemTemplate>
-                                                    </ListView>
-                                                </TeachingTip.HeroContent>
-                                            </TeachingTip>
-                                        </Button.Resources>
-                                    </Button>
+    <StackPanel x:Name="root">
+        <StackPanel x:Name="Growl"
+                    MinWidth="340"
+                    wuc:Growl.GrowlParent="True"/>
+        <wuc:SettingsPageControl
+            x:Name="settingsControl"
+            ModuleDescription="自动化模块能够对文件和文件夹的变动进行监控。依据自定义设置以及与之关联的文件处理任务，该模块可自动执行相应的操作。"
+            ModuleTitle="自动化"
+            ModuleImageSource="ms-appx:///Assets/Modules/Auto.png">
+            <wuc:SettingsPageControl.ModuleContent>
+                <StackPanel wuc:PanelAttach.ChildrenTransitions="Default"
+                            Orientation="Vertical">
+                    <wuc:SimpleSettingsGroup Margin="0,-32,0,0"
+                                             Header="自动分析（全局）">
+                        <wuc:SettingsCard Description="文件自动处理选项"
+                                          Header="文件更改时">
+                            <wuc:SettingsCard.HeaderIcon>
+                                <FontIcon Glyph="&#xF0E4;"/>
+                            </wuc:SettingsCard.HeaderIcon>
+                            <StackPanel Orientation="Horizontal"
+                                        Spacing="8">
+                                <ToggleSwitch x:Name="FileChange"
+                                              IsOn="{x:Bind ViewModel.IsFileChange, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBlock Text="延迟："
+                                           Margin="20,8,0,0"/>
+                                <NumberBox Value="{x:Bind ViewModel.DelaySeconds, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                           IsEnabled="{x:Bind ViewModel.IsFileChange, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBlock Text="秒"
+                                           Margin="0,8,0,0"/>
+                            </StackPanel>
+                        </wuc:SettingsCard>
+                        <wuc:SettingsCard Description="EasyTidy启动时执行一次"
+                                          Header="启动时">
+                            <wuc:SettingsCard.HeaderIcon>
+                                <FontIcon Glyph="&#xE7E8;"/>
+                            </wuc:SettingsCard.HeaderIcon>
+                            <ToggleSwitch x:Name="StartupExecution"
+                                          IsOn="{x:Bind ViewModel.IsStartupExecution, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </wuc:SettingsCard>
+                        <wuc:SettingsCard Description="根据设定的时间定期执行"
+                                          Header="定期执行">
+                            <wuc:SettingsCard.HeaderIcon>
+                                <FontIcon Glyph="&#xE916;"/>
+                            </wuc:SettingsCard.HeaderIcon>
+                            <StackPanel Orientation="Horizontal"
+                                        Spacing="8">
+                                <ToggleSwitch x:Name="RegularTaskRunning"
+                                              IsOn="{x:Bind ViewModel.RegularTaskRunning, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBlock Text="每："
+                                           Margin="20,8,0,0"/>
+                                <TimePicker ClockIdentifier="24HourClock"
+                                            IsEnabled="{x:Bind ViewModel.RegularTaskRunning, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                            SelectedTime="{x:Bind ViewModel.SelectTaskTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+                        </wuc:SettingsCard>
+                        <wuc:SettingsCard Description="根据设定的计划进行周期性执行"
+                                          Header="按照计划">
+                            <wuc:SettingsCard.HeaderIcon>
+                                <FontIcon Glyph="&#xED28;"/>
+                            </wuc:SettingsCard.HeaderIcon>
+                            <StackPanel Orientation="Horizontal"
+                                        Spacing="8">
+                                <ToggleSwitch x:Name="OnScheduleExecutionSwitch"
+                                              IsOn="{x:Bind ViewModel.OnScheduleExecution, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <Button Content="配置"
+                                        Command="{x:Bind ViewModel.PlanExecutionCommand}"
+                                        IsEnabled="{x:Bind ViewModel.OnScheduleExecution, Mode=OneWay}"/>
+                            </StackPanel>
+                        </wuc:SettingsCard>
 
-                                    <CheckBox x:Name="FeatureIndependentConfigFlagCheckBox"
-                                              Margin="10,0,0,0"
-                                              IsChecked="{x:Bind ViewModel.FeatureIndependentConfigFlag, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                                        是否单独配置
-                                    </CheckBox>
-                                    <Button Content="自定义"
-                                            Margin="5,0,0,0"
-                                            Command="{x:Bind ViewModel.CustomConfigCommand}"
-                                            IsEnabled="{x:Bind ViewModel.FeatureIndependentConfigFlag, Mode=OneWay}"/>
-                                </StackPanel>
-                            </wuc:SettingsCard>
-                        </wuc:SettingsExpander.Items>
+                    </wuc:SimpleSettingsGroup>
+                    <wuc:SimpleSettingsGroup Header="任务关联">
+                        <wuc:SettingsExpander Header="配置任务"
+                                              HeaderIcon="{wuc:FontIcon FontFamily={StaticResource SymbolThemeFontFamily}, Glyph=&#xEA65;}"
+                                              Description="将配置的任务与全局计划关联，或者单独配置"
+                                              IsExpanded="True">
+                            <wuc:SettingsExpander.Items>
+                                <wuc:SettingsCard Header="任务选择">
+                                    <StackPanel Orientation="Horizontal"
+                                                Spacing="8">
+                                        <Button x:Name="GroupButton"
+                                                Content="任务组"
+                                                Command="{x:Bind ViewModel.SelectTaskCommand}"
+                                                CommandParameter="{Binding ElementName=GroupButton}">
+                                            <Button.Resources>
+                                                <TeachingTip x:Name="GroupTaskSelect"
+                                                             Title="选择任务组"
+                                                             Target="{x:Bind GroupButton}"
+                                                             IsOpen="{x:Bind ViewModel.GroupGlobalIsOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                             PreferredPlacement="Bottom"
+                                                             CloseButtonClick="GroupTaskSelect_CloseButtonClick">
+                                                    <TeachingTip.HeroContent>
+                                                        <ListView x:Name="GroupTaskListView"
+                                                                  SelectionMode="Multiple"
+                                                                  MaxHeight="320"
+                                                                  ItemsSource="{x:Bind ViewModel.TaskGroupListACV, Mode=TwoWay}">
+                                                            <ListView.ItemTemplate>
+                                                                <DataTemplate x:DataType="model:TaskGroupTable">
+                                                                    <TextBlock Text="{x:Bind GroupName}"/>
+                                                                </DataTemplate>
+                                                            </ListView.ItemTemplate>
+                                                        </ListView>
+                                                    </TeachingTip.HeroContent>
+                                                </TeachingTip>
+                                            </Button.Resources>
+                                        </Button>
+                                        <Button x:Name="SelectButton"
+                                                Content="单个任务"
+                                                Command="{x:Bind ViewModel.SelectTaskCommand}"
+                                                CommandParameter="{Binding ElementName=SelectButton}">
+                                            <Button.Resources>
+                                                <TeachingTip x:Name="TaskSelect"
+                                                             Title="选择任务"
+                                                             Target="{x:Bind SelectButton}"
+                                                             IsOpen="{x:Bind ViewModel.GlobalIsOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                             PreferredPlacement="Bottom"
+                                                             CloseButtonClick="TaskSelect_CloseButtonClick">
+                                                    <TeachingTip.HeroContent>
+                                                        <ListView x:Name="TaskListView"
+                                                                  SelectionMode="Multiple"
+                                                                  MaxHeight="320"
+                                                                  ItemsSource="{x:Bind ViewModel.TaskListACV, Mode=TwoWay}">
+                                                            <ListView.ItemTemplate>
+                                                                <DataTemplate x:DataType="model:FileExplorerTable">
+                                                                    <TextBlock Text="{x:Bind TaskName}"/>
+                                                                </DataTemplate>
+                                                            </ListView.ItemTemplate>
+                                                        </ListView>
+                                                    </TeachingTip.HeroContent>
+                                                </TeachingTip>
+                                            </Button.Resources>
+                                        </Button>
 
-                    </wuc:SettingsExpander>
+                                        <CheckBox x:Name="FeatureIndependentConfigFlagCheckBox"
+                                                  IsChecked="{x:Bind ViewModel.FeatureIndependentConfigFlag, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                            是否单独配置
+                                        </CheckBox>
+                                        <Button Content="自定义"
+                                                Command="{x:Bind ViewModel.CustomConfigCommand}"
+                                                IsEnabled="{x:Bind ViewModel.FeatureIndependentConfigFlag, Mode=OneWay}"/>
+                                    </StackPanel>
+                                </wuc:SettingsCard>
+                            </wuc:SettingsExpander.Items>
 
-                </wuc:SimpleSettingsGroup>
-                <StackPanel Orientation="Horizontal"
-                            Spacing="8"
-                            HorizontalAlignment="Right">
-                    <Button Content="撤销配置"
-                            HorizontalAlignment="Center"
-                            Margin="0,10,0,0"/>
-                    <Button Content="保存配置"
-                            HorizontalAlignment="Center"
-                            Margin="0,10,0,0"/>
+                        </wuc:SettingsExpander>
+
+                    </wuc:SimpleSettingsGroup>
+                    <StackPanel Orientation="Horizontal"
+                                Spacing="8"
+                                HorizontalAlignment="Right"
+                                Visibility="{x:Bind ViewModel.NotFeatureIndependentConfigFlag, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
+                        Converter={StaticResource BoolToVisibilityConverter}}">
+                        <Button Content="撤销配置"
+                                HorizontalAlignment="Center"
+                                Margin="0,10,0,0"/>
+                        <Button Content="保存配置"
+                                HorizontalAlignment="Center"
+                                Margin="0,10,0,0"
+                                Command="{x:Bind ViewModel.SaveTaskConfigCommand}"/>
+                    </StackPanel>
                 </StackPanel>
-            </StackPanel>
-        </wuc:SettingsPageControl.ModuleContent>
+            </wuc:SettingsPageControl.ModuleContent>
 
-    </wuc:SettingsPageControl>
+        </wuc:SettingsPageControl>
+        <wuc:LoadingIndicator x:Name="Load"
+                              Mode="Arcs"
+                              IsActive="{x:Bind ViewModel.IsActive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+    </StackPanel>
+
 
 </Page>

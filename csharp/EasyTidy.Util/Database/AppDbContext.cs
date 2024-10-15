@@ -23,4 +23,13 @@ public class AppDbContext : DbContext
     }
 
     public DbSet<FileExplorerTable> FileExplorer { get; set; }
+
+    public DbSet<ScheduleTable> Schedule { get; set; }
+
+    public DbSet<AutomaticTable> Automatic { get; set; }
+
+    public DbSet<TaskGroupTable> TaskGroup { get; set; }
+
+    public DbSet<FilterTable> Filters { get; set; }
+
 }

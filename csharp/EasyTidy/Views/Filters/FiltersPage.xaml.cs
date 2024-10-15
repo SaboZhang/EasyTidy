@@ -9,10 +9,23 @@ public sealed partial class FiltersPage : Page
 {
     public FilterViewModel ViewModel { get; set; }
 
+    /// <summary>
+    /// Initializes a new instance of the FiltersPage class.
+    /// </summary>
     public FiltersPage()
     {
         ViewModel = App.GetService<FilterViewModel>();
         this.InitializeComponent();
         XamlRoot = App.MainWindow.Content.XamlRoot;
+    }
+
+    private void EditButton_Click(object sender, RoutedEventArgs e)
+    {
+        ViewModel.UpdateTaskCommand.Execute((sender as Button).DataContext);
+    }
+
+    private void DeleteButton_Click(object sender, RoutedEventArgs e)
+    {
+        ViewModel.DeleteTaskCommand.Execute((sender as Button).DataContext);
     }
 }

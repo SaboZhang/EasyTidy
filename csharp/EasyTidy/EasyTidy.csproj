@@ -20,8 +20,9 @@
     <ApplicationIcon>Assets\icon.ico</ApplicationIcon>
     <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
     <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
-    <WindowsPackageType>MSIX</WindowsPackageType>
+    <WindowsPackageType>None</WindowsPackageType>
     <DefaultLanguage>zh-CN</DefaultLanguage>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <None Include="Assets\**\*">
@@ -168,6 +169,7 @@
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240829007" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.9" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Quartz" Version="3.13.0" />
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
     <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
     <PackageReference Include="WinUICommunity.Components" Version="6.9.0" />
@@ -175,6 +177,7 @@
     <PackageReference Include="WinUICommunity.LandingPages" Version="6.9.0" />
   </ItemGroup>
   <ItemGroup>
+	<ProjectReference Include="..\EasyTidy.Service\EasyTidy.Service.csproj" />
     <ProjectReference Include="..\EasyTidy.Log\EasyTidy.Log.csproj" />
     <ProjectReference Include="..\EasyTidy.Model\EasyTidy.Model.csproj" />
     <ProjectReference Include="..\EasyTidy.Util\EasyTidy.Util.csproj" />

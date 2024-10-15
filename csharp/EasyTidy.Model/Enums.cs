@@ -47,6 +47,70 @@ public enum OperationMode
 
     [Display(Name = "删除")] Delete,
 
-    [Display(Name = "重命名")] Rename
+    [Display(Name = "重命名")] Rename,
 
+    [Display(Name = "回收站")] RecycleBin
+
+}
+
+public enum YesOrNo
+{
+    [Display(Name = "否")] No,
+
+    [Display(Name = "是")] Yes,
+}
+
+public enum DateUnit
+{
+    [Display(Name ="秒")] Second,
+
+    [Display(Name ="分钟")] Minute,
+
+    [Display(Name = "小时")] Hour,
+
+    [Display(Name = "天")] Day,
+
+    [Display(Name = "月")] Month,
+
+    [Display(Name = "年")] Year
+}
+
+public enum ComparisonResult
+{
+    [Display(Name = ">")]
+    GreaterThan,
+
+    [Display(Name = "=")]
+    Equal,
+
+    [Display(Name = "<")]
+    LessThan,
+}
+
+public enum SizeUnit
+{
+    [Display(Name = "字节")] Byte,
+
+    [Display(Name = "KB")] Kilobyte,
+
+    [Display(Name = "MB")] Megabyte,
+
+    [Display(Name = "GB")] Gigabyte
+}
+
+public enum ContentOperatorEnum
+{
+    [Display(Name = "至少一个单词")] AtLeastOneWord,
+
+    [Display(Name = "至少一个单词（区分大小写）")] AtLeastOneWordCaseSensitive,
+
+    [Display(Name = "以随意的顺序的所有单词")] AllWordsInAnyOrder,
+
+    [Display(Name = "以随意的顺序的所有单词（区分大小写）")] AllWordsInAnyOrderCaseSensitive,
+
+    [Display(Name = "正则表达式")] RegularExpression,
+
+    [Display(Name = "字符串")] String,
+
+    [Display(Name = "字符串（区分大小写）")] StringCaseSensitive
 }
