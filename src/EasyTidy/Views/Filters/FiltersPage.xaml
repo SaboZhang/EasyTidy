@@ -27,7 +27,7 @@
         ModuleImageSource="ms-appx:///Assets/Modules/Filters.png">
         <wuc:SettingsPageControl.ModuleContent>
             <StackPanel>
-                <wuc:SettingsCard x:Name="AddTask"
+                <wuc:SettingsCard x:Name="AddFilterCard"
                                   Header="添加过滤器"
                                   Description="添加自定义附加的过滤器">
                     <wuc:SettingsCard.HeaderIcon>
@@ -35,15 +35,15 @@
                     </wuc:SettingsCard.HeaderIcon>
                     <StackPanel>
                         <Button Content="添加过滤器"
-                                x:Name="TaskButton"
+                                x:Name="FiltersButton"
                                 Style="{StaticResource AccentButtonStyle}"
                                 Command="{x:Bind ViewModel.AddFilterClickedCommand}"/>
                     </StackPanel>
                 </wuc:SettingsCard>
                 <StackPanel>
-                    <TextBlock x:Name="TaskList"
+                    <TextBlock x:Name="FiltersList"
                                TextWrapping="Wrap"
-                               Text="任务列表"
+                               Text="过滤器列表"
                                Margin="0,20,20,0"/>
                     <wuc:LoadingIndicator x:Name="Load"
                                           Mode="Arcs"

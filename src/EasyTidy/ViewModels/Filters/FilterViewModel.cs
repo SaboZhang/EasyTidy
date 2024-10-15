@@ -133,6 +133,7 @@ public partial class FilterViewModel : ObservableRecipient
                 ContentValue = dialog.ContentValue
             });
             await db.SaveChangesAsync();
+            await OnPageLoaded();
         }
         catch (Exception ex) 
         { 
