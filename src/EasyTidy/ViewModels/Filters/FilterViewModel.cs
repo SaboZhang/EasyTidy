@@ -134,10 +134,20 @@ public partial class FilterViewModel : ObservableRecipient
             });
             await db.SaveChangesAsync();
             await OnPageLoaded();
+            Growl.Success(new GrowlInfo
+            {
+                Message = "添加成功",
+                ShowDateTime = false
+            });
         }
         catch (Exception ex) 
         { 
             Logger.Error($"添加过滤器失败：{ex}");
+            Growl.Error(new GrowlInfo
+            {
+                Message = "添加失败",
+                ShowDateTime = false
+            });
         }
     }
 
