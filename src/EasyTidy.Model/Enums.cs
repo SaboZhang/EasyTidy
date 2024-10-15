@@ -97,3 +97,20 @@ public enum SizeUnit
 
     [Display(Name = "GB")] Gigabyte
 }
+
+public enum ContentOperatorEnum
+{
+    [Display(Name = "至少一个单词")] AtLeastOneWord,
+
+    [Display(Name = "至少一个单词（区分大小写）")] AtLeastOneWordCaseSensitive,
+
+    [Display(Name = "以随意的顺序的所有单词")] AllWordsInAnyOrder,
+
+    [Display(Name = "以随意的顺序的所有单词（区分大小写）")] AllWordsInAnyOrderCaseSensitive,
+
+    [Display(Name = "正则表达式")] RegularExpression,
+
+    [Display(Name = "字符串")] String,
+
+    [Display(Name = "字符串（区分大小写）")] StringCaseSensitive
+}

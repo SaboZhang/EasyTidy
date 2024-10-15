@@ -55,7 +55,7 @@ public class FilterTable
     public string IncludedFiles { get; set; }
 
     public bool IsContentSelected { get; set; }
-    public string ContentOperator { get; set; }
+    public ContentOperatorEnum ContentOperator { get; set; }
     public string ContentValue { get; set; }
 
     // Character 相关字段
@@ -69,19 +69,19 @@ public class FilterTable
 
         if (IsSizeSelected)
         {
-            AppendCondition(sb, ref isFirst, $"文件大小：{EnumHelper.GetDisplayName(SizeOperator)} = {SizeValue} {EnumHelper.GetDisplayName(SizeUnit)}");
+            AppendCondition(sb, ref isFirst, $"文件大小：{EnumHelper.GetDisplayName(SizeOperator)} {SizeValue} {EnumHelper.GetDisplayName(SizeUnit)}");
         }
         if (IsCreateDateSelected)
         {
-            AppendCondition(sb, ref isFirst, $"创建时间：{EnumHelper.GetDisplayName(CreateDateOperator)} = {CreateDateValue} {EnumHelper.GetDisplayName(CreateDateUnit)}");
+            AppendCondition(sb, ref isFirst, $"创建时间：{EnumHelper.GetDisplayName(CreateDateOperator)} {CreateDateValue} {EnumHelper.GetDisplayName(CreateDateUnit)}");
         }
         if (IsEditDateSelected)
         {
-            AppendCondition(sb, ref isFirst, $"修改时间：{EnumHelper.GetDisplayName(EditDateOperator)} = {EditDateValue} {EnumHelper.GetDisplayName(EditDateUnit)}");
+            AppendCondition(sb, ref isFirst, $"修改时间：{EnumHelper.GetDisplayName(EditDateOperator)} {EditDateValue} {EnumHelper.GetDisplayName(EditDateUnit)}");
         }
         if (IsVisitDateSelected)
         {
-            AppendCondition(sb, ref isFirst, $"访问时间：{EnumHelper.GetDisplayName(VisitDateOperator)} = {VisitDateValue} {EnumHelper.GetDisplayName(VisitDateUnit)}");
+            AppendCondition(sb, ref isFirst, $"访问时间：{EnumHelper.GetDisplayName(VisitDateOperator)} {VisitDateValue} {EnumHelper.GetDisplayName(VisitDateUnit)}");
         }
 
         return sb.ToString();

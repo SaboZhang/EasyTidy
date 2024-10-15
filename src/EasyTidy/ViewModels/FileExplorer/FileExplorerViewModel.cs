@@ -68,15 +68,17 @@ public partial class FileExplorerViewModel : ObservableRecipient
         {
             var dialog = sender as AddTaskContentDialog;
             await using var db = new AppDbContext();
-            if (SelectedOperationMode == OperationMode.Delete)
+            if (dialog.HasErrors)
             {
-                TaskSource = string.Empty;
+                args.Cancel = true;
+                return;
             }
             await db.FileExplorer.AddAsync(new FileExplorerTable
             {
                 TaskName = dialog.TaskName,
                 TaskRule = dialog.TaskRule,
-                TaskSource = TaskSource,
+                TaskSource = SelectedOperationMode == OperationMode.Delete || SelectedOperationMode == OperationMode.RecycleBin
+                ? string.Empty : TaskSource,
                 Shortcut = dialog.Shortcut,
                 TaskTarget = TaskTarget,
                 OperationMode = SelectedOperationMode,

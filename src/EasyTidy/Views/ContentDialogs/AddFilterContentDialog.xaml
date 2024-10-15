@@ -11,26 +11,42 @@
     CornerRadius="{ThemeResource OverlayCornerRadius}"
     DefaultButton="Primary">
 
+    <ContentDialog.Resources>
+        <DataTemplate x:Key="ValidationTemplate"
+              x:DataType="x:String">
+            <TextBlock Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+               Text="{x:Bind}"/>
+        </DataTemplate>
+    </ContentDialog.Resources>
+    
     <StackPanel>
+        <StackPanel x:Name="Growl"
+                    MinWidth="340"
+                    wuc:Growl.GrowlParent="True"/>
         <StackPanel Orientation="Horizontal"
                     Spacing="8">
-            <TextBlock Text="过滤器名称：" 
+            <TextBlock Text="过滤器名称："
                        Margin="0,8,0,0"/>
             <TextBox x:Name="NameTextBox"
                      Margin="38,0,0,0"
                      MinWidth="210"
+                     wuc:Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
+                     wuc:Validation.ValidationPropertyName="FilterName"
+                     wuc:Validation.ValidationProvider="{x:Bind}"
+                     Style="{StaticResource ValidatingTextBoxStyle}"
                      Text="{x:Bind FilterName, Mode=TwoWay}"/>
         </StackPanel>
         <wuc:Divider Content="属性"
-                HorizontalContentAlignment="Left"/>
+                     HorizontalContentAlignment="Left"/>
         <StackPanel x:Name="SizePropertyStackPanel"
                     Orientation="Horizontal"
                     Spacing="8"
                     Margin="0,-10,0,0">
             <CheckBox Content="文件大小："
-                      IsChecked="{x:Bind IsSizeSelected, Mode=TwoWay}"/>
+                      IsChecked="{x:Bind IsSizeSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             <ComboBox x:Name="SizeComboBox"
                       Width="78"
+                      IsEnabled="False"
                       ItemsSource="{x:Bind ViewModel.ComparisonResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                       SelectedItem="{x:Bind SizeOperator, Mode=TwoWay}">
                 <ComboBox.ItemTemplate>
@@ -41,10 +57,12 @@
             </ComboBox>
             <TextBox x:Name="SizeTextBox"
                      Width="120"
+                     IsEnabled="False"
                      InputScope="Number"
                      Text="{x:Bind SizeValue, Mode=TwoWay}"/>
             <ComboBox x:Name="SizeUnitComboBox"
                       Width="78"
+                      IsEnabled="False"
                       ItemsSource="{x:Bind ViewModel.SizeUnits, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                       SelectedItem="{x:Bind SizeUnit, Mode=TwoWay}">
                 <ComboBox.ItemTemplate>
@@ -59,9 +77,10 @@
                     Spacing="8"
                     Margin="0,10,0,0">
             <CheckBox Content="创建时间："
-                      IsChecked="{x:Bind IsCreateDateSelected}"/>
+                      IsChecked="{x:Bind IsCreateDateSelected, Mode=TwoWay}"/>
             <ComboBox x:Name="CreateDateComboBox"
                       Width="78"
+                      IsEnabled="False"
                       ItemsSource="{x:Bind ViewModel.ComparisonResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                       SelectedItem="{x:Bind CreateDateOperator, Mode=TwoWay}">
                 <ComboBox.ItemTemplate>
@@ -73,9 +92,11 @@
             <TextBox x:Name="CreateDateTextBox"
                      Width="120"
                      InputScope="Number"
+                     IsEnabled="False"
                      Text="{x:Bind CreateDateValue, Mode=TwoWay}"/>
             <ComboBox x:Name="CreateDateUnitComboBox"
                       Width="78"
+                      IsEnabled="False"
                       ItemsSource="{x:Bind ViewModel.DateUnits, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                       SelectedItem="{x:Bind CreateDateUnit, Mode=TwoWay}">
                 <ComboBox.ItemTemplate>
@@ -93,6 +114,7 @@
                       IsChecked="{x:Bind IsEditDateSelected, Mode=TwoWay}"/>
             <ComboBox x:Name="EditDateComboBox"
                       Width="78"
+                      IsEnabled="False"
                       ItemsSource="{x:Bind ViewModel.ComparisonResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                       SelectedItem="{x:Bind EditDateOperator, Mode=TwoWay}">
                 <ComboBox.ItemTemplate>
@@ -104,9 +126,11 @@
             <TextBox x:Name="EditDateTextBox"
                      Width="120"
                      InputScope="Number"
+                     IsEnabled="False"
                      Text="{x:Bind EditDateValue, Mode=TwoWay}"/>
             <ComboBox x:Name="EditDateUnitComboBox"
                       Width="78"
+                      IsEnabled="False"
                       ItemsSource="{x:Bind ViewModel.DateUnits, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                       SelectedItem="{x:Bind EditDateUnit, Mode=TwoWay}">
                 <ComboBox.ItemTemplate>
@@ -124,6 +148,7 @@
                       IsChecked="{x:Bind IsVisitDateSelected, Mode=TwoWay}"/>
             <ComboBox x:Name="VisitDateComboBox"
                       Width="78"
+                      IsEnabled="False"
                       ItemsSource="{x:Bind ViewModel.ComparisonResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                       SelectedItem="{x:Bind VisitDateOperator, Mode=TwoWay}">
                 <ComboBox.ItemTemplate>
@@ -135,9 +160,11 @@
             <TextBox x:Name="VisitDateTextBox"
                      Width="120"
                      InputScope="Number"
+                     IsEnabled="False"
                      Text="{x:Bind VisitDateValue, Mode=TwoWay}"/>
             <ComboBox x:Name="VisitDateUnitComboBox"
                       Width="78"
+                      IsEnabled="False"
                       ItemsSource="{x:Bind ViewModel.DateUnits, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                       SelectedItem="{x:Bind VisitDateUnit, Mode=TwoWay}">
                 <ComboBox.ItemTemplate>
@@ -148,7 +175,7 @@
             </ComboBox>
         </StackPanel>
         <wuc:Divider Content="特性"
-                HorizontalContentAlignment="Left"/>
+                     HorizontalContentAlignment="Left"/>
         <StackPanel x:Name="ArchiveStackPanel"
                     Orientation="Horizontal"
                     Spacing="8"
@@ -157,6 +184,7 @@
                       IsChecked="{x:Bind IsArchiveSelected, Mode=TwoWay}"/>
             <ComboBox x:Name="ArchiveComboBox"
                       Width="78"
+                      IsEnabled="False"
                       ItemsSource="{x:Bind ViewModel.YesOrNos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                       SelectedItem="{x:Bind ArchiveValue, Mode=TwoWay}">
                 <ComboBox.ItemTemplate>
@@ -169,6 +197,7 @@
                       IsChecked="{x:Bind IsHiddenSelected, Mode=TwoWay}"/>
             <ComboBox x:Name="HidenComboBox"
                       Width="78"
+                      IsEnabled="False"
                       ItemsSource="{x:Bind ViewModel.YesOrNos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                       SelectedItem="{x:Bind HiddenValue, Mode=TwoWay}">
                 <ComboBox.ItemTemplate>
@@ -186,6 +215,7 @@
                       IsChecked="{x:Bind IsReadOnlySelected, Mode=TwoWay}"/>
             <ComboBox x:Name="RadyOnlyComboBox"
                       Width="78"
+                      IsEnabled="False"
                       ItemsSource="{x:Bind ViewModel.YesOrNos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                       SelectedItem="{x:Bind ReadOnlyValue, Mode=TwoWay}">
                 <ComboBox.ItemTemplate>
@@ -198,6 +228,7 @@
                       IsChecked="{x:Bind IsSystemSelected, Mode=TwoWay}"/>
             <ComboBox x:Name="SystemComboBox"
                       Width="78"
+                      IsEnabled="False"
                       ItemsSource="{x:Bind ViewModel.YesOrNos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                       SelectedItem="{x:Bind SystemValue, Mode=TwoWay}">
                 <ComboBox.ItemTemplate>
@@ -215,6 +246,7 @@
                       IsChecked="{x:Bind IsTempSelected, Mode=TwoWay}"/>
             <ComboBox x:Name="TempComboBox"
                       Width="78"
+                      IsEnabled="False"
                       ItemsSource="{x:Bind ViewModel.YesOrNos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                       SelectedItem="{x:Bind TempValue, Mode=TwoWay}">
                 <ComboBox.ItemTemplate>
@@ -225,7 +257,7 @@
             </ComboBox>
         </StackPanel>
         <wuc:Divider Content="其他"
-                HorizontalContentAlignment="Left"/>
+                     HorizontalContentAlignment="Left"/>
         <StackPanel x:Name="OtherStackPanel"
                     Orientation="Horizontal"
                     Spacing="8"
@@ -234,6 +266,7 @@
                       IsChecked="{x:Bind IsIncludeSelected, Mode=TwoWay}"/>
             <TextBox x:Name="OtherTextBox"
                      Width="120"
+                     IsEnabled="False"
                      Text="{x:Bind IncludedFiles, Mode=TwoWay}"/>
         </StackPanel>
         <StackPanel x:Name="ContentStackPanel"
@@ -244,19 +277,20 @@
                       IsChecked="{x:Bind IsContentSelected, Mode=TwoWay}"/>
             <ComboBox x:Name="ContentComboBox"
                       Width="352"
+                      IsEnabled="False"
+                      ItemsSource="{x:Bind ViewModel.ContentOperators, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                       SelectedItem="{x:Bind ContentOperator, Mode=TwoWay}">
-                <ComboBoxItem Content="至少一个单词"/>
-                <ComboBoxItem Content="至少一个单词（区分大小写）"/>
-                <ComboBoxItem Content="以随意的顺序的所有单词"/>
-                <ComboBoxItem Content="以随意的顺序的所有单词（区分大小写）"/>
-                <ComboBoxItem Content="正则表达式"/>
-                <ComboBoxItem Content="字符串"/>
-                <ComboBoxItem Content="字符串（区分大小写）"/>
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Converter={StaticResource EnumDisplayNameConverter}}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
             </ComboBox>
         </StackPanel>
         <TextBox x:Name="ContentTextBox"
                  Width="480"
                  Margin="0,10,0,0"
+                 IsEnabled="False"
                  HorizontalAlignment="Left"
                  Text="{x:Bind ContentValue, Mode=TwoWay}"/>
     </StackPanel>
