@@ -46,6 +46,11 @@ public partial class FileExplorerViewModel : ObservableRecipient
     [ObservableProperty]
     private string _selectedGroupName;
 
+    /// <summary>
+    /// 添加
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <returns></returns>
     [RelayCommand]
     private async Task OnAddTaskClick(object sender)
     {
@@ -110,6 +115,10 @@ public partial class FileExplorerViewModel : ObservableRecipient
 
     }
 
+    /// <summary>
+    /// 选择源文件
+    /// </summary>
+    /// <returns></returns>
     [RelayCommand]
     private async Task OnSelectSourcePath()
     {
@@ -126,6 +135,11 @@ public partial class FileExplorerViewModel : ObservableRecipient
         }
     }
 
+
+    /// <summary>
+    /// 选择目标文件
+    /// </summary>
+    /// <returns></returns>
     [RelayCommand]
     private async Task OnSelectTargetPath()
     {
@@ -142,6 +156,10 @@ public partial class FileExplorerViewModel : ObservableRecipient
         }
     }
 
+    /// <summary>
+    /// 页面加载
+    /// </summary>
+    /// <returns></returns>
     [RelayCommand]
     private async Task OnPageLoaded()
     {
@@ -183,6 +201,11 @@ public partial class FileExplorerViewModel : ObservableRecipient
         IsActive = false;
     }
 
+    /// <summary>
+    /// 更新
+    /// </summary>
+    /// <param name="dataContext"></param>
+    /// <returns></returns>
     [RelayCommand]
     private async Task OnUpdateTask(object dataContext)
     {
@@ -250,6 +273,11 @@ public partial class FileExplorerViewModel : ObservableRecipient
 
     }
 
+    /// <summary>
+    /// 删除
+    /// </summary>
+    /// <param name="dataContext"></param>
+    /// <returns></returns>
     [RelayCommand]
     private async Task OnDeleteTask(object dataContext)
     {
@@ -287,6 +315,11 @@ public partial class FileExplorerViewModel : ObservableRecipient
         IsActive = false;
     }
 
+    /// <summary>
+    /// 执行
+    /// </summary>
+    /// <param name="dataContext"></param>
+    /// <returns></returns>
     [RelayCommand]
     private async Task OnExecuteTask(object dataContext)
     {
@@ -313,6 +346,11 @@ public partial class FileExplorerViewModel : ObservableRecipient
         IsActive = false;
     }
 
+    /// <summary>
+    /// 禁用
+    /// </summary>
+    /// <param name="dataContext"></param>
+    /// <returns></returns>
     [RelayCommand]
     private async Task OnIsEnableTask(object dataContext)
     {
@@ -348,6 +386,10 @@ public partial class FileExplorerViewModel : ObservableRecipient
 
     }
 
+    /// <summary>
+    /// 分组
+    /// </summary>
+    /// <returns></returns>
     [RelayCommand]
     private async Task OnGroupNameChanged()
     {

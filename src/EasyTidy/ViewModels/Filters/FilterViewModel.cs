@@ -45,6 +45,10 @@ public partial class FilterViewModel : ObservableRecipient
     [ObservableProperty]
     public AdvancedCollectionView _filtersListACV;
 
+    /// <summary>
+    /// 初始化加载页面
+    /// </summary>
+    /// <returns></returns>
     [RelayCommand]
     private async Task OnPageLoaded()
     {
@@ -94,6 +98,12 @@ public partial class FilterViewModel : ObservableRecipient
         await dialog.ShowAsync();
     }
 
+
+    /// <summary>
+    /// 添加过滤器
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="args"></param>
     private async void OnAddFilterPrimaryButton(ContentDialog sender, ContentDialogButtonClickEventArgs args)
     {
         try
@@ -170,6 +180,11 @@ public partial class FilterViewModel : ObservableRecipient
         }
     }
 
+    /// <summary>
+    /// 删除
+    /// </summary>
+    /// <param name="dataContext"></param>
+    /// <returns></returns>
     [RelayCommand]
     private async Task OnDeleteTask(object dataContext)
     {
@@ -207,6 +222,11 @@ public partial class FilterViewModel : ObservableRecipient
         IsActive = false;
     }
 
+    /// <summary>
+    /// 修改
+    /// </summary>
+    /// <param name="dataContext"></param>
+    /// <returns></returns>
     [RelayCommand]
     private async Task OnUpdateTask(object dataContext)
     {
