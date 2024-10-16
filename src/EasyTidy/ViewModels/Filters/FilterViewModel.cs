@@ -186,7 +186,7 @@ public partial class FilterViewModel : ObservableRecipient
     /// <param name="dataContext"></param>
     /// <returns></returns>
     [RelayCommand]
-    private async Task OnDeleteTask(object dataContext)
+    private async Task OnDeleteFilter(object dataContext)
     {
         IsActive = true;
         try
@@ -228,7 +228,7 @@ public partial class FilterViewModel : ObservableRecipient
     /// <param name="dataContext"></param>
     /// <returns></returns>
     [RelayCommand]
-    private async Task OnUpdateTask(object dataContext)
+    private async Task OnUpdateFilter(object dataContext)
     {
         try
         {
@@ -349,7 +349,7 @@ public partial class FilterViewModel : ObservableRecipient
                 Message = "修改失败",
                 ShowDateTime = false
             });
-            Logger.Error($"FileExplorerViewModel: OnUpdateTask 异常信息 {ex}");
+            Logger.Error($"FilterViewModel: OnUpdateTask 异常信息 {ex}");
         }
 
     }
