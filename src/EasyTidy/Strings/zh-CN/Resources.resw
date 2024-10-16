@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!-- 
-    Microsoft ResX Schema 
-    
+  <!--
+    Microsoft ResX Schema
+
     Version 2.0
-    
-    The primary goals of this format is to allow a simple XML format 
-    that is mostly human readable. The generation and parsing of the 
-    various data types are done through the TypeConverter classes 
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
     associated with the data types.
-    
+
     Example:
-    
+
     ... ado.net/XML headers & schema ...
     <resheader name="resmimetype">text/microsoft-resx</resheader>
     <resheader name="version">2.0</resheader>
@@ -26,36 +26,36 @@
         <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
         <comment>This is a comment</comment>
     </data>
-                
-    There are any number of "resheader" rows that contain simple 
+
+    There are any number of "resheader" rows that contain simple
     name/value pairs.
-    
-    Each data row contains a name, and value. The row also contains a 
-    type or mimetype. Type corresponds to a .NET class that support 
-    text/value conversion through the TypeConverter architecture. 
-    Classes that don't support this are serialized and stored with the 
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
     mimetype set.
-    
-    The mimetype is used for serialized objects, and tells the 
-    ResXResourceReader how to depersist the object. This is currently not 
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
     extensible. For a given mimetype the value must be set accordingly:
-    
-    Note - application/x-microsoft.net.object.binary.base64 is the format 
-    that the ResXResourceWriter will generate, however the reader can 
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
     read any of the formats listed below.
-    
+
     mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with 
+    value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
-    
+
     mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with 
+    value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
             : and then encoded with base64 encoding.
 
     mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array 
+    value   : The object must be serialized into a byte array
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
@@ -120,7 +120,7 @@
   <data name="Filters" xml:space="preserve">
     <value>过滤器</value>
   </data>
-  <data name="Automatic" xml:space="preserve">
+  <data name="Automatic.Title" xml:space="preserve">
     <value>自动化</value>
   </data>
   <data name="TaskOrchestration" xml:space="preserve">
@@ -132,28 +132,100 @@
   <data name="Settings" xml:space="preserve">
     <value>设置</value>
   </data>
-  <data name="auto_SettingsControlTitle" xml:space="preserve">
+  <data name="SettingsPageControl.ModuleTitle" xml:space="preserve">
     <value>自动化</value>
   </data>
-  <data name="auto_SettingsControlDesc" xml:space="preserve">
+  <data name="SettingsPageControl.ModuleDescription" xml:space="preserve">
     <value>自动化模块能够对文件和文件夹的变动进行监控。依据自定义设置以及与之关联的文件处理任务，该模块可自动执行相应的操作。</value>
   </data>
-  <data name="AutoAnalysisGlobalHeader" xml:space="preserve">
+  <data name="AutoAnalysisGlobal.Header" xml:space="preserve">
     <value>自动分析（全局）</value>
   </data>
-  <data name="FileChangeDescription" xml:space="preserve">
+  <data name="FileChange.Description" xml:space="preserve">
     <value>文件自动处理选项</value>
   </data>
-  <data name="FileChangeWhenHeader" xml:space="preserve">
+  <data name="FileChangeCard.Header" xml:space="preserve">
     <value>文件更改时</value>
   </data>
-  <data name="StartupExecutionHeader" xml:space="preserve">
+  <data name="StartupExecutionCard.Header" xml:space="preserve">
     <value>启动时</value>
   </data>
-  <data name="RegularTaskRunningHeader" xml:space="preserve">
+  <data name="StartupExecutionCard.Description" xml:space="preserve">
+    <value>EasyTidy启动时执行一次</value>
+  </data>
+  <data name="RegularTaskRunningCard.Header" xml:space="preserve">
     <value>定期执行</value>
   </data>
-  <data name="ScheduledExecutionHeader" xml:space="preserve">
+  <data name="ScheduledExecutionCard.Header" xml:space="preserve">
     <value>按照计划</value>
+  </data>
+  <data name="FileChangeDelay.Text" xml:space="preserve">
+    <value>延迟：</value>
+  </data>
+  <data name="FileChangeSecond.Text" xml:space="preserve">
+    <value>秒</value>
+  </data>
+  <data name="RegularTaskRunningCard.Description" xml:space="preserve">
+    <value>根据设定的时间定期执行</value>
+  </data>
+  <data name="RegularTaskRunningBlock.Text" xml:space="preserve">
+    <value>每：</value>
+  </data>
+  <data name="ScheduledExecutionCard.Description" xml:space="preserve">
+    <value>根据设定的计划进行周期性执行</value>
+  </data>
+  <data name="ConfigurationButton.Content" xml:space="preserve">
+    <value>配置</value>
+  </data>
+  <data name="TaskAssociation.Header" xml:space="preserve">
+    <value>任务关联</value>
+  </data>
+  <data name="ConfigurationTask.Header" xml:space="preserve">
+    <value>配置任务</value>
+  </data>
+  <data name="ConfigurationTask.Description" xml:space="preserve">
+    <value>将配置的任务与全局计划关联，或者单独配置</value>
+  </data>
+  <data name="TaskSelection.Header" xml:space="preserve">
+    <value>任务选择</value>
+  </data>
+  <data name="TaskButton.Content" xml:space="preserve">
+    <value>任务组</value>
+  </data>
+  <data name="TaskGroup.Title" xml:space="preserve">
+    <value>选择任务组</value>
+  </data>
+  <data name="SingleTask.Content" xml:space="preserve">
+    <value>单个任务</value>
+  </data>
+  <data name="SelectTask.Title" xml:space="preserve">
+    <value>选择任务</value>
+  </data>
+  <data name="Separate.Content" xml:space="preserve">
+    <value>是否单独配置</value>
+  </data>
+  <data name="Customize.Content" xml:space="preserve">
+    <value>自定义</value>
+  </data>
+  <data name="ResetButton.Content" xml:space="preserve">
+    <value>撤销配置</value>
+  </data>
+  <data name="SaveButton.Content" xml:space="preserve">
+    <value>保存配置</value>
+  </data>
+  <data name="TaskList.Title" xml:space="preserve">
+    <value>任务列表</value>
+  </data>
+  <data name="FileChangeBlock.Text" xml:space="preserve">
+    <value>文件更改时</value>
+  </data>
+  <data name="RegularTaskRunningText.Text" xml:space="preserve">
+    <value>定时执行</value>
+  </data>
+  <data name="SelectTaskBlock.Text" xml:space="preserve">
+    <value>选择任务：</value>
+  </data>
+  <data name="ScheduleText" xml:space="preserve">
+    <value>时间表</value>
   </data>
 </root>

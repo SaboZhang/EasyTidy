@@ -30,8 +30,8 @@
           "UniqueId": "EasyTidy.Views.FileExplorerPage",
           "Title": "任务编排",
           "Subtitle": "TaskOrchestration",
-          "ImagePath": "ms-appx:///Assets/Fluent/fileExplorerPreview.png",
-          "ImageIconPath": "ms-appx:///Assets/Fluent/fileExplorerPreview.png",
+          "ImagePath": "ms-appx:///Assets/Fluent/task1.png",
+          "ImageIconPath": "ms-appx:///Assets/Fluent/task1.png",
           "IsUpdated": true
         },
         {

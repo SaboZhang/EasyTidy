@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.WinUI.UI;
+﻿using CommunityToolkit.WinUI;
+using CommunityToolkit.WinUI.Collections;
 using EasyTidy.Model;
 using EasyTidy.Util;
 using EasyTidy.Views.ContentDialogs;
@@ -191,7 +192,7 @@ public partial class AutomaticViewModel : ObservableRecipient
         var dialog = new PlanExecutionContentDialog
         {
             ViewModel = this,
-            Title = "时间表",
+            Title = "ScheduleText".GetLocalized(),
             PrimaryButtonText = "保存",
             CloseButtonText = "取消",
             ThemeService = themeService

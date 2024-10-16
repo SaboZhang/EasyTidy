@@ -1,4 +1,4 @@
-﻿using CommunityToolkit.WinUI.UI;
+﻿using CommunityToolkit.WinUI.Collections;
 using EasyTidy.Model;
 using EasyTidy.Util;
 using EasyTidy.Views.ContentDialogs;
