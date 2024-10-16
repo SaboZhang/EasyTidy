@@ -19,13 +19,13 @@
             <views:BreadcrumbBarUserControl SingleItem="{x:Bind BreadCrumbBarItemText, Mode=OneWay}" />
 
             <wuc:SettingsCard
-                Description="Select the theme that suits your mood and preference. You can choose from dark, light, or system themes."
-                Header="App theme"
+                Description="选择适合您心情和偏好的主题。您可以从深色、浅色或系统主题中进行选择。"
+                Header="应用主题"
                 HeaderIcon="{wuc:BitmapIcon Source=Assets/Fluent/theme.png}">
                 <ComboBox x:Name="CmbTheme">
-                    <ComboBoxItem Content="Light" Tag="Light" />
-                    <ComboBoxItem Content="Dark" Tag="Dark" />
-                    <ComboBoxItem Content="Default" Tag="Default" />
+                    <ComboBoxItem Content="浅色" Tag="Light" />
+                    <ComboBoxItem Content="深色" Tag="Dark" />
+                    <ComboBoxItem Content="默认" Tag="Default" />
                     <i:Interaction.Behaviors>
                         <ic:EventTriggerBehavior EventName="SelectionChanged">
                             <ic:EventTriggerBehavior.Actions>

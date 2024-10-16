@@ -120,13 +120,40 @@
   <data name="Automatic" xml:space="preserve">
     <value>Automatic</value>
   </data>
-  <data name="FileExplorer" xml:space="preserve">
-    <value>FileExplorer</value>
+  <data name="TaskOrchestration" xml:space="preserve">
+    <value>Task Orchestration</value>
   </data>
   <data name="Filters" xml:space="preserve">
     <value>Filters</value>
   </data>
   <data name="Backup" xml:space="preserve">
     <value>Backup</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="auto_SettingsControlTitle" xml:space="preserve">
+    <value>Automatic</value>
+  </data>
+  <data name="auto_SettingsControlDesc" xml:space="preserve">
+    <value>The automation module can monitor changes to files and folders. Based on custom settings and associated file processing tasks, this module can automatically perform the corresponding actions.</value>
+  </data>
+  <data name="AutoAnalysisGlobalHeader" xml:space="preserve">
+    <value>AutoAnalysis(Global)</value>
+  </data>
+  <data name="FileChangeDescription" xml:space="preserve">
+    <value>File automatic processing options</value>
+  </data>
+  <data name="FileChangeWhenHeader" xml:space="preserve">
+    <value>When files change</value>
+  </data>
+  <data name="StartupExecutionHeader" xml:space="preserve">
+    <value>On startup</value>
+  </data>
+  <data name="RegularTaskRunningHeader" xml:space="preserve">
+    <value>Regular execution</value>
+  </data>
+  <data name="ScheduledExecutionHeader" xml:space="preserve">
+    <value>According to schedule</value>
   </data>
 </root>

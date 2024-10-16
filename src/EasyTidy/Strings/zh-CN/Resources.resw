@@ -123,10 +123,37 @@
   <data name="Automatic" xml:space="preserve">
     <value>自动化</value>
   </data>
-  <data name="FileExplorer" xml:space="preserve">
-    <value>文件管理</value>
+  <data name="TaskOrchestration" xml:space="preserve">
+    <value>任务编排</value>
   </data>
   <data name="Backup" xml:space="preserve">
     <value>备份</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="auto_SettingsControlTitle" xml:space="preserve">
+    <value>自动化</value>
+  </data>
+  <data name="auto_SettingsControlDesc" xml:space="preserve">
+    <value>自动化模块能够对文件和文件夹的变动进行监控。依据自定义设置以及与之关联的文件处理任务，该模块可自动执行相应的操作。</value>
+  </data>
+  <data name="AutoAnalysisGlobalHeader" xml:space="preserve">
+    <value>自动分析（全局）</value>
+  </data>
+  <data name="FileChangeDescription" xml:space="preserve">
+    <value>文件自动处理选项</value>
+  </data>
+  <data name="FileChangeWhenHeader" xml:space="preserve">
+    <value>文件更改时</value>
+  </data>
+  <data name="StartupExecutionHeader" xml:space="preserve">
+    <value>启动时</value>
+  </data>
+  <data name="RegularTaskRunningHeader" xml:space="preserve">
+    <value>定期执行</value>
+  </data>
+  <data name="ScheduledExecutionHeader" xml:space="preserve">
+    <value>按照计划</value>
   </data>
 </root>

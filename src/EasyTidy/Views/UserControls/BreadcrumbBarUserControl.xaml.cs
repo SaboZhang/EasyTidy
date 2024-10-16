@@ -31,7 +31,7 @@ public sealed partial class BreadcrumbBarUserControl : UserControl
 
     private void BreadcrumbBarUserControl_Loaded(object sender, RoutedEventArgs e)
     {
-        ViewModel.BreadcrumbBarCollection.Add("Settings");
+        ViewModel.BreadcrumbBarCollection.Add(LocalizedStrings.Get("Settings"));
         if (Items != null)
         {
             foreach (var item in Items)
