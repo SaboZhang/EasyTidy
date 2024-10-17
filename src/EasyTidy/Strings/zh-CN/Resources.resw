@@ -274,7 +274,7 @@
     <comment/>
   </data>
   <data name="ReleaseNote.Content" xml:space="preserve">
-    <value>Release Note</value>
+    <value>发行日志</value>
     <comment/>
   </data>
   <data name="DownloadButton.Content" xml:space="preserve">
@@ -288,7 +288,7 @@
     <value>相关链接</value>
   </data>
   <data name="AboutUsSetting.Description" xml:space="preserve">
-    <value>描述</value>
+    <value>EasyTidy 可自动处理和组织文件及文件夹。能按名称、目录等多种条件过滤文件，支持手动和自动执行，可设置延时、时间间隔或用 CRON 表达式自定义执行周期，让文件管理轻松高效。</value>
   </data>
   <data name="ThemeSettingsCard.Description" xml:space="preserve">
     <value>选择适合您心情和偏好的主题。您可以从深色、浅色或系统主题中进行选择。</value>

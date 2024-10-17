@@ -291,7 +291,7 @@
   </data>
   <data name="AboutUsSetting.Description" xml:space="preserve">
     <value>Description</value>
-    <comment>Description</comment>
+    <comment>EasyTidy can automatically process and organize files and folders. It can filter files by various conditions such as name and directory. Supports manual and automatic execution. You can set delay, time interval or customize the execution cycle with CRON expression for easy and efficient file management.</comment>
   </data>
   <data name="ThemeSettingsCard.Description" xml:space="preserve">
     <value>Select the theme that suits your mood and preference. You can choose from dark, light, or system themes.</value>
