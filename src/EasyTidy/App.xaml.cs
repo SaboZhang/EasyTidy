@@ -74,6 +74,7 @@ public partial class App : Application
 
     protected async override void OnLaunched(LaunchActivatedEventArgs args)
     {
+        // ApplicationLanguages.PrimaryLanguageOverride = "en-US";
         // 开启日志服务
         LogService.Register();
 
