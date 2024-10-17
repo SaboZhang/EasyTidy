@@ -90,7 +90,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 OperationMode = SelectedOperationMode,
                 IsEnabled = dialog.EnabledFlag,
                 GroupName = await db.TaskGroup.AnyAsync(x => x.GroupName == SelectedGroupName)
-                ? await db.TaskGroup.Where(x => x.GroupName == SelectedGroupName).FirstOrDefaultAsync() 
+                ? await db.TaskGroup.Where(x => x.GroupName == SelectedGroupName).FirstOrDefaultAsync()
                 : new TaskGroupTable
                 {
                     GroupName = dialog.GroupName
@@ -180,7 +180,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                         {
                             item.TaskSource = "桌面";
                         }
-                    }  
+                    }
                     GroupList = new(list.Select(x => x.GroupName.GroupName).Distinct().ToList());
                     var newList = list.Select(x => x.GroupName.GroupName).Distinct().ToList();
                     newList.Insert(0, "AllText".GetLocalized());
@@ -421,8 +421,8 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
             TaskListACV = new AdvancedCollectionView(TaskList, true);
             TaskListACV.SortDescriptions.Add(new SortDescription("ID", SortDirection.Ascending));
         }
-        catch (Exception ex) 
-        { 
+        catch (Exception ex)
+        {
             Logger.Error($"{ex.Message}");
             IsActive = false;
         }

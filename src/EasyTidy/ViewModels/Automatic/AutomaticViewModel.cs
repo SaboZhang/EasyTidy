@@ -5,9 +5,7 @@ using EasyTidy.Util;
 using EasyTidy.Views.ContentDialogs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.UI.Dispatching;
-using System.Collections;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace EasyTidy.ViewModels;
@@ -273,7 +271,8 @@ public partial class AutomaticViewModel : ObservableRecipient
                 }
             }
 
-            await db.Automatic.AddAsync(new AutomaticTable{
+            await db.Automatic.AddAsync(new AutomaticTable
+            {
                 IsFileChange = CustomFileChange,
                 IsStartupExecution = CustomStartupExecution,
                 RegularTaskRunning = CustomRegularTaskRunning,
@@ -297,7 +296,7 @@ public partial class AutomaticViewModel : ObservableRecipient
             Logger.Error($"添加自定义配置失败：{ex}");
         }
     }
-    
+
     [RelayCommand]
     private void OnSelectTask(object parameter)
     {
@@ -360,7 +359,7 @@ public partial class AutomaticViewModel : ObservableRecipient
                 dispatcherQueue.TryEnqueue(async () =>
                 {
                     await using var db = new AppDbContext();
-                    var list = await db.FileExplorer.Include(x =>x.GroupName).Where(f => f.IsRelated == false).ToListAsync();
+                    var list = await db.FileExplorer.Include(x => x.GroupName).Where(f => f.IsRelated == false).ToListAsync();
                     TaskList = new(list);
                     TaskListACV = new AdvancedCollectionView(TaskList, true);
                     TaskListACV.SortDescriptions.Add(new SortDescription("ID", SortDirection.Ascending));

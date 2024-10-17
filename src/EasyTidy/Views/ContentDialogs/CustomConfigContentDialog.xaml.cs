@@ -90,7 +90,7 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
                 _dayOfWeek = value;
                 ValidateDayOfWeek(_dayOfWeek);
                 OnPropertyChanged();
-            } 
+            }
         }
     }
 
@@ -109,7 +109,7 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
                 _dayOfMonth = value;
                 ValidateDayOfMonth(_dayOfMonth);
                 OnPropertyChanged();
-            } 
+            }
         }
     }
 
@@ -128,7 +128,7 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
                 _monthlyDay = value;
                 ValidateMonthlyDay(_monthlyDay);
                 OnPropertyChanged();
-            } 
+            }
         }
     }
 

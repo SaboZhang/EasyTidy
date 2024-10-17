@@ -1,10 +1,8 @@
-﻿using EasyTidy.Log;
+﻿using CommunityToolkit.WinUI;
+using EasyTidy.Log;
 using H.NotifyIcon;
 using Microsoft.Windows.AppNotifications;
 using Microsoft.Windows.Globalization;
-using System.Xml.Linq;
-using System;
-using CommunityToolkit.WinUI;
 
 namespace EasyTidy;
 

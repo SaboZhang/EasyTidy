@@ -2,7 +2,6 @@
 using Serilog.Core;
 using Serilog.Events;
 using System;
-using System.ComponentModel;
 
 namespace EasyTidy.Log;
 public class SerilogLogger : BaseLogger
@@ -14,7 +13,7 @@ public class SerilogLogger : BaseLogger
         var logConfiguration = new LoggerConfiguration()
             .WriteTo.File(
                 string.Format("{0}logs/{1}/log.log", AppDomain.CurrentDomain.BaseDirectory, version),    //使用绝对路径创建日志文件
-                                                                                            //shared: true,
+                                                                                                         //shared: true,
                 rollingInterval: RollingInterval.Day,
                 restrictedToMinimumLevel: LogEventLevel.Verbose,
                 outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} [{Level:u3}] {Message:lj}{NewLine}{Exception}"

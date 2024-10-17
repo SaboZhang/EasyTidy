@@ -26,7 +26,7 @@ public class FileExplorerTable
     /// <summary>
     /// 是否已关联
     /// </summary>
-    public bool IsRelated { get; set; } = false; 
+    public bool IsRelated { get; set; } = false;
 
     public TaskGroupTable GroupName { get; set; }
 

@@ -110,7 +110,7 @@ public partial class FilterViewModel : ObservableRecipient
         {
             var dialog = sender as AddFilterContentDialog;
             var value = string.IsNullOrWhiteSpace(dialog.CreateDateValue);
-            if (dialog.HasErrors || (!dialog.IsSizeSelected && !dialog.IsCreateDateSelected && !dialog.IsEditDateSelected 
+            if (dialog.HasErrors || (!dialog.IsSizeSelected && !dialog.IsCreateDateSelected && !dialog.IsEditDateSelected
                 && !dialog.IsVisitDateSelected && !dialog.IsContentSelected && string.IsNullOrWhiteSpace(dialog.SizeValue)
                 && string.IsNullOrWhiteSpace(dialog.CreateDateValue) && string.IsNullOrWhiteSpace(dialog.EditDateValue)
                 && string.IsNullOrWhiteSpace(dialog.VisitDateValue) && string.IsNullOrWhiteSpace(dialog.ContentValue)
@@ -278,7 +278,7 @@ public partial class FilterViewModel : ObservableRecipient
 
                 dialog.PrimaryButtonClick += async (s, e) =>
                 {
-                    if (dialog.HasErrors || (!dialog.IsSizeSelected && !dialog.IsCreateDateSelected && !dialog.IsEditDateSelected 
+                    if (dialog.HasErrors || (!dialog.IsSizeSelected && !dialog.IsCreateDateSelected && !dialog.IsEditDateSelected
                         && !dialog.IsVisitDateSelected && !dialog.IsContentSelected && string.IsNullOrWhiteSpace(dialog.SizeValue)
                         && string.IsNullOrWhiteSpace(dialog.CreateDateValue) && string.IsNullOrWhiteSpace(dialog.EditDateValue)
                         && string.IsNullOrWhiteSpace(dialog.VisitDateValue) && string.IsNullOrWhiteSpace(dialog.ContentValue)
