@@ -9,10 +9,10 @@ namespace EasyTidy.Model;
 /// </summary>
 public enum BackupType
 {
-    [Display(Name = "本地备份")]
+    [Display(Name = "LocalBackText")]
     Local,
 
-    [Display(Name = "WebDav")]
+    [Display(Name = "WebDavText")]
     WebDav
 }
 
@@ -22,17 +22,17 @@ public enum BackupType
 public enum FileOperationType
 {
 
-    [Display(Name = "跳过")] Skip,
+    [Display(Name = "SkipText")] Skip,
 
-    [Display(Name = "覆盖")] Override,
+    [Display(Name = "OverrideText")] Override,
 
-    [Display(Name = "如果较新则覆盖")] OverwriteIfNewer,
+    [Display(Name = "OverwriteIfNewerText")] OverwriteIfNewer,
 
-    [Display(Name = "如果大小不同则覆盖")] OverrideIfSizesDiffer,
+    [Display(Name = "OverrideIfSizesDifferText")] OverrideIfSizesDiffer,
 
-    [Display(Name = "重命名(01)")] ReNameAppend,
+    [Display(Name = "ReNameAppendText")] ReNameAppend,
 
-    [Display(Name = "重命名-当前日期")] ReNameAddDate
+    [Display(Name = "ReNameAddDateText")] ReNameAddDate
 }
 
 /// <summary>
@@ -41,76 +41,76 @@ public enum FileOperationType
 public enum OperationMode
 {
 
-    [Display(Name = "移动")] Move,
+    [Display(Name = "MoveText")] Move,
 
-    [Display(Name = "复制")] Copy,
+    [Display(Name = "CopyText")] Copy,
 
-    [Display(Name = "删除")] Delete,
+    [Display(Name = "DeleteText")] Delete,
 
-    [Display(Name = "重命名")] Rename,
+    [Display(Name = "RenameText")] Rename,
 
-    [Display(Name = "回收站")] RecycleBin
+    [Display(Name = "RecycleBinText")] RecycleBin
 
 }
 
 public enum YesOrNo
 {
-    [Display(Name = "否")] No,
+    [Display(Name = "NoStr")] No,
 
-    [Display(Name = "是")] Yes,
+    [Display(Name = "YesStr")] Yes,
 }
 
 public enum DateUnit
 {
-    [Display(Name ="秒")] Second,
+    [Display(Name = "SecondText")] Second,
 
-    [Display(Name ="分钟")] Minute,
+    [Display(Name = "MinuteText")] Minute,
 
-    [Display(Name = "小时")] Hour,
+    [Display(Name = "HourText")] Hour,
 
-    [Display(Name = "天")] Day,
+    [Display(Name = "DayText")] Day,
 
-    [Display(Name = "月")] Month,
+    [Display(Name = "MonthText")] Month,
 
-    [Display(Name = "年")] Year
+    [Display(Name = "YearText")] Year
 }
 
 public enum ComparisonResult
 {
-    [Display(Name = ">")]
+    [Display(Name = "GreaterThanText")]
     GreaterThan,
 
-    [Display(Name = "=")]
+    [Display(Name = "EqualToText")]
     Equal,
 
-    [Display(Name = "<")]
+    [Display(Name = "LessThanText")]
     LessThan,
 }
 
 public enum SizeUnit
 {
-    [Display(Name = "字节")] Byte,
+    [Display(Name = "ByteText")] Byte,
 
-    [Display(Name = "KB")] Kilobyte,
+    [Display(Name = "KilobyteText")] Kilobyte,
 
-    [Display(Name = "MB")] Megabyte,
+    [Display(Name = "MegabyteText")] Megabyte,
 
-    [Display(Name = "GB")] Gigabyte
+    [Display(Name = "GigabyteText")] Gigabyte
 }
 
 public enum ContentOperatorEnum
 {
-    [Display(Name = "至少一个单词")] AtLeastOneWord,
+    [Display(Name = "AtLeastOneWord")] AtLeastOneWord,
 
-    [Display(Name = "至少一个单词（区分大小写）")] AtLeastOneWordCaseSensitive,
+    [Display(Name = "AtLeastOneWordCaseSensitive")] AtLeastOneWordCaseSensitive,
 
-    [Display(Name = "以随意的顺序的所有单词")] AllWordsInAnyOrder,
+    [Display(Name = "AllWordsInAnyOrder")] AllWordsInAnyOrder,
 
-    [Display(Name = "以随意的顺序的所有单词（区分大小写）")] AllWordsInAnyOrderCaseSensitive,
+    [Display(Name = "AllWordsInAnyOrderCaseSensitive")] AllWordsInAnyOrderCaseSensitive,
 
-    [Display(Name = "正则表达式")] RegularExpression,
+    [Display(Name = "RegularExpression")] RegularExpression,
 
-    [Display(Name = "字符串")] String,
+    [Display(Name = "StringText")] String,
 
-    [Display(Name = "字符串（区分大小写）")] StringCaseSensitive
+    [Display(Name = "StringCaseSensitive")] StringCaseSensitive
 }

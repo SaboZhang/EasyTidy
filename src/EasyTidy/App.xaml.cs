@@ -1,6 +1,10 @@
 ﻿using EasyTidy.Log;
 using H.NotifyIcon;
 using Microsoft.Windows.AppNotifications;
+using Microsoft.Windows.Globalization;
+using System.Xml.Linq;
+using System;
+using CommunityToolkit.WinUI;
 
 namespace EasyTidy;
 
@@ -66,7 +70,7 @@ public partial class App : Application
         services.AddTransient<SettingsViewModel>();
         services.AddTransient<BreadCrumbBarViewModel>();
         services.AddTransient<AutomaticViewModel>();
-        services.AddTransient<FileExplorerViewModel>();
+        services.AddTransient<TaskOrchestrationViewModel>();
         services.AddTransient<FilterViewModel>();
 
         return services.BuildServiceProvider();
@@ -74,9 +78,13 @@ public partial class App : Application
 
     protected async override void OnLaunched(LaunchActivatedEventArgs args)
     {
-        // ApplicationLanguages.PrimaryLanguageOverride = "en-US";
+        if (!string.IsNullOrEmpty(Settings.Language))
+        {
+            Logger.Info($"当前语言被设置为：{Settings.Language}");
+            ApplicationLanguages.PrimaryLanguageOverride = Settings.Language;
+        }
         // 开启日志服务
-        LogService.Register();
+        LogService.Register("", LogLevel.Debug, AppVersion);
 
         if (!PackageHelper.IsPackaged)
         {
@@ -86,8 +94,8 @@ public partial class App : Application
 
         if (!createdNew)
         {
-            ToastWithAvatar.Instance.Description = "EasyTidy应用程序已在运行中";
-            ToastWithAvatar.Instance.ScenarioName = "多开提醒";
+            ToastWithAvatar.Instance.Description = "ToastWithAvatarDescriptionText".GetLocalized();
+            ToastWithAvatar.Instance.ScenarioName = "RemindText".GetLocalized();
             //应用程序已经在运行！当前的执行退出。
             ToastWithAvatar.Instance.SendToast();
             Environment.Exit(0);

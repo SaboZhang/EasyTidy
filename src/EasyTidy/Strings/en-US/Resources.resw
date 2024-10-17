@@ -60,45 +60,45 @@
             : and then encoded with base64 encoding.
     -->
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -119,178 +119,178 @@
   </resheader>
   <data name="Automatic.Title" xml:space="preserve">
     <value>Automatic</value>
-    <comment/>
+    <comment />
   </data>
   <data name="TaskOrchestration" xml:space="preserve">
     <value>Task Orchestration</value>
-    <comment/>
+    <comment />
   </data>
   <data name="Filters" xml:space="preserve">
     <value>Filters</value>
-    <comment/>
+    <comment />
   </data>
   <data name="Backup" xml:space="preserve">
     <value>Backup</value>
-    <comment/>
+    <comment />
   </data>
   <data name="Settings" xml:space="preserve">
     <value>Settings</value>
-    <comment/>
+    <comment />
   </data>
   <data name="SettingsPageControl.ModuleTitle" xml:space="preserve">
     <value>Automatic</value>
-    <comment/>
+    <comment />
   </data>
   <data name="SettingsPageControl.ModuleDescription" xml:space="preserve">
     <value>The automation module can monitor changes to files and folders. Based on custom settings and associated file processing tasks, this module can automatically perform the corresponding actions.</value>
-    <comment/>
+    <comment />
   </data>
   <data name="StartupExecutionCard.Header" xml:space="preserve">
     <value>On startup</value>
-    <comment/>
+    <comment />
   </data>
   <data name="StartupExecutionCard.Description" xml:space="preserve">
     <value>EasyTidy Execute once at startup</value>
-    <comment/>
+    <comment />
   </data>
   <data name="RegularTaskRunningCard.Header" xml:space="preserve">
     <value>Regular execution</value>
-    <comment/>
+    <comment />
   </data>
   <data name="ScheduledExecutionCard.Header" xml:space="preserve">
     <value>According to schedule</value>
-    <comment/>
+    <comment />
   </data>
   <data name="FileChangeDelay.Text" xml:space="preserve">
     <value>Delay：</value>
-    <comment/>
+    <comment />
   </data>
   <data name="FileChangeSecond.Text" xml:space="preserve">
     <value>Second</value>
-    <comment/>
+    <comment />
   </data>
   <data name="AutoAnalysisGlobal.Header" xml:space="preserve">
     <value>AutoAnalysis(Global)</value>
-    <comment/>
+    <comment />
   </data>
   <data name="FileChange.Description" xml:space="preserve">
     <value>Automatic file processing options</value>
-    <comment/>
+    <comment />
   </data>
   <data name="FileChangeCard.Header" xml:space="preserve">
     <value>When files change</value>
-    <comment/>
+    <comment />
   </data>
   <data name="RegularTaskRunningCard.Description" xml:space="preserve">
     <value>Regularly execute according to the set time</value>
-    <comment/>
+    <comment />
   </data>
   <data name="RegularTaskRunningBlock.Text" xml:space="preserve">
     <value>Every:</value>
-    <comment/>
+    <comment />
   </data>
   <data name="ScheduledExecutionCard.Description" xml:space="preserve">
     <value>Perform periodic execution according to the set plan</value>
-    <comment/>
+    <comment />
   </data>
   <data name="ConfigurationButton.Content" xml:space="preserve">
     <value>Configuration</value>
-    <comment/>
+    <comment />
   </data>
   <data name="TaskAssociation.Header" xml:space="preserve">
     <value>Task association</value>
-    <comment/>
+    <comment />
   </data>
   <data name="ConfigurationTask.Header" xml:space="preserve">
     <value>Configuration Task</value>
-    <comment/>
+    <comment />
   </data>
   <data name="ConfigurationTask.Description" xml:space="preserve">
     <value>Associate the configured tasks with the global plan or configure them separately</value>
-    <comment/>
+    <comment />
   </data>
   <data name="TaskSelection.Header" xml:space="preserve">
     <value>Task selection</value>
-    <comment/>
+    <comment />
   </data>
   <data name="TaskButton.Content" xml:space="preserve">
     <value>Task force</value>
-    <comment/>
+    <comment />
   </data>
   <data name="TaskGroup.Title" xml:space="preserve">
     <value>Select Task Group</value>
-    <comment/>
+    <comment />
   </data>
   <data name="SingleTask.Content" xml:space="preserve">
     <value>Single Task</value>
-    <comment/>
+    <comment />
   </data>
   <data name="SelectTask.Title" xml:space="preserve">
     <value>Select Task</value>
-    <comment/>
+    <comment />
   </data>
   <data name="Separate.Content" xml:space="preserve">
     <value>Is it configured separately</value>
-    <comment/>
+    <comment />
   </data>
   <data name="Customize.Content" xml:space="preserve">
     <value>Customize</value>
-    <comment/>
+    <comment />
   </data>
   <data name="ResetButton.Content" xml:space="preserve">
     <value>Revoke configuration</value>
-    <comment/>
+    <comment />
   </data>
   <data name="SaveButton.Content" xml:space="preserve">
     <value>Save Configuration</value>
-    <comment/>
+    <comment />
   </data>
   <data name="TaskList.Title" xml:space="preserve">
     <value>Task list</value>
-    <comment/>
+    <comment />
   </data>
   <data name="FileChangeBlock.Text" xml:space="preserve">
     <value>When files change</value>
-    <comment/>
+    <comment />
   </data>
   <data name="RegularTaskRunningText.Text" xml:space="preserve">
     <value>Regular execution</value>
-    <comment/>
+    <comment />
   </data>
   <data name="SelectTaskBlock.Text" xml:space="preserve">
     <value>Task selection：</value>
-    <comment/>
+    <comment />
   </data>
   <data name="ScheduleText" xml:space="preserve">
     <value>schedule</value>
-    <comment/>
+    <comment />
   </data>
   <data name="UpdateBlock.Text" xml:space="preserve">
     <value>Last Update Check</value>
-    <comment/>
+    <comment />
   </data>
   <data name="CheckButton.Content" xml:space="preserve">
     <value>Check for New Version</value>
-    <comment/>
+    <comment />
   </data>
   <data name="ReleaseNote.Content" xml:space="preserve">
     <value>Release Note</value>
-    <comment/>
+    <comment />
   </data>
   <data name="DownloadButton.Content" xml:space="preserve">
     <value>Download Update</value>
-    <comment/>
+    <comment />
   </data>
   <data name="CodeButton.Content" xml:space="preserve">
     <value>Source Code</value>
-    <comment/>
+    <comment />
   </data>
   <data name="LinkBlock.Text" xml:space="preserve">
     <value>Related Links</value>
     <comment> </comment>
   </data>
   <data name="AboutUsSetting.Description" xml:space="preserve">
-    <value>Description</value>
+    <value>EasyTidy can automatically process and organize files and folders. It can filter files by various conditions such as name and directory. Supports manual and automatic execution. You can set delay, time interval or customize the execution cycle with CRON expression for easy and efficient file management.</value>
     <comment>EasyTidy can automatically process and organize files and folders. It can filter files by various conditions such as name and directory. Supports manual and automatic execution. You can set delay, time interval or customize the execution cycle with CRON expression for easy and efficient file management.</comment>
   </data>
   <data name="ThemeSettingsCard.Description" xml:space="preserve">
@@ -324,5 +324,155 @@
   </data>
   <data name="FilterSettingsControl.ModuleTitle" xml:space="preserve">
     <value>Filter</value>
+  </data>
+  <data name="ThemeSettingPage.Description" xml:space="preserve">
+    <value>Explore the different ways to customize the appearance and behavior of your app. You can change the material, theme, accent, and more options to suit your style and preference.</value>
+  </data>
+  <data name="ThemeSettingPage.Header" xml:space="preserve">
+    <value>Behavior &amp; animation</value>
+  </data>
+  <data name="AppUpdateSetting.Description" xml:space="preserve">
+    <value>Check for Updates</value>
+  </data>
+  <data name="AppUpdateSetting.Header" xml:space="preserve">
+    <value>Check for Updates</value>
+  </data>
+  <data name="AboutUsSettingPage.Description" xml:space="preserve">
+    <value>About EasyTidy and Developer</value>
+  </data>
+  <data name="AboutUsSettingPage.Header" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="GeneralPageControl.ModuleDescription" xml:space="preserve">
+    <value>EasyTidy is an open-source, professional file management tool designed to provide users with efficient and convenient file classification and organization solutions. Through custom settings, users can achieve various sorting methods such as automatic sorting, scheduled sorting, real-time sorting, and manual sorting to meet the file management needs in different scenarios. Used by the author ♥  make.</value>
+  </data>
+  <data name="GeneralPageControl.ModuleTitle" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="AtLeastOneWord" xml:space="preserve">
+    <value>At least one word</value>
+  </data>
+  <data name="YesStr" xml:space="preserve">
+    <value>YES</value>
+  </data>
+  <data name="NoStr" xml:space="preserve">
+    <value>NO</value>
+  </data>
+  <data name="AtLeastOneWordCaseSensitive" xml:space="preserve">
+    <value>At least one word (case sensitive)</value>
+  </data>
+  <data name="AllWordsInAnyOrder" xml:space="preserve">
+    <value>All words in a random order</value>
+  </data>
+  <data name="AllWordsInAnyOrderCaseSensitive" xml:space="preserve">
+    <value>All words in arbitrary order (case sensitive)</value>
+  </data>
+  <data name="RegularExpression" xml:space="preserve">
+    <value>regular expression</value>
+  </data>
+  <data name="StringText" xml:space="preserve">
+    <value>String</value>
+  </data>
+  <data name="StringCaseSensitive" xml:space="preserve">
+    <value>String (case sensitive)</value>
+  </data>
+  <data name="LocalBackText" xml:space="preserve">
+    <value>Local backup</value>
+  </data>
+  <data name="WebDavText" xml:space="preserve">
+    <value>WebDav</value>
+  </data>
+  <data name="SkipText" xml:space="preserve">
+    <value>Skip</value>
+  </data>
+  <data name="OverrideText" xml:space="preserve">
+    <value>Override</value>
+  </data>
+  <data name="OverwriteIfNewerText" xml:space="preserve">
+    <value>Overwrite If Newer</value>
+  </data>
+  <data name="OverrideIfSizesDifferText" xml:space="preserve">
+    <value>If the sizes are different, cover them</value>
+  </data>
+  <data name="ReNameAppendText" xml:space="preserve">
+    <value>Rename(01)</value>
+  </data>
+  <data name="ReNameAddDateText" xml:space="preserve">
+    <value>Rename - Current Date</value>
+  </data>
+  <data name="MoveText" xml:space="preserve">
+    <value>Move</value>
+  </data>
+  <data name="CopyText" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="DeleteText" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="RenameText" xml:space="preserve">
+    <value>Rename</value>
+  </data>
+  <data name="RecycleBinText" xml:space="preserve">
+    <value>RecycleBin</value>
+  </data>
+  <data name="GreaterThanText" xml:space="preserve">
+    <value>&gt;</value>
+  </data>
+  <data name="EqualToText" xml:space="preserve">
+    <value>=</value>
+  </data>
+  <data name="LessThanText" xml:space="preserve">
+    <value>&lt;</value>
+  </data>
+  <data name="ByteText" xml:space="preserve">
+    <value>byte</value>
+  </data>
+  <data name="KilobyteText" xml:space="preserve">
+    <value>KB</value>
+  </data>
+  <data name="MegabyteText" xml:space="preserve">
+    <value>MB</value>
+  </data>
+  <data name="GigabyteText" xml:space="preserve">
+    <value>GB</value>
+  </data>
+  <data name="SecondText" xml:space="preserve">
+    <value>Second</value>
+  </data>
+  <data name="MinuteText" xml:space="preserve">
+    <value>Minute</value>
+  </data>
+  <data name="HourText" xml:space="preserve">
+    <value>Hour</value>
+  </data>
+  <data name="DayText" xml:space="preserve">
+    <value>Day</value>
+  </data>
+  <data name="MonthText" xml:space="preserve">
+    <value>Month</value>
+  </data>
+  <data name="YearText" xml:space="preserve">
+    <value>Year</value>
+  </data>
+  <data name="AllText" xml:space="preserve">
+    <value>ALL</value>
+  </data>
+  <data name="FileProcessing.Header" xml:space="preserve">
+    <value>File processing</value>
+  </data>
+  <data name="FileProcessingCard.Header" xml:space="preserve">
+    <value>Dealing with conflicts</value>
+  </data>
+  <data name="FileProcessingCard.Description" xml:space="preserve">
+    <value>Options for automatic conflict resolution</value>
+  </data>
+  <data name="FileProcessingComboBox.PlaceholderText" xml:space="preserve">
+    <value>Conflict handling methods</value>
+  </data>
+  <data name="ToastWithAvatarDescriptionText" xml:space="preserve">
+    <value>Easytidy application is running</value>
+  </data>
+  <data name="RemindText" xml:space="preserve">
+    <value>More reminder</value>
   </data>
 </root>

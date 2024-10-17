@@ -12,7 +12,7 @@ namespace EasyTidy.Views.ContentDialogs;
 /// </summary>
 public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErrorInfo, INotifyPropertyChanged
 {
-    public FileExplorerViewModel ViewModel { get; set; }
+    public TaskOrchestrationViewModel ViewModel { get; set; }
 
     private string _groupName;
     public string GroupName
@@ -43,7 +43,7 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
 
     public AddTaskContentDialog()
     {
-        ViewModel = App.GetService<FileExplorerViewModel>();
+        ViewModel = App.GetService<TaskOrchestrationViewModel>();
         this.InitializeComponent();
         XamlRoot = App.MainWindow.Content.XamlRoot;
         RequestedTheme = ViewModel.themeService.GetElementTheme();

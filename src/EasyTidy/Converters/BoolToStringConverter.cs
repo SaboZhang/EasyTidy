@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml.Data;
+﻿using CommunityToolkit.WinUI;
+using Microsoft.UI.Xaml.Data;
 
 namespace EasyTidy.Converters;
 
@@ -8,7 +9,7 @@ public class BoolToStringConverter : IValueConverter
     {
         if (value is bool boolValue)
         {
-            return boolValue ? "是" : "否";
+            return boolValue ? "YesStr".GetLocalized() : "NoStr".GetLocalized();
         }
         return null;
     }
@@ -17,11 +18,11 @@ public class BoolToStringConverter : IValueConverter
     {
         if (value is string strValue)
         {
-            if ("是".Equals(strValue))
+            if ("YesStr".GetLocalized().Equals(strValue))
             {
                 return true;
             }
-            else if ("否".Equals(strValue))
+            else if ("NoStr".GetLocalized().Equals(strValue))
             {
                 return false;
             }

@@ -5,12 +5,12 @@ namespace EasyTidy.Views;
 /// <summary>
 /// An empty page that can be used on its own or navigated to within a Frame.
 /// </summary>
-public sealed partial class FileExplorerPage : Page
+public sealed partial class TaskOrchestrationPage : Page
 {
-    public FileExplorerViewModel ViewModel { get; set; }
-    public FileExplorerPage()
+    public TaskOrchestrationViewModel ViewModel { get; set; }
+    public TaskOrchestrationPage()
     {
-        ViewModel = App.GetService<FileExplorerViewModel>();
+        ViewModel = App.GetService<TaskOrchestrationViewModel>();
         this.InitializeComponent();
         XamlRoot = App.MainWindow.Content.XamlRoot;
     }

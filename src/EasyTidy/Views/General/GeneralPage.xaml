@@ -11,21 +11,20 @@
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     mc:Ignorable="d">
 
-    <wuc:SettingsPageControl ModuleDescription="EasyTidy是一款开源的，专业的文件管理工具，旨在为用户提供高效、便捷的文件分类整理解决方案。通过自定义设置，用户可以实现自动整理、定时整理、实时整理以及手动整理等多种整理方式，以满足不同场景下的文件管理需求。由作者用 ♥ 制作。"
+    <wuc:SettingsPageControl x:Name="GeneralSettingsPageControl"
+                             x:Uid="GeneralPageControl"
                              ModuleImageSource="ms-appx:///Assets/Modules/PT.png"
-                             ModuleTitle="常规"
                              SecondaryLinksHeader="Related information">
         <wuc:SettingsPageControl.ModuleContent>
             <StackPanel wuc:PanelAttach.ChildrenTransitions="Default"
                         Orientation="Vertical">
                 <wuc:SimpleSettingsGroup Margin="0,-32,0,0"
-                                         Header="文件处理">
-                    <wuc:SettingsCard Description="自动处理冲突的选项"
-                                      Header="处理冲突">
+                                         x:Uid="FileProcessing">
+                    <wuc:SettingsCard x:Uid="FileProcessingCard">
                         <wuc:SettingsCard.HeaderIcon>
                             <FontIcon Glyph="&#xE7BA;"/>
                         </wuc:SettingsCard.HeaderIcon>
-                        <ComboBox PlaceholderText="冲突处理方式"
+                        <ComboBox x:Uid="FileProcessingComboBox"
                                   x:Name="FileConflictResolution"
                                   ItemsSource="{x:Bind ViewModel.FileOperationTypes}"
                                   SelectedItem="{x:Bind ViewModel.OperationType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
@@ -147,13 +146,6 @@
                                                 <TextBlock Text="{Binding Converter={StaticResource EnumDisplayNameConverter}}"/>
                                             </DataTemplate>
                                         </ComboBox.ItemTemplate>
-                                        <!-- <i:Interaction.Behaviors>
-                                            <ic:EventTriggerBehavior EventName="SelectionChanged">
-                                                <ic:EventTriggerBehavior.Actions>
-                                                    <ic:InvokeCommandAction Command="{x:Bind ViewModel.SelectPathTypeCommand}" />
-                                                </ic:EventTriggerBehavior.Actions>
-                                            </ic:EventTriggerBehavior>
-                                        </i:Interaction.Behaviors> -->
                                     </ComboBox>
                                 </StackPanel>
                             </wuc:SettingsCard>

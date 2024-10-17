@@ -27,7 +27,7 @@
           "IsUpdated": true
         },
         {
-          "UniqueId": "EasyTidy.Views.FileExplorerPage",
+          "UniqueId": "EasyTidy.Views.TaskOrchestrationPage",
           "Title": "任务编排",
           "Subtitle": "TaskOrchestration",
           "ImagePath": "ms-appx:///Assets/Fluent/task1.png",

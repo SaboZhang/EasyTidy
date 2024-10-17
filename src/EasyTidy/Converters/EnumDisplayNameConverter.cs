@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml.Data;
+﻿using CommunityToolkit.WinUI;
+using Microsoft.UI.Xaml.Data;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 
@@ -16,7 +17,7 @@ public class EnumDisplayNameConverter : IValueConverter
                 var displayAttribute = member.GetCustomAttribute<DisplayAttribute>();
                 if (displayAttribute != null)
                 {
-                    return displayAttribute.Name;
+                    return displayAttribute.Name.GetLocalized();
                 }
             }
         }

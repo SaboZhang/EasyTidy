@@ -13,6 +13,8 @@ public static class Constants
     public static readonly string LogDirectoryPath = Path.Combine(RootDirectoryPath, "Log");
     public static readonly string LogFilePath = Path.Combine(LogDirectoryPath, "Log.txt");
 
+    public static readonly string LogPathName = AssemblyInfoHelper.GetAppInfo().Version.ToString();
+
     private const string PortableConfig = "portable_config";
 
     /// <summary>

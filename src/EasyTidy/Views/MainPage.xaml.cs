@@ -10,6 +10,7 @@ public sealed partial class MainPage : Page
         appTitleBar.Window = App.MainWindow;
         ViewModel.JsonNavigationViewService.Initialize(NavView, NavFrame);
         ViewModel.JsonNavigationViewService.ConfigJson("Assets/NavViewMenu/AppData.json");
+        Logger.Info("MainPage Initialized");
     }
 
     private void appTitleBar_BackButtonClick(object sender, RoutedEventArgs e)

@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.WinUI.Collections;
+﻿using CommunityToolkit.WinUI;
+using CommunityToolkit.WinUI.Collections;
 using EasyTidy.Model;
 using EasyTidy.Util;
 using EasyTidy.Views.ContentDialogs;
@@ -8,11 +9,11 @@ using System.Collections.ObjectModel;
 
 namespace EasyTidy.ViewModels;
 
-public partial class FileExplorerViewModel : ObservableRecipient
+public partial class TaskOrchestrationViewModel : ObservableRecipient
 {
     public IThemeService themeService;
 
-    public FileExplorerViewModel(IThemeService themeService)
+    public TaskOrchestrationViewModel(IThemeService themeService)
     {
         this.themeService = themeService;
     }
@@ -110,7 +111,7 @@ public partial class FileExplorerViewModel : ObservableRecipient
                 Message = "添加失败",
                 ShowDateTime = false
             });
-            Logger.Error($"FileExplorerViewModel: OnAddTaskClick 异常信息 {ex}");
+            Logger.Error($"TaskOrchestrationViewModel: OnAddTaskClick 异常信息 {ex}");
         }
 
     }
@@ -131,7 +132,7 @@ public partial class FileExplorerViewModel : ObservableRecipient
         catch (Exception ex)
         {
             TaskSource = "";
-            Logger.Error($"FileExplorerViewModel: OnSelectMediaPath 异常信息 {ex}");
+            Logger.Error($"TaskOrchestrationViewModel: OnSelectSourcePath 异常信息 {ex}");
         }
     }
 
@@ -152,7 +153,7 @@ public partial class FileExplorerViewModel : ObservableRecipient
         catch (Exception ex)
         {
             TaskTarget = "";
-            Logger.Error($"FileExplorerViewModel: OnSelectMediaPath 异常信息 {ex}");
+            Logger.Error($"TaskOrchestrationViewModel: OnSelectTargetPath 异常信息 {ex}");
         }
     }
 
@@ -182,9 +183,9 @@ public partial class FileExplorerViewModel : ObservableRecipient
                     }  
                     GroupList = new(list.Select(x => x.GroupName.GroupName).Distinct().ToList());
                     var newList = list.Select(x => x.GroupName.GroupName).Distinct().ToList();
-                    newList.Insert(0, "全部");
+                    newList.Insert(0, "AllText".GetLocalized());
                     GroupNameList = new(newList);
-                    SelectedGroupName = "全部";
+                    SelectedGroupName = "AllText".GetLocalized();
                     TaskList = new(list);
                     TaskListACV = new AdvancedCollectionView(TaskList, true);
                     TaskListACV.SortDescriptions.Add(new SortDescription("ID", SortDirection.Ascending));
@@ -399,7 +400,7 @@ public partial class FileExplorerViewModel : ObservableRecipient
             var list = await Task.Run(async () =>
             {
                 await using var db = new AppDbContext();
-                var query = SelectedGroupName == "全部"
+                var query = SelectedGroupName == "AllText".GetLocalized()
                 ? db.FileExplorer.Include(x => x.GroupName)
                 : db.FileExplorer.Include(x => x.GroupName).Where(x => x.GroupName.GroupName == SelectedGroupName);
 

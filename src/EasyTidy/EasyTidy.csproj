@@ -149,10 +149,10 @@
     <None Remove="Views\ContentDialogs\AddTaskContentDialog.xaml" />
     <None Remove="Views\ContentDialogs\CustomConfigContentDialog.xaml" />
     <None Remove="Views\ContentDialogs\PlanExecutionContentDialog.xaml" />
-    <None Remove="Views\FileExplorer\FileExplorerPage.xaml" />
     <None Remove="Views\Filters\FiltersPage.xaml" />
     <None Remove="Views\General\GeneralPage.xaml" />
     <None Remove="Views\NotificationView.xaml" />
+    <None Remove="Views\TaskOrchestration\TaskOrchestrationPage.xaml" />
     <None Remove="Views\TrayIconView.xaml" />
   </ItemGroup>
   <ItemGroup>

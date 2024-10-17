@@ -3,7 +3,7 @@ using Nucs.JsonSettings;
 using Nucs.JsonSettings.Modulation;
 
 namespace EasyTidy.Common;
-public class AppConfig : JsonSettings, IVersionable
+public partial class AppConfig : JsonSettings, IVersionable
 {
     [EnforcedVersion("1.0.0.0")]
     public virtual Version Version { get; set; } = new Version(1, 0, 0, 0);
@@ -19,4 +19,6 @@ public class AppConfig : JsonSettings, IVersionable
     public virtual ConfigModel? GeneralConfig { get; set; } = InitialConfig();
 
     public virtual AutomaticConfigModel? AutomaticConfig { get; set; } = new();
+
+    public virtual string Language { get; set; }
 }
