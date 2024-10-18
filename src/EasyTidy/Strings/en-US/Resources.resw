@@ -475,4 +475,34 @@
   <data name="RemindText" xml:space="preserve">
     <value>More reminder</value>
   </data>
+  <data name="AddFilterSettingsCard.Header" xml:space="preserve">
+    <value>Add filter</value>
+  </data>
+  <data name="AddFilterSettingsCard.Description" xml:space="preserve">
+    <value>Add custom additional filters</value>
+  </data>
+  <data name="FilterButton.Content" xml:space="preserve">
+    <value>Add filter</value>
+  </data>
+  <data name="FiltersListBlock.Text" xml:space="preserve">
+    <value>Filter List</value>
+  </data>
+  <data name="AttributeBlock.Text" xml:space="preserve">
+    <value>Attribute</value>
+  </data>
+  <data name="FilterNameBlock.Text" xml:space="preserve">
+    <value>Filter Name</value>
+  </data>
+  <data name="FeaturesBlock.Text" xml:space="preserve">
+    <value>Characteristics</value>
+  </data>
+  <data name="OtherBlock.Text" xml:space="preserve">
+    <value>Other</value>
+  </data>
+  <data name="OperationBlock.Text" xml:space="preserve">
+    <value>Operation</value>
+  </data>
+  <data name="EditButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Edit</value>
+  </data>
 </root>

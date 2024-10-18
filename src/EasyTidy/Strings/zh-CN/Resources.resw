@@ -467,4 +467,34 @@
   <data name="RemindText" xml:space="preserve">
     <value>多开提醒</value>
   </data>
+  <data name="AddFilterSettingsCard.Header" xml:space="preserve">
+    <value>添加过滤器</value>
+  </data>
+  <data name="AddFilterSettingsCard.Description" xml:space="preserve">
+    <value>添加自定义附加的过滤器</value>
+  </data>
+  <data name="FilterButton.Content" xml:space="preserve">
+    <value>添加过滤器</value>
+  </data>
+  <data name="FiltersListBlock.Text" xml:space="preserve">
+    <value>过滤器列表</value>
+  </data>
+  <data name="AttributeBlock.Text" xml:space="preserve">
+    <value>属性</value>
+  </data>
+  <data name="FilterNameBlock.Text" xml:space="preserve">
+    <value>过滤器名称</value>
+  </data>
+  <data name="FeaturesBlock.Text" xml:space="preserve">
+    <value>特性</value>
+  </data>
+  <data name="OtherBlock.Text" xml:space="preserve">
+    <value>其他</value>
+  </data>
+  <data name="OperationBlock.Text" xml:space="preserve">
+    <value>操作</value>
+  </data>
+  <data name="EditButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>编辑</value>
+  </data>
 </root>

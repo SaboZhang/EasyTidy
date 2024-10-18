@@ -27,13 +27,12 @@
         <wuc:SettingsPageControl.ModuleContent>
             <StackPanel>
                 <wuc:SettingsCard x:Name="AddFilterCard"
-                                  Header="添加过滤器"
-                                  Description="添加自定义附加的过滤器">
+                                  x:Uid="AddFilterSettingsCard">
                     <wuc:SettingsCard.HeaderIcon>
                         <FontIcon Glyph="&#xE71C;"/>
                     </wuc:SettingsCard.HeaderIcon>
                     <StackPanel>
-                        <Button Content="添加过滤器"
+                        <Button x:Uid="FilterButton"
                                 x:Name="FiltersButton"
                                 Style="{StaticResource AccentButtonStyle}"
                                 Command="{x:Bind ViewModel.AddFilterClickedCommand}"/>
@@ -42,7 +41,7 @@
                 <StackPanel>
                     <TextBlock x:Name="FiltersList"
                                TextWrapping="Wrap"
-                               Text="过滤器列表"
+                               x:Uid="FiltersListBlock"
                                Margin="0,20,20,0"/>
                     <wuc:LoadingIndicator x:Name="Load"
                                           Mode="Arcs"
@@ -67,23 +66,23 @@
                                                HorizontalAlignment="Center"
                                                VerticalAlignment="Center"/>
                                     <TextBlock Grid.Column="1"
-                                               Text="过滤器名称"
+                                               x:Uid="FilterNameBlock"
                                                VerticalAlignment="Center"
                                                HorizontalAlignment="Center"/>
                                     <TextBlock Grid.Column="2"
-                                               Text="属性"
+                                               x:Uid="AttributeBlock"
                                                VerticalAlignment="Center"
                                                HorizontalAlignment="Center"/>
                                     <TextBlock Grid.Column="3"
-                                               Text="特性"
+                                               x:Uid="FeaturesBlock"
                                                VerticalAlignment="Center"
                                                HorizontalAlignment="Center"/>
                                     <TextBlock Grid.Column="4"
-                                               Text="其他"
+                                               x:Uid="OtherBlock"
                                                VerticalAlignment="Center"
                                                HorizontalAlignment="Center"/>
                                     <TextBlock Grid.Column="5"
-                                               Text="操作"
+                                               x:Uid="OperationBlock"
                                                HorizontalAlignment="Center"
                                                VerticalAlignment="Center"/>
                                 </Grid>
@@ -127,7 +126,7 @@
                                                     DataContext="{x:Bind}"
                                                     Width="42"
                                                     Height="42"
-                                                    ToolTipService.ToolTip="编辑"
+                                                    x:Uid="EditButton"
                                                     Click="EditButton_Click"/>
                                             <Button x:Name="DeleteButton"
                                                     Content="{wuc:BitmapIcon Source=Assets/Fluent/delete.png}"
