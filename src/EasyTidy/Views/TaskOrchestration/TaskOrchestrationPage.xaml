@@ -109,7 +109,7 @@
                                     </Grid>
                                 </ListView.Header>
                                 <ListView.ItemTemplate>
-                                    <DataTemplate x:DataType="model:FileExplorerTable">
+                                    <DataTemplate x:DataType="model:TaskOrchestrationTable">
                                         <Grid ColumnSpacing="16">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="60"/>

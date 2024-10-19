@@ -158,7 +158,7 @@ public partial class AutomaticViewModel : ObservableRecipient
     public bool _customOnScheduleExecution = false;
 
     [ObservableProperty]
-    public ObservableCollection<FileExplorerTable> _taskList;
+    public ObservableCollection<TaskOrchestrationTable> _taskList;
 
     [ObservableProperty]
     public AdvancedCollectionView _taskListACV;
@@ -172,7 +172,7 @@ public partial class AutomaticViewModel : ObservableRecipient
     private readonly DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
 
     [ObservableProperty]
-    private ObservableCollection<FileExplorerTable> _selectedTaskList = [];
+    private ObservableCollection<TaskOrchestrationTable> _selectedTaskList = [];
 
     [ObservableProperty]
     private ObservableCollection<TaskGroupTable> _selectedGroupTaskList = [];
@@ -258,7 +258,7 @@ public partial class AutomaticViewModel : ObservableRecipient
                 return;
             }
 
-            List<FileExplorerTable> list = [];
+            List<TaskOrchestrationTable> list = [];
 
             foreach (var item in SelectedTaskList)
             {
@@ -393,7 +393,7 @@ public partial class AutomaticViewModel : ObservableRecipient
                 SelectedTaskList.Clear();
                 foreach (var item in items)
                 {
-                    FileExplorerTable task = item as FileExplorerTable;
+                    TaskOrchestrationTable task = item as TaskOrchestrationTable;
                     SelectedTaskList.Add(task);
                 }
                 await OnPageLoaded();
@@ -438,7 +438,7 @@ public partial class AutomaticViewModel : ObservableRecipient
         try
         {
             await using var db = new AppDbContext();
-            List<FileExplorerTable> list = [];
+            List<TaskOrchestrationTable> list = [];
             foreach (var item in SelectedTaskList)
             {
                 var update = await db.FileExplorer.Where(x => x.ID == item.ID && item.IsRelated == false).FirstOrDefaultAsync();

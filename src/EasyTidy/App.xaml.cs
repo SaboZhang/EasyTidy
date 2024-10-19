@@ -136,7 +136,7 @@ public partial class App : Application
                 Logger.Error(ex.ToString());
             }
         }
-        // await DynamicLocalizerHelper.InitializeLocalizer("zh-CN", "en-US");
+
     }
 
     private void OnClosed(object sender, WindowEventArgs args)

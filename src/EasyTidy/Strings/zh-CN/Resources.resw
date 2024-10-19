@@ -117,15 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Filters" xml:space="preserve">
+  <data name="NavFiltersText" xml:space="preserve">
     <value>过滤器</value>
     <comment />
   </data>
-  <data name="Automatic.Title" xml:space="preserve">
+  <data name="NavAutomaticText" xml:space="preserve">
     <value>自动化</value>
     <comment />
   </data>
-  <data name="TaskOrchestration" xml:space="preserve">
+  <data name="NavTaskOrchestrationText" xml:space="preserve">
     <value>任务编排</value>
     <comment />
   </data>
@@ -496,5 +496,8 @@
   </data>
   <data name="EditButton.ToolTipService.ToolTip" xml:space="preserve">
     <value>编辑</value>
+  </data>
+  <data name="NavGeneralText" xml:space="preserve">
+    <value>常规</value>
   </data>
 </root>

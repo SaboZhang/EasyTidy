@@ -137,7 +137,7 @@
                                                                   MaxHeight="320"
                                                                   ItemsSource="{x:Bind ViewModel.TaskListACV, Mode=TwoWay}">
                                                             <ListView.ItemTemplate>
-                                                                <DataTemplate x:DataType="model:FileExplorerTable">
+                                                                <DataTemplate x:DataType="model:TaskOrchestrationTable">
                                                                     <TextBlock Text="{x:Bind TaskName}"/>
                                                                 </DataTemplate>
                                                             </ListView.ItemTemplate>

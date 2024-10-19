@@ -3,8 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EasyTidy.Model;
 
-[Table("FileExplorer")]
-public class FileExplorerTable
+[Table("TaskOrchestration")]
+public class TaskOrchestrationTable
 {
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int ID { get; set; }

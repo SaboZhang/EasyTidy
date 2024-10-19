@@ -94,7 +94,8 @@ public class FilterTable
 
         if (IsArchiveSelected)
         {
-            AppendCondition(sb, ref isFirst, $"存档 = {EnumHelper.GetDisplayName(ArchiveValue)}");
+            var valueName = "存档";
+            AppendCondition(sb, ref isFirst, $"{valueName} = {EnumHelper.GetDisplayName(ArchiveValue)}");
         }
         if (IsHiddenSelected)
         {

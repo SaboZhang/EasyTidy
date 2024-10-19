@@ -33,7 +33,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
     private readonly DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
 
     [ObservableProperty]
-    public ObservableCollection<FileExplorerTable> _taskList;
+    public ObservableCollection<TaskOrchestrationTable> _taskList;
 
     [ObservableProperty]
     public List<string> _groupList = new();
@@ -79,7 +79,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 args.Cancel = true;
                 return;
             }
-            await db.FileExplorer.AddAsync(new FileExplorerTable
+            await db.FileExplorer.AddAsync(new TaskOrchestrationTable
             {
                 TaskName = dialog.TaskName,
                 TaskRule = dialog.TaskRule,
@@ -222,7 +222,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                     CloseButtonText = "取消",
                 };
 
-                var task = dataContext as FileExplorerTable;
+                var task = dataContext as TaskOrchestrationTable;
                 dialog.TaskName = task.TaskName;
                 dialog.TaskRule = task.TaskRule;
                 dialog.TaskSource = task.TaskSource;
@@ -287,7 +287,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         {
             if (dataContext != null)
             {
-                var task = dataContext as FileExplorerTable;
+                var task = dataContext as TaskOrchestrationTable;
                 await using var db = new AppDbContext();
                 var delete = await db.FileExplorer.Where(x => x.ID == task.ID).FirstOrDefaultAsync();
                 if (delete != null)
@@ -329,7 +329,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         {
             if (dataContext != null)
             {
-                var task = dataContext as FileExplorerTable;
+                var task = dataContext as TaskOrchestrationTable;
                 await using var db = new AppDbContext();
 
             }
@@ -360,7 +360,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         {
             if (dataContext != null)
             {
-                var task = dataContext as FileExplorerTable;
+                var task = dataContext as TaskOrchestrationTable;
                 await using var db = new AppDbContext();
                 var update = await db.FileExplorer.Where(x => x.ID == task.ID).FirstOrDefaultAsync();
                 update.IsEnabled = !update.IsEnabled;
