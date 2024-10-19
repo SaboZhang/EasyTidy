@@ -134,7 +134,7 @@
                                                     DataContext="{x:Bind}"
                                                     Width="42"
                                                     Height="42"
-                                                    ToolTipService.ToolTip="删除"
+                                                    x:Uid="DeleteButton"
                                                     Click="DeleteButton_Click"/>
                                         </StackPanel>
                                     </Grid>

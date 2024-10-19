@@ -106,7 +106,7 @@
         </StackPanel>
         <StackPanel Orientation="Horizontal"
                     Spacing="8">
-            <TextBlock Text="EasyTidy启动时："
+            <TextBlock x:Uid="DialogAtStartup"
                        Margin="0,8,0,0"/>
             <ToggleSwitch IsOn="{x:Bind ViewModel.CustomStartupExecution, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
@@ -125,12 +125,12 @@
         </StackPanel>
         <wuc:Divider/>
         <StackPanel Margin="0,-10,0,0">
-            <TextBlock Text="按照计划"/>
+            <TextBlock x:Uid="DialogAsPlanned"/>
             <StackPanel>
                 <StackPanel Orientation="Horizontal"
                             Spacing="20"
                             Margin="0,10,0,0">
-                    <TextBlock Text="分钟"
+                    <TextBlock x:Uid="DialogMinute"
                                Margin="0,5,0,0"/>
                     <TextBox x:Name="MinuteBox"
                              Margin="88,0,0,0"
@@ -145,7 +145,7 @@
                 <StackPanel Orientation="Horizontal"
                             Margin="0,10,0,0"
                             Spacing="20">
-                    <TextBlock Text="小时"
+                    <TextBlock x:Uid="DialogHour"
                                Margin="0,5,0,0"/>
                     <TextBox x:Name="HourBox"
                              Margin="88,0,0,0"
@@ -160,7 +160,7 @@
                 <StackPanel Orientation="Horizontal"
                             Spacing="20"
                             Margin="0,10,0,0">
-                    <TextBlock Text="每个星期的第几天"
+                    <TextBlock x:Uid="DialogWeek"
                                Margin="0,5,0,0"/>
                     <TextBox x:Name="DayOfWeekBox"
                              Margin="4,0,0,0"
@@ -170,12 +170,12 @@
                              wuc:Validation.ValidationPropertyName="DayOfWeek"
                              wuc:Validation.ValidationProvider="{x:Bind}"
                              Style="{StaticResource ValidatingTextBoxStyle}"/>
-                    <TextBlock Text="(0=周日 to 6=周六)"/>
+                    <TextBlock x:Uid="DialogDayOfWeekBlock"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal"
                             Spacing="20"
                             Margin="0,10,0,0">
-                    <TextBlock Text="每个月第几天"
+                    <TextBlock x:Uid="DialogDayOfMonth"
                                Margin="0,5,0,0"/>
                     <TextBox x:Name="DayOfMonthBox"
                              Margin="32,0,0,0"
@@ -190,7 +190,7 @@
                 <StackPanel Orientation="Horizontal"
                             Spacing="20"
                             Margin="0,10,0,0">
-                    <TextBlock Text="月份"
+                    <TextBlock x:Uid="DialogMonth"
                                Margin="0,5,0,0"/>
                     <TextBox x:Name="MonthlyDayBox"
                              Margin="88,0,0,0"
@@ -205,7 +205,7 @@
                 <wuc:Divider/>
                 <StackPanel Orientation="Horizontal"
                             Spacing="20">
-                    <TextBlock Text="CRON 表达式"
+                    <TextBlock x:Uid="DialogExpression"
                                Margin="0,5,0,0"/>
                     <TextBox x:Name="ExpressionBox"
                              Margin="32,0,0,0"

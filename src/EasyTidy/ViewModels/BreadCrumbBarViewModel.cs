@@ -11,7 +11,7 @@ public partial class BreadCrumbBarViewModel : ObservableRecipient
     public BreadCrumbBarViewModel(IJsonNavigationViewService jsonNavigationViewService)
     {
         JsonNavigationViewService = jsonNavigationViewService;
-        breadcrumbBarCollection = new ObservableCollection<string>();
+        breadcrumbBarCollection = [];
     }
 
     [RelayCommand]

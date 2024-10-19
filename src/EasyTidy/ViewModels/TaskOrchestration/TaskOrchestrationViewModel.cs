@@ -58,9 +58,9 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         var dialog = new AddTaskContentDialog
         {
             ViewModel = this,
-            Title = "添加任务",
-            PrimaryButtonText = "保存",
-            CloseButtonText = "取消",
+            Title = "AdditionalText".GetLocalized(),
+            PrimaryButtonText = "SaveText".GetLocalized(),
+            CloseButtonText = "CancelText".GetLocalized(),
             TaskTarget = string.Empty
         };
         dialog.PrimaryButtonClick += OnAddTaskPrimaryButton;
@@ -100,7 +100,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
             await OnPageLoaded();
             Growl.Success(new GrowlInfo
             {
-                Message = "添加成功",
+                Message = "SaveSuccessfulText".GetLocalized(),
                 ShowDateTime = false
             });
         }
@@ -108,7 +108,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         {
             Growl.Error(new GrowlInfo
             {
-                Message = "添加失败",
+                Message = "SaveFailedText".GetLocalized(),
                 ShowDateTime = false
             });
             Logger.Error($"TaskOrchestrationViewModel: OnAddTaskClick 异常信息 {ex}");
@@ -178,7 +178,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                     {
                         if (item.TaskSource == Environment.GetFolderPath(Environment.SpecialFolder.Desktop))
                         {
-                            item.TaskSource = "桌面";
+                            item.TaskSource = "DesktopText".GetLocalized();
                         }
                     }
                     GroupList = new(list.Select(x => x.GroupName.GroupName).Distinct().ToList());
@@ -217,9 +217,9 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 var dialog = new AddTaskContentDialog
                 {
                     ViewModel = this,
-                    Title = "修改",
-                    PrimaryButtonText = "保存",
-                    CloseButtonText = "取消",
+                    Title = "ModifyText".GetLocalized(),
+                    PrimaryButtonText = "SaveText".GetLocalized(),
+                    CloseButtonText = "CancelText".GetLocalized(),
                 };
 
                 var task = dataContext as TaskOrchestrationTable;
@@ -252,7 +252,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                     await OnPageLoaded();
                     Growl.Success(new GrowlInfo
                     {
-                        Message = "修改成功",
+                        Message = "ModifySuccessfullyText".GetLocalized(),
                         ShowDateTime = false
                     });
                 };
@@ -266,7 +266,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         {
             Growl.Error(new GrowlInfo
             {
-                Message = "修改失败",
+                Message = "ModificationFailedText".GetLocalized(),
                 ShowDateTime = false
             });
             Logger.Error($"FileExplorerViewModel: OnUpdateTask 异常信息 {ex}");
@@ -298,7 +298,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 await OnPageLoaded();
                 Growl.Success(new GrowlInfo
                 {
-                    Message = "删除成功",
+                    Message = "DeleteSuccessfulText".GetLocalized(),
                     ShowDateTime = false
                 });
             }
@@ -307,7 +307,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         {
             Growl.Error(new GrowlInfo
             {
-                Message = "删除失败",
+                Message = "DeleteFailedText".GetLocalized(),
                 ShowDateTime = false
             });
             Logger.Error($"FileExplorerViewModel: OnDeleteTask 异常信息 {ex}");
@@ -338,7 +338,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         {
             Growl.Error(new GrowlInfo
             {
-                Message = "执行失败",
+                Message = "ExecutionFailedText".GetLocalized(),
                 ShowDateTime = false
             });
             Logger.Error($"FileExplorerViewModel: OnExecuteTask 异常信息 {ex}");
@@ -368,7 +368,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 await OnPageLoaded();
                 Growl.Success(new GrowlInfo
                 {
-                    Message = "禁用成功",
+                    Message = "DisabledSuccessfullyText".GetLocalized(),
                     ShowDateTime = false
                 });
             }
@@ -377,7 +377,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         {
             Growl.Error(new GrowlInfo
             {
-                Message = "禁用失败",
+                Message = "DisablingFailedText".GetLocalized(),
                 ShowDateTime = false
             });
             Logger.Error($"FileExplorerViewModel: OnIsEnableTask 异常信息 {ex}");
@@ -410,7 +410,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 {
                     if (item.TaskSource == Environment.GetFolderPath(Environment.SpecialFolder.Desktop))
                     {
-                        item.TaskSource = "桌面";
+                        item.TaskSource = "DesktopText".GetLocalized();
                     }
                 }
 

@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.WinUI.Collections;
+﻿using CommunityToolkit.WinUI;
+using CommunityToolkit.WinUI.Collections;
 using EasyTidy.Model;
 using EasyTidy.Util;
 using EasyTidy.Views.ContentDialogs;
@@ -89,8 +90,8 @@ public partial class FilterViewModel : ObservableRecipient
         {
             ViewModel = this,
             Title = "添加过滤器",
-            PrimaryButtonText = "保存",
-            CloseButtonText = "取消"
+            PrimaryButtonText = "SaveText".GetLocalized(),
+            CloseButtonText = "CancelText".GetLocalized(),
         };
 
         dialog.PrimaryButtonClick += OnAddFilterPrimaryButton;
@@ -165,7 +166,7 @@ public partial class FilterViewModel : ObservableRecipient
             await OnPageLoaded();
             Growl.Success(new GrowlInfo
             {
-                Message = "添加成功",
+                Message = "SaveSuccessfulText".GetLocalized(),
                 ShowDateTime = false
             });
         }
@@ -174,7 +175,7 @@ public partial class FilterViewModel : ObservableRecipient
             Logger.Error($"添加过滤器失败：{ex}");
             Growl.Error(new GrowlInfo
             {
-                Message = "添加失败",
+                Message = "SaveFailedText".GetLocalized(),
                 ShowDateTime = false
             });
         }
@@ -204,7 +205,7 @@ public partial class FilterViewModel : ObservableRecipient
                 await OnPageLoaded();
                 Growl.Success(new GrowlInfo
                 {
-                    Message = "删除成功",
+                    Message = "DeleteSuccessfulText".GetLocalized(),
                     ShowDateTime = false
                 });
             }
@@ -213,7 +214,7 @@ public partial class FilterViewModel : ObservableRecipient
         {
             Growl.Error(new GrowlInfo
             {
-                Message = "删除失败",
+                Message = "DeleteFailedText".GetLocalized(),
                 ShowDateTime = false
             });
             Logger.Error($"FilterViewModel: OnDeleteTask 异常信息 {ex}");
@@ -237,9 +238,9 @@ public partial class FilterViewModel : ObservableRecipient
                 var dialog = new AddFilterContentDialog
                 {
                     ViewModel = this,
-                    Title = "修改",
-                    PrimaryButtonText = "保存",
-                    CloseButtonText = "取消",
+                    Title = "ModifyText".GetLocalized(),
+                    PrimaryButtonText = "SaveText".GetLocalized(),
+                    CloseButtonText = "CancelText".GetLocalized(),
                 };
 
                 var filter = dataContext as FilterTable;
@@ -332,7 +333,7 @@ public partial class FilterViewModel : ObservableRecipient
                     await OnPageLoaded();
                     Growl.Success(new GrowlInfo
                     {
-                        Message = "修改成功",
+                        Message = "ModifySuccessfullyText".GetLocalized(),
                         ShowDateTime = false
                     });
                 };
@@ -346,7 +347,7 @@ public partial class FilterViewModel : ObservableRecipient
         {
             Growl.Error(new GrowlInfo
             {
-                Message = "修改失败",
+                Message = "ModificationFailedText".GetLocalized(),
                 ShowDateTime = false
             });
             Logger.Error($"FilterViewModel: OnUpdateTask 异常信息 {ex}");

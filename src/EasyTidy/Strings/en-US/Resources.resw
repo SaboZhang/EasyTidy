@@ -310,7 +310,7 @@
     <comment> </comment>
   </data>
   <data name="Default.Content" xml:space="preserve">
-    <value>Default</value>
+    <value>Windows Default</value>
     <comment>Default</comment>
   </data>
   <data name="ColorSettingsCard.Description" xml:space="preserve">
@@ -507,5 +507,317 @@
   </data>
   <data name="NavGeneralText" xml:space="preserve">
     <value>General</value>
+  </data>
+  <data name="DesktopText" xml:space="preserve">
+    <value>Desktop</value>
+  </data>
+  <data name="ModifyText" xml:space="preserve">
+    <value>Modify</value>
+  </data>
+  <data name="SaveText" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="CancelText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="AdditionalText" xml:space="preserve">
+    <value>Additional</value>
+  </data>
+  <data name="SaveSuccessfulText" xml:space="preserve">
+    <value>Save Successful</value>
+  </data>
+  <data name="SaveFailedText" xml:space="preserve">
+    <value>Save Failed</value>
+  </data>
+  <data name="CustomConfigurationText" xml:space="preserve">
+    <value>Custom Configuration</value>
+  </data>
+  <data name="ModifySuccessfullyText" xml:space="preserve">
+    <value>Modify Successfully</value>
+  </data>
+  <data name="ModificationFailedText" xml:space="preserve">
+    <value>Modification Failed</value>
+  </data>
+  <data name="DeleteSuccessfulText" xml:space="preserve">
+    <value>Delete Successful</value>
+  </data>
+  <data name="DeleteFailedText" xml:space="preserve">
+    <value>Delete Failed</value>
+  </data>
+  <data name="ExecutionFailedText" xml:space="preserve">
+    <value>Execution Failed</value>
+  </data>
+  <data name="DisabledSuccessfullyText" xml:space="preserve">
+    <value>Disabled Successfully</value>
+  </data>
+  <data name="DisablingFailedText" xml:space="preserve">
+    <value>Disabling Failed</value>
+  </data>
+  <data name="DialogFilterNameBlock.Text" xml:space="preserve">
+    <value>Filter Name:</value>
+  </data>
+  <data name="DividerAttribute.Content" xml:space="preserve">
+    <value>Attribute</value>
+  </data>
+  <data name="DialogFileSize.Content" xml:space="preserve">
+    <value>File Size:</value>
+  </data>
+  <data name="DialogCreationTime.Content" xml:space="preserve">
+    <value>Creation Time:</value>
+  </data>
+  <data name="DialogModifyTime.Content" xml:space="preserve">
+    <value>Modify Time:</value>
+  </data>
+  <data name="DialogVisitTime.Content" xml:space="preserve">
+    <value>Visit Time:</value>
+  </data>
+  <data name="DialogDividerCharacteristics.Content" xml:space="preserve">
+    <value>Characteristics</value>
+  </data>
+  <data name="DialogArchive.Content" xml:space="preserve">
+    <value>Archive:</value>
+  </data>
+  <data name="DialogHide.Content" xml:space="preserve">
+    <value>Hidden:</value>
+  </data>
+  <data name="DialogReadonly.Content" xml:space="preserve">
+    <value>Read only:</value>
+  </data>
+  <data name="DialogSystem.Content" xml:space="preserve">
+    <value>System:</value>
+  </data>
+  <data name="DialogTemporary.Content" xml:space="preserve">
+    <value>Temporary:</value>
+  </data>
+  <data name="DialogDividerOthers.Content" xml:space="preserve">
+    <value>Others</value>
+  </data>
+  <data name="DialogIncludedFiles.Content" xml:space="preserve">
+    <value>Included files:</value>
+  </data>
+  <data name="DialogFileContent.Content" xml:space="preserve">
+    <value>File content:</value>
+  </data>
+  <data name="DeleteButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="DialogTaskGroupName.Text" xml:space="preserve">
+    <value>Task Group Name:</value>
+  </data>
+  <data name="TaskGroupBox.PlaceholderText" xml:space="preserve">
+    <value>Please enter or select</value>
+  </data>
+  <data name="DialogTaskName.Text" xml:space="preserve">
+    <value>Task Name:</value>
+  </data>
+  <data name="TaskNameBoxPlaceholder.PlaceholderText" xml:space="preserve">
+    <value>Please enter the task name</value>
+  </data>
+  <data name="DialogProcessingRules.Text" xml:space="preserve">
+    <value>Processing Rules:</value>
+  </data>
+  <data name="DialogTaskRulePlaceholder.PlaceholderText" xml:space="preserve">
+    <value>Please enter processing rules/regex</value>
+  </data>
+  <data name="DialogRuleButton.Content" xml:space="preserve">
+    <value>Rule example</value>
+  </data>
+  <data name="DialogFilterButton.Content" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="DialogOperatingMethod.Text" xml:space="preserve">
+    <value>Mode of operation:</value>
+  </data>
+  <data name="DialogTaskOperateListPlaceholder.PlaceholderText" xml:space="preserve">
+    <value>Please Select Operation Mode</value>
+  </data>
+  <data name="DialogSourceFolder.Text" xml:space="preserve">
+    <value>Source folder:</value>
+  </data>
+  <data name="DialogSourcePlaceholder.PlaceholderText" xml:space="preserve">
+    <value>Please select a folder, the default is the desktop</value>
+  </data>
+  <data name="DialogSourceButton.Content" xml:space="preserve">
+    <value>Choice</value>
+  </data>
+  <data name="DiaalogShortcut.Content" xml:space="preserve">
+    <value>Shortcut</value>
+  </data>
+  <data name="DialogTargetFolder.Text" xml:space="preserve">
+    <value>Target Folder:</value>
+  </data>
+  <data name="DialogTargetPlaceholder.PlaceholderText" xml:space="preserve">
+    <value>Choose or enter folder directly</value>
+  </data>
+  <data name="DialogTargetButton.Content" xml:space="preserve">
+    <value>Choice:</value>
+  </data>
+  <data name="DialogTaskEnable.Text" xml:space="preserve">
+    <value>Enable:</value>
+  </data>
+  <data name="DialogTaskGroup.PlaceholderText" xml:space="preserve">
+    <value>Select group name</value>
+  </data>
+  <data name="DialogAtStartup.Text" xml:space="preserve">
+    <value>EasyTidy Startup:</value>
+  </data>
+  <data name="DialogAsPlanned.Text" xml:space="preserve">
+    <value>According to the plan</value>
+  </data>
+  <data name="DialogMinute.Text" xml:space="preserve">
+    <value>Minute</value>
+  </data>
+  <data name="DialogHour.Text" xml:space="preserve">
+    <value>Hour</value>
+  </data>
+  <data name="DialogWeek.Text" xml:space="preserve">
+    <value>Which day of the week</value>
+  </data>
+  <data name="DialogDayOfWeekBlock.Text" xml:space="preserve">
+    <value>(0=Sunday to 6=Saturday)</value>
+  </data>
+  <data name="DialogDayOfMonth.Text" xml:space="preserve">
+    <value>Day of the Month</value>
+  </data>
+  <data name="DialogMonth.Text" xml:space="preserve">
+    <value>Month</value>
+  </data>
+  <data name="DialogExpression.Text" xml:space="preserve">
+    <value>CRON expression</value>
+  </data>
+  <data name="DialogNotice.Text" xml:space="preserve">
+    <value>Support CRON expression, and CRON expression has higher priority than the values of the first five items</value>
+  </data>
+  <data name="DialogFirst.Text" xml:space="preserve">
+    <value>It will run when the time unit matches the value below;</value>
+  </data>
+  <data name="DialogExplanation1.Text" xml:space="preserve">
+    <value>(Empty String) Matches any value</value>
+  </data>
+  <data name="DialogExplanation2.Text" xml:space="preserve">
+    <value>Val1, Val2, ..., ValN Match Value List</value>
+  </data>
+  <data name="DialogExplanation3.Text" xml:space="preserve">
+    <value>Match values range from n1 to n2</value>
+  </data>
+  <data name="DialogExplanation4.Text" xml:space="preserve">
+    <value>n1-n2/n3 matches the range n1 to n2 for step n3</value>
+  </data>
+  <data name="DialogExplanation5.Text" xml:space="preserve">
+    <value>Example: Minutes=15 Hours=03 Month=3-10/3 Day of the week=1,3,5 Tasks will be at</value>
+  </data>
+  <data name="DialogExplanation6.Text" xml:space="preserve">
+    <value>Runs at 3:15 AM on Mondays, Wednesdays, and Fridays in March, June, and September.</value>
+  </data>
+  <data name="GeneralSubFloderCard.Description" xml:space="preserve">
+    <value>Process folders, but not scan inside folders</value>
+  </data>
+  <data name="GeneralSubFloderCard.Header" xml:space="preserve">
+    <value>Subfolder</value>
+  </data>
+  <data name="GeneraIgnoreCard.Description" xml:space="preserve">
+    <value>Ignore files that are currently in use by other applications</value>
+  </data>
+  <data name="GeneraIgnoreCard.Header" xml:space="preserve">
+    <value>Files in use</value>
+  </data>
+  <data name="GeneralIrrelevantFilesCard.Description" xml:space="preserve">
+    <value>Ignore irrelevant files or folders as well as system file folders</value>
+  </data>
+  <data name="GeneralIrrelevantFilesCard.Header" xml:space="preserve">
+    <value>Irrelevant file</value>
+  </data>
+  <data name="GeneralEmptyFileCard.Description" xml:space="preserve">
+    <value>Ignore files that size = 0 or empty folder</value>
+  </data>
+  <data name="GeneralEmptyFileCard.Header" xml:space="preserve">
+    <value>Empty file</value>
+  </data>
+  <data name="GeneralHiddenFileCard.Description" xml:space="preserve">
+    <value>Ignore hidden files</value>
+  </data>
+  <data name="GeneralHiddenFileCard.Header" xml:space="preserve">
+    <value>Hidden files</value>
+  </data>
+  <data name="GeneralAppSettings.Header" xml:space="preserve">
+    <value>App settings</value>
+  </data>
+  <data name="GeneralAutoStartCard.Description" xml:space="preserve">
+    <value>Start EasyTidy at System Startup</value>
+  </data>
+  <data name="GeneralAutoStartCard.Header" xml:space="preserve">
+    <value>Auto start</value>
+  </data>
+  <data name="GeneralCheckCard.Description" xml:space="preserve">
+    <value>Check for updates at startup</value>
+  </data>
+  <data name="GeneralCheckCard.Header" xml:space="preserve">
+    <value>Check for updates</value>
+  </data>
+  <data name="GeneralMinimizeCard.Description" xml:space="preserve">
+    <value>Minimize to the notification area on startup</value>
+  </data>
+  <data name="GeneralMinimizeCard.Header" xml:space="preserve">
+    <value>Minimize</value>
+  </data>
+  <data name="GeneralBack.Header" xml:space="preserve">
+    <value>Backup/Restore</value>
+  </data>
+  <data name="GeneralBackCard.Description" xml:space="preserve">
+    <value>If necessary, EasyTidy will automatically restart. Check the automatic backup to back up every time the software starts</value>
+  </data>
+  <data name="GeneralBackCard.Header" xml:space="preserve">
+    <value>Backup and restore settings</value>
+  </data>
+  <data name="GeneralBackButton.Content" xml:space="preserve">
+    <value>Backup</value>
+  </data>
+  <data name="GeneralRestoreButton.Content" xml:space="preserve">
+    <value>Restore</value>
+  </data>
+  <data name="GeneralAutoBackup.Content" xml:space="preserve">
+    <value>Auto backup</value>
+  </data>
+  <data name="GeneralLocationCard.Header" xml:space="preserve">
+    <value>Location</value>
+  </data>
+  <data name="GeneralBackupMethod.PlaceholderText" xml:space="preserve">
+    <value>Select Backup method</value>
+  </data>
+  <data name="GeneralAddress.Text" xml:space="preserve">
+    <value>Address:</value>
+  </data>
+  <data name="GeneralUsername.Text" xml:space="preserve">
+    <value>Username:</value>
+  </data>
+  <data name="GeneralPassword.Text" xml:space="preserve">
+    <value>Password:</value>
+  </data>
+  <data name="GeneralBackupInformation.Header" xml:space="preserve">
+    <value>Backup information</value>
+  </data>
+  <data name="GeneralStatus.Text" xml:space="preserve">
+    <value>Status:</value>
+  </data>
+  <data name="GeneralRefresh.Text" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="GeneralFilename.Text" xml:space="preserve">
+    <value>Filename:</value>
+  </data>
+  <data name="GeneralSourceComputer.Text" xml:space="preserve">
+    <value>Source Computer:</value>
+  </data>
+  <data name="GeneralCreatedOn.Text" xml:space="preserve">
+    <value>Created on:</value>
+  </data>
+  <data name="GeneralUseDocumentation.Text" xml:space="preserve">
+    <value>Documentation</value>
+  </data>
+  <data name="GereralReport.Text" xml:space="preserve">
+    <value>Report BUG</value>
+  </data>
+  <data name="GeneralRequestFeature.Text" xml:space="preserve">
+    <value>Request Feature</value>
   </data>
 </root>

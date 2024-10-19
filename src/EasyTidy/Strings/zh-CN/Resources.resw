@@ -303,7 +303,7 @@
     <value>深色</value>
   </data>
   <data name="Default.Content" xml:space="preserve">
-    <value>系统默认</value>
+    <value>Windows默认</value>
   </data>
   <data name="ColorSettingsCard.Description" xml:space="preserve">
     <value>将应用程序的颜色与 Windows 强调色同步。您可以通过单击此卡打开 Windows 强调色设置。</value>
@@ -499,5 +499,317 @@
   </data>
   <data name="NavGeneralText" xml:space="preserve">
     <value>常规</value>
+  </data>
+  <data name="DesktopText" xml:space="preserve">
+    <value>桌面</value>
+  </data>
+  <data name="ModifyText" xml:space="preserve">
+    <value>修改</value>
+  </data>
+  <data name="SaveText" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="CancelText" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="AdditionalText" xml:space="preserve">
+    <value>新增</value>
+  </data>
+  <data name="SaveSuccessfulText" xml:space="preserve">
+    <value>保存成功</value>
+  </data>
+  <data name="SaveFailedText" xml:space="preserve">
+    <value>保存失败</value>
+  </data>
+  <data name="CustomConfigurationText" xml:space="preserve">
+    <value>自定义配置</value>
+  </data>
+  <data name="ModifySuccessfullyText" xml:space="preserve">
+    <value>修改成功</value>
+  </data>
+  <data name="ModificationFailedText" xml:space="preserve">
+    <value>修改失败</value>
+  </data>
+  <data name="DeleteSuccessfulText" xml:space="preserve">
+    <value>删除成功</value>
+  </data>
+  <data name="DeleteFailedText" xml:space="preserve">
+    <value>删除失败</value>
+  </data>
+  <data name="ExecutionFailedText" xml:space="preserve">
+    <value>执行失败</value>
+  </data>
+  <data name="DisabledSuccessfullyText" xml:space="preserve">
+    <value>禁用成功</value>
+  </data>
+  <data name="DisablingFailedText" xml:space="preserve">
+    <value>禁用失败</value>
+  </data>
+  <data name="DialogFilterNameBlock.Text" xml:space="preserve">
+    <value>过滤器名称：</value>
+  </data>
+  <data name="DividerAttribute.Content" xml:space="preserve">
+    <value>属性</value>
+  </data>
+  <data name="DialogFileSize.Content" xml:space="preserve">
+    <value>文件大小：</value>
+  </data>
+  <data name="DialogCreationTime.Content" xml:space="preserve">
+    <value>创建时间：</value>
+  </data>
+  <data name="DialogModifyTime.Content" xml:space="preserve">
+    <value>修改时间：</value>
+  </data>
+  <data name="DialogVisitTime.Content" xml:space="preserve">
+    <value>访问时间：</value>
+  </data>
+  <data name="DialogDividerCharacteristics.Content" xml:space="preserve">
+    <value>特性</value>
+  </data>
+  <data name="DialogArchive.Content" xml:space="preserve">
+    <value>存档：</value>
+  </data>
+  <data name="DialogHide.Content" xml:space="preserve">
+    <value>隐藏：</value>
+  </data>
+  <data name="DialogReadonly.Content" xml:space="preserve">
+    <value>只读：</value>
+  </data>
+  <data name="DialogSystem.Content" xml:space="preserve">
+    <value>系统：</value>
+  </data>
+  <data name="DialogTemporary.Content" xml:space="preserve">
+    <value>临时：</value>
+  </data>
+  <data name="DialogDividerOthers.Content" xml:space="preserve">
+    <value>其他</value>
+  </data>
+  <data name="DialogIncludedFiles.Content" xml:space="preserve">
+    <value>包含的文件：</value>
+  </data>
+  <data name="DialogFileContent.Content" xml:space="preserve">
+    <value>文件内容：</value>
+  </data>
+  <data name="DeleteButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="DialogTaskGroupName.Text" xml:space="preserve">
+    <value>任务组名：</value>
+  </data>
+  <data name="TaskGroupBox.PlaceholderText" xml:space="preserve">
+    <value>请输入或者选择</value>
+  </data>
+  <data name="DialogTaskName.Text" xml:space="preserve">
+    <value>任务名称：</value>
+  </data>
+  <data name="TaskNameBoxPlaceholder.PlaceholderText" xml:space="preserve">
+    <value>请输入任务名称</value>
+  </data>
+  <data name="DialogProcessingRules.Text" xml:space="preserve">
+    <value>处理规则：</value>
+  </data>
+  <data name="DialogTaskRulePlaceholder.PlaceholderText" xml:space="preserve">
+    <value>请输入处理规则/正则</value>
+  </data>
+  <data name="DialogRuleButton.Content" xml:space="preserve">
+    <value>规则示列</value>
+  </data>
+  <data name="DialogFilterButton.Content" xml:space="preserve">
+    <value>筛选器</value>
+  </data>
+  <data name="DialogOperatingMethod.Text" xml:space="preserve">
+    <value>操作方式：</value>
+  </data>
+  <data name="DialogTaskOperateListPlaceholder.PlaceholderText" xml:space="preserve">
+    <value>请选择操作方式</value>
+  </data>
+  <data name="DialogSourceFolder.Text" xml:space="preserve">
+    <value>源文件夹：</value>
+  </data>
+  <data name="DialogSourcePlaceholder.PlaceholderText" xml:space="preserve">
+    <value>请选择文件夹，默认为桌面</value>
+  </data>
+  <data name="DialogSourceButton.Content" xml:space="preserve">
+    <value>选择</value>
+  </data>
+  <data name="DiaalogShortcut.Content" xml:space="preserve">
+    <value>快捷方式</value>
+  </data>
+  <data name="DialogTargetFolder.Text" xml:space="preserve">
+    <value>目标文件夹：</value>
+  </data>
+  <data name="DialogTargetPlaceholder.PlaceholderText" xml:space="preserve">
+    <value>请选择或输入文件夹</value>
+  </data>
+  <data name="DialogTargetButton.Content" xml:space="preserve">
+    <value>选择：</value>
+  </data>
+  <data name="DialogTaskEnable.Text" xml:space="preserve">
+    <value>是否启用：</value>
+  </data>
+  <data name="DialogTaskGroup.PlaceholderText" xml:space="preserve">
+    <value>选择组名</value>
+  </data>
+  <data name="DialogAtStartup.Text" xml:space="preserve">
+    <value>EasyTidy启动时：</value>
+  </data>
+  <data name="DialogAsPlanned.Text" xml:space="preserve">
+    <value>按照计划</value>
+  </data>
+  <data name="DialogMinute.Text" xml:space="preserve">
+    <value>分钟</value>
+  </data>
+  <data name="DialogHour.Text" xml:space="preserve">
+    <value>小时</value>
+  </data>
+  <data name="DialogWeek.Text" xml:space="preserve">
+    <value>每个星期的第几天</value>
+  </data>
+  <data name="DialogDayOfWeekBlock.Text" xml:space="preserve">
+    <value>(0=周日 to 6=周六)</value>
+  </data>
+  <data name="DialogDayOfMonth.Text" xml:space="preserve">
+    <value>每个月第几天</value>
+  </data>
+  <data name="DialogMonth.Text" xml:space="preserve">
+    <value>月份</value>
+  </data>
+  <data name="DialogExpression.Text" xml:space="preserve">
+    <value>CRON 表达式</value>
+  </data>
+  <data name="DialogNotice.Text" xml:space="preserve">
+    <value>支持CRON表达式，CRON表达式优先级高于前5项的值</value>
+  </data>
+  <data name="DialogFirst.Text" xml:space="preserve">
+    <value>时间单位匹配下方的值时，将会运行；</value>
+  </data>
+  <data name="DialogExplanation1.Text" xml:space="preserve">
+    <value>（空字符串）匹配任何值</value>
+  </data>
+  <data name="DialogExplanation2.Text" xml:space="preserve">
+    <value>Val1,Val2,...,ValN 匹配值列表</value>
+  </data>
+  <data name="DialogExplanation3.Text" xml:space="preserve">
+    <value>n1-n2 匹配n1到n2的值范围</value>
+  </data>
+  <data name="DialogExplanation4.Text" xml:space="preserve">
+    <value>n1-n2/n3 与步骤n3匹配范围n1到n2</value>
+  </data>
+  <data name="DialogExplanation5.Text" xml:space="preserve">
+    <value>示列：分钟=15 小时=03 月份=3-10/3 每个星期的第几天=1,3,5任务将会在</value>
+  </data>
+  <data name="DialogExplanation6.Text" xml:space="preserve">
+    <value>3，6，9月的每周1，3，5早上3点15分运行。</value>
+  </data>
+  <data name="GeneralSubFloderCard.Description" xml:space="preserve">
+    <value>处理文件夹，但不扫描文件夹内</value>
+  </data>
+  <data name="GeneralSubFloderCard.Header" xml:space="preserve">
+    <value>子文件夹</value>
+  </data>
+  <data name="GeneraIgnoreCard.Description" xml:space="preserve">
+    <value>忽略正在被其他应用程序使用的文件</value>
+  </data>
+  <data name="GeneraIgnoreCard.Header" xml:space="preserve">
+    <value>使用中的文件</value>
+  </data>
+  <data name="GeneralIrrelevantFilesCard.Description" xml:space="preserve">
+    <value>忽略无关的文件或者文件夹以及系统文件文件夹</value>
+  </data>
+  <data name="GeneralIrrelevantFilesCard.Header" xml:space="preserve">
+    <value>无关文件</value>
+  </data>
+  <data name="GeneralEmptyFileCard.Description" xml:space="preserve">
+    <value>忽略大小为0的文件或者空文件夹</value>
+  </data>
+  <data name="GeneralEmptyFileCard.Header" xml:space="preserve">
+    <value>空文件</value>
+  </data>
+  <data name="GeneralHiddenFileCard.Description" xml:space="preserve">
+    <value>忽略隐藏的文件</value>
+  </data>
+  <data name="GeneralHiddenFileCard.Header" xml:space="preserve">
+    <value>隐藏文件</value>
+  </data>
+  <data name="GeneralAppSettings.Header" xml:space="preserve">
+    <value>应用设置</value>
+  </data>
+  <data name="GeneralAutoStartCard.Description" xml:space="preserve">
+    <value>系统启动时启动EasyTidy</value>
+  </data>
+  <data name="GeneralAutoStartCard.Header" xml:space="preserve">
+    <value>自动启动</value>
+  </data>
+  <data name="GeneralCheckCard.Description" xml:space="preserve">
+    <value>启动时检查更新</value>
+  </data>
+  <data name="GeneralCheckCard.Header" xml:space="preserve">
+    <value>检查更新</value>
+  </data>
+  <data name="GeneralMinimizeCard.Description" xml:space="preserve">
+    <value>启动时最小化到通知区域</value>
+  </data>
+  <data name="GeneralMinimizeCard.Header" xml:space="preserve">
+    <value>最小化</value>
+  </data>
+  <data name="GeneralBack.Header" xml:space="preserve">
+    <value>备份/还原</value>
+  </data>
+  <data name="GeneralBackCard.Description" xml:space="preserve">
+    <value>如果有需要，EasyTidy将自动重启，勾选自动备份将在每次软件启动时进行备份</value>
+  </data>
+  <data name="GeneralBackCard.Header" xml:space="preserve">
+    <value>备份和还原设置</value>
+  </data>
+  <data name="GeneralBackButton.Content" xml:space="preserve">
+    <value>备份</value>
+  </data>
+  <data name="GeneralRestoreButton.Content" xml:space="preserve">
+    <value>还原</value>
+  </data>
+  <data name="GeneralAutoBackup.Content" xml:space="preserve">
+    <value>自动备份</value>
+  </data>
+  <data name="GeneralLocationCard.Header" xml:space="preserve">
+    <value>位置</value>
+  </data>
+  <data name="GeneralBackupMethod.PlaceholderText" xml:space="preserve">
+    <value>选择备份方式</value>
+  </data>
+  <data name="GeneralAddress.Text" xml:space="preserve">
+    <value>地址：</value>
+  </data>
+  <data name="GeneralUsername.Text" xml:space="preserve">
+    <value>用户名：</value>
+  </data>
+  <data name="GeneralPassword.Text" xml:space="preserve">
+    <value>密码：</value>
+  </data>
+  <data name="GeneralBackupInformation.Header" xml:space="preserve">
+    <value>备份信息</value>
+  </data>
+  <data name="GeneralStatus.Text" xml:space="preserve">
+    <value>状态：</value>
+  </data>
+  <data name="GeneralRefresh.Text" xml:space="preserve">
+    <value>刷新</value>
+  </data>
+  <data name="GeneralFilename.Text" xml:space="preserve">
+    <value>文件名：</value>
+  </data>
+  <data name="GeneralSourceComputer.Text" xml:space="preserve">
+    <value>源计算机：</value>
+  </data>
+  <data name="GeneralCreatedOn.Text" xml:space="preserve">
+    <value>创建于：</value>
+  </data>
+  <data name="GeneralUseDocumentation.Text" xml:space="preserve">
+    <value>使用文档</value>
+  </data>
+  <data name="GereralReport.Text" xml:space="preserve">
+    <value>报告BUG</value>
+  </data>
+  <data name="GeneralRequestFeature.Text" xml:space="preserve">
+    <value>申请功能</value>
   </data>
 </root>

@@ -20,14 +20,14 @@
     </ContentDialog.Resources>
 
     <StackPanel>
-        <TextBlock Text="时间单位匹配下方的值时，将会运行；"
+        <TextBlock x:Uid="DialogFirst"
                 Margin="0,20,0,5"/>
-        <TextBlock Text="支持CRON表达式，CRON表达式优先级高于前5项的值"
+        <TextBlock x:Uid="DialogNotice"
                 Margin="0,0,0,20"/>
         <StackPanel Orientation="Horizontal"
                     Spacing="20"
                     Margin="0,10,0,0">
-            <TextBlock Text="分钟："
+            <TextBlock x:Uid="DialogMinute"
                        Margin="0,5,0,0"/>
             <TextBox x:Name="MinutesBox"
                      Margin="88,0,0,0"
@@ -42,7 +42,7 @@
         <StackPanel Orientation="Horizontal"
                     Margin="0,10,0,0"
                     Spacing="20">
-            <TextBlock Text="小时："
+            <TextBlock x:Uid="DialogHour"
                        Margin="0,5,0,0"/>
             <TextBox Margin="88,0,0,0"
                      MinWidth="200"
@@ -56,7 +56,7 @@
         <StackPanel Orientation="Horizontal"
                     Spacing="20"
                     Margin="0,10,0,0">
-            <TextBlock Text="每个星期的第几天："
+            <TextBlock x:Uid="DialogWeek"
                        Margin="0,5,0,0"/>
             <TextBox Margin="4,0,0,0"
                      MinWidth="200"
@@ -65,12 +65,12 @@
                      wuc:Validation.ValidationPropertyName="DayOfWeek"
                      wuc:Validation.ValidationProvider="{x:Bind}"
                      Style="{StaticResource ValidatingTextBoxStyle}"/>
-            <TextBlock Text="(0=周日 to 6=周六)"/>
+            <TextBlock x:Uid="DialogDayOfWeekBlock"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal"
                     Spacing="20"
                     Margin="0,10,0,0">
-            <TextBlock Text="每个月第几天："
+            <TextBlock x:Uid="DialogDayOfMonth"
                        Margin="0,5,0,0"/>
             <TextBox Margin="32,0,0,0"
                      MinWidth="200"
@@ -84,7 +84,7 @@
         <StackPanel Orientation="Horizontal"
                     Spacing="20"
                     Margin="0,10,0,0">
-            <TextBlock Text="月份："
+            <TextBlock x:Uid="DialogMonth"
                        Margin="0,5,0,0"/>
             <TextBox Margin="88,0,0,0"
                      MinWidth="200"
@@ -98,7 +98,7 @@
         <wuc:Divider/>
         <StackPanel Orientation="Horizontal"
                     Spacing="20">
-            <TextBlock Text="CRON 表达式："
+            <TextBlock x:Uid="DialogExpression"
                        Margin="0,5,0,0"/>
             <TextBox Margin="32,0,0,0"
                     Name="CronExpressionBox"
@@ -110,17 +110,17 @@
                      Style="{StaticResource ValidatingTextBoxStyle}"/>
         </StackPanel>
 
-        <TextBlock Text="（空字符串）匹配任何值"
+        <TextBlock x:Uid="DialogExplanation1"
                    Margin="0,40,0,20"/>
-        <TextBlock Text="Val1,Val2,...,ValN 匹配值列表"
+        <TextBlock x:Uid="DialogExplanation2"
                    Margin="0,-20,0,20"/>
-        <TextBlock Text="n1-n2 匹配n1到n2的值范围"
+        <TextBlock x:Uid="DialogExplanation3"
                    Margin="0,-20,0,20"/>
-        <TextBlock Text="n1-n2/n3 与步骤n3匹配范围n1到n2"
+        <TextBlock x:Uid="DialogExplanation4"
                    Margin="0,-20,0,20"/>
-        <TextBlock Text="示列：分钟=15 小时=03 月份=3-10/3 每个星期的第几天=1,3,5任务将会在"
+        <TextBlock x:Uid="DialogExplanation5"
                    Margin="0,-20,0,20"/>
-        <TextBlock Text="3，6，9月的每周1，3，5早上3点15分运行。"
+        <TextBlock x:Uid="DialogExplanation6"
                    Margin="0,-20,0,20"/>
     </StackPanel>
 </ContentDialog>

@@ -191,8 +191,8 @@ public partial class AutomaticViewModel : ObservableRecipient
         {
             ViewModel = this,
             Title = "ScheduleText".GetLocalized(),
-            PrimaryButtonText = "保存",
-            CloseButtonText = "取消",
+            PrimaryButtonText = "SaveText".GetLocalized(),
+            CloseButtonText = "CancelText".GetLocalized(),
             ThemeService = themeService
         };
         dialog.PrimaryButtonClick += OnOnAddPlanPrimaryButton;
@@ -236,9 +236,9 @@ public partial class AutomaticViewModel : ObservableRecipient
         var dialog = new CustomConfigContentDialog
         {
             ViewModel = this,
-            Title = "自定义配置",
-            PrimaryButtonText = "保存",
-            CloseButtonText = "取消",
+            Title = "CustomConfigurationText".GetLocalized(),
+            PrimaryButtonText = "SaveText".GetLocalized(),
+            CloseButtonText = "CancelText".GetLocalized(),
         };
 
         dialog.PrimaryButtonClick += OnAddCustomConfigPrimaryButton;
@@ -491,7 +491,7 @@ public partial class AutomaticViewModel : ObservableRecipient
             await OnPageLoaded();
             Growl.Success(new GrowlInfo
             {
-                Message = "保存成功",
+                Message = "SaveSuccessfulText".GetLocalized(),
                 ShowDateTime = false
             });
         }
@@ -499,7 +499,7 @@ public partial class AutomaticViewModel : ObservableRecipient
         {
             Growl.Error(new GrowlInfo
             {
-                Message = "保存失败",
+                Message = "SaveFailedText".GetLocalized(),
                 ShowDateTime = false
             });
             Logger.Error($"AutomaticViewModel: OnSaveTaskConfig 异常信息 {ex}");

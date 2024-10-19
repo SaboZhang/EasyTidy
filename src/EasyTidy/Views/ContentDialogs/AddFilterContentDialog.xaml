@@ -25,7 +25,7 @@
                     wuc:Growl.GrowlParent="True"/>
         <StackPanel Orientation="Horizontal"
                     Spacing="8">
-            <TextBlock Text="过滤器名称："
+            <TextBlock x:Uid="DialogFilterNameBlock"
                        Margin="0,8,0,0"/>
             <TextBox x:Name="NameTextBox"
                      Margin="38,0,0,0"
@@ -36,13 +36,13 @@
                      Style="{StaticResource ValidatingTextBoxStyle}"
                      Text="{x:Bind FilterName, Mode=TwoWay}"/>
         </StackPanel>
-        <wuc:Divider Content="属性"
+        <wuc:Divider x:Uid="DividerAttribute"
                      HorizontalContentAlignment="Left"/>
         <StackPanel x:Name="SizePropertyStackPanel"
                     Orientation="Horizontal"
                     Spacing="8"
                     Margin="0,-10,0,0">
-            <CheckBox Content="文件大小："
+            <CheckBox x:Uid="DialogFileSize"
                       IsChecked="{x:Bind IsSizeSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             <ComboBox x:Name="SizeComboBox"
                       Width="78"
@@ -76,7 +76,7 @@
                     Orientation="Horizontal"
                     Spacing="8"
                     Margin="0,10,0,0">
-            <CheckBox Content="创建时间："
+            <CheckBox x:Uid="DialogCreationTime"
                       IsChecked="{x:Bind IsCreateDateSelected, Mode=TwoWay}"/>
             <ComboBox x:Name="CreateDateComboBox"
                       Width="78"
@@ -110,7 +110,7 @@
                     Orientation="Horizontal"
                     Spacing="8"
                     Margin="0,10,0,0">
-            <CheckBox Content="修改时间："
+            <CheckBox x:Uid="DialogModifyTime"
                       IsChecked="{x:Bind IsEditDateSelected, Mode=TwoWay}"/>
             <ComboBox x:Name="EditDateComboBox"
                       Width="78"
@@ -144,7 +144,7 @@
                     Orientation="Horizontal"
                     Spacing="8"
                     Margin="0,10,0,0">
-            <CheckBox Content="访问时间："
+            <CheckBox x:Uid="DialogVisitTime"
                       IsChecked="{x:Bind IsVisitDateSelected, Mode=TwoWay}"/>
             <ComboBox x:Name="VisitDateComboBox"
                       Width="78"
@@ -174,13 +174,13 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
         </StackPanel>
-        <wuc:Divider Content="特性"
+        <wuc:Divider x:Uid="DialogDividerCharacteristics"
                      HorizontalContentAlignment="Left"/>
         <StackPanel x:Name="ArchiveStackPanel"
                     Orientation="Horizontal"
                     Spacing="8"
                     Margin="0,-10,0,0">
-            <CheckBox Content="存档："
+            <CheckBox x:Uid="DialogArchive"
                       IsChecked="{x:Bind IsArchiveSelected, Mode=TwoWay}"/>
             <ComboBox x:Name="ArchiveComboBox"
                       Width="78"
@@ -193,7 +193,7 @@
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
-            <CheckBox Content="隐藏："
+            <CheckBox x:Uid="DialogHide"
                       IsChecked="{x:Bind IsHiddenSelected, Mode=TwoWay}"/>
             <ComboBox x:Name="HidenComboBox"
                       Width="78"
@@ -211,7 +211,7 @@
                     Orientation="Horizontal"
                     Spacing="8"
                     Margin="0,10,0,0">
-            <CheckBox Content="只读："
+            <CheckBox x:Uid="DialogReadonly"
                       IsChecked="{x:Bind IsReadOnlySelected, Mode=TwoWay}"/>
             <ComboBox x:Name="RadyOnlyComboBox"
                       Width="78"
@@ -224,7 +224,7 @@
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
-            <CheckBox Content="系统："
+            <CheckBox x:Uid="DialogSystem"
                       IsChecked="{x:Bind IsSystemSelected, Mode=TwoWay}"/>
             <ComboBox x:Name="SystemComboBox"
                       Width="78"
@@ -242,7 +242,7 @@
                     Orientation="Horizontal"
                     Spacing="8"
                     Margin="0,10,0,0">
-            <CheckBox Content="临时："
+            <CheckBox x:Uid="DialogTemporary"
                       IsChecked="{x:Bind IsTempSelected, Mode=TwoWay}"/>
             <ComboBox x:Name="TempComboBox"
                       Width="78"
@@ -256,13 +256,13 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
         </StackPanel>
-        <wuc:Divider Content="其他"
+        <wuc:Divider x:Uid="DialogDividerOthers"
                      HorizontalContentAlignment="Left"/>
         <StackPanel x:Name="OtherStackPanel"
                     Orientation="Horizontal"
                     Spacing="8"
                     Margin="0,-10,0,0">
-            <CheckBox Content="包含的文件："
+            <CheckBox x:Uid="DialogIncludedFiles"
                       IsChecked="{x:Bind IsIncludeSelected, Mode=TwoWay}"/>
             <TextBox x:Name="OtherTextBox"
                      Width="120"
@@ -273,7 +273,7 @@
                     Orientation="Horizontal"
                     Spacing="8"
                     Margin="0,10,0,0">
-            <CheckBox Content="文件内容："
+            <CheckBox x:Uid="DialogFileContent"
                       IsChecked="{x:Bind IsContentSelected, Mode=TwoWay}"/>
             <ComboBox x:Name="ContentComboBox"
                       Width="352"
