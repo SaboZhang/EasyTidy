@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using CommunityToolkit.WinUI;
 
 namespace EasyTidy.Model;
 
@@ -20,7 +21,7 @@ public static class EnumHelper
             if (attributes.Length > 0)
             {
                 var displayAttribute = (DisplayAttribute)attributes[0];
-                return displayAttribute.Name;
+                return displayAttribute.Name?.GetLocalized();
             }
         }
         return value.ToString();
