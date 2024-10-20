@@ -100,7 +100,7 @@
                           Glyph=&#xE777;}">
                         <StackPanel Orientation="Horizontal"
                                     Spacing="8">
-                            <Button x:Uid="GeneralBackButton"/>
+                            <Button x:Uid="GeneralBackButton" Command="{x:Bind ViewModel.BackupConfigsClickCommand}" />
                             <Button x:Uid="GeneralRestoreButton"/>
                             <CheckBox x:Uid="GeneralAutoBackup"/>
                         </StackPanel>
@@ -169,20 +169,23 @@
                                     <TextBox Grid.Row="0"
                                              Grid.Column="1"
                                              Width="480"
-                                             Margin="0,-8,0,15"/>
+                                             Margin="0,-8,0,15"
+                                             Text="{x:Bind ViewModel.WebDavUrl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
                                     <TextBlock Grid.Row="1"
                                                x:Uid="GeneralUsername"/>
                                     <TextBox Grid.Row="1"
                                              Grid.Column="1"
                                              Width="480"
-                                             Margin="0,-8,0,15"/>
+                                             Margin="0,-8,0,15"
+                                             Text="{x:Bind ViewModel.WebDavUserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                     <TextBlock Grid.Row="2"
                                                x:Uid="GeneralPassword"/>
                                     <PasswordBox Grid.Row="2"
                                                  Grid.Column="1"
                                                  Width="480"
-                                                 Margin="0,-8,0,15"/>
+                                                 Margin="0,-8,0,15"
+                                                 Password="{x:Bind ViewModel.WebDavPassWord, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 </Grid>
                             </wuc:SettingsCard>
                             <wuc:SettingsCard HorizontalContentAlignment="Left"
@@ -237,9 +240,12 @@
 
                     </wuc:SettingsExpander>
                 </wuc:SimpleSettingsGroup>
-                <InfoBar Title="结果"
-                         IsClosable="False"
-                         IsOpen="True"/>
+                <InfoBar 
+                    Title="{x:Bind ViewModel.SettingsBackupMessage, Mode=OneWay}"
+                    IsClosable="False"
+                    IsOpen="{x:Bind ViewModel.SettingsBackupRestoreMessageVisible, Mode=OneWay}"
+                    IsTabStop="{x:Bind ViewModel.SettingsBackupRestoreMessageVisible, Mode=OneWay}"
+                    Severity="{x:Bind ViewModel.BackupRestoreMessageSeverity, Mode=TwoWay}" />
 
             </StackPanel>
         </wuc:SettingsPageControl.ModuleContent>

@@ -76,13 +76,14 @@ public partial class App : Application
 
     protected async override void OnLaunched(LaunchActivatedEventArgs args)
     {
+        // 开启日志服务
+        LogService.Register("", LogLevel.Debug, AppVersion);
+
         if (!string.IsNullOrEmpty(Settings.Language))
         {
             Logger.Info($"当前语言被设置为：{Settings.Language}");
             ApplicationLanguages.PrimaryLanguageOverride = Settings.Language;
         }
-        // 开启日志服务
-        LogService.Register("", LogLevel.Debug, AppVersion);
 
         if (!PackageHelper.IsPackaged)
         {

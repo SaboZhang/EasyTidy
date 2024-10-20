@@ -24,5 +24,5 @@ public static class Constants
     /// </remarks>
     public static readonly string ExecutePath = AppDomain.CurrentDomain.BaseDirectory;
 
-    private static readonly string PortableCnfPath = $"{ExecutePath}{PortableConfig}";
+    public static readonly string PortableCnfPath = $"{ExecutePath}{PortableConfig}";
 }

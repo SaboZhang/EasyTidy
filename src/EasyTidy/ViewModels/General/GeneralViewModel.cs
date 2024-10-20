@@ -1,4 +1,5 @@
 ﻿using EasyTidy.Model;
+using EasyTidy.Util;
 using System.Runtime.CompilerServices;
 
 namespace EasyTidy.ViewModels;
@@ -35,6 +36,24 @@ public partial class GeneralViewModel : ObservableRecipient
     /// </summary>
     [ObservableProperty]
     private IList<BackupType> backupTypes = Enum.GetValues(typeof(BackupType)).Cast<BackupType>().ToList();
+
+    [ObservableProperty]
+    private string _settingsBackupMessage;
+
+    [ObservableProperty]
+    private InfoBarSeverity _backupRestoreMessageSeverity;
+
+    [ObservableProperty]
+    private bool _settingsBackupRestoreMessageVisible;
+
+    [ObservableProperty]
+    private string _webDavUserName;
+
+    [ObservableProperty]
+    private string _webDavPassWord;
+
+    [ObservableProperty]
+    private string _webDavUrl;
 
     /// <summary>
     /// 是否处理子文件夹
@@ -233,10 +252,12 @@ public partial class GeneralViewModel : ObservableRecipient
             case BackupType.Local:
                 PathTypeSelectedIndex = true;
                 WebDavIsShow = false;
+                Settings.BackupType = BackupType.Local;
                 break;
             case BackupType.WebDav:
                 PathTypeSelectedIndex = false;
                 WebDavIsShow = true;
+                Settings.BackupType = BackupType.WebDav;
                 break;
             default:
                 PathTypeSelectedIndex = false;
@@ -259,6 +280,41 @@ public partial class GeneralViewModel : ObservableRecipient
             FloderPath = "";
             Logger.Error($"ServerViewModel: OnSelectMediaPath 异常信息 {ex}");
         }
+    }
+
+    [RelayCommand]
+    private async Task BackupConfigsClickAsync()
+    {
+        string backupAndRestoreDir = Constants.PortableCnfPath ?? Constants.RootDirectoryPath;
+
+        switch (Settings.BackupType)
+        {
+            case BackupType.Local:
+                // 本地备份
+                BackupRestoreMessageSeverity = InfoBarSeverity.Success;
+                SettingsBackupMessage = "备份成功";
+                break;
+            case BackupType.WebDav:
+                // WebDav备份
+                WebDavClient webDavClient = new(WebDavUrl, WebDavUserName, WebDavPassWord);
+                var backup = await webDavClient.UploadFileAsync("", "");
+                if (backup)
+                {
+                    BackupRestoreMessageSeverity = InfoBarSeverity.Success;
+                    SettingsBackupMessage = "备份成功";
+                }
+                else
+                {
+                    BackupRestoreMessageSeverity = InfoBarSeverity.Error;
+                    SettingsBackupMessage = "备份失败";
+                }
+                break;
+            default:
+                BackupRestoreMessageSeverity = InfoBarSeverity.Warning;
+                SettingsBackupMessage = "请选择备份类型";
+                break;
+        }
+        
     }
 
     private void NotifyPropertyChanged([CallerMemberName] string propertyName = null, bool reDoBackupDryRun = true)

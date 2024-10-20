@@ -681,7 +681,7 @@
     <value>支持CRON表达式，CRON表达式优先级高于前5项的值</value>
   </data>
   <data name="DialogFirst.Text" xml:space="preserve">
-    <value>时间单位匹配下方的值时，将会运行；</value>
+    <value>时间单位匹配下方的值时，将会运行。</value>
   </data>
   <data name="DialogExplanation1.Text" xml:space="preserve">
     <value>（空字符串）匹配任何值</value>
@@ -886,5 +886,113 @@
   </data>
   <data name="ThemeTransparent.Content" xml:space="preserve">
     <value>透明</value>
+  </data>
+  <data name="TrayIconStopMonitoring.Text" xml:space="preserve">
+    <value>停止监控</value>
+  </data>
+  <data name="TrayIconExecuteOnce.Text" xml:space="preserve">
+    <value>执行一次</value>
+  </data>
+  <data name="TrayIconPreferences.Text" xml:space="preserve">
+    <value>偏好设置</value>
+  </data>
+  <data name="TrayIconScreen.Text" xml:space="preserve">
+    <value>显示/隐藏界面</value>
+  </data>
+  <data name="TrayIconRestart.Text" xml:space="preserve">
+    <value>重启应用</value>
+  </data>
+  <data name="TrayIconExit.Text" xml:space="preserve">
+    <value>退出程序</value>
+  </data>
+  <data name="MainTitleBarTheme.ToolTipService.ToolTip" xml:space="preserve">
+    <value>切换主题</value>
+  </data>
+  <data name="MainTitleBarNav.ToolTipService.ToolTip" xml:space="preserve">
+    <value>变更导航</value>
+  </data>
+  <data name="MainSuggestBox.PlaceholderText" xml:space="preserve">
+    <value>搜索</value>
+  </data>
+  <data name="SettingsLanguageCard.Header" xml:space="preserve">
+    <value>应用程序语言</value>
+  </data>
+  <data name="SettingsLanguageCard.Description" xml:space="preserve">
+    <value>默认情况下 EasyTidy 将使用 OS 语言</value>
+  </data>
+  <data name="Default_language" xml:space="preserve">
+    <value>Windows默认</value>
+  </data>
+  <data name="Arabic_Saudi_Arabia_Language" xml:space="preserve">
+    <value>阿拉伯语（沙特阿拉伯）</value>
+  </data>
+  <data name="LanguageRestartInfo.Title" xml:space="preserve">
+    <value>重启 EasyTidy 以使语言更改生效</value>
+  </data>
+  <data name="LanguageRestartInfoButton.Content" xml:space="preserve">
+    <value>重启</value>
+  </data>
+  <data name="Czech_Language" xml:space="preserve">
+    <value>捷克语</value>
+  </data>
+  <data name="German_Language" xml:space="preserve">
+    <value>德语</value>
+  </data>
+  <data name="English_Language" xml:space="preserve">
+    <value>英语</value>
+  </data>
+  <data name="Spanish_Language" xml:space="preserve">
+    <value>西班牙语</value>
+  </data>
+  <data name="Persian_Farsi_Language" xml:space="preserve">
+    <value>波斯语(法尔西语)</value>
+  </data>
+  <data name="French_Language" xml:space="preserve">
+    <value>法语</value>
+  </data>
+  <data name="Hebrew_Israel_Language" xml:space="preserve">
+    <value>希伯来语(以色列)</value>
+  </data>
+  <data name="Hungarian_Language" xml:space="preserve">
+    <value>匈牙利语</value>
+  </data>
+  <data name="Italian_Language" xml:space="preserve">
+    <value>意大利语</value>
+  </data>
+  <data name="Japanese_Language" xml:space="preserve">
+    <value>日语</value>
+  </data>
+  <data name="Korean_Language" xml:space="preserve">
+    <value>韩语</value>
+  </data>
+  <data name="Dutch_Language" xml:space="preserve">
+    <value>荷兰语</value>
+  </data>
+  <data name="Polish_Language" xml:space="preserve">
+    <value>波兰语</value>
+  </data>
+  <data name="Portuguese_Brazil_Language" xml:space="preserve">
+    <value>葡萄牙语(巴西)</value>
+  </data>
+  <data name="Portuguese_Portugal_Language" xml:space="preserve">
+    <value>葡萄牙语(葡萄牙)</value>
+  </data>
+  <data name="Russian_Language" xml:space="preserve">
+    <value>俄语</value>
+  </data>
+  <data name="Swedish_Language" xml:space="preserve">
+    <value>瑞典语</value>
+  </data>
+  <data name="Turkish_Language" xml:space="preserve">
+    <value>土耳其语</value>
+  </data>
+  <data name="Ukrainian_Language" xml:space="preserve">
+    <value>乌克兰语</value>
+  </data>
+  <data name="Chinese_Simplified_Language" xml:space="preserve">
+    <value>简体中文</value>
+  </data>
+  <data name="Chinese_Traditional_Language" xml:space="preserve">
+    <value>中文(繁体)</value>
   </data>
 </root>

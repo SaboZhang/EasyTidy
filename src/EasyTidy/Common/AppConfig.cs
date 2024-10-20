@@ -21,4 +21,6 @@ public partial class AppConfig : JsonSettings, IVersionable
     public virtual AutomaticConfigModel? AutomaticConfig { get; set; } = new();
 
     public virtual string Language { get; set; }
+
+    public virtual BackupType BackupType { get; set; }
 }

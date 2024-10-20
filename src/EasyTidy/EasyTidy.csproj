@@ -142,6 +142,9 @@
     <Content Remove="Assets\Store\Wide310x150Logo.scale-150.png" />
     <Content Remove="Assets\Store\Wide310x150Logo.scale-400.png" />
     <Content Remove="Assets\Wide310x150Logo.scale-200.png" />
+    <Content Remove="Strings\fr-FR\Resources.resw" />
+    <Content Remove="Strings\ja-JP\Resources.resw" />
+    <Content Remove="Strings\zh-TW\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Views\Automatic\AutomaticPage.xaml" />

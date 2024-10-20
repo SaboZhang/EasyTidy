@@ -29,23 +29,23 @@
             <MenuFlyout AreOpenCloseAnimationsEnabled="False">
                 <MenuFlyoutItem
                     Command="{x:Bind StopWatcherCommand}"
-                    Text="停止监控"/>
+                    x:Uid="TrayIconStopMonitoring"/>
                 <MenuFlyoutItem
                     Command="{x:Bind ShowHideWindowCommand}"
-                    Text="执行一次"/>
+                    x:Uid="TrayIconExecuteOnce"/>
                 <MenuFlyoutItem
                     Command="{x:Bind ShowSettingsCommand}"
-                    Text="偏好设置"/>
+                    x:Uid="TrayIconPreferences"/>
                 <MenuFlyoutItem
                     Command="{x:Bind ShowHideWindowCommand}"
-                    Text="显示/隐藏界面"/>
+                    x:Uid="TrayIconScreen"/>
                 <MenuFlyoutSeparator/>
                 <MenuFlyoutItem
                     Command="{x:Bind RestartApplicationCommand}"
-                    Text="重启应用"/>
+                    x:Uid="TrayIconRestart"/>
                 <MenuFlyoutItem
                     Command="{x:Bind ExitApplicationCommand}"
-                    Text="退出程序"/>
+                    x:Uid="TrayIconExit"/>
             </MenuFlyout>
         </tb:TaskbarIcon.ContextFlyout>
     </tb:TaskbarIcon>
