@@ -812,4 +812,79 @@
   <data name="GeneralRequestFeature.Text" xml:space="preserve">
     <value>申请功能</value>
   </data>
+  <data name="TaskSettingsPage.ModuleDescription" xml:space="preserve">
+    <value>用户可添加文件处理任务，并能够对其执行方式进行专业设置，包括选择自动执行、仅执行一次，亦或是创建桌面快捷方式、添加备份任务等操作。</value>
+  </data>
+  <data name="TaskSettingsPage.ModuleTitle" xml:space="preserve">
+    <value>任务管理</value>
+  </data>
+  <data name="TaskAddTask.Description" xml:space="preserve">
+    <value>添加文件自动整理的任务</value>
+  </data>
+  <data name="TaskAddTask.Header" xml:space="preserve">
+    <value>添加任务</value>
+  </data>
+  <data name="TaskAddTaskButton.Content" xml:space="preserve">
+    <value>添加任务</value>
+  </data>
+  <data name="TaskDisplay.PlaceholderText" xml:space="preserve">
+    <value>按分组显示</value>
+  </data>
+  <data name="TaskDisplay.ToolTipService.ToolTip" xml:space="preserve">
+    <value>按分组筛选</value>
+  </data>
+  <data name="TaskListView.Text" xml:space="preserve">
+    <value>任务列表</value>
+  </data>
+  <data name="TaskListTaskName.Text" xml:space="preserve">
+    <value>任务名称</value>
+  </data>
+  <data name="TaskListSource.Text" xml:space="preserve">
+    <value>源文件夹</value>
+  </data>
+  <data name="TaskListTarget.Text" xml:space="preserve">
+    <value>目标文件夹</value>
+  </data>
+  <data name="TaskListShortcuts.Text" xml:space="preserve">
+    <value>桌面快捷方式</value>
+  </data>
+  <data name="TaskListEnable.Text" xml:space="preserve">
+    <value>是否启用</value>
+  </data>
+  <data name="TaskListOperation.Text" xml:space="preserve">
+    <value>操作</value>
+  </data>
+  <data name="RunButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>执行一次</value>
+  </data>
+  <data name="IsEnableButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>是否禁用</value>
+  </data>
+  <data name="ThemeMaterial.Header" xml:space="preserve">
+    <value>材质</value>
+  </data>
+  <data name="ThemeMaterial.Description" xml:space="preserve">
+    <value>更改您应用程序背景的外观效果。您可以选择云母、亚克力或透明选项。</value>
+  </data>
+  <data name="ThemeNone.Content" xml:space="preserve">
+    <value>无</value>
+  </data>
+  <data name="ThemeMica.Content" xml:space="preserve">
+    <value>云母</value>
+  </data>
+  <data name="ThemeMicaAlt.Content" xml:space="preserve">
+    <value>云母 Alt</value>
+  </data>
+  <data name="ThemeDesktopAcrylic.Content" xml:space="preserve">
+    <value>背景亚克力</value>
+  </data>
+  <data name="ThemeAcrylicBase.Content" xml:space="preserve">
+    <value>亚克力</value>
+  </data>
+  <data name="ThemeAcrylicThin.Content" xml:space="preserve">
+    <value>半透明亚克力</value>
+  </data>
+  <data name="ThemeTransparent.Content" xml:space="preserve">
+    <value>透明</value>
+  </data>
 </root>

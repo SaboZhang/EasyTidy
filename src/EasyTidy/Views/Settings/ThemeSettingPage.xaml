@@ -35,17 +35,16 @@
                 </ComboBox>
             </wuc:SettingsCard>
             <wuc:SettingsCard
-                Description="Change the appearance of the backdrop material behind your app. You can choose from mica, acrylic, or transparent options."
-                Header="Material"
+                x:Uid="ThemeMaterial"
                 HeaderIcon="{wuc:BitmapIcon Source=Assets/Fluent/backdrop.png}">
                 <ComboBox x:Name="CmbBackdrop">
-                    <ComboBoxItem Content="None" Tag="None" />
-                    <ComboBoxItem Content="Mica" Tag="Mica" />
-                    <ComboBoxItem Content="Mica Alt" Tag="MicaAlt" />
-                    <ComboBoxItem Content="Desktop Acrylic" Tag="DesktopAcrylic" />
-                    <ComboBoxItem Content="Acrylic Base" Tag="AcrylicBase" />
-                    <ComboBoxItem Content="Acrylic Thin" Tag="AcrylicThin" />
-                    <ComboBoxItem Content="Transparent" Tag="Transparent" />
+                    <ComboBoxItem x:Uid="ThemeNone" Tag="None" />
+                    <ComboBoxItem x:Uid="ThemeMica" Tag="Mica" />
+                    <ComboBoxItem x:Uid="ThemeMicaAlt" Tag="MicaAlt" />
+                    <ComboBoxItem x:Uid="ThemeDesktopAcrylic" Tag="DesktopAcrylic" />
+                    <ComboBoxItem x:Uid="ThemeAcrylicBase" Tag="AcrylicBase" />
+                    <ComboBoxItem x:Uid="ThemeAcrylicThin" Tag="AcrylicThin" />
+                    <ComboBoxItem x:Uid="ThemeTransparent" Tag="Transparent" />
                     <i:Interaction.Behaviors>
                         <ic:EventTriggerBehavior EventName="SelectionChanged">
                             <ic:EventTriggerBehavior.Actions>

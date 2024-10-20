@@ -20,34 +20,31 @@
         </ic:EventTriggerBehavior>
     </i:Interaction.Behaviors>
 
-    <StackPanel x:Name="root">
+    <StackPanel x:Name="Root">
         <StackPanel x:Name="Growl"
                     MinWidth="340"
                     wuc:Growl.GrowlParent="True"/>
         <wuc:SettingsPageControl
-            x:Name="settingsControl"
-            ModuleDescription="用户可添加文件处理任务，并能够对其执行方式进行专业设置，包括选择自动执行、仅执行一次，亦或是创建桌面快捷方式、添加备份任务等操作。"
-            ModuleTitle="任务管理"
+            x:Name="SettingsControl"
+            x:Uid="TaskSettingsPage"
             ModuleImageSource="ms-appx:///Assets/Modules/FileTask.png">
             <wuc:SettingsPageControl.ModuleContent>
                 <StackPanel>
                     <wuc:SettingsCard x:Name="AddTask"
-                                      Header="添加任务"
-                                      Description="添加文件自动整理的任务">
+                                      x:Uid="TaskAddTask">
                         <wuc:SettingsCard.HeaderIcon>
                             <FontIcon Glyph="&#xE7C4;"/>
                         </wuc:SettingsCard.HeaderIcon>
                         <StackPanel Orientation="Horizontal"
                                     Spacing="10">
-                            <Button Content="添加任务"
+                            <Button x:Uid="TaskAddTaskButton"
                                     x:Name="TaskButton"
                                     Style="{StaticResource AccentButtonStyle}"
                                     Command="{x:Bind ViewModel.AddTaskClickCommand}"/>
                             <ComboBox x:Name="GroupNameComboBox"
-                                      PlaceholderText="按分组选择"
+                                      x:Uid="TaskDisplay"
                                       ItemsSource="{x:Bind ViewModel.GroupNameList, Mode=OneWay}"
-                                      SelectedItem="{x:Bind ViewModel.SelectedGroupName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                      ToolTipService.ToolTip="按分组筛选">
+                                      SelectedItem="{x:Bind ViewModel.SelectedGroupName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                 <i:Interaction.Behaviors>
                                     <ic:EventTriggerBehavior EventName="SelectionChanged">
                                         <ic:EventTriggerBehavior.Actions>
@@ -61,7 +58,7 @@
                     <StackPanel>
                         <TextBlock x:Name="TaskList"
                                    TextWrapping="Wrap"
-                                   Text="任务列表"
+                                   x:Uid="TaskListView"
                                    Margin="0,20,20,0"/>
                         <wuc:LoadingIndicator x:Name="Load"
                                               Mode="Arcs"
@@ -86,24 +83,24 @@
                                                    HorizontalAlignment="Left"
                                                    VerticalAlignment="Center"/>
                                         <TextBlock Grid.Column="1"
-                                                   Text="任务名称"
+                                                   x:Uid="TaskListTaskName"
                                                    VerticalAlignment="Center"/>
                                         <TextBlock Grid.Column="2"
-                                                   Text="源文件夹"
+                                                   x:Uid="TaskListSource"
                                                    VerticalAlignment="Center"/>
                                         <TextBlock Grid.Column="3"
-                                                   Text="目标文件夹"
+                                                   x:Uid="TaskListTarget"
                                                    VerticalAlignment="Center"/>
                                         <TextBlock Grid.Column="4"
-                                                   Text="桌面快捷方式"
+                                                   x:Uid="TaskListShortcuts"
                                                    VerticalAlignment="Center"
                                                    HorizontalAlignment="Center"/>
                                         <TextBlock Grid.Column="5"
-                                                   Text="是否启用"
+                                                   x:Uid="TaskListEnable"
                                                    VerticalAlignment="Center"
                                                    HorizontalAlignment="Center"/>
                                         <TextBlock Grid.Column="6"
-                                                   Text="操作"
+                                                   x:Uid="TaskListOperation"
                                                    HorizontalAlignment="Center"
                                                    VerticalAlignment="Center"/>
                                     </Grid>
@@ -146,28 +143,30 @@
                                                         Spacing="8"
                                                         Grid.Column="6">
                                                 <Button x:Name="EditButton"
-                                                        Content="{wuc:BitmapIcon Source=Assets/Fluent/edit.png}"
                                                         Style="{StaticResource SubtleButtonStyle}"
                                                         DataContext="{x:Bind}"
                                                         Width="42"
                                                         Height="42"
-                                                        ToolTipService.ToolTip="编辑"
-                                                        Click="EditButton_Click"/>
+                                                        x:Uid="EditButton"
+                                                        Click="EditButton_Click">
+                                                    <Image Source="/Assets/Fluent/edit.png"/>
+                                                </Button>
                                                 <Button x:Name="DeleteButton"
-                                                        Content="{wuc:BitmapIcon Source=Assets/Fluent/delete.png}"
                                                         Style="{StaticResource SubtleButtonStyle}"
                                                         DataContext="{x:Bind}"
                                                         Width="42"
                                                         Height="42"
-                                                        ToolTipService.ToolTip="删除"
-                                                        Click="DeleteButton_Click"/>
+                                                        x:Uid="DeleteButton"
+                                                        Click="DeleteButton_Click">
+                                                    <Image Source="/Assets/Fluent/delete.png"/>
+                                                </Button>
                                                 <Button x:Name="RunButton"
                                                         Content="{wuc:BitmapIcon Source=Assets/Fluent/run.png}"
                                                         Style="{StaticResource SubtleButtonStyle}"
                                                         DataContext="{x:Bind}"
                                                         Width="42"
                                                         Height="42"
-                                                        ToolTipService.ToolTip="执行一次"
+                                                        x:Uid="RunButton"
                                                         Click="RunButton_Click"/>
                                                 <Button x:Name="IsEnableButton"
                                                         Content="{wuc:BitmapIcon Source=Assets/Fluent/isanble.png}"
@@ -175,7 +174,7 @@
                                                         DataContext="{x:Bind}"
                                                         Width="42"
                                                         Height="42"
-                                                        ToolTipService.ToolTip="是否禁用"
+                                                        x:Uid="IsEnableButton"
                                                         Click="IsEnableButton_Click"/>
                                             </StackPanel>
                                         </Grid>

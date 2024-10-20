@@ -820,4 +820,79 @@
   <data name="GeneralRequestFeature.Text" xml:space="preserve">
     <value>Request Feature</value>
   </data>
+  <data name="TaskSettingsPage.ModuleDescription" xml:space="preserve">
+    <value>Users can add file processing tasks and professionally configure the execution mode, including selecting automatic execution, one-time execution only, and creating desktop shortcuts and adding backup tasks.</value>
+  </data>
+  <data name="TaskSettingsPage.ModuleTitle" xml:space="preserve">
+    <value>Task Management</value>
+  </data>
+  <data name="TaskAddTask.Description" xml:space="preserve">
+    <value>Add files to a tidy task</value>
+  </data>
+  <data name="TaskAddTask.Header" xml:space="preserve">
+    <value>Add Task</value>
+  </data>
+  <data name="TaskAddTaskButton.Content" xml:space="preserve">
+    <value>Add Task</value>
+  </data>
+  <data name="TaskDisplay.PlaceholderText" xml:space="preserve">
+    <value>Display by group</value>
+  </data>
+  <data name="TaskDisplay.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Filter by group</value>
+  </data>
+  <data name="TaskListView.Text" xml:space="preserve">
+    <value>Task List</value>
+  </data>
+  <data name="TaskListTaskName.Text" xml:space="preserve">
+    <value>Task Name</value>
+  </data>
+  <data name="TaskListSource.Text" xml:space="preserve">
+    <value>Source Folder</value>
+  </data>
+  <data name="TaskListTarget.Text" xml:space="preserve">
+    <value>Target folder</value>
+  </data>
+  <data name="TaskListShortcuts.Text" xml:space="preserve">
+    <value>Desktop shortcuts</value>
+  </data>
+  <data name="TaskListEnable.Text" xml:space="preserve">
+    <value>Enable</value>
+  </data>
+  <data name="TaskListOperation.Text" xml:space="preserve">
+    <value>Operation</value>
+  </data>
+  <data name="RunButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Execute once</value>
+  </data>
+  <data name="IsEnableButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Enable</value>
+  </data>
+  <data name="ThemeMaterial.Header" xml:space="preserve">
+    <value>Material</value>
+  </data>
+  <data name="ThemeMaterial.Description" xml:space="preserve">
+    <value>Change the appearance of the backdrop material behind your app. You can choose from mica, acrylic, or transparent options.</value>
+  </data>
+  <data name="ThemeNone.Content" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="ThemeMica.Content" xml:space="preserve">
+    <value>Mica</value>
+  </data>
+  <data name="ThemeMicaAlt.Content" xml:space="preserve">
+    <value>Mica Alt</value>
+  </data>
+  <data name="ThemeDesktopAcrylic.Content" xml:space="preserve">
+    <value>Desktop Acrylic</value>
+  </data>
+  <data name="ThemeAcrylicBase.Content" xml:space="preserve">
+    <value>Acrylic Base</value>
+  </data>
+  <data name="ThemeAcrylicThin.Content" xml:space="preserve">
+    <value>Acrylic Thin</value>
+  </data>
+  <data name="ThemeTransparent.Content" xml:space="preserve">
+    <value>Transparent</value>
+  </data>
 </root>
