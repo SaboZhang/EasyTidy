@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EasyTidy.Model;
@@ -29,5 +30,7 @@ public class TaskOrchestrationTable
     public bool IsRelated { get; set; } = false;
 
     public TaskGroupTable GroupName { get; set; }
+
+    public List<FilterTable> Filter { get; set; }
 
 }

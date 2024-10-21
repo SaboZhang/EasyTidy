@@ -71,7 +71,7 @@
                                     <Grid Padding="16,12"
                                           ColumnSpacing="16">
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="60"/>
+                                            <ColumnDefinition Width="40"/>
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="*"/>
@@ -109,7 +109,7 @@
                                     <DataTemplate x:DataType="model:TaskOrchestrationTable">
                                         <Grid ColumnSpacing="16">
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="60"/>
+                                                <ColumnDefinition Width="40"/>
                                                 <ColumnDefinition Width="*"/>
                                                 <ColumnDefinition Width="*"/>
                                                 <ColumnDefinition Width="*"/>
