@@ -4,11 +4,11 @@ namespace EasyTidy.Views;
 
 public sealed partial class SettingsPage : Page
 {
-    public SettingsViewModel ViewModel { get; }
+    public SettingsViewModel ViewModel { get; set; }
     public SettingsPage()
     {
-        ViewModel = new SettingsViewModel();
         this.InitializeComponent();
+        ViewModel = new SettingsViewModel();
         DataContext = ViewModel;
     }
 
