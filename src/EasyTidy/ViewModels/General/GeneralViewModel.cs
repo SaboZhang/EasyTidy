@@ -1,4 +1,5 @@
-﻿using EasyTidy.Model;
+﻿using CommunityToolkit.WinUI;
+using EasyTidy.Model;
 using EasyTidy.Util;
 using System.Runtime.CompilerServices;
 

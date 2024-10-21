@@ -12,10 +12,6 @@ public partial class SettingsViewModel : ObservableObject
     public SettingsViewModel(IJsonNavigationViewService jsonNavigationViewService)
     {
         JsonNavigationViewService = jsonNavigationViewService;
-    }
-
-    public SettingsViewModel() 
-    {
         InitializeLanguages();
     }
 

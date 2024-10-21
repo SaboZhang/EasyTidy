@@ -17,7 +17,8 @@
             Spacing="5">
             <wuc:SettingsCard x:Name="ChangeLanguageSetting"
                               x:Uid="SettingsLanguageCard"
-                              HeaderIcon="{wuc:BitmapIcon Source=Assets/Fluent/language.png}">
+                              HeaderIcon="{wuc:BitmapIcon Source=Assets/Fluent/language.png}"
+                              Tag="LanguageSetting">
                 <ComboBox x:Name="LanguageComboBox"
                           DisplayMemberPath="Language"
                           ItemsSource="{Binding Languages, Mode=TwoWay}"
