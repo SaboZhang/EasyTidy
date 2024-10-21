@@ -49,6 +49,11 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
         RequestedTheme = ViewModel.themeService.GetElementTheme();
     }
 
+    private void FilterButtonTeachingTip_CloseButtonClick(TeachingTip sender, object args)
+    {
+        // ViewModel.SelectedItemChangedCommand.Execute(sender);
+    }
+
     private void ValidateGroupName(string groupName)
     {
         var errors = new List<string>(1);

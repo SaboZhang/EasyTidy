@@ -570,10 +570,10 @@
   <data name="DialogTaskRulePlaceholder.PlaceholderText" xml:space="preserve">
     <value>処理ルール/正規表現を入力してください</value>
   </data>
-  <data name="DialogRuleButton.Content" xml:space="preserve">
+  <data name="DialogRuleButton.ToolTipService.ToolTip" xml:space="preserve">
     <value>ルールの例</value>
   </data>
-  <data name="DialogFilterButton.Content" xml:space="preserve">
+  <data name="DialogFilterButton.ToolTipService.ToolTip" xml:space="preserve">
     <value>フィルタ</value>
   </data>
   <data name="DialogOperatingMethod.Text" xml:space="preserve">
@@ -601,13 +601,13 @@
     <value>フォルダを直接選択または入力する</value>
   </data>
   <data name="DialogTargetButton.Content" xml:space="preserve">
-    <value>選択:</value>
+    <value>選択</value>
   </data>
   <data name="DialogTaskEnable.Text" xml:space="preserve">
     <value>有効化：</value>
   </data>
   <data name="DialogTaskGroup.PlaceholderText" xml:space="preserve">
-    <value>グループ名の選択</value>
+    <value>チョイス</value>
   </data>
   <data name="DialogAtStartup.Text" xml:space="preserve">
     <value>EasyTidy起動：</value>
@@ -655,10 +655,7 @@
     <value>n 1−n 2／n 3はステップn 3のn 1〜n 2の範囲に一致する</value>
   </data>
   <data name="DialogExplanation5.Text" xml:space="preserve">
-    <value>例：分=15時間=03ヶ月=3-10/3日=1、3、5つのタスクは</value>
-  </data>
-  <data name="DialogExplanation6.Text" xml:space="preserve">
-    <value>3月、6月、9月の月、水、金曜日の午前3時15分に運行されます。</value>
+    <value>例えば 分 = 15 時 = 03 月 = 3-10/3 曜日 = 1、3、5 タスクは 3 月、6 月、9 月の月曜日、水曜日、金曜日の午前 3:15 に実行されます。</value>
   </data>
   <data name="GeneralSubFloderCard.Description" xml:space="preserve">
     <value>フォルダの内部をスキャンせずにフォルダを処理する</value>
@@ -962,5 +959,14 @@
   </data>
   <data name="BackupSelectionTips" xml:space="preserve">
     <value>バックアップの種類を選択してください</value>
+  </data>
+  <data name="DialogRegularTaskRunningBlockText.Header" xml:space="preserve">
+    <value>每：</value>
+  </data>
+  <data name="DialogRegularTaskRunningTime.Header" xml:space="preserve">
+    <value>インターバル</value>
+  </data>
+  <data name="FileChangeDelayText.Header" xml:space="preserve">
+    <value>遅延(二番目 (にばんめ))</value>
   </data>
 </root>

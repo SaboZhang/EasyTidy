@@ -185,10 +185,6 @@
     <value>Regularly execute according to the set time</value>
     <comment />
   </data>
-  <data name="RegularTaskRunningBlock.Text" xml:space="preserve">
-    <value>Every:</value>
-    <comment />
-  </data>
   <data name="ScheduledExecutionCard.Description" xml:space="preserve">
     <value>Perform periodic execution according to the set plan</value>
     <comment />
@@ -619,10 +615,10 @@
   <data name="DialogTaskRulePlaceholder.PlaceholderText" xml:space="preserve">
     <value>Please enter processing rules/regex</value>
   </data>
-  <data name="DialogRuleButton.Content" xml:space="preserve">
+  <data name="DialogRuleButton.ToolTipService.ToolTip" xml:space="preserve">
     <value>Rule example</value>
   </data>
-  <data name="DialogFilterButton.Content" xml:space="preserve">
+  <data name="DialogFilterButton.ToolTipService.ToolTip" xml:space="preserve">
     <value>Filter</value>
   </data>
   <data name="DialogOperatingMethod.Text" xml:space="preserve">
@@ -650,13 +646,13 @@
     <value>Choose or enter folder directly</value>
   </data>
   <data name="DialogTargetButton.Content" xml:space="preserve">
-    <value>Choice:</value>
+    <value>Choice</value>
   </data>
   <data name="DialogTaskEnable.Text" xml:space="preserve">
     <value>Enable:</value>
   </data>
   <data name="DialogTaskGroup.PlaceholderText" xml:space="preserve">
-    <value>Select group name</value>
+    <value>Choice</value>
   </data>
   <data name="DialogAtStartup.Text" xml:space="preserve">
     <value>EasyTidy Startup:</value>
@@ -704,10 +700,7 @@
     <value>n1-n2/n3 matches the range n1 to n2 for step n3</value>
   </data>
   <data name="DialogExplanation5.Text" xml:space="preserve">
-    <value>Example: Minutes=15 Hours=03 Month=3-10/3 Day of the week=1,3,5 Tasks will be at</value>
-  </data>
-  <data name="DialogExplanation6.Text" xml:space="preserve">
-    <value>Runs at 3:15 AM on Mondays, Wednesdays, and Fridays in March, June, and September.</value>
+    <value>Example: Minutes = 15 Hours = 03 Month = 3-10/3 Day of the week = 1,3,5 The tasks will run at 3:15 AM on Mondays, Wednesdays, and Fridays in March, June, and September.</value>
   </data>
   <data name="GeneralSubFloderCard.Description" xml:space="preserve">
     <value>Process folders, but not scan inside folders</value>
@@ -1011,5 +1004,14 @@
   </data>
   <data name="BackupSelectionTips" xml:space="preserve">
     <value>Please select the backup type</value>
+  </data>
+  <data name="DialogRegularTaskRunningTime.Header" xml:space="preserve">
+    <value>Interval</value>
+  </data>
+  <data name="RegularTaskRunningBlock.Text" xml:space="preserve">
+    <value>Every:</value>
+  </data>
+  <data name="FileChangeDelayText.Header" xml:space="preserve">
+    <value>Delay(Second)</value>
   </data>
 </root>

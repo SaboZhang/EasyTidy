@@ -185,10 +185,6 @@
     <value>根据设定的时间定期执行</value>
     <comment />
   </data>
-  <data name="RegularTaskRunningBlock.Text" xml:space="preserve">
-    <value>每：</value>
-    <comment />
-  </data>
   <data name="ScheduledExecutionCard.Description" xml:space="preserve">
     <value>根据设定的计划进行周期性执行</value>
     <comment />
@@ -611,10 +607,10 @@
   <data name="DialogTaskRulePlaceholder.PlaceholderText" xml:space="preserve">
     <value>请输入处理规则/正则</value>
   </data>
-  <data name="DialogRuleButton.Content" xml:space="preserve">
+  <data name="DialogRuleButton.ToolTipService.ToolTip" xml:space="preserve">
     <value>规则示列</value>
   </data>
-  <data name="DialogFilterButton.Content" xml:space="preserve">
+  <data name="DialogFilterButton.ToolTipService.ToolTip" xml:space="preserve">
     <value>筛选器</value>
   </data>
   <data name="DialogOperatingMethod.Text" xml:space="preserve">
@@ -642,13 +638,13 @@
     <value>请选择或输入文件夹</value>
   </data>
   <data name="DialogTargetButton.Content" xml:space="preserve">
-    <value>选择：</value>
+    <value>选择</value>
   </data>
   <data name="DialogTaskEnable.Text" xml:space="preserve">
     <value>是否启用：</value>
   </data>
   <data name="DialogTaskGroup.PlaceholderText" xml:space="preserve">
-    <value>选择组名</value>
+    <value>选择</value>
   </data>
   <data name="DialogAtStartup.Text" xml:space="preserve">
     <value>EasyTidy启动时：</value>
@@ -696,10 +692,7 @@
     <value>n1-n2/n3 与步骤n3匹配范围n1到n2</value>
   </data>
   <data name="DialogExplanation5.Text" xml:space="preserve">
-    <value>示列：分钟=15 小时=03 月份=3-10/3 每个星期的第几天=1,3,5任务将会在</value>
-  </data>
-  <data name="DialogExplanation6.Text" xml:space="preserve">
-    <value>3，6，9月的每周1，3，5早上3点15分运行。</value>
+    <value>示列：分钟=15 小时=03 月份=3-10/3 每个星期的第几天=1,3,5任务将会在3，6，9月的每周1，3，5早上3点15分运行。</value>
   </data>
   <data name="GeneralSubFloderCard.Description" xml:space="preserve">
     <value>处理文件夹，但不扫描文件夹内</value>
@@ -1003,5 +996,14 @@
   </data>
   <data name="BackupSelectionTips" xml:space="preserve">
     <value>请选择备份类型</value>
+  </data>
+  <data name="DialogRegularTaskRunningTime.Header" xml:space="preserve">
+    <value>间隔</value>
+  </data>
+  <data name="RegularTaskRunningBlock.Text" xml:space="preserve">
+    <value>每：</value>
+  </data>
+  <data name="FileChangeDelayText.Header" xml:space="preserve">
+    <value>延迟(秒)</value>
   </data>
 </root>

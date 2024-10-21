@@ -7,6 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    xmlns:model="using:EasyTidy.Model"
     xmlns:wuc="using:WinUICommunity"
     CornerRadius="{ThemeResource OverlayCornerRadius}"
     DefaultButton="Primary">
@@ -26,11 +27,13 @@
                     Margin="0,10,0,0">
             <TextBlock x:Name="TaskGroupName"
                        x:Uid="DialogTaskGroupName"
-                       Margin="0,5,0,0"/>
+                       Margin="0,5,0,0"
+                       Width="110"
+                       TextWrapping="Wrap"/>
             <TextBox x:Name="TaskGroupNameBox" 
                      Text="{x:Bind GroupName, Mode=TwoWay}"
-                     MinWidth="240"
-                     Margin="14,0,0,0"
+                     Width="210"
+                     Margin="6,0,0,0"
                      x:Uid="TaskGroupBox"
                      wuc:Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
                      wuc:Validation.ValidationPropertyName="GroupName"
@@ -38,7 +41,7 @@
                      Style="{StaticResource ValidatingTextBoxStyle}"/>
             <ComboBox x:Name="TaskGroupNameComboBox"
                       x:Uid="DialogTaskGroup"
-                      Width="Auto"
+                      MaxWidth="100"
                       Text="{x:Bind GroupName, Mode=TwoWay}"
                       IsEditable="True"
                       ItemsSource="{x:Bind ViewModel.GroupList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -50,11 +53,13 @@
                     Margin="0,10,0,0">
             <TextBlock x:Name="TaskTitle"
                        x:Uid="DialogTaskName"
-                       Margin="0,5,0,0"/>
+                       Margin="0,5,0,0"
+                       Width="110"
+                       TextWrapping="Wrap"/>
             <TextBox x:Name="TaskNameBox"
                      x:Uid="TaskNameBoxPlaceholder"
-                     Margin="14,0,0,0"
-                     MinWidth="240"
+                     Margin="6,0,0,0"
+                     Width="210"
                      Text="{x:Bind TaskName, Mode=TwoWay}"/>
         </StackPanel>
         <StackPanel x:Name="TaskRulePanel"
@@ -63,16 +68,46 @@
                     Margin="0,20,0,0">
             <TextBlock x:Name="TaskRuleTitle"
                        x:Uid="DialogProcessingRules"
-                       Margin="0,5,0,0"/>
+                       Margin="0,5,0,0"
+                       Width="110"
+                       TextWrapping="Wrap"/>
             <TextBox x:Name="TaskRuleBox"
                      x:Uid="DialogTaskRulePlaceholder"
-                     Margin="14,0,0,0"
-                     Width="240"
+                     Margin="6,0,0,0"
+                     Width="210"
                      Text="{x:Bind TaskRule, Mode=TwoWay}"/>
             <Button x:Name="RuleButton"
-                    x:Uid="DialogRuleButton"/>
+                    Width="52"
+                    Height="32"
+                    x:Uid="DialogRuleButton">
+                <Button.Content>
+                    <Image Source="/Assets/Fluent/rule.png" Stretch="Uniform"/>
+                </Button.Content>
+            </Button>
             <Button x:Name="FilterButton"
-                    x:Uid="DialogFilterButton"/>
+                    Width="52"
+                    Height="32"
+                    x:Uid="DialogFilterButton">
+                <Button.Content>
+                    <Image Source="/Assets/Fluent/filter.png" Stretch="Uniform"/>
+                </Button.Content>
+                <Button.Resources>
+                    <TeachingTip x:Name="FilterButtonTeachingTip"
+                                 PreferredPlacement="Bottom"
+                                 CloseButtonClick="FilterButtonTeachingTip_CloseButtonClick">
+                        <TeachingTip.HeroContent>
+                            <ListView x:Name="DialogFilterListView"
+                                      MaxHeight="320">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate x:DataType="model:FilterTable">
+                                        <TextBlock Text="{x:Bind FilterName}"/>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </TeachingTip.HeroContent>
+                    </TeachingTip>
+                </Button.Resources>
+            </Button>
         </StackPanel>
         <StackPanel x:Name="TaskOperatePanel"
                     Orientation="Horizontal"
@@ -80,13 +115,15 @@
                     Margin="0,20,0,0">
             <TextBlock x:Name="TaskOperateTitle"
                        x:Uid="DialogOperatingMethod"
-                       Margin="0,5,0,0"/>
+                       Margin="0,5,0,0"
+                       Width="110"
+                       TextWrapping="Wrap"/>
             <ComboBox x:Name="TaskOperateList"
                       ItemsSource="{x:Bind ViewModel.OperationModes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                       SelectedItem="{x:Bind ViewModel.SelectedOperationMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                       x:Uid="DialogTaskOperateListPlaceholder"
-                      Margin="14,0,0,0"
-                      Width="240">
+                      Margin="6,0,0,0"
+                      Width="210">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Converter={StaticResource EnumDisplayNameConverter}}"/>
@@ -100,11 +137,13 @@
                     Margin="0,20,0,0">
             <TextBlock x:Name="TaskSourceTitle"
                        x:Uid="DialogSourceFolder"
-                       Margin="0,5,0,0"/>
+                       Margin="0,5,0,0"
+                       Width="110"
+                       TextWrapping="Wrap"/>
             <TextBox x:Name="Source"
                      x:Uid="DialogSourcePlaceholder"
-                     Margin="14,0,0,0"
-                     Width="240"
+                     Margin="6,0,0,0"
+                     Width="210"
                      Text="{x:Bind ViewModel.TaskSource, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      IsEnabled="False"/>
             <Button x:Name="SourceButton"
@@ -117,10 +156,13 @@
                     Margin="0,20,0,0">
             <TextBlock x:Name="TaskTargetTitle"
                        x:Uid="DialogTargetFolder"
-                       Margin="0,5,0,0"/>
+                       Margin="0,5,0,0"
+                       Width="110"
+                       TextWrapping="Wrap"/>
             <TextBox x:Name="Target"
                      x:Uid="DialogTargetPlaceholder"
-                     Width="240"
+                     Width="210"
+                     Margin="6,0,0,0"
                      Text="{x:Bind ViewModel.TaskTarget, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             <Button x:Name="TargetButton"
                     x:Uid="DialogTargetButton"
@@ -132,11 +174,13 @@
                     Margin="0,20,0,0">
             <TextBlock x:Name="TaskEnableTitle"
                        x:Uid="DialogTaskEnable"
-                       Margin="0,8,16,0"/>
+                       Margin="0,8,14,0"
+                       Width="100"/>
             <ToggleSwitch x:Name="EnableSwitch"
                           IsOn="{x:Bind EnabledFlag, Mode=TwoWay}"/>
             <CheckBox x:Name="CreateShortcut"
                       x:Uid="DiaalogShortcut"
+                      Margin="-64,0,0,0"
                       IsChecked="{x:Bind Shortcut, Mode=TwoWay}"></CheckBox>
         </StackPanel>
     </StackPanel>

@@ -168,9 +168,6 @@
   <data name="RegularTaskRunningCard.Description" xml:space="preserve">
     <value>Exécuter régulièrement en fonction de l'heure définie</value>
   </data>
-  <data name="RegularTaskRunningBlock.Text" xml:space="preserve">
-    <value>Chaque:</value>
-  </data>
   <data name="ScheduledExecutionCard.Description" xml:space="preserve">
     <value>Effectuer une exécution périodique en fonction du plan définitif</value>
   </data>
@@ -570,10 +567,10 @@
   <data name="DialogTaskRulePlaceholder.PlaceholderText" xml:space="preserve">
     <value>Veuillez saisir les règles de traitement / regex</value>
   </data>
-  <data name="DialogRuleButton.Content" xml:space="preserve">
+  <data name="DialogRuleButton.ToolTipService.ToolTip" xml:space="preserve">
     <value>Exemple de règle</value>
   </data>
-  <data name="DialogFilterButton.Content" xml:space="preserve">
+  <data name="DialogFilterButton.ToolTipService.ToolTip" xml:space="preserve">
     <value>Filtre</value>
   </data>
   <data name="DialogOperatingMethod.Text" xml:space="preserve">
@@ -601,13 +598,13 @@
     <value>Choisissez ou entrez directement le dossier</value>
   </data>
   <data name="DialogTargetButton.Content" xml:space="preserve">
-    <value>Choix:</value>
+    <value>Choix</value>
   </data>
   <data name="DialogTaskEnable.Text" xml:space="preserve">
     <value>Activer:</value>
   </data>
   <data name="DialogTaskGroup.PlaceholderText" xml:space="preserve">
-    <value>Sélectionnez le nom du groupe</value>
+    <value>Choix</value>
   </data>
   <data name="DialogAtStartup.Text" xml:space="preserve">
     <value>Startup Easytidy:</value>
@@ -655,10 +652,7 @@
     <value>N1-N2 / N3 correspond à la plage N1 à N2 pour l'étape N3</value>
   </data>
   <data name="DialogExplanation5.Text" xml:space="preserve">
-    <value>Exemple: minutes = 15 heures = 03 mois = 3-10 / 3 jours de la semaine = 1,3,5 Les tâches seront à</value>
-  </data>
-  <data name="DialogExplanation6.Text" xml:space="preserve">
-    <value>Se déroule à 3 h 15 le lundi, le mercredi et le vendredi en mars, juin et septembre.</value>
+    <value>Exemple : Minutes = 15 Heures = 03 Mois = 3-10/3 Jour de la semaine = 1,3,5 Les tâches s'exécuteront à 3h15 du matin les lundis, mercredis et vendredis en mars, juin et septembre.</value>
   </data>
   <data name="GeneralSubFloderCard.Description" xml:space="preserve">
     <value>Dossiers de processus, mais pas de scanner à l'intérieur des dossiers</value>
@@ -962,5 +956,14 @@
   </data>
   <data name="BackupSelectionTips" xml:space="preserve">
     <value>Veuillez sélectionner le type de sauvegarde</value>
+  </data>
+  <data name="DialogRegularTaskRunningTime.Header" xml:space="preserve">
+    <value>Intervalle</value>
+  </data>
+  <data name="RegularTaskRunningBlock.Text" xml:space="preserve">
+    <value>Chaque:</value>
+  </data>
+  <data name="FileChangeDelayText.Header" xml:space="preserve">
+    <value>Délai(Deuxième)</value>
   </data>
 </root>
