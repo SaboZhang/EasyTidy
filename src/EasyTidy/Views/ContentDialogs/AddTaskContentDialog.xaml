@@ -110,9 +110,6 @@
             <Button x:Name="SourceButton"
                     x:Uid="DialogSourceButton"
                     Command="{x:Bind ViewModel.SelectSourcePathCommand}"/>
-            <CheckBox x:Name="CreateShortcut"
-                      x:Uid="DiaalogShortcut"
-                      IsChecked="{x:Bind Shortcut, Mode=TwoWay}">
             </CheckBox>
         </StackPanel>
         <StackPanel x:Name="TaskTargetPanel"
@@ -139,6 +136,9 @@
                        Margin="0,8,16,0"/>
             <ToggleSwitch x:Name="EnableSwitch"
                           IsOn="{x:Bind EnabledFlag, Mode=TwoWay}"/>
+            <CheckBox x:Name="CreateShortcut"
+                      x:Uid="DiaalogShortcut"
+                      IsChecked="{x:Bind Shortcut, Mode=TwoWay}">
         </StackPanel>
     </StackPanel>
 </ContentDialog>

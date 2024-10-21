@@ -592,7 +592,7 @@
     <value>選擇</value>
   </data>
   <data name="DiaalogShortcut.Content" xml:space="preserve">
-    <value>快捷方式</value>
+    <value>目標資料夾桌面捷徑</value>
   </data>
   <data name="DialogTargetFolder.Text" xml:space="preserve">
     <value>目標文件夾：</value>
@@ -953,5 +953,14 @@
   </data>
   <data name="Chinese_Traditional_Language" xml:space="preserve">
     <value>中文(繁體)</value>
+  </data>
+  <data name="BackupSuccessTips" xml:space="preserve">
+    <value>備份成功</value>
+  </data>
+  <data name="BackupFailedTips" xml:space="preserve">
+    <value>備份失敗</value>
+  </data>
+  <data name="BackupSelectionTips" xml:space="preserve">
+    <value>請選擇備份類型</value>
   </data>
 </root>

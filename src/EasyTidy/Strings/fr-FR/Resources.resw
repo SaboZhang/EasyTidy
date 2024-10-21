@@ -592,7 +592,7 @@
     <value>Choix</value>
   </data>
   <data name="DiaalogShortcut.Content" xml:space="preserve">
-    <value>Raccourci</value>
+    <value>Raccourci du bureau vers le dossier de destination</value>
   </data>
   <data name="DialogTargetFolder.Text" xml:space="preserve">
     <value>Dossier cible:</value>
@@ -625,7 +625,7 @@
     <value>Quel jour de la semaine</value>
   </data>
   <data name="DialogDayOfWeekBlock.Text" xml:space="preserve">
-    <value>(0 = dimanche à 6 = samedi)</value>
+    <value>(0 = dim. à 6 = sam)</value>
   </data>
   <data name="DialogDayOfMonth.Text" xml:space="preserve">
     <value>Jour du mois</value>
@@ -953,5 +953,14 @@
   </data>
   <data name="Chinese_Traditional_Language" xml:space="preserve">
     <value>Chinois (traditionnel)</value>
+  </data>
+  <data name="BackupSuccessTips" xml:space="preserve">
+    <value>Sauvegarde réussie</value>
+  </data>
+  <data name="BackupFailedTips" xml:space="preserve">
+    <value>La sauvegarde a échoué</value>
+  </data>
+  <data name="BackupSelectionTips" xml:space="preserve">
+    <value>Veuillez sélectionner le type de sauvegarde</value>
   </data>
 </root>

@@ -292,7 +292,7 @@ public partial class GeneralViewModel : ObservableRecipient
             case BackupType.Local:
                 // 本地备份
                 BackupRestoreMessageSeverity = InfoBarSeverity.Success;
-                SettingsBackupMessage = "备份成功";
+                SettingsBackupMessage = "BackupSuccessTips".GetLocalized();
                 break;
             case BackupType.WebDav:
                 // WebDav备份
@@ -301,17 +301,17 @@ public partial class GeneralViewModel : ObservableRecipient
                 if (backup)
                 {
                     BackupRestoreMessageSeverity = InfoBarSeverity.Success;
-                    SettingsBackupMessage = "备份成功";
+                    SettingsBackupMessage = "BackupSuccessTips".GetLocalized();
                 }
                 else
                 {
                     BackupRestoreMessageSeverity = InfoBarSeverity.Error;
-                    SettingsBackupMessage = "备份失败";
+                    SettingsBackupMessage = "BackupFailedTips".GetLocalized();
                 }
                 break;
             default:
                 BackupRestoreMessageSeverity = InfoBarSeverity.Warning;
-                SettingsBackupMessage = "请选择备份类型";
+                SettingsBackupMessage = "BackupSelectionTips".GetLocalized();
                 break;
         }
         

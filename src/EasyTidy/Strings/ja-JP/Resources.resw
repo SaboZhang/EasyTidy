@@ -592,7 +592,7 @@
     <value>せんたく</value>
   </data>
   <data name="DiaalogShortcut.Content" xml:space="preserve">
-    <value>ショートカット</value>
+    <value>デスクトップのショートカットを目的のフォルダーに作成する</value>
   </data>
   <data name="DialogTargetFolder.Text" xml:space="preserve">
     <value>宛先フォルダ：</value>
@@ -625,7 +625,7 @@
     <value>週のうちの何日</value>
   </data>
   <data name="DialogDayOfWeekBlock.Text" xml:space="preserve">
-    <value>（0＝日曜日から6＝土曜日）</value>
+    <value>（0＝日～6＝土）</value>
   </data>
   <data name="DialogDayOfMonth.Text" xml:space="preserve">
     <value>月のどの日</value>
@@ -953,5 +953,14 @@
   </data>
   <data name="Chinese_Traditional_Language" xml:space="preserve">
     <value>中国語（繁体字）</value>
+  </data>
+  <data name="BackupSuccessTips" xml:space="preserve">
+    <value>バックアップが成功しました</value>
+  </data>
+  <data name="BackupFailedTips" xml:space="preserve">
+    <value>バックアップ失敗</value>
+  </data>
+  <data name="BackupSelectionTips" xml:space="preserve">
+    <value>バックアップの種類を選択してください</value>
   </data>
 </root>
