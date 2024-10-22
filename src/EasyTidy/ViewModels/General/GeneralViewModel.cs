@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.WinUI;
 using EasyTidy.Model;
 using EasyTidy.Util;
+using System.IO.Compression;
 using System.Runtime.CompilerServices;
 
 namespace EasyTidy.ViewModels;
@@ -286,14 +287,18 @@ public partial class GeneralViewModel : ObservableRecipient
     [RelayCommand]
     private async Task BackupConfigsClickAsync()
     {
-        string backupAndRestoreDir = Constants.PortableCnfPath ?? Constants.RootDirectoryPath;
+        string backupAndRestoreDir = Directory.Exists(Constants.PortableCnfPath) ? Constants.PortableCnfPath : Constants.RootDirectoryPath;
 
         switch (Settings.BackupType)
         {
             case BackupType.Local:
                 // 本地备份
-                BackupRestoreMessageSeverity = InfoBarSeverity.Success;
-                SettingsBackupMessage = "BackupSuccessTips".GetLocalized();
+                var result = CreateZipFile(backupAndRestoreDir, backupAndRestoreDir);
+                if (result)
+                {
+                    BackupRestoreMessageSeverity = InfoBarSeverity.Success;
+                    SettingsBackupMessage = "BackupSuccessTips".GetLocalized();
+                }
                 break;
             case BackupType.WebDav:
                 // WebDav备份
@@ -328,5 +333,19 @@ public partial class GeneralViewModel : ObservableRecipient
 
         UpdateCurConfig(this);
 
+    }
+
+    private bool CreateZipFile(string sourceDirectory, string outputZipFilePath)
+    {
+        try
+        {
+            ZipFile.CreateFromDirectory(sourceDirectory, outputZipFilePath);
+            return true;
+        }
+        catch (Exception ex) 
+        {
+            Logger.Error($"备份失败：{ex}");
+            return false;
+        }
     }
 }
