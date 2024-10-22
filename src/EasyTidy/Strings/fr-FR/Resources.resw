@@ -966,4 +966,31 @@
   <data name="FileChangeDelayText.Header" xml:space="preserve">
     <value>Délai(Deuxième)</value>
   </data>
+  <data name="MinuteFormatInfo" xml:space="preserve">
+    <value>Erreur de format de minute</value>
+  </data>
+  <data name="HourFormatInfo" xml:space="preserve">
+    <value>Erreur de format d'heure</value>
+  </data>
+  <data name="WeeksFormatInfo" xml:space="preserve">
+    <value>Erreur de format des semaines</value>
+  </data>
+  <data name="DateFormatInfo" xml:space="preserve">
+    <value>Erreur de format de date</value>
+  </data>
+  <data name="MonthFormatInfo" xml:space="preserve">
+    <value>Erreur de format du mois</value>
+  </data>
+  <data name="CronExpressionInfo" xml:space="preserve">
+    <value>Format d'expression CRON invalide</value>
+  </data>
+  <data name="GroupInformationVerification" xml:space="preserve">
+    <value>Le nom du groupe ne peut pas être vide</value>
+  </data>
+  <data name="GroupInformationVerificationAdd" xml:space="preserve">
+    <value>Veuillez entrer ou sélectionner un nom de groupe</value>
+  </data>
+  <data name="FilterNameValidation" xml:space="preserve">
+    <value>Veuillez saisir un nom de filtre</value>
+  </data>
 </root>

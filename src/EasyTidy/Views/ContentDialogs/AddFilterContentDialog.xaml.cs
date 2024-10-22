@@ -15,7 +15,7 @@ public sealed partial class AddFilterContentDialog : ContentDialog, INotifyDataE
 {
     public FilterViewModel ViewModel { get; set; }
 
-    #region ÊôÐÔ & ×Ö¶Î
+    #region å­—æ®µ & å±žæ€§
     private string _filterName = string.Empty;
     public string FilterName
     {
@@ -231,7 +231,7 @@ public sealed partial class AddFilterContentDialog : ContentDialog, INotifyDataE
         var errors = new List<string>(1);
         if (string.IsNullOrWhiteSpace(filterName))
         {
-            errors.Add("¹ýÂËÆ÷Ãû²»ÄÜÎª¿Õ");
+            errors.Add("FilterNameValidation".GetLocalized());
         }
         SetErrors("FilterName", errors);
     }

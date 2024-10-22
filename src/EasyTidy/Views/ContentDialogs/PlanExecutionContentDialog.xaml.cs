@@ -155,7 +155,7 @@ public sealed partial class PlanExecutionContentDialog : ContentDialog, INotifyD
         var pattern = new Regex(@"^([1-9]|[1-5][0-9])(,(?=[1-9]|[1-5][0-9]))*$");
         if (!pattern.IsMatch(minute) && !string.IsNullOrWhiteSpace(minute))
         {
-            errors.Add("分钟格式错误");
+            errors.Add("MinuteFormatInfo".GetLocalized());
         }
         SetErrors("Minute", errors);
     }
@@ -170,7 +170,7 @@ public sealed partial class PlanExecutionContentDialog : ContentDialog, INotifyD
         var pattern = new Regex(@"^(2[0-3]|[01]?[0-9])(,(2[0-3]|[01]?[0-9]))*$");
         if (!pattern.IsMatch(hour) && !string.IsNullOrWhiteSpace(hour))
         {
-            errors.Add("小时格式错误");
+            errors.Add("HourFormatInfo".GetLocalized());
         }
         SetErrors("Hour", errors);
     }
@@ -185,7 +185,7 @@ public sealed partial class PlanExecutionContentDialog : ContentDialog, INotifyD
         var pattern = new Regex(@"^(0|1|2|3|4|5|6)(,(0|1|2|3|4|5|6))*$");
         if (!pattern.IsMatch(dayOfWeek) && !string.IsNullOrWhiteSpace(dayOfWeek))
         {
-            errors.Add("星期格式错误");
+            errors.Add("WeeksFormatInfo".GetLocalized());
         }
         SetErrors("DayOfWeek", errors);
     }
@@ -200,7 +200,7 @@ public sealed partial class PlanExecutionContentDialog : ContentDialog, INotifyD
         var pattern = new Regex(@"^(31|30|[12][0-9]|1?[1-9])(,(31|30|[12][0-9]|1?[1-9]))*$");
         if (!pattern.IsMatch(dayOfMonth) && !string.IsNullOrWhiteSpace(dayOfMonth))
         {
-            errors.Add("日期格式错误");
+            errors.Add("DateFormatInfo".GetLocalized());
         }
         SetErrors("DayOfMonth", errors);
     }
@@ -215,7 +215,7 @@ public sealed partial class PlanExecutionContentDialog : ContentDialog, INotifyD
         var pattern = new Regex(@"^(1|2|3|4|5|6|7|8|9|10|11|12)(,(1|2|3|4|5|6|7|8|9|10|11|12))*$");
         if (!pattern.IsMatch(monthlyDay) && !string.IsNullOrWhiteSpace(monthlyDay))
         {
-            errors.Add("月份格式错误");
+            errors.Add("MonthFormatInfo".GetLocalized());
         }
         SetErrors("MonthlyDay", errors);
     }
@@ -229,7 +229,7 @@ public sealed partial class PlanExecutionContentDialog : ContentDialog, INotifyD
         var errors = new List<string>(1);
         if (!Quartz.CronExpression.IsValidExpression(cron) && !string.IsNullOrWhiteSpace(cron))
         {
-            errors.Add("CRON 表达式格式错误");
+            errors.Add("CronExpressionInfo".GetLocalized());
         }
         SetErrors("CronExpression", errors);
     }

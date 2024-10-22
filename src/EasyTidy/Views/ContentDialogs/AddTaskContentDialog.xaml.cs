@@ -56,10 +56,11 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
 
     private void ValidateGroupName(string groupName)
     {
-        var errors = new List<string>(1);
+        var errors = new List<string>(2);
         if (string.IsNullOrWhiteSpace(groupName))
         {
-            errors.Add("组名不能为空");
+            errors.Add("GroupInformationVerification".GetLocalized());
+            errors.Add("GroupInformationVerificationAdd".GetLocalized());
         }
         SetErrors("GroupName", errors);
     }

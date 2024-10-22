@@ -1014,4 +1014,31 @@
   <data name="FileChangeDelayText.Header" xml:space="preserve">
     <value>Delay(Second)</value>
   </data>
+  <data name="MinuteFormatInfo" xml:space="preserve">
+    <value>Minute format error</value>
+  </data>
+  <data name="HourFormatInfo" xml:space="preserve">
+    <value>Hour format error</value>
+  </data>
+  <data name="WeeksFormatInfo" xml:space="preserve">
+    <value>Weeks format error</value>
+  </data>
+  <data name="DateFormatInfo" xml:space="preserve">
+    <value>Date format error</value>
+  </data>
+  <data name="MonthFormatInfo" xml:space="preserve">
+    <value>Month format error</value>
+  </data>
+  <data name="CronExpressionInfo" xml:space="preserve">
+    <value>Invalid CRON expression format</value>
+  </data>
+  <data name="GroupInformationVerification" xml:space="preserve">
+    <value>Group name can't be empty</value>
+  </data>
+  <data name="GroupInformationVerificationAdd" xml:space="preserve">
+    <value>Please enter or select a group name</value>
+  </data>
+  <data name="FilterNameValidation" xml:space="preserve">
+    <value>Please enter a filter name</value>
+  </data>
 </root>

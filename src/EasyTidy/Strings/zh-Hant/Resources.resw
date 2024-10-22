@@ -966,4 +966,31 @@
   <data name="FileChangeDelayText.Header" xml:space="preserve">
     <value>延遲(秒)</value>
   </data>
+  <data name="MinuteFormatInfo" xml:space="preserve">
+    <value>分鐘格式錯誤</value>
+  </data>
+  <data name="HourFormatInfo" xml:space="preserve">
+    <value>小時格式錯誤</value>
+  </data>
+  <data name="WeeksFormatInfo" xml:space="preserve">
+    <value>星期格式錯誤</value>
+  </data>
+  <data name="DateFormatInfo" xml:space="preserve">
+    <value>日期格式錯誤</value>
+  </data>
+  <data name="MonthFormatInfo" xml:space="preserve">
+    <value>月份格式錯誤</value>
+  </data>
+  <data name="CronExpressionInfo" xml:space="preserve">
+    <value>無效的CRON表達式</value>
+  </data>
+  <data name="GroupInformationVerification" xml:space="preserve">
+    <value>群組名稱不能為空</value>
+  </data>
+  <data name="GroupInformationVerificationAdd" xml:space="preserve">
+    <value>請選擇或輸入群組名稱</value>
+  </data>
+  <data name="FilterNameValidation" xml:space="preserve">
+    <value>請輸入過濾器名稱</value>
+  </data>
 </root>
