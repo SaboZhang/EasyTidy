@@ -996,4 +996,7 @@
   <data name="FilterNameValidation" xml:space="preserve">
     <value>フィルタ名を入力してください</value>
   </data>
+  <data name="ValidateDelay" xml:space="preserve">
+    <value>遅延は秒数のみ入力できます</value>
+  </data>
 </root>

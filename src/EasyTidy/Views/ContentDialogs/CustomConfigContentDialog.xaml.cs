@@ -173,7 +173,7 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
         var pattern = new Regex(@"^\d+$");
         if (!pattern.IsMatch(delay) && !string.IsNullOrWhiteSpace(delay))
         {
-            errors.Add("�ӳ�ֻ����������");
+            errors.Add("ValidateDelay".GetLocalized());
         }
         SetErrors("Delay", errors);
     }

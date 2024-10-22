@@ -1033,4 +1033,7 @@
   <data name="FilterNameValidation" xml:space="preserve">
     <value>请输入过滤器名称</value>
   </data>
+  <data name="ValidateDelay" xml:space="preserve">
+    <value>延迟只能输入秒数</value>
+  </data>
 </root>

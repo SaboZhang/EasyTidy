@@ -993,4 +993,7 @@
   <data name="FilterNameValidation" xml:space="preserve">
     <value>請輸入過濾器名稱</value>
   </data>
+  <data name="ValidateDelay" xml:space="preserve">
+    <value>延遲只能輸入秒數</value>
+  </data>
 </root>

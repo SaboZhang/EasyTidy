@@ -1041,4 +1041,7 @@
   <data name="FilterNameValidation" xml:space="preserve">
     <value>Please enter a filter name</value>
   </data>
+  <data name="ValidateDelay" xml:space="preserve">
+    <value>Delay can only enter seconds</value>
+  </data>
 </root>

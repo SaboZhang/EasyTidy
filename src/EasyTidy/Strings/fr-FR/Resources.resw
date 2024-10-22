@@ -993,4 +993,7 @@
   <data name="FilterNameValidation" xml:space="preserve">
     <value>Veuillez saisir un nom de filtre</value>
   </data>
+  <data name="ValidateDelay" xml:space="preserve">
+    <value>Le délai ne doit être saisi qu'en secondes</value>
+  </data>
 </root>
