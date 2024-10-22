@@ -1044,4 +1044,7 @@
   <data name="ValidateDelay" xml:space="preserve">
     <value>Delay can only enter seconds</value>
   </data>
+  <data name="CreateShortcutFailedText" xml:space="preserve">
+    <value>Failed to create desktop shortcut</value>
+  </data>
 </root>

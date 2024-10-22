@@ -8,7 +8,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     xmlns:model="using:EasyTidy.Model"
-    xmlns:wuc="using:WinUICommunity"
+    xmlns:wuc="using:WinUICommunity" 
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core" 
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
     CornerRadius="{ThemeResource OverlayCornerRadius}"
     DefaultButton="Primary">
 
@@ -31,7 +33,7 @@
                        Width="110"
                        TextWrapping="Wrap"/>
             <TextBox x:Name="TaskGroupNameBox" 
-                     Text="{x:Bind GroupName, Mode=TwoWay}"
+                     Text="{x:Bind ViewModel.GroupTextName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      Width="210"
                      Margin="6,0,0,0"
                      x:Uid="TaskGroupBox"
@@ -42,10 +44,18 @@
             <ComboBox x:Name="TaskGroupNameComboBox"
                       x:Uid="DialogTaskGroup"
                       MaxWidth="100"
-                      Text="{x:Bind GroupName, Mode=TwoWay}"
                       IsEditable="True"
                       ItemsSource="{x:Bind ViewModel.GroupList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                      SelectedItem="{x:Bind ViewModel.SelectedGroupName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                      SelectedItem="{x:Bind ViewModel.SelectedGroupName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      SelectedIndex="{x:Bind ViewModel.SelectedGroupIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <i:Interaction.Behaviors>
+                    <ic:EventTriggerBehavior EventName="SelectionChanged">
+                        <ic:EventTriggerBehavior.Actions>
+                            <ic:InvokeCommandAction Command="{x:Bind ViewModel.GroupSelectionChangedCommand}"/>
+                        </ic:EventTriggerBehavior.Actions>
+                    </ic:EventTriggerBehavior>
+                </i:Interaction.Behaviors>
+            </ComboBox>
         </StackPanel>
         <StackPanel x:Name="TaskNamePanel"
                     Orientation="Horizontal"
@@ -87,17 +97,20 @@
             <Button x:Name="FilterButton"
                     Width="52"
                     Height="32"
-                    x:Uid="DialogFilterButton">
+                    x:Uid="DialogFilterButton"
+                    Click="FilterButton_Click">
                 <Button.Content>
                     <Image Source="/Assets/Fluent/filter.png" Stretch="Uniform"/>
                 </Button.Content>
                 <Button.Resources>
                     <TeachingTip x:Name="FilterButtonTeachingTip"
                                  PreferredPlacement="Bottom"
+                                 Target="{x:Bind FilterButton}"
                                  CloseButtonClick="FilterButtonTeachingTip_CloseButtonClick">
                         <TeachingTip.HeroContent>
                             <ListView x:Name="DialogFilterListView"
-                                      MaxHeight="320">
+                                      MaxHeight="320"
+                                      ItemsSource="{x:Bind ViewModel.FilterListACV, Mode=TwoWay}">
                                 <ListView.ItemTemplate>
                                     <DataTemplate x:DataType="model:FilterTable">
                                         <TextBlock Text="{x:Bind FilterName}"/>

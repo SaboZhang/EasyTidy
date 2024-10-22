@@ -999,4 +999,7 @@
   <data name="ValidateDelay" xml:space="preserve">
     <value>遅延は秒数のみ入力できます</value>
   </data>
+  <data name="CreateShortcutFailedText" xml:space="preserve">
+    <value>デスクトップショートカットを作成できませんでした</value>
+  </data>
 </root>

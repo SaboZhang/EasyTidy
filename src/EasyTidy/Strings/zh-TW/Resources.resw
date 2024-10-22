@@ -999,4 +999,7 @@
   <data name="ValidateDelay" xml:space="preserve">
     <value>延遲只能輸入秒數</value>
   </data>
+  <data name="CreateShortcutFailedText" xml:space="preserve">
+    <value>桌面捷徑建立失敗</value>
+  </data>
 </root>

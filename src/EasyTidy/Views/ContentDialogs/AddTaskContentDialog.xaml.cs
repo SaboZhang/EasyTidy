@@ -1,6 +1,7 @@
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
+using CommunityToolkit.WinUI;
 using System.Collections;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -51,7 +52,7 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
 
     private void FilterButtonTeachingTip_CloseButtonClick(TeachingTip sender, object args)
     {
-        // ViewModel.SelectedItemChangedCommand.Execute(sender);
+        ViewModel.SelectedItemChangedCommand.Execute(sender);
     }
 
     private void ValidateGroupName(string groupName)
@@ -100,5 +101,10 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
             _ = _validationErrors.Remove(key);
 
         OnErrorsChanged(key);
+    }
+
+    private void FilterButton_Click(object sender, RoutedEventArgs e)
+    {
+        FilterButtonTeachingTip.IsOpen = true;
     }
 }

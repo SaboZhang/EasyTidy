@@ -381,7 +381,7 @@ public partial class AutomaticViewModel : ObservableRecipient
     }
 
     [RelayCommand]
-    private async Task OnSelectedItemChanged(object dataContext)
+    private Task OnSelectedItemChanged(object dataContext)
     {
         try
         {
@@ -396,7 +396,6 @@ public partial class AutomaticViewModel : ObservableRecipient
                     TaskOrchestrationTable task = item as TaskOrchestrationTable;
                     SelectedTaskList.Add(task);
                 }
-                await OnPageLoaded();
             }
         }
         catch (Exception ex)
@@ -404,6 +403,7 @@ public partial class AutomaticViewModel : ObservableRecipient
             Logger.Error($"AutomaticViewModel: OnSelectedItemChanged 异常信息 {ex}");
         }
 
+        return Task.CompletedTask;
     }
 
     [RelayCommand]

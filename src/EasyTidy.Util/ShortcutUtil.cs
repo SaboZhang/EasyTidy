@@ -48,6 +48,27 @@ public class ShortcutUtil
         ShortCutCreate(true);
     }
 
+    /// <summary>
+    /// 创建文件夹桌面快捷方式
+    /// </summary>
+    /// <param name="FileName"></param>
+    /// <param name="targetPath"></param>
+    /// <returns></returns>
+    public static bool CreateShortcutDesktop(string FileName, string targetPath)
+    {
+        try
+        {
+            string deskTop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\";
+            string shortcutPath = deskTop + FileName + ".lnk";
+            CreateShortcut(shortcutPath, targetPath, FileName);
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
     #endregion
 
     #region Param
@@ -184,7 +205,7 @@ public class ShortcutUtil
     {
         // ReSharper disable once SuspiciousTypeConversion.Global
         var link = (IShellLink)new ShellLink();
-        //link.SetDescription(description);
+        link.SetDescription(description);
         link.SetPath(appPath);
 
         if (File.Exists(shortcutPath))

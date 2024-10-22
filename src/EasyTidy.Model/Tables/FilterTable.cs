@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
@@ -53,6 +54,8 @@ public class FilterTable
     public bool IsContentSelected { get; set; }
     public ContentOperatorEnum ContentOperator { get; set; }
     public string ContentValue { get; set; }
+
+    public List<TaskOrchestrationTable> TaskOrchestrations { get; set; }
 
     // Character 相关字段
     [NotMapped]

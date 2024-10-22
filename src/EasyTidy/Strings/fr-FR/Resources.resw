@@ -996,4 +996,7 @@
   <data name="ValidateDelay" xml:space="preserve">
     <value>Le délai ne doit être saisi qu'en secondes</value>
   </data>
+  <data name="CreateShortcutFailedText" xml:space="preserve">
+    <value>Impossible de créer un raccourci sur le bureau</value>
+  </data>
 </root>

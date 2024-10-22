@@ -1036,4 +1036,7 @@
   <data name="ValidateDelay" xml:space="preserve">
     <value>延迟只能输入秒数</value>
   </data>
+  <data name="CreateShortcutFailedText" xml:space="preserve">
+    <value>桌面快捷方式创建失败</value>
+  </data>
 </root>

@@ -33,19 +33,35 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
     private readonly DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
 
     [ObservableProperty]
-    public ObservableCollection<TaskOrchestrationTable> _taskList;
+    private ObservableCollection<TaskOrchestrationTable> _taskList;
 
     [ObservableProperty]
-    public List<string> _groupList = new();
+    private List<string> _groupList = new();
 
     [ObservableProperty]
-    public List<string> _groupNameList = new();
+    private List<string> _groupNameList = new();
 
     [ObservableProperty]
-    public AdvancedCollectionView _taskListACV;
+    private AdvancedCollectionView _taskListACV;
 
     [ObservableProperty]
-    private string _selectedGroupName;
+    private string _selectedGroupName = string.Empty;
+
+    [ObservableProperty]
+    private FilterTable _selectedFilter;
+
+    [ObservableProperty]
+    private ObservableCollection<FilterTable> _filterList;
+
+    [ObservableProperty]
+    private AdvancedCollectionView _filterListACV;
+
+    [ObservableProperty]
+    private int _selectedGroupIndex = -1;
+
+    [ObservableProperty]
+    private string _groupTextName = string.Empty;
+
 
     /// <summary>
     /// 添加
@@ -63,6 +79,8 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
             CloseButtonText = "CancelText".GetLocalized(),
             TaskTarget = string.Empty
         };
+        SelectedGroupName = string.Empty;
+        SelectedGroupIndex = -1;
         dialog.PrimaryButtonClick += OnAddTaskPrimaryButton;
 
         await dialog.ShowAsync();
@@ -89,15 +107,35 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 TaskTarget = TaskTarget,
                 OperationMode = SelectedOperationMode,
                 IsEnabled = dialog.EnabledFlag,
-                GroupName = await db.TaskGroup.AnyAsync(x => x.GroupName == SelectedGroupName)
+                GroupName = !string.IsNullOrEmpty(SelectedGroupName)
                 ? await db.TaskGroup.Where(x => x.GroupName == SelectedGroupName).FirstOrDefaultAsync()
                 : new TaskGroupTable
                 {
-                    GroupName = dialog.GroupName
-                }
+                    GroupName = GroupTextName
+                },
+                Filter = SelectedFilter != null 
+                ? await db.Filters.Where(x => x.Id == SelectedFilter.Id).FirstOrDefaultAsync() : null
             });
             await db.SaveChangesAsync();
+            if (dialog.Shortcut)
+            {
+                var result = ShortcutUtil.CreateShortcutDesktop(dialog.TaskName, TaskTarget);
+                if (!result)
+                {
+                    Growl.Error(new GrowlInfo
+                    {
+                        Message = "CreateShortcutFailedText".GetLocalized(),
+                        ShowDateTime = false
+                    });
+                    Logger.Error($"TaskOrchestrationViewModel: OnAddTaskClick 创建桌面快捷方式失败");
+                }
+            }
             await OnPageLoaded();
+            TaskTarget = string.Empty;
+            SelectedFilter = null;
+            SelectedGroupName = null;
+            SelectedGroupIndex = -1;
+            GroupTextName = string.Empty;
             Growl.Success(new GrowlInfo
             {
                 Message = "SaveSuccessfulText".GetLocalized(),
@@ -174,6 +212,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 {
                     await using var db = new AppDbContext();
                     var list = await db.FileExplorer.Include(x => x.GroupName).ToListAsync();
+                    var filterList = await db.Filters.ToListAsync();
                     foreach (var item in list)
                     {
                         if (item.TaskSource == Environment.GetFolderPath(Environment.SpecialFolder.Desktop))
@@ -185,7 +224,9 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                     var newList = list.Select(x => x.GroupName.GroupName).Distinct().ToList();
                     newList.Insert(0, "AllText".GetLocalized());
                     GroupNameList = new(newList);
-                    SelectedGroupName = "AllText".GetLocalized();
+                    FilterList = new(filterList);
+                    FilterListACV = new AdvancedCollectionView(FilterList, true);
+                    FilterListACV.SortDescriptions.Add(new SortDescription("Id", SortDirection.Ascending));
                     TaskList = new(list);
                     TaskListACV = new AdvancedCollectionView(TaskList, true);
                     TaskListACV.SortDescriptions.Add(new SortDescription("ID", SortDirection.Ascending));
@@ -226,10 +267,11 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 dialog.TaskName = task.TaskName;
                 dialog.TaskRule = task.TaskRule;
                 dialog.TaskSource = task.TaskSource;
-                dialog.TaskTarget = task.TaskTarget;
+                TaskTarget = task.TaskTarget;
                 dialog.Shortcut = task.Shortcut;
                 SelectedOperationMode = task.OperationMode;
-                dialog.GroupName = task.GroupName.GroupName;
+                SelectedGroupName = task.GroupName.GroupName;
+                GroupTextName = task.GroupName.GroupName;
 
                 dialog.PrimaryButtonClick += async (s, e) =>
                 {
@@ -247,7 +289,8 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                     oldTask.TaskTarget = TaskTarget;
                     oldTask.OperationMode = SelectedOperationMode;
                     oldTask.IsEnabled = dialog.EnabledFlag;
-                    oldTask.GroupName.GroupName = dialog.GroupName;
+                    oldTask.GroupName.GroupName = GroupTextName;
+                    oldTask.Filter = await db.Filters.Where(x => x.Id == SelectedFilter.Id).FirstOrDefaultAsync();
                     await db.SaveChangesAsync();
                     await OnPageLoaded();
                     Growl.Success(new GrowlInfo
@@ -427,6 +470,44 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
             IsActive = false;
         }
         IsActive = false;
+    }
+
+    [RelayCommand]
+    private Task OnSelectedItemChanged(object dataContext)
+    {
+        try
+        {
+            if (dataContext != null)
+            {
+                var listViews = dataContext as TeachingTip;
+                var listView = listViews.HeroContent as ListView;
+                var item = listView.SelectedItem;
+                if (item is FilterTable filter)
+                {
+                    SelectedFilter = filter;
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.Error($"TaskOrchestrationViewModel: OnSelectedItemChanged 异常信息 {ex}");
+        }
+
+        return Task.CompletedTask;
+    }
+
+    [RelayCommand]
+    private void OnGroupSelectionChanged()
+    {
+        if (string.IsNullOrEmpty(SelectedGroupName) 
+            || "AllText".GetLocalized().Equals(SelectedGroupName))
+        {
+            SelectedGroupName = string.Empty;
+        }
+        else
+        {
+            GroupTextName = SelectedGroupName;
+        }
     }
 }
 

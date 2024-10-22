@@ -31,6 +31,6 @@ public class TaskOrchestrationTable
 
     public TaskGroupTable GroupName { get; set; }
 
-    public List<FilterTable> Filter { get; set; }
+    public FilterTable Filter { get; set; }
 
 }
