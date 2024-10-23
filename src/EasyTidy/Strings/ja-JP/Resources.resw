@@ -241,7 +241,7 @@
     <value>アップデートのダウンロード</value>
   </data>
   <data name="CodeButton.Content" xml:space="preserve">
-    <value>ソースコード</value>
+    <value>GitHubリポジトリ</value>
   </data>
   <data name="LinkBlock.Text" xml:space="preserve">
     <value>関連リンク</value>

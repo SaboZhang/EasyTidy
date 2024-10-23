@@ -278,7 +278,7 @@
     <comment />
   </data>
   <data name="CodeButton.Content" xml:space="preserve">
-    <value>源代码</value>
+    <value>GitHub 存储库</value>
   </data>
   <data name="LinkBlock.Text" xml:space="preserve">
     <value>相关链接</value>

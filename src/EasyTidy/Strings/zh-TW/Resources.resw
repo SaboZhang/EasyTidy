@@ -241,7 +241,7 @@
     <value>下載更新</value>
   </data>
   <data name="CodeButton.Content" xml:space="preserve">
-    <value>原始程式碼</value>
+    <value>GitHub 儲存庫</value>
   </data>
   <data name="LinkBlock.Text" xml:space="preserve">
     <value>相關連結</value>

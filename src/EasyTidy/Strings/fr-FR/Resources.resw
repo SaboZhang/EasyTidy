@@ -238,7 +238,7 @@
     <value>Télécharger la mise à jour</value>
   </data>
   <data name="CodeButton.Content" xml:space="preserve">
-    <value>Code source</value>
+    <value>Référentiel GitHub</value>
   </data>
   <data name="LinkBlock.Text" xml:space="preserve">
     <value>Liens connexes</value>
