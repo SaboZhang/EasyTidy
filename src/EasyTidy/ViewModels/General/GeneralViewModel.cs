@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.WinUI;
 using EasyTidy.Model;
 using EasyTidy.Util;
-using System.IO.Compression;
 using System.Runtime.CompilerServices;
 
 namespace EasyTidy.ViewModels;
@@ -56,6 +55,18 @@ public partial class GeneralViewModel : ObservableRecipient
 
     [ObservableProperty]
     private string _webDavUrl;
+
+    [ObservableProperty]
+    private string _backupStatus;
+
+    [ObservableProperty]
+    private string _backupCreateTime;
+
+    [ObservableProperty]
+    private string _backupHostName;
+
+    [ObservableProperty]
+    private string _backupFileName;
 
     /// <summary>
     /// 是否处理子文件夹
@@ -292,13 +303,8 @@ public partial class GeneralViewModel : ObservableRecipient
         switch (Settings.BackupType)
         {
             case BackupType.Local:
-                // 本地备份
-                var result = CreateZipFile(backupAndRestoreDir, backupAndRestoreDir);
-                if (result)
-                {
-                    BackupRestoreMessageSeverity = InfoBarSeverity.Success;
-                    SettingsBackupMessage = "BackupSuccessTips".GetLocalized();
-                }
+                // 本地备份 
+                await LocalBackupAsync();
                 break;
             case BackupType.WebDav:
                 // WebDav备份
@@ -316,8 +322,11 @@ public partial class GeneralViewModel : ObservableRecipient
                 }
                 break;
             default:
+                SettingsBackupRestoreMessageVisible = true;
                 BackupRestoreMessageSeverity = InfoBarSeverity.Warning;
                 SettingsBackupMessage = "BackupSelectionTips".GetLocalized();
+                await Task.Delay(10000);
+                SettingsBackupRestoreMessageVisible = false;
                 break;
         }
         
@@ -335,17 +344,61 @@ public partial class GeneralViewModel : ObservableRecipient
 
     }
 
-    private bool CreateZipFile(string sourceDirectory, string outputZipFilePath)
+    private async Task LocalBackupAsync()
     {
         try
         {
-            ZipFile.CreateFromDirectory(sourceDirectory, outputZipFilePath);
-            return true;
+            if (string.IsNullOrEmpty(FloderPath))
+            {
+                Growl.Warning("BackupPathText".GetLocalized());
+                return;
+            }
+            var zipFilePath = Path.Combine(FloderPath, $"EasyTidy_backup_{DateTime.Now:yyyyMMddHHmmss}.zip");
+            ZipUtil.CompressFile(Constants.CnfPath, zipFilePath);
+            SettingsBackupRestoreMessageVisible = true;
+            ShowBackInfo(zipFilePath);
+            BackupRestoreMessageSeverity = InfoBarSeverity.Success;
+            SettingsBackupMessage = "BackupSuccessTips".GetLocalized();
+            await Task.Delay(10000);
+            SettingsBackupRestoreMessageVisible = false;
         }
         catch (Exception ex) 
-        {
-            Logger.Error($"备份失败：{ex}");
-            return false;
+        { 
+            Logger.Error($"备份异常：{ex.Message}");
+            SettingsBackupRestoreMessageVisible = true;
+            BackupRestoreMessageSeverity = InfoBarSeverity.Error;
+            SettingsBackupMessage = "BackupFailedTips".GetLocalized();
+            await Task.Delay(10000);
+            SettingsBackupRestoreMessageVisible = false;
         }
     }
+
+    private void ShowBackInfo(string file)
+    {
+
+        BackupStatus = "BackupStatusText".GetLocalized();
+        BackupCreateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+        BackupFileName = Path.GetFileName(file);
+        BackupHostName = WebDavIsShow? WebDavUrl : Environment.MachineName;
+        Settings.BackupConfig.CreateTime = BackupCreateTime;
+        Settings.BackupConfig.FileName = BackupFileName;
+        Settings.BackupConfig.HostName = BackupHostName;
+        Settings.Save();
+    }
+
+    private async Task WebDavBackupAsync()
+    {
+        try
+        {
+            WebDavClient webDavClient = new(WebDavUrl, WebDavUserName, WebDavPassWord);
+            var zipFilePath = Path.Combine(Constants.CnfPath, $"EasyTidy_backup_{DateTime.Now:yyyyMMddHHmmss}.zip");
+            ZipUtil.CompressFile(Constants.CnfPath, zipFilePath);
+            var backup = await webDavClient.UploadFileAsync("", "");
+        }
+        catch (Exception ex)
+        {
+            Logger.Error($"{ex.Message}");
+        }
+    }
+
 }

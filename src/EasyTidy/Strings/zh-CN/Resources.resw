@@ -1039,4 +1039,10 @@
   <data name="CreateShortcutFailedText" xml:space="preserve">
     <value>桌面快捷方式创建失败</value>
   </data>
+  <data name="BackupPathText" xml:space="preserve">
+    <value>请选择备份文件夹路径</value>
+  </data>
+  <data name="BackupStatusText" xml:space="preserve">
+    <value>当前设置匹配</value>
+  </data>
 </root>

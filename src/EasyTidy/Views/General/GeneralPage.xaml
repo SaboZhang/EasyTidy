@@ -211,7 +211,8 @@
                                     </Grid.RowDefinitions>
                                     <TextBlock x:Uid="GeneralStatus"/>
                                     <TextBlock Grid.Column="1"
-                                               Foreground="{ThemeResource TextFillColorSecondaryBrush}">
+                                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                               Text="{x:Bind ViewModel.BackupStatus, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                         <Run/>
                                         <Hyperlink TextDecorations="Underline">
                                             <Run x:Uid="GeneralRefresh"/>
@@ -222,18 +223,21 @@
                                                x:Uid="GeneralFilename"/>
                                     <TextBlock Grid.Row="1"
                                                Grid.Column="1"
-                                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+                                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                               Text="{x:Bind ViewModel.BackupFileName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
                                     <TextBlock Grid.Row="2"
                                                x:Uid="GeneralSourceComputer"/>
                                     <TextBlock Grid.Row="2"
                                                Grid.Column="1"
-                                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+                                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                               Text="{x:Bind ViewModel.BackupHostName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                     <TextBlock Grid.Row="3"
                                                x:Uid="GeneralCreatedOn"/>
                                     <TextBlock Grid.Row="3"
                                                Grid.Column="1"
-                                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+                                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                               Text="{x:Bind ViewModel.BackupCreateTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 </Grid>
                             </wuc:SettingsCard>
                         </wuc:SettingsExpander.Items>

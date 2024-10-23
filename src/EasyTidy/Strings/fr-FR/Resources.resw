@@ -999,4 +999,10 @@
   <data name="CreateShortcutFailedText" xml:space="preserve">
     <value>Impossible de créer un raccourci sur le bureau</value>
   </data>
+  <data name="BackupPathText" xml:space="preserve">
+    <value>Veuillez sélectionner un dossier de sauvegarde</value>
+  </data>
+  <data name="BackupStatusText" xml:space="preserve">
+    <value>Paramètres actuels correspondants</value>
+  </data>
 </root>

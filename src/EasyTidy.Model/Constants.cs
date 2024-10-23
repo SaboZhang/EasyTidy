@@ -25,4 +25,17 @@ public static class Constants
     public static readonly string ExecutePath = AppDomain.CurrentDomain.BaseDirectory;
 
     public static readonly string PortableCnfPath = $"{ExecutePath}{PortableConfig}";
+
+    /// <summary>
+    ///     是否为便携模式
+    /// </summary>
+    private static readonly bool IsPortable = Directory.Exists(PortableCnfPath);
+
+    /// <summary>
+    ///     用户配置目录
+    /// </summary>
+    public static readonly string CnfPath = IsPortable
+            ? PortableCnfPath
+            : RootDirectoryPath;
+
 }

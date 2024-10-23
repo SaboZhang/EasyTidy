@@ -1002,4 +1002,10 @@
   <data name="CreateShortcutFailedText" xml:space="preserve">
     <value>桌面捷徑建立失敗</value>
   </data>
+  <data name="BackupPathText" xml:space="preserve">
+    <value>請選擇備份資料夾路徑</value>
+  </data>
+  <data name="BackupStatusText" xml:space="preserve">
+    <value>當前設定匹配</value>
+  </data>
 </root>

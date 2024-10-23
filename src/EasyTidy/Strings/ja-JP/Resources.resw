@@ -1002,4 +1002,10 @@
   <data name="CreateShortcutFailedText" xml:space="preserve">
     <value>デスクトップショートカットを作成できませんでした</value>
   </data>
+  <data name="BackupPathText" xml:space="preserve">
+    <value>バックアップフォルダのパスを選択してください</value>
+  </data>
+  <data name="BackupStatusText" xml:space="preserve">
+    <value>現在の設定は一致</value>
+  </data>
 </root>

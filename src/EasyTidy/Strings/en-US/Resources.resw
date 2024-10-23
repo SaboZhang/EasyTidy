@@ -1047,4 +1047,10 @@
   <data name="CreateShortcutFailedText" xml:space="preserve">
     <value>Failed to create desktop shortcut</value>
   </data>
+  <data name="BackupPathText" xml:space="preserve">
+    <value>Please select a backup folder path</value>
+  </data>
+  <data name="BackupStatusText" xml:space="preserve">
+    <value>Current setting match</value>
+  </data>
 </root>
