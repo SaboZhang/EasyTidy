@@ -15,30 +15,48 @@
             Margin="10"
             wuc:PanelAttach.ChildrenTransitions="Default"
             Spacing="5">
+            <wuc:SettingsCard x:Name="ChangeLanguageSetting"
+                              x:Uid="SettingsLanguageCard"
+                              HeaderIcon="{wuc:BitmapIcon Source=Assets/Fluent/language.png}"
+                              Tag="LanguageSetting">
+                <ComboBox x:Name="LanguageComboBox"
+                          DisplayMemberPath="Language"
+                          ItemsSource="{Binding Languages, Mode=TwoWay}"
+                          SelectedIndex="{Binding LanguagesIndex, Mode=TwoWay}">
+                </ComboBox>
+            </wuc:SettingsCard>
+            <InfoBar 
+                x:Uid="LanguageRestartInfo"
+                IsClosable="False"
+                IsOpen="{x:Bind Mode=OneWay, Path=ViewModel.LanguageChanged}"
+                IsTabStop="True"
+                Severity="Informational">
+                <InfoBar.ActionButton>
+                    <Button x:Uid="LanguageRestartInfoButton"
+                            Click="Click_LanguageRestart"/>
+                </InfoBar.ActionButton>
+            </InfoBar>
             <wuc:SettingsCard x:Name="ThemeSetting"
                               Command="{x:Bind ViewModel.GoToSettingPageCommand}"
                               CommandParameter="{Binding ElementName=ThemeSetting}"
-                              Description="Explore the different ways to customize the appearance and behavior of your app. You can change the material, theme, accent, and more options to suit your style and preference."
-                              Header="行为和动画"
+                              x:Uid="ThemeSettingPage"
                               HeaderIcon="{wuc:BitmapIcon Source=Assets/Fluent/theme.png}"
                               IsClickEnabled="True"
-                              Tag="ThemeSettingPage" />
+                              Tag="ThemeSettingPage"/>
             <wuc:SettingsCard x:Name="AppUpdateSetting"
                               Command="{x:Bind ViewModel.GoToSettingPageCommand}"
                               CommandParameter="{Binding ElementName=AppUpdateSetting}"
-                              Description="Check for Updates"
-                              Header="检查更新"
+                              x:Uid="AppUpdateSetting"
                               HeaderIcon="{wuc:BitmapIcon Source=Assets/Fluent/update.png}"
                               IsClickEnabled="True"
-                              Tag="AppUpdateSettingPage" />
+                              Tag="AppUpdateSettingPage"/>
             <wuc:SettingsCard x:Name="AboutSetting"
                               Command="{x:Bind ViewModel.GoToSettingPageCommand}"
                               CommandParameter="{Binding ElementName=AboutSetting}"
-                              Description="About EasyTidy and Developer"
-                              Header="关于"
+                              x:Uid="AboutUsSettingPage"
                               HeaderIcon="{wuc:BitmapIcon Source=Assets/Fluent/info.png}"
                               IsClickEnabled="True"
-                              Tag="AboutUsSettingPage" />
+                              Tag="AboutUsSettingPage"/>
 
         </StackPanel>
     </ScrollView>

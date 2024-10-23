@@ -22,7 +22,7 @@ public class AppDbContext : DbContext
         optionsBuilder.UseSqlite($"Data Source={dbFile}");
     }
 
-    public DbSet<FileExplorerTable> FileExplorer { get; set; }
+    public DbSet<TaskOrchestrationTable> FileExplorer { get; set; }
 
     public DbSet<ScheduleTable> Schedule { get; set; }
 

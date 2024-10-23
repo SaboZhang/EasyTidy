@@ -1,6 +1,7 @@
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
+using CommunityToolkit.WinUI;
 using System.Collections;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -12,7 +13,7 @@ namespace EasyTidy.Views.ContentDialogs;
 /// </summary>
 public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErrorInfo, INotifyPropertyChanged
 {
-    public FileExplorerViewModel ViewModel { get; set; }
+    public TaskOrchestrationViewModel ViewModel { get; set; }
 
     private string _groupName;
     public string GroupName
@@ -43,18 +44,24 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
 
     public AddTaskContentDialog()
     {
-        ViewModel = App.GetService<FileExplorerViewModel>();
+        ViewModel = App.GetService<TaskOrchestrationViewModel>();
         this.InitializeComponent();
         XamlRoot = App.MainWindow.Content.XamlRoot;
         RequestedTheme = ViewModel.themeService.GetElementTheme();
     }
 
+    private void FilterButtonTeachingTip_CloseButtonClick(TeachingTip sender, object args)
+    {
+        ViewModel.SelectedItemChangedCommand.Execute(sender);
+    }
+
     private void ValidateGroupName(string groupName)
     {
-        var errors = new List<string>(1);
+        var errors = new List<string>(2);
         if (string.IsNullOrWhiteSpace(groupName))
         {
-            errors.Add("组名不能为空");
+            errors.Add("GroupInformationVerification".GetLocalized());
+            errors.Add("GroupInformationVerificationAdd".GetLocalized());
         }
         SetErrors("GroupName", errors);
     }
@@ -94,5 +101,10 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
             _ = _validationErrors.Remove(key);
 
         OnErrorsChanged(key);
+    }
+
+    private void FilterButton_Click(object sender, RoutedEventArgs e)
+    {
+        FilterButtonTeachingTip.IsOpen = true;
     }
 }

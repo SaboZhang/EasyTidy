@@ -1,4 +1,6 @@
-﻿using EasyTidy.Model;
+﻿using CommunityToolkit.WinUI;
+using EasyTidy.Model;
+using EasyTidy.Util;
 using System.Runtime.CompilerServices;
 
 namespace EasyTidy.ViewModels;
@@ -35,6 +37,36 @@ public partial class GeneralViewModel : ObservableRecipient
     /// </summary>
     [ObservableProperty]
     private IList<BackupType> backupTypes = Enum.GetValues(typeof(BackupType)).Cast<BackupType>().ToList();
+
+    [ObservableProperty]
+    private string _settingsBackupMessage;
+
+    [ObservableProperty]
+    private InfoBarSeverity _backupRestoreMessageSeverity;
+
+    [ObservableProperty]
+    private bool _settingsBackupRestoreMessageVisible;
+
+    [ObservableProperty]
+    private string _webDavUserName;
+
+    [ObservableProperty]
+    private string _webDavPassWord;
+
+    [ObservableProperty]
+    private string _webDavUrl;
+
+    [ObservableProperty]
+    private string _backupStatus;
+
+    [ObservableProperty]
+    private string _backupCreateTime;
+
+    [ObservableProperty]
+    private string _backupHostName;
+
+    [ObservableProperty]
+    private string _backupFileName;
 
     /// <summary>
     /// 是否处理子文件夹
@@ -233,10 +265,12 @@ public partial class GeneralViewModel : ObservableRecipient
             case BackupType.Local:
                 PathTypeSelectedIndex = true;
                 WebDavIsShow = false;
+                Settings.BackupType = BackupType.Local;
                 break;
             case BackupType.WebDav:
                 PathTypeSelectedIndex = false;
                 WebDavIsShow = true;
+                Settings.BackupType = BackupType.WebDav;
                 break;
             default:
                 PathTypeSelectedIndex = false;
@@ -261,6 +295,43 @@ public partial class GeneralViewModel : ObservableRecipient
         }
     }
 
+    [RelayCommand]
+    private async Task BackupConfigsClickAsync()
+    {
+        string backupAndRestoreDir = Directory.Exists(Constants.PortableCnfPath) ? Constants.PortableCnfPath : Constants.RootDirectoryPath;
+
+        switch (Settings.BackupType)
+        {
+            case BackupType.Local:
+                // 本地备份 
+                await LocalBackupAsync();
+                break;
+            case BackupType.WebDav:
+                // WebDav备份
+                WebDavClient webDavClient = new(WebDavUrl, WebDavUserName, WebDavPassWord);
+                var backup = await webDavClient.UploadFileAsync("", "");
+                if (backup)
+                {
+                    BackupRestoreMessageSeverity = InfoBarSeverity.Success;
+                    SettingsBackupMessage = "BackupSuccessTips".GetLocalized();
+                }
+                else
+                {
+                    BackupRestoreMessageSeverity = InfoBarSeverity.Error;
+                    SettingsBackupMessage = "BackupFailedTips".GetLocalized();
+                }
+                break;
+            default:
+                SettingsBackupRestoreMessageVisible = true;
+                BackupRestoreMessageSeverity = InfoBarSeverity.Warning;
+                SettingsBackupMessage = "BackupSelectionTips".GetLocalized();
+                await Task.Delay(10000);
+                SettingsBackupRestoreMessageVisible = false;
+                break;
+        }
+        
+    }
+
     private void NotifyPropertyChanged([CallerMemberName] string propertyName = null, bool reDoBackupDryRun = true)
     {
 
@@ -272,4 +343,62 @@ public partial class GeneralViewModel : ObservableRecipient
         UpdateCurConfig(this);
 
     }
+
+    private async Task LocalBackupAsync()
+    {
+        try
+        {
+            if (string.IsNullOrEmpty(FloderPath))
+            {
+                Growl.Warning("BackupPathText".GetLocalized());
+                return;
+            }
+            var zipFilePath = Path.Combine(FloderPath, $"EasyTidy_backup_{DateTime.Now:yyyyMMddHHmmss}.zip");
+            ZipUtil.CompressFile(Constants.CnfPath, zipFilePath);
+            SettingsBackupRestoreMessageVisible = true;
+            ShowBackInfo(zipFilePath);
+            BackupRestoreMessageSeverity = InfoBarSeverity.Success;
+            SettingsBackupMessage = "BackupSuccessTips".GetLocalized();
+            await Task.Delay(10000);
+            SettingsBackupRestoreMessageVisible = false;
+        }
+        catch (Exception ex) 
+        { 
+            Logger.Error($"备份异常：{ex.Message}");
+            SettingsBackupRestoreMessageVisible = true;
+            BackupRestoreMessageSeverity = InfoBarSeverity.Error;
+            SettingsBackupMessage = "BackupFailedTips".GetLocalized();
+            await Task.Delay(10000);
+            SettingsBackupRestoreMessageVisible = false;
+        }
+    }
+
+    private void ShowBackInfo(string file)
+    {
+
+        BackupStatus = "BackupStatusText".GetLocalized();
+        BackupCreateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+        BackupFileName = Path.GetFileName(file);
+        BackupHostName = WebDavIsShow? WebDavUrl : Environment.MachineName;
+        Settings.BackupConfig.CreateTime = BackupCreateTime;
+        Settings.BackupConfig.FileName = BackupFileName;
+        Settings.BackupConfig.HostName = BackupHostName;
+        Settings.Save();
+    }
+
+    private async Task WebDavBackupAsync()
+    {
+        try
+        {
+            WebDavClient webDavClient = new(WebDavUrl, WebDavUserName, WebDavPassWord);
+            var zipFilePath = Path.Combine(Constants.CnfPath, $"EasyTidy_backup_{DateTime.Now:yyyyMMddHHmmss}.zip");
+            ZipUtil.CompressFile(Constants.CnfPath, zipFilePath);
+            var backup = await webDavClient.UploadFileAsync("", "");
+        }
+        catch (Exception ex)
+        {
+            Logger.Error($"{ex.Message}");
+        }
+    }
+
 }

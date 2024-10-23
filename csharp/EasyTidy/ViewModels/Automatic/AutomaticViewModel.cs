@@ -1,12 +1,11 @@
-﻿using CommunityToolkit.WinUI.UI;
+﻿using CommunityToolkit.WinUI;
+using CommunityToolkit.WinUI.Collections;
 using EasyTidy.Model;
 using EasyTidy.Util;
 using EasyTidy.Views.ContentDialogs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.UI.Dispatching;
-using System.Collections;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace EasyTidy.ViewModels;
@@ -159,7 +158,7 @@ public partial class AutomaticViewModel : ObservableRecipient
     public bool _customOnScheduleExecution = false;
 
     [ObservableProperty]
-    public ObservableCollection<FileExplorerTable> _taskList;
+    public ObservableCollection<TaskOrchestrationTable> _taskList;
 
     [ObservableProperty]
     public AdvancedCollectionView _taskListACV;
@@ -173,7 +172,7 @@ public partial class AutomaticViewModel : ObservableRecipient
     private readonly DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
 
     [ObservableProperty]
-    private ObservableCollection<FileExplorerTable> _selectedTaskList = [];
+    private ObservableCollection<TaskOrchestrationTable> _selectedTaskList = [];
 
     [ObservableProperty]
     private ObservableCollection<TaskGroupTable> _selectedGroupTaskList = [];
@@ -191,9 +190,9 @@ public partial class AutomaticViewModel : ObservableRecipient
         var dialog = new PlanExecutionContentDialog
         {
             ViewModel = this,
-            Title = "时间表",
-            PrimaryButtonText = "保存",
-            CloseButtonText = "取消",
+            Title = "ScheduleText".GetLocalized(),
+            PrimaryButtonText = "SaveText".GetLocalized(),
+            CloseButtonText = "CancelText".GetLocalized(),
             ThemeService = themeService
         };
         dialog.PrimaryButtonClick += OnOnAddPlanPrimaryButton;
@@ -237,9 +236,9 @@ public partial class AutomaticViewModel : ObservableRecipient
         var dialog = new CustomConfigContentDialog
         {
             ViewModel = this,
-            Title = "自定义配置",
-            PrimaryButtonText = "保存",
-            CloseButtonText = "取消",
+            Title = "CustomConfigurationText".GetLocalized(),
+            PrimaryButtonText = "SaveText".GetLocalized(),
+            CloseButtonText = "CancelText".GetLocalized(),
         };
 
         dialog.PrimaryButtonClick += OnAddCustomConfigPrimaryButton;
@@ -259,7 +258,7 @@ public partial class AutomaticViewModel : ObservableRecipient
                 return;
             }
 
-            List<FileExplorerTable> list = [];
+            List<TaskOrchestrationTable> list = [];
 
             foreach (var item in SelectedTaskList)
             {
@@ -272,7 +271,8 @@ public partial class AutomaticViewModel : ObservableRecipient
                 }
             }
 
-            await db.Automatic.AddAsync(new AutomaticTable{
+            await db.Automatic.AddAsync(new AutomaticTable
+            {
                 IsFileChange = CustomFileChange,
                 IsStartupExecution = CustomStartupExecution,
                 RegularTaskRunning = CustomRegularTaskRunning,
@@ -296,7 +296,7 @@ public partial class AutomaticViewModel : ObservableRecipient
             Logger.Error($"添加自定义配置失败：{ex}");
         }
     }
-    
+
     [RelayCommand]
     private void OnSelectTask(object parameter)
     {
@@ -359,7 +359,7 @@ public partial class AutomaticViewModel : ObservableRecipient
                 dispatcherQueue.TryEnqueue(async () =>
                 {
                     await using var db = new AppDbContext();
-                    var list = await db.FileExplorer.Include(x =>x.GroupName).Where(f => f.IsRelated == false).ToListAsync();
+                    var list = await db.FileExplorer.Include(x => x.GroupName).Where(f => f.IsRelated == false).ToListAsync();
                     TaskList = new(list);
                     TaskListACV = new AdvancedCollectionView(TaskList, true);
                     TaskListACV.SortDescriptions.Add(new SortDescription("ID", SortDirection.Ascending));
@@ -381,7 +381,7 @@ public partial class AutomaticViewModel : ObservableRecipient
     }
 
     [RelayCommand]
-    private async Task OnSelectedItemChanged(object dataContext)
+    private Task OnSelectedItemChanged(object dataContext)
     {
         try
         {
@@ -393,10 +393,9 @@ public partial class AutomaticViewModel : ObservableRecipient
                 SelectedTaskList.Clear();
                 foreach (var item in items)
                 {
-                    FileExplorerTable task = item as FileExplorerTable;
+                    TaskOrchestrationTable task = item as TaskOrchestrationTable;
                     SelectedTaskList.Add(task);
                 }
-                await OnPageLoaded();
             }
         }
         catch (Exception ex)
@@ -404,6 +403,7 @@ public partial class AutomaticViewModel : ObservableRecipient
             Logger.Error($"AutomaticViewModel: OnSelectedItemChanged 异常信息 {ex}");
         }
 
+        return Task.CompletedTask;
     }
 
     [RelayCommand]
@@ -438,7 +438,7 @@ public partial class AutomaticViewModel : ObservableRecipient
         try
         {
             await using var db = new AppDbContext();
-            List<FileExplorerTable> list = [];
+            List<TaskOrchestrationTable> list = [];
             foreach (var item in SelectedTaskList)
             {
                 var update = await db.FileExplorer.Where(x => x.ID == item.ID && item.IsRelated == false).FirstOrDefaultAsync();
@@ -491,7 +491,7 @@ public partial class AutomaticViewModel : ObservableRecipient
             await OnPageLoaded();
             Growl.Success(new GrowlInfo
             {
-                Message = "保存成功",
+                Message = "SaveSuccessfulText".GetLocalized(),
                 ShowDateTime = false
             });
         }
@@ -499,7 +499,7 @@ public partial class AutomaticViewModel : ObservableRecipient
         {
             Growl.Error(new GrowlInfo
             {
-                Message = "保存失败",
+                Message = "SaveFailedText".GetLocalized(),
                 ShowDateTime = false
             });
             Logger.Error($"AutomaticViewModel: OnSaveTaskConfig 异常信息 {ex}");

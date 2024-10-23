@@ -33,7 +33,7 @@
                         Content="{wuc:FontIcon GlyphCode=E793,
                            FontSize=16}"
                         Style="{ThemeResource SubtleButtonStyle}"
-                        ToolTipService.ToolTip="Toggle Theme" />
+                        x:Uid="MainTitleBarTheme" />
                     <Button
                         x:Name="NavViewPaneDisplayModeButton"
                         Height="32"
@@ -42,7 +42,7 @@
                         Content="{wuc:FontIcon GlyphCode=F594,
                             FontSize=16}"
                         Style="{ThemeResource SubtleButtonStyle}"
-                        ToolTipService.ToolTip="变更导航" />
+                        x:Uid="MainTitleBarNav" />
                 </StackPanel>
 
             </wuc:TitleBar.Footer>
@@ -54,7 +54,7 @@
             IsPaneToggleButtonVisible="False">
             <NavigationView.AutoSuggestBox>
                 <AutoSuggestBox Name="autoSuggestBox"
-                        PlaceholderText="Search"
+                        x:Uid="MainSuggestBox"
                         QueryIcon="Find" />
             </NavigationView.AutoSuggestBox>
 

@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using CommunityToolkit.WinUI;
 
 namespace EasyTidy.Model;
 
@@ -24,7 +21,7 @@ public static class EnumHelper
             if (attributes.Length > 0)
             {
                 var displayAttribute = (DisplayAttribute)attributes[0];
-                return displayAttribute.Name;
+                return displayAttribute.Name?.GetLocalized();
             }
         }
         return value.ToString();

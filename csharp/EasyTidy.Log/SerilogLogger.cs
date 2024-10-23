@@ -8,12 +8,12 @@ public class SerilogLogger : BaseLogger
 {
     private readonly Logger _logger;
 
-    public SerilogLogger(LogLevel minLevel = LogLevel.Debug)
+    public SerilogLogger(LogLevel minLevel = LogLevel.Debug, string version = "1.0.0.0")
     {
         var logConfiguration = new LoggerConfiguration()
             .WriteTo.File(
-                string.Format("{0}logs/log.log", AppDomain.CurrentDomain.BaseDirectory),    //使用绝对路径创建日志文件
-                                                                                            //shared: true,
+                string.Format("{0}logs/{1}/log.log", AppDomain.CurrentDomain.BaseDirectory, version),    //使用绝对路径创建日志文件
+                                                                                                         //shared: true,
                 rollingInterval: RollingInterval.Day,
                 restrictedToMinimumLevel: LogEventLevel.Verbose,
                 outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} [{Level:u3}] {Message:lj}{NewLine}{Exception}"

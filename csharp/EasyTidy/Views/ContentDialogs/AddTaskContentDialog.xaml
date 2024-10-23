@@ -7,7 +7,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    xmlns:wuc="using:WinUICommunity"
+    xmlns:model="using:EasyTidy.Model"
+    xmlns:wuc="using:WinUICommunity" 
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core" 
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
     CornerRadius="{ThemeResource OverlayCornerRadius}"
     DefaultButton="Primary">
 
@@ -25,36 +28,48 @@
                     Spacing="8"
                     Margin="0,10,0,0">
             <TextBlock x:Name="TaskGroupName"
-                       Text="任务组名："
-                       Margin="0,5,0,0"/>
+                       x:Uid="DialogTaskGroupName"
+                       Margin="0,5,0,0"
+                       Width="110"
+                       TextWrapping="Wrap"/>
             <TextBox x:Name="TaskGroupNameBox" 
-                     Text="{x:Bind GroupName, Mode=TwoWay}"
-                     MinWidth="240"
-                     Margin="14,0,0,0"
-                     PlaceholderText="请输入或者选择"
+                     Text="{x:Bind ViewModel.GroupTextName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     Width="210"
+                     Margin="6,0,0,0"
+                     x:Uid="TaskGroupBox"
                      wuc:Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
                      wuc:Validation.ValidationPropertyName="GroupName"
                      wuc:Validation.ValidationProvider="{x:Bind}"
                      Style="{StaticResource ValidatingTextBoxStyle}"/>
             <ComboBox x:Name="TaskGroupNameComboBox"
-                      PlaceholderText="选择组名"
-                      Width="Auto"
-                      Text="{x:Bind GroupName, Mode=TwoWay}"
+                      x:Uid="DialogTaskGroup"
+                      MaxWidth="100"
                       IsEditable="True"
                       ItemsSource="{x:Bind ViewModel.GroupList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                      SelectedItem="{x:Bind ViewModel.SelectedGroupName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                      SelectedItem="{x:Bind ViewModel.SelectedGroupName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      SelectedIndex="{x:Bind ViewModel.SelectedGroupIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <i:Interaction.Behaviors>
+                    <ic:EventTriggerBehavior EventName="SelectionChanged">
+                        <ic:EventTriggerBehavior.Actions>
+                            <ic:InvokeCommandAction Command="{x:Bind ViewModel.GroupSelectionChangedCommand}"/>
+                        </ic:EventTriggerBehavior.Actions>
+                    </ic:EventTriggerBehavior>
+                </i:Interaction.Behaviors>
+            </ComboBox>
         </StackPanel>
         <StackPanel x:Name="TaskNamePanel"
                     Orientation="Horizontal"
                     Spacing="8"
                     Margin="0,10,0,0">
             <TextBlock x:Name="TaskTitle"
-                       Text="任务名称："
-                       Margin="0,5,0,0"/>
+                       x:Uid="DialogTaskName"
+                       Margin="0,5,0,0"
+                       Width="110"
+                       TextWrapping="Wrap"/>
             <TextBox x:Name="TaskNameBox"
-                     PlaceholderText="请输入任务名称"
-                     Margin="14,0,0,0"
-                     MinWidth="240"
+                     x:Uid="TaskNameBoxPlaceholder"
+                     Margin="6,0,0,0"
+                     Width="210"
                      Text="{x:Bind TaskName, Mode=TwoWay}"/>
         </StackPanel>
         <StackPanel x:Name="TaskRulePanel"
@@ -62,31 +77,66 @@
                     Spacing="8"
                     Margin="0,20,0,0">
             <TextBlock x:Name="TaskRuleTitle"
-                       Text="处理规则："
-                       Margin="0,5,0,0"/>
+                       x:Uid="DialogProcessingRules"
+                       Margin="0,5,0,0"
+                       Width="110"
+                       TextWrapping="Wrap"/>
             <TextBox x:Name="TaskRuleBox"
-                     PlaceholderText="请输入处理规则/正则"
-                     Margin="14,0,0,0"
-                     Width="240"
+                     x:Uid="DialogTaskRulePlaceholder"
+                     Margin="6,0,0,0"
+                     Width="210"
                      Text="{x:Bind TaskRule, Mode=TwoWay}"/>
             <Button x:Name="RuleButton"
-                    Content="规则示列"/>
+                    Width="52"
+                    Height="32"
+                    x:Uid="DialogRuleButton">
+                <Button.Content>
+                    <Image Source="/Assets/Fluent/rule.png" Stretch="Uniform"/>
+                </Button.Content>
+            </Button>
             <Button x:Name="FilterButton"
-                    Content="筛选器"/>
+                    Width="52"
+                    Height="32"
+                    x:Uid="DialogFilterButton"
+                    Click="FilterButton_Click">
+                <Button.Content>
+                    <Image Source="/Assets/Fluent/filter.png" Stretch="Uniform"/>
+                </Button.Content>
+                <Button.Resources>
+                    <TeachingTip x:Name="FilterButtonTeachingTip"
+                                 PreferredPlacement="Bottom"
+                                 Target="{x:Bind FilterButton}"
+                                 CloseButtonClick="FilterButtonTeachingTip_CloseButtonClick">
+                        <TeachingTip.HeroContent>
+                            <ListView x:Name="DialogFilterListView"
+                                      MaxHeight="320"
+                                      ItemsSource="{x:Bind ViewModel.FilterListACV, Mode=TwoWay}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate x:DataType="model:FilterTable">
+                                        <TextBlock Text="{x:Bind FilterName}"/>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </TeachingTip.HeroContent>
+                    </TeachingTip>
+                </Button.Resources>
+            </Button>
         </StackPanel>
         <StackPanel x:Name="TaskOperatePanel"
                     Orientation="Horizontal"
                     Spacing="8"
                     Margin="0,20,0,0">
             <TextBlock x:Name="TaskOperateTitle"
-                       Text="操作方式："
-                       Margin="0,5,0,0"/>
+                       x:Uid="DialogOperatingMethod"
+                       Margin="0,5,0,0"
+                       Width="110"
+                       TextWrapping="Wrap"/>
             <ComboBox x:Name="TaskOperateList"
                       ItemsSource="{x:Bind ViewModel.OperationModes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                       SelectedItem="{x:Bind ViewModel.SelectedOperationMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                      PlaceholderText="请选择操作方式"
-                      Margin="14,0,0,0"
-                      Width="240">
+                      x:Uid="DialogTaskOperateListPlaceholder"
+                      Margin="6,0,0,0"
+                      Width="210">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Converter={StaticResource EnumDisplayNameConverter}}"/>
@@ -99,35 +149,36 @@
                     Spacing="8"
                     Margin="0,20,0,0">
             <TextBlock x:Name="TaskSourceTitle"
-                       Text="源文件夹："
-                       Margin="0,5,0,0"/>
+                       x:Uid="DialogSourceFolder"
+                       Margin="0,5,0,0"
+                       Width="110"
+                       TextWrapping="Wrap"/>
             <TextBox x:Name="Source"
-                     PlaceholderText="请选择文件夹，默认为桌面"
-                     Margin="14,0,0,0"
-                     Width="240"
+                     x:Uid="DialogSourcePlaceholder"
+                     Margin="6,0,0,0"
+                     Width="210"
                      Text="{x:Bind ViewModel.TaskSource, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      IsEnabled="False"/>
             <Button x:Name="SourceButton"
-                    Content="选择"
+                    x:Uid="DialogSourceButton"
                     Command="{x:Bind ViewModel.SelectSourcePathCommand}"/>
-            <CheckBox x:Name="CreateShortcut"
-                      Content="快捷方式"
-                      IsChecked="{x:Bind Shortcut, Mode=TwoWay}">
-            </CheckBox>
         </StackPanel>
         <StackPanel x:Name="TaskTargetPanel"
                     Orientation="Horizontal"
                     Spacing="8"
                     Margin="0,20,0,0">
             <TextBlock x:Name="TaskTargetTitle"
-                       Text="目标文件夹："
-                       Margin="0,5,0,0"/>
+                       x:Uid="DialogTargetFolder"
+                       Margin="0,5,0,0"
+                       Width="110"
+                       TextWrapping="Wrap"/>
             <TextBox x:Name="Target"
-                     PlaceholderText="请选择或输入文件夹"
-                     Width="240"
+                     x:Uid="DialogTargetPlaceholder"
+                     Width="210"
+                     Margin="6,0,0,0"
                      Text="{x:Bind ViewModel.TaskTarget, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             <Button x:Name="TargetButton"
-                    Content="选择"
+                    x:Uid="DialogTargetButton"
                     Command="{x:Bind ViewModel.SelectTargetPathCommand}"/>
         </StackPanel>
         <StackPanel x:Name="TaskEnablePanel"
@@ -135,10 +186,15 @@
                     Spacing="8"
                     Margin="0,20,0,0">
             <TextBlock x:Name="TaskEnableTitle"
-                       Text="是否启用："
-                       Margin="0,8,16,0"/>
+                       x:Uid="DialogTaskEnable"
+                       Margin="0,8,14,0"
+                       Width="100"/>
             <ToggleSwitch x:Name="EnableSwitch"
                           IsOn="{x:Bind EnabledFlag, Mode=TwoWay}"/>
+            <CheckBox x:Name="CreateShortcut"
+                      x:Uid="DiaalogShortcut"
+                      Margin="-64,0,0,0"
+                      IsChecked="{x:Bind Shortcut, Mode=TwoWay}"></CheckBox>
         </StackPanel>
     </StackPanel>
 </ContentDialog>

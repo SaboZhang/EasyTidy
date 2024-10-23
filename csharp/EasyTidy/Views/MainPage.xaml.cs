@@ -1,15 +1,25 @@
-﻿namespace EasyTidy.Views;
+﻿using Microsoft.Windows.ApplicationModel.Resources;
+
+namespace EasyTidy.Views;
 
 public sealed partial class MainPage : Page
 {
     public MainViewModel ViewModel { get; }
+
+    private readonly ResourceManager _resourceManager;
+
+    private readonly ResourceContext _resourceContext;
     public MainPage()
     {
+        _resourceManager = new ResourceManager();
+        _resourceContext = _resourceManager.CreateResourceContext();
         ViewModel = App.GetService<MainViewModel>();
         this.InitializeComponent();
         appTitleBar.Window = App.MainWindow;
         ViewModel.JsonNavigationViewService.Initialize(NavView, NavFrame);
         ViewModel.JsonNavigationViewService.ConfigJson("Assets/NavViewMenu/AppData.json");
+        ViewModel.JsonNavigationViewService.ConfigLocalizer(_resourceManager, _resourceContext);
+        Logger.Info("MainPage Initialized");
     }
 
     private void appTitleBar_BackButtonClick(object sender, RoutedEventArgs e)

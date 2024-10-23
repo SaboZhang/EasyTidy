@@ -12,35 +12,39 @@
       "Items": [
         {
           "UniqueId": "EasyTidy.Views.GeneralPage",
-          "Title": "常规",
+          "Title": "NavGeneralText",
           "Subtitle": "EasyTidy",
           "ImagePath": "ms-appx:///Assets/Fluent/general.png",
           "ImageIconPath": "ms-appx:///Assets/Fluent/general.png",
-          "HideItem": true
-        },
-        {
-          "UniqueId": "EasyTidy.Views.AutomaticPage",
-          "Title": "自动化",
-          "Subtitle": "Automatic",
-          "ImagePath": "ms-appx:///Assets/Fluent/auto.png",
-          "ImageIconPath": "ms-appx:///Assets/Fluent/auto.png",
-          "IsUpdated": true
+          "HideItem": true,
+          "UsexUid": true
         },
         {
           "UniqueId": "EasyTidy.Views.FiltersPage",
-          "Title": "过滤器",
+          "Title": "NavFiltersText",
           "Subtitle": "Filters",
           "ImagePath": "ms-appx:///Assets/Fluent/Filters.png",
           "ImageIconPath": "ms-appx:///Assets/Fluent/Filters.png",
-          "IsUpdated": true
+          "IsUpdated": true,
+          "UsexUid": true
         },
         {
-          "UniqueId": "EasyTidy.Views.FileExplorerPage",
-          "Title": "文件管理",
-          "Subtitle": "FileExplorer",
-          "ImagePath": "ms-appx:///Assets/Fluent/fileExplorerPreview.png",
-          "ImageIconPath": "ms-appx:///Assets/Fluent/fileExplorerPreview.png",
-          "IsUpdated": true
+          "UniqueId": "EasyTidy.Views.TaskOrchestrationPage",
+          "Title": "NavTaskOrchestrationText",
+          "Subtitle": "TaskOrchestration",
+          "ImagePath": "ms-appx:///Assets/Fluent/task1.png",
+          "ImageIconPath": "ms-appx:///Assets/Fluent/task1.png",
+          "IsUpdated": true,
+          "UsexUid": true
+        },
+        {
+          "UniqueId": "EasyTidy.Views.AutomaticPage",
+          "Title": "NavAutomaticText",
+          "Subtitle": "Automatic",
+          "ImagePath": "ms-appx:///Assets/Fluent/auto.png",
+          "ImageIconPath": "ms-appx:///Assets/Fluent/auto.png",
+          "IsUpdated": true,
+          "UsexUid": true
         }
       ]
     }

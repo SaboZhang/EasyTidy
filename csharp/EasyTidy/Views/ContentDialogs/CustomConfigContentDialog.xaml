@@ -23,18 +23,19 @@
     <StackPanel>
         <StackPanel Orientation="Horizontal"
                     Spacing="48">
-            <TextBlock Text="选择任务："
-                       Margin="0,5,0,0"/>
+            <TextBlock x:Uid="SelectTaskBlock"
+                       Margin="0,5,0,0"
+                       Width="140"/>
             <StackPanel HorizontalAlignment="Left"
                         Orientation="Horizontal"
                         Spacing="20">
                 <Button x:Name="CustomGroupButton"
-                        Content="任务组"
+                        x:Uid="TaskButton"
                         Command="{x:Bind ViewModel.CustomSelectTaskCommand}"
                         CommandParameter="{Binding ElementName=CustomGroupButton}">
                     <Button.Resources>
                         <TeachingTip x:Name="CustomGroupTaskSelect"
-                                     Title="选择任务组"
+                                     x:Uid="TaskGroup"
                                      Target="{x:Bind CustomGroupButton}"
                                      IsOpen="{x:Bind ViewModel.CustomGroupIsOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                      PreferredPlacement="Bottom"
@@ -55,13 +56,13 @@
                     </Button.Resources>
                 </Button>
                 <Button x:Name="CustomTaskList"
-                        Content="单个任务"
+                        x:Uid="SingleTask"
                         Command="{x:Bind ViewModel.CustomSelectTaskCommand}"
                         HorizontalAlignment="Right"
                         CommandParameter="{Binding ElementName=CustomTaskList}">
                     <Button.Resources>
                         <TeachingTip x:Name="CustomTaskSelect"
-                                     Title="任务列表"
+                                     x:Uid="TaskList"
                                      Target="{x:Bind CustomTaskList}"
                                      IsOpen="{x:Bind ViewModel.CustomIsOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                      PreferredPlacement="Bottom"
@@ -69,10 +70,10 @@
                             <TeachingTip.HeroContent>
                                 <ListView x:Name="CustomListView"
                                           SelectionMode="Multiple"
-                                          MaxHeight="280"
+                                          MaxHeight="320"
                                           ItemsSource="{x:Bind ViewModel.TaskListACV, Mode=TwoWay}">
                                     <ListView.ItemTemplate>
-                                        <DataTemplate x:DataType="model:FileExplorerTable">
+                                        <DataTemplate x:DataType="model:TaskOrchestrationTable">
                                             <TextBlock Text="{x:Bind TaskName}"/>
                                         </DataTemplate>
                                     </ListView.ItemTemplate>
@@ -86,54 +87,60 @@
         <StackPanel Orientation="Horizontal"
                     Spacing="8"
                     Margin="0,10,0,0">
-            <TextBlock Text="文件更改时"
-                       Margin="0,8,0,0"/>
+            <TextBlock x:Uid="FileChangeBlock"
+                       Margin="0,30,0,0"
+                       Width="140"
+                       TextWrapping="Wrap"/>
             <ToggleSwitch IsOn="{x:Bind ViewModel.CustomFileChange, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                          Margin="38,-1,0,0"/>
-            <TextBlock Text="延迟："
-                       Margin="-78,8,0,0"/>
+                          Margin="0,22,0,0"
+                          Width="100"/>
             <TextBox x:Name="DelayBox"
+                     x:Uid="FileChangeDelayText"
                      IsEnabled="{x:Bind ViewModel.CustomFileChange, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                     Margin="0,0,0,0"
+                     Margin="-60,0,0,0"
                      MinWidth="160"
                      Text="{x:Bind Delay, Mode=TwoWay}"
                      wuc:Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
                      wuc:Validation.ValidationPropertyName="Delay"
                      wuc:Validation.ValidationProvider="{x:Bind}"
                      Style="{StaticResource ValidatingTextBoxStyle}"/>
-            <TextBlock Text="秒"
-                       Margin="0,8,0,0"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal"
                     Spacing="8">
-            <TextBlock Text="EasyTidy启动时："
-                       Margin="0,8,0,0"/>
-            <ToggleSwitch IsOn="{x:Bind ViewModel.CustomStartupExecution, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBlock x:Uid="DialogAtStartup"
+                       Margin="0,30,0,0"
+                       Width="140"/>
+            <ToggleSwitch IsOn="{x:Bind ViewModel.CustomStartupExecution, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          Width="100"
+                          Margin="0,22,0,0"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal"
                     Spacing="8">
-            <TextBlock Text="定时执行"
-                       Margin="0,10,0,0"/>
+            <TextBlock x:Uid="RegularTaskRunningText"
+                       Margin="0,30,0,0"
+                       Width="140"/>
             <ToggleSwitch IsOn="{x:Bind ViewModel.CustomRegularTaskRunning, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                          Margin="52,-1,0,0"/>
-            <TextBlock Text="每："
-                       Margin="-78,10,0,0"/>
-            <TimePicker ClockIdentifier="24HourClock"
+                          Margin="0,22,0,0"
+                          Width="100"/>
+            <TimePicker x:Name="SelectedTimePicker"
+                        ClockIdentifier="24HourClock"
+                        x:Uid="DialogRegularTaskRunningTime"
                         IsEnabled="{x:Bind ViewModel.CustomRegularTaskRunning, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         Margin="-60,0,0,0"
                         SelectedTime="{x:Bind SelectedTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
         <wuc:Divider/>
         <StackPanel Margin="0,-10,0,0">
-            <TextBlock Text="按照计划"/>
+            <TextBlock x:Uid="DialogAsPlanned"/>
             <StackPanel>
                 <StackPanel Orientation="Horizontal"
                             Spacing="20"
                             Margin="0,10,0,0">
-                    <TextBlock Text="分钟"
-                               Margin="0,5,0,0"/>
+                    <TextBlock x:Uid="DialogMinute"
+                               Margin="0,5,0,0"
+                               Width="140"
+                               TextWrapping="Wrap"/>
                     <TextBox x:Name="MinuteBox"
-                             Margin="88,0,0,0"
                              MinWidth="180"
                              Text="{x:Bind Minute, Mode=TwoWay}"
                              wuc:Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
@@ -145,10 +152,11 @@
                 <StackPanel Orientation="Horizontal"
                             Margin="0,10,0,0"
                             Spacing="20">
-                    <TextBlock Text="小时"
-                               Margin="0,5,0,0"/>
+                    <TextBlock x:Uid="DialogHour"
+                               Margin="0,5,0,0"
+                               Width="140"
+                               TextWrapping="Wrap"/>
                     <TextBox x:Name="HourBox"
-                             Margin="88,0,0,0"
                              MinWidth="180"
                              Text="{x:Bind Hour, Mode=TwoWay}"
                              wuc:Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
@@ -160,25 +168,27 @@
                 <StackPanel Orientation="Horizontal"
                             Spacing="20"
                             Margin="0,10,0,0">
-                    <TextBlock Text="每个星期的第几天"
-                               Margin="0,5,0,0"/>
+                    <TextBlock x:Uid="DialogWeek"
+                               Margin="0,5,0,0"
+                               Width="140"
+                               TextWrapping="Wrap"/>
                     <TextBox x:Name="DayOfWeekBox"
-                             Margin="4,0,0,0"
                              MinWidth="180"
                              Text="{x:Bind DayOfWeek, Mode=TwoWay}"
                              wuc:Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
                              wuc:Validation.ValidationPropertyName="DayOfWeek"
                              wuc:Validation.ValidationProvider="{x:Bind}"
                              Style="{StaticResource ValidatingTextBoxStyle}"/>
-                    <TextBlock Text="(0=周日 to 6=周六)"/>
+                    <TextBlock x:Uid="DialogDayOfWeekBlock"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal"
                             Spacing="20"
                             Margin="0,10,0,0">
-                    <TextBlock Text="每个月第几天"
-                               Margin="0,5,0,0"/>
+                    <TextBlock x:Uid="DialogDayOfMonth"
+                               Margin="0,5,0,0"
+                               Width="140"
+                               TextWrapping="Wrap"/>
                     <TextBox x:Name="DayOfMonthBox"
-                             Margin="32,0,0,0"
                              MinWidth="180"
                              Text="{x:Bind DayOfMonth, Mode=TwoWay}"
                              wuc:Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
@@ -190,10 +200,11 @@
                 <StackPanel Orientation="Horizontal"
                             Spacing="20"
                             Margin="0,10,0,0">
-                    <TextBlock Text="月份"
-                               Margin="0,5,0,0"/>
+                    <TextBlock x:Uid="DialogMonth"
+                               Margin="0,5,0,0"
+                               Width="140"
+                               TextWrapping="Wrap"/>
                     <TextBox x:Name="MonthlyDayBox"
-                             Margin="88,0,0,0"
                              MinWidth="180"
                              Text="{x:Bind MonthlyDay, Mode=TwoWay}"
                              wuc:Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
@@ -205,10 +216,11 @@
                 <wuc:Divider/>
                 <StackPanel Orientation="Horizontal"
                             Spacing="20">
-                    <TextBlock Text="CRON 表达式"
-                               Margin="0,5,0,0"/>
+                    <TextBlock x:Uid="DialogExpression"
+                               Margin="0,5,0,0"
+                               Width="140"
+                               TextWrapping="Wrap"/>
                     <TextBox x:Name="ExpressionBox"
-                             Margin="32,0,0,0"
                              MinWidth="180"
                              Text="{x:Bind Expression, Mode=TwoWay}"
                              wuc:Validation.ErrorTemplate="{StaticResource ValidationTemplate}"

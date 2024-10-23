@@ -1,6 +1,7 @@
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
+using CommunityToolkit.WinUI;
 using EasyTidy.Model;
 using System.Collections;
 using System.ComponentModel;
@@ -15,10 +16,10 @@ public sealed partial class AddFilterContentDialog : ContentDialog, INotifyDataE
 {
     public FilterViewModel ViewModel { get; set; }
 
-    #region ÊôÐÔ & ×Ö¶Î
+    #region å­—æ®µ & å±žæ€§
     private string _filterName = string.Empty;
-    public string FilterName 
-    { 
+    public string FilterName
+    {
         get => _filterName;
         set
         {
@@ -32,8 +33,8 @@ public sealed partial class AddFilterContentDialog : ContentDialog, INotifyDataE
     }
 
     private bool _isSizeSelected = false;
-    public bool IsSizeSelected 
-    { 
+    public bool IsSizeSelected
+    {
         get => _isSizeSelected;
         set
         {
@@ -51,8 +52,8 @@ public sealed partial class AddFilterContentDialog : ContentDialog, INotifyDataE
     public SizeUnit SizeUnit { get; set; }
 
     private bool _isCreateDateSelected = false;
-    public bool IsCreateDateSelected 
-    { 
+    public bool IsCreateDateSelected
+    {
         get => _isCreateDateSelected;
         set
         {
@@ -70,8 +71,8 @@ public sealed partial class AddFilterContentDialog : ContentDialog, INotifyDataE
     public DateUnit CreateDateUnit { get; set; }
 
     private bool _isEditDateSelected = false;
-    public bool IsEditDateSelected 
-    { 
+    public bool IsEditDateSelected
+    {
         get => _isEditDateSelected;
         set
         {
@@ -89,8 +90,8 @@ public sealed partial class AddFilterContentDialog : ContentDialog, INotifyDataE
     public DateUnit EditDateUnit { get; set; }
 
     private bool _isVisitDateSelected = false;
-    public bool IsVisitDateSelected 
-    { 
+    public bool IsVisitDateSelected
+    {
         get => _isVisitDateSelected;
         set
         {
@@ -108,8 +109,8 @@ public sealed partial class AddFilterContentDialog : ContentDialog, INotifyDataE
     public DateUnit VisitDateUnit { get; set; }
 
     private bool _isArchiveSelected = false;
-    public bool IsArchiveSelected 
-    { 
+    public bool IsArchiveSelected
+    {
         get => _isArchiveSelected;
         set
         {
@@ -123,8 +124,8 @@ public sealed partial class AddFilterContentDialog : ContentDialog, INotifyDataE
     public YesOrNo ArchiveValue { get; set; }
 
     private bool _isHiddenSelected = false;
-    public bool IsHiddenSelected 
-    { 
+    public bool IsHiddenSelected
+    {
         get => _isHiddenSelected;
         set
         {
@@ -138,8 +139,8 @@ public sealed partial class AddFilterContentDialog : ContentDialog, INotifyDataE
     public YesOrNo HiddenValue { get; set; }
 
     private bool _isReadOnlySelected = false;
-    public bool IsReadOnlySelected 
-    { 
+    public bool IsReadOnlySelected
+    {
         get => _isReadOnlySelected;
         set
         {
@@ -153,8 +154,8 @@ public sealed partial class AddFilterContentDialog : ContentDialog, INotifyDataE
     public YesOrNo ReadOnlyValue { get; set; }
 
     private bool _isSystemSelected = false;
-    public bool IsSystemSelected 
-    { 
+    public bool IsSystemSelected
+    {
         get => _isSystemSelected;
         set
         {
@@ -168,8 +169,8 @@ public sealed partial class AddFilterContentDialog : ContentDialog, INotifyDataE
     public YesOrNo SystemValue { get; set; }
 
     private bool _isTempSelected = false;
-    public bool IsTempSelected 
-    { 
+    public bool IsTempSelected
+    {
         get => _isTempSelected;
         set
         {
@@ -183,8 +184,8 @@ public sealed partial class AddFilterContentDialog : ContentDialog, INotifyDataE
     public YesOrNo TempValue { get; set; }
 
     private bool _isIncludeSelected = false;
-    public bool IsIncludeSelected 
-    { 
+    public bool IsIncludeSelected
+    {
         get => _isIncludeSelected;
         set
         {
@@ -198,7 +199,7 @@ public sealed partial class AddFilterContentDialog : ContentDialog, INotifyDataE
     public string IncludedFiles { get; set; }
 
     private bool _isExcludeSelected = false;
-    public bool IsContentSelected 
+    public bool IsContentSelected
     {
         get => _isExcludeSelected;
         set
@@ -231,7 +232,7 @@ public sealed partial class AddFilterContentDialog : ContentDialog, INotifyDataE
         var errors = new List<string>(1);
         if (string.IsNullOrWhiteSpace(filterName))
         {
-            errors.Add("¹ýÂËÆ÷Ãû²»ÄÜÎª¿Õ");
+            errors.Add("FilterNameValidation".GetLocalized());
         }
         SetErrors("FilterName", errors);
     }

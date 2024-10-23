@@ -21,11 +21,11 @@ public sealed partial class FiltersPage : Page
 
     private void EditButton_Click(object sender, RoutedEventArgs e)
     {
-        ViewModel.UpdateTaskCommand.Execute((sender as Button).DataContext);
+        ViewModel.UpdateFilterCommand.Execute((sender as Button).DataContext);
     }
 
     private void DeleteButton_Click(object sender, RoutedEventArgs e)
     {
-        ViewModel.DeleteTaskCommand.Execute((sender as Button).DataContext);
+        ViewModel.DeleteFilterCommand.Execute((sender as Button).DataContext);
     }
 }

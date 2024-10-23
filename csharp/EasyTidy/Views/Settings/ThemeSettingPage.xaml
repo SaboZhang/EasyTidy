@@ -19,13 +19,12 @@
             <views:BreadcrumbBarUserControl SingleItem="{x:Bind BreadCrumbBarItemText, Mode=OneWay}" />
 
             <wuc:SettingsCard
-                Description="Select the theme that suits your mood and preference. You can choose from dark, light, or system themes."
-                Header="App theme"
+                x:Uid="ThemeSettingsCard"
                 HeaderIcon="{wuc:BitmapIcon Source=Assets/Fluent/theme.png}">
                 <ComboBox x:Name="CmbTheme">
-                    <ComboBoxItem Content="Light" Tag="Light" />
-                    <ComboBoxItem Content="Dark" Tag="Dark" />
-                    <ComboBoxItem Content="Default" Tag="Default" />
+                    <ComboBoxItem x:Uid="Light" Tag="Light" />
+                    <ComboBoxItem x:Uid="Dark" Tag="Dark" />
+                    <ComboBoxItem x:Uid="Default" Tag="Default" />
                     <i:Interaction.Behaviors>
                         <ic:EventTriggerBehavior EventName="SelectionChanged">
                             <ic:EventTriggerBehavior.Actions>
@@ -36,17 +35,16 @@
                 </ComboBox>
             </wuc:SettingsCard>
             <wuc:SettingsCard
-                Description="Change the appearance of the backdrop material behind your app. You can choose from mica, acrylic, or transparent options."
-                Header="Material"
+                x:Uid="ThemeMaterial"
                 HeaderIcon="{wuc:BitmapIcon Source=Assets/Fluent/backdrop.png}">
                 <ComboBox x:Name="CmbBackdrop">
-                    <ComboBoxItem Content="None" Tag="None" />
-                    <ComboBoxItem Content="Mica" Tag="Mica" />
-                    <ComboBoxItem Content="Mica Alt" Tag="MicaAlt" />
-                    <ComboBoxItem Content="Desktop Acrylic" Tag="DesktopAcrylic" />
-                    <ComboBoxItem Content="Acrylic Base" Tag="AcrylicBase" />
-                    <ComboBoxItem Content="Acrylic Thin" Tag="AcrylicThin" />
-                    <ComboBoxItem Content="Transparent" Tag="Transparent" />
+                    <ComboBoxItem x:Uid="ThemeNone" Tag="None" />
+                    <ComboBoxItem x:Uid="ThemeMica" Tag="Mica" />
+                    <ComboBoxItem x:Uid="ThemeMicaAlt" Tag="MicaAlt" />
+                    <ComboBoxItem x:Uid="ThemeDesktopAcrylic" Tag="DesktopAcrylic" />
+                    <ComboBoxItem x:Uid="ThemeAcrylicBase" Tag="AcrylicBase" />
+                    <ComboBoxItem x:Uid="ThemeAcrylicThin" Tag="AcrylicThin" />
+                    <ComboBoxItem x:Uid="ThemeTransparent" Tag="Transparent" />
                     <i:Interaction.Behaviors>
                         <ic:EventTriggerBehavior EventName="SelectionChanged">
                             <ic:EventTriggerBehavior.Actions>
@@ -59,8 +57,7 @@
             <wuc:SettingsCard
                 ActionIcon="{wuc:BitmapIcon Source=Assets/Fluent/external.png}"
                 Command="{x:Bind ViewModel.OpenWindowsColorSettingsCommand}"
-                Description="Sync your app’s color with your Windows accent color. You can open the Windows accent color setting by clicking this card."
-                Header="Accent color"
+                x:Uid="ColorSettingsCard"
                 HeaderIcon="{wuc:BitmapIcon Source=Assets/Fluent/color.png}"
                 IsClickEnabled="True" />
         </StackPanel>

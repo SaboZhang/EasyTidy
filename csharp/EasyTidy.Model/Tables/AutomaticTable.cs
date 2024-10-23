@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EasyTidy.Model;
 
@@ -31,7 +26,7 @@ public class AutomaticTable
 
     public ScheduleTable Schedule { get; set; }
 
-    public List<FileExplorerTable> FileExplorerList { get; set; }
+    public List<TaskOrchestrationTable> FileExplorerList { get; set; }
 
 }
 

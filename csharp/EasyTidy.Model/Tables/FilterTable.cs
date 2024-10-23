@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace EasyTidy.Model;
 
@@ -58,6 +55,8 @@ public class FilterTable
     public ContentOperatorEnum ContentOperator { get; set; }
     public string ContentValue { get; set; }
 
+    public List<TaskOrchestrationTable> TaskOrchestrations { get; set; }
+
     // Character 相关字段
     [NotMapped]
     public virtual string CharacterValue { get; set; }
@@ -98,7 +97,8 @@ public class FilterTable
 
         if (IsArchiveSelected)
         {
-            AppendCondition(sb, ref isFirst, $"存档 = {EnumHelper.GetDisplayName(ArchiveValue)}");
+            var valueName = "存档";
+            AppendCondition(sb, ref isFirst, $"{valueName} = {EnumHelper.GetDisplayName(ArchiveValue)}");
         }
         if (IsHiddenSelected)
         {

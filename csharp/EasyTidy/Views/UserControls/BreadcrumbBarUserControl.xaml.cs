@@ -1,4 +1,6 @@
-﻿namespace EasyTidy.Views;
+﻿using CommunityToolkit.WinUI;
+
+namespace EasyTidy.Views;
 
 public sealed partial class BreadcrumbBarUserControl : UserControl
 {
@@ -31,7 +33,7 @@ public sealed partial class BreadcrumbBarUserControl : UserControl
 
     private void BreadcrumbBarUserControl_Loaded(object sender, RoutedEventArgs e)
     {
-        ViewModel.BreadcrumbBarCollection.Add("Settings");
+        ViewModel.BreadcrumbBarCollection.Add("Settings".GetLocalized());
         if (Items != null)
         {
             foreach (var item in Items)
