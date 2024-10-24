@@ -1,8 +1,12 @@
 ﻿using CommunityToolkit.WinUI;
 using EasyTidy.Log;
+using EasyTidy.Model;
+using EasyTidy.Service;
 using H.NotifyIcon;
 using Microsoft.Windows.AppNotifications;
 using Microsoft.Windows.Globalization;
+using Quartz;
+using System.Collections.Specialized;
 
 namespace EasyTidy;
 
@@ -138,6 +142,10 @@ public partial class App : Application
             }
         }
 
+        await QuartzConfig.InitQuartzConfigAsync();
+        await QuartzHelper.InitAsync();
+        await QuartzHelper.StartAllJob();
+
     }
 
     private void OnClosed(object sender, WindowEventArgs args)
@@ -160,5 +168,6 @@ public partial class App : Application
     {
         notificationManager.Unregister();
     }
+
 }
 

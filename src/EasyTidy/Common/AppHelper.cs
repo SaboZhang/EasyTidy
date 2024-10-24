@@ -60,8 +60,10 @@ public static partial class AppHelper
         Settings.GeneralConfig.FileOperationType = viewModel.OperationType;
         Settings.GeneralConfig.EmptyFiles = viewModel.EmptyFiles;
         Settings.GeneralConfig.HiddenFiles = viewModel.HiddenFiles;
+        Settings.BackupConfig.AutoBackup = viewModel.AutoBackup;
         StartupOperate(viewModel.IsStartup);
         Settings.GeneralConfig = Settings.GeneralConfig;
+        Settings.BackupConfig = Settings.BackupConfig;
 
     }
 

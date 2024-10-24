@@ -12,8 +12,10 @@ public class BackupModel
 
     public string CreateTime { get; set; }
 
-    public string FileName { get; set; }
+    public string BackupFileName { get; set; }
 
     public string HostName { get; set; }
+
+    public bool AutoBackup { get; set; } = false;
 
 }

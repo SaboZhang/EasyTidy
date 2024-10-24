@@ -745,7 +745,7 @@
     <value>備份資訊</value>
   </data>
   <data name="GeneralStatus.Text" xml:space="preserve">
-    <value>狀態：</value>
+    <value>版本：</value>
   </data>
   <data name="GeneralRefresh.Text" xml:space="preserve">
     <value>刷新</value>

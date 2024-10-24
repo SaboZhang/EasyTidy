@@ -24,5 +24,11 @@ public partial class AppConfig : JsonSettings, IVersionable
 
     public virtual BackupType BackupType { get; set; }
 
+    public virtual string WebDavUrl { get; set; }
+
+    public virtual string WebDavUser { get; set; }
+
+    public virtual string WebDavPassword { get; set; }
+
     public virtual BackupModel? BackupConfig { get; set; } = new();
 }

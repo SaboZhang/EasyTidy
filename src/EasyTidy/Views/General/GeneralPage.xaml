@@ -11,6 +11,14 @@
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     mc:Ignorable="d">
 
+    <i:Interaction.Behaviors>
+        <ic:EventTriggerBehavior EventName="Loaded">
+            <ic:EventTriggerBehavior.Actions>
+                <ic:InvokeCommandAction Command="{x:Bind ViewModel.PageLoadedCommand}"/>
+            </ic:EventTriggerBehavior.Actions>
+        </ic:EventTriggerBehavior>
+    </i:Interaction.Behaviors>
+
     <wuc:SettingsPageControl x:Name="GeneralSettingsPageControl"
                              x:Uid="GeneralPageControl"
                              ModuleImageSource="ms-appx:///Assets/Modules/PT.png"
@@ -102,7 +110,7 @@
                                     Spacing="8">
                             <Button x:Uid="GeneralBackButton" Command="{x:Bind ViewModel.BackupConfigsClickCommand}" />
                             <Button x:Uid="GeneralRestoreButton"/>
-                            <CheckBox x:Uid="GeneralAutoBackup"/>
+                            <CheckBox x:Uid="GeneralAutoBackup" IsChecked="{x:Bind ViewModel.AutoBackup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         </StackPanel>
                         <wuc:SettingsExpander.Items>
                             <wuc:SettingsCard x:Uid="GeneralLocationCard">
@@ -133,7 +141,8 @@
                                               Width="140"
                                               x:Name="CmbPathType"
                                               SelectionChanged="CmbPathType_SelectionChanged"
-                                              ItemsSource="{x:Bind ViewModel.BackupTypes}">
+                                              ItemsSource="{x:Bind ViewModel.BackupTypes}"
+                                              SelectedIndex="{x:Bind ViewModel.BackupTypeIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                         <ComboBox.ItemTemplate>
                                             <DataTemplate>
                                                 <TextBlock Text="{Binding Converter={StaticResource EnumDisplayNameConverter}}"/>

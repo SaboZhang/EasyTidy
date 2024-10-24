@@ -4,11 +4,13 @@ using System.IO;
 
 namespace EasyTidy.Util;
 
-public class AppDbContext : DbContext
+public partial class AppDbContext : DbContext
 {
     public AppDbContext()
     {
         Database.EnsureCreatedAsync();
+        string scriptPath = $"{Constants.ExecutePath}\\Assets\\Script\\quartz_sqlite.sql";
+        ExecuteSqlScript(this, scriptPath);
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -20,6 +22,12 @@ public class AppDbContext : DbContext
         }
         var dbFile = @$"{DirPath}\EasyTidy.db";
         optionsBuilder.UseSqlite($"Data Source={dbFile}");
+    }
+
+    private static void ExecuteSqlScript(AppDbContext context, string scriptPath)
+    {
+        string script = File.ReadAllText(scriptPath);
+        context.Database.ExecuteSqlRaw(script);
     }
 
     public DbSet<TaskOrchestrationTable> FileExplorer { get; set; }

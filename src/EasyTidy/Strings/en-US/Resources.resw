@@ -790,7 +790,7 @@
     <value>Backup information</value>
   </data>
   <data name="GeneralStatus.Text" xml:space="preserve">
-    <value>Status:</value>
+    <value>Version:</value>
   </data>
   <data name="GeneralRefresh.Text" xml:space="preserve">
     <value>Refresh</value>

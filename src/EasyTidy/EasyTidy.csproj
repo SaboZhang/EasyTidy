@@ -97,6 +97,7 @@
     <Content Remove="Assets\Inactive.ico" />
     <Content Remove="Assets\LockScreenLogo.scale-200.png" />
     <Content Remove="Assets\Red.ico" />
+    <Content Remove="Assets\Script\quartz_sqlite.sql" />
     <Content Remove="Assets\SplashScreen.scale-200.png" />
     <Content Remove="Assets\Square150x150Logo.scale-200.png" />
     <Content Remove="Assets\Square44x44Logo.scale-200.png" />
@@ -180,6 +181,7 @@
     <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.9" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Quartz" Version="3.13.0" />
+    <PackageReference Include="Quartz.Serialization.Json" Version="3.13.0" />
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
     <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
     <PackageReference Include="WinUICommunity.Components" Version="6.9.0" />
@@ -208,6 +210,9 @@
     <None Update="Assets\Red.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Assets\Script\quartz_sqlite.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Assets\SplashScreen.scale-200.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -221,6 +226,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Assets\Wide310x150Logo.scale-200.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="quartz.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Themes\Fonts\LXGWWenKai-Regular.ttf">

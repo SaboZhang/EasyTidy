@@ -745,7 +745,7 @@
     <value>バックアップ情報</value>
   </data>
   <data name="GeneralStatus.Text" xml:space="preserve">
-    <value>状態：</value>
+    <value>バージョン：</value>
   </data>
   <data name="GeneralRefresh.Text" xml:space="preserve">
     <value>リフレッシュ</value>
