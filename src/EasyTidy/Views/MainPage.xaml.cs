@@ -9,6 +9,7 @@ public sealed partial class MainPage : Page
     private readonly ResourceManager _resourceManager;
 
     private readonly ResourceContext _resourceContext;
+
     public MainPage()
     {
         _resourceManager = new ResourceManager();

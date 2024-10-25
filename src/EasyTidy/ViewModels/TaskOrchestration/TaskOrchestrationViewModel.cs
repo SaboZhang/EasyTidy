@@ -17,7 +17,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
     public TaskOrchestrationViewModel(IThemeService themeService)
     {
         this.themeService = themeService;
-        _dbContext = App.Services.GetService<AppDbContext>();
+        _dbContext = App.GetService<AppDbContext>();
     }
 
     [ObservableProperty]
@@ -401,10 +401,9 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
             if (dataContext != null)
             {
                 var task = dataContext as TaskOrchestrationTable;
-                await using var db = new AppDbContext();
-                var update = await db.FileExplorer.Where(x => x.ID == task.ID).FirstOrDefaultAsync();
+                var update = await _dbContext.FileExplorer.Where(x => x.ID == task.ID).FirstOrDefaultAsync();
                 update.IsEnabled = !update.IsEnabled;
-                await db.SaveChangesAsync();
+                await _dbContext.SaveChangesAsync();
                 await OnPageLoaded();
                 Growl.Success(new GrowlInfo
                 {

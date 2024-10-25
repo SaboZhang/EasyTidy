@@ -1,8 +1,10 @@
 ﻿using EasyTidy.Model;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace EasyTidy.Util;
 
@@ -10,7 +12,7 @@ public partial class AppDbContext : DbContext
 {
     public AppDbContext(DbContextOptions<AppDbContext> options): base(options)
     {
-        InitializeDatabaseAsync();
+        InitializeDatabaseAsync().Wait();
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -27,7 +29,7 @@ public partial class AppDbContext : DbContext
         }
     }
 
-    private async Task InitializeDatabaseAsync()
+    public async Task InitializeDatabaseAsync()
     {
         await Database.EnsureCreatedAsync();
 
@@ -39,7 +41,7 @@ public partial class AppDbContext : DbContext
         if (!await ScriptExecutionStatus.AnyAsync(s => s.ScriptName == "quartz_sqlite" && s.Status == "executed"))
         {
             string scriptPath = Path.Combine(Constants.ExecutePath, "Assets", "Script", "quartz_sqlite.sql");
-            await ExecuteSqlScriptAsync(scriptPath);
+            ExecuteSqlScript(scriptPath);
             ScriptExecutionStatus.Add(new ScriptExecutionStatus
             {
                 ScriptName = "quartz_sqlite",
@@ -50,10 +52,10 @@ public partial class AppDbContext : DbContext
         }
     }
 
-    private async Task ExecuteSqlScriptAsync(string scriptPath)
+    private void ExecuteSqlScript(string scriptPath)
     {
-        var script = await File.ReadAllTextAsync(scriptPath);
-        await Database.ExecuteSqlRawAsync(script);
+        var script = File.ReadAllText(scriptPath);
+        Database.ExecuteSqlRawAsync(script);
     }
 
     public DbSet<TaskOrchestrationTable> FileExplorer { get; set; }

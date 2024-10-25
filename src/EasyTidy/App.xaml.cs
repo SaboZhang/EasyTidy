@@ -2,7 +2,9 @@
 using EasyTidy.Log;
 using EasyTidy.Model;
 using EasyTidy.Service;
+using EasyTidy.Util;
 using H.NotifyIcon;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Windows.AppNotifications;
 using Microsoft.Windows.Globalization;
 using Quartz;
@@ -20,11 +22,13 @@ public partial class App : Application
     public string AppVersion { get; set; } = AssemblyInfoHelper.GetAssemblyVersion();
     public string AppName { get; set; } = "EasyTidy";
 
-    private bool createdNew;
+    private bool _createdNew;
 
-    private NotificationManager notificationManager;
+    private NotificationManager _notificationManager;
 
     public static bool HandleClosedEvents { get; set; } = true;
+
+    private readonly AppDbContext _dbContext;
 
     public static T GetService<T>() where T : class
     {
@@ -45,10 +49,11 @@ public partial class App : Application
             {
                 { ToastWithAvatar.Instance.ScenarioId, ToastWithAvatar.Instance.NotificationReceived }
             };
-            notificationManager = new NotificationManager(c_notificationHandlers);
+            _notificationManager = new NotificationManager(c_notificationHandlers);
         }
         Services = ConfigureServices();
         this.InitializeComponent();
+        _dbContext = Services.GetRequiredService<AppDbContext>();
     }
 
     private static ServiceProvider ConfigureServices()
@@ -96,11 +101,11 @@ public partial class App : Application
 
         if (!PackageHelper.IsPackaged)
         {
-            notificationManager.Init(notificationManager, OnNotificationInvoked);
+            _notificationManager.Init(_notificationManager, OnNotificationInvoked);
         }
-        _mutex = new Mutex(true, AppName, out createdNew);
+        _mutex = new Mutex(true, AppName, out _createdNew);
 
-        if (!createdNew)
+        if (!_createdNew)
         {
             ToastWithAvatar.Instance.Description = "ToastWithAvatarDescriptionText".GetLocalized();
             ToastWithAvatar.Instance.ScenarioName = "RemindText".GetLocalized();
@@ -167,7 +172,7 @@ public partial class App : Application
             Logger.Info($"{AppName}_{AppVersion} Closed...\n");
             LogService.UnRegister();
         }
-        notificationManager.Unregister();
+        _notificationManager.Unregister();
     }
 
 }

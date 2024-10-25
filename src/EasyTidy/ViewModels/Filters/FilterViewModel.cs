@@ -11,6 +11,7 @@ namespace EasyTidy.ViewModels;
 
 public partial class FilterViewModel : ObservableRecipient
 {
+    private readonly AppDbContext _dbContext;
     public FilterViewModel()
     {
 
@@ -19,6 +20,7 @@ public partial class FilterViewModel : ObservableRecipient
     public FilterViewModel(IThemeService themeService)
     {
         this.themeService = themeService;
+        _dbContext = App.GetService<AppDbContext>();
     }
 
     private readonly DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
@@ -60,9 +62,8 @@ public partial class FilterViewModel : ObservableRecipient
             {
                 dispatcherQueue.TryEnqueue(async () =>
                 {
-                    await using var db = new AppDbContext();
                     // 查询所有过滤器
-                    var list = await db.Filters.ToListAsync();
+                    var list = await _dbContext.Filters.ToListAsync();
                     foreach (var item in list)
                     {
                         item.CharacterValue = item.BuildCharacterValue();
@@ -126,8 +127,7 @@ public partial class FilterViewModel : ObservableRecipient
                 args.Cancel = true;
                 return;
             }
-            await using var db = new AppDbContext();
-            await db.Filters.AddAsync(new FilterTable
+            await _dbContext.Filters.AddAsync(new FilterTable
             {
                 FilterName = dialog.FilterName,
                 IsSizeSelected = dialog.IsSizeSelected,
@@ -162,7 +162,7 @@ public partial class FilterViewModel : ObservableRecipient
                 IsContentSelected = dialog.IsContentSelected,
                 ContentValue = dialog.ContentValue
             });
-            await db.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync();
             await OnPageLoaded();
             Growl.Success(new GrowlInfo
             {
@@ -195,13 +195,12 @@ public partial class FilterViewModel : ObservableRecipient
             if (dataContext != null)
             {
                 var task = dataContext as FilterTable;
-                await using var db = new AppDbContext();
-                var delete = await db.Filters.Where(x => x.Id == task.Id).FirstOrDefaultAsync();
+                var delete = await _dbContext.Filters.Where(x => x.Id == task.Id).FirstOrDefaultAsync();
                 if (delete != null)
                 {
-                    db.Filters.Remove(delete);
+                    _dbContext.Filters.Remove(delete);
                 }
-                await db.SaveChangesAsync();
+                await _dbContext.SaveChangesAsync();
                 await OnPageLoaded();
                 Growl.Success(new GrowlInfo
                 {
@@ -294,8 +293,7 @@ public partial class FilterViewModel : ObservableRecipient
                         e.Cancel = true;
                         return;
                     }
-                    await using var db = new AppDbContext();
-                    var oldFilter = await db.Filters.Where(x => x.Id == filter.Id).FirstOrDefaultAsync();
+                    var oldFilter = await _dbContext.Filters.Where(x => x.Id == filter.Id).FirstOrDefaultAsync();
                     oldFilter.FilterName = dialog.FilterName;
                     oldFilter.IsSizeSelected = dialog.IsSizeSelected;
                     oldFilter.SizeOperator = dialog.SizeOperator;
@@ -329,7 +327,7 @@ public partial class FilterViewModel : ObservableRecipient
                     oldFilter.IsContentSelected = dialog.IsContentSelected;
                     oldFilter.ContentValue = dialog.ContentValue;
 
-                    await db.SaveChangesAsync();
+                    await _dbContext.SaveChangesAsync();
                     await OnPageLoaded();
                     Growl.Success(new GrowlInfo
                     {

@@ -12,9 +12,11 @@ namespace EasyTidy.ViewModels;
 
 public partial class AutomaticViewModel : ObservableRecipient
 {
+    private readonly AppDbContext _dbContext;
     public AutomaticViewModel(IThemeService themeService)
     {
         this.themeService = themeService;
+        _dbContext = App.GetService<AppDbContext>();
     }
 
     public AutomaticViewModel()
@@ -205,14 +207,13 @@ public partial class AutomaticViewModel : ObservableRecipient
     {
         try
         {
-            await using var db = new AppDbContext();
             var dialog = sender as PlanExecutionContentDialog;
             if (dialog.HasErrors)
             {
                 args.Cancel = true;
                 return;
             }
-            await db.Schedule.AddAsync(new ScheduleTable
+            await _dbContext.Schedule.AddAsync(new ScheduleTable
             {
                 Minutes = dialog.Minute,
                 Hours = dialog.Hour,
@@ -221,7 +222,7 @@ public partial class AutomaticViewModel : ObservableRecipient
                 Monthly = dialog.MonthlyDay,
                 CronExpression = dialog.CronExpression
             });
-            await db.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync();
         }
         catch (Exception ex)
         {
@@ -250,7 +251,6 @@ public partial class AutomaticViewModel : ObservableRecipient
     {
         try
         {
-            await using var db = new AppDbContext();
             var dialog = sender as CustomConfigContentDialog;
             if (dialog.HasErrors)
             {
@@ -262,16 +262,16 @@ public partial class AutomaticViewModel : ObservableRecipient
 
             foreach (var item in SelectedTaskList)
             {
-                var update = await db.FileExplorer.Where(x => x.ID == item.ID && item.IsRelated == false).FirstOrDefaultAsync();
+                var update = await _dbContext.FileExplorer.Where(x => x.ID == item.ID && item.IsRelated == false).FirstOrDefaultAsync();
                 if (update != null)
                 {
                     update.IsRelated = true;
-                    db.Entry(update).State = EntityState.Modified;
+                    _dbContext.Entry(update).State = EntityState.Modified;
                     list.Add(update);
                 }
             }
 
-            await db.Automatic.AddAsync(new AutomaticTable
+            await _dbContext.Automatic.AddAsync(new AutomaticTable
             {
                 IsFileChange = CustomFileChange,
                 IsStartupExecution = CustomStartupExecution,
@@ -358,12 +358,11 @@ public partial class AutomaticViewModel : ObservableRecipient
             {
                 dispatcherQueue.TryEnqueue(async () =>
                 {
-                    await using var db = new AppDbContext();
-                    var list = await db.FileExplorer.Include(x => x.GroupName).Where(f => f.IsRelated == false).ToListAsync();
+                    var list = await _dbContext.FileExplorer.Include(x => x.GroupName).Where(f => f.IsRelated == false).ToListAsync();
                     TaskList = new(list);
                     TaskListACV = new AdvancedCollectionView(TaskList, true);
                     TaskListACV.SortDescriptions.Add(new SortDescription("ID", SortDirection.Ascending));
-                    var groupList = await db.TaskGroup.Where(x => x.IsUsed == false).ToListAsync();
+                    var groupList = await _dbContext.TaskGroup.Where(x => x.IsUsed == false).ToListAsync();
                     TaskGroupList = new(groupList);
                     TaskGroupListACV = new AdvancedCollectionView(TaskGroupList, true);
                     TaskGroupListACV.SortDescriptions.Add(new SortDescription("Id", SortDirection.Ascending));
@@ -437,11 +436,10 @@ public partial class AutomaticViewModel : ObservableRecipient
         IsActive = true;
         try
         {
-            await using var db = new AppDbContext();
             List<TaskOrchestrationTable> list = [];
             foreach (var item in SelectedTaskList)
             {
-                var update = await db.FileExplorer.Where(x => x.ID == item.ID && item.IsRelated == false).FirstOrDefaultAsync();
+                var update = await _dbContext.FileExplorer.Where(x => x.ID == item.ID && item.IsRelated == false).FirstOrDefaultAsync();
                 if (update != null)
                 {
                     update.IsRelated = true;
@@ -450,7 +448,7 @@ public partial class AutomaticViewModel : ObservableRecipient
             }
             foreach (var item in SelectedGroupTaskList)
             {
-                var updates = await db.FileExplorer.Include(x => x.GroupName).Where(x => x.GroupName.Id == item.Id).ToListAsync();
+                var updates = await _dbContext.FileExplorer.Include(x => x.GroupName).Where(x => x.GroupName.Id == item.Id).ToListAsync();
                 if (updates != null)
                 {
                     list.AddRange(updates.Select(fileExplorer =>
@@ -461,8 +459,8 @@ public partial class AutomaticViewModel : ObservableRecipient
                     }));
                 }
             }
-            db.FileExplorer.UpdateRange(list);
-            await db.SaveChangesAsync();
+            _dbContext.FileExplorer.UpdateRange(list);
+            await _dbContext.SaveChangesAsync();
             await OnPageLoaded();
             DateTime dateValue = DateTime.Parse(SelectTaskTime);
             if (!RegularTaskRunning)
@@ -472,7 +470,7 @@ public partial class AutomaticViewModel : ObservableRecipient
             ScheduleTable schedule = null;
             if (OnScheduleExecution)
             {
-                schedule = await db.Schedule.OrderByDescending(x => x.ID).FirstOrDefaultAsync();
+                schedule = await _dbContext.Schedule.OrderByDescending(x => x.ID).FirstOrDefaultAsync();
             }
             AutomaticTable automatic = new()
             {
@@ -486,8 +484,8 @@ public partial class AutomaticViewModel : ObservableRecipient
                 Schedule = schedule,
                 FileExplorerList = list
             };
-            await db.Automatic.AddAsync(automatic);
-            await db.SaveChangesAsync();
+            await _dbContext.Automatic.AddAsync(automatic);
+            await _dbContext.SaveChangesAsync();
             await OnPageLoaded();
             Growl.Success(new GrowlInfo
             {

@@ -9,6 +9,7 @@ public partial class GeneralViewModel : ObservableRecipient
 {
     #region 字段 & 属性
 
+    private readonly AppDbContext _dbContext;
     /// <summary>
     ///     当前配置实例
     /// </summary>
@@ -70,6 +71,11 @@ public partial class GeneralViewModel : ObservableRecipient
 
     [ObservableProperty]
     private int _backupTypeIndex = -1;
+
+    public GeneralViewModel()
+    {
+        _dbContext = App.GetService<AppDbContext>();
+    }
 
     /// <summary>
     /// 是否处理子文件夹
