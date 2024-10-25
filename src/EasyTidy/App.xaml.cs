@@ -75,6 +75,11 @@ public partial class App : Application
         services.AddTransient<TaskOrchestrationViewModel>();
         services.AddTransient<FilterViewModel>();
 
+        // 注册 AppDbContext
+        services.AddDbContext<AppDbContext>(options =>
+            options.UseSqlite($"Data Source={Path.Combine(Constants.CnfPath, "EasyTidy.db")}"),
+            ServiceLifetime.Singleton); // 使用 Singleton 确保唯一实例
+
         return services.BuildServiceProvider();
     }
 
@@ -148,16 +153,6 @@ public partial class App : Application
 
     }
 
-    private void OnClosed(object sender, WindowEventArgs args)
-    {
-        // 记录日志
-        if (Logger != null && !HandleClosedEvents)
-        {
-            Logger.Info($"{AppName}_{AppVersion} Closed...\n");
-            LogService.UnRegister();
-        }
-    }
-
     private void OnNotificationInvoked(string message)
     {
         // 记录日志
@@ -166,6 +161,12 @@ public partial class App : Application
 
     void OnProcessExit(object sender, EventArgs e)
     {
+        // 记录日志
+        if (Logger != null && !HandleClosedEvents)
+        {
+            Logger.Info($"{AppName}_{AppVersion} Closed...\n");
+            LogService.UnRegister();
+        }
         notificationManager.Unregister();
     }
 

@@ -11,11 +11,13 @@ namespace EasyTidy.ViewModels;
 
 public partial class TaskOrchestrationViewModel : ObservableRecipient
 {
+    private readonly AppDbContext _dbContext;
     public IThemeService themeService;
 
     public TaskOrchestrationViewModel(IThemeService themeService)
     {
         this.themeService = themeService;
+        _dbContext = App.Services.GetService<AppDbContext>();
     }
 
     [ObservableProperty]
@@ -91,13 +93,12 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         try
         {
             var dialog = sender as AddTaskContentDialog;
-            await using var db = new AppDbContext();
             if (dialog.HasErrors)
             {
                 args.Cancel = true;
                 return;
             }
-            await db.FileExplorer.AddAsync(new TaskOrchestrationTable
+            await _dbContext.FileExplorer.AddAsync(new TaskOrchestrationTable
             {
                 TaskName = dialog.TaskName,
                 TaskRule = dialog.TaskRule,
@@ -108,15 +109,15 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 OperationMode = SelectedOperationMode,
                 IsEnabled = dialog.EnabledFlag,
                 GroupName = !string.IsNullOrEmpty(SelectedGroupName)
-                ? await db.TaskGroup.Where(x => x.GroupName == SelectedGroupName).FirstOrDefaultAsync()
+                ? await _dbContext.TaskGroup.Where(x => x.GroupName == SelectedGroupName).FirstOrDefaultAsync()
                 : new TaskGroupTable
                 {
                     GroupName = GroupTextName
                 },
                 Filter = SelectedFilter != null 
-                ? await db.Filters.Where(x => x.Id == SelectedFilter.Id).FirstOrDefaultAsync() : null
+                ? await _dbContext.Filters.Where(x => x.Id == SelectedFilter.Id).FirstOrDefaultAsync() : null
             });
-            await db.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync();
             if (dialog.Shortcut)
             {
                 var result = ShortcutUtil.CreateShortcutDesktop(dialog.TaskName, TaskTarget);
@@ -210,9 +211,8 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
             {
                 dispatcherQueue.TryEnqueue(async () =>
                 {
-                    await using var db = new AppDbContext();
-                    var list = await db.FileExplorer.Include(x => x.GroupName).ToListAsync();
-                    var filterList = await db.Filters.ToListAsync();
+                    var list = await _dbContext.FileExplorer.Include(x => x.GroupName).ToListAsync();
+                    var filterList = await _dbContext.Filters.ToListAsync();
                     foreach (var item in list)
                     {
                         if (item.TaskSource == Environment.GetFolderPath(Environment.SpecialFolder.Desktop))
@@ -280,8 +280,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                         e.Cancel = true;
                         return;
                     }
-                    await using var db = new AppDbContext();
-                    var oldTask = await db.FileExplorer.Include(x => x.GroupName).Where(x => x.ID == task.ID).FirstOrDefaultAsync();
+                    var oldTask = await _dbContext.FileExplorer.Include(x => x.GroupName).Where(x => x.ID == task.ID).FirstOrDefaultAsync();
                     oldTask.TaskName = dialog.TaskName;
                     oldTask.TaskRule = dialog.TaskRule;
                     oldTask.TaskSource = TaskSource;
@@ -290,8 +289,8 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                     oldTask.OperationMode = SelectedOperationMode;
                     oldTask.IsEnabled = dialog.EnabledFlag;
                     oldTask.GroupName.GroupName = GroupTextName;
-                    oldTask.Filter = await db.Filters.Where(x => x.Id == SelectedFilter.Id).FirstOrDefaultAsync();
-                    await db.SaveChangesAsync();
+                    oldTask.Filter = await _dbContext.Filters.Where(x => x.Id == SelectedFilter.Id).FirstOrDefaultAsync();
+                    await _dbContext.SaveChangesAsync();
                     await OnPageLoaded();
                     Growl.Success(new GrowlInfo
                     {
@@ -331,13 +330,12 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
             if (dataContext != null)
             {
                 var task = dataContext as TaskOrchestrationTable;
-                await using var db = new AppDbContext();
-                var delete = await db.FileExplorer.Where(x => x.ID == task.ID).FirstOrDefaultAsync();
+                var delete = await _dbContext.FileExplorer.Where(x => x.ID == task.ID).FirstOrDefaultAsync();
                 if (delete != null)
                 {
-                    db.FileExplorer.Remove(delete);
+                    _dbContext.FileExplorer.Remove(delete);
                 }
-                await db.SaveChangesAsync();
+                await _dbContext.SaveChangesAsync();
                 await OnPageLoaded();
                 Growl.Success(new GrowlInfo
                 {
@@ -373,8 +371,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
             if (dataContext != null)
             {
                 var task = dataContext as TaskOrchestrationTable;
-                await using var db = new AppDbContext();
-
+                var list = await _dbContext.FileExplorer.Include(x => x.GroupName).ToListAsync();
             }
         }
         catch (Exception ex)
@@ -442,10 +439,9 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         {
             var list = await Task.Run(async () =>
             {
-                await using var db = new AppDbContext();
                 var query = SelectedGroupName == "AllText".GetLocalized()
-                ? db.FileExplorer.Include(x => x.GroupName)
-                : db.FileExplorer.Include(x => x.GroupName).Where(x => x.GroupName.GroupName == SelectedGroupName);
+                ? _dbContext.FileExplorer.Include(x => x.GroupName)
+                : _dbContext.FileExplorer.Include(x => x.GroupName).Where(x => x.GroupName.GroupName == SelectedGroupName);
 
                 var resultList = await query.ToListAsync();
 

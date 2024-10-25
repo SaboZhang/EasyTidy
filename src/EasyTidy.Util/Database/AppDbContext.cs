@@ -8,75 +8,52 @@ namespace EasyTidy.Util;
 
 public partial class AppDbContext : DbContext
 {
-    public AppDbContext()
+    public AppDbContext(DbContextOptions<AppDbContext> options): base(options)
     {
-        Database.EnsureCreatedAsync();
-        CreateScriptExecutionStatusTableIfNotExists();
-        string scriptPath = $"{Constants.ExecutePath}\\Assets\\Script\\quartz_sqlite.sql";
-        if (Database.GetPendingMigrations().Any())
-        {
-            Database.Migrate();
-        }
-        var scriptExecuted = CheckIfScriptExecuted();
-        if (!scriptExecuted)
-        {
-            ExecuteSqlScript(this, scriptPath);
-            MarkScriptAsExecuted();
-        }
+        InitializeDatabaseAsync();
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        var DirPath = Constants.RootDirectoryPath;
-        if (!Directory.Exists(DirPath))
+        if (!optionsBuilder.IsConfigured)
         {
-            Directory.CreateDirectory(DirPath);
-        }
-        var dbFile = @$"{DirPath}\EasyTidy.db";
-        optionsBuilder.UseSqlite($"Data Source={dbFile}");
-    }
-
-    private static void ExecuteSqlScript(AppDbContext context, string scriptPath)
-    {
-        string script = File.ReadAllText(scriptPath);
-        context.Database.ExecuteSqlRaw(script);
-    }
-
-    private void CreateScriptExecutionStatusTableIfNotExists()
-    {
-        using var connection = new SqliteConnection($"Data Source={Constants.RootDirectoryPath}\\EasyTidy.db");
-        connection.Open();
-        var tableCheckCommand = connection.CreateCommand();
-        tableCheckCommand.CommandText = "SELECT name FROM sqlite_master WHERE type='table' AND name='script_execution_status';";
-        var result = tableCheckCommand.ExecuteScalar();
-        if (result == null)
-        {
-            var createTableCommand = connection.CreateCommand();
-            createTableCommand.CommandText = "CREATE TABLE script_execution_status(" +
-                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "script_name TEXT," +
-                "status TEXT)";
-            createTableCommand.ExecuteNonQuery();
+            var DirPath = Constants.CnfPath;
+            if (!Directory.Exists(DirPath))
+            {
+                Directory.CreateDirectory(DirPath);
+            }
+            var dbFile = @$"{DirPath}\EasyTidy.db";
+            optionsBuilder.UseSqlite($"Data Source={dbFile}");
         }
     }
 
-    private bool CheckIfScriptExecuted()
+    private async Task InitializeDatabaseAsync()
     {
-        using var connection = new SqliteConnection($"Data Source={Constants.RootDirectoryPath}\\EasyTidy.db");
-        connection.Open();
-        var command = connection.CreateCommand();
-        command.CommandText = "SELECT * FROM script_execution_status WHERE script_name = 'quartz_sqlite' AND status = 'executed'";
-        var result = command.ExecuteReader();
-        return result.HasRows;
+        await Database.EnsureCreatedAsync();
+
+        if (Database.GetPendingMigrations().Any())
+        {
+            await Database.MigrateAsync();
+        }
+
+        if (!await ScriptExecutionStatus.AnyAsync(s => s.ScriptName == "quartz_sqlite" && s.Status == "executed"))
+        {
+            string scriptPath = Path.Combine(Constants.ExecutePath, "Assets", "Script", "quartz_sqlite.sql");
+            await ExecuteSqlScriptAsync(scriptPath);
+            ScriptExecutionStatus.Add(new ScriptExecutionStatus
+            {
+                ScriptName = "quartz_sqlite",
+                Status = "executed",
+                ExecutionDate = DateTime.UtcNow
+            });
+            await SaveChangesAsync();
+        }
     }
 
-    private void MarkScriptAsExecuted()
+    private async Task ExecuteSqlScriptAsync(string scriptPath)
     {
-        using var connection = new SqliteConnection($"Data Source={Constants.RootDirectoryPath}\\EasyTidy.db");
-        connection.Open();
-        var command = connection.CreateCommand();
-        command.CommandText = "INSERT INTO script_execution_status (script_name, status) VALUES ('quartz_sqlite', 'executed')";
-        command.ExecuteNonQuery();
+        var script = await File.ReadAllTextAsync(scriptPath);
+        await Database.ExecuteSqlRawAsync(script);
     }
 
     public DbSet<TaskOrchestrationTable> FileExplorer { get; set; }
@@ -88,5 +65,7 @@ public partial class AppDbContext : DbContext
     public DbSet<TaskGroupTable> TaskGroup { get; set; }
 
     public DbSet<FilterTable> Filters { get; set; }
+
+    public DbSet<ScriptExecutionStatus> ScriptExecutionStatus { get; set; }
 
 }
