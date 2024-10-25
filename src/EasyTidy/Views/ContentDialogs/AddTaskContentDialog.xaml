@@ -93,6 +93,19 @@
                 <Button.Content>
                     <Image Source="/Assets/Fluent/rule.png" Stretch="Uniform"/>
                 </Button.Content>
+                <Button.Flyout>
+                    <MenuFlyout>
+                        <MenuFlyoutSubItem Text="用于处理文件的规则">
+                            <MenuFlyoutItem Text="* = 所有文件"/>
+                            <MenuFlyoutItem Text="# = 所有不含其他匹配的文件"/>
+                        </MenuFlyoutSubItem>
+                        <MenuFlyoutSubItem Text="用于处理文件夹的规则">
+                            <MenuFlyoutItem Text="** = 所有文件夹"/>
+                            <MenuFlyoutItem Text="## = 所有不含其他匹配的文件夹"/>
+                        </MenuFlyoutSubItem>
+                        <ToggleMenuFlyoutItem Text="视为正则表达式" IsChecked="True"/>
+                    </MenuFlyout>
+                </Button.Flyout>
             </Button>
             <Button x:Name="FilterButton"
                     Width="52"
