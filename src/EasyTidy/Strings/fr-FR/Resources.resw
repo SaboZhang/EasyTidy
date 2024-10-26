@@ -1005,4 +1005,7 @@
   <data name="BackupStatusText" xml:space="preserve">
     <value>Paramètres actuels correspondants</value>
   </data>
+  <data name="RegardedExpressionText" xml:space="preserve">
+    <value>Considérer comme une expression régulière</value>
+  </data>
 </root>

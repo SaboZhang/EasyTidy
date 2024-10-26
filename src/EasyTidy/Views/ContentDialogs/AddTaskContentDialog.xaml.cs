@@ -2,9 +2,11 @@
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
 using CommunityToolkit.WinUI;
+using Microsoft.UI.Xaml.Data;
 using System.Collections;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 
 namespace EasyTidy.Views.ContentDialogs;
 
@@ -16,6 +18,9 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
     public TaskOrchestrationViewModel ViewModel { get; set; }
 
     private string _groupName;
+    private string _taskRule;
+    private bool _isRegex = false;
+
     public string GroupName
     {
         get => _groupName;
@@ -30,9 +35,20 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
         }
     }
 
-    public string TaskName { get; set; }
+    public string TaskRule
+    {
+        get => _taskRule;
+        set
+        {
+            if (_taskRule != value)
+            {
+                _taskRule = value;
+                OnPropertyChanged();
+            }
+        }
+    }
 
-    public string TaskRule { get; set; }
+    public string TaskName { get; set; }
 
     public string TaskSource { get; set; }
 
@@ -42,13 +58,89 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
 
     public bool EnabledFlag { get; set; } = true;
 
+    public bool IsRegex 
+    { 
+        get => _isRegex; 
+        set
+        {
+            if (_isRegex != value)
+            {
+                _isRegex = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+
     public AddTaskContentDialog()
     {
         ViewModel = App.GetService<TaskOrchestrationViewModel>();
         this.InitializeComponent();
         XamlRoot = App.MainWindow.Content.XamlRoot;
         RequestedTheme = ViewModel.themeService.GetElementTheme();
+        PopulateMenu(ViewModel);
     }
+
+    private void PopulateMenu(TaskOrchestrationViewModel viewModel)
+    {
+        foreach (var category in viewModel.MenuCategories)
+        {
+            // 创建第一级菜单项
+            var subItem = new MenuFlyoutSubItem { Text = category.Title };
+
+            // 添加第二级菜单项
+            for (int i = 0; i < category.Items.Count; i++)
+            {
+                var menuItem = new MenuFlyoutItem { Text = category.Items[i] };
+                menuItem.Click += OnMenuItemClick;
+                subItem.Items.Add(menuItem);
+                if (i == 1 || i == 7)
+                {
+                    subItem.Items.Add(new MenuFlyoutSeparator());
+                }
+            }
+
+            // 将 SubItem 添加到主 MenuFlyout
+            RuleFlyout.Items.Add(subItem);
+        }
+        // 在所有主菜单项之后添加 ToggleMenuFlyoutItem
+        var toggleItem = new ToggleMenuFlyoutItem
+        {
+            Text = "RegardedExpressionText".GetLocalized(),
+            IsChecked = IsRegex
+        };
+
+        // 注册 Click 事件处理程序
+        toggleItem.Click += (sender, e) =>
+        {
+            // 切换 IsChecked 状态
+            IsRegex = !IsRegex;
+            // 调用方法以处理状态变化
+            OnIsRegexChanged(IsRegex);
+        };
+
+        // 添加可选的分隔符和 ToggleMenuFlyoutItem 到主 MenuFlyout
+        RuleFlyout.Items.Add(new MenuFlyoutSeparator());  // 分隔符
+        RuleFlyout.Items.Add(toggleItem);                 // ToggleMenuFlyoutItem
+    }
+
+
+    private void OnIsRegexChanged(bool isRegex)
+    {
+        IsRegex = isRegex;
+    }
+
+    private void OnMenuItemClick(object sender, RoutedEventArgs e)
+    {
+        if (sender is MenuFlyoutItem menuItem)
+        {
+            var selectedValue = menuItem.Text;
+            var rule = RuleRegex().Split(selectedValue)[0];
+            TaskRule = rule;
+        }
+    }
+
+    [GeneratedRegex(@"\s+")]
+    private static partial Regex RuleRegex();
 
     private void FilterButtonTeachingTip_CloseButtonClick(TeachingTip sender, object args)
     {
@@ -95,7 +187,7 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
 
     private void SetErrors(string key, ICollection<string> errors)
     {
-        if (errors.Any())
+        if (errors.Count != 0)
             _validationErrors[key] = errors;
         else
             _ = _validationErrors.Remove(key);

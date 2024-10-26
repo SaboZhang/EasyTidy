@@ -23,6 +23,10 @@ public class TaskOrchestrationTable
     public OperationMode OperationMode { get; set; }
 
     public bool IsEnabled { get; set; }
+    /// <summary>
+    /// 是否正则
+    /// </summary>
+    public bool IsRegex { get; set; } = false;
 
     /// <summary>
     /// 是否已关联

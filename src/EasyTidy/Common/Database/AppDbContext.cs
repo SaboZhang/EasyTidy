@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EasyTidy.Util;
+namespace EasyTidy.Common.Database;
 
 public partial class AppDbContext : DbContext
 {
@@ -29,14 +29,11 @@ public partial class AppDbContext : DbContext
         }
     }
 
+
     public async Task InitializeDatabaseAsync()
     {
         await Database.EnsureCreatedAsync();
-
-        if (Database.GetPendingMigrations().Any())
-        {
-            await Database.MigrateAsync();
-        }
+        await Database.MigrateAsync();
 
         if (!await ScriptExecutionStatus.AnyAsync(s => s.ScriptName == "quartz_sqlite" && s.Status == "executed"))
         {

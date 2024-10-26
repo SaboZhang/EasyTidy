@@ -1008,4 +1008,7 @@
   <data name="BackupStatusText" xml:space="preserve">
     <value>現在の設定は一致</value>
   </data>
+  <data name="RegardedExpressionText" xml:space="preserve">
+    <value>正規表現として考慮する</value>
+  </data>
 </root>

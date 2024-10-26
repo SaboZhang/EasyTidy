@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.WinUI;
 using CommunityToolkit.WinUI.Collections;
+using EasyTidy.Common.Database;
 using EasyTidy.Model;
 using EasyTidy.Util;
 using EasyTidy.Views.ContentDialogs;
@@ -18,6 +19,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
     {
         this.themeService = themeService;
         _dbContext = App.GetService<AppDbContext>();
+        LoadRulesMenu();
     }
 
     [ObservableProperty]
@@ -64,6 +66,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
     [ObservableProperty]
     private string _groupTextName = string.Empty;
 
+    public ObservableCollection<MenuCategory> MenuCategories { get; set; }
 
     /// <summary>
     /// 添加
@@ -115,7 +118,8 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                     GroupName = GroupTextName
                 },
                 Filter = SelectedFilter != null 
-                ? await _dbContext.Filters.Where(x => x.Id == SelectedFilter.Id).FirstOrDefaultAsync() : null
+                ? await _dbContext.Filters.Where(x => x.Id == SelectedFilter.Id).FirstOrDefaultAsync() : null,
+                IsRegex = dialog.IsRegex
             });
             await _dbContext.SaveChangesAsync();
             if (dialog.Shortcut)
@@ -272,6 +276,9 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 SelectedOperationMode = task.OperationMode;
                 SelectedGroupName = task.GroupName.GroupName;
                 GroupTextName = task.GroupName.GroupName;
+                SelectedFilter = task.Filter;
+                dialog.EnabledFlag = task.IsEnabled;
+                dialog.IsRegex = task.IsRegex;
 
                 dialog.PrimaryButtonClick += async (s, e) =>
                 {
@@ -289,6 +296,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                     oldTask.OperationMode = SelectedOperationMode;
                     oldTask.IsEnabled = dialog.EnabledFlag;
                     oldTask.GroupName.GroupName = GroupTextName;
+                    oldTask.IsRegex = dialog.IsRegex;
                     oldTask.Filter = await _dbContext.Filters.Where(x => x.Id == SelectedFilter.Id).FirstOrDefaultAsync();
                     await _dbContext.SaveChangesAsync();
                     await OnPageLoaded();
@@ -504,5 +512,53 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
             GroupTextName = SelectedGroupName;
         }
     }
+
+    private void LoadRulesMenu()
+    {
+        var orderedFloderRules = FloderRulesMenuDescription.ToList(); // 转为 List 保留顺序
+        var orderedFileRules = FileRulesMenuDescription.ToList();
+        MenuCategories =
+        [
+            new() {
+                Title = "用于处理文件的规则",
+                Items = orderedFileRules.Select(kv => kv.Value + " = " + kv.Key).ToList()
+            },
+            new() {
+                Title = "用于处理文件夹的规则",
+                Items = orderedFloderRules.Select(kv => kv.Value + " = " + kv.Key).ToList()
+            }
+        ];
+    }
+
+    private readonly Dictionary<string, string> FloderRulesMenuDescription = new Dictionary<string, string>
+    {
+        { "所有文件夹","**" },
+        { "所有不含其他匹配的文件夹","##" },
+        { "所有以\"robot\"开头的文件夹","robot**" },
+        { "所有包含\"robot\"的文件夹","**robot**" },
+        { "所有位于\"C:下的名为\"robot\"的文件夹","C:\\**\\robot" },
+        { "使用 \";\" 或者 \"|\" 来分隔","image**|photo**" },
+        { "使用\"/\"来不包含由\"my\"开头的文件夹","**/my**" },
+    };
+
+    private readonly Dictionary<string, string> FileRulesMenuDescription = new Dictionary<string, string>
+    {
+        { "所有文件","*" },
+        { "所有不含其他匹配的文件","#" },
+        { "所有扩展名为\"jpg\"的文件","*.jpg" },
+        { "所有以\"penguin\"开头的文件","penguin*" },
+        { "所有包含 \"penguin\" 的文件","*penguin*" },
+        { "\"Folder\" 下的所有 \"jpg\" 文件","C:\\Folder\\*.jpg" },
+        { "使用 \";\" 或者 \"|\" 来分隔","*.jpg;*.png" },
+        { "使用 \"/\" 来排除以 \"sea\" 开头的文件","*.jpg/sea*" },
+        { "压缩文件","*.7z;*.bz2;*.gz;*.iso;*.rar;*.xz;*.z*.zip" },
+        { "文档","*.djvu;*.doc;*.docx;*.epub;*.odt;*.pdf;*.rtp;*.tex;*.txt" },
+        { "图片","*.bmp;*.gif;*.ico;*.jpg;*.jpeg;*.png;*.psd;*.tif;*.tiff" },
+        { "音乐","*.aac;*.flac;*.m4a;*mp3*.ogg;*.wma;*.wav" },
+        { "演示文稿和工作表","*.csv;*.odp;*.ods;*.pps;*.ppt;*.pptx;*.xls;*.xlsx" },
+        { "视频","*.avi;*.fly;*.m4v;*.mkv;*.mov;*.mp4;*.mpeg;*.mpg;*.wmv" },
+    };
+
+
 }
 

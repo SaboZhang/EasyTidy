@@ -19,7 +19,7 @@
 
   <ItemGroup>
 	  <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240829007" />
-	  <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1" />
+	  <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
 	  <PackageReference Include="Quartz" Version="3.13.0" />
 	  <PackageReference Include="Quartz.Serialization.Json" Version="3.13.0" />
 	  <PackageReference Include="System.Data.SQLite.Core" Version="1.0.119" />

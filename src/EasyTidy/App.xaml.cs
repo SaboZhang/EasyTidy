@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.WinUI;
+using EasyTidy.Common.Database;
 using EasyTidy.Log;
 using EasyTidy.Model;
 using EasyTidy.Service;

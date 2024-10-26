@@ -1053,4 +1053,7 @@
   <data name="BackupStatusText" xml:space="preserve">
     <value>Current setting match</value>
   </data>
+  <data name="RegardedExpressionText" xml:space="preserve">
+    <value>Regarded as a regular expression</value>
+  </data>
 </root>

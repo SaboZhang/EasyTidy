@@ -1005,4 +1005,7 @@
   <data name="BackupStatusText" xml:space="preserve">
     <value>當前設定匹配</value>
   </data>
+  <data name="RegardedExpressionText" xml:space="preserve">
+    <value>視為正則表示式</value>
+  </data>
 </root>
