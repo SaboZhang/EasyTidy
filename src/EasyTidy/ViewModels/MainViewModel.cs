@@ -30,6 +30,10 @@ public partial class MainViewModel : ObservableObject, ITitleBarAutoSuggestBoxAw
 
     }
 
+    /// <summary>
+    /// 启动时执行
+    /// </summary>
+    /// <returns></returns>
     private async Task OnStartupExecutionAsync()
     {
         var list = _dbContext.Automatic.Include(a => a.TaskOrchestrationList).Where(a => a.IsStartupExecution == true).ToList();
