@@ -55,7 +55,7 @@ public partial class AppDbContext : DbContext
         Database.ExecuteSqlRawAsync(script);
     }
 
-    public DbSet<TaskOrchestrationTable> FileExplorer { get; set; }
+    public DbSet<TaskOrchestrationTable> TaskOrchestration { get; set; }
 
     public DbSet<ScheduleTable> Schedule { get; set; }
 

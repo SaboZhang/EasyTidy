@@ -2,16 +2,18 @@
 using CommunityToolkit.WinUI.Collections;
 using EasyTidy.Common.Database;
 using EasyTidy.Model;
-using EasyTidy.Util;
+using EasyTidy.Service;
+using EasyTidy.ViewModels.Automatic;
 using EasyTidy.Views.ContentDialogs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.UI.Dispatching;
+using Quartz;
 using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
 
 namespace EasyTidy.ViewModels;
 
-public partial class AutomaticViewModel : ObservableRecipient
+public partial class AutomaticViewModel : ObservableRecipient, IJob
 {
     private readonly AppDbContext _dbContext;
     public AutomaticViewModel(IThemeService themeService)
@@ -186,6 +188,9 @@ public partial class AutomaticViewModel : ObservableRecipient
     [ObservableProperty]
     private string _selectTaskTime = DateTime.Now.ToString("HH:mm");
 
+    [ObservableProperty]
+    private bool _customSchedule;
+
 
     [RelayCommand]
     private async Task OnPlanExecution()
@@ -263,7 +268,7 @@ public partial class AutomaticViewModel : ObservableRecipient
 
             foreach (var item in SelectedTaskList)
             {
-                var update = await _dbContext.FileExplorer.Where(x => x.ID == item.ID && item.IsRelated == false).FirstOrDefaultAsync();
+                var update = await _dbContext.TaskOrchestration.Where(x => x.ID == item.ID && item.IsRelated == false).FirstOrDefaultAsync();
                 if (update != null)
                 {
                     update.IsRelated = true;
@@ -272,13 +277,33 @@ public partial class AutomaticViewModel : ObservableRecipient
                 }
             }
 
-            await _dbContext.Automatic.AddAsync(new AutomaticTable
+            foreach (var item in SelectedGroupTaskList)
+            {
+                var updates = await _dbContext.TaskOrchestration.Include(x => x.GroupName).Where(x => x.GroupName.Id == item.Id).ToListAsync();
+                if (updates != null)
+                {
+                    list.AddRange(updates.Select(taskOrchestration =>
+                    {
+                        taskOrchestration.IsRelated = true;
+                        taskOrchestration.GroupName.IsUsed = true;
+                        return taskOrchestration;
+                    }));
+                }
+            }
+            DateTime dateValue = DateTime.Parse(SelectTaskTime);
+            if (!RegularTaskRunning)
+            {
+                dateValue = new DateTime(dateValue.Year, dateValue.Month, dateValue.Day, 0, 0, 0);
+            }
+            var auto = new AutomaticTable
             {
                 IsFileChange = CustomFileChange,
                 IsStartupExecution = CustomStartupExecution,
                 RegularTaskRunning = CustomRegularTaskRunning,
                 OnScheduleExecution = CustomOnScheduleExecution,
                 DelaySeconds = dialog.Delay,
+                Hourly = dateValue.Hour.ToString(),
+                Minutes = dateValue.Minute.ToString(),
                 Schedule = new ScheduleTable
                 {
                     Minutes = dialog.Minute,
@@ -288,9 +313,13 @@ public partial class AutomaticViewModel : ObservableRecipient
                     Monthly = dialog.MonthlyDay,
                     CronExpression = dialog.Expression
                 },
-                FileExplorerList = list
+                TaskOrchestrationList = list
+            };
+            await _dbContext.Automatic.AddAsync(auto);
 
-            });
+            await _dbContext.SaveChangesAsync();
+            var customViewModel = new AutomaticCustomViewModel();
+            await customViewModel.AddCustomTaskConfig(auto, CustomSchedule);
         }
         catch (Exception ex)
         {
@@ -359,7 +388,7 @@ public partial class AutomaticViewModel : ObservableRecipient
             {
                 dispatcherQueue.TryEnqueue(async () =>
                 {
-                    var list = await _dbContext.FileExplorer.Include(x => x.GroupName).Where(f => f.IsRelated == false).ToListAsync();
+                    var list = await _dbContext.TaskOrchestration.Include(x => x.GroupName).Where(f => f.IsRelated == false).ToListAsync();
                     TaskList = new(list);
                     TaskListACV = new AdvancedCollectionView(TaskList, true);
                     TaskListACV.SortDescriptions.Add(new SortDescription("ID", SortDirection.Ascending));
@@ -440,7 +469,7 @@ public partial class AutomaticViewModel : ObservableRecipient
             List<TaskOrchestrationTable> list = [];
             foreach (var item in SelectedTaskList)
             {
-                var update = await _dbContext.FileExplorer.Where(x => x.ID == item.ID && item.IsRelated == false).FirstOrDefaultAsync();
+                var update = await _dbContext.TaskOrchestration.Where(x => x.ID == item.ID && item.IsRelated == false).FirstOrDefaultAsync();
                 if (update != null)
                 {
                     update.IsRelated = true;
@@ -449,18 +478,18 @@ public partial class AutomaticViewModel : ObservableRecipient
             }
             foreach (var item in SelectedGroupTaskList)
             {
-                var updates = await _dbContext.FileExplorer.Include(x => x.GroupName).Where(x => x.GroupName.Id == item.Id).ToListAsync();
+                var updates = await _dbContext.TaskOrchestration.Include(x => x.GroupName).Where(x => x.GroupName.Id == item.Id).ToListAsync();
                 if (updates != null)
                 {
-                    list.AddRange(updates.Select(fileExplorer =>
+                    list.AddRange(updates.Select(taskOrchestration =>
                     {
-                        fileExplorer.IsRelated = true;
-                        fileExplorer.GroupName.IsUsed = true;
-                        return fileExplorer;
+                        taskOrchestration.IsRelated = true;
+                        taskOrchestration.GroupName.IsUsed = true;
+                        return taskOrchestration;
                     }));
                 }
             }
-            _dbContext.FileExplorer.UpdateRange(list);
+            _dbContext.TaskOrchestration.UpdateRange(list);
             await _dbContext.SaveChangesAsync();
             await OnPageLoaded();
             DateTime dateValue = DateTime.Parse(SelectTaskTime);
@@ -472,6 +501,13 @@ public partial class AutomaticViewModel : ObservableRecipient
             if (OnScheduleExecution)
             {
                 schedule = await _dbContext.Schedule.OrderByDescending(x => x.ID).FirstOrDefaultAsync();
+                if (!string.IsNullOrEmpty(schedule.CronExpression))
+                {
+                    foreach (var item in list)
+                    {
+                        await QuartzHelper.AddJob<AutomaticViewModel>(item.TaskName, item.GroupName.GroupName, schedule.CronExpression);
+                    }
+                }  
             }
             AutomaticTable automatic = new()
             {
@@ -483,7 +519,7 @@ public partial class AutomaticViewModel : ObservableRecipient
                 OnScheduleExecution = OnScheduleExecution,
                 IsStartupExecution = IsStartupExecution,
                 Schedule = schedule,
-                FileExplorerList = list
+                TaskOrchestrationList = list
             };
             await _dbContext.Automatic.AddAsync(automatic);
             await _dbContext.SaveChangesAsync();
@@ -509,4 +545,11 @@ public partial class AutomaticViewModel : ObservableRecipient
 
     }
 
+    public async Task Execute(IJobExecutionContext context)
+    {
+        Logger.Info(context.JobDetail.ToString());
+        // 获取数据库枚举值
+        var mode = 0;
+        await OperationHandler.ExecuteOperationAsync(mode, "示例参数1");
+    }
 }

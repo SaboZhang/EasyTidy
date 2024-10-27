@@ -1011,4 +1011,67 @@
   <data name="RegardedExpressionText" xml:space="preserve">
     <value>正規表現として考慮する</value>
   </data>
+  <data name="AllFoldersText" xml:space="preserve">
+    <value>すべてのフォルダー</value>
+  </data>
+  <data name="AllFoldersWithoutOtherMatches" xml:space="preserve">
+    <value>他のマッチングなしのすべてのフォルダー</value>
+  </data>
+  <data name="AllFoldersStartingWithrobot" xml:space="preserve">
+    <value>「robot」で始まるすべてのフォルダー</value>
+  </data>
+  <data name="AllFoldersContainingrobot" xml:space="preserve">
+    <value>「robot」を含むすべてのフォルダ</value>
+  </data>
+  <data name="AllFoldersNamed_robot_LocatedUnder" xml:space="preserve">
+    <value>"C:\"にある"robot"という名前のすべてのフォルダー</value>
+  </data>
+  <data name="Use_Or_ToSeparate" xml:space="preserve">
+    <value>";" または "|" を使って区切ります</value>
+  </data>
+  <data name="UseToExcludeFoldersStartingWithmy" xml:space="preserve">
+    <value>「my」で始まるフォルダを除外するには「/」を使用する</value>
+  </data>
+  <data name="AllFiles" xml:space="preserve">
+    <value>すべてのファイル</value>
+  </data>
+  <data name="AllFilesWithNoOtherMatches" xml:space="preserve">
+    <value>他の照合を持たない、すべてのファイル</value>
+  </data>
+  <data name="AllFilesWithTheExtension" xml:space="preserve">
+    <value>拡張子が「jpg」であるすべてのファイル</value>
+  </data>
+  <data name="AllFilesBeginningWith" xml:space="preserve">
+    <value>「penguin」ではじまるすべてのファイル</value>
+  </data>
+  <data name="AllFilesContains" xml:space="preserve">
+    <value>「ペンギン」を含むすべてのファイル</value>
+  </data>
+  <data name="All_FilesUnder" xml:space="preserve">
+    <value>「フォルダ」にある「jpg」ファイルすべて</value>
+  </data>
+  <data name="UseDelimiter" xml:space="preserve">
+    <value>";" または "|" を使用して区切る</value>
+  </data>
+  <data name="UseDelimitersToExclude" xml:space="preserve">
+    <value>"sea"で始まるファイルを除外するには"/"を使用してください</value>
+  </data>
+  <data name="CompressedFile" xml:space="preserve">
+    <value>圧縮ファイル</value>
+  </data>
+  <data name="Document" xml:space="preserve">
+    <value>ドキュメント</value>
+  </data>
+  <data name="Photograph" xml:space="preserve">
+    <value>画像</value>
+  </data>
+  <data name="Music" xml:space="preserve">
+    <value>音楽</value>
+  </data>
+  <data name="PresentationAndWorksheet" xml:space="preserve">
+    <value>プレゼンテーションとワークシート</value>
+  </data>
+  <data name="Video" xml:space="preserve">
+    <value>ビデオ</value>
+  </data>
 </root>

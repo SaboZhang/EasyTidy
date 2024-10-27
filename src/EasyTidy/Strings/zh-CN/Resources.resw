@@ -1048,4 +1048,67 @@
   <data name="RegardedExpressionText" xml:space="preserve">
     <value>视为正则表达式</value>
   </data>
+  <data name="AllFoldersText" xml:space="preserve">
+    <value>所有文件夹</value>
+  </data>
+  <data name="AllFoldersWithoutOtherMatches" xml:space="preserve">
+    <value>所有不含其他匹配的文件夹</value>
+  </data>
+  <data name="AllFoldersStartingWithrobot" xml:space="preserve">
+    <value>所有以 "robot" 开头的文件夹</value>
+  </data>
+  <data name="AllFoldersContainingrobot" xml:space="preserve">
+    <value>所有包含 "robot" 的文件夹</value>
+  </data>
+  <data name="AllFoldersNamed_robot_LocatedUnder" xml:space="preserve">
+    <value>所有位于"C:下的名为 "robot" 的文件夹</value>
+  </data>
+  <data name="Use_Or_ToSeparate" xml:space="preserve">
+    <value>使用 ";" 或 "|" 来分隔</value>
+  </data>
+  <data name="UseToExcludeFoldersStartingWithmy" xml:space="preserve">
+    <value>使用 "/" 来不包含由 "my" 开头的文件夹</value>
+  </data>
+  <data name="AllFiles" xml:space="preserve">
+    <value>所有文件</value>
+  </data>
+  <data name="AllFilesWithNoOtherMatches" xml:space="preserve">
+    <value>所有不含其他匹配的文件</value>
+  </data>
+  <data name="AllFilesWithTheExtension" xml:space="preserve">
+    <value>所有扩展名为 "jpg" 的文件</value>
+  </data>
+  <data name="AllFilesBeginningWith" xml:space="preserve">
+    <value>所有以 "penguin" 开头的文件</value>
+  </data>
+  <data name="AllFilesContains" xml:space="preserve">
+    <value>所有包含 "penguin" 的文件</value>
+  </data>
+  <data name="All_FilesUnder" xml:space="preserve">
+    <value>文件夹下的所有"jpg"文件</value>
+  </data>
+  <data name="UseDelimiter" xml:space="preserve">
+    <value>使用 ";" 或 "|" 來分隔</value>
+  </data>
+  <data name="UseDelimitersToExclude" xml:space="preserve">
+    <value>使用 "/" 排除以 "sea "开头的文件</value>
+  </data>
+  <data name="CompressedFile" xml:space="preserve">
+    <value>压缩文件</value>
+  </data>
+  <data name="Document" xml:space="preserve">
+    <value>文档</value>
+  </data>
+  <data name="Photograph" xml:space="preserve">
+    <value>图片</value>
+  </data>
+  <data name="Music" xml:space="preserve">
+    <value>音乐</value>
+  </data>
+  <data name="PresentationAndWorksheet" xml:space="preserve">
+    <value>演示文稿和工作表</value>
+  </data>
+  <data name="Video" xml:space="preserve">
+    <value>视频</value>
+  </data>
 </root>

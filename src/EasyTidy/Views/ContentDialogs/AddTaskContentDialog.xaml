@@ -46,7 +46,7 @@
                       MaxWidth="100"
                       IsEditable="True"
                       ItemsSource="{x:Bind ViewModel.GroupList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                      SelectedItem="{x:Bind ViewModel.SelectedGroupName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      SelectedItem="{x:Bind ViewModel.SelectedTaskGroupName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                       SelectedIndex="{x:Bind ViewModel.SelectedGroupIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <i:Interaction.Behaviors>
                     <ic:EventTriggerBehavior EventName="SelectionChanged">

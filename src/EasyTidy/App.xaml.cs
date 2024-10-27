@@ -154,7 +154,6 @@ public partial class App : Application
         }
 
         await QuartzConfig.InitQuartzConfigAsync();
-        await QuartzHelper.InitAsync();
         await QuartzHelper.StartAllJob();
 
     }
@@ -174,6 +173,7 @@ public partial class App : Application
             LogService.UnRegister();
         }
         _notificationManager.Unregister();
+        QuartzHelper.StopAllJob().Wait();
     }
 
 }

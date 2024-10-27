@@ -1008,4 +1008,67 @@
   <data name="RegardedExpressionText" xml:space="preserve">
     <value>Considérer comme une expression régulière</value>
   </data>
+  <data name="AllFoldersText" xml:space="preserve">
+    <value>Tous les dossiers</value>
+  </data>
+  <data name="AllFoldersWithoutOtherMatches" xml:space="preserve">
+    <value>Tous les dossiers sans autres correspondances</value>
+  </data>
+  <data name="AllFoldersStartingWithrobot" xml:space="preserve">
+    <value>Tous les dossiers qui commencent par "robot"</value>
+  </data>
+  <data name="AllFoldersContainingrobot" xml:space="preserve">
+    <value>Tous les dossiers contenant "robot"</value>
+  </data>
+  <data name="AllFoldersNamed_robot_LocatedUnder" xml:space="preserve">
+    <value>Tous les dossiers nommés "robot" situés dans "C:\"</value>
+  </data>
+  <data name="Use_Or_ToSeparate" xml:space="preserve">
+    <value>Utilisez ";" ou "|" pour séparer</value>
+  </data>
+  <data name="UseToExcludeFoldersStartingWithmy" xml:space="preserve">
+    <value>Utilisez "/" pour exclure les dossiers commençant par "my"</value>
+  </data>
+  <data name="AllFiles" xml:space="preserve">
+    <value>Tous les fichiers</value>
+  </data>
+  <data name="AllFilesWithNoOtherMatches" xml:space="preserve">
+    <value>Tous les fichiers sans autres correspondance</value>
+  </data>
+  <data name="AllFilesWithTheExtension" xml:space="preserve">
+    <value>Tous les fichiers avec l'extension "jpg"</value>
+  </data>
+  <data name="AllFilesBeginningWith" xml:space="preserve">
+    <value>Tous les fichiers commençant par "penguin"</value>
+  </data>
+  <data name="AllFilesContains" xml:space="preserve">
+    <value>Tous les fichiers contenant "penguin"</value>
+  </data>
+  <data name="All_FilesUnder" xml:space="preserve">
+    <value>Tous les fichiers "jpg" dans le "Dossier"</value>
+  </data>
+  <data name="UseDelimiter" xml:space="preserve">
+    <value>Utiliser ";" ou "|" se séparer</value>
+  </data>
+  <data name="UseDelimitersToExclude" xml:space="preserve">
+    <value>Utilisez "/" pour exclure les fichiers commençant par "sea"</value>
+  </data>
+  <data name="CompressedFile" xml:space="preserve">
+    <value>Fichier compressé</value>
+  </data>
+  <data name="Document" xml:space="preserve">
+    <value>Document</value>
+  </data>
+  <data name="Photograph" xml:space="preserve">
+    <value>Image</value>
+  </data>
+  <data name="Music" xml:space="preserve">
+    <value>Musique</value>
+  </data>
+  <data name="PresentationAndWorksheet" xml:space="preserve">
+    <value>Présentations et fiches de travail</value>
+  </data>
+  <data name="Video" xml:space="preserve">
+    <value>Vidéo</value>
+  </data>
 </root>

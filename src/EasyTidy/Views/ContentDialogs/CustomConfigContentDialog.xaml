@@ -130,8 +130,14 @@
                         SelectedTime="{x:Bind SelectedTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
         <wuc:Divider/>
+        <StackPanel Orientation="Horizontal"
+                    Spacing="8"
+                    Margin="0,-8,0,0">
+            <TextBlock x:Uid="DialogAsPlanned"
+                       Width="140"/>
+            <ToggleSwitch IsOn="{x:Bind ViewModel.CustomSchedule, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,-8,0,0"/>
+        </StackPanel>
         <StackPanel Margin="0,-10,0,0">
-            <TextBlock x:Uid="DialogAsPlanned"/>
             <StackPanel>
                 <StackPanel Orientation="Horizontal"
                             Spacing="20"

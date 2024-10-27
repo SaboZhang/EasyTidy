@@ -26,7 +26,7 @@ public class AutomaticTable
 
     public ScheduleTable Schedule { get; set; }
 
-    public List<TaskOrchestrationTable> FileExplorerList { get; set; }
+    public List<TaskOrchestrationTable> TaskOrchestrationList { get; set; }
 
 }
 

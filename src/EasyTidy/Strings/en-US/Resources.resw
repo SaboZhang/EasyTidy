@@ -1056,4 +1056,67 @@
   <data name="RegardedExpressionText" xml:space="preserve">
     <value>Regarded as a regular expression</value>
   </data>
+  <data name="AllFoldersText" xml:space="preserve">
+    <value>All folders</value>
+  </data>
+  <data name="AllFoldersWithoutOtherMatches" xml:space="preserve">
+    <value>All folders without other matches</value>
+  </data>
+  <data name="AllFoldersStartingWithrobot" xml:space="preserve">
+    <value>All folders that start with "robot"</value>
+  </data>
+  <data name="AllFoldersContainingrobot" xml:space="preserve">
+    <value>All folders containing "robot"</value>
+  </data>
+  <data name="AllFoldersNamed_robot_LocatedUnder" xml:space="preserve">
+    <value>All folders named "robot" located in "C:\"</value>
+  </data>
+  <data name="Use_Or_ToSeparate" xml:space="preserve">
+    <value>Use ";" or "|" to separate</value>
+  </data>
+  <data name="UseToExcludeFoldersStartingWithmy" xml:space="preserve">
+    <value>Use "/" to exclude folders starting with "my"</value>
+  </data>
+  <data name="AllFiles" xml:space="preserve">
+    <value>All files</value>
+  </data>
+  <data name="AllFilesWithNoOtherMatches" xml:space="preserve">
+    <value>All other unmatched files</value>
+  </data>
+  <data name="AllFilesWithTheExtension" xml:space="preserve">
+    <value>All files with the extension "jpg"</value>
+  </data>
+  <data name="AllFilesBeginningWith" xml:space="preserve">
+    <value>All files beginning with "penguin"</value>
+  </data>
+  <data name="AllFilesContains" xml:space="preserve">
+    <value>All files containing "penguin"</value>
+  </data>
+  <data name="All_FilesUnder" xml:space="preserve">
+    <value>All "jpg" files under the "Folder"</value>
+  </data>
+  <data name="UseDelimiter" xml:space="preserve">
+    <value>Use ";" or "|" to separate</value>
+  </data>
+  <data name="UseDelimitersToExclude" xml:space="preserve">
+    <value>Use "/" to exclude files starting with "sea"</value>
+  </data>
+  <data name="CompressedFile" xml:space="preserve">
+    <value>Compressed file</value>
+  </data>
+  <data name="Document" xml:space="preserve">
+    <value>Document</value>
+  </data>
+  <data name="Photograph" xml:space="preserve">
+    <value>Pictures</value>
+  </data>
+  <data name="Music" xml:space="preserve">
+    <value>Music</value>
+  </data>
+  <data name="PresentationAndWorksheet" xml:space="preserve">
+    <value>Presentations &amp; Worksheets</value>
+  </data>
+  <data name="Video" xml:space="preserve">
+    <value>Video</value>
+  </data>
 </root>

@@ -8,13 +8,12 @@ namespace EasyTidy.Service;
 
 public class QuartzHelper
 {
-    private static ISchedulerFactory scheduleFactory = null;
     private static IScheduler _scheduler = null;
 
-    public static async Task InitAsync()
+    // 设置 Scheduler 实例
+    public static void SetScheduler(IScheduler scheduler)
     {
-        scheduleFactory = new StdSchedulerFactory();
-        _scheduler = await scheduleFactory.GetScheduler();
+        _scheduler = scheduler;
     }
 
     public static async Task AddSimpleJobOfSecondAsync<T>(string jobName, string groupName, int second, Dictionary<string, object> param = null) where T : IJob
@@ -111,6 +110,15 @@ public class QuartzHelper
     public static async Task StartAllJob()
     {
         await _scheduler.Start();
+    }
+
+    public static async Task StopAllJob()
+    {
+        if (_scheduler != null)
+        {
+            await _scheduler.Shutdown();
+        }
+        
     }
 
 

@@ -40,16 +40,19 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
     private ObservableCollection<TaskOrchestrationTable> _taskList;
 
     [ObservableProperty]
-    private List<string> _groupList = new();
+    private List<string> _groupList = [];
 
     [ObservableProperty]
-    private List<string> _groupNameList = new();
+    private List<string> _groupNameList = [];
 
     [ObservableProperty]
     private AdvancedCollectionView _taskListACV;
 
     [ObservableProperty]
     private string _selectedGroupName = string.Empty;
+
+    [ObservableProperty]
+    private string _selectedTaskGroupName = string.Empty;
 
     [ObservableProperty]
     private FilterTable _selectedFilter;
@@ -101,7 +104,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 args.Cancel = true;
                 return;
             }
-            await _dbContext.FileExplorer.AddAsync(new TaskOrchestrationTable
+            await _dbContext.TaskOrchestration.AddAsync(new TaskOrchestrationTable
             {
                 TaskName = dialog.TaskName,
                 TaskRule = dialog.TaskRule,
@@ -111,8 +114,8 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 TaskTarget = TaskTarget,
                 OperationMode = SelectedOperationMode,
                 IsEnabled = dialog.EnabledFlag,
-                GroupName = !string.IsNullOrEmpty(SelectedGroupName)
-                ? await _dbContext.TaskGroup.Where(x => x.GroupName == SelectedGroupName).FirstOrDefaultAsync()
+                GroupName = !string.IsNullOrEmpty(SelectedTaskGroupName) && SelectedTaskGroupName != "AllText".GetLocalized()
+                ? await _dbContext.TaskGroup.Where(x => x.GroupName == SelectedTaskGroupName).FirstOrDefaultAsync()
                 : new TaskGroupTable
                 {
                     GroupName = GroupTextName
@@ -162,7 +165,6 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
     /// <summary>
     /// 选择源文件
     /// </summary>
-    /// <returns></returns>
     [RelayCommand]
     private async Task OnSelectSourcePath()
     {
@@ -183,7 +185,6 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
     /// <summary>
     /// 选择目标文件
     /// </summary>
-    /// <returns></returns>
     [RelayCommand]
     private async Task OnSelectTargetPath()
     {
@@ -203,7 +204,6 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
     /// <summary>
     /// 页面加载
     /// </summary>
-    /// <returns></returns>
     [RelayCommand]
     private async Task OnPageLoaded()
     {
@@ -215,7 +215,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
             {
                 dispatcherQueue.TryEnqueue(async () =>
                 {
-                    var list = await _dbContext.FileExplorer.Include(x => x.GroupName).ToListAsync();
+                    var list = await _dbContext.TaskOrchestration.Include(x => x.GroupName).ToListAsync();
                     var filterList = await _dbContext.Filters.ToListAsync();
                     foreach (var item in list)
                     {
@@ -241,7 +241,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         catch (Exception ex)
         {
             IsActive = false;
-            Logger.Error($"FileExplorerViewModel: OnPageLoad 异常信息 {ex}");
+            Logger.Error($"TaskOrchestrationViewModel: OnPageLoad 异常信息 {ex}");
         }
 
         IsActive = false;
@@ -251,7 +251,6 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
     /// 更新
     /// </summary>
     /// <param name="dataContext"></param>
-    /// <returns></returns>
     [RelayCommand]
     private async Task OnUpdateTask(object dataContext)
     {
@@ -274,7 +273,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 TaskTarget = task.TaskTarget;
                 dialog.Shortcut = task.Shortcut;
                 SelectedOperationMode = task.OperationMode;
-                SelectedGroupName = task.GroupName.GroupName;
+                SelectedTaskGroupName = task.GroupName.GroupName;
                 GroupTextName = task.GroupName.GroupName;
                 SelectedFilter = task.Filter;
                 dialog.EnabledFlag = task.IsEnabled;
@@ -287,7 +286,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                         e.Cancel = true;
                         return;
                     }
-                    var oldTask = await _dbContext.FileExplorer.Include(x => x.GroupName).Where(x => x.ID == task.ID).FirstOrDefaultAsync();
+                    var oldTask = await _dbContext.TaskOrchestration.Include(x => x.GroupName).Where(x => x.ID == task.ID).FirstOrDefaultAsync();
                     oldTask.TaskName = dialog.TaskName;
                     oldTask.TaskRule = dialog.TaskRule;
                     oldTask.TaskSource = TaskSource;
@@ -319,7 +318,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 Message = "ModificationFailedText".GetLocalized(),
                 ShowDateTime = false
             });
-            Logger.Error($"FileExplorerViewModel: OnUpdateTask 异常信息 {ex}");
+            Logger.Error($"TaskOrchestrationViewModel: OnUpdateTask 异常信息 {ex}");
         }
 
     }
@@ -338,10 +337,10 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
             if (dataContext != null)
             {
                 var task = dataContext as TaskOrchestrationTable;
-                var delete = await _dbContext.FileExplorer.Where(x => x.ID == task.ID).FirstOrDefaultAsync();
+                var delete = await _dbContext.TaskOrchestration.Where(x => x.ID == task.ID).FirstOrDefaultAsync();
                 if (delete != null)
                 {
-                    _dbContext.FileExplorer.Remove(delete);
+                    _dbContext.TaskOrchestration.Remove(delete);
                 }
                 await _dbContext.SaveChangesAsync();
                 await OnPageLoaded();
@@ -359,7 +358,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 Message = "DeleteFailedText".GetLocalized(),
                 ShowDateTime = false
             });
-            Logger.Error($"FileExplorerViewModel: OnDeleteTask 异常信息 {ex}");
+            Logger.Error($"TaskOrchestrationViewModel: OnDeleteTask 异常信息 {ex}");
             IsActive = false;
         }
         IsActive = false;
@@ -379,7 +378,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
             if (dataContext != null)
             {
                 var task = dataContext as TaskOrchestrationTable;
-                var list = await _dbContext.FileExplorer.Include(x => x.GroupName).ToListAsync();
+                var list = await _dbContext.TaskOrchestration.Include(x => x.GroupName).ToListAsync();
             }
         }
         catch (Exception ex)
@@ -389,7 +388,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 Message = "ExecutionFailedText".GetLocalized(),
                 ShowDateTime = false
             });
-            Logger.Error($"FileExplorerViewModel: OnExecuteTask 异常信息 {ex}");
+            Logger.Error($"TaskOrchestrationViewModel: OnExecuteTask 异常信息 {ex}");
             IsActive = false;
         }
         IsActive = false;
@@ -409,7 +408,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
             if (dataContext != null)
             {
                 var task = dataContext as TaskOrchestrationTable;
-                var update = await _dbContext.FileExplorer.Where(x => x.ID == task.ID).FirstOrDefaultAsync();
+                var update = await _dbContext.TaskOrchestration.Where(x => x.ID == task.ID).FirstOrDefaultAsync();
                 update.IsEnabled = !update.IsEnabled;
                 await _dbContext.SaveChangesAsync();
                 await OnPageLoaded();
@@ -447,8 +446,8 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
             var list = await Task.Run(async () =>
             {
                 var query = SelectedGroupName == "AllText".GetLocalized()
-                ? _dbContext.FileExplorer.Include(x => x.GroupName)
-                : _dbContext.FileExplorer.Include(x => x.GroupName).Where(x => x.GroupName.GroupName == SelectedGroupName);
+                ? _dbContext.TaskOrchestration.Include(x => x.GroupName)
+                : _dbContext.TaskOrchestration.Include(x => x.GroupName).Where(x => x.GroupName.GroupName == SelectedGroupName);
 
                 var resultList = await query.ToListAsync();
 
@@ -502,14 +501,14 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
     [RelayCommand]
     private void OnGroupSelectionChanged()
     {
-        if (string.IsNullOrEmpty(SelectedGroupName) 
-            || "AllText".GetLocalized().Equals(SelectedGroupName))
+        if (string.IsNullOrEmpty(SelectedTaskGroupName) 
+            || "AllText".GetLocalized().Equals(SelectedTaskGroupName))
         {
-            SelectedGroupName = string.Empty;
+            SelectedTaskGroupName = string.Empty;
         }
         else
         {
-            GroupTextName = SelectedGroupName;
+            GroupTextName = SelectedTaskGroupName;
         }
     }
 
@@ -521,42 +520,42 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         [
             new() {
                 Title = "用于处理文件的规则",
-                Items = orderedFileRules.Select(kv => kv.Value + " = " + kv.Key).ToList()
+                Items = orderedFileRules.Select(kv => kv.Value + " = " + kv.Key.GetLocalized()).ToList()
             },
             new() {
                 Title = "用于处理文件夹的规则",
-                Items = orderedFloderRules.Select(kv => kv.Value + " = " + kv.Key).ToList()
+                Items = orderedFloderRules.Select(kv => kv.Value + " = " + kv.Key.GetLocalized()).ToList()
             }
         ];
     }
 
     private readonly Dictionary<string, string> FloderRulesMenuDescription = new Dictionary<string, string>
     {
-        { "所有文件夹","**" },
-        { "所有不含其他匹配的文件夹","##" },
-        { "所有以\"robot\"开头的文件夹","robot**" },
-        { "所有包含\"robot\"的文件夹","**robot**" },
-        { "所有位于\"C:下的名为\"robot\"的文件夹","C:\\**\\robot" },
-        { "使用 \";\" 或者 \"|\" 来分隔","image**|photo**" },
-        { "使用\"/\"来不包含由\"my\"开头的文件夹","**/my**" },
+        { "AllFoldersText","**" },
+        { "AllFoldersWithoutOtherMatches","##" },
+        { "AllFoldersStartingWithrobot","robot**" },
+        { "AllFoldersContainingrobot","**robot**" },
+        { "AllFoldersNamed_robot_LocatedUnder","C:\\**\\robot" },
+        { "Use_Or_ToSeparate","image**|photo**" },
+        { "UseToExcludeFoldersStartingWithmy","**/my**" },
     };
 
     private readonly Dictionary<string, string> FileRulesMenuDescription = new Dictionary<string, string>
     {
-        { "所有文件","*" },
-        { "所有不含其他匹配的文件","#" },
-        { "所有扩展名为\"jpg\"的文件","*.jpg" },
-        { "所有以\"penguin\"开头的文件","penguin*" },
-        { "所有包含 \"penguin\" 的文件","*penguin*" },
-        { "\"Folder\" 下的所有 \"jpg\" 文件","C:\\Folder\\*.jpg" },
-        { "使用 \";\" 或者 \"|\" 来分隔","*.jpg;*.png" },
-        { "使用 \"/\" 来排除以 \"sea\" 开头的文件","*.jpg/sea*" },
-        { "压缩文件","*.7z;*.bz2;*.gz;*.iso;*.rar;*.xz;*.z*.zip" },
-        { "文档","*.djvu;*.doc;*.docx;*.epub;*.odt;*.pdf;*.rtp;*.tex;*.txt" },
-        { "图片","*.bmp;*.gif;*.ico;*.jpg;*.jpeg;*.png;*.psd;*.tif;*.tiff" },
-        { "音乐","*.aac;*.flac;*.m4a;*mp3*.ogg;*.wma;*.wav" },
-        { "演示文稿和工作表","*.csv;*.odp;*.ods;*.pps;*.ppt;*.pptx;*.xls;*.xlsx" },
-        { "视频","*.avi;*.fly;*.m4v;*.mkv;*.mov;*.mp4;*.mpeg;*.mpg;*.wmv" },
+        { "AllFiles","*" },
+        { "AllFilesWithNoOtherMatches","#" },
+        { "AllFilesWithTheExtension","*.jpg" },
+        { "AllFilesBeginningWith","penguin*" },
+        { "AllFilesContains","*penguin*" },
+        { "All_FilesUnder","C:\\Folder\\*.jpg" },
+        { "UseDelimiter","*.jpg;*.png" },
+        { "UseDelimitersToExclude","*.jpg/sea*" },
+        { "CompressedFile","*.7z;*.bz2;*.gz;*.iso;*.rar;*.xz;*.z*.zip" },
+        { "Document","*.djvu;*.doc;*.docx;*.epub;*.odt;*.pdf;*.rtp;*.tex;*.txt" },
+        { "Photograph","*.bmp;*.gif;*.ico;*.jpg;*.jpeg;*.png;*.psd;*.tif;*.tiff" },
+        { "Music","*.aac;*.flac;*.m4a;*mp3*.ogg;*.wma;*.wav" },
+        { "PresentationAndWorksheet","*.csv;*.odp;*.ods;*.pps;*.ppt;*.pptx;*.xls;*.xlsx" },
+        { "Video","*.avi;*.fly;*.m4v;*.mkv;*.mov;*.mp4;*.mpeg;*.mpg;*.wmv" },
     };
 
 
