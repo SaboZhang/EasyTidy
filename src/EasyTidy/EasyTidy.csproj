@@ -148,6 +148,7 @@
     <Content Remove="Strings\zh-TW\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="ViewModels\tmp.cs_back" />
     <None Remove="Views\Automatic\AutomaticPage.xaml" />
     <None Remove="Views\ContentDialogs\AddFilterContentDialog.xaml" />
     <None Remove="Views\ContentDialogs\AddTaskContentDialog.xaml" />

@@ -2,9 +2,12 @@
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
 using CommunityToolkit.WinUI;
+using EasyTidy.Model;
 using Microsoft.UI.Xaml.Data;
+using Microsoft.UI.Xaml.Media;
 using System.Collections;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
@@ -20,6 +23,7 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
     private string _groupName;
     private string _taskRule;
     private bool _isRegex = false;
+    private TaskRuleType _ruleType = TaskRuleType.CustomRule;
 
     public string GroupName
     {
@@ -43,6 +47,19 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
             if (_taskRule != value)
             {
                 _taskRule = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+
+    public TaskRuleType RuleType
+    {
+        get => _ruleType;
+        set
+        {
+            if (_ruleType != value)
+            {
+                _ruleType = value;
                 OnPropertyChanged();
             }
         }
@@ -127,6 +144,10 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
     private void OnIsRegexChanged(bool isRegex)
     {
         IsRegex = isRegex;
+        if (IsRegex)
+        {
+            RuleType = TaskRuleType.ExpressionRules;
+        }
     }
 
     private void OnMenuItemClick(object sender, RoutedEventArgs e)
@@ -136,11 +157,42 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
             var selectedValue = menuItem.Text;
             var rule = RuleRegex().Split(selectedValue)[0];
             TaskRule = rule;
+
+            foreach (var item in RuleFlyout.Items)
+            {
+                if (item is MenuFlyoutSubItem subItem)
+                {
+                    if (subItem.Text == "HandlingFolderRules".GetLocalized() && subItem.Items.Contains(menuItem))
+                    {
+                        RuleType = TaskRuleType.FolderRule;
+                        break;
+                    }else if (subItem.Text == "HandlingRulesForFiles".GetLocalized() && subItem.Items.Contains(menuItem))
+                    {
+                        RuleType = TaskRuleType.FileRule;
+                        break;
+                    }
+                    else
+                    {
+                        RuleType = TaskRuleType.CustomRule;
+                    }
+                }
+            }
         }
     }
 
     [GeneratedRegex(@"\s+")]
     private static partial Regex RuleRegex();
+
+    // 辅助方法：查找父级元素
+    private T FindParent<T>(DependencyObject child) where T : DependencyObject
+    {
+        DependencyObject parent = VisualTreeHelper.GetParent(child);
+        while (parent != null && !(parent is T))
+        {
+            parent = VisualTreeHelper.GetParent(parent);
+        }
+        return parent as T;
+    }
 
     private void FilterButtonTeachingTip_CloseButtonClick(TeachingTip sender, object args)
     {

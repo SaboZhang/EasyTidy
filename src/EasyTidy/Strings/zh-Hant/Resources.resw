@@ -1077,4 +1077,7 @@
   <data name="HandlingRulesForFiles" xml:space="preserve">
     <value>用於處理文件的規則</value>
   </data>
+  <data name="HandlingRulesForCustom" xml:space="preserve">
+    <value>None</value>
+  </data>
 </root>

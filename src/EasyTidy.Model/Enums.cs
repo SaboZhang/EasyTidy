@@ -117,6 +117,9 @@ public enum ContentOperatorEnum
 
 public enum TaskRuleType
 {
+
+    [Display(Name = "HandlingRulesForCustom")] CustomRule,
+
     [Display(Name = "HandlingFolderRules")] FolderRule,
 
     [Display(Name = "HandlingRulesForFiles")] FileRule,

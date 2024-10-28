@@ -1,4 +1,5 @@
-﻿using EasyTidy.Model;
+﻿using EasyTidy.Common.Database;
+using EasyTidy.Model;
 using EasyTidy.Service;
 using EasyTidy.Util;
 using Quartz;
@@ -12,6 +13,13 @@ namespace EasyTidy.ViewModels.Automatic
 {
     public class AutomaticCustomViewModel : IJob
     {
+        private readonly AppDbContext _dbContext;
+
+        public AutomaticCustomViewModel()
+        {
+            _dbContext = App.GetService<AppDbContext>();
+        }
+
         public async Task AddCustomTaskConfig(AutomaticTable automaticTable, bool customSchedule = false)
         {
             if (automaticTable != null)
@@ -29,27 +37,8 @@ namespace EasyTidy.ViewModels.Automatic
                     {
                         foreach (var item in automaticTable.TaskOrchestrationList)
                         {
-                            if (automaticTable.IsFileChange)
-                            {
-                                var param = new Dictionary<string, object>
-                                {
-                                    { "taskName", item.TaskName },
-                                    { "groupName", item.GroupName.GroupName },
-                                    { "TaskId", item.ID }
-                                };
-                                var delay = Convert.ToInt32(automaticTable.DelaySeconds);
-                                await QuartzHelper.AddSimpleJobOfSecondAsync<AutomaticCustomViewModel>(item.TaskName + "-" + item.ID, item.GroupName.GroupName, delay, param);
-                            }else if (automaticTable.RegularTaskRunning)
-                            {
-                                var param = new Dictionary<string, object>
-                                {
-                                    { "taskName", item.TaskName },
-                                    { "groupName", item.GroupName.GroupName },
-                                    { "TaskId", item.ID }
-                                };
-                                var interval = (Convert.ToInt32(automaticTable.Hourly) * 60) + Convert.ToInt32(automaticTable.Minutes);
-                                await QuartzHelper.AddSimpleJobOfMinuteAsync<AutomaticCustomViewModel>(item.TaskName, item.GroupName.GroupName, interval, param);
-                            }else if (automaticTable.Schedule.Monthly != null 
+                            
+                            if (automaticTable.Schedule.Monthly != null 
                                 || automaticTable.Schedule.DailyInMonthNumber != null 
                                 || automaticTable.Schedule.WeeklyDayNumber != null 
                                 || automaticTable.Schedule.Hours != null 
@@ -61,6 +50,33 @@ namespace EasyTidy.ViewModels.Automatic
                         }
                     }
                 }
+                else if (automaticTable.IsFileChange)
+                {
+                    foreach (var item in automaticTable.TaskOrchestrationList)
+                    {
+                        var delay = Convert.ToInt32(automaticTable.DelaySeconds);
+                        var ruleModel = new RuleModel
+                        {
+                            Rule = item.TaskRule,
+                            RuleType = item.RuleType,
+                            Filter = item.Filter
+                        };
+                        FileEventHandler.MonitorFolder(item.OperationMode, item.TaskSource, item.TaskTarget, delay, Settings.GeneralConfig.FileOperationType, ruleModel);
+                    }
+                }
+                else if (automaticTable.RegularTaskRunning)
+                {
+                    foreach (var item in automaticTable.TaskOrchestrationList)
+                    {
+                        var param = new Dictionary<string, object>
+                        {
+                            { "TaskId", item.ID }
+                        };
+                        var interval = (Convert.ToInt32(automaticTable.Hourly) * 60) + Convert.ToInt32(automaticTable.Minutes);
+                        await QuartzHelper.AddSimpleJobOfMinuteAsync<AutomaticCustomViewModel>(item.TaskName, item.GroupName.GroupName, interval, param);
+
+                    }
+                }
             }
         }
 
@@ -68,8 +84,11 @@ namespace EasyTidy.ViewModels.Automatic
         public async Task Execute(IJobExecutionContext context)
         {
             var taskId = context.MergedJobDataMap.GetString("TaskId");
-            var taskName = context.MergedJobDataMap.GetString("taskName");
-            var groupName = context.MergedJobDataMap.GetString("groupName");
+            if (!string.IsNullOrEmpty(taskId))
+            {
+                var task = _dbContext.TaskOrchestration.Where(t => t.ID == Convert.ToInt32(taskId)).ToList();
+                Logger.Info(task.Count() + "个定时任务被触发");
+            }
             // 获取 JobName
             string jobName = context.JobDetail.Key.Name;
             // 获取数据库枚举值

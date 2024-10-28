@@ -1125,4 +1125,7 @@
   <data name="HandlingRulesForFiles" xml:space="preserve">
     <value>Rules for processing files</value>
   </data>
+  <data name="HandlingRulesForCustom" xml:space="preserve">
+    <value>None</value>
+  </data>
 </root>

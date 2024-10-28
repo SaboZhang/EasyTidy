@@ -188,8 +188,20 @@ public partial class AutomaticViewModel : ObservableRecipient, IJob
     [ObservableProperty]
     private string _selectTaskTime = DateTime.Now.ToString("HH:mm");
 
-    [ObservableProperty]
-    private bool _customSchedule;
+    private bool _customSchedule = false;
+
+    public bool CustomSchedule
+    {
+        get => _customSchedule;
+        set
+        {
+            if (_customSchedule != value)
+            {
+                _customSchedule = value;
+                OnPropertyChanged();
+            }
+        }
+    }
 
 
     [RelayCommand]
@@ -291,7 +303,7 @@ public partial class AutomaticViewModel : ObservableRecipient, IJob
                 }
             }
             DateTime dateValue = DateTime.Parse(SelectTaskTime);
-            if (!RegularTaskRunning)
+            if (!CustomRegularTaskRunning)
             {
                 dateValue = new DateTime(dateValue.Year, dateValue.Month, dateValue.Day, 0, 0, 0);
             }

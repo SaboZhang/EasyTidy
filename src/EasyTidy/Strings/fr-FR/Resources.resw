@@ -1077,4 +1077,7 @@
   <data name="HandlingRulesForFiles" xml:space="preserve">
     <value>Règles de traitement des dossiers</value>
   </data>
+  <data name="HandlingRulesForCustom" xml:space="preserve">
+    <value>None</value>
+  </data>
 </root>

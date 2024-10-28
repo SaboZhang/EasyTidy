@@ -114,6 +114,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 TaskTarget = TaskTarget,
                 OperationMode = SelectedOperationMode,
                 IsEnabled = dialog.EnabledFlag,
+                RuleType = dialog.RuleType,
                 GroupName = !string.IsNullOrEmpty(SelectedTaskGroupName) && SelectedTaskGroupName != "AllText".GetLocalized()
                 ? await _dbContext.TaskGroup.Where(x => x.GroupName == SelectedTaskGroupName).FirstOrDefaultAsync()
                 : new TaskGroupTable
@@ -278,6 +279,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 SelectedFilter = task.Filter;
                 dialog.EnabledFlag = task.IsEnabled;
                 dialog.IsRegex = task.IsRegex;
+                dialog.RuleType = task.RuleType;
 
                 dialog.PrimaryButtonClick += async (s, e) =>
                 {

@@ -18,6 +18,8 @@ public class QuartzConfig
             ["quartz.scheduler.instanceName"] = "EasyTidyScheduler",
             ["quartz.scheduler.instanceId"] = "AUTO",
             ["quartz.jobStore.driverDelegateType"] = "Quartz.Impl.AdoJobStore.SQLiteDelegate, Quartz",
+            ["quartz.jobStore.type"] = "Quartz.Impl.AdoJobStore.JobStoreTX, Quartz", // 指定持久化存储策略
+            ["quartz.jobStore.tablePrefix"] = "QRTZ_", // 表前缀
         };
 
         // 使用SchedulerBuilder创建调度器实例，并根据需要覆盖或添加配置

@@ -36,6 +36,7 @@ public class QuartzHelper
 
         var job = JobBuilder.Create<T>()
             .WithIdentity(jobKey)
+            .StoreDurably()
             .Build();
 
         if (param != null && param.Count > 0)

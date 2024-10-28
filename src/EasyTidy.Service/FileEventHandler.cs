@@ -1,12 +1,16 @@
 ﻿using EasyTidy.Model;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace EasyTidy.Service;
 
-public class FileEventHandler
+public static class FileEventHandler
 {
-    private FileSystemWatcher _watcher;
+    private static Dictionary<string, FileSystemWatcher> _watchers = [];
+    private static readonly char[] separator = [';', '|'];
 
     /// <summary>
     /// 监控文件变化
@@ -17,21 +21,22 @@ public class FileEventHandler
     /// <param name="fileOperationType"></param>
     public static void MonitorFolder(OperationMode operationMode, string folderPath, string targetPath, int delaySeconds, FileOperationType fileOperationType, RuleModel filter)
     {
-        if (_watcher != null) return; // 防止重复监控
+        if (_watchers.ContainsKey(folderPath)) return; // 防止重复监控
 
-        _watcher = new FileSystemWatcher
+        var watcher = new FileSystemWatcher
         {
             Path = folderPath,
             NotifyFilter = NotifyFilters.FileName | NotifyFilters.DirectoryName | NotifyFilters.LastWrite,
             Filter = "*.*"
         };
 
-        _watcher.Created += (sender, e) => OnFileChange(e, delaySeconds, () => HandleFileChange(operationMode, e.FullPath, targetPath, fileOperationType, filter));
-        _watcher.Deleted += (sender, e) => OnFileChange(e, delaySeconds, () => HandleFileChange(operationMode, e.FullPath, targetPath, fileOperationType, filter));
-        _watcher.Changed += (sender, e) => OnFileChange(e, delaySeconds, () => HandleFileChange(operationMode, e.FullPath, targetPath, fileOperationType, filter));
-        _watcher.Renamed += (sender, e) => OnFileChange(e, delaySeconds, () => HandleFileChange(operationMode, e.FullPath, targetPath, fileOperationType, filter));
-        _watcher.EnableRaisingEvents = true;
+        watcher.Created += (sender, e) => OnFileChange(e, delaySeconds, () => HandleFileChange(operationMode, e.FullPath, targetPath, fileOperationType, filter));
+        watcher.Deleted += (sender, e) => OnFileChange(e, delaySeconds, () => HandleFileChange(operationMode, e.FullPath, targetPath, fileOperationType, filter));
+        watcher.Changed += (sender, e) => OnFileChange(e, delaySeconds, () => HandleFileChange(operationMode, e.FullPath, targetPath, fileOperationType, filter));
+        watcher.Renamed += (sender, e) => OnFileChange(e, delaySeconds, () => HandleFileChange(operationMode, e.FullPath, targetPath, fileOperationType, filter));
+        watcher.EnableRaisingEvents = true;
 
+        _watchers[folderPath] = watcher; // 存储监控器
     }
 
     private static void OnFileChange(FileSystemEventArgs e, int delaySeconds, Action action)
@@ -57,7 +62,7 @@ public class FileEventHandler
 
     private static List<Func<string, bool>> GetPathFilters(FilterTable filter)
     {
-        List<Func<string, bool>> filters = new List<Func<string, bool>>();
+        List<Func<string, bool>> filters = [];
 
         // Size Filter
         if (filter.IsSizeSelected)
@@ -149,23 +154,55 @@ public class FileEventHandler
             filters.Add(filePath =>
             {
                 string content = File.ReadAllText(filePath);
-                return filter.ContentOperator == ContentOperatorEnum.Contains
-                    ? content.Contains(filter.ContentValue)
-                    : !content.Contains(filter.ContentValue);
+                string contentValue = filter.ContentValue;
+
+                return filter.ContentOperator switch
+                {
+                    ContentOperatorEnum.AtLeastOneWord =>
+                        content.Split(' ').Any(word => word.Equals(contentValue, StringComparison.OrdinalIgnoreCase)),
+
+                    ContentOperatorEnum.AtLeastOneWordCaseSensitive =>
+                        content.Split(' ').Any(word => word.Equals(contentValue, StringComparison.Ordinal)),
+
+                    ContentOperatorEnum.AllWordsInAnyOrder =>
+                        contentValue.Split(' ').All(word => content.Contains(word, StringComparison.OrdinalIgnoreCase)),
+
+                    ContentOperatorEnum.AllWordsInAnyOrderCaseSensitive =>
+                        contentValue.Split(' ').All(word => content.Contains(word, StringComparison.Ordinal)),
+
+                    ContentOperatorEnum.RegularExpression =>
+                        Regex.IsMatch(content, contentValue),
+
+                    ContentOperatorEnum.String =>
+                        content.Contains(contentValue, StringComparison.OrdinalIgnoreCase),
+
+                    ContentOperatorEnum.StringCaseSensitive =>
+                        content.Contains(contentValue, StringComparison.Ordinal),
+
+                    _ => false
+                };
             });
         }
-
+        
         return filters;
     }
 
     // Helper methods
     private static long ConvertSizeToBytes(string sizeValue, SizeUnit sizeUnit)
     {
-        // Conversion logic based on size unit (KB, MB, etc.)
+        // 转换逻辑，基于大小单位（字节、KB、MB、GB等）
         long size = long.Parse(sizeValue);
-        return size * (sizeUnit == SizeUnit.KB ? 1024 : sizeUnit == SizeUnit.MB ? 1024 * 1024 : 1);
-    }
 
+        return size * (sizeUnit switch
+        {
+            SizeUnit.Kilobyte => 1024,
+            SizeUnit.Megabyte => 1024 * 1024,
+            SizeUnit.Gigabyte => 1024 * 1024 * 1024,
+            SizeUnit.Byte => 1,
+            _ => 1 // 默认情况下返回字节
+        });
+    }
+    
     private static DateTime ConvertToDateTime(string dateValue, DateUnit dateUnit)
     {
         // Parse and adjust date based on unit (days, months, etc.)
@@ -197,94 +234,122 @@ public class FileEventHandler
 
     private static List<Func<string, bool>> GeneratePathFilters(string rule, TaskRuleType ruleType)
     {
-        List<Func<string, bool>> filters = new List<Func<string, bool>>();
+        List<Func<string, bool>> filters = [];
 
         switch (ruleType)
         {
-            case RuleType.FileRule:
-                // 文件规则处理
-                if (rule == "#")
+            case TaskRuleType.FileRule:
+                filters.AddRange(GenerateFileFilters(rule));
+                break;
+
+            case TaskRuleType.FolderRule:
+                filters.AddRange(GenerateFolderFilters(rule));
+                break;
+
+            case TaskRuleType.CustomRule:
+                filters.AddRange(GenerateCustomFilters(rule));
+                break;
+            case TaskRuleType.ExpressionRules:
+                filters.Add(filePath => Regex.IsMatch(filePath, rule));
+                break;
+        }
+
+        return filters;
+    }
+
+    private static IEnumerable<Func<string, bool>> GenerateFileFilters(string rule)
+    {
+        if (rule == "#")
+        {
+            yield return filePath => File.Exists(filePath);
+        }
+        else
+        {
+            string[] conditions = rule.Split(new[] { ';', '|' }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (var condition in conditions)
+            {
+                if (condition.Contains("/"))
                 {
-                    filters.Add(filePath => File.Exists(filePath));
-                }
-                else if (rule.Contains(";") || rule.Contains("|"))
-                {
-                    string[] suffixes = rule.Split(new[] { ';', '|' }, StringSplitOptions.RemoveEmptyEntries);
-                    filters.Add(filePath =>
-                    {
-                        string extension = Path.GetExtension(filePath);
-                        return suffixes.Any(suffix => $"*{extension}" == suffix);
-                    });
-                }
-                else if (rule.Contains("/") && rule.Contains("*"))
-                {
-                    var parts = rule.Split('/');
+                    var parts = condition.Split('/');
                     string includePattern = parts[0];
                     string excludePattern = parts[1];
 
-                    filters.Add(filePath =>
+                    yield return filePath =>
                     {
                         string fileName = Path.GetFileName(filePath);
                         return Regex.IsMatch(fileName, includePattern.Replace("*", ".*")) &&
                                !Regex.IsMatch(fileName, excludePattern.Replace("*", ".*"));
-                    });
-                }
-                else if (rule == "*")
-                {
-                    filters.Add(filePath => File.Exists(filePath));
+                    };
                 }
                 else
                 {
-                    filters.Add(filePath => Path.GetExtension(filePath) == rule.TrimStart('*'));
-                }
-                break;
-
-            case RuleType.FolderRule:
-                // 文件夹规则处理
-                if (rule == "##")
-                {
-                    filters.Add(filePath => Directory.Exists(filePath));
-                }
-                else if (rule == "**")
-                {
-                    filters.Add(filePath => Directory.Exists(filePath));
-                }
-                // else if (rule.Contains("/") && rule.Contains("**"))
-                // {
-                //     var parts = rule.Split('/');
-                //     string includePattern = parts[0];
-                //     string excludePattern = parts[1];
-
-                //     filters.Add(filePath =>
-                //     {
-                //         string directoryName = Path.GetFileName(filePath);
-                //         return Regex.IsMatch(directoryName, includePattern.Replace("**", ".*")) &&
-                //                !directoryName.StartsWith(excludePattern.Replace("**", ""));
-                //     });
-                // }
-                else if (rule.StartsWith("**/")) // 处理 **/my** 的排除规则
-                {
-                    string exclusion = rule.Substring(3); // 去掉前面的 **/
-                    filters.Add(filePath =>
+                    string normalizedCondition = condition.Trim();
+                    if (normalizedCondition == "*")
                     {
-                        string directoryName = Path.GetFileName(filePath);
-                        return !directoryName.StartsWith(exclusion) && Directory.Exists(filePath);
-                    });
+                        yield return filePath => File.Exists(filePath);
+                    }
+                    else
+                    {
+                        string extension = Path.GetExtension(normalizedCondition);
+                        yield return filePath => Path.GetExtension(filePath) == extension;
+                    }
+                }
+            }
+        }
+    }
+
+    private static IEnumerable<Func<string, bool>> GenerateFolderFilters(string rule)
+    {
+        if (rule == "##")
+        {
+            yield return folderPath => Directory.Exists(folderPath);
+        }
+        else
+        {
+            string[] conditions = rule.Split(new[] { ';', '|' }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (var condition in conditions)
+            {
+                string normalizedCondition = condition.Trim();
+                if (normalizedCondition == "**")
+                {
+                    yield return folderPath => Directory.Exists(folderPath);
                 }
                 else
                 {
-                    filters.Add(filePath =>
+                    yield return folderPath =>
                     {
-                        string directoryName = Path.GetFileName(Path.GetDirectoryName(filePath) ?? string.Empty);
-                        return directoryName == rule;
-                    });
+                        string folderName = Path.GetFileName(folderPath);
+                        return folderName == normalizedCondition.Replace("**", "");
+                    };
                 }
-                break;
+            }
+        }
+    }
 
-            case RuleType.ExpressionRules:
-                // 正则表达式处理
-                filters.Add(filePath => Regex.IsMatch(filePath, rule));
-                break;
+    private static IEnumerable<Func<string, bool>> GenerateCustomFilters(string rule)
+    {
+        var filters = new List<Func<string, bool>>();
+
+        if (rule.Contains(';') || rule.Contains('|'))
+        {
+            string[] parts = rule.Split(new[] { ';', '|' }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (var part in parts)
+            {
+                if (part.StartsWith("file:"))
+                {
+                    filters.AddRange(GenerateFileFilters(part.Substring(5)));
+                }
+                else if (part.StartsWith("folder:"))
+                {
+                    filters.AddRange(GenerateFolderFilters(part.Substring(7)));
+                }
+            }
+        }
+        else
+        {
+            // 处理单个规则
+            filters.AddRange(GenerateFileFilters(rule));
+            filters.AddRange(GenerateFolderFilters(rule));
         }
 
         return filters;

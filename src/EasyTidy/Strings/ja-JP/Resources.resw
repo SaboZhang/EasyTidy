@@ -1080,4 +1080,7 @@
   <data name="HandlingRulesForFiles" xml:space="preserve">
     <value>ファイルの処理ルール</value>
   </data>
+  <data name="HandlingRulesForCustom" xml:space="preserve">
+    <value>None</value>
+  </data>
 </root>
