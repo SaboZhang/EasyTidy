@@ -1074,4 +1074,10 @@
   <data name="Video" xml:space="preserve">
     <value>ビデオ</value>
   </data>
+  <data name="HandlingFolderRules" xml:space="preserve">
+    <value>フォルダーの扱い方のルール</value>
+  </data>
+  <data name="HandlingRulesForFiles" xml:space="preserve">
+    <value>ファイルの処理ルール</value>
+  </data>
 </root>

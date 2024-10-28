@@ -1071,4 +1071,10 @@
   <data name="Video" xml:space="preserve">
     <value>視頻</value>
   </data>
+  <data name="HandlingFolderRules" xml:space="preserve">
+    <value>用於處理資料夾的規則</value>
+  </data>
+  <data name="HandlingRulesForFiles" xml:space="preserve">
+    <value>用於處理文件的規則</value>
+  </data>
 </root>

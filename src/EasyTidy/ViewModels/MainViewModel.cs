@@ -17,7 +17,8 @@ public partial class MainViewModel : ObservableObject, ITitleBarAutoSuggestBoxAw
         themeService.ConfigBackdrop();
         themeService.ConfigElementTheme();
         _dbContext = App.GetService<AppDbContext>();
-        OnStartupExecutionAsync().ConfigureAwait(false);
+        // 启动时执行，不等待
+        _ = Task.Run(OnStartupExecutionAsync);
     }
 
     public void OnAutoSuggestBoxTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)

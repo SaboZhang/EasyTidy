@@ -519,11 +519,11 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         MenuCategories =
         [
             new() {
-                Title = "用于处理文件的规则",
+                Title = "HandlingRulesForFiles".GetLocalized(),
                 Items = orderedFileRules.Select(kv => kv.Value + " = " + kv.Key.GetLocalized()).ToList()
             },
             new() {
-                Title = "用于处理文件夹的规则",
+                Title = "HandlingFolderRules".GetLocalized(),
                 Items = orderedFloderRules.Select(kv => kv.Value + " = " + kv.Key.GetLocalized()).ToList()
             }
         ];

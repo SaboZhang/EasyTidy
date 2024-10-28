@@ -114,3 +114,13 @@ public enum ContentOperatorEnum
 
     [Display(Name = "StringCaseSensitive")] StringCaseSensitive
 }
+
+public enum TaskRuleType
+{
+    [Display(Name = "HandlingFolderRules")] FolderRule,
+
+    [Display(Name = "HandlingRulesForFiles")] FileRule,
+
+    [Display(Name = "RegardedExpressionText")] ExpressionRules
+
+}
