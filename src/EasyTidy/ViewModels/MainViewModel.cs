@@ -43,7 +43,7 @@ public partial class MainViewModel : ObservableObject, ITitleBarAutoSuggestBoxAw
             foreach(var task in item.TaskOrchestrationList)
             {
                 // 执行操作
-                await OperationHandler.ExecuteOperationAsync(Convert.ToInt32(task.OperationMode), "示例参数1");
+                await OperationHandler.ExecuteOperationAsync(task.OperationMode, "示例参数1");
             }
         }
 
