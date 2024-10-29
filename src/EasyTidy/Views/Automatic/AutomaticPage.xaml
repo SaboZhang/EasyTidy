@@ -120,7 +120,7 @@
                                                 </TeachingTip>
                                             </Button.Resources>
                                         </Button>
-                                        <Button x:Name="SelectButton"
+                                        <!-- <Button x:Name="SelectButton"
                                                 x:Uid="SingleTask"
                                                 Command="{x:Bind ViewModel.SelectTaskCommand}"
                                                 CommandParameter="{Binding ElementName=SelectButton}">
@@ -145,7 +145,7 @@
                                                     </TeachingTip.HeroContent>
                                                 </TeachingTip>
                                             </Button.Resources>
-                                        </Button>
+                                        </Button> -->
 
                                         <CheckBox x:Name="FeatureIndependentConfigFlagCheckBox"
                                                   IsChecked="{x:Bind ViewModel.FeatureIndependentConfigFlag, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"

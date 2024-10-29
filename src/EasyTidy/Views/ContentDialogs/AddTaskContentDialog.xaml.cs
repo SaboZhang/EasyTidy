@@ -25,6 +25,8 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
     private bool _isRegex = false;
     private TaskRuleType _ruleType = TaskRuleType.CustomRule;
 
+    private bool _isShowTaskSource = true;
+
     public string GroupName
     {
         get => _groupName;
@@ -65,6 +67,19 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
         }
     }
 
+    public bool IsShowTaskSource
+    {
+        get => _isShowTaskSource;
+        set
+        {
+            if (_isShowTaskSource != value)
+            {
+                _isShowTaskSource = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+
     public string TaskName { get; set; }
 
     public string TaskSource { get; set; }
@@ -95,6 +110,12 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
         XamlRoot = App.MainWindow.Content.XamlRoot;
         RequestedTheme = ViewModel.themeService.GetElementTheme();
         PopulateMenu(ViewModel);
+    }
+
+    private void TaskOperateSelected(object sender, RoutedEventArgs e)
+    {
+        IsShowTaskSource = TaskOperateList.SelectedItem == OperationMode.Delete 
+        || SelectedOperationMode == OperationMode.RecycleBin? false : true;
     }
 
     private void PopulateMenu(TaskOrchestrationViewModel viewModel)

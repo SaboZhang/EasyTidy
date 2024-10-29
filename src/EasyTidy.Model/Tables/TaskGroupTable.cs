@@ -13,4 +13,6 @@ public class TaskGroupTable
 
     public bool IsUsed { get; set; } = false;
 
+    public List<TaskOrchestrationTable> TaskOrchestrationList { get; set; }
+
 }

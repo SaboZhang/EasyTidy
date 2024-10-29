@@ -302,7 +302,7 @@ public partial class AutomaticViewModel : ObservableRecipient, IJob
                     }));
                 }
             }
-            DateTime dateValue = DateTime.Parse(SelectTaskTime);
+            DateTime dateValue = DateTime.Parse(dialog.SelectedTime);
             if (!CustomRegularTaskRunning)
             {
                 dateValue = new DateTime(dateValue.Year, dateValue.Month, dateValue.Day, 0, 0, 0);
@@ -316,7 +316,7 @@ public partial class AutomaticViewModel : ObservableRecipient, IJob
                 DelaySeconds = dialog.Delay,
                 Hourly = dateValue.Hour.ToString(),
                 Minutes = dateValue.Minute.ToString(),
-                Schedule = new ScheduleTable
+                Schedule = CustomSchedule ? new ScheduleTable
                 {
                     Minutes = dialog.Minute,
                     Hours = dialog.Hour,
@@ -324,7 +324,7 @@ public partial class AutomaticViewModel : ObservableRecipient, IJob
                     DailyInMonthNumber = dialog.DayOfMonth,
                     Monthly = dialog.MonthlyDay,
                     CronExpression = dialog.Expression
-                },
+                } : null,
                 TaskOrchestrationList = list
             };
             await _dbContext.Automatic.AddAsync(auto);
@@ -404,7 +404,11 @@ public partial class AutomaticViewModel : ObservableRecipient, IJob
                     TaskList = new(list);
                     TaskListACV = new AdvancedCollectionView(TaskList, true);
                     TaskListACV.SortDescriptions.Add(new SortDescription("ID", SortDirection.Ascending));
-                    var groupList = await _dbContext.TaskGroup.Where(x => x.IsUsed == false).ToListAsync();
+                    var groups = await _dbContext.TaskGroup.Include(g => g.TaskOrchestrationList).Where(x => x.IsUsed == false).ToListAsync();
+                    // 过滤分组：当某个分组的所有关联任务 IsRelated 为 true 时不显示该分组
+                    var groupList = groups
+                        .Where(g => g.Tasks.All(t => t.IsRelated == false)) // 只显示与 IsRelated 为 false 的分组
+                        .ToList();
                     TaskGroupList = new(groupList);
                     TaskGroupListACV = new AdvancedCollectionView(TaskGroupList, true);
                     TaskGroupListACV.SortDescriptions.Add(new SortDescription("Id", SortDirection.Ascending));
@@ -519,7 +523,7 @@ public partial class AutomaticViewModel : ObservableRecipient, IJob
                     {
                         await QuartzHelper.AddJob<AutomaticViewModel>(item.TaskName, item.GroupName.GroupName, schedule.CronExpression);
                     }
-                }  
+                }
             }
             AutomaticTable automatic = new()
             {
