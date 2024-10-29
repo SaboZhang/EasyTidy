@@ -1,5 +1,6 @@
 ﻿using Quartz;
 using Quartz.Impl;
+using Quartz.Impl.Matchers;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -36,7 +37,6 @@ public class QuartzHelper
 
         var job = JobBuilder.Create<T>()
             .WithIdentity(jobKey)
-            .StoreDurably()
             .Build();
 
         if (param != null && param.Count > 0)
@@ -49,6 +49,7 @@ public class QuartzHelper
 
         var trigger = TriggerBuilder.Create()
             .WithIdentity($"{jobName}Trigger", groupName)
+            // .ForJob(job)
             .WithSimpleSchedule(action)
             .Build();
 
@@ -106,6 +107,21 @@ public class QuartzHelper
         }
 
         await _scheduler.ResumeJob(jobKey);
+    }
+
+    public static async Task TriggerAllJobsOnceAsync()
+    {
+        // 获取所有作业的触发器
+        var jobKeys = await _scheduler.GetJobKeys(GroupMatcher<JobKey>.AnyGroup());
+
+        foreach (var jobKey in jobKeys)
+        {
+            // 获取作业详情
+            var jobDetail = await _scheduler.GetJobDetail(jobKey);
+
+            // 触发作业
+            await _scheduler.TriggerJob(jobKey);
+        }
     }
 
     public static async Task StartAllJob()

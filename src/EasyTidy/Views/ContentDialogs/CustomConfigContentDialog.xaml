@@ -22,40 +22,14 @@
 
     <StackPanel>
         <StackPanel Orientation="Horizontal"
-                    Spacing="48">
+                    Spacing="8">
             <TextBlock x:Uid="SelectTaskBlock"
                        Margin="0,5,0,0"
                        Width="140"/>
             <StackPanel HorizontalAlignment="Left"
                         Orientation="Horizontal"
-                        Spacing="20">
-                <Button x:Name="CustomGroupButton"
-                        x:Uid="TaskButton"
-                        Command="{x:Bind ViewModel.CustomSelectTaskCommand}"
-                        CommandParameter="{Binding ElementName=CustomGroupButton}">
-                    <Button.Resources>
-                        <TeachingTip x:Name="CustomGroupTaskSelect"
-                                     x:Uid="TaskGroup"
-                                     Target="{x:Bind CustomGroupButton}"
-                                     IsOpen="{x:Bind ViewModel.CustomGroupIsOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                     PreferredPlacement="Bottom"
-                                     CloseButtonClick="CustomGroupTaskSelect_CloseButtonClick">
-                            <TeachingTip.HeroContent>
-                                <ListView x:Name="CustomGroupTaskListView"
-                                          SelectionMode="Multiple"
-                                          MaxHeight="320"
-                                          ItemsSource="{x:Bind ViewModel.TaskGroupListACV, Mode=TwoWay}">
-                                    <ListView.ItemTemplate>
-                                        <DataTemplate x:DataType="model:TaskGroupTable">
-                                            <TextBlock Text="{x:Bind GroupName}"/>
-                                        </DataTemplate>
-                                    </ListView.ItemTemplate>
-                                </ListView>
-                            </TeachingTip.HeroContent>
-                        </TeachingTip>
-                    </Button.Resources>
-                </Button>
-                <!-- <Button x:Name="CustomTaskList"
+                        Spacing="8">
+                <Button x:Name="CustomTaskList"
                         x:Uid="SingleTask"
                         Command="{x:Bind ViewModel.CustomSelectTaskCommand}"
                         HorizontalAlignment="Right"
@@ -81,7 +55,7 @@
                             </TeachingTip.HeroContent>
                         </TeachingTip>
                     </Button.Resources>
-                </Button> -->
+                </Button>
             </StackPanel>
         </StackPanel>
         <StackPanel Orientation="Horizontal"

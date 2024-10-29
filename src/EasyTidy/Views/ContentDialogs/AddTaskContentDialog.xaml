@@ -139,7 +139,8 @@
                       SelectedItem="{x:Bind ViewModel.SelectedOperationMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                       x:Uid="DialogTaskOperateListPlaceholder"
                       Margin="6,0,0,0"
-                      Width="210">
+                      Width="210"
+                      SelectionChanged="TaskOperateList_SelectionChanged">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Converter={StaticResource EnumDisplayNameConverter}}"/>
@@ -150,8 +151,7 @@
         <StackPanel x:Name="TaskSourcePanel"
                     Orientation="Horizontal"
                     Spacing="8"
-                    Margin="0,20,0,0"
-                    Visibility="{x:Bind IsShowTaskSource, Mode=TwoWay, Converter={StaticResource BooleanToVisibilityConverter}">
+                    Margin="0,20,0,0">
             <TextBlock x:Name="TaskSourceTitle"
                        x:Uid="DialogSourceFolder"
                        Margin="0,5,0,0"

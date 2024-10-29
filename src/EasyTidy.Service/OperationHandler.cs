@@ -1,9 +1,6 @@
 ﻿using EasyTidy.Model;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace EasyTidy.Service;
@@ -29,11 +26,11 @@ public static class OperationHandler
     }
 
     // 执行操作的方法
-    public static async Task ExecuteOperationAsync(int operationValue, string parameter)
+    public static async Task ExecuteOperationAsync(OperationMode operationValue, string parameter)
     {
         if (Enum.IsDefined(typeof(OperationMode), operationValue))
         {
-            var operation = (OperationMode)operationValue;
+            var operation = operationValue;
             // 查找并执行对应的方法
             if (_operations.TryGetValue(operation, out var operationMethod))
             {

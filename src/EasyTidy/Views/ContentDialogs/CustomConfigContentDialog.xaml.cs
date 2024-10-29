@@ -308,8 +308,4 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
         ViewModel.SelectedItemChangedCommand.Execute(sender);
     }
 
-    private void CustomGroupTaskSelect_CloseButtonClick(TeachingTip sender, object args)
-    {
-        ViewModel.SelectGroupItemChangedCommand.Execute(sender);
-    }
 }

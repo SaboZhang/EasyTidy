@@ -1,4 +1,5 @@
-﻿using H.NotifyIcon;
+﻿using EasyTidy.Service;
+using H.NotifyIcon;
 using System.Diagnostics;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -89,8 +90,15 @@ public sealed partial class TrayIconView : UserControl
     {
         Settings.AutomaticConfig.RegularTaskRunning = false;
         Settings.Save();
+        FileEventHandler.StopAllMonitoring();
         ToastWithAvatar.Instance.ScenarioName = "停止监视";
         ToastWithAvatar.Instance.Description = "EasyTidy停止监视成功";
         ToastWithAvatar.Instance.SendToast();
+    }
+
+    [RelayCommand]
+    private async Task ExecuteOnceAsync()
+    {
+        await QuartzHelper.TriggerAllJobsOnceAsync();
     }
 }

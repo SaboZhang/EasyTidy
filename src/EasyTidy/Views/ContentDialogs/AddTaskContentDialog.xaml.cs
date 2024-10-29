@@ -112,12 +112,6 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
         PopulateMenu(ViewModel);
     }
 
-    private void TaskOperateSelected(object sender, RoutedEventArgs e)
-    {
-        IsShowTaskSource = TaskOperateList.SelectedItem == OperationMode.Delete 
-        || SelectedOperationMode == OperationMode.RecycleBin? false : true;
-    }
-
     private void PopulateMenu(TaskOrchestrationViewModel viewModel)
     {
         foreach (var category in viewModel.MenuCategories)
@@ -204,17 +198,6 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
     [GeneratedRegex(@"\s+")]
     private static partial Regex RuleRegex();
 
-    // 辅助方法：查找父级元素
-    private T FindParent<T>(DependencyObject child) where T : DependencyObject
-    {
-        DependencyObject parent = VisualTreeHelper.GetParent(child);
-        while (parent != null && !(parent is T))
-        {
-            parent = VisualTreeHelper.GetParent(parent);
-        }
-        return parent as T;
-    }
-
     private void FilterButtonTeachingTip_CloseButtonClick(TeachingTip sender, object args)
     {
         ViewModel.SelectedItemChangedCommand.Execute(sender);
@@ -271,5 +254,23 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
     private void FilterButton_Click(object sender, RoutedEventArgs e)
     {
         FilterButtonTeachingTip.IsOpen = true;
+    }
+
+    private void TaskOperateList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (sender != null)
+        {
+            var selected = sender as ComboBox;
+            if (selected != null && selected.SelectedItem != null)
+            {
+                TaskSourcePanel.Visibility = selected.SelectedItem switch
+                {
+                    OperationMode.Delete => Visibility.Collapsed,
+                    OperationMode.RecycleBin => Visibility.Collapsed,
+                    OperationMode.Rename => Visibility.Collapsed,
+                    _ => Visibility.Visible,
+                };
+            }
+        }
     }
 }

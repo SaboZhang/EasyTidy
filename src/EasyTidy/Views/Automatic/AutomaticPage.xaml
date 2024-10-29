@@ -120,32 +120,6 @@
                                                 </TeachingTip>
                                             </Button.Resources>
                                         </Button>
-                                        <!-- <Button x:Name="SelectButton"
-                                                x:Uid="SingleTask"
-                                                Command="{x:Bind ViewModel.SelectTaskCommand}"
-                                                CommandParameter="{Binding ElementName=SelectButton}">
-                                            <Button.Resources>
-                                                <TeachingTip x:Name="TaskSelect"
-                                                             x:Uid="SelectTask"
-                                                             Target="{x:Bind SelectButton}"
-                                                             IsOpen="{x:Bind ViewModel.GlobalIsOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                             PreferredPlacement="Bottom"
-                                                             CloseButtonClick="TaskSelect_CloseButtonClick">
-                                                    <TeachingTip.HeroContent>
-                                                        <ListView x:Name="TaskListView"
-                                                                  SelectionMode="Multiple"
-                                                                  MaxHeight="320"
-                                                                  ItemsSource="{x:Bind ViewModel.TaskListACV, Mode=TwoWay}">
-                                                            <ListView.ItemTemplate>
-                                                                <DataTemplate x:DataType="model:TaskOrchestrationTable">
-                                                                    <TextBlock Text="{x:Bind TaskName}"/>
-                                                                </DataTemplate>
-                                                            </ListView.ItemTemplate>
-                                                        </ListView>
-                                                    </TeachingTip.HeroContent>
-                                                </TeachingTip>
-                                            </Button.Resources>
-                                        </Button> -->
 
                                         <CheckBox x:Name="FeatureIndependentConfigFlagCheckBox"
                                                   IsChecked="{x:Bind ViewModel.FeatureIndependentConfigFlag, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"

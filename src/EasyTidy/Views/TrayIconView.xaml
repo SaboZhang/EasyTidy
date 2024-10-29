@@ -31,7 +31,7 @@
                     Command="{x:Bind StopWatcherCommand}"
                     x:Uid="TrayIconStopMonitoring"/>
                 <MenuFlyoutItem
-                    Command="{x:Bind ShowHideWindowCommand}"
+                    Command="{x:Bind ExecuteOnceCommand}"
                     x:Uid="TrayIconExecuteOnce"/>
                 <MenuFlyoutItem
                     Command="{x:Bind ShowSettingsCommand}"

@@ -1,19 +1,17 @@
 ﻿using CommunityToolkit.WinUI;
 using CommunityToolkit.WinUI.Collections;
 using EasyTidy.Common.Database;
+using EasyTidy.Common.Job;
 using EasyTidy.Model;
-using EasyTidy.Service;
-using EasyTidy.ViewModels.Automatic;
 using EasyTidy.Views.ContentDialogs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.UI.Dispatching;
-using Quartz;
 using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
 
 namespace EasyTidy.ViewModels;
 
-public partial class AutomaticViewModel : ObservableRecipient, IJob
+public partial class AutomaticViewModel : ObservableRecipient
 {
     private readonly AppDbContext _dbContext;
     public AutomaticViewModel(IThemeService themeService)
@@ -139,13 +137,7 @@ public partial class AutomaticViewModel : ObservableRecipient, IJob
     public bool _notFeatureIndependentConfigFlag = true;
 
     [ObservableProperty]
-    public bool _globalIsOpen = false;
-
-    [ObservableProperty]
     public bool _groupGlobalIsOpen = false;
-
-    [ObservableProperty]
-    public bool _customGroupIsOpen = false;
 
     [ObservableProperty]
     public bool _customIsOpen = false;
@@ -289,19 +281,6 @@ public partial class AutomaticViewModel : ObservableRecipient, IJob
                 }
             }
 
-            foreach (var item in SelectedGroupTaskList)
-            {
-                var updates = await _dbContext.TaskOrchestration.Include(x => x.GroupName).Where(x => x.GroupName.Id == item.Id).ToListAsync();
-                if (updates != null)
-                {
-                    list.AddRange(updates.Select(taskOrchestration =>
-                    {
-                        taskOrchestration.IsRelated = true;
-                        taskOrchestration.GroupName.IsUsed = true;
-                        return taskOrchestration;
-                    }));
-                }
-            }
             DateTime dateValue = DateTime.Parse(dialog.SelectedTime);
             if (!CustomRegularTaskRunning)
             {
@@ -330,8 +309,7 @@ public partial class AutomaticViewModel : ObservableRecipient, IJob
             await _dbContext.Automatic.AddAsync(auto);
 
             await _dbContext.SaveChangesAsync();
-            var customViewModel = new AutomaticCustomViewModel();
-            await customViewModel.AddCustomTaskConfig(auto, CustomSchedule);
+            await AutomaticCustomJob.AddCustomTaskConfig(auto, CustomSchedule);
         }
         catch (Exception ex)
         {
@@ -340,41 +318,17 @@ public partial class AutomaticViewModel : ObservableRecipient, IJob
     }
 
     [RelayCommand]
-    private void OnSelectTask(object parameter)
+    private void OnSelectTask()
     {
-        var item = parameter as Button;
-        var name = item.Name;
-
-        switch (name)
-        {
-            case "SelectButton":
-                GlobalIsOpen = true;
-                GroupGlobalIsOpen = false;
-                break;
-            case "GroupButton":
-                GlobalIsOpen = false;
-                GroupGlobalIsOpen = true;
-                break;
-        }
+        GroupGlobalIsOpen = true;
+        CustomIsOpen = false;
     }
 
     [RelayCommand]
-    private void OnCustomSelectTask(object parameter)
+    private void OnCustomSelectTask()
     {
-        var item = parameter as Button;
-        var name = item.Name;
-
-        switch (name)
-        {
-            case "CustomTaskList":
-                CustomIsOpen = true;
-                CustomGroupIsOpen = false;
-                break;
-            case "CustomGroupButton":
-                CustomIsOpen = false;
-                CustomGroupIsOpen = true;
-                break;
-        }
+        CustomIsOpen = true;
+        GroupGlobalIsOpen = false;
     }
 
     private void NotifyPropertyChanged([CallerMemberName] string propertyName = null, bool reDoBackupDryRun = true)
@@ -406,9 +360,7 @@ public partial class AutomaticViewModel : ObservableRecipient, IJob
                     TaskListACV.SortDescriptions.Add(new SortDescription("ID", SortDirection.Ascending));
                     var groups = await _dbContext.TaskGroup.Include(g => g.TaskOrchestrationList).Where(x => x.IsUsed == false).ToListAsync();
                     // 过滤分组：当某个分组的所有关联任务 IsRelated 为 true 时不显示该分组
-                    var groupList = groups
-                        .Where(g => g.Tasks.All(t => t.IsRelated == false)) // 只显示与 IsRelated 为 false 的分组
-                        .ToList();
+                    var groupList = groups.Where(g => g.TaskOrchestrationList.All(t => t.IsRelated == false)).ToList();
                     TaskGroupList = new(groupList);
                     TaskGroupListACV = new AdvancedCollectionView(TaskGroupList, true);
                     TaskGroupListACV.SortDescriptions.Add(new SortDescription("Id", SortDirection.Ascending));
@@ -483,15 +435,6 @@ public partial class AutomaticViewModel : ObservableRecipient, IJob
         try
         {
             List<TaskOrchestrationTable> list = [];
-            foreach (var item in SelectedTaskList)
-            {
-                var update = await _dbContext.TaskOrchestration.Where(x => x.ID == item.ID && item.IsRelated == false).FirstOrDefaultAsync();
-                if (update != null)
-                {
-                    update.IsRelated = true;
-                    list.Add(update);
-                }
-            }
             foreach (var item in SelectedGroupTaskList)
             {
                 var updates = await _dbContext.TaskOrchestration.Include(x => x.GroupName).Where(x => x.GroupName.Id == item.Id).ToListAsync();
@@ -517,13 +460,6 @@ public partial class AutomaticViewModel : ObservableRecipient, IJob
             if (OnScheduleExecution)
             {
                 schedule = await _dbContext.Schedule.OrderByDescending(x => x.ID).FirstOrDefaultAsync();
-                if (!string.IsNullOrEmpty(schedule.CronExpression))
-                {
-                    foreach (var item in list)
-                    {
-                        await QuartzHelper.AddJob<AutomaticViewModel>(item.TaskName, item.GroupName.GroupName, schedule.CronExpression);
-                    }
-                }
             }
             AutomaticTable automatic = new()
             {
@@ -540,6 +476,7 @@ public partial class AutomaticViewModel : ObservableRecipient, IJob
             await _dbContext.Automatic.AddAsync(automatic);
             await _dbContext.SaveChangesAsync();
             await OnPageLoaded();
+            await AutomaticJob.AddTaskConfig(automatic, OnScheduleExecution);
             Growl.Success(new GrowlInfo
             {
                 Message = "SaveSuccessfulText".GetLocalized(),
@@ -559,13 +496,5 @@ public partial class AutomaticViewModel : ObservableRecipient, IJob
 
         IsActive = false;
 
-    }
-
-    public async Task Execute(IJobExecutionContext context)
-    {
-        Logger.Info(context.JobDetail.ToString());
-        // 获取数据库枚举值
-        var mode = 0;
-        await OperationHandler.ExecuteOperationAsync(mode, "示例参数1");
     }
 }

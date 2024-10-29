@@ -1,4 +1,5 @@
 ﻿using EasyTidy.Model;
+using Quartz;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -353,6 +354,16 @@ public static class FileEventHandler
         }
 
         return filters;
+    }
+
+    public static void StopAllMonitoring()
+    {
+        foreach (var watcher in _watchers.Values)
+        {
+            watcher.EnableRaisingEvents = false;
+            watcher.Dispose();
+        }
+        _watchers.Clear();
     }
 
 }
