@@ -19,6 +19,7 @@ public partial class MainViewModel : ObservableObject, ITitleBarAutoSuggestBoxAw
         _dbContext = App.GetService<AppDbContext>();
         // 启动时执行，不等待
         _ = Task.Run(OnStartupExecutionAsync);
+        OnStartAllMonitoring();
     }
 
     public void OnAutoSuggestBoxTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
@@ -37,7 +38,7 @@ public partial class MainViewModel : ObservableObject, ITitleBarAutoSuggestBoxAw
     /// <returns></returns>
     private async Task OnStartupExecutionAsync()
     {
-        var list = _dbContext.Automatic.Include(a => a.TaskOrchestrationList).Where(a => a.IsStartupExecution == true).ToList();
+        var list = _dbContext.Automatic.Include(a => a.TaskOrchestrationList).Where(a => a.IsStartupExecution == true && a.IsEnable == true).ToList();
         foreach (var item in list) 
         {
             foreach(var task in item.TaskOrchestrationList)
@@ -47,5 +48,21 @@ public partial class MainViewModel : ObservableObject, ITitleBarAutoSuggestBoxAw
             }
         }
 
+    }
+
+    /// <summary>
+    /// 启动所有文件夹监控
+    /// </summary>
+    private void OnStartAllMonitoring()
+    {
+        var list = _dbContext.Automatic.Include(a => a.TaskOrchestrationList).Where(a => a.RegularTaskRunning == true && a.IsEnable == true).ToList();
+        foreach (var item in list)
+        {
+            foreach (var task in item.TaskOrchestrationList)
+            {
+                // 执行操作
+                FileEventHandler.MonitorFolder(task.OperationMode, task.FilePath, task.TargetPath, task.FileOperationType);
+            }
+        }
     }
 }

@@ -180,6 +180,9 @@ public partial class AutomaticViewModel : ObservableRecipient
     [ObservableProperty]
     private string _selectTaskTime = DateTime.Now.ToString("HH:mm");
 
+    [ObservableProperty]
+    private List<string> _fireTimes
+
     private bool _customSchedule = false;
 
     public bool CustomSchedule
@@ -496,5 +499,14 @@ public partial class AutomaticViewModel : ObservableRecipient
 
         IsActive = false;
 
+    }
+
+    private void VerifyCronExpression(string cronExpression)
+    {
+        var result = CronExpressionUtil.VerificationCronExpression(cronExpression);
+        VerificationMessage = result.Message;
+        
+        // Format fire times for display
+        FireTimes = result.FireTimes.Select(time => time.ToString("yyyy-MM-dd HH:mm:ss")).ToList();
     }
 }

@@ -265,9 +265,9 @@
         <wuc:SettingsPageControl.PrimaryLinks>
             <wuc:PageLink Link="https://docs.luckyits.com"
                           x:Uid="GeneralUseDocumentation"/>
-            <wuc:PageLink Link="https://github.com/SaboZhang/Organize/issues/new?assignees=&labels=&projects=&template=bug_report.md&title="
+            <wuc:PageLink Link="https://github.com/SaboZhang/Organize/issues/new?assignees=&labels=type%3A+bug&projects=&template=bug_report.yml&title=%5BBUG%5D%3A+title"
                           x:Uid="GereralReport"/>
-            <wuc:PageLink Link="https://github.com/SaboZhang/Organize/issues/new?assignees=&labels=&projects=&template=feature_request.md&title="
+            <wuc:PageLink Link="https://github.com/SaboZhang/Organize/issues/new?assignees=&labels=type%3A+enhancement&projects=&template=feature_request.yml&title=%5BFeature%5D%3A+title"
                           x:Uid="GeneralRequestFeature"/>
         </wuc:SettingsPageControl.PrimaryLinks>
 
