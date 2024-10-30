@@ -47,10 +47,10 @@ body:
       required: true
 
   - type: input
-      attributes:
-          label: Software Version (应用版本)
-          placeholder: 'Eg: 2.0.0'
-      validations:
+    attributes:
+      label: Software Version (应用版本)
+      placeholder: 'Eg: 2.0.0'
+    validations:
           required: true
 
   - type: textarea
