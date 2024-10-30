@@ -1,0 +1,67 @@
+# EasyTidy
+
+name: 🐛 Bug Report
+description: Problems with EasyTidy
+title: '[BUG]: title'
+labels: ['type: bug']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        # ⬆️ Please give a concise and clear title ⬆️
+        ## Thank you for submitting a EasyTidy 🐛 Bug Report!
+  - type: checkboxes
+    attributes:
+      label: 🔎 Search before asking
+      description: >
+        Please search the EasyTidy [Docs](https://docs.luckyits.com/), [Issues](https://github.com/SaboZhang/Organize/issues) to see if a similar bug report already exists.
+      options:
+        - label: I have searched the EasyTidy [Docs](https://docs.luckyits.com/) and found no similar bug report.
+          required: true
+        - label: I have searched the EasyTidy [Issues](https://github.com/SaboZhang/Organize/issues) and found no similar bug report.
+          required: true
+
+  - type: textarea
+    attributes:
+      label: 🐛 Bug (问题描述)
+      description: Provide console output with error messages and/or screenshots of the bug. (请提供详细报错信息或者截图)
+      placeholder: |
+        💡 ProTip! Include as much information as possible (screenshots, logs, tracebacks etc.) to receive the most helpful response.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: 🏃‍♂️ Environment (运行环境)
+      description: Please describe your running environment so that I can reproduce the bug. (请给出详细系统信息，便于复现问题)
+      placeholder: |
+        ```bash
+        处理器	12th Gen Intel(R) Core(TM) i7-12700H   2.30 GHz
+        机带 RAM	16.0 GB (15.7 GB 可用)
+        系统类型	64 位操作系统, 基于 x64 的处理器
+        版本	Windows 11 家庭中文版
+        版本号	24H2
+        操作系统版本	26100.2033
+        ```
+    validations:
+      required: true
+
+  - type: input
+      attributes:
+          label: Software Version (应用版本)
+          placeholder: 'Eg: 2.0.0'
+      validations:
+          required: true
+
+  - type: textarea
+    attributes:
+      label: 🌰 Steps to Reproduce the Issue (问题复现步骤)
+      description: >
+        When reporting issues, providing detailed steps to reproduce the problem helps in 
+        accurately identifying the bug, facilitating quicker resolution. (请务必提供该复现步骤，这样节省大家时间)
+      placeholder: |
+        ```bash
+        # Operation steps
+        ```
+    validations:
+      required: true

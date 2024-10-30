@@ -50,7 +50,10 @@ public static class OperationHandler
     // 操作方法示例
     private static async Task MoveAsync(string parameter)
     {
-        await Task.Delay(500);
+        await Task.Run(() =>
+        {
+            FileActuator.ExecuteFileOperation(OperationMode.Move, parameter, parameter, FileOperationType.Override);
+        });
         Console.WriteLine("执行移动操作");
     }
 

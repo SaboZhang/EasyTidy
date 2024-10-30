@@ -263,11 +263,11 @@
             </StackPanel>
         </wuc:SettingsPageControl.ModuleContent>
         <wuc:SettingsPageControl.PrimaryLinks>
-            <wuc:PageLink Link="https://aka.ms/powertoys"
+            <wuc:PageLink Link="https://docs.luckyits.com"
                           x:Uid="GeneralUseDocumentation"/>
-            <wuc:PageLink Link="https://aka.ms/powerToysReportBug"
+            <wuc:PageLink Link="https://github.com/SaboZhang/Organize/issues/new?assignees=&labels=&projects=&template=bug_report.md&title="
                           x:Uid="GereralReport"/>
-            <wuc:PageLink Link="https://aka.ms/powerToysRequestFeature"
+            <wuc:PageLink Link="https://github.com/SaboZhang/Organize/issues/new?assignees=&labels=&projects=&template=feature_request.md&title="
                           x:Uid="GeneralRequestFeature"/>
         </wuc:SettingsPageControl.PrimaryLinks>
 
