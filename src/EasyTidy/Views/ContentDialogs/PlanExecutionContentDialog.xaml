@@ -9,7 +9,8 @@
     xmlns:wuc="using:WinUICommunity"
     CornerRadius="{ThemeResource OverlayCornerRadius}"
     DefaultButton="Primary"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
 
     <ContentDialog.Resources>
         <DataTemplate x:Key="ValidationTemplate"
@@ -129,5 +130,18 @@
         <TextBlock x:Uid="DialogExplanation5"
                    Margin="0,-20,0,20"
                    TextWrapping="Wrap"/>
+        <TeachingTip x:Name="PlanTeachingTip"
+                     PreferredPlacement="Center"
+                     Title="最近执行日期">
+            <TeachingTip.HeroContent>
+                <ListView x:Name="PlanListView"
+                          ItemsSource="{x:Bind ViewModel.FireTimes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          SelectionMode="None"
+                          HorizontalContentAlignment="Center"
+                          HorizontalAlignment="Center">
+                    
+                </ListView>
+            </TeachingTip.HeroContent>
+        </TeachingTip>
     </StackPanel>
 </ContentDialog>

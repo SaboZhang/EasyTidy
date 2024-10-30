@@ -18,7 +18,7 @@ public partial class MainViewModel : ObservableObject, ITitleBarAutoSuggestBoxAw
         themeService.ConfigElementTheme();
         _dbContext = App.GetService<AppDbContext>();
         // 启动时执行，不等待
-        _ = Task.Run(OnStartupExecutionAsync);
+        OnStartupExecutionAsync();
         OnStartAllMonitoring();
     }
 
@@ -36,17 +36,22 @@ public partial class MainViewModel : ObservableObject, ITitleBarAutoSuggestBoxAw
     /// 启动时执行
     /// </summary>
     /// <returns></returns>
-    private async Task OnStartupExecutionAsync()
+    private void OnStartupExecutionAsync()
     {
-        var list = _dbContext.Automatic.Include(a => a.TaskOrchestrationList).Where(a => a.IsStartupExecution == true && a.IsEnable == true).ToList();
-        foreach (var item in list) 
-        {
-            foreach(var task in item.TaskOrchestrationList)
-            {
-                // 执行操作
-                await OperationHandler.ExecuteOperationAsync(task.OperationMode, "示例参数1");
-            }
-        }
+        var list = _dbContext.Automatic.Include(a => a.TaskOrchestrationList).Where(a => a.IsStartupExecution == true).ToList();
+        // 并行执行任务，但不等待
+        var tasks = list.SelectMany(item =>
+            item.TaskOrchestrationList
+                .Where(t => t.IsRelated)
+                .Select(task => Task.Run(async () =>
+                    await OperationHandler.ExecuteOperationAsync(task.OperationMode, new OperationParameters
+                    {
+                        SourcePath = "示例参数1", // 示例参数
+                        TargetPath = "示例参数2"  // 可以根据需要修改
+                    }))));
+
+        // 启动所有任务，但不等待它们完成
+        _ = Task.WhenAll(tasks);
 
     }
 
@@ -55,13 +60,24 @@ public partial class MainViewModel : ObservableObject, ITitleBarAutoSuggestBoxAw
     /// </summary>
     private void OnStartAllMonitoring()
     {
-        var list = _dbContext.Automatic.Include(a => a.TaskOrchestrationList).Where(a => a.RegularTaskRunning == true && a.IsEnable == true).ToList();
+        var list = _dbContext.Automatic.Include(a => a.TaskOrchestrationList).Where(a => a.RegularTaskRunning == true).ToList();
         foreach (var item in list)
         {
-            foreach (var task in item.TaskOrchestrationList)
+            foreach (var task in item.TaskOrchestrationList.Where(t => t.IsRelated))
             {
-                // 执行操作
-                FileEventHandler.MonitorFolder(task.OperationMode, task.FilePath, task.TargetPath, task.FileOperationType);
+                RuleModel rule = new()
+                {
+                    Rule = task.TaskRule,
+                    RuleType = task.RuleType,
+                    Filter = task.Filter
+                };
+                // 根据 GeneralConfig 判断调用
+                FileOperationType fileOperationType = Settings.GeneralConfig != null
+                    ? Settings.GeneralConfig.FileOperationType
+                    : default; // 使用 default 或者枚举中的某个默认值
+                               // 执行操作
+                FileEventHandler.MonitorFolder(task.OperationMode, task.TaskSource, task.TaskTarget, Convert.ToInt32(item.DelaySeconds), rule, fileOperationType);
+                
             }
         }
     }

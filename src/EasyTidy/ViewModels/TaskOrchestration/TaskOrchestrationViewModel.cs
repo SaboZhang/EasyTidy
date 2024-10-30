@@ -109,7 +109,8 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 TaskName = dialog.TaskName,
                 TaskRule = dialog.TaskRule,
                 TaskSource = SelectedOperationMode == OperationMode.Delete || SelectedOperationMode == OperationMode.RecycleBin
-                ? string.Empty : TaskSource,
+                ? string.Empty : TaskSource.Equals("DesktopText".GetLocalized())
+                ? Environment.GetFolderPath(Environment.SpecialFolder.Desktop) : TaskSource,
                 Shortcut = dialog.Shortcut,
                 TaskTarget = TaskTarget,
                 OperationMode = SelectedOperationMode,

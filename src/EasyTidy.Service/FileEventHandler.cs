@@ -20,7 +20,7 @@ public static class FileEventHandler
     /// <param name="targetPath"></param>
     /// <param name="delaySeconds"></param>
     /// <param name="fileOperationType"></param>
-    public static void MonitorFolder(OperationMode operationMode, string folderPath, string targetPath, int delaySeconds, FileOperationType fileOperationType, RuleModel filter)
+    public static void MonitorFolder(OperationMode operationMode, string folderPath, string targetPath, int delaySeconds, RuleModel filter, FileOperationType fileOperationType = FileOperationType.Skip)
     {
         if (_watchers.ContainsKey(folderPath)) return; // 防止重复监控
 

@@ -20,7 +20,7 @@ public static class FileActuator
             // 处理文件夹操作
             ProcessDirectory(sourcePath, targetPath, operationMode, fileOperationType, pathFilters);
         }
-        else if (File.Exists(sourcePath))
+        else if (File.Exists(sourcePath) || File.Exists(targetPath))
         {
             // 处理单个文件操作
             ProcessFile(sourcePath, targetPath, operationMode, fileOperationType, pathFilters);
@@ -77,13 +77,13 @@ public static class FileActuator
                 CopyFile(sourcePath, targetPath, fileOperationType);
                 break;
             case OperationMode.Delete:
-                DeleteFile(sourcePath);
+                DeleteFile(targetPath);
                 break;
             case OperationMode.Rename:
                 RenameFile(sourcePath, targetPath);
                 break;
             case OperationMode.RecycleBin:
-                MoveToRecycleBin(sourcePath);
+                MoveToRecycleBin(targetPath);
                 break;
             default:
                 throw new NotSupportedException($"Operation mode '{operationMode}' is not supported.");

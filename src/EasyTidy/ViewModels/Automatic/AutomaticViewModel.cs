@@ -3,9 +3,11 @@ using CommunityToolkit.WinUI.Collections;
 using EasyTidy.Common.Database;
 using EasyTidy.Common.Job;
 using EasyTidy.Model;
+using EasyTidy.Util;
 using EasyTidy.Views.ContentDialogs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.UI.Dispatching;
+using Microsoft.UI.Xaml.Controls;
 using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
 
@@ -181,7 +183,7 @@ public partial class AutomaticViewModel : ObservableRecipient
     private string _selectTaskTime = DateTime.Now.ToString("HH:mm");
 
     [ObservableProperty]
-    private List<string> _fireTimes
+    private List<string> _fireTimes;
 
     private bool _customSchedule = false;
 
@@ -208,7 +210,8 @@ public partial class AutomaticViewModel : ObservableRecipient
             Title = "ScheduleText".GetLocalized(),
             PrimaryButtonText = "SaveText".GetLocalized(),
             CloseButtonText = "CancelText".GetLocalized(),
-            ThemeService = themeService
+            ThemeService = themeService,
+            SecondaryButtonText = "测试"
         };
         dialog.PrimaryButtonClick += OnOnAddPlanPrimaryButton;
 
@@ -312,7 +315,7 @@ public partial class AutomaticViewModel : ObservableRecipient
             await _dbContext.Automatic.AddAsync(auto);
 
             await _dbContext.SaveChangesAsync();
-            await AutomaticCustomJob.AddCustomTaskConfig(auto, CustomSchedule);
+            await AutomaticJob.AddTaskConfig(auto, CustomSchedule);
         }
         catch (Exception ex)
         {
@@ -501,12 +504,19 @@ public partial class AutomaticViewModel : ObservableRecipient
 
     }
 
-    private void VerifyCronExpression(string cronExpression)
+    public bool VerifyCronExpression(string cronExpression)
     {
         var result = CronExpressionUtil.VerificationCronExpression(cronExpression);
-        VerificationMessage = result.Message;
+        var VerificationMessage = result.Message;
+        if (result.IsValid ) 
+        {
+            FireTimes = result.FireTimes.Select(time => time.ToString("yyyy-MM-dd HH:mm:ss")).ToList();
+            return true;
+        }
+        else
+        {
+            return false;
+        }
         
-        // Format fire times for display
-        FireTimes = result.FireTimes.Select(time => time.ToString("yyyy-MM-dd HH:mm:ss")).ToList();
     }
 }

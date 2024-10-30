@@ -8,14 +8,14 @@ namespace EasyTidy.Service;
 public static class OperationHandler
 {
     // 创建委托类型用于操作方法
-    private delegate void OperationMethod(string parameter);
+    private delegate void OperationMethod(OperationParameters parameter);
 
     // 使用字典映射操作名称到方法
-    private static readonly Dictionary<OperationMode, Func<string, Task>> _operations;
+    private static readonly Dictionary<OperationMode, Func<OperationParameters, Task>> _operations;
 
     static OperationHandler()
     {
-        _operations = new Dictionary<OperationMode, Func<string, Task>>
+        _operations = new Dictionary<OperationMode, Func<OperationParameters, Task>>
         {
             { OperationMode.Move, MoveAsync },
             { OperationMode.Copy, CopyAsync },
@@ -26,7 +26,7 @@ public static class OperationHandler
     }
 
     // 执行操作的方法
-    public static async Task ExecuteOperationAsync(OperationMode operationValue, string parameter)
+    public static async Task ExecuteOperationAsync(OperationMode operationValue, OperationParameters parameter)
     {
         if (Enum.IsDefined(typeof(OperationMode), operationValue))
         {
@@ -48,36 +48,48 @@ public static class OperationHandler
     }
 
     // 操作方法示例
-    private static async Task MoveAsync(string parameter)
+    private static async Task MoveAsync(OperationParameters parameter)
     {
         await Task.Run(() =>
         {
-            FileActuator.ExecuteFileOperation(OperationMode.Move, parameter, parameter, FileOperationType.Override);
+            FileActuator.ExecuteFileOperation(OperationMode.Move, parameter.SourcePath, parameter.TargetPath, FileOperationType.Override);
         });
         Console.WriteLine("执行移动操作");
     }
 
-    private static async Task CopyAsync(string parameter)
+    private static async Task CopyAsync(OperationParameters parameter)
     {
-        await Task.Delay(500);
+        await Task.Run(() =>
+        {
+            FileActuator.ExecuteFileOperation(OperationMode.Copy, parameter.SourcePath, parameter.TargetPath, FileOperationType.Override);
+        });
         Console.WriteLine("执行复制操作");
     }
 
-    private static async Task DeleteAsync(string parameter)
+    private static async Task DeleteAsync(OperationParameters parameter)
     {
-        await Task.Delay(500);
+        await Task.Run(() =>
+        {
+            FileActuator.ExecuteFileOperation(OperationMode.Delete, parameter.SourcePath, parameter.TargetPath, FileOperationType.Override);
+        });
         Console.WriteLine("执行删除操作");
     }
 
-    private static async Task RenameAsync(string parameter)
+    private static async Task RenameAsync(OperationParameters parameter)
     {
-        await Task.Delay(500);
+        await Task.Run(() =>
+        {
+            FileActuator.ExecuteFileOperation(OperationMode.Rename, parameter.SourcePath, parameter.TargetPath, FileOperationType.Override);
+        });
         Console.WriteLine("重命名逻辑");
     }
 
-    private static async Task RecycleBinAsync(string parameter) 
+    private static async Task RecycleBinAsync(OperationParameters parameter) 
     {
-        await Task.Delay(500);
+        await Task.Run(() => 
+        { 
+            FileActuator.ExecuteFileOperation(OperationMode.RecycleBin, parameter.SourcePath, parameter.TargetPath, FileOperationType.Override); 
+        });
         Console.WriteLine("回收站逻辑");
     }
 }

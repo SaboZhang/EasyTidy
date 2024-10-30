@@ -2,6 +2,7 @@
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
 using CommunityToolkit.WinUI;
+using EasyTidy.Util;
 using System.Collections;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -271,4 +272,40 @@ public sealed partial class PlanExecutionContentDialog : ContentDialog, INotifyD
         OnErrorsChanged(key);
     }
 
+    private ContentDialogButtonClickEventArgs _secondaryButtonArgs;
+
+    private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+    {
+        var verifyCron = false;
+
+        if (string.IsNullOrEmpty(CronExpression))
+        {
+            verifyCron = ViewModel.VerifyCronExpression(CronExpression);
+        }
+        else
+        {
+            var cron = CronExpressionUtil.GenerateCronExpression(Minute, Hour, DayOfMonth, MonthlyDay, DayOfWeek);
+            verifyCron = ViewModel.VerifyCronExpression(cron);
+        }
+        args.Cancel = true;
+        _secondaryButtonArgs = args;
+        PlanTeachingTip.IsOpen = true;
+        if (!verifyCron)
+        {
+            PlanTeachingTip.Subtitle = "验证失败";
+        }
+        PlanTeachingTip.CloseButtonClick += PlanTeachingTip_CloseButtonClick;
+    }
+
+    private void PlanTeachingTip_CloseButtonClick(TeachingTip sender, object args)
+    {
+        // 关闭 TeachingTip
+        sender.IsOpen = false;
+
+        // 在这里设置 args.Cancel = false; 但 args 需要是适当的上下文
+        if (_secondaryButtonArgs != null)
+        {
+            _secondaryButtonArgs.Cancel = false; // 允许关闭 ContentDialog
+        }
+    }
 }
