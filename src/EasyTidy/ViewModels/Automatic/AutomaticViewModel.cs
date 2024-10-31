@@ -223,7 +223,7 @@ public partial class AutomaticViewModel : ObservableRecipient
             PrimaryButtonText = "SaveText".GetLocalized(),
             CloseButtonText = "CancelText".GetLocalized(),
             ThemeService = themeService,
-            SecondaryButtonText = "测试"
+            SecondaryButtonText = "Test".GetLocalized()
         };
         dialog.PrimaryButtonClick += OnOnAddPlanPrimaryButton;
 
@@ -268,6 +268,7 @@ public partial class AutomaticViewModel : ObservableRecipient
             Title = "CustomConfigurationText".GetLocalized(),
             PrimaryButtonText = "SaveText".GetLocalized(),
             CloseButtonText = "CancelText".GetLocalized(),
+            SecondaryButtonText = "Test".GetLocalized()
         };
 
         dialog.PrimaryButtonClick += OnAddCustomConfigPrimaryButton;
@@ -516,18 +517,19 @@ public partial class AutomaticViewModel : ObservableRecipient
 
     }
 
-    public bool VerifyCronExpression(string cronExpression)
+    public (bool IsValid, string Times) VerifyCronExpression(string cronExpression)
     {
+        FireTimes?.Clear();
         var result = CronExpressionUtil.VerificationCronExpression(cronExpression);
         var VerificationMessage = result.Message;
         if (result.IsValid ) 
         {
             FireTimes = result.FireTimes.Select(time => time.ToString("yyyy-MM-dd HH:mm:ss")).ToList();
-            return true;
+            return (true, FireTimes.Count.ToString());
         }
         else
         {
-            return false;
+            return (false, "0");
         }
         
     }

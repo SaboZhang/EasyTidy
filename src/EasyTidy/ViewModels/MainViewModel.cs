@@ -1,7 +1,9 @@
 ﻿using EasyTidy.Common.Database;
 using EasyTidy.Model;
 using EasyTidy.Service;
+using EasyTidy.Util;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 using WinRT;
 
 namespace EasyTidy.ViewModels;
@@ -38,17 +40,32 @@ public partial class MainViewModel : ObservableObject, ITitleBarAutoSuggestBoxAw
     /// <returns></returns>
     private void OnStartupExecutionAsync()
     {
-        var list = _dbContext.Automatic.Include(a => a.TaskOrchestrationList).Where(a => a.IsStartupExecution == true).ToList();
+        var list = _dbContext.Automatic.Include(a => a.TaskOrchestrationList)
+        .Where(a => a.IsStartupExecution)
+        .ToList();
+
         // 并行执行任务，但不等待
         var tasks = list.SelectMany(item =>
             item.TaskOrchestrationList
                 .Where(t => t.IsRelated)
-                .Select(task => Task.Run(async () =>
+                .Select(async task =>
+                {
+                    // 处理过滤器
+                    List<Func<string, bool>> pathFilters = FilterUtil.GetPathFilters(task.Filter);
+                    List<Func<string, bool>> dynamicFilters = FilterUtil.GeneratePathFilters(task.TaskRule, task.RuleType);
+                    pathFilters.AddRange(dynamicFilters);
+
+                    // 执行操作
                     await OperationHandler.ExecuteOperationAsync(task.OperationMode, new OperationParameters
                     {
-                        SourcePath = "示例参数1", // 示例参数
-                        TargetPath = "示例参数2"  // 可以根据需要修改
-                    }))));
+                        OperationMode = task.OperationMode,
+                        SourcePath = task.TaskSource,
+                        TargetPath = task.TaskTarget,
+                        FileOperationType = Settings.GeneralConfig.FileOperationType,
+                        HandleSubfolders = Settings.GeneralConfig.SubFolder,
+                        Funcs = pathFilters // 将过滤器传递给操作
+                    });
+                }));
 
         // 启动所有任务，但不等待它们完成
         _ = Task.WhenAll(tasks);
@@ -76,7 +93,8 @@ public partial class MainViewModel : ObservableObject, ITitleBarAutoSuggestBoxAw
                     ? Settings.GeneralConfig.FileOperationType
                     : default; // 使用 default 或者枚举中的某个默认值
                                // 执行操作
-                FileEventHandler.MonitorFolder(task.OperationMode, task.TaskSource, task.TaskTarget, Convert.ToInt32(item.DelaySeconds), rule, fileOperationType);
+                var sub = Settings.GeneralConfig?.SubFolder ?? true;
+                FileEventHandler.MonitorFolder(task.OperationMode, task.TaskSource, task.TaskTarget, Convert.ToInt32(item.DelaySeconds), rule, sub, fileOperationType);
                 
             }
         }

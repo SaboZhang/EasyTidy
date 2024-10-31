@@ -4,6 +4,7 @@ using EasyTidy.Service;
 using EasyTidy.Util;
 using Microsoft.EntityFrameworkCore;
 using Quartz;
+using System;
 
 
 namespace EasyTidy.Common.Job;
@@ -48,10 +49,20 @@ public class AutomaticJob : IJob
         }
         if (task != null)
         {
+            List<Func<string, bool>> pathFilters = FilterUtil.GetPathFilters(task.Filter);
+            // 根据 rule 和 RuleType 动态生成的过滤条件
+            List<Func<string, bool>> dynamicFilters = FilterUtil.GeneratePathFilters(task.TaskRule, task.RuleType);
+            pathFilters.AddRange(dynamicFilters);
+
             OperationParameters operationParameters = new OperationParameters
             {
+                OperationMode = task.OperationMode,
                 SourcePath = task.TaskSource,
-                TargetPath = task.TaskTarget
+                TargetPath = task.TaskTarget,
+                FileOperationType = Settings.GeneralConfig.FileOperationType,
+                HandleSubfolders = Settings.GeneralConfig.SubFolder,
+                Funcs = pathFilters,
+
             };
 
             // 执行操作
@@ -107,7 +118,8 @@ public class AutomaticJob : IJob
 
             if (automaticTable.IsFileChange)
             {
-                FileEventHandler.MonitorFolder(item.OperationMode, item.TaskSource, item.TaskTarget, delay, ruleModel, Settings.GeneralConfig.FileOperationType);
+                var sub = Settings.GeneralConfig?.SubFolder ?? true;
+                FileEventHandler.MonitorFolder(item.OperationMode, item.TaskSource, item.TaskTarget, delay, ruleModel, sub, Settings.GeneralConfig.FileOperationType);
 
                 if (automaticTable.RegularTaskRunning)
                 {

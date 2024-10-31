@@ -1083,4 +1083,40 @@
   <data name="HandlingRulesForCustom" xml:space="preserve">
     <value>None</value>
   </data>
+  <data name="ExecutionDate.Title" xml:space="preserve">
+    <value>執行日期</value>
+  </data>
+  <data name="VerificationSuccessful" xml:space="preserve">
+    <value>驗證成功，最近 {0} 次的執行時間</value>
+  </data>
+  <data name="VerificationFailed" xml:space="preserve">
+    <value>驗證失敗，每個星期第幾天跟每月第幾天存在衝突</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>關閉</value>
+  </data>
+  <data name="Test" xml:space="preserve">
+    <value>測試</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>狀態</value>
+  </data>
+  <data name="CurrentVersion" xml:space="preserve">
+    <value>當前版本 v{0}</value>
+  </data>
+  <data name="CheckingForNewVersion" xml:space="preserve">
+    <value>檢查新版本</value>
+  </data>
+  <data name="FoundANewVersion" xml:space="preserve">
+    <value>我們發現了一個新版本{0}創建於{1}和發佈於{2}</value>
+  </data>
+  <data name="LatestVersion" xml:space="preserve">
+    <value>您正在使用最新版本</value>
+  </data>
+  <data name="ErrorConnection" xml:space="preserve">
+    <value>錯誤連線</value>
+  </data>
+  <data name="ReleaseNotes" xml:space="preserve">
+    <value>發行說明</value>
+  </data>
 </root>

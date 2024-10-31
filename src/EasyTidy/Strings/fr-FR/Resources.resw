@@ -1080,4 +1080,40 @@
   <data name="HandlingRulesForCustom" xml:space="preserve">
     <value>None</value>
   </data>
+  <data name="ExecutionDate.Title" xml:space="preserve">
+    <value>Date d'exécution</value>
+  </data>
+  <data name="VerificationSuccessful" xml:space="preserve">
+    <value>La validation a été réussie, temps d'exécution des {0} dernières fois</value>
+  </data>
+  <data name="VerificationFailed" xml:space="preserve">
+    <value>Échec de vérification, conflit entre le jour de la semaine et le jour du mois</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Fermé</value>
+  </data>
+  <data name="Test" xml:space="preserve">
+    <value>Test</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Statut</value>
+  </data>
+  <data name="CurrentVersion" xml:space="preserve">
+    <value>Version actuelle v{0}</value>
+  </data>
+  <data name="CheckingForNewVersion" xml:space="preserve">
+    <value>Vérification de la nouvelle version</value>
+  </data>
+  <data name="FoundANewVersion" xml:space="preserve">
+    <value>Nous avons trouvé une nouvelle version {0} créée à {1} et publiée à {2}</value>
+  </data>
+  <data name="LatestVersion" xml:space="preserve">
+    <value>Vous utilisez la dernière version</value>
+  </data>
+  <data name="ErrorConnection" xml:space="preserve">
+    <value>Erreur de connexion</value>
+  </data>
+  <data name="ReleaseNotes" xml:space="preserve">
+    <value>Notes de mise à jour</value>
+  </data>
 </root>

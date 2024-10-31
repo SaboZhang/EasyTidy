@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -12,18 +13,18 @@ namespace EasyTidy.Service;
 
 public static class FileActuator
 {
-    
-    public static void ExecuteFileOperation(OperationMode operationMode, string sourcePath, string targetPath, FileOperationType fileOperationType, List<Func<string, bool>> pathFilters = null)
+
+    public static void ExecuteFileOperation(OperationMode operationMode, string sourcePath, string targetPath, FileOperationType fileOperationType, bool subFolder = true, List<Func<string, bool>> pathFilters = null)
     {
         if (Directory.Exists(sourcePath))
         {
             // 处理文件夹操作
-            ProcessDirectory(sourcePath, targetPath, operationMode, fileOperationType, pathFilters);
+            ProcessDirectory(sourcePath, targetPath, operationMode, fileOperationType, subFolder, pathFilters);
         }
         else if (File.Exists(sourcePath) || File.Exists(targetPath))
         {
             // 处理单个文件操作
-            ProcessFile(sourcePath, targetPath, operationMode, fileOperationType, pathFilters);
+            ProcessFile(sourcePath, targetPath, operationMode, fileOperationType, subFolder, pathFilters);
         }
         else
         {
@@ -31,7 +32,7 @@ public static class FileActuator
         }
     }
 
-    private static void ProcessDirectory(string sourceDir, string targetDir, OperationMode operationMode, FileOperationType fileOperationType, List<Func<string, bool>> pathFilters = null)
+    private static void ProcessDirectory(string sourceDir, string targetDir, OperationMode operationMode, FileOperationType fileOperationType, bool subFolder = true, List<Func<string, bool>> pathFilters = null)
     {
         // 创建目标目录
         if (!Directory.Exists(targetDir))
@@ -47,22 +48,25 @@ public static class FileActuator
                 continue; // 跳过不符合条件的文件
             }
             string targetFilePath = Path.Combine(targetDir, Path.GetFileName(filePath));
-            ProcessFile(filePath, targetFilePath, operationMode, fileOperationType, pathFilters);
+            ProcessFile(filePath, targetFilePath, operationMode, fileOperationType, subFolder, pathFilters);
         }
 
         // 递归处理子文件夹
-        foreach (var subDir in Directory.GetDirectories(sourceDir))
+        if (subFolder)
         {
-            if (ShouldSkip(pathFilters, subDir))
+            foreach (var subDir in Directory.GetDirectories(sourceDir))
             {
-                continue; // 跳过不符合条件的文件夹
+                if (ShouldSkip(pathFilters, subDir))
+                {
+                    continue; // 跳过不符合条件的文件夹
+                }
+                string targetSubDir = Path.Combine(targetDir, Path.GetFileName(subDir));
+                ProcessDirectory(subDir, targetSubDir, operationMode, fileOperationType, subFolder, pathFilters);
             }
-            string targetSubDir = Path.Combine(targetDir, Path.GetFileName(subDir));
-            ProcessDirectory(subDir, targetSubDir, operationMode, fileOperationType, pathFilters);
         }
     }
 
-    private static void ProcessFile(string sourcePath, string targetPath, OperationMode operationMode, FileOperationType fileOperationType, List<Func<string, bool>> pathFilters = null)
+    private static void ProcessFile(string sourcePath, string targetPath, OperationMode operationMode, FileOperationType fileOperationType, bool subFolder = true, List<Func<string, bool>> pathFilters = null)
     {
         if (ShouldSkip(pathFilters, sourcePath))
         {
@@ -83,7 +87,7 @@ public static class FileActuator
                 RenameFile(sourcePath, targetPath);
                 break;
             case OperationMode.RecycleBin:
-                MoveToRecycleBin(targetPath);
+                MoveToRecycleBin(targetPath, subFolder);
                 break;
             default:
                 throw new NotSupportedException($"Operation mode '{operationMode}' is not supported.");
@@ -119,10 +123,38 @@ public static class FileActuator
         File.Move(sourcePath, targetPath);
     }
 
-    private static void MoveToRecycleBin(string path)
+    private static void MoveToRecycleBin(string path, bool deleteSubfolders = false)
     {
-        // 需要使用一个外部库，例如 System.IO.FileSystem.Primitives
-        // 这里用伪代码表示将文件移动到回收站的逻辑
+        if (!Directory.Exists(path))
+        {
+            throw new DirectoryNotFoundException($"Directory not found: {path}");
+        }
+        if (deleteSubfolders)
+        {
+            foreach (var subfolder in Directory.GetDirectories(path))
+            {
+                MoveToRecycleBin(subfolder, true);
+            }
+        }
+
+        // Get all files in the directory
+        var files = Directory.GetFiles(path);
+        foreach (var file in files)
+        {
+            DeleteFileToRecycleBin(file);
+        }
+    }
+
+    private static void DeleteFileToRecycleBin(string filePath)
+    {
+        SHFILEOPSTRUCT shFileOp = new SHFILEOPSTRUCT
+        {
+            wFunc = FO_DELETE,
+            pFrom = filePath + '\0', // Ensure null-terminated string
+            fFlags = FOF_ALLOWUNDO | FOF_NOCONFIRMATION | FOF_SILENT
+        };
+
+        SHFileOperation(ref shFileOp);
     }
 
     private static void HandleFileConflict(string sourcePath, string targetPath, FileOperationType fileOperationType, Action action)
@@ -213,5 +245,26 @@ public static class FileActuator
 
         return false; // 不跳过
     }
+
+    [DllImport("shell32.dll", CharSet = CharSet.Auto)]
+    private static extern int SHFileOperation(ref SHFILEOPSTRUCT FileOp);
+
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+    private struct SHFILEOPSTRUCT
+    {
+        public IntPtr hwnd;
+        public uint wFunc;
+        public string pFrom;
+        public string pTo;
+        public uint fFlags;
+        public bool fAnyOperationsAborted;
+        public IntPtr hNameMappings;
+        public string lpszProgressTitle;
+    }
+
+    private const int FO_DELETE = 3;
+    private const int FOF_NOCONFIRMATION = 0x00000010;
+    private const int FOF_SILENT = 0x00000004;
+    private const int FOF_ALLOWUNDO = 0x00000400;
 
 }

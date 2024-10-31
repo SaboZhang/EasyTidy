@@ -21,4 +21,6 @@ public class OperationParameters
 
     public RuleModel RuleModel { get; set; }
 
+    public bool? HandleSubfolders { get; set; }
+
 }

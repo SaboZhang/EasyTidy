@@ -1,4 +1,5 @@
-﻿using Windows.System;
+﻿using CommunityToolkit.WinUI;
+using Windows.System;
 
 namespace EasyTidy.ViewModels;
 public partial class AppUpdateSettingViewModel : ObservableObject
@@ -19,30 +20,35 @@ public partial class AppUpdateSettingViewModel : ObservableObject
     public bool isCheckButtonEnabled = true;
 
     [ObservableProperty]
-    public string loadingStatus = "Status";
+    public string loadingStatus = "Status".GetLocalized();
 
     private string ChangeLog = string.Empty;
 
     public AppUpdateSettingViewModel()
     {
-        CurrentVersion = $"Current Version v{App.Current.AppVersion}";
+        CurrentVersion = string.Format("CurrentVersion".GetLocalized(), App.Current.AppVersion);
         LastUpdateCheck = Settings.LastUpdateCheck;
     }
 
     [RelayCommand]
     private async Task CheckForUpdateAsync()
     {
+        await CheckForNewVersionAsync();
+    }
+
+    public async Task CheckForNewVersionAsync()
+    {
         IsLoading = true;
         IsUpdateAvailable = false;
         IsCheckButtonEnabled = false;
-        LoadingStatus = "Checking for new version";
+        LoadingStatus = "CheckingForNewVersion".GetLocalized();
         if (NetworkHelper.IsNetworkAvailable())
         {
             try
             {
                 //Todo: Fix UserName and Repo
-                string username = "";
-                string repo = "";
+                string username = "SaboZhang";
+                string repo = "Organize";
                 LastUpdateCheck = DateTime.Now.ToShortDateString();
                 Settings.LastUpdateCheck = DateTime.Now.ToShortDateString();
                 var update = await UpdateHelper.CheckUpdateAsync(username, repo, new Version(App.Current.AppVersion));
@@ -50,11 +56,11 @@ public partial class AppUpdateSettingViewModel : ObservableObject
                 {
                     IsUpdateAvailable = true;
                     ChangeLog = update.Changelog;
-                    LoadingStatus = $"We found a new version {update.TagName} Created at {update.CreatedAt} and Published at {update.PublishedAt}";
+                    LoadingStatus = string.Format("NewVersionAvailable".GetLocalized(), update.TagName, update.CreatedAt, update.PublishedAt);
                 }
                 else
                 {
-                    LoadingStatus = "You are using latest version";
+                    LoadingStatus = "LatestVersion".GetLocalized();
                 }
             }
             catch (Exception ex)
@@ -66,7 +72,7 @@ public partial class AppUpdateSettingViewModel : ObservableObject
         }
         else
         {
-            LoadingStatus = "Error Connection";
+            LoadingStatus = "ErrorConnection".GetLocalized();
         }
         IsLoading = false;
         IsCheckButtonEnabled = true;
@@ -84,8 +90,8 @@ public partial class AppUpdateSettingViewModel : ObservableObject
     {
         ContentDialog dialog = new ContentDialog()
         {
-            Title = "发行说明",
-            CloseButtonText = "关闭",
+            Title = "ReleaseNotes".GetLocalized(),
+            CloseButtonText = "Close".GetLocalized(),
             Content = new ScrollViewer
             {
                 Content = new TextBlock

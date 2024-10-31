@@ -1083,4 +1083,40 @@
   <data name="HandlingRulesForCustom" xml:space="preserve">
     <value>None</value>
   </data>
+  <data name="ExecutionDate.Title" xml:space="preserve">
+    <value>執行日</value>
+  </data>
+  <data name="VerificationSuccessful" xml:space="preserve">
+    <value>検証は成功しました，過去{0}回の試行の実行時間</value>
+  </data>
+  <data name="VerificationFailed" xml:space="preserve">
+    <value>検証失敗、曜日と月日の衝突</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>閉じる</value>
+  </data>
+  <data name="Test" xml:space="preserve">
+    <value>テスト</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>ステータス</value>
+  </data>
+  <data name="CurrentVersion" xml:space="preserve">
+    <value>現在のバージョン v{0}</value>
+  </data>
+  <data name="CheckingForNewVersion" xml:space="preserve">
+    <value>新しいバージョンをチェックしています</value>
+  </data>
+  <data name="FoundANewVersion" xml:space="preserve">
+    <value>新しいバージョンである{0}が発見されました。{1}に作成されました{2}にリリースされました</value>
+  </data>
+  <data name="LatestVersion" xml:space="preserve">
+    <value>最新バージョンを使用しています</value>
+  </data>
+  <data name="ErrorConnection" xml:space="preserve">
+    <value>接続エラー</value>
+  </data>
+  <data name="ReleaseNotes" xml:space="preserve">
+    <value>リリースノート</value>
+  </data>
 </root>

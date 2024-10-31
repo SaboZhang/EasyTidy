@@ -132,7 +132,7 @@
                    TextWrapping="Wrap"/>
         <TeachingTip x:Name="PlanTeachingTip"
                      PreferredPlacement="Center"
-                     Title="最近执行日期">
+                     x:Uid="ExecutionDate">
             <TeachingTip.HeroContent>
                 <ListView x:Name="PlanListView"
                           ItemsSource="{x:Bind ViewModel.FireTimes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"

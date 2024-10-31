@@ -276,24 +276,22 @@ public sealed partial class PlanExecutionContentDialog : ContentDialog, INotifyD
 
     private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
     {
-        var verifyCron = false;
+        _secondaryButtonArgs = args; // 保存 args
 
-        if (string.IsNullOrEmpty(CronExpression))
-        {
-            verifyCron = ViewModel.VerifyCronExpression(CronExpression);
-        }
-        else
-        {
-            var cron = CronExpressionUtil.GenerateCronExpression(Minute, Hour, DayOfMonth, MonthlyDay, DayOfWeek);
-            verifyCron = ViewModel.VerifyCronExpression(cron);
-        }
-        args.Cancel = true;
-        _secondaryButtonArgs = args;
+        // 验证 Cron 表达式
+        var (IsValid, Times) = !string.IsNullOrEmpty(CronExpression)
+            ? ViewModel.VerifyCronExpression(CronExpression)
+            : ViewModel.VerifyCronExpression(CronExpressionUtil.GenerateCronExpression(Minute, Hour, DayOfMonth, MonthlyDay, DayOfWeek));
+
+        // 处理 TeachingTip 的显示
         PlanTeachingTip.IsOpen = true;
-        if (!verifyCron)
-        {
-            PlanTeachingTip.Subtitle = "验证失败";
-        }
+        PlanTeachingTip.Subtitle = IsValid
+            ? string.Format("VerificationSuccessful".GetLocalized(), Times)
+            : "VerificationFailed".GetLocalized();
+
+        // 取消 ContentDialog 的关闭
+        args.Cancel = true;
+        PlanTeachingTip.CloseButtonContent = "Close".GetLocalized();
         PlanTeachingTip.CloseButtonClick += PlanTeachingTip_CloseButtonClick;
     }
 
@@ -302,10 +300,11 @@ public sealed partial class PlanExecutionContentDialog : ContentDialog, INotifyD
         // 关闭 TeachingTip
         sender.IsOpen = false;
 
-        // 在这里设置 args.Cancel = false; 但 args 需要是适当的上下文
+        // 允许关闭 ContentDialog
         if (_secondaryButtonArgs != null)
         {
-            _secondaryButtonArgs.Cancel = false; // 允许关闭 ContentDialog
+            _secondaryButtonArgs.Cancel = false;
         }
     }
+
 }

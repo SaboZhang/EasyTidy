@@ -10,7 +10,8 @@
     xmlns:model="using:EasyTidy.Model"
     mc:Ignorable="d"
     CornerRadius="{ThemeResource OverlayCornerRadius}"
-    DefaultButton="Primary">
+    DefaultButton="Primary"
+    SecondaryButtonClick="CustomContentDialog_SecondaryButtonClick">
 
     <ContentDialog.Resources>
         <DataTemplate x:Key="ValidationTemplate"
@@ -211,6 +212,17 @@
                     <TextBlock Height="48"
                                Margin="8"/>
                 </StackPanel>
+                <TeachingTip x:Name="CustomPlanTeachingTip"
+                             PreferredPlacement="Center"
+                             x:Uid="ExecutionDate">
+                    <TeachingTip.HeroContent>
+                        <ListView x:Name="PlanListView"
+                                  ItemsSource="{x:Bind ViewModel.FireTimes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                  SelectionMode="None"
+                                  HorizontalContentAlignment="Center"
+                                  HorizontalAlignment="Center"/>
+                    </TeachingTip.HeroContent>
+                </TeachingTip>
             </StackPanel>
         </StackPanel>
     </StackPanel>

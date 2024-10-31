@@ -142,15 +142,8 @@ public partial class App : Application
         MainWindow.Activate();
         if ((bool)Settings.GeneralConfig.IsStartupCheck)
         {
-            try
-            {
-                Settings.LastUpdateCheck = DateTime.Now.ToShortDateString();
-                var update = await UpdateHelper.CheckUpdateAsync("SaboZhang", "Organize", new Version(Current.AppVersion));
-            }
-            catch (Exception ex)
-            {
-                Logger.Error(ex.ToString());
-            }
+            var app = new AppUpdateSettingViewModel();
+            await app.CheckForNewVersionAsync();
         }
 
         await QuartzConfig.InitQuartzConfigAsync();

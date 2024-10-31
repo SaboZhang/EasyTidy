@@ -1128,4 +1128,40 @@
   <data name="HandlingRulesForCustom" xml:space="preserve">
     <value>None</value>
   </data>
+  <data name="ExecutionDate.Title" xml:space="preserve">
+    <value>Execution Date</value>
+  </data>
+  <data name="VerificationSuccessful" xml:space="preserve">
+    <value>Validation was successful, execution time of the past {0} times</value>
+  </data>
+  <data name="VerificationFailed" xml:space="preserve">
+    <value>Verification failed, conflict between day of the week and day of the month</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Test" xml:space="preserve">
+    <value>Test</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="CurrentVersion" xml:space="preserve">
+    <value>Current version v{0}</value>
+  </data>
+  <data name="CheckingForNewVersion" xml:space="preserve">
+    <value>Checking for new version</value>
+  </data>
+  <data name="FoundANewVersion" xml:space="preserve">
+    <value>We found a new version {0} Created at {1} and Published at {2}</value>
+  </data>
+  <data name="LatestVersion" xml:space="preserve">
+    <value>You are using latest version</value>
+  </data>
+  <data name="ErrorConnection" xml:space="preserve">
+    <value>Error Connection</value>
+  </data>
+  <data name="ReleaseNotes" xml:space="preserve">
+    <value>Release Notes</value>
+  </data>
 </root>

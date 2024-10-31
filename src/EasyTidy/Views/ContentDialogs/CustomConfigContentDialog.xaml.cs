@@ -2,6 +2,7 @@
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
 using CommunityToolkit.WinUI;
+using EasyTidy.Util;
 using Quartz;
 using System.Collections;
 using System.ComponentModel;
@@ -306,6 +307,41 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
     private void CustomTaskSelect_CloseButtonClick(TeachingTip sender, object args)
     {
         ViewModel.SelectedItemChangedCommand.Execute(sender);
+    }
+
+    private ContentDialogButtonClickEventArgs _secondaryButtonArgs;
+
+    private void CustomContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+    {
+        _secondaryButtonArgs = args; // 保存 args
+
+        // 验证 Cron 表达式
+        var (IsValid, Times) = !string.IsNullOrEmpty(Expression)
+            ? ViewModel.VerifyCronExpression(Expression)
+            : ViewModel.VerifyCronExpression(CronExpressionUtil.GenerateCronExpression(Minute, Hour, DayOfMonth, MonthlyDay, DayOfWeek));
+
+        // 处理 TeachingTip 的显示
+        CustomPlanTeachingTip.IsOpen = true;
+        CustomPlanTeachingTip.Subtitle = IsValid
+            ? string.Format("VerificationSuccessful".GetLocalized(), Times)
+            : "VerificationFailed".GetLocalized();
+
+        // 取消 ContentDialog 的关闭
+        args.Cancel = true;
+        CustomPlanTeachingTip.CloseButtonContent = "Close".GetLocalized();
+        CustomPlanTeachingTip.CloseButtonClick += CustomPlanTeachingTip_CloseButtonClick;
+    }
+
+    private void CustomPlanTeachingTip_CloseButtonClick(TeachingTip sender, object args)
+    {
+        // 关闭 TeachingTip
+        sender.IsOpen = false;
+
+        // 允许关闭 ContentDialog
+        if (_secondaryButtonArgs != null)
+        {
+            _secondaryButtonArgs.Cancel = false;
+        }
     }
 
 }

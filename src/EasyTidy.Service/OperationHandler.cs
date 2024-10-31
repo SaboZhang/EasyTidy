@@ -52,7 +52,7 @@ public static class OperationHandler
     {
         await Task.Run(() =>
         {
-            FileActuator.ExecuteFileOperation(OperationMode.Move, parameter.SourcePath, parameter.TargetPath, FileOperationType.Override);
+            FileActuator.ExecuteFileOperation(OperationMode.Move, parameter.SourcePath, parameter.TargetPath, parameter.FileOperationType, (bool)parameter.HandleSubfolders, parameter.Funcs);
         });
         Console.WriteLine("执行移动操作");
     }
@@ -61,7 +61,7 @@ public static class OperationHandler
     {
         await Task.Run(() =>
         {
-            FileActuator.ExecuteFileOperation(OperationMode.Copy, parameter.SourcePath, parameter.TargetPath, FileOperationType.Override);
+            FileActuator.ExecuteFileOperation(OperationMode.Copy, parameter.SourcePath, parameter.TargetPath, parameter.FileOperationType, (bool)parameter.HandleSubfolders, parameter.Funcs);
         });
         Console.WriteLine("执行复制操作");
     }
@@ -70,7 +70,7 @@ public static class OperationHandler
     {
         await Task.Run(() =>
         {
-            FileActuator.ExecuteFileOperation(OperationMode.Delete, parameter.SourcePath, parameter.TargetPath, FileOperationType.Override);
+            FileActuator.ExecuteFileOperation(OperationMode.Delete, parameter.SourcePath, parameter.TargetPath, parameter.FileOperationType, (bool)parameter.HandleSubfolders, parameter.Funcs);
         });
         Console.WriteLine("执行删除操作");
     }
@@ -79,7 +79,7 @@ public static class OperationHandler
     {
         await Task.Run(() =>
         {
-            FileActuator.ExecuteFileOperation(OperationMode.Rename, parameter.SourcePath, parameter.TargetPath, FileOperationType.Override);
+            FileActuator.ExecuteFileOperation(OperationMode.Rename, parameter.SourcePath, parameter.TargetPath, parameter.FileOperationType, (bool)parameter.HandleSubfolders, parameter.Funcs);
         });
         Console.WriteLine("重命名逻辑");
     }
@@ -88,7 +88,7 @@ public static class OperationHandler
     {
         await Task.Run(() => 
         { 
-            FileActuator.ExecuteFileOperation(OperationMode.RecycleBin, parameter.SourcePath, parameter.TargetPath, FileOperationType.Override); 
+            FileActuator.ExecuteFileOperation(OperationMode.RecycleBin, parameter.SourcePath, parameter.TargetPath, parameter.FileOperationType, (bool)parameter.HandleSubfolders, parameter.Funcs);
         });
         Console.WriteLine("回收站逻辑");
     }
