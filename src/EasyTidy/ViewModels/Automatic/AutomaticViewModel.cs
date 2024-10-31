@@ -182,7 +182,6 @@ public partial class AutomaticViewModel : ObservableRecipient
     [ObservableProperty]
     private string _selectTaskTime = DateTime.Now.ToString("HH:mm");
 
-    [ObservableProperty]
     private List<string> _fireTimes;
 
     private bool _customSchedule = false;
@@ -195,6 +194,19 @@ public partial class AutomaticViewModel : ObservableRecipient
             if (_customSchedule != value)
             {
                 _customSchedule = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+
+    public List<string> FireTimes
+    {
+        get => _fireTimes;
+        set
+        {
+            if (_fireTimes != value)
+            {
+                _fireTimes = value;
                 OnPropertyChanged();
             }
         }
