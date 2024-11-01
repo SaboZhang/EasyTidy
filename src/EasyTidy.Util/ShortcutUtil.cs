@@ -58,6 +58,13 @@ public class ShortcutUtil
     {
         try
         {
+            // 确保 targetPath 的目录存在
+            string targetDirectory = Path.GetDirectoryName(targetPath);
+            if (!string.IsNullOrEmpty(targetDirectory) && !Directory.Exists(targetDirectory))
+            {
+                Directory.CreateDirectory(targetDirectory);
+            }
+            
             string deskTop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\";
             string shortcutPath = deskTop + FileName + ".lnk";
             CreateShortcut(shortcutPath, targetPath, FileName);

@@ -20,59 +20,64 @@ public class AutomaticJob : IJob
 
     public async Task Execute(IJobExecutionContext context)
     {
-        TaskOrchestrationTable task;
         var taskId = context.MergedJobDataMap.GetString("TaskId");
-        if (!string.IsNullOrEmpty(taskId))
-        {
-            task = _dbContext.TaskOrchestration.Where(t => t.ID == Convert.ToInt32(taskId)).FirstOrDefaultAsync().Result;
-        }
-        else
-        {
-            // 获取 JobName
-            string jobName = context.JobDetail.Key.Name;
-            if (string.IsNullOrEmpty(jobName))
-            {
-                Logger.Error("JobName is null");
-                return;
-            }
-            var id = jobName.Split('#').LastOrDefault();
-            if (id != null && int.TryParse(id, out int parsedId))
-            {
-                task = await _dbContext.TaskOrchestration
-                    .FirstOrDefaultAsync(t => t.ID == parsedId);
-            }
-            else
-            {
-                Logger.Error($"ID 解析失败: {jobName}");
-                return; // Exit if ID is invalid 
-            }
-        }
-        if (task != null)
-        {
-            List<Func<string, bool>> pathFilters = FilterUtil.GetPathFilters(task.Filter);
-            // 根据 rule 和 RuleType 动态生成的过滤条件
-            List<Func<string, bool>> dynamicFilters = FilterUtil.GeneratePathFilters(task.TaskRule, task.RuleType);
-            pathFilters.AddRange(dynamicFilters);
+        var task = await GetTaskAsync(taskId, context);
 
-            OperationParameters operationParameters = new OperationParameters
-            {
-                OperationMode = task.OperationMode,
-                SourcePath = task.TaskSource,
-                TargetPath = task.TaskTarget,
-                FileOperationType = Settings.GeneralConfig.FileOperationType,
-                HandleSubfolders = Settings.GeneralConfig.SubFolder,
-                Funcs = pathFilters,
-
-            };
-
-            // 执行操作
-            await OperationHandler.ExecuteOperationAsync(task.OperationMode, operationParameters);
-        }else
+        if (task == null)
         {
-            Logger.Error("Task is null");
+            Logger.Error("Task retrieval failed or Task is null.");
+            return;
         }
+
+        List<Func<string, bool>> pathFilters = BuildFilters(task);
+
+        OperationParameters operationParameters = new OperationParameters
+        {
+            OperationMode = task.OperationMode,
+            SourcePath = task.TaskSource,
+            TargetPath = task.TaskTarget,
+            FileOperationType = Settings.GeneralConfig.FileOperationType,
+            HandleSubfolders = Settings.GeneralConfig.SubFolder,
+            Funcs = pathFilters,
+        };
+
+        // Execute the operation based on parameters
+        await OperationHandler.ExecuteOperationAsync(task.OperationMode, operationParameters);
     }
-    
+
+    // Helper method to retrieve task based on task ID or job name
+    private async Task<TaskOrchestrationTable> GetTaskAsync(string taskId, IJobExecutionContext context)
+    {
+        if (!string.IsNullOrEmpty(taskId) && int.TryParse(taskId, out int parsedTaskId))
+        {
+            return await _dbContext.TaskOrchestration.FirstOrDefaultAsync(t => t.ID == parsedTaskId);
+        }
+
+        string jobName = context.JobDetail.Key.Name;
+        if (string.IsNullOrEmpty(jobName))
+        {
+            Logger.Error("JobName is null");
+            return null;
+        }
+
+        var idPart = jobName.Split('#').LastOrDefault();
+        if (int.TryParse(idPart, out int parsedId))
+        {
+            return await _dbContext.TaskOrchestration.FirstOrDefaultAsync(t => t.ID == parsedId);
+        }
+
+        Logger.Error($"Failed to parse ID from JobName: {jobName}");
+        return null;
+    }
+
+    private List<Func<string, bool>> BuildFilters(TaskOrchestrationTable task)
+    {
+        List<Func<string, bool>> pathFilters = FilterUtil.GetPathFilters(task.Filter);
+        List<Func<string, bool>> dynamicFilters = FilterUtil.GeneratePathFilters(task.TaskRule, task.RuleType);
+        pathFilters.AddRange(dynamicFilters);
+        return pathFilters;
+    }
+
     /// <summary>
     /// 添加定时任务
     /// </summary>
@@ -103,9 +108,8 @@ public class AutomaticJob : IJob
         }
 
         // Handle file change monitoring and task scheduling
-        var delay = Convert.ToInt32(automaticTable.DelaySeconds);
-        var interval = (Convert.ToInt32(automaticTable.Hourly) * 60) + Convert.ToInt32(automaticTable.Minutes);
-
+        var interval = (Convert.ToInt32(string.IsNullOrEmpty(automaticTable.Hourly) ? "0" : automaticTable.Hourly) * 60)
+             + Convert.ToInt32(string.IsNullOrEmpty(automaticTable.Minutes) ? "0" : automaticTable.Minutes);
         foreach (var item in taskOrchestrationList)
         {
             var param = new Dictionary<string, object> { { "TaskId", item.ID.ToString() } };
@@ -118,6 +122,7 @@ public class AutomaticJob : IJob
 
             if (automaticTable.IsFileChange)
             {
+                var delay = Convert.ToInt32(automaticTable.DelaySeconds);
                 var sub = Settings.GeneralConfig?.SubFolder ?? true;
                 FileEventHandler.MonitorFolder(item.OperationMode, item.TaskSource, item.TaskTarget, delay, ruleModel, sub, Settings.GeneralConfig.FileOperationType);
 

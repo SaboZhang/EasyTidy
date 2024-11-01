@@ -117,10 +117,11 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 IsEnabled = dialog.EnabledFlag,
                 RuleType = dialog.RuleType,
                 GroupName = !string.IsNullOrEmpty(SelectedTaskGroupName) && SelectedTaskGroupName != "AllText".GetLocalized()
-                ? await _dbContext.TaskGroup.Where(x => x.GroupName == SelectedTaskGroupName).FirstOrDefaultAsync()
+                ? await GetOrUpdateTaskGroupAsync(SelectedTaskGroupName)
                 : new TaskGroupTable
                 {
-                    GroupName = GroupTextName
+                    GroupName = GroupTextName,
+                    IsUsed = false
                 },
                 Filter = SelectedFilter != null 
                 ? await _dbContext.Filters.Where(x => x.Id == SelectedFilter.Id).FirstOrDefaultAsync() : null,
@@ -165,6 +166,25 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
     }
 
     /// <summary>
+    /// 获取或更新任务组
+    /// </summary>
+    /// <param name="groupName"></param>
+    /// <returns></returns>
+    private async Task<TaskGroupTable> GetOrUpdateTaskGroupAsync(string groupName)
+    {
+        var taskGroup = await _dbContext.TaskGroup
+            .FirstOrDefaultAsync(x => x.GroupName == groupName);
+
+        if (taskGroup != null && taskGroup.IsUsed)
+        {
+            taskGroup.IsUsed = false;
+            await _dbContext.SaveChangesAsync();
+        }
+
+        return taskGroup;
+    }
+
+    /// <summary>
     /// 选择源文件
     /// </summary>
     [RelayCommand]
@@ -182,7 +202,6 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
             Logger.Error($"TaskOrchestrationViewModel: OnSelectSourcePath 异常信息 {ex}");
         }
     }
-
 
     /// <summary>
     /// 选择目标文件

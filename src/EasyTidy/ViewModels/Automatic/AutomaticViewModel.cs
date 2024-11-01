@@ -377,9 +377,7 @@ public partial class AutomaticViewModel : ObservableRecipient
                     TaskList = new(list);
                     TaskListACV = new AdvancedCollectionView(TaskList, true);
                     TaskListACV.SortDescriptions.Add(new SortDescription("ID", SortDirection.Ascending));
-                    var groups = await _dbContext.TaskGroup.Include(g => g.TaskOrchestrationList).Where(x => x.IsUsed == false).ToListAsync();
-                    // 过滤分组：当某个分组的所有关联任务 IsRelated 为 true 时不显示该分组
-                    var groupList = groups.Where(g => g.TaskOrchestrationList.All(t => t.IsRelated == false)).ToList();
+                    var groupList = await _dbContext.TaskGroup.Include(g => g.TaskOrchestrationList).Where(g => g.IsUsed == false && g.TaskOrchestrationList.Any(t => t.IsRelated == false)).ToListAsync();
                     TaskGroupList = new(groupList);
                     TaskGroupListACV = new AdvancedCollectionView(TaskGroupList, true);
                     TaskGroupListACV.SortDescriptions.Add(new SortDescription("Id", SortDirection.Ascending));
