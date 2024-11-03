@@ -3,13 +3,10 @@ using EasyTidy.Common.Database;
 using EasyTidy.Log;
 using EasyTidy.Model;
 using EasyTidy.Service;
-using EasyTidy.Util;
 using H.NotifyIcon;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Windows.AppNotifications;
 using Microsoft.Windows.Globalization;
-using Quartz;
-using System.Collections.Specialized;
 
 namespace EasyTidy;
 
@@ -43,6 +40,11 @@ public partial class App : Application
 
     public App()
     {
+        // 注册全局异常处理
+        AppDomain.CurrentDomain.UnhandledException += GlobalExceptionHandler;
+        // 注册应用程序的未处理异常事件
+        Application.Current.UnhandledException += App_UnhandledException;
+
         if (!PackageHelper.IsPackaged)
         {
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
@@ -55,6 +57,24 @@ public partial class App : Application
         Services = ConfigureServices();
         this.InitializeComponent();
         _dbContext = Services.GetRequiredService<AppDbContext>();
+    }
+
+    private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
+    {
+        LogException(e.Exception);
+        e.Handled = true;
+    }
+
+    private void GlobalExceptionHandler(object sender, System.UnhandledExceptionEventArgs e)
+    {
+        Exception ex = (Exception)e.ExceptionObject;
+        LogException(ex);
+    }
+
+    private void LogException(Exception ex)
+    {
+        // 记录异常的逻辑
+        Logger.Error($"Global exception caught: {ex}");
     }
 
     private static ServiceProvider ConfigureServices()
@@ -167,6 +187,7 @@ public partial class App : Application
         }
         _notificationManager.Unregister();
         QuartzHelper.StopAllJob().Wait();
+        FileEventHandler.StopAllMonitoring();
     }
 
 }

@@ -1,6 +1,8 @@
 ﻿using EasyTidy.Model;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -11,9 +13,15 @@ namespace EasyTidy.Util;
 
 public class FilterUtil
 {
-    public static List<Func<string, bool>> GetPathFilters(FilterTable filter)
+    public static Func<string, bool>? GetPathFilters(FilterTable filter)
     {
-        List<Func<string, bool>> filters = [];
+
+        if (filter == null)
+        {
+            return null; // 没有过滤器，接受所有
+        }
+
+        List<Func<string, bool>> filters = new List<Func<string, bool>>();
 
         // Size Filter
         if (filter.IsSizeSelected)
@@ -135,7 +143,7 @@ public class FilterUtil
             });
         }
 
-        return filters;
+        return filePath => filters.All(f => f(filePath));
     }
 
     // Helper methods
@@ -185,20 +193,29 @@ public class FilterUtil
 
     public static List<Func<string, bool>> GeneratePathFilters(string rule, TaskRuleType ruleType)
     {
-        List<Func<string, bool>> filters = [];
+        var filters = new List<Func<string, bool>>();
 
         switch (ruleType)
         {
             case TaskRuleType.FileRule:
-                filters.AddRange(GenerateFileFilters(rule));
+                foreach (var filter in GenerateFileFilters(rule))
+                {
+                    filters.Add(filter);
+                }
                 break;
 
             case TaskRuleType.FolderRule:
-                filters.AddRange(GenerateFolderFilters(rule));
+                foreach (var filter in GenerateFolderFilters(rule))
+                {
+                    filters.Add(filter);
+                }
                 break;
 
             case TaskRuleType.CustomRule:
-                filters.AddRange(GenerateCustomFilters(rule));
+                foreach (var filter in GenerateCustomFilters(rule))
+                {
+                    filters.Add(filter);
+                }
                 break;
             case TaskRuleType.ExpressionRules:
                 filters.Add(filePath => Regex.IsMatch(filePath, rule));
@@ -208,50 +225,58 @@ public class FilterUtil
         return filters;
     }
 
-    private static IEnumerable<Func<string, bool>> GenerateFileFilters(string rule)
+
+    public static IEnumerable<Func<string, bool>> GenerateFileFilters(string rule)
     {
-        if (rule == "#")
+        // 检查是否为“处理所有文件”的规则
+        if (rule == "*")
         {
             yield return filePath => File.Exists(filePath);
         }
         else
         {
+            // 分割多个条件（后缀规则）
             string[] conditions = rule.Split(new[] { ';', '|' }, StringSplitOptions.RemoveEmptyEntries);
+
+            // 为每个条件创建过滤器
             foreach (var condition in conditions)
             {
-                if (condition.Contains("/"))
+                string trimmedCondition = condition.Trim().ToLower();
+
+                if (trimmedCondition.Contains('/'))
                 {
-                    var parts = condition.Split('/');
-                    string includePattern = parts[0];
-                    string excludePattern = parts[1];
+                    // 包含斜杠处理包含-排除模式
+                    var parts = trimmedCondition.Split('/');
+                    string includePattern = parts[0].Trim();
+                    string excludePattern = parts[1].Trim();
 
                     yield return filePath =>
                     {
-                        string fileName = Path.GetFileName(filePath);
-                        return Regex.IsMatch(fileName, includePattern.Replace("*", ".*")) &&
-                               !Regex.IsMatch(fileName, excludePattern.Replace("*", ".*"));
+                        string fileName = Path.GetFileName(filePath).ToLower();
+                        return Regex.IsMatch(fileName, "^" + Regex.Escape(includePattern).Replace(@"\*", ".*") + "$") &&
+                               !Regex.IsMatch(fileName, "^" + Regex.Escape(excludePattern).Replace(@"\*", ".*") + "$");
                     };
                 }
-                else
+                else if (trimmedCondition.StartsWith("*."))
                 {
-                    string normalizedCondition = condition.Trim();
-                    if (normalizedCondition == "*")
+                    // 处理常见的扩展名匹配，确保严格匹配指定的扩展名
+                    string requiredExtension = trimmedCondition.Substring(1); // 去掉 "*"
+
+                    yield return filePath =>
                     {
-                        yield return filePath => File.Exists(filePath);
-                    }
-                    else
-                    {
-                        string extension = Path.GetExtension(normalizedCondition);
-                        yield return filePath => Path.GetExtension(filePath) == extension;
-                    }
+                        // 确保前面加上点，并进行匹配
+                        string fileExtension = Path.GetExtension(filePath).ToLower();
+                        return fileExtension == $".{requiredExtension}"; // 确保前面加上点
+                    };
                 }
             }
         }
     }
 
+
     private static IEnumerable<Func<string, bool>> GenerateFolderFilters(string rule)
     {
-        if (rule == "##")
+        if (rule == "**")
         {
             yield return folderPath => Directory.Exists(folderPath);
         }
@@ -286,13 +311,13 @@ public class FilterUtil
             string[] parts = rule.Split(new[] { ';', '|' }, StringSplitOptions.RemoveEmptyEntries);
             foreach (var part in parts)
             {
-                if (part.StartsWith("file:"))
+                if (ContainsTwoConsecutiveChars(part, '*') || ContainsTwoConsecutiveChars(part, '#'))
                 {
-                    filters.AddRange(GenerateFileFilters(part.Substring(5)));
+                    filters.AddRange(GenerateFolderFilters(part));
                 }
-                else if (part.StartsWith("folder:"))
+                else
                 {
-                    filters.AddRange(GenerateFolderFilters(part.Substring(7)));
+                    filters.AddRange(GenerateFileFilters(part));
                 }
             }
         }
@@ -305,4 +330,11 @@ public class FilterUtil
 
         return filters;
     }
+
+    private static bool ContainsTwoConsecutiveChars(string input, char character)
+    {
+        var pattern = new string(character, 2); // 创建一个包含两个指定字符的字符串
+        return input.Contains(pattern); // 检查字符串是否包含这个模式
+    }
+
 }

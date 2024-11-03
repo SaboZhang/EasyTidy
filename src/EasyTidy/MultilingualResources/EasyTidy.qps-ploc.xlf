@@ -1,0 +1,1346 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en-US" target-language="qps-ploc" original="EASYTIDY/STRINGS/ZH-CN/RESOURCES.RESW" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
+    <header>
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="1.0.0.0" tool-company="Microsoft" />
+    </header>
+    <body>
+      <group id="EASYTIDY/STRINGS/EN-US/RESOURCES.RESW" datatype="resx">
+        <trans-unit id="NavAutomaticText" translate="yes" xml:space="preserve">
+          <source>Automatic</source>
+          <target state="new">Automatic</target>
+        </trans-unit>
+        <trans-unit id="NavTaskOrchestrationText" translate="yes" xml:space="preserve">
+          <source>Task Orchestration</source>
+          <target state="new">Task Orchestration</target>
+        </trans-unit>
+        <trans-unit id="NavFiltersText" translate="yes" xml:space="preserve">
+          <source>Filters</source>
+          <target state="new">Filters</target>
+        </trans-unit>
+        <trans-unit id="Backup" translate="yes" xml:space="preserve">
+          <source>Backup</source>
+          <target state="new">Backup</target>
+        </trans-unit>
+        <trans-unit id="Settings" translate="yes" xml:space="preserve">
+          <source>Settings</source>
+          <target state="new">Settings</target>
+        </trans-unit>
+        <trans-unit id="SettingsPageControl.ModuleTitle" translate="yes" xml:space="preserve">
+          <source>Automatic</source>
+          <target state="new">Automatic</target>
+        </trans-unit>
+        <trans-unit id="SettingsPageControl.ModuleDescription" translate="yes" xml:space="preserve">
+          <source>The automation module can monitor changes to files and folders. Based on custom settings and associated file processing tasks, this module can automatically perform the corresponding actions.</source>
+          <target state="new">The automation module can monitor changes to files and folders. Based on custom settings and associated file processing tasks, this module can automatically perform the corresponding actions.</target>
+        </trans-unit>
+        <trans-unit id="StartupExecutionCard.Header" translate="yes" xml:space="preserve">
+          <source>On startup</source>
+          <target state="new">On startup</target>
+        </trans-unit>
+        <trans-unit id="StartupExecutionCard.Description" translate="yes" xml:space="preserve">
+          <source>EasyTidy Execute once at startup</source>
+          <target state="new">EasyTidy Execute once at startup</target>
+        </trans-unit>
+        <trans-unit id="RegularTaskRunningCard.Header" translate="yes" xml:space="preserve">
+          <source>Regular execution</source>
+          <target state="new">Regular execution</target>
+        </trans-unit>
+        <trans-unit id="ScheduledExecutionCard.Header" translate="yes" xml:space="preserve">
+          <source>According to schedule</source>
+          <target state="new">According to schedule</target>
+        </trans-unit>
+        <trans-unit id="FileChangeDelay.Text" translate="yes" xml:space="preserve">
+          <source>Delay：</source>
+          <target state="new">Delay：</target>
+        </trans-unit>
+        <trans-unit id="FileChangeSecond.Text" translate="yes" xml:space="preserve">
+          <source>Second</source>
+          <target state="new">Second</target>
+        </trans-unit>
+        <trans-unit id="AutoAnalysisGlobal.Header" translate="yes" xml:space="preserve">
+          <source>AutoAnalysis(Global)</source>
+          <target state="new">AutoAnalysis(Global)</target>
+        </trans-unit>
+        <trans-unit id="FileChange.Description" translate="yes" xml:space="preserve">
+          <source>Automatic file processing options</source>
+          <target state="new">Automatic file processing options</target>
+        </trans-unit>
+        <trans-unit id="FileChangeCard.Header" translate="yes" xml:space="preserve">
+          <source>When files change</source>
+          <target state="new">When files change</target>
+        </trans-unit>
+        <trans-unit id="RegularTaskRunningCard.Description" translate="yes" xml:space="preserve">
+          <source>Regularly execute according to the set time</source>
+          <target state="new">Regularly execute according to the set time</target>
+        </trans-unit>
+        <trans-unit id="ScheduledExecutionCard.Description" translate="yes" xml:space="preserve">
+          <source>Perform periodic execution according to the set plan</source>
+          <target state="new">Perform periodic execution according to the set plan</target>
+        </trans-unit>
+        <trans-unit id="ConfigurationButton.Content" translate="yes" xml:space="preserve">
+          <source>Configuration</source>
+          <target state="new">Configuration</target>
+        </trans-unit>
+        <trans-unit id="TaskAssociation.Header" translate="yes" xml:space="preserve">
+          <source>Task association</source>
+          <target state="new">Task association</target>
+        </trans-unit>
+        <trans-unit id="ConfigurationTask.Header" translate="yes" xml:space="preserve">
+          <source>Configuration Task</source>
+          <target state="new">Configuration Task</target>
+        </trans-unit>
+        <trans-unit id="ConfigurationTask.Description" translate="yes" xml:space="preserve">
+          <source>Associate the configured tasks with the global plan or configure them separately</source>
+          <target state="new">Associate the configured tasks with the global plan or configure them separately</target>
+        </trans-unit>
+        <trans-unit id="TaskSelection.Header" translate="yes" xml:space="preserve">
+          <source>Task selection</source>
+          <target state="new">Task selection</target>
+        </trans-unit>
+        <trans-unit id="TaskButton.Content" translate="yes" xml:space="preserve">
+          <source>Task force</source>
+          <target state="new">Task force</target>
+        </trans-unit>
+        <trans-unit id="TaskGroup.Title" translate="yes" xml:space="preserve">
+          <source>Select Task Group</source>
+          <target state="new">Select Task Group</target>
+        </trans-unit>
+        <trans-unit id="SingleTask.Content" translate="yes" xml:space="preserve">
+          <source>Single Task</source>
+          <target state="new">Single Task</target>
+        </trans-unit>
+        <trans-unit id="SelectTask.Title" translate="yes" xml:space="preserve">
+          <source>Select Task</source>
+          <target state="new">Select Task</target>
+        </trans-unit>
+        <trans-unit id="Separate.Content" translate="yes" xml:space="preserve">
+          <source>Is it configured separately</source>
+          <target state="new">Is it configured separately</target>
+        </trans-unit>
+        <trans-unit id="Customize.Content" translate="yes" xml:space="preserve">
+          <source>Customize</source>
+          <target state="new">Customize</target>
+        </trans-unit>
+        <trans-unit id="ResetButton.Content" translate="yes" xml:space="preserve">
+          <source>Revoke configuration</source>
+          <target state="new">Revoke configuration</target>
+        </trans-unit>
+        <trans-unit id="SaveButton.Content" translate="yes" xml:space="preserve">
+          <source>Save Configuration</source>
+          <target state="new">Save Configuration</target>
+        </trans-unit>
+        <trans-unit id="TaskList.Title" translate="yes" xml:space="preserve">
+          <source>Task list</source>
+          <target state="new">Task list</target>
+        </trans-unit>
+        <trans-unit id="FileChangeBlock.Text" translate="yes" xml:space="preserve">
+          <source>When files change</source>
+          <target state="new">When files change</target>
+        </trans-unit>
+        <trans-unit id="RegularTaskRunningText.Text" translate="yes" xml:space="preserve">
+          <source>Regular execution</source>
+          <target state="new">Regular execution</target>
+        </trans-unit>
+        <trans-unit id="SelectTaskBlock.Text" translate="yes" xml:space="preserve">
+          <source>Task selection：</source>
+          <target state="new">Task selection：</target>
+        </trans-unit>
+        <trans-unit id="ScheduleText" translate="yes" xml:space="preserve">
+          <source>schedule</source>
+          <target state="new">schedule</target>
+        </trans-unit>
+        <trans-unit id="UpdateBlock.Text" translate="yes" xml:space="preserve">
+          <source>Last Update Check</source>
+          <target state="new">Last Update Check</target>
+        </trans-unit>
+        <trans-unit id="CheckButton.Content" translate="yes" xml:space="preserve">
+          <source>Check for New Version</source>
+          <target state="new">Check for New Version</target>
+        </trans-unit>
+        <trans-unit id="ReleaseNote.Content" translate="yes" xml:space="preserve">
+          <source>Release Note</source>
+          <target state="new">Release Note</target>
+        </trans-unit>
+        <trans-unit id="DownloadButton.Content" translate="yes" xml:space="preserve">
+          <source>Download Update</source>
+          <target state="new">Download Update</target>
+        </trans-unit>
+        <trans-unit id="CodeButton.Content" translate="yes" xml:space="preserve">
+          <source>GitHub Repository</source>
+          <target state="new">GitHub Repository</target>
+        </trans-unit>
+        <trans-unit id="LinkBlock.Text" translate="yes" xml:space="preserve">
+          <source>Related Links</source>
+          <target state="new">Related Links</target>
+        </trans-unit>
+        <trans-unit id="AboutUsSetting.Description" translate="yes" xml:space="preserve">
+          <source>EasyTidy can automatically process and organize files and folders. It can filter files by various conditions such as name and directory. Supports manual and automatic execution. You can set delay, time interval or customize the execution cycle with CRON expression for easy and efficient file management.</source>
+          <target state="new">EasyTidy can automatically process and organize files and folders. It can filter files by various conditions such as name and directory. Supports manual and automatic execution. You can set delay, time interval or customize the execution cycle with CRON expression for easy and efficient file management.</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">EasyTidy can automatically process and organize files and folders. It can filter files by various conditions such as name and directory. Supports manual and automatic execution. You can set delay, time interval or customize the execution cycle with CRON expression for easy and efficient file management.</note>
+        </trans-unit>
+        <trans-unit id="ThemeSettingsCard.Description" translate="yes" xml:space="preserve">
+          <source>Select the theme that suits your mood and preference. You can choose from dark, light, or system themes.</source>
+          <target state="new">Select the theme that suits your mood and preference. You can choose from dark, light, or system themes.</target>
+        </trans-unit>
+        <trans-unit id="ThemeSettingsCard.Header" translate="yes" xml:space="preserve">
+          <source>App theme</source>
+          <target state="new">App theme</target>
+        </trans-unit>
+        <trans-unit id="Light.Content" translate="yes" xml:space="preserve">
+          <source>Light</source>
+          <target state="new">Light</target>
+        </trans-unit>
+        <trans-unit id="Dark.Content" translate="yes" xml:space="preserve">
+          <source>Dark</source>
+          <target state="new">Dark</target>
+        </trans-unit>
+        <trans-unit id="Default.Content" translate="yes" xml:space="preserve">
+          <source>Windows Default</source>
+          <target state="new">Windows Default</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Default</note>
+        </trans-unit>
+        <trans-unit id="ColorSettingsCard.Description" translate="yes" xml:space="preserve">
+          <source>Sync your app’s color with your Windows accent color. You can open the Windows accent color setting by clicking this card.</source>
+          <target state="new">Sync your app’s color with your Windows accent color. You can open the Windows accent color setting by clicking this card.</target>
+        </trans-unit>
+        <trans-unit id="ColorSettingsCard.Header" translate="yes" xml:space="preserve">
+          <source>Accent color</source>
+          <target state="new">Accent color</target>
+        </trans-unit>
+        <trans-unit id="FilterSettingsControl.ModuleDescription" translate="yes" xml:space="preserve">
+          <source>Easily add files that need to be filtered to achieve precise management of specific files. By adding file processing rules, you can customize the way files are processed to meet individual needs. At the same time, you can also use the powerful pattern matching function of regular expressions to further refine the filtering and processing logic of files, making file management more efficient and intelligent. Whether you want to exclude specific types of files or perform special processing on files that match specific patterns, you can easily do it here.</source>
+          <target state="new">Easily add files that need to be filtered to achieve precise management of specific files. By adding file processing rules, you can customize the way files are processed to meet individual needs. At the same time, you can also use the powerful pattern matching function of regular expressions to further refine the filtering and processing logic of files, making file management more efficient and intelligent. Whether you want to exclude specific types of files or perform special processing on files that match specific patterns, you can easily do it here.</target>
+        </trans-unit>
+        <trans-unit id="FilterSettingsControl.ModuleTitle" translate="yes" xml:space="preserve">
+          <source>Filter</source>
+          <target state="new">Filter</target>
+        </trans-unit>
+        <trans-unit id="ThemeSettingPage.Description" translate="yes" xml:space="preserve">
+          <source>Explore the different ways to customize the appearance and behavior of your app. You can change the material, theme, accent, and more options to suit your style and preference.</source>
+          <target state="new">Explore the different ways to customize the appearance and behavior of your app. You can change the material, theme, accent, and more options to suit your style and preference.</target>
+        </trans-unit>
+        <trans-unit id="ThemeSettingPage.Header" translate="yes" xml:space="preserve">
+          <source>Behavior &amp; animation</source>
+          <target state="new">Behavior &amp; animation</target>
+        </trans-unit>
+        <trans-unit id="AppUpdateSetting.Description" translate="yes" xml:space="preserve">
+          <source>Check for Updates</source>
+          <target state="new">Check for Updates</target>
+        </trans-unit>
+        <trans-unit id="AppUpdateSetting.Header" translate="yes" xml:space="preserve">
+          <source>Check for Updates</source>
+          <target state="new">Check for Updates</target>
+        </trans-unit>
+        <trans-unit id="AboutUsSettingPage.Description" translate="yes" xml:space="preserve">
+          <source>About EasyTidy and Developer</source>
+          <target state="new">About EasyTidy and Developer</target>
+        </trans-unit>
+        <trans-unit id="AboutUsSettingPage.Header" translate="yes" xml:space="preserve">
+          <source>About</source>
+          <target state="new">About</target>
+        </trans-unit>
+        <trans-unit id="GeneralPageControl.ModuleDescription" translate="yes" xml:space="preserve">
+          <source>EasyTidy is an open-source, professional file management tool designed to provide users with efficient and convenient file classification and organization solutions. Through custom settings, users can achieve various sorting methods such as automatic sorting, scheduled sorting, real-time sorting, and manual sorting to meet the file management needs in different scenarios. Used by the author ♥  make.</source>
+          <target state="new">EasyTidy is an open-source, professional file management tool designed to provide users with efficient and convenient file classification and organization solutions. Through custom settings, users can achieve various sorting methods such as automatic sorting, scheduled sorting, real-time sorting, and manual sorting to meet the file management needs in different scenarios. Used by the author ♥  make.</target>
+        </trans-unit>
+        <trans-unit id="GeneralPageControl.ModuleTitle" translate="yes" xml:space="preserve">
+          <source>General</source>
+          <target state="new">General</target>
+        </trans-unit>
+        <trans-unit id="AtLeastOneWord" translate="yes" xml:space="preserve">
+          <source>At least one word</source>
+          <target state="new">At least one word</target>
+        </trans-unit>
+        <trans-unit id="YesStr" translate="yes" xml:space="preserve">
+          <source>YES</source>
+          <target state="new">YES</target>
+        </trans-unit>
+        <trans-unit id="NoStr" translate="yes" xml:space="preserve">
+          <source>NO</source>
+          <target state="new">NO</target>
+        </trans-unit>
+        <trans-unit id="AtLeastOneWordCaseSensitive" translate="yes" xml:space="preserve">
+          <source>At least one word (case sensitive)</source>
+          <target state="new">At least one word (case sensitive)</target>
+        </trans-unit>
+        <trans-unit id="AllWordsInAnyOrder" translate="yes" xml:space="preserve">
+          <source>All words in a random order</source>
+          <target state="new">All words in a random order</target>
+        </trans-unit>
+        <trans-unit id="AllWordsInAnyOrderCaseSensitive" translate="yes" xml:space="preserve">
+          <source>All words in arbitrary order (case sensitive)</source>
+          <target state="new">All words in arbitrary order (case sensitive)</target>
+        </trans-unit>
+        <trans-unit id="RegularExpression" translate="yes" xml:space="preserve">
+          <source>regular expression</source>
+          <target state="new">regular expression</target>
+        </trans-unit>
+        <trans-unit id="StringText" translate="yes" xml:space="preserve">
+          <source>String</source>
+          <target state="new">String</target>
+        </trans-unit>
+        <trans-unit id="StringCaseSensitive" translate="yes" xml:space="preserve">
+          <source>String (case sensitive)</source>
+          <target state="new">String (case sensitive)</target>
+        </trans-unit>
+        <trans-unit id="LocalBackText" translate="yes" xml:space="preserve">
+          <source>Local backup</source>
+          <target state="new">Local backup</target>
+        </trans-unit>
+        <trans-unit id="WebDavText" translate="yes" xml:space="preserve">
+          <source>WebDav</source>
+          <target state="new">WebDav</target>
+        </trans-unit>
+        <trans-unit id="SkipText" translate="yes" xml:space="preserve">
+          <source>Skip</source>
+          <target state="new">Skip</target>
+        </trans-unit>
+        <trans-unit id="OverrideText" translate="yes" xml:space="preserve">
+          <source>Override</source>
+          <target state="new">Override</target>
+        </trans-unit>
+        <trans-unit id="OverwriteIfNewerText" translate="yes" xml:space="preserve">
+          <source>Overwrite If Newer</source>
+          <target state="new">Overwrite If Newer</target>
+        </trans-unit>
+        <trans-unit id="OverrideIfSizesDifferText" translate="yes" xml:space="preserve">
+          <source>If the sizes are different, cover them</source>
+          <target state="new">If the sizes are different, cover them</target>
+        </trans-unit>
+        <trans-unit id="ReNameAppendText" translate="yes" xml:space="preserve">
+          <source>Rename(01)</source>
+          <target state="new">Rename(01)</target>
+        </trans-unit>
+        <trans-unit id="ReNameAddDateText" translate="yes" xml:space="preserve">
+          <source>Rename - Current Date</source>
+          <target state="new">Rename - Current Date</target>
+        </trans-unit>
+        <trans-unit id="MoveText" translate="yes" xml:space="preserve">
+          <source>Move</source>
+          <target state="new">Move</target>
+        </trans-unit>
+        <trans-unit id="CopyText" translate="yes" xml:space="preserve">
+          <source>Copy</source>
+          <target state="new">Copy</target>
+        </trans-unit>
+        <trans-unit id="DeleteText" translate="yes" xml:space="preserve">
+          <source>Delete</source>
+          <target state="new">Delete</target>
+        </trans-unit>
+        <trans-unit id="RenameText" translate="yes" xml:space="preserve">
+          <source>Rename</source>
+          <target state="new">Rename</target>
+        </trans-unit>
+        <trans-unit id="RecycleBinText" translate="yes" xml:space="preserve">
+          <source>RecycleBin</source>
+          <target state="new">RecycleBin</target>
+        </trans-unit>
+        <trans-unit id="GreaterThanText" translate="yes" xml:space="preserve">
+          <source>&gt;</source>
+          <target state="new">&gt;</target>
+        </trans-unit>
+        <trans-unit id="EqualToText" translate="yes" xml:space="preserve">
+          <source>=</source>
+          <target state="new">=</target>
+        </trans-unit>
+        <trans-unit id="LessThanText" translate="yes" xml:space="preserve">
+          <source>&lt;</source>
+          <target state="new">&lt;</target>
+        </trans-unit>
+        <trans-unit id="ByteText" translate="yes" xml:space="preserve">
+          <source>byte</source>
+          <target state="new">byte</target>
+        </trans-unit>
+        <trans-unit id="KilobyteText" translate="yes" xml:space="preserve">
+          <source>KB</source>
+          <target state="new">KB</target>
+        </trans-unit>
+        <trans-unit id="MegabyteText" translate="yes" xml:space="preserve">
+          <source>MB</source>
+          <target state="new">MB</target>
+        </trans-unit>
+        <trans-unit id="GigabyteText" translate="yes" xml:space="preserve">
+          <source>GB</source>
+          <target state="new">GB</target>
+        </trans-unit>
+        <trans-unit id="SecondText" translate="yes" xml:space="preserve">
+          <source>Second</source>
+          <target state="new">Second</target>
+        </trans-unit>
+        <trans-unit id="MinuteText" translate="yes" xml:space="preserve">
+          <source>Minute</source>
+          <target state="new">Minute</target>
+        </trans-unit>
+        <trans-unit id="HourText" translate="yes" xml:space="preserve">
+          <source>Hour</source>
+          <target state="new">Hour</target>
+        </trans-unit>
+        <trans-unit id="DayText" translate="yes" xml:space="preserve">
+          <source>Day</source>
+          <target state="new">Day</target>
+        </trans-unit>
+        <trans-unit id="MonthText" translate="yes" xml:space="preserve">
+          <source>Month</source>
+          <target state="new">Month</target>
+        </trans-unit>
+        <trans-unit id="YearText" translate="yes" xml:space="preserve">
+          <source>Year</source>
+          <target state="new">Year</target>
+        </trans-unit>
+        <trans-unit id="AllText" translate="yes" xml:space="preserve">
+          <source>ALL</source>
+          <target state="new">ALL</target>
+        </trans-unit>
+        <trans-unit id="FileProcessing.Header" translate="yes" xml:space="preserve">
+          <source>File processing</source>
+          <target state="new">File processing</target>
+        </trans-unit>
+        <trans-unit id="FileProcessingCard.Header" translate="yes" xml:space="preserve">
+          <source>Dealing with conflicts</source>
+          <target state="new">Dealing with conflicts</target>
+        </trans-unit>
+        <trans-unit id="FileProcessingCard.Description" translate="yes" xml:space="preserve">
+          <source>Options for automatic conflict resolution</source>
+          <target state="new">Options for automatic conflict resolution</target>
+        </trans-unit>
+        <trans-unit id="FileProcessingComboBox.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>Conflict handling methods</source>
+          <target state="new">Conflict handling methods</target>
+        </trans-unit>
+        <trans-unit id="ToastWithAvatarDescriptionText" translate="yes" xml:space="preserve">
+          <source>Easytidy application is running</source>
+          <target state="new">Easytidy application is running</target>
+        </trans-unit>
+        <trans-unit id="RemindText" translate="yes" xml:space="preserve">
+          <source>More reminder</source>
+          <target state="new">More reminder</target>
+        </trans-unit>
+        <trans-unit id="AddFilterSettingsCard.Header" translate="yes" xml:space="preserve">
+          <source>Add filter</source>
+          <target state="new">Add filter</target>
+        </trans-unit>
+        <trans-unit id="AddFilterSettingsCard.Description" translate="yes" xml:space="preserve">
+          <source>Add custom additional filters</source>
+          <target state="new">Add custom additional filters</target>
+        </trans-unit>
+        <trans-unit id="FilterButton.Content" translate="yes" xml:space="preserve">
+          <source>Add filter</source>
+          <target state="new">Add filter</target>
+        </trans-unit>
+        <trans-unit id="FiltersListBlock.Text" translate="yes" xml:space="preserve">
+          <source>Filter List</source>
+          <target state="new">Filter List</target>
+        </trans-unit>
+        <trans-unit id="AttributeBlock.Text" translate="yes" xml:space="preserve">
+          <source>Attribute</source>
+          <target state="new">Attribute</target>
+        </trans-unit>
+        <trans-unit id="FilterNameBlock.Text" translate="yes" xml:space="preserve">
+          <source>Filter Name</source>
+          <target state="new">Filter Name</target>
+        </trans-unit>
+        <trans-unit id="FeaturesBlock.Text" translate="yes" xml:space="preserve">
+          <source>Characteristics</source>
+          <target state="new">Characteristics</target>
+        </trans-unit>
+        <trans-unit id="OtherBlock.Text" translate="yes" xml:space="preserve">
+          <source>Other</source>
+          <target state="new">Other</target>
+        </trans-unit>
+        <trans-unit id="OperationBlock.Text" translate="yes" xml:space="preserve">
+          <source>Operation</source>
+          <target state="new">Operation</target>
+        </trans-unit>
+        <trans-unit id="EditButton.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Edit</source>
+          <target state="new">Edit</target>
+        </trans-unit>
+        <trans-unit id="NavGeneralText" translate="yes" xml:space="preserve">
+          <source>General</source>
+          <target state="new">General</target>
+        </trans-unit>
+        <trans-unit id="DesktopText" translate="yes" xml:space="preserve">
+          <source>Desktop</source>
+          <target state="new">Desktop</target>
+        </trans-unit>
+        <trans-unit id="ModifyText" translate="yes" xml:space="preserve">
+          <source>Modify</source>
+          <target state="new">Modify</target>
+        </trans-unit>
+        <trans-unit id="SaveText" translate="yes" xml:space="preserve">
+          <source>Save</source>
+          <target state="new">Save</target>
+        </trans-unit>
+        <trans-unit id="CancelText" translate="yes" xml:space="preserve">
+          <source>Cancel</source>
+          <target state="new">Cancel</target>
+        </trans-unit>
+        <trans-unit id="AdditionalText" translate="yes" xml:space="preserve">
+          <source>Additional</source>
+          <target state="new">Additional</target>
+        </trans-unit>
+        <trans-unit id="SaveSuccessfulText" translate="yes" xml:space="preserve">
+          <source>Save Successful</source>
+          <target state="new">Save Successful</target>
+        </trans-unit>
+        <trans-unit id="SaveFailedText" translate="yes" xml:space="preserve">
+          <source>Save Failed</source>
+          <target state="new">Save Failed</target>
+        </trans-unit>
+        <trans-unit id="CustomConfigurationText" translate="yes" xml:space="preserve">
+          <source>Custom Configuration</source>
+          <target state="new">Custom Configuration</target>
+        </trans-unit>
+        <trans-unit id="ModifySuccessfullyText" translate="yes" xml:space="preserve">
+          <source>Modify Successfully</source>
+          <target state="new">Modify Successfully</target>
+        </trans-unit>
+        <trans-unit id="ModificationFailedText" translate="yes" xml:space="preserve">
+          <source>Modification Failed</source>
+          <target state="new">Modification Failed</target>
+        </trans-unit>
+        <trans-unit id="DeleteSuccessfulText" translate="yes" xml:space="preserve">
+          <source>Delete Successful</source>
+          <target state="new">Delete Successful</target>
+        </trans-unit>
+        <trans-unit id="DeleteFailedText" translate="yes" xml:space="preserve">
+          <source>Delete Failed</source>
+          <target state="new">Delete Failed</target>
+        </trans-unit>
+        <trans-unit id="ExecutionFailedText" translate="yes" xml:space="preserve">
+          <source>Execution Failed</source>
+          <target state="new">Execution Failed</target>
+        </trans-unit>
+        <trans-unit id="DisabledSuccessfullyText" translate="yes" xml:space="preserve">
+          <source>Disabled Successfully</source>
+          <target state="new">Disabled Successfully</target>
+        </trans-unit>
+        <trans-unit id="DisablingFailedText" translate="yes" xml:space="preserve">
+          <source>Disabling Failed</source>
+          <target state="new">Disabling Failed</target>
+        </trans-unit>
+        <trans-unit id="DialogFilterNameBlock.Text" translate="yes" xml:space="preserve">
+          <source>Filter Name:</source>
+          <target state="new">Filter Name:</target>
+        </trans-unit>
+        <trans-unit id="DividerAttribute.Content" translate="yes" xml:space="preserve">
+          <source>Attribute</source>
+          <target state="new">Attribute</target>
+        </trans-unit>
+        <trans-unit id="DialogFileSize.Content" translate="yes" xml:space="preserve">
+          <source>File Size:</source>
+          <target state="new">File Size:</target>
+        </trans-unit>
+        <trans-unit id="DialogCreationTime.Content" translate="yes" xml:space="preserve">
+          <source>Creation Time:</source>
+          <target state="new">Creation Time:</target>
+        </trans-unit>
+        <trans-unit id="DialogModifyTime.Content" translate="yes" xml:space="preserve">
+          <source>Modify Time:</source>
+          <target state="new">Modify Time:</target>
+        </trans-unit>
+        <trans-unit id="DialogVisitTime.Content" translate="yes" xml:space="preserve">
+          <source>Visit Time:</source>
+          <target state="new">Visit Time:</target>
+        </trans-unit>
+        <trans-unit id="DialogDividerCharacteristics.Content" translate="yes" xml:space="preserve">
+          <source>Characteristics</source>
+          <target state="new">Characteristics</target>
+        </trans-unit>
+        <trans-unit id="DialogArchive.Content" translate="yes" xml:space="preserve">
+          <source>Archive:</source>
+          <target state="new">Archive:</target>
+        </trans-unit>
+        <trans-unit id="DialogHide.Content" translate="yes" xml:space="preserve">
+          <source>Hidden:</source>
+          <target state="new">Hidden:</target>
+        </trans-unit>
+        <trans-unit id="DialogReadonly.Content" translate="yes" xml:space="preserve">
+          <source>Read only:</source>
+          <target state="new">Read only:</target>
+        </trans-unit>
+        <trans-unit id="DialogSystem.Content" translate="yes" xml:space="preserve">
+          <source>System:</source>
+          <target state="new">System:</target>
+        </trans-unit>
+        <trans-unit id="DialogTemporary.Content" translate="yes" xml:space="preserve">
+          <source>Temporary:</source>
+          <target state="new">Temporary:</target>
+        </trans-unit>
+        <trans-unit id="DialogDividerOthers.Content" translate="yes" xml:space="preserve">
+          <source>Others</source>
+          <target state="new">Others</target>
+        </trans-unit>
+        <trans-unit id="DialogIncludedFiles.Content" translate="yes" xml:space="preserve">
+          <source>Included files:</source>
+          <target state="new">Included files:</target>
+        </trans-unit>
+        <trans-unit id="DialogFileContent.Content" translate="yes" xml:space="preserve">
+          <source>File content:</source>
+          <target state="new">File content:</target>
+        </trans-unit>
+        <trans-unit id="DeleteButton.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Delete</source>
+          <target state="new">Delete</target>
+        </trans-unit>
+        <trans-unit id="DialogTaskGroupName.Text" translate="yes" xml:space="preserve">
+          <source>Task Group Name:</source>
+          <target state="new">Task Group Name:</target>
+        </trans-unit>
+        <trans-unit id="TaskGroupBox.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>Please enter or select</source>
+          <target state="new">Please enter or select</target>
+        </trans-unit>
+        <trans-unit id="DialogTaskName.Text" translate="yes" xml:space="preserve">
+          <source>Task Name:</source>
+          <target state="new">Task Name:</target>
+        </trans-unit>
+        <trans-unit id="TaskNameBoxPlaceholder.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>Please enter the task name</source>
+          <target state="new">Please enter the task name</target>
+        </trans-unit>
+        <trans-unit id="DialogProcessingRules.Text" translate="yes" xml:space="preserve">
+          <source>Processing Rules:</source>
+          <target state="new">Processing Rules:</target>
+        </trans-unit>
+        <trans-unit id="DialogTaskRulePlaceholder.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>Please enter processing rules/regex</source>
+          <target state="new">Please enter processing rules/regex</target>
+        </trans-unit>
+        <trans-unit id="DialogRuleButton.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Rule example</source>
+          <target state="new">Rule example</target>
+        </trans-unit>
+        <trans-unit id="DialogFilterButton.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Filter</source>
+          <target state="new">Filter</target>
+        </trans-unit>
+        <trans-unit id="DialogOperatingMethod.Text" translate="yes" xml:space="preserve">
+          <source>Mode of operation:</source>
+          <target state="new">Mode of operation:</target>
+        </trans-unit>
+        <trans-unit id="DialogTaskOperateListPlaceholder.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>Please Select Operation Mode</source>
+          <target state="new">Please Select Operation Mode</target>
+        </trans-unit>
+        <trans-unit id="DialogSourceFolder.Text" translate="yes" xml:space="preserve">
+          <source>Source folder:</source>
+          <target state="new">Source folder:</target>
+        </trans-unit>
+        <trans-unit id="DialogSourcePlaceholder.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>Please select a folder, the default is the desktop</source>
+          <target state="new">Please select a folder, the default is the desktop</target>
+        </trans-unit>
+        <trans-unit id="DialogSourceButton.Content" translate="yes" xml:space="preserve">
+          <source>Choice</source>
+          <target state="new">Choice</target>
+        </trans-unit>
+        <trans-unit id="DiaalogShortcut.Content" translate="yes" xml:space="preserve">
+          <source>Desktop shortcut to the destination folder</source>
+          <target state="new">Desktop shortcut to the destination folder</target>
+        </trans-unit>
+        <trans-unit id="DialogTargetFolder.Text" translate="yes" xml:space="preserve">
+          <source>Target Folder:</source>
+          <target state="new">Target Folder:</target>
+        </trans-unit>
+        <trans-unit id="DialogTargetPlaceholder.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>Choose or enter folder directly</source>
+          <target state="new">Choose or enter folder directly</target>
+        </trans-unit>
+        <trans-unit id="DialogTargetButton.Content" translate="yes" xml:space="preserve">
+          <source>Choice</source>
+          <target state="new">Choice</target>
+        </trans-unit>
+        <trans-unit id="DialogTaskEnable.Text" translate="yes" xml:space="preserve">
+          <source>Enable:</source>
+          <target state="new">Enable:</target>
+        </trans-unit>
+        <trans-unit id="DialogTaskGroup.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>Choice</source>
+          <target state="new">Choice</target>
+        </trans-unit>
+        <trans-unit id="DialogAtStartup.Text" translate="yes" xml:space="preserve">
+          <source>EasyTidy Startup:</source>
+          <target state="new">EasyTidy Startup:</target>
+        </trans-unit>
+        <trans-unit id="DialogAsPlanned.Text" translate="yes" xml:space="preserve">
+          <source>According to the plan</source>
+          <target state="new">According to the plan</target>
+        </trans-unit>
+        <trans-unit id="DialogMinute.Text" translate="yes" xml:space="preserve">
+          <source>Minute</source>
+          <target state="new">Minute</target>
+        </trans-unit>
+        <trans-unit id="DialogHour.Text" translate="yes" xml:space="preserve">
+          <source>Hour</source>
+          <target state="new">Hour</target>
+        </trans-unit>
+        <trans-unit id="DialogWeek.Text" translate="yes" xml:space="preserve">
+          <source>Which day of the week</source>
+          <target state="new">Which day of the week</target>
+        </trans-unit>
+        <trans-unit id="DialogDayOfWeekBlock.Text" translate="yes" xml:space="preserve">
+          <source>(0=Sun to 6=Sat)</source>
+          <target state="new">(0=Sun to 6=Sat)</target>
+        </trans-unit>
+        <trans-unit id="DialogDayOfMonth.Text" translate="yes" xml:space="preserve">
+          <source>Day of the Month</source>
+          <target state="new">Day of the Month</target>
+        </trans-unit>
+        <trans-unit id="DialogMonth.Text" translate="yes" xml:space="preserve">
+          <source>Month</source>
+          <target state="new">Month</target>
+        </trans-unit>
+        <trans-unit id="DialogExpression.Text" translate="yes" xml:space="preserve">
+          <source>CRON expression</source>
+          <target state="new">CRON expression</target>
+        </trans-unit>
+        <trans-unit id="DialogNotice.Text" translate="yes" xml:space="preserve">
+          <source>Support CRON expression, and CRON expression has higher priority than the values of the first five items</source>
+          <target state="new">Support CRON expression, and CRON expression has higher priority than the values of the first five items</target>
+        </trans-unit>
+        <trans-unit id="DialogFirst.Text" translate="yes" xml:space="preserve">
+          <source>It will run when the time unit matches the value below.</source>
+          <target state="new">It will run when the time unit matches the value below.</target>
+        </trans-unit>
+        <trans-unit id="DialogExplanation1.Text" translate="yes" xml:space="preserve">
+          <source>(Empty String) Matches any value</source>
+          <target state="new">(Empty String) Matches any value</target>
+        </trans-unit>
+        <trans-unit id="DialogExplanation2.Text" translate="yes" xml:space="preserve">
+          <source>Val1, Val2, ..., ValN Match Value List</source>
+          <target state="new">Val1, Val2, ..., ValN Match Value List</target>
+        </trans-unit>
+        <trans-unit id="DialogExplanation3.Text" translate="yes" xml:space="preserve">
+          <source>Match values range from n1 to n2</source>
+          <target state="new">Match values range from n1 to n2</target>
+        </trans-unit>
+        <trans-unit id="DialogExplanation4.Text" translate="yes" xml:space="preserve">
+          <source>n1-n2/n3 matches the range n1 to n2 for step n3</source>
+          <target state="new">n1-n2/n3 matches the range n1 to n2 for step n3</target>
+        </trans-unit>
+        <trans-unit id="DialogExplanation5.Text" translate="yes" xml:space="preserve">
+          <source>Example: Minutes = 15 Hours = 03 Month = 3-10/3 Day of the week = 1,3,5 The tasks will run at 3:15 AM on Mondays, Wednesdays, and Fridays in March, June, and September.</source>
+          <target state="new">Example: Minutes = 15 Hours = 03 Month = 3-10/3 Day of the week = 1,3,5 The tasks will run at 3:15 AM on Mondays, Wednesdays, and Fridays in March, June, and September.</target>
+        </trans-unit>
+        <trans-unit id="GeneralSubFloderCard.Description" translate="yes" xml:space="preserve">
+          <source>Process folders, but not scan inside folders</source>
+          <target state="new">Process folders, but not scan inside folders</target>
+        </trans-unit>
+        <trans-unit id="GeneralSubFloderCard.Header" translate="yes" xml:space="preserve">
+          <source>Subfolder</source>
+          <target state="new">Subfolder</target>
+        </trans-unit>
+        <trans-unit id="GeneraIgnoreCard.Description" translate="yes" xml:space="preserve">
+          <source>Ignore files that are currently in use by other applications</source>
+          <target state="new">Ignore files that are currently in use by other applications</target>
+        </trans-unit>
+        <trans-unit id="GeneraIgnoreCard.Header" translate="yes" xml:space="preserve">
+          <source>Files in use</source>
+          <target state="new">Files in use</target>
+        </trans-unit>
+        <trans-unit id="GeneralIrrelevantFilesCard.Description" translate="yes" xml:space="preserve">
+          <source>Ignore irrelevant files or folders as well as system file folders</source>
+          <target state="new">Ignore irrelevant files or folders as well as system file folders</target>
+        </trans-unit>
+        <trans-unit id="GeneralIrrelevantFilesCard.Header" translate="yes" xml:space="preserve">
+          <source>Irrelevant file</source>
+          <target state="new">Irrelevant file</target>
+        </trans-unit>
+        <trans-unit id="GeneralEmptyFileCard.Description" translate="yes" xml:space="preserve">
+          <source>Ignore files that size = 0 or empty folder</source>
+          <target state="new">Ignore files that size = 0 or empty folder</target>
+        </trans-unit>
+        <trans-unit id="GeneralEmptyFileCard.Header" translate="yes" xml:space="preserve">
+          <source>Empty file</source>
+          <target state="new">Empty file</target>
+        </trans-unit>
+        <trans-unit id="GeneralHiddenFileCard.Description" translate="yes" xml:space="preserve">
+          <source>Ignore hidden files</source>
+          <target state="new">Ignore hidden files</target>
+        </trans-unit>
+        <trans-unit id="GeneralHiddenFileCard.Header" translate="yes" xml:space="preserve">
+          <source>Hidden files</source>
+          <target state="new">Hidden files</target>
+        </trans-unit>
+        <trans-unit id="GeneralAppSettings.Header" translate="yes" xml:space="preserve">
+          <source>App settings</source>
+          <target state="new">App settings</target>
+        </trans-unit>
+        <trans-unit id="GeneralAutoStartCard.Description" translate="yes" xml:space="preserve">
+          <source>Start EasyTidy at System Startup</source>
+          <target state="new">Start EasyTidy at System Startup</target>
+        </trans-unit>
+        <trans-unit id="GeneralAutoStartCard.Header" translate="yes" xml:space="preserve">
+          <source>Auto start</source>
+          <target state="new">Auto start</target>
+        </trans-unit>
+        <trans-unit id="GeneralCheckCard.Description" translate="yes" xml:space="preserve">
+          <source>Check for updates at startup</source>
+          <target state="new">Check for updates at startup</target>
+        </trans-unit>
+        <trans-unit id="GeneralCheckCard.Header" translate="yes" xml:space="preserve">
+          <source>Check for updates</source>
+          <target state="new">Check for updates</target>
+        </trans-unit>
+        <trans-unit id="GeneralMinimizeCard.Description" translate="yes" xml:space="preserve">
+          <source>Minimize to the notification area on startup</source>
+          <target state="new">Minimize to the notification area on startup</target>
+        </trans-unit>
+        <trans-unit id="GeneralMinimizeCard.Header" translate="yes" xml:space="preserve">
+          <source>Minimize</source>
+          <target state="new">Minimize</target>
+        </trans-unit>
+        <trans-unit id="GeneralBack.Header" translate="yes" xml:space="preserve">
+          <source>Backup/Restore</source>
+          <target state="new">Backup/Restore</target>
+        </trans-unit>
+        <trans-unit id="GeneralBackCard.Description" translate="yes" xml:space="preserve">
+          <source>If necessary, EasyTidy will automatically restart. Check the automatic backup to back up every time the software starts</source>
+          <target state="new">If necessary, EasyTidy will automatically restart. Check the automatic backup to back up every time the software starts</target>
+        </trans-unit>
+        <trans-unit id="GeneralBackCard.Header" translate="yes" xml:space="preserve">
+          <source>Backup and restore settings</source>
+          <target state="new">Backup and restore settings</target>
+        </trans-unit>
+        <trans-unit id="GeneralBackButton.Content" translate="yes" xml:space="preserve">
+          <source>Backup</source>
+          <target state="new">Backup</target>
+        </trans-unit>
+        <trans-unit id="GeneralRestoreButton.Content" translate="yes" xml:space="preserve">
+          <source>Restore</source>
+          <target state="new">Restore</target>
+        </trans-unit>
+        <trans-unit id="GeneralAutoBackup.Content" translate="yes" xml:space="preserve">
+          <source>Auto backup</source>
+          <target state="new">Auto backup</target>
+        </trans-unit>
+        <trans-unit id="GeneralLocationCard.Header" translate="yes" xml:space="preserve">
+          <source>Location</source>
+          <target state="new">Location</target>
+        </trans-unit>
+        <trans-unit id="GeneralBackupMethod.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>Select Backup method</source>
+          <target state="new">Select Backup method</target>
+        </trans-unit>
+        <trans-unit id="GeneralAddress.Text" translate="yes" xml:space="preserve">
+          <source>Address:</source>
+          <target state="new">Address:</target>
+        </trans-unit>
+        <trans-unit id="GeneralUsername.Text" translate="yes" xml:space="preserve">
+          <source>Username:</source>
+          <target state="new">Username:</target>
+        </trans-unit>
+        <trans-unit id="GeneralPassword.Text" translate="yes" xml:space="preserve">
+          <source>Password:</source>
+          <target state="new">Password:</target>
+        </trans-unit>
+        <trans-unit id="GeneralBackupInformation.Header" translate="yes" xml:space="preserve">
+          <source>Backup information</source>
+          <target state="new">Backup information</target>
+        </trans-unit>
+        <trans-unit id="GeneralStatus.Text" translate="yes" xml:space="preserve">
+          <source>Version:</source>
+          <target state="new">Version:</target>
+        </trans-unit>
+        <trans-unit id="GeneralRefresh.Text" translate="yes" xml:space="preserve">
+          <source>Refresh</source>
+          <target state="new">Refresh</target>
+        </trans-unit>
+        <trans-unit id="GeneralFilename.Text" translate="yes" xml:space="preserve">
+          <source>Filename:</source>
+          <target state="new">Filename:</target>
+        </trans-unit>
+        <trans-unit id="GeneralSourceComputer.Text" translate="yes" xml:space="preserve">
+          <source>Source Computer:</source>
+          <target state="new">Source Computer:</target>
+        </trans-unit>
+        <trans-unit id="GeneralCreatedOn.Text" translate="yes" xml:space="preserve">
+          <source>Created on:</source>
+          <target state="new">Created on:</target>
+        </trans-unit>
+        <trans-unit id="GeneralUseDocumentation.Text" translate="yes" xml:space="preserve">
+          <source>Documentation</source>
+          <target state="new">Documentation</target>
+        </trans-unit>
+        <trans-unit id="GereralReport.Text" translate="yes" xml:space="preserve">
+          <source>Report BUG</source>
+          <target state="new">Report BUG</target>
+        </trans-unit>
+        <trans-unit id="GeneralRequestFeature.Text" translate="yes" xml:space="preserve">
+          <source>Request Feature</source>
+          <target state="new">Request Feature</target>
+        </trans-unit>
+        <trans-unit id="TaskSettingsPage.ModuleDescription" translate="yes" xml:space="preserve">
+          <source>Users can add file processing tasks and professionally configure the execution mode, including selecting automatic execution, one-time execution only, and creating desktop shortcuts and adding backup tasks.</source>
+          <target state="new">Users can add file processing tasks and professionally configure the execution mode, including selecting automatic execution, one-time execution only, and creating desktop shortcuts and adding backup tasks.</target>
+        </trans-unit>
+        <trans-unit id="TaskSettingsPage.ModuleTitle" translate="yes" xml:space="preserve">
+          <source>Task Management</source>
+          <target state="new">Task Management</target>
+        </trans-unit>
+        <trans-unit id="TaskAddTask.Description" translate="yes" xml:space="preserve">
+          <source>Add files to a tidy task</source>
+          <target state="new">Add files to a tidy task</target>
+        </trans-unit>
+        <trans-unit id="TaskAddTask.Header" translate="yes" xml:space="preserve">
+          <source>Add Task</source>
+          <target state="new">Add Task</target>
+        </trans-unit>
+        <trans-unit id="TaskAddTaskButton.Content" translate="yes" xml:space="preserve">
+          <source>Add Task</source>
+          <target state="new">Add Task</target>
+        </trans-unit>
+        <trans-unit id="TaskDisplay.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>Display by group</source>
+          <target state="new">Display by group</target>
+        </trans-unit>
+        <trans-unit id="TaskDisplay.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Filter by group</source>
+          <target state="new">Filter by group</target>
+        </trans-unit>
+        <trans-unit id="TaskListView.Text" translate="yes" xml:space="preserve">
+          <source>Task List</source>
+          <target state="new">Task List</target>
+        </trans-unit>
+        <trans-unit id="TaskListTaskName.Text" translate="yes" xml:space="preserve">
+          <source>Task Name</source>
+          <target state="new">Task Name</target>
+        </trans-unit>
+        <trans-unit id="TaskListSource.Text" translate="yes" xml:space="preserve">
+          <source>Source Folder</source>
+          <target state="new">Source Folder</target>
+        </trans-unit>
+        <trans-unit id="TaskListTarget.Text" translate="yes" xml:space="preserve">
+          <source>Target folder</source>
+          <target state="new">Target folder</target>
+        </trans-unit>
+        <trans-unit id="TaskListShortcuts.Text" translate="yes" xml:space="preserve">
+          <source>Desktop shortcuts</source>
+          <target state="new">Desktop shortcuts</target>
+        </trans-unit>
+        <trans-unit id="TaskListEnable.Text" translate="yes" xml:space="preserve">
+          <source>Enable</source>
+          <target state="new">Enable</target>
+        </trans-unit>
+        <trans-unit id="TaskListOperation.Text" translate="yes" xml:space="preserve">
+          <source>Operation</source>
+          <target state="new">Operation</target>
+        </trans-unit>
+        <trans-unit id="RunButton.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Execute once</source>
+          <target state="new">Execute once</target>
+        </trans-unit>
+        <trans-unit id="IsEnableButton.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Enable</source>
+          <target state="new">Enable</target>
+        </trans-unit>
+        <trans-unit id="ThemeMaterial.Header" translate="yes" xml:space="preserve">
+          <source>Material</source>
+          <target state="new">Material</target>
+        </trans-unit>
+        <trans-unit id="ThemeMaterial.Description" translate="yes" xml:space="preserve">
+          <source>Change the appearance of the backdrop material behind your app. You can choose from mica, acrylic, or transparent options.</source>
+          <target state="new">Change the appearance of the backdrop material behind your app. You can choose from mica, acrylic, or transparent options.</target>
+        </trans-unit>
+        <trans-unit id="ThemeNone.Content" translate="yes" xml:space="preserve">
+          <source>None</source>
+          <target state="new">None</target>
+        </trans-unit>
+        <trans-unit id="ThemeMica.Content" translate="yes" xml:space="preserve">
+          <source>Mica</source>
+          <target state="new">Mica</target>
+        </trans-unit>
+        <trans-unit id="ThemeMicaAlt.Content" translate="yes" xml:space="preserve">
+          <source>Mica Alt</source>
+          <target state="new">Mica Alt</target>
+        </trans-unit>
+        <trans-unit id="ThemeDesktopAcrylic.Content" translate="yes" xml:space="preserve">
+          <source>Desktop Acrylic</source>
+          <target state="new">Desktop Acrylic</target>
+        </trans-unit>
+        <trans-unit id="ThemeAcrylicBase.Content" translate="yes" xml:space="preserve">
+          <source>Acrylic Base</source>
+          <target state="new">Acrylic Base</target>
+        </trans-unit>
+        <trans-unit id="ThemeAcrylicThin.Content" translate="yes" xml:space="preserve">
+          <source>Acrylic Thin</source>
+          <target state="new">Acrylic Thin</target>
+        </trans-unit>
+        <trans-unit id="ThemeTransparent.Content" translate="yes" xml:space="preserve">
+          <source>Transparent</source>
+          <target state="new">Transparent</target>
+        </trans-unit>
+        <trans-unit id="TrayIconStopMonitoring.Text" translate="yes" xml:space="preserve">
+          <source>Stop monitoring</source>
+          <target state="new">Stop monitoring</target>
+        </trans-unit>
+        <trans-unit id="TrayIconExecuteOnce.Text" translate="yes" xml:space="preserve">
+          <source>Execute once</source>
+          <target state="new">Execute once</target>
+        </trans-unit>
+        <trans-unit id="TrayIconPreferences.Text" translate="yes" xml:space="preserve">
+          <source>Preferences</source>
+          <target state="new">Preferences</target>
+        </trans-unit>
+        <trans-unit id="TrayIconScreen.Text" translate="yes" xml:space="preserve">
+          <source>Show/Hide</source>
+          <target state="new">Show/Hide</target>
+        </trans-unit>
+        <trans-unit id="TrayIconRestart.Text" translate="yes" xml:space="preserve">
+          <source>Restart</source>
+          <target state="new">Restart</target>
+        </trans-unit>
+        <trans-unit id="TrayIconExit.Text" translate="yes" xml:space="preserve">
+          <source>Exit</source>
+          <target state="new">Exit</target>
+        </trans-unit>
+        <trans-unit id="MainTitleBarTheme.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Toggle Theme</source>
+          <target state="new">Toggle Theme</target>
+        </trans-unit>
+        <trans-unit id="MainTitleBarNav.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Change Navigation</source>
+          <target state="new">Change Navigation</target>
+        </trans-unit>
+        <trans-unit id="MainSuggestBox.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>Search</source>
+          <target state="new">Search</target>
+        </trans-unit>
+        <trans-unit id="SettingsLanguageCard.Header" translate="yes" xml:space="preserve">
+          <source>Application language</source>
+          <target state="new">Application language</target>
+        </trans-unit>
+        <trans-unit id="SettingsLanguageCard.Description" translate="yes" xml:space="preserve">
+          <source>EasyTidy will use OS language by default</source>
+          <target state="new">EasyTidy will use OS language by default</target>
+        </trans-unit>
+        <trans-unit id="Default_language" translate="yes" xml:space="preserve">
+          <source>Windows default</source>
+          <target state="new">Windows default</target>
+        </trans-unit>
+        <trans-unit id="Arabic_Saudi_Arabia_Language" translate="yes" xml:space="preserve">
+          <source>Arabic(Saudi Arabia)</source>
+          <target state="new">Arabic(Saudi Arabia)</target>
+        </trans-unit>
+        <trans-unit id="LanguageRestartInfo.Title" translate="yes" xml:space="preserve">
+          <source>Restart EasyTidy for language change to effect</source>
+          <target state="new">Restart EasyTidy for language change to effect</target>
+        </trans-unit>
+        <trans-unit id="LanguageRestartInfoButton.Content" translate="yes" xml:space="preserve">
+          <source>Restart</source>
+          <target state="new">Restart</target>
+        </trans-unit>
+        <trans-unit id="Czech_Language" translate="yes" xml:space="preserve">
+          <source>Czech</source>
+          <target state="new">Czech</target>
+        </trans-unit>
+        <trans-unit id="German_Language" translate="yes" xml:space="preserve">
+          <source>German</source>
+          <target state="new">German</target>
+        </trans-unit>
+        <trans-unit id="English_Language" translate="yes" xml:space="preserve">
+          <source>English</source>
+          <target state="new">English</target>
+        </trans-unit>
+        <trans-unit id="Spanish_Language" translate="yes" xml:space="preserve">
+          <source>Spanish</source>
+          <target state="new">Spanish</target>
+        </trans-unit>
+        <trans-unit id="Persian_Farsi_Language" translate="yes" xml:space="preserve">
+          <source>Persian (Farsi)</source>
+          <target state="new">Persian (Farsi)</target>
+        </trans-unit>
+        <trans-unit id="French_Language" translate="yes" xml:space="preserve">
+          <source>French</source>
+          <target state="new">French</target>
+        </trans-unit>
+        <trans-unit id="Hebrew_Israel_Language" translate="yes" xml:space="preserve">
+          <source>Hebrew (Israel)</source>
+          <target state="new">Hebrew (Israel)</target>
+        </trans-unit>
+        <trans-unit id="Hungarian_Language" translate="yes" xml:space="preserve">
+          <source>Hungarian</source>
+          <target state="new">Hungarian</target>
+        </trans-unit>
+        <trans-unit id="Italian_Language" translate="yes" xml:space="preserve">
+          <source>Italian</source>
+          <target state="new">Italian</target>
+        </trans-unit>
+        <trans-unit id="Japanese_Language" translate="yes" xml:space="preserve">
+          <source>Japanese</source>
+          <target state="new">Japanese</target>
+        </trans-unit>
+        <trans-unit id="Korean_Language" translate="yes" xml:space="preserve">
+          <source>Korean</source>
+          <target state="new">Korean</target>
+        </trans-unit>
+        <trans-unit id="Dutch_Language" translate="yes" xml:space="preserve">
+          <source>Dutch</source>
+          <target state="new">Dutch</target>
+        </trans-unit>
+        <trans-unit id="Polish_Language" translate="yes" xml:space="preserve">
+          <source>Polish</source>
+          <target state="new">Polish</target>
+        </trans-unit>
+        <trans-unit id="Portuguese_Brazil_Language" translate="yes" xml:space="preserve">
+          <source>Portuguese (Brazil)</source>
+          <target state="new">Portuguese (Brazil)</target>
+        </trans-unit>
+        <trans-unit id="Portuguese_Portugal_Language" translate="yes" xml:space="preserve">
+          <source>Portuguese (Portugal)</source>
+          <target state="new">Portuguese (Portugal)</target>
+        </trans-unit>
+        <trans-unit id="Russian_Language" translate="yes" xml:space="preserve">
+          <source>Russian</source>
+          <target state="new">Russian</target>
+        </trans-unit>
+        <trans-unit id="Swedish_Language" translate="yes" xml:space="preserve">
+          <source>Swedish</source>
+          <target state="new">Swedish</target>
+        </trans-unit>
+        <trans-unit id="Turkish_Language" translate="yes" xml:space="preserve">
+          <source>Turkish</source>
+          <target state="new">Turkish</target>
+        </trans-unit>
+        <trans-unit id="Ukrainian_Language" translate="yes" xml:space="preserve">
+          <source>Ukrainian</source>
+          <target state="new">Ukrainian</target>
+        </trans-unit>
+        <trans-unit id="Chinese_Simplified_Language" translate="yes" xml:space="preserve">
+          <source>Chinese (Simplified)</source>
+          <target state="new">Chinese (Simplified)</target>
+        </trans-unit>
+        <trans-unit id="Chinese_Traditional_Language" translate="yes" xml:space="preserve">
+          <source>Chinese (Traditional)</source>
+          <target state="new">Chinese (Traditional)</target>
+        </trans-unit>
+        <trans-unit id="BackupSuccessTips" translate="yes" xml:space="preserve">
+          <source>Backup successful</source>
+          <target state="new">Backup successful</target>
+        </trans-unit>
+        <trans-unit id="BackupFailedTips" translate="yes" xml:space="preserve">
+          <source>Backup failed</source>
+          <target state="new">Backup failed</target>
+        </trans-unit>
+        <trans-unit id="BackupSelectionTips" translate="yes" xml:space="preserve">
+          <source>Please select the backup type</source>
+          <target state="new">Please select the backup type</target>
+        </trans-unit>
+        <trans-unit id="DialogRegularTaskRunningTime.Header" translate="yes" xml:space="preserve">
+          <source>Interval</source>
+          <target state="new">Interval</target>
+        </trans-unit>
+        <trans-unit id="RegularTaskRunningBlock.Text" translate="yes" xml:space="preserve">
+          <source>Every:</source>
+          <target state="new">Every:</target>
+        </trans-unit>
+        <trans-unit id="FileChangeDelayText.Header" translate="yes" xml:space="preserve">
+          <source>Delay(Second)</source>
+          <target state="new">Delay(Second)</target>
+        </trans-unit>
+        <trans-unit id="MinuteFormatInfo" translate="yes" xml:space="preserve">
+          <source>Minute format error</source>
+          <target state="new">Minute format error</target>
+        </trans-unit>
+        <trans-unit id="HourFormatInfo" translate="yes" xml:space="preserve">
+          <source>Hour format error</source>
+          <target state="new">Hour format error</target>
+        </trans-unit>
+        <trans-unit id="WeeksFormatInfo" translate="yes" xml:space="preserve">
+          <source>Weeks format error</source>
+          <target state="new">Weeks format error</target>
+        </trans-unit>
+        <trans-unit id="DateFormatInfo" translate="yes" xml:space="preserve">
+          <source>Date format error</source>
+          <target state="new">Date format error</target>
+        </trans-unit>
+        <trans-unit id="MonthFormatInfo" translate="yes" xml:space="preserve">
+          <source>Month format error</source>
+          <target state="new">Month format error</target>
+        </trans-unit>
+        <trans-unit id="CronExpressionInfo" translate="yes" xml:space="preserve">
+          <source>Invalid CRON expression format</source>
+          <target state="new">Invalid CRON expression format</target>
+        </trans-unit>
+        <trans-unit id="GroupInformationVerification" translate="yes" xml:space="preserve">
+          <source>Group name can't be empty</source>
+          <target state="new">Group name can't be empty</target>
+        </trans-unit>
+        <trans-unit id="GroupInformationVerificationAdd" translate="yes" xml:space="preserve">
+          <source>Please enter or select a group name</source>
+          <target state="new">Please enter or select a group name</target>
+        </trans-unit>
+        <trans-unit id="FilterNameValidation" translate="yes" xml:space="preserve">
+          <source>Please enter a filter name</source>
+          <target state="new">Please enter a filter name</target>
+        </trans-unit>
+        <trans-unit id="ValidateDelay" translate="yes" xml:space="preserve">
+          <source>Delay can only enter seconds</source>
+          <target state="new">Delay can only enter seconds</target>
+        </trans-unit>
+        <trans-unit id="CreateShortcutFailedText" translate="yes" xml:space="preserve">
+          <source>Failed to create desktop shortcut</source>
+          <target state="new">Failed to create desktop shortcut</target>
+        </trans-unit>
+        <trans-unit id="BackupPathText" translate="yes" xml:space="preserve">
+          <source>Please select a backup folder path</source>
+          <target state="new">Please select a backup folder path</target>
+        </trans-unit>
+        <trans-unit id="BackupStatusText" translate="yes" xml:space="preserve">
+          <source>Current setting match</source>
+          <target state="new">Current setting match</target>
+        </trans-unit>
+        <trans-unit id="RegardedExpressionText" translate="yes" xml:space="preserve">
+          <source>Regarded as a regular expression</source>
+          <target state="new">Regarded as a regular expression</target>
+        </trans-unit>
+        <trans-unit id="AllFoldersText" translate="yes" xml:space="preserve">
+          <source>All folders</source>
+          <target state="new">All folders</target>
+        </trans-unit>
+        <trans-unit id="AllFoldersWithoutOtherMatches" translate="yes" xml:space="preserve">
+          <source>All folders without other matches</source>
+          <target state="new">All folders without other matches</target>
+        </trans-unit>
+        <trans-unit id="AllFoldersStartingWithrobot" translate="yes" xml:space="preserve">
+          <source>All folders that start with "robot"</source>
+          <target state="new">All folders that start with "robot"</target>
+        </trans-unit>
+        <trans-unit id="AllFoldersContainingrobot" translate="yes" xml:space="preserve">
+          <source>All folders containing "robot"</source>
+          <target state="new">All folders containing "robot"</target>
+        </trans-unit>
+        <trans-unit id="AllFoldersNamed_robot_LocatedUnder" translate="yes" xml:space="preserve">
+          <source>All folders named "robot" located in "C:\"</source>
+          <target state="new">All folders named "robot" located in "C:\"</target>
+        </trans-unit>
+        <trans-unit id="Use_Or_ToSeparate" translate="yes" xml:space="preserve">
+          <source>Use ";" or "|" to separate</source>
+          <target state="new">Use ";" or "|" to separate</target>
+        </trans-unit>
+        <trans-unit id="UseToExcludeFoldersStartingWithmy" translate="yes" xml:space="preserve">
+          <source>Use "/" to exclude folders starting with "my"</source>
+          <target state="new">Use "/" to exclude folders starting with "my"</target>
+        </trans-unit>
+        <trans-unit id="AllFiles" translate="yes" xml:space="preserve">
+          <source>All files</source>
+          <target state="new">All files</target>
+        </trans-unit>
+        <trans-unit id="AllFilesWithNoOtherMatches" translate="yes" xml:space="preserve">
+          <source>All other unmatched files</source>
+          <target state="new">All other unmatched files</target>
+        </trans-unit>
+        <trans-unit id="AllFilesWithTheExtension" translate="yes" xml:space="preserve">
+          <source>All files with the extension "jpg"</source>
+          <target state="new">All files with the extension "jpg"</target>
+        </trans-unit>
+        <trans-unit id="AllFilesBeginningWith" translate="yes" xml:space="preserve">
+          <source>All files beginning with "penguin"</source>
+          <target state="new">All files beginning with "penguin"</target>
+        </trans-unit>
+        <trans-unit id="AllFilesContains" translate="yes" xml:space="preserve">
+          <source>All files containing "penguin"</source>
+          <target state="new">All files containing "penguin"</target>
+        </trans-unit>
+        <trans-unit id="All_FilesUnder" translate="yes" xml:space="preserve">
+          <source>All "jpg" files under the "Folder"</source>
+          <target state="new">All "jpg" files under the "Folder"</target>
+        </trans-unit>
+        <trans-unit id="UseDelimiter" translate="yes" xml:space="preserve">
+          <source>Use ";" or "|" to separate</source>
+          <target state="new">Use ";" or "|" to separate</target>
+        </trans-unit>
+        <trans-unit id="UseDelimitersToExclude" translate="yes" xml:space="preserve">
+          <source>Use "/" to exclude files starting with "sea"</source>
+          <target state="new">Use "/" to exclude files starting with "sea"</target>
+        </trans-unit>
+        <trans-unit id="CompressedFile" translate="yes" xml:space="preserve">
+          <source>Compressed file</source>
+          <target state="new">Compressed file</target>
+        </trans-unit>
+        <trans-unit id="Document" translate="yes" xml:space="preserve">
+          <source>Document</source>
+          <target state="new">Document</target>
+        </trans-unit>
+        <trans-unit id="Photograph" translate="yes" xml:space="preserve">
+          <source>Pictures</source>
+          <target state="new">Pictures</target>
+        </trans-unit>
+        <trans-unit id="Music" translate="yes" xml:space="preserve">
+          <source>Music</source>
+          <target state="new">Music</target>
+        </trans-unit>
+        <trans-unit id="PresentationAndWorksheet" translate="yes" xml:space="preserve">
+          <source>Presentations &amp; Worksheets</source>
+          <target state="new">Presentations &amp; Worksheets</target>
+        </trans-unit>
+        <trans-unit id="Video" translate="yes" xml:space="preserve">
+          <source>Video</source>
+          <target state="new">Video</target>
+        </trans-unit>
+        <trans-unit id="HandlingFolderRules" translate="yes" xml:space="preserve">
+          <source>Rules for handling folders</source>
+          <target state="new">Rules for handling folders</target>
+        </trans-unit>
+        <trans-unit id="HandlingRulesForFiles" translate="yes" xml:space="preserve">
+          <source>Rules for processing files</source>
+          <target state="new">Rules for processing files</target>
+        </trans-unit>
+        <trans-unit id="HandlingRulesForCustom" translate="yes" xml:space="preserve">
+          <source>None</source>
+          <target state="new">None</target>
+        </trans-unit>
+        <trans-unit id="ExecutionDate.Title" translate="yes" xml:space="preserve">
+          <source>Execution Date</source>
+          <target state="new">Execution Date</target>
+        </trans-unit>
+        <trans-unit id="VerificationSuccessful" translate="yes" xml:space="preserve">
+          <source>Validation was successful, execution time of the past {0} times</source>
+          <target state="new">Validation was successful, execution time of the past {0} times</target>
+        </trans-unit>
+        <trans-unit id="VerificationFailed" translate="yes" xml:space="preserve">
+          <source>Verification failed, conflict between day of the week and day of the month</source>
+          <target state="new">Verification failed, conflict between day of the week and day of the month</target>
+        </trans-unit>
+        <trans-unit id="Close" translate="yes" xml:space="preserve">
+          <source>Close</source>
+          <target state="new">Close</target>
+        </trans-unit>
+        <trans-unit id="Test" translate="yes" xml:space="preserve">
+          <source>Test</source>
+          <target state="new">Test</target>
+        </trans-unit>
+        <trans-unit id="Status" translate="yes" xml:space="preserve">
+          <source>Status</source>
+          <target state="new">Status</target>
+        </trans-unit>
+        <trans-unit id="CurrentVersion" translate="yes" xml:space="preserve">
+          <source>Current version v{0}</source>
+          <target state="new">Current version v{0}</target>
+        </trans-unit>
+        <trans-unit id="CheckingForNewVersion" translate="yes" xml:space="preserve">
+          <source>Checking for new version</source>
+          <target state="new">Checking for new version</target>
+        </trans-unit>
+        <trans-unit id="FoundANewVersion" translate="yes" xml:space="preserve">
+          <source>We found a new version {0} Created at {1} and Published at {2}</source>
+          <target state="new">We found a new version {0} Created at {1} and Published at {2}</target>
+        </trans-unit>
+        <trans-unit id="LatestVersion" translate="yes" xml:space="preserve">
+          <source>You are using latest version</source>
+          <target state="new">You are using latest version</target>
+        </trans-unit>
+        <trans-unit id="ErrorConnection" translate="yes" xml:space="preserve">
+          <source>Error Connection</source>
+          <target state="new">Error Connection</target>
+        </trans-unit>
+        <trans-unit id="ReleaseNotes" translate="yes" xml:space="preserve">
+          <source>Release Notes</source>
+          <target state="new">Release Notes</target>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
+</xliff>

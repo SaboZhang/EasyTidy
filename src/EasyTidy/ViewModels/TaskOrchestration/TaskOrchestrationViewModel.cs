@@ -2,6 +2,7 @@
 using CommunityToolkit.WinUI.Collections;
 using EasyTidy.Common.Database;
 using EasyTidy.Model;
+using EasyTidy.Service;
 using EasyTidy.Util;
 using EasyTidy.Views.ContentDialogs;
 using Microsoft.EntityFrameworkCore;
@@ -365,6 +366,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                     _dbContext.TaskOrchestration.Remove(delete);
                 }
                 await _dbContext.SaveChangesAsync();
+                await QuartzHelper.DeleteJob(task.TaskName + "#" + task.ID.ToString(), task.GroupName.GroupName);
                 await OnPageLoaded();
                 Growl.Success(new GrowlInfo
                 {
@@ -433,6 +435,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 var update = await _dbContext.TaskOrchestration.Where(x => x.ID == task.ID).FirstOrDefaultAsync();
                 update.IsEnabled = !update.IsEnabled;
                 await _dbContext.SaveChangesAsync();
+                await QuartzHelper.PauseJob(task.TaskName + "#" + task.ID.ToString(), task.GroupName.GroupName);
                 await OnPageLoaded();
                 Growl.Success(new GrowlInfo
                 {

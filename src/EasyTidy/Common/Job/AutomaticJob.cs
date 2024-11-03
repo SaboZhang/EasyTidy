@@ -1,10 +1,12 @@
-﻿using EasyTidy.Common.Database;
+﻿using CommunityToolkit.WinUI;
+using EasyTidy.Common.Database;
 using EasyTidy.Model;
 using EasyTidy.Service;
 using EasyTidy.Util;
 using Microsoft.EntityFrameworkCore;
 using Quartz;
 using System;
+using System.Threading.Tasks;
 
 
 namespace EasyTidy.Common.Job;
@@ -12,6 +14,8 @@ namespace EasyTidy.Common.Job;
 public class AutomaticJob : IJob
 {
     private readonly AppDbContext _dbContext;
+
+    private static readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
 
     public AutomaticJob()
     {
@@ -29,20 +33,27 @@ public class AutomaticJob : IJob
             return;
         }
 
-        List<Func<string, bool>> pathFilters = BuildFilters(task);
+        var operationParameters = new OperationParameters(
+            operationMode: task.OperationMode,
+            sourcePath: task.TaskSource.Equals("DesktopText".GetLocalized())
+            ? Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
+            : task.TaskSource,
+            targetPath: task.TaskTarget,
+            fileOperationType: Settings.GeneralConfig.FileOperationType, 
+            handleSubfolders: Settings.GeneralConfig.SubFolder ?? false,
+            funcs: FilterUtil.GeneratePathFilters(task.TaskRule, task.RuleType),
+            pathFilter: FilterUtil.GetPathFilters(task.Filter),
+            ruleModel: new RuleModel { Filter = task.Filter, Rule = task.TaskRule, RuleType = task.RuleType },
+            id: task.ID,
+            ruleName: task.TaskRule
+            );
 
-        OperationParameters operationParameters = new OperationParameters
+        Logger.Info($"Executing task with SourcePath: {operationParameters.SourcePath}, TargetPath: {operationParameters.TargetPath}");
+        // 启动独立的线程来执行操作，避免参数冲突
+        await Task.Run(async () =>
         {
-            OperationMode = task.OperationMode,
-            SourcePath = task.TaskSource,
-            TargetPath = task.TaskTarget,
-            FileOperationType = Settings.GeneralConfig.FileOperationType,
-            HandleSubfolders = Settings.GeneralConfig.SubFolder,
-            Funcs = pathFilters,
-        };
-
-        // Execute the operation based on parameters
-        await OperationHandler.ExecuteOperationAsync(task.OperationMode, operationParameters);
+            await OperationHandler.ExecuteOperationAsync(task.OperationMode, operationParameters);
+        });
     }
 
     // Helper method to retrieve task based on task ID or job name
@@ -50,6 +61,7 @@ public class AutomaticJob : IJob
     {
         if (!string.IsNullOrEmpty(taskId) && int.TryParse(taskId, out int parsedTaskId))
         {
+            Logger.Info($"Retrieving task with ID: {parsedTaskId}");
             return await _dbContext.TaskOrchestration.FirstOrDefaultAsync(t => t.ID == parsedTaskId);
         }
 
@@ -68,14 +80,6 @@ public class AutomaticJob : IJob
 
         Logger.Error($"Failed to parse ID from JobName: {jobName}");
         return null;
-    }
-
-    private List<Func<string, bool>> BuildFilters(TaskOrchestrationTable task)
-    {
-        List<Func<string, bool>> pathFilters = FilterUtil.GetPathFilters(task.Filter);
-        List<Func<string, bool>> dynamicFilters = FilterUtil.GeneratePathFilters(task.TaskRule, task.RuleType);
-        pathFilters.AddRange(dynamicFilters);
-        return pathFilters;
     }
 
     /// <summary>
@@ -124,16 +128,27 @@ public class AutomaticJob : IJob
             {
                 var delay = Convert.ToInt32(automaticTable.DelaySeconds);
                 var sub = Settings.GeneralConfig?.SubFolder ?? true;
-                FileEventHandler.MonitorFolder(item.OperationMode, item.TaskSource, item.TaskTarget, delay, ruleModel, sub, Settings.GeneralConfig.FileOperationType);
+                var parameters = new OperationParameters(
+                    operationMode: item.OperationMode,
+                    sourcePath: item.TaskSource.Equals("DesktopText".GetLocalized())
+                    ? Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
+                    : item.TaskSource,
+                    targetPath: item.TaskTarget,
+                    fileOperationType: Settings.GeneralConfig.FileOperationType,
+                    handleSubfolders: Settings.GeneralConfig.SubFolder ?? true,
+                    funcs: new List<Func<string, bool>>(FilterUtil.GeneratePathFilters(item.TaskRule, item.RuleType)),
+                    pathFilter: FilterUtil.GetPathFilters(item.Filter)
+                    );
+                FileEventHandler.MonitorFolder(parameters, delay);
 
                 if (automaticTable.RegularTaskRunning)
                 {
-                    await QuartzHelper.AddSimpleJobOfMinuteAsync<AutomaticJob>(item.TaskName, item.GroupName.GroupName, interval, param);
+                    await QuartzHelper.AddSimpleJobOfMinuteAsync<AutomaticJob>($"{item.TaskName}#{item.ID}", item.GroupName.GroupName, interval, param);
                 }
             }
             else if (automaticTable.RegularTaskRunning)
             {
-                await QuartzHelper.AddSimpleJobOfMinuteAsync<AutomaticJob>(item.TaskName, item.GroupName.GroupName, interval, param);
+                await QuartzHelper.AddSimpleJobOfMinuteAsync<AutomaticJob>($"{item.TaskName}#{item.ID}", item.GroupName.GroupName, interval, param);
             }
         }
     }

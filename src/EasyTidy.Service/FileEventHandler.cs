@@ -6,13 +6,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace EasyTidy.Service;
 
 public static class FileEventHandler
 {
     private static Dictionary<string, FileSystemWatcher> _watchers = [];
-    private static readonly char[] separator = [';', '|'];
 
     /// <summary>
     /// 监控文件变化
@@ -21,24 +21,24 @@ public static class FileEventHandler
     /// <param name="targetPath"></param>
     /// <param name="delaySeconds"></param>
     /// <param name="fileOperationType"></param>
-    public static void MonitorFolder(OperationMode operationMode, string folderPath, string targetPath, int delaySeconds, RuleModel filter, bool subFolder = true, FileOperationType fileOperationType = FileOperationType.Skip)
+    public static void MonitorFolder(OperationParameters parameter, int delaySeconds = 5)
     {
-        if (_watchers.ContainsKey(folderPath)) return; // 防止重复监控
+        if (_watchers.ContainsKey(parameter.SourcePath)) return; // 防止重复监控
 
         var watcher = new FileSystemWatcher
         {
-            Path = folderPath,
+            Path = parameter.SourcePath,
             NotifyFilter = NotifyFilters.FileName | NotifyFilters.DirectoryName | NotifyFilters.LastWrite,
             Filter = "*.*"
         };
 
-        watcher.Created += (sender, e) => OnFileChange(e, delaySeconds, () => HandleFileChange(operationMode, e.FullPath, targetPath, fileOperationType, filter, subFolder));
-        watcher.Deleted += (sender, e) => OnFileChange(e, delaySeconds, () => HandleFileChange(operationMode, e.FullPath, targetPath, fileOperationType, filter, subFolder));
-        watcher.Changed += (sender, e) => OnFileChange(e, delaySeconds, () => HandleFileChange(operationMode, e.FullPath, targetPath, fileOperationType, filter, subFolder));
-        watcher.Renamed += (sender, e) => OnFileChange(e, delaySeconds, () => HandleFileChange(operationMode, e.FullPath, targetPath, fileOperationType, filter, subFolder));
+        watcher.Created += (sender, e) => OnFileChange(e, delaySeconds, () => HandleFileChange(parameter));
+        watcher.Deleted += (sender, e) => OnFileChange(e, delaySeconds, () => HandleFileChange(parameter));
+        watcher.Changed += (sender, e) => OnFileChange(e, delaySeconds, () => HandleFileChange(parameter));
+        watcher.Renamed += (sender, e) => OnFileChange(e, delaySeconds, () => HandleFileChange(parameter));
         watcher.EnableRaisingEvents = true;
 
-        _watchers[folderPath] = watcher; // 存储监控器
+        _watchers[parameter.SourcePath] = watcher; // 存储监控器
     }
 
     private static void OnFileChange(FileSystemEventArgs e, int delaySeconds, Action action)
@@ -50,16 +50,9 @@ public static class FileEventHandler
         });
     }
 
-    private static void HandleFileChange(OperationMode operationMode, string source, string target, FileOperationType fileOperationType, RuleModel filter, bool subFolder = true)
+    private static void HandleFileChange(OperationParameters parameter)
     {
-        // 定义过滤规则
-        List<Func<string, bool>> pathFilters = FilterUtil.GetPathFilters(filter.Filter);
-        // 根据 rule 和 RuleType 动态生成的过滤条件
-        List<Func<string, bool>> dynamicFilters = FilterUtil.GeneratePathFilters(filter.Rule, filter.RuleType);
-        // 合并两组过滤条件
-        pathFilters.AddRange(dynamicFilters);
-        // FileActuator.OnExecuteMoveFile(source, target, fileOperationType);FileActuator.OnExecuteMoveFile(source, target, fileOperationType);
-        FileActuator.ExecuteFileOperation(operationMode, source, target, fileOperationType, subFolder, pathFilters);
+        Task.Run(() => FileActuator.ExecuteFileOperationAsync(parameter));
     }
 
 

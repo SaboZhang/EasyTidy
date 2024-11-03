@@ -461,6 +461,9 @@ public partial class AutomaticViewModel : ObservableRecipient
                     {
                         taskOrchestration.IsRelated = true;
                         taskOrchestration.GroupName.IsUsed = true;
+                        taskOrchestration.TaskSource = taskOrchestration.TaskSource.Equals("DesktopText".GetLocalized()) 
+                        ? taskOrchestration.TaskSource = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) 
+                        : taskOrchestration.TaskSource;
                         return taskOrchestration;
                     }));
                 }

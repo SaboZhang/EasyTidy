@@ -21,12 +21,12 @@
     <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
     <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
     <WindowsPackageType>None</WindowsPackageType>
-    <DefaultLanguage>zh-CN</DefaultLanguage>
+    <DefaultLanguage>en-Us</DefaultLanguage>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Label="MultilingualAppToolkit">
     <MultilingualAppToolkitVersion>4.0</MultilingualAppToolkitVersion>
-    <MultilingualFallbackLanguage>zh-CN</MultilingualFallbackLanguage>
+    <MultilingualFallbackLanguage>en-Us</MultilingualFallbackLanguage>
     <TranslationReport Condition="'$(Configuration)' == 'Release'">true</TranslationReport>
     <SuppressPseudoWarning Condition="'$(Configuration)' == 'Debug'">true</SuppressPseudoWarning>
   </PropertyGroup>
@@ -145,9 +145,16 @@
     <Content Remove="Assets\Wide310x150Logo.scale-200.png" />
     <Content Remove="Strings\fr-FR\Resources.resw" />
     <Content Remove="Strings\ja-JP\Resources.resw" />
+    <Content Remove="Strings\qps-ploc\Resources.resw" />
     <Content Remove="Strings\zh-TW\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="MultilingualResources\EasyTidy.fr-FR.xlf" />
+    <None Remove="MultilingualResources\EasyTidy.ja-JP.xlf" />
+    <None Remove="MultilingualResources\EasyTidy.qps-ploc.xlf" />
+    <None Remove="MultilingualResources\EasyTidy.zh-CN.xlf" />
+    <None Remove="MultilingualResources\EasyTidy.zh-Hant.xlf" />
+    <None Remove="MultilingualResources\EasyTidy.zh-TW.xlf" />
     <None Remove="ViewModels\tmp.cs_back" />
     <None Remove="Views\Automatic\AutomaticPage.xaml" />
     <None Remove="Views\ContentDialogs\AddFilterContentDialog.xaml" />
@@ -324,5 +331,13 @@
   </ItemGroup>
   <ItemGroup>
     <PRIResource Remove="Strings\zh-CN\Resources.resw" />
+  </ItemGroup>
+  <ItemGroup>
+    <XliffResource Include="MultilingualResources\EasyTidy.fr-FR.xlf" />
+    <XliffResource Include="MultilingualResources\EasyTidy.ja-JP.xlf" />
+    <XliffResource Include="MultilingualResources\EasyTidy.qps-ploc.xlf" />
+    <XliffResource Include="MultilingualResources\EasyTidy.zh-CN.xlf" />
+    <XliffResource Include="MultilingualResources\EasyTidy.zh-Hant.xlf" />
+    <XliffResource Include="MultilingualResources\EasyTidy.zh-TW.xlf" />
   </ItemGroup>
 </Project>
