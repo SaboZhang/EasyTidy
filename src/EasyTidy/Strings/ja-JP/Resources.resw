@@ -393,10 +393,10 @@
     <value>実行に失敗しました</value>
   </data>
   <data name="DisabledSuccessfullyText" xml:space="preserve">
-    <value>無効化に成功しました</value>
+    <value>操作が成功しました</value>
   </data>
   <data name="DisablingFailedText" xml:space="preserve">
-    <value>無効化に失敗しました</value>
+    <value>操作が失敗しました</value>
   </data>
   <data name="DialogFilterNameBlock.Text" xml:space="preserve">
     <value>フィルタ名：</value>

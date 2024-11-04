@@ -1,8 +1,6 @@
 using EasyTidy.Log;
 using EasyTidy.Model;
-using EasyTidy.Util;
 using System;
-using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
@@ -20,9 +18,9 @@ public static class FileActuator
 {
     private static readonly ConcurrentDictionary<string, SemaphoreSlim> _operationLocks = new ConcurrentDictionary<string, SemaphoreSlim>();
 
-    private static readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
+    private static readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1);
 
-    public static async Task ExecuteFileOperationAsync(OperationParameters parameters, int maxRetries = 3)
+    public static async Task ExecuteFileOperationAsync(OperationParameters parameters, int maxRetries = 5)
     {
         string operationId = $"{parameters.OperationMode}-{parameters.SourcePath}-{Guid.NewGuid()}";
         var operationLock = _operationLocks.GetOrAdd(operationId, _ => new SemaphoreSlim(1, 1));
@@ -97,19 +95,15 @@ public static class FileActuator
         var fileList = Directory.GetFiles(parameters.SourcePath).ToList();
         // 获取所有文件并处理
         int fileCount = 0;
-        foreach (var filePath in Directory.GetFiles(parameters.SourcePath))
+        foreach (var filePath in fileList)
         {
             fileCount++;
             var dynamicFilters = new List<Func<string, bool>>(parameters.Funcs);
-            LogService.Logger.Info($"执行文件操作，获取所有文件 filePath: {filePath}, RuleFilters: {parameters.RuleName},=== {fileCount}, sourcePath: {parameters.SourcePath}");
-            if (ShouldSkip(dynamicFilters, filePath, parameters.PathFilter))
+            if (ShouldSkip(new List<Func<string, bool>>(parameters.Funcs), filePath, parameters.PathFilter))
             {
-                bool areEqual = dynamicFilters.SequenceEqual(parameters.Funcs);
-                LogService.Logger.Info($"执行文件操作，获取所有文件 areEqual: {areEqual}, RuleFilters: {parameters.RuleName}");
+                LogService.Logger.Info($"执行文件操作，获取所有文件跳过不符合条件的文件 filePath: {filePath}, RuleFilters: {parameters.RuleName},=== {fileCount}, sourcePath: {parameters.SourcePath}");
                 continue; // 跳过不符合条件的文件
             }
-
-            LogService.Logger.Info("执行文件操作，获取所有文件 ProcessDirectory");
 
             // 更新目标路径
             var targetFilePath = Path.Combine(parameters.TargetPath, Path.GetFileName(filePath));
@@ -129,7 +123,8 @@ public static class FileActuator
         // 递归处理子文件夹
         if (parameters.HandleSubfolders)
         {
-            foreach (var subDir in Directory.GetDirectories(parameters.SourcePath))
+            var subDirList = Directory.GetDirectories(parameters.SourcePath).ToList();
+            foreach (var subDir in subDirList)
             {
                 if (ShouldSkip(parameters.Funcs, subDir, parameters.PathFilter))
                 {
@@ -161,7 +156,7 @@ public static class FileActuator
             LogService.Logger.Info($"执行文件操作 ShouldSkip {parameters.RuleName}{parameters.Id}");
             return;
         }
-        
+
         switch (parameters.OperationMode)
         {
             case OperationMode.Move:
@@ -203,7 +198,6 @@ public static class FileActuator
         finally
         {
             _semaphore.Release(); // 确保释放互斥锁
-            LogService.Logger.Info("执行文件操作=====完成");
         }
     }
 

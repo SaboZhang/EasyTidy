@@ -393,10 +393,10 @@
     <value>L'exécution a échoué</value>
   </data>
   <data name="DisabledSuccessfullyText" xml:space="preserve">
-    <value>Handicapé avec succès</value>
+    <value>L'opération a réussi</value>
   </data>
   <data name="DisablingFailedText" xml:space="preserve">
-    <value>La désactivation a échoué</value>
+    <value>Échec de l'opération</value>
   </data>
   <data name="DialogFilterNameBlock.Text" xml:space="preserve">
     <value>Nom du filtre:</value>

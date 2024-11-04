@@ -3,11 +3,8 @@
 
 using CommunityToolkit.WinUI;
 using EasyTidy.Model;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Media;
 using System.Collections;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
@@ -90,9 +87,9 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
 
     public bool EnabledFlag { get; set; } = true;
 
-    public bool IsRegex 
-    { 
-        get => _isRegex; 
+    public bool IsRegex
+    {
+        get => _isRegex;
         set
         {
             if (_isRegex != value)
@@ -181,7 +178,8 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
                     {
                         RuleType = TaskRuleType.FolderRule;
                         break;
-                    }else if (subItem.Text == "HandlingRulesForFiles".GetLocalized() && subItem.Items.Contains(menuItem))
+                    }
+                    else if (subItem.Text == "HandlingRulesForFiles".GetLocalized() && subItem.Items.Contains(menuItem))
                     {
                         RuleType = TaskRuleType.FileRule;
                         break;

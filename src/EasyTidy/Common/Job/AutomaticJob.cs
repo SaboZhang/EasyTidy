@@ -5,8 +5,6 @@ using EasyTidy.Service;
 using EasyTidy.Util;
 using Microsoft.EntityFrameworkCore;
 using Quartz;
-using System;
-using System.Threading.Tasks;
 
 
 namespace EasyTidy.Common.Job;
@@ -14,6 +12,7 @@ namespace EasyTidy.Common.Job;
 public class AutomaticJob : IJob
 {
     private readonly AppDbContext _dbContext;
+    private static readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1);
 
     public AutomaticJob()
     {
@@ -37,7 +36,7 @@ public class AutomaticJob : IJob
             ? Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
             : task.TaskSource,
             targetPath: task.TaskTarget,
-            fileOperationType: Settings.GeneralConfig.FileOperationType, 
+            fileOperationType: Settings.GeneralConfig.FileOperationType,
             handleSubfolders: Settings.GeneralConfig.SubFolder ?? false,
             funcs: FilterUtil.GeneratePathFilters(task.TaskRule, task.RuleType),
             pathFilter: FilterUtil.GetPathFilters(task.Filter),
@@ -46,7 +45,7 @@ public class AutomaticJob : IJob
             ruleName: task.TaskRule
             );
 
-        Logger.Info($"Executing task with SourcePath: {operationParameters.SourcePath}, TargetPath: {operationParameters.TargetPath}, TaskRule: {operationParameters.RuleName} | 未赋值的Rule: {task.TaskRule}");
+        Logger.Info($"Executing task with SourcePath: {operationParameters.SourcePath}, TargetPath: {operationParameters.TargetPath}");
         // 启动独立的线程来执行操作，避免参数冲突
         await Task.Run(async () =>
         {
@@ -60,7 +59,7 @@ public class AutomaticJob : IJob
         if (!string.IsNullOrEmpty(taskId) && int.TryParse(taskId, out int parsedTaskId))
         {
             Logger.Info($"Retrieving task with ID: {parsedTaskId}");
-            return await _dbContext.TaskOrchestration.FirstOrDefaultAsync(t => t.ID == parsedTaskId);
+            return await _dbContext.TaskOrchestration.FirstOrDefaultAsync(t => t.ID == parsedTaskId && t.IsEnabled == true);
         }
 
         string jobName = context.JobDetail.Key.Name;
@@ -73,7 +72,7 @@ public class AutomaticJob : IJob
         var idPart = jobName.Split('#').LastOrDefault();
         if (int.TryParse(idPart, out int parsedId))
         {
-            return await _dbContext.TaskOrchestration.FirstOrDefaultAsync(t => t.ID == parsedId);
+            return await _dbContext.TaskOrchestration.FirstOrDefaultAsync(t => t.ID == parsedId && t.IsEnabled == true);
         }
 
         Logger.Error($"Failed to parse ID from JobName: {jobName}");

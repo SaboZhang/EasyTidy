@@ -544,10 +544,10 @@
     <value>Execution Failed</value>
   </data>
   <data name="DisabledSuccessfullyText" xml:space="preserve">
-    <value>Disabled Successfully</value>
+    <value>Operation succeeded</value>
   </data>
   <data name="DisablingFailedText" xml:space="preserve">
-    <value>Disabling Failed</value>
+    <value>Operation failed</value>
   </data>
   <data name="DialogFilterNameBlock.Text" xml:space="preserve">
     <value>Filter Name:</value>

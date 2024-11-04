@@ -7,7 +7,6 @@ using EasyTidy.Util;
 using EasyTidy.Views.ContentDialogs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.UI.Dispatching;
-using Microsoft.UI.Xaml.Controls;
 using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
 
@@ -295,6 +294,9 @@ public partial class AutomaticViewModel : ObservableRecipient
                 if (update != null)
                 {
                     update.IsRelated = true;
+                    update.TaskSource = update.TaskSource.Equals("DesktopText".GetLocalized())
+                        ? update.TaskSource = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
+                        : update.TaskSource;
                     _dbContext.Entry(update).State = EntityState.Modified;
                     list.Add(update);
                 }
@@ -461,8 +463,8 @@ public partial class AutomaticViewModel : ObservableRecipient
                     {
                         taskOrchestration.IsRelated = true;
                         taskOrchestration.GroupName.IsUsed = true;
-                        taskOrchestration.TaskSource = taskOrchestration.TaskSource.Equals("DesktopText".GetLocalized()) 
-                        ? taskOrchestration.TaskSource = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) 
+                        taskOrchestration.TaskSource = taskOrchestration.TaskSource.Equals("DesktopText".GetLocalized())
+                        ? taskOrchestration.TaskSource = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
                         : taskOrchestration.TaskSource;
                         return taskOrchestration;
                     }));
@@ -523,7 +525,7 @@ public partial class AutomaticViewModel : ObservableRecipient
         FireTimes?.Clear();
         var result = CronExpressionUtil.VerificationCronExpression(cronExpression);
         var VerificationMessage = result.Message;
-        if (result.IsValid ) 
+        if (result.IsValid)
         {
             FireTimes = result.FireTimes.Select(time => time.ToString("yyyy-MM-dd HH:mm:ss")).ToList();
             return (true, FireTimes.Count.ToString());
@@ -532,6 +534,6 @@ public partial class AutomaticViewModel : ObservableRecipient
         {
             return (false, "0");
         }
-        
+
     }
 }

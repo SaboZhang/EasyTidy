@@ -291,7 +291,7 @@ public partial class GeneralViewModel : ObservableRecipient
         WebDavUserName = Settings.WebDavUser ?? string.Empty;
         WebDavPassWord = Settings.WebDavPassword ?? string.Empty;
         WebDavIsShow = Settings.BackupType == BackupType.WebDav;
-        BackupTypeIndex = WebDavIsShow? 1 : PathTypeSelectedIndex? 0 : -1;
+        BackupTypeIndex = WebDavIsShow ? 1 : PathTypeSelectedIndex ? 0 : -1;
     }
 
     [RelayCommand]
@@ -359,7 +359,7 @@ public partial class GeneralViewModel : ObservableRecipient
                 await DelayCloseMessageVisible();
                 break;
         }
-        
+
     }
 
     private void NotifyPropertyChanged([CallerMemberName] string propertyName = null, bool reDoBackupDryRun = true)
@@ -393,8 +393,8 @@ public partial class GeneralViewModel : ObservableRecipient
             BackupRestoreMessageSeverity = InfoBarSeverity.Success;
             SettingsBackupMessage = "BackupSuccessTips".GetLocalized();
         }
-        catch (Exception ex) 
-        { 
+        catch (Exception ex)
+        {
             Logger.Error($"备份异常：{ex.Message}");
             SettingsBackupRestoreMessageVisible = true;
             BackupRestoreMessageSeverity = InfoBarSeverity.Error;
@@ -412,7 +412,7 @@ public partial class GeneralViewModel : ObservableRecipient
         BackupStatus = AssemblyInfoHelper.GetAssemblyVersion();
         BackupCreateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         BackupFileName = Path.GetFileName(file);
-        BackupHostName = WebDavIsShow? WebDavUrl + "/EasyTidy" : Environment.MachineName;
+        BackupHostName = WebDavIsShow ? WebDavUrl + "/EasyTidy" : Environment.MachineName;
 
         Settings.BackupConfig.BackupVersion = BackupStatus;
         Settings.BackupConfig.CreateTime = BackupCreateTime;

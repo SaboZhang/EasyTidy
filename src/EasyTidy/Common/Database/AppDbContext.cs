@@ -1,16 +1,11 @@
 ﻿using EasyTidy.Model;
-using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace EasyTidy.Common.Database;
 
 public partial class AppDbContext : DbContext
 {
-    public AppDbContext(DbContextOptions<AppDbContext> options): base(options)
+    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
         InitializeDatabaseAsync().Wait();
     }

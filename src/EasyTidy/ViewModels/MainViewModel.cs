@@ -4,9 +4,6 @@ using EasyTidy.Model;
 using EasyTidy.Service;
 using EasyTidy.Util;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Threading.Tasks;
-using WinRT;
 
 namespace EasyTidy.ViewModels;
 public partial class MainViewModel : ObservableObject, ITitleBarAutoSuggestBoxAware
@@ -56,7 +53,7 @@ public partial class MainViewModel : ObservableObject, ITitleBarAutoSuggestBoxAw
                         // 执行操作
                         await OperationHandler.ExecuteOperationAsync(task.OperationMode, new OperationParameters(
                             task.OperationMode,
-                            task.TaskSource = task.TaskRule.Equals("DesktopText".GetLocalized()) 
+                            task.TaskSource = task.TaskRule.Equals("DesktopText".GetLocalized().Trim())
                             ? Environment.GetFolderPath(Environment.SpecialFolder.Desktop) : task.TaskSource,
                             task.TaskTarget,
                             Settings.GeneralConfig.FileOperationType,

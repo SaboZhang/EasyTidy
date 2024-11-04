@@ -1,6 +1,6 @@
-﻿using System;
+﻿using CommunityToolkit.WinUI;
+using System;
 using System.ComponentModel.DataAnnotations;
-using CommunityToolkit.WinUI;
 
 namespace EasyTidy.Model;
 

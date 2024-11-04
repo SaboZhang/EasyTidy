@@ -1,7 +1,6 @@
 ﻿using EasyTidy.Model;
 using Quartz;
 using Quartz.Impl.Triggers;
-using Quartz.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;

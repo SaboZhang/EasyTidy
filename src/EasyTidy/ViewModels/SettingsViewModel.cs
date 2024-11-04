@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.WinUI;
 using EasyTidy.Model;
-using H.NotifyIcon.Core;
 using Microsoft.UI.Xaml.Media.Animation;
 using System.Collections.ObjectModel;
 using System.Diagnostics;

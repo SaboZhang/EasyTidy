@@ -1,6 +1,4 @@
-﻿using H.NotifyIcon.Core;
-
-namespace EasyTidy.Views;
+﻿namespace EasyTidy.Views;
 
 public sealed partial class SettingsPage : Page
 {

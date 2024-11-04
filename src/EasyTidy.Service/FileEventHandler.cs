@@ -1,11 +1,7 @@
 ﻿using EasyTidy.Model;
-using EasyTidy.Util;
-using Quartz;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace EasyTidy.Service;

@@ -64,7 +64,7 @@ public class ShortcutUtil
             {
                 Directory.CreateDirectory(targetDirectory);
             }
-            
+
             string deskTop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\";
             string shortcutPath = deskTop + FileName + ".lnk";
             CreateShortcut(shortcutPath, targetPath, FileName);

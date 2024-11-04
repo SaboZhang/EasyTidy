@@ -124,7 +124,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                     GroupName = GroupTextName,
                     IsUsed = false
                 },
-                Filter = SelectedFilter != null 
+                Filter = SelectedFilter != null
                 ? await _dbContext.Filters.Where(x => x.Id == SelectedFilter.Id).FirstOrDefaultAsync() : null,
                 IsRegex = dialog.IsRegex
             });
@@ -419,7 +419,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
     }
 
     /// <summary>
-    /// 禁用
+    /// 禁用/启用
     /// </summary>
     /// <param name="dataContext"></param>
     /// <returns></returns>
@@ -435,7 +435,9 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 var update = await _dbContext.TaskOrchestration.Where(x => x.ID == task.ID).FirstOrDefaultAsync();
                 update.IsEnabled = !update.IsEnabled;
                 await _dbContext.SaveChangesAsync();
-                await QuartzHelper.PauseJob(task.TaskName + "#" + task.ID.ToString(), task.GroupName.GroupName);
+                await (update.IsEnabled
+                    ? QuartzHelper.ResumeJob(task.TaskName + "#" + task.ID.ToString(), task.GroupName.GroupName)
+                    : QuartzHelper.PauseJob(task.TaskName + "#" + task.ID.ToString(), task.GroupName.GroupName));
                 await OnPageLoaded();
                 Growl.Success(new GrowlInfo
                 {
@@ -526,7 +528,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
     [RelayCommand]
     private void OnGroupSelectionChanged()
     {
-        if (string.IsNullOrEmpty(SelectedTaskGroupName) 
+        if (string.IsNullOrEmpty(SelectedTaskGroupName)
             || "AllText".GetLocalized().Equals(SelectedTaskGroupName))
         {
             SelectedTaskGroupName = string.Empty;

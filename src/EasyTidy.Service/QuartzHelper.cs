@@ -1,5 +1,4 @@
 ﻿using Quartz;
-using Quartz.Impl;
 using Quartz.Impl.Matchers;
 using System;
 using System.Collections.Generic;
@@ -135,7 +134,7 @@ public class QuartzHelper
         {
             await _scheduler.Shutdown();
         }
-        
+
     }
 
 

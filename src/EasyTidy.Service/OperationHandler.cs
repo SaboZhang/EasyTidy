@@ -134,10 +134,10 @@ public static class OperationHandler
         LogService.Logger.Info("重命名逻辑");
     }
 
-    private static async Task RecycleBinAsync(OperationParameters parameter) 
+    private static async Task RecycleBinAsync(OperationParameters parameter)
     {
-        await Task.Run(() => 
-        { 
+        await Task.Run(() =>
+        {
             // FileActuator.ExecuteFileOperation(OperationMode.RecycleBin, parameter.SourcePath, parameter.TargetPath, parameter.FileOperationType, (bool)parameter.HandleSubfolders, parameter.Funcs);
         });
         LogService.Logger.Info("回收站逻辑");

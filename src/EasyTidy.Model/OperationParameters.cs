@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EasyTidy.Model;
 
@@ -27,7 +24,7 @@ public class OperationParameters
 
     public string RuleName { get; set; }
 
-    public OperationParameters(OperationMode operationMode, string sourcePath, string targetPath, FileOperationType fileOperationType, bool handleSubfolders, 
+    public OperationParameters(OperationMode operationMode, string sourcePath, string targetPath, FileOperationType fileOperationType, bool handleSubfolders,
         List<Func<string, bool>> funcs, Func<string, bool> pathFilter, RuleModel ruleModel = null, int id = 0, string ruleName = null)
     {
         OperationMode = operationMode;
