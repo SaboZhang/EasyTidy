@@ -15,8 +15,6 @@ public class AutomaticJob : IJob
 {
     private readonly AppDbContext _dbContext;
 
-    private static readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
-
     public AutomaticJob()
     {
         _dbContext = App.GetService<AppDbContext>();
@@ -48,7 +46,7 @@ public class AutomaticJob : IJob
             ruleName: task.TaskRule
             );
 
-        Logger.Info($"Executing task with SourcePath: {operationParameters.SourcePath}, TargetPath: {operationParameters.TargetPath}");
+        Logger.Info($"Executing task with SourcePath: {operationParameters.SourcePath}, TargetPath: {operationParameters.TargetPath}, TaskRule: {operationParameters.RuleName} | 未赋值的Rule: {task.TaskRule}");
         // 启动独立的线程来执行操作，避免参数冲突
         await Task.Run(async () =>
         {

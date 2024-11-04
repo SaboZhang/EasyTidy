@@ -266,7 +266,7 @@ public class FilterUtil
                     {
                         // 确保前面加上点，并进行匹配
                         string fileExtension = Path.GetExtension(filePath).ToLower();
-                        return fileExtension == $".{requiredExtension}"; // 确保前面加上点
+                        return fileExtension == requiredExtension; // 确保前面加上点
                     };
                 }
             }

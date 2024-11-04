@@ -94,6 +94,7 @@ public static class FileActuator
             Directory.CreateDirectory(parameters.TargetPath);
         }
 
+        var fileList = Directory.GetFiles(parameters.SourcePath).ToList();
         // 获取所有文件并处理
         int fileCount = 0;
         foreach (var filePath in Directory.GetFiles(parameters.SourcePath))
