@@ -136,10 +136,34 @@ public static class OperationHandler
 
     private static async Task RecycleBinAsync(OperationParameters parameter)
     {
-        await Task.Run(async () =>
+        string operationId = $"{parameter.SourcePath}-{parameter.TargetPath}-{parameter.FileOperationType}";
+
+        // 使用锁来确保同一时间只有一个线程可以执行该操作
+        lock (_executedOperations)
         {
-            await FileActuator.ExecuteFileOperationAsync(parameter);
-        });
-        LogService.Logger.Info("回收站逻辑");
+            if (_executedOperations.Contains(operationId))
+            {
+                LogService.Logger.Info($"Move operation already in progress, skipping execution. {parameter.Id}");
+                return;
+            }
+            _executedOperations.Add(operationId);
+        }
+        try
+        {
+            await Task.Run(async () =>
+            {
+                await FileActuator.ExecuteFileOperationAsync(parameter);
+            });
+            LogService.Logger.Info("回收站逻辑");
+        }
+        finally
+        {
+            lock (_executedOperations)
+            {
+                _executedOperations.Remove(operationId);
+                LogService.Logger.Info("Removed operation from executed operations.");
+            }
+        }
+        
     }
 }
