@@ -152,7 +152,7 @@ public static class OperationHandler
         {
             await Task.Run(async () =>
             {
-                await FileActuator.ExecuteFileOperationAsync(parameter);
+                await FileActuator.ProcessFileAsync(parameter);
             });
             LogService.Logger.Info("回收站逻辑");
         }

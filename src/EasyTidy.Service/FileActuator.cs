@@ -150,9 +150,9 @@ public static class FileActuator
         }
     }
 
-    private static async Task ProcessFileAsync(OperationParameters parameters)
+    internal static async Task ProcessFileAsync(OperationParameters parameters)
     {
-        if (ShouldSkip(parameters.Funcs, parameters.SourcePath, parameters.PathFilter))
+        if (ShouldSkip(parameters.Funcs, parameters.SourcePath, parameters.PathFilter) && parameters.OperationMode != OperationMode.RecycleBin)
         {
             LogService.Logger.Info($"执行文件操作 ShouldSkip {parameters.RuleName}{parameters.Id}");
             return;
@@ -174,7 +174,8 @@ public static class FileActuator
                 await RenameFile(parameters.SourcePath, parameters.TargetPath);
                 break;
             case OperationMode.RecycleBin:
-                await MoveToRecycleBin(parameters.TargetPath, parameters.HandleSubfolders);
+                await MoveToRecycleBin(parameters.TargetPath, new List<Func<string, bool>>(parameters.Funcs), 
+                    parameters.PathFilter, parameters.RuleModel.RuleType, parameters.HandleSubfolders);
                 break;
             default:
                 throw new NotSupportedException($"Operation mode '{parameters.OperationMode}' is not supported.");
@@ -264,7 +265,8 @@ public static class FileActuator
         }
     }
 
-    private static async Task MoveToRecycleBin(string path, bool deleteSubfolders = false)
+    private static async Task MoveToRecycleBin(string path, List<Func<string, bool>> dynamicFilters, 
+        Func<string, bool>? pathFilter, TaskRuleType ruleType, bool deleteSubfolders = false)
     {
         await _semaphore.WaitAsync(); // 请求对文件操作的独占访问
         try
@@ -279,19 +281,28 @@ public static class FileActuator
                 {
                     foreach (var subfolder in Directory.GetDirectories(path))
                     {
-                        await MoveToRecycleBin(subfolder, true); // 递归处理子文件夹
+                        if (ShouldSkip(dynamicFilters, path, pathFilter) && ruleType != TaskRuleType.FileRule)
+                        {
+                            continue;
+                        }
+                        await MoveToRecycleBin(subfolder, dynamicFilters, pathFilter, ruleType, true); // 递归处理子文件夹
+                        // 将当前目录移到回收站（在子文件夹中文件处理完成后进行）
+                        FileSystem.DeleteDirectory(subfolder, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
                     }
+                    
                 }
 
                 // 获取目录中的所有文件并移到回收站
                 var files = Directory.GetFiles(path);
                 foreach (var file in files)
                 {
+                    if (ShouldSkip(dynamicFilters, path, pathFilter) && ruleType != TaskRuleType.FolderRule)
+                    {
+                        continue;
+                    }
                     FileSystem.DeleteFile(path, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
                 }
-
-                // 将当前目录移到回收站（此操作会在子文件夹和文件处理完成后进行）
-                FileSystem.DeleteDirectory(path, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
+                
             }
             else
             {
