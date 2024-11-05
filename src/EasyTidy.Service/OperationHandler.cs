@@ -109,36 +109,36 @@ public static class OperationHandler
 
     private static async Task CopyAsync(OperationParameters parameter)
     {
-        await Task.Run(() =>
+        await Task.Run(async () =>
         {
-            // FileActuator.ExecuteFileOperation(OperationMode.Copy, parameter.SourcePath, parameter.TargetPath, parameter.FileOperationType, (bool)parameter.HandleSubfolders, parameter.Funcs);
+            await FileActuator.ExecuteFileOperationAsync(parameter);
         });
         LogService.Logger.Info("执行复制操作");
     }
 
     private static async Task DeleteAsync(OperationParameters parameter)
     {
-        await Task.Run(() =>
+        await Task.Run(async () =>
         {
-            // FileActuator.ExecuteFileOperation(OperationMode.Delete, parameter.SourcePath, parameter.TargetPath, parameter.FileOperationType, (bool)parameter.HandleSubfolders, parameter.Funcs);
+            await FileActuator.ExecuteFileOperationAsync(parameter);
         });
         LogService.Logger.Info("执行删除操作");
     }
 
     private static async Task RenameAsync(OperationParameters parameter)
     {
-        await Task.Run(() =>
+        await Task.Run(async () =>
         {
-            // FileActuator.ExecuteFileOperation(OperationMode.Rename, parameter.SourcePath, parameter.TargetPath, parameter.FileOperationType, (bool)parameter.HandleSubfolders, parameter.Funcs);
+            await FileActuator.ExecuteFileOperationAsync(parameter);
         });
         LogService.Logger.Info("重命名逻辑");
     }
 
     private static async Task RecycleBinAsync(OperationParameters parameter)
     {
-        await Task.Run(() =>
+        await Task.Run(async () =>
         {
-            // FileActuator.ExecuteFileOperation(OperationMode.RecycleBin, parameter.SourcePath, parameter.TargetPath, parameter.FileOperationType, (bool)parameter.HandleSubfolders, parameter.Funcs);
+            await FileActuator.ExecuteFileOperationAsync(parameter);
         });
         LogService.Logger.Info("回收站逻辑");
     }

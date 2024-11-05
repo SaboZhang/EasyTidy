@@ -393,7 +393,7 @@
     <value>実行に失敗しました</value>
   </data>
   <data name="DisabledSuccessfullyText" xml:space="preserve">
-    <value>操作が成功しました</value>
+    <value>処理が完了しました。</value>
   </data>
   <data name="DisablingFailedText" xml:space="preserve">
     <value>操作が失敗しました</value>

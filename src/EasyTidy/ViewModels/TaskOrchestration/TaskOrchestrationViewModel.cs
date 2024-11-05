@@ -110,7 +110,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 TaskName = dialog.TaskName,
                 TaskRule = dialog.TaskRule,
                 TaskSource = SelectedOperationMode == OperationMode.Delete || SelectedOperationMode == OperationMode.RecycleBin
-                ? string.Empty : TaskSource.Equals("DesktopText".GetLocalized())
+                ? TaskTarget : TaskSource.Equals("DesktopText".GetLocalized())
                 ? Environment.GetFolderPath(Environment.SpecialFolder.Desktop) : TaskSource,
                 Shortcut = dialog.Shortcut,
                 TaskTarget = TaskTarget,
@@ -577,7 +577,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         { "All_FilesUnder","C:\\Folder\\*.jpg" },
         { "UseDelimiter","*.jpg;*.png" },
         { "UseDelimitersToExclude","*.jpg/sea*" },
-        { "CompressedFile","*.7z;*.bz2;*.gz;*.iso;*.rar;*.xz;*.z*.zip" },
+        { "CompressedFile","*.7z;*.bz2;*.gz;*.iso;*.rar;*.xz;*.z*;.zip" },
         { "Document","*.djvu;*.doc;*.docx;*.epub;*.odt;*.pdf;*.rtp;*.tex;*.txt" },
         { "Photograph","*.bmp;*.gif;*.ico;*.jpg;*.jpeg;*.png;*.psd;*.tif;*.tiff" },
         { "Music","*.aac;*.flac;*.m4a;*mp3*.ogg;*.wma;*.wav" },

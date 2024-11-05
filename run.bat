@@ -1,23 +1,17 @@
+:: by EasyTidy
 @echo off
-setlocal
+@ECHO OFF&(PUSHD "%~DP0")&(REG QUERY "HKU\S-1-5-19">NUL 2>&1)||(
+powershell -Command "Start-Process '%~sdpnx0' -Verb RunAs"&&EXIT)
 
-:: 设置 EasyTidy 目录
-set "easyTidyDir=%cd%\EasyTidy"
+echo set WshShell = WScript.CreateObject("WScript.Shell")>tmp.vbs
+echo set oShellLink = WshShell.CreateShortcut("%~dp0" ^& "\EasyTidy.lnk")>>tmp.vbs
+echo oShellLink.TargetPath ="%~dp0EasyTidy\EasyTidy.exe">>tmp.vbs
+echo oShellLink.WindowStyle ="1">>tmp.vbs
+echo oShellLink.IconLocation = "%~dp0EasyTidy\EasyTidy.exe">>tmp.vbs
+echo oShellLink.Description = "">>tmp.vbs
+echo oShellLink.WorkingDirectory = "%~dp0">>tmp.vbs
+echo oShellLink.Save>>tmp.vbs
+call tmp.vbs
+del /f /q tmp.vbs
 
-:: 检查 EasyTidy 目录是否存在
-if not exist "%easyTidyDir%" (
-    echo EasyTidy directory not found!
-    exit /b 1
-)
-
-:: 检查 EasyTidy.exe 是否存在
-if not exist "%easyTidyDir%\EasyTidy.exe" (
-    echo EasyTidy.exe not found in EasyTidy directory!
-    exit /b 1
-)
-
-:: 运行 EasyTidy.exe
-echo Running EasyTidy.exe...
-"%easyTidyDir%\EasyTidy.exe"
-
-endlocal
+start "" "%~dp0EasyTidy\EasyTidy.exe"

@@ -513,12 +513,12 @@
           <target state="new">Execution Failed</target>
         </trans-unit>
         <trans-unit id="DisabledSuccessfullyText" translate="yes" xml:space="preserve">
-          <source>Disabled Successfully</source>
-          <target state="new">Disabled Successfully</target>
+          <source>Operation succeeded</source>
+          <target state="new">Operation succeeded</target>
         </trans-unit>
         <trans-unit id="DisablingFailedText" translate="yes" xml:space="preserve">
-          <source>Disabling Failed</source>
-          <target state="new">Disabling Failed</target>
+          <source>Operation failed</source>
+          <target state="new">Operation failed</target>
         </trans-unit>
         <trans-unit id="DialogFilterNameBlock.Text" translate="yes" xml:space="preserve">
           <source>Filter Name:</source>

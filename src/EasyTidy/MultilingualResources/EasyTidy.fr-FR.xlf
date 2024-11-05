@@ -519,12 +519,12 @@
           <target state="translated">L'exécution a échoué</target>
         </trans-unit>
         <trans-unit id="DisabledSuccessfullyText" translate="yes" xml:space="preserve">
-          <source>Disabled Successfully</source>
-          <target state="translated">Handicapé avec succès</target>
+          <source>Operation succeeded</source>
+          <target state="translated">L'opération a réussi</target>
         </trans-unit>
         <trans-unit id="DisablingFailedText" translate="yes" xml:space="preserve">
-          <source>Disabling Failed</source>
-          <target state="translated">La désactivation a échoué</target>
+          <source>Operation failed</source>
+          <target state="translated">L'opération a échoué.</target>
         </trans-unit>
         <trans-unit id="DialogFilterNameBlock.Text" translate="yes" xml:space="preserve">
           <source>Filter Name:</source>

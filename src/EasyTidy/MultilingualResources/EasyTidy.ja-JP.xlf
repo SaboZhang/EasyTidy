@@ -520,12 +520,12 @@
           <target state="translated">実行に失敗しました</target>
         </trans-unit>
         <trans-unit id="DisabledSuccessfullyText" translate="yes" xml:space="preserve">
-          <source>Disabled Successfully</source>
-          <target state="translated">無効化に成功しました</target>
+          <source>Operation succeeded</source>
+          <target state="translated">処理が完了しました。</target>
         </trans-unit>
         <trans-unit id="DisablingFailedText" translate="yes" xml:space="preserve">
-          <source>Disabling Failed</source>
-          <target state="translated">無効化に失敗しました</target>
+          <source>Operation failed</source>
+          <target state="translated">操作が失敗しました</target>
         </trans-unit>
         <trans-unit id="DialogFilterNameBlock.Text" translate="yes" xml:space="preserve">
           <source>Filter Name:</source>

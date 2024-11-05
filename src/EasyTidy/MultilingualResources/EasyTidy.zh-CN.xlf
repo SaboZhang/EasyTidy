@@ -520,12 +520,12 @@
           <target state="translated">执行失败</target>
         </trans-unit>
         <trans-unit id="DisabledSuccessfullyText" translate="yes" xml:space="preserve">
-          <source>Disabled Successfully</source>
-          <target state="translated">禁用成功</target>
+          <source>Operation succeeded</source>
+          <target state="translated">操作成功</target>
         </trans-unit>
         <trans-unit id="DisablingFailedText" translate="yes" xml:space="preserve">
-          <source>Disabling Failed</source>
-          <target state="translated">禁用失败</target>
+          <source>Operation failed</source>
+          <target state="translated">操作失败</target>
         </trans-unit>
         <trans-unit id="DialogFilterNameBlock.Text" translate="yes" xml:space="preserve">
           <source>Filter Name:</source>

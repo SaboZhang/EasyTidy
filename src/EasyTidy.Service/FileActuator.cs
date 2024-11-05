@@ -1,5 +1,6 @@
 using EasyTidy.Log;
 using EasyTidy.Model;
+using Microsoft.VisualBasic.FileIO;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -268,23 +269,33 @@ public static class FileActuator
         await _semaphore.WaitAsync(); // 请求对文件操作的独占访问
         try
         {
-            if (!Directory.Exists(path))
+            if (File.Exists(path)) // 如果路径是文件
             {
-                throw new DirectoryNotFoundException($"Directory not found: {path}");
+                FileSystem.DeleteFile(path, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin); // 将文件移到回收站
             }
-            if (deleteSubfolders)
+            else if (Directory.Exists(path)) // 如果路径是文件夹
             {
-                foreach (var subfolder in Directory.GetDirectories(path))
+                if (deleteSubfolders)
                 {
-                    await MoveToRecycleBin(subfolder, true);
+                    foreach (var subfolder in Directory.GetDirectories(path))
+                    {
+                        await MoveToRecycleBin(subfolder, true); // 递归处理子文件夹
+                    }
                 }
-            }
 
-            // 获取目录中的所有文件
-            var files = Directory.GetFiles(path);
-            foreach (var file in files)
+                // 获取目录中的所有文件并移到回收站
+                var files = Directory.GetFiles(path);
+                foreach (var file in files)
+                {
+                    FileSystem.DeleteFile(path, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
+                }
+
+                // 将当前目录移到回收站（此操作会在子文件夹和文件处理完成后进行）
+                FileSystem.DeleteDirectory(path, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
+            }
+            else
             {
-                DeleteFileToRecycleBin(file);
+                throw new FileNotFoundException($"File or directory not found: {path}");
             }
         }
         catch (Exception ex)
@@ -296,18 +307,6 @@ public static class FileActuator
         {
             _semaphore.Release(); // 确保释放互斥锁
         }
-    }
-
-    private static void DeleteFileToRecycleBin(string filePath)
-    {
-        SHFILEOPSTRUCT shFileOp = new SHFILEOPSTRUCT
-        {
-            wFunc = FO_DELETE,
-            pFrom = filePath + '\0', // Ensure null-terminated string
-            fFlags = FOF_ALLOWUNDO | FOF_NOCONFIRMATION | FOF_SILENT
-        };
-
-        SHFileOperation(ref shFileOp);
     }
 
     private static void HandleFileConflict(string sourcePath, string targetPath, FileOperationType fileOperationType, Action action)
@@ -405,26 +404,5 @@ public static class FileActuator
         LogService.Logger.Info($"satisfiesDynamicFilters: {satisfiesDynamicFilters}, satisfiesPathFilter: {satisfiesPathFilter}");
         return satisfiesDynamicFilters && satisfiesPathFilter;
     }
-
-    [DllImport("shell32.dll", CharSet = CharSet.Auto)]
-    private static extern int SHFileOperation(ref SHFILEOPSTRUCT FileOp);
-
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-    private struct SHFILEOPSTRUCT
-    {
-        public IntPtr hwnd;
-        public uint wFunc;
-        public string pFrom;
-        public string pTo;
-        public uint fFlags;
-        public bool fAnyOperationsAborted;
-        public IntPtr hNameMappings;
-        public string lpszProgressTitle;
-    }
-
-    private const int FO_DELETE = 3;
-    private const int FOF_NOCONFIRMATION = 0x00000010;
-    private const int FOF_SILENT = 0x00000004;
-    private const int FOF_ALLOWUNDO = 0x00000400;
 
 }

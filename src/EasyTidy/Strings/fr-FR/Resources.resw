@@ -396,7 +396,7 @@
     <value>L'opération a réussi</value>
   </data>
   <data name="DisablingFailedText" xml:space="preserve">
-    <value>Échec de l'opération</value>
+    <value>L'opération a échoué.</value>
   </data>
   <data name="DialogFilterNameBlock.Text" xml:space="preserve">
     <value>Nom du filtre:</value>
