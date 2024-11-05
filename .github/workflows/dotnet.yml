@@ -32,7 +32,6 @@ jobs:
     - name: Publish
       run: |
         .\publish.ps1
-        .\cleanocr.ps1
         .\7z.ps1 ${{ github.ref_name }}
 
     - name: Release
@@ -52,7 +51,7 @@ jobs:
       # id: calculate_hash
       # shell: pwsh
       # run: |
-            # $str=(Get-FileHash STranslate_${{ github.ref_name }}_win-x64_sha256.txt -Algorithm SHA256).Hash
+            # $str=(Get-FileHash EasyTidy_${{ github.ref_name }}_win-x64_sha256.txt -Algorithm SHA256).Hash
             # echo ""
             # echo "========================================"
             # echo "Generated hash is: $str"
@@ -68,13 +67,13 @@ jobs:
     # - name: Checkout extras
       # uses: actions/checkout@v4
       # with:
-        # repository: 'ZGGSONG/Extras'
+        # repository: 'SaboZhang/Extras'
         # token: ${{ secrets.CI_TOKEN }}
 
     # - name: Setup Git
       # run: |
-        # git config --global user.email "zggsong@foxmail.com"
-        # git config --global user.name "zggsong"
+        # git config --global user.email "tao993859833@Live.cn"
+        # git config --global user.name "SaboZhang"
 
     # - name: Sync with upstream
       # run: |
@@ -83,20 +82,20 @@ jobs:
         # git checkout master
         # git merge upstream/master # 好像有点问题如果有更新的提交
 
-    # - name: Update stranslate.json
+    # - name: Update easytidy.json
       # run: |
         # cd bucket
-        # jq --indent 4 --arg version "${{ github.ref_name }}" --arg hash_string "${{needs.build.outputs.fileHash}}" --argjson old_version "$(jq '.version' stranslate.json)" '.version = ${{ github.ref_name }} | .architecture."64bit".hash = ${{needs.build.outputs.fileHash}} | .architecture."64bit".url |= gsub($old_version; ${{ github.ref_name }})' "stranslate.json" > temp.json && mv temp.json "stranslate.json"
+        # jq --indent 4 --arg version "${{ github.ref_name }}" --arg hash_string "${{needs.build.outputs.fileHash}}" --argjson old_version "$(jq '.version' easytidy.json)" '.version = ${{ github.ref_name }} | .architecture."64bit".hash = ${{needs.build.outputs.fileHash}} | .architecture."64bit".url |= gsub($old_version; ${{ github.ref_name }})' "easytidy.json" > temp.json && mv temp.json "easytidy.json"
         # cd ..
         # echo ""
         # echo "========================================"
-        # echo "Update stranslate.json successfully."
+        # echo "Update easytidy.json successfully."
         # echo "========================================"
 
     # - name: Commit and push
       # run: |
-        # jq . stranslate.json
+        # jq . easytidy.json
         # echo "Simulate Commit and Push"
-        # # git add buckets/stranslate.json
-        # # git commit -m "stranslate: Update version to ${{ github.ref_name }}"
+        # # git add buckets/easytidy.json
+        # # git commit -m "easytidy: Update version to ${{ github.ref_name }}"
         # # git push

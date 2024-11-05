@@ -65,6 +65,7 @@ public sealed partial class TrayIconView : UserControl
         App.HandleClosedEvents = false;
         TrayIcon.Dispose();
         App.MainWindow?.Close();
+        Environment.Exit(0);
     }
 
     /// <summary>
