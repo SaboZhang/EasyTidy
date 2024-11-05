@@ -9,6 +9,8 @@ if ([string]::IsNullOrEmpty($version)) {
     exit
 }
 
+Copy-Item -Path ./run.bat -Destination ./publish/run.bat
+
 # 使用7-Zip创建ZIP文件
 & 7z a -tzip "EasyTidy_${version}_win-x64.zip" ./publish/*
 
