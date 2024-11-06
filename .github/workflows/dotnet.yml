@@ -45,7 +45,7 @@ jobs:
           EasyTidy_${{ github.ref_name }}_win-x64.zip
           EasyTidy_${{ github.ref_name }}_win-x64_7z.7z
           EasyTidy_${{ github.ref_name }}_win-x64_sha256.txt
-        
+
     # TODO: 输出 Hash 结果给 scoop extras
     # - name: Output
       # id: calculate_hash
@@ -72,7 +72,7 @@ jobs:
 
     # - name: Setup Git
       # run: |
-        # git config --global user.email "tao993859833@Live.cn"
+        # git config --global user.email "easytidy@luckyits.com"
         # git config --global user.name "SaboZhang"
 
     # - name: Sync with upstream
