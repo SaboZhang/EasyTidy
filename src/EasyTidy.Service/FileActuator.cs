@@ -194,6 +194,13 @@ public static class FileActuator
         }
         catch (Exception ex)
         {
+            if (IsFileLocked(sourcePath)) 
+            {
+                HandleFileConflict(sourcePath, targetPath, fileOperationType, () =>
+                {
+                    ForceProcessFile(sourcePath, targetPath);
+                }, false, true);
+            }
             // 处理异常（记录日志等）
             LogService.Logger.Error($"Error moving file: {ex.Message}");
         }
@@ -255,7 +262,7 @@ public static class FileActuator
 
         }
         catch (Exception ex)
-        {
+        { 
             // 处理异常（记录日志等）
             LogService.Logger.Error($"Error renaming file: {ex.Message}");
         }
@@ -287,7 +294,10 @@ public static class FileActuator
                         }
                         await MoveToRecycleBin(subfolder, dynamicFilters, pathFilter, ruleType, true); // 递归处理子文件夹
                         // 将当前目录移到回收站（在子文件夹中文件处理完成后进行）
-                        FileSystem.DeleteDirectory(subfolder, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
+                        if (IsFolderEmpty(subfolder)) 
+                        {
+                            FileSystem.DeleteDirectory(subfolder, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
+                        }
                     }
                     
                 }
@@ -320,7 +330,24 @@ public static class FileActuator
         }
     }
 
-    private static void HandleFileConflict(string sourcePath, string targetPath, FileOperationType fileOperationType, Action action)
+    private static bool IsFolderEmpty(string folderPath)
+    {
+        // 检查文件夹路径是否有效
+        if (Directory.Exists(folderPath))
+        {
+            // 获取文件夹中的文件和子文件夹
+            var files = Directory.GetFiles(folderPath);
+            var directories = Directory.GetDirectories(folderPath);
+
+            // 如果文件夹中没有文件且没有子文件夹，则认为文件夹为空
+            return files.Length == 0 && directories.Length == 0;
+        }
+
+        // 如果文件夹不存在，返回 false
+        return false;
+    }
+
+    private static void HandleFileConflict(string sourcePath, string targetPath, FileOperationType fileOperationType, Action action, bool isMove = false, bool inUse = false)
     {
         if (File.Exists(targetPath))
         {
@@ -346,11 +373,22 @@ public static class FileActuator
                     break;
                 case FileOperationType.ReNameAppend:
                     string newPath = GetUniqueFilePath(targetPath);
-                    File.Copy(sourcePath, newPath);
+                    if (!inUse) {
+                        (isMove ? (Action)(() => File.Move(sourcePath, newPath)) 
+                        : () => File.Copy(sourcePath, newPath))();
+                    }else{
+                        ForceProcessFile(sourcePath, newPath);
+                    }
                     break;
                 case FileOperationType.ReNameAddDate:
                     newPath = GetUniqueFilePathWithDate(targetPath);
-                    File.Copy(sourcePath, newPath);
+                    if (!inUse) 
+                    {
+                        (isMove ? (Action)(() => File.Move(sourcePath, newPath)) 
+                        : () => File.Copy(sourcePath, newPath))();
+                    }else{
+                        ForceProcessFile(sourcePath, newPath);
+                    }
                     break;
                 default:
                     throw new NotSupportedException($"File operation type '{fileOperationType}' is not supported.");
@@ -413,7 +451,73 @@ public static class FileActuator
 
         // 如果 pathFilter 不为 null，要求 satisfiesDynamicFilters 和 satisfiesPathFilter 同时满足
         LogService.Logger.Info($"satisfiesDynamicFilters: {satisfiesDynamicFilters}, satisfiesPathFilter: {satisfiesPathFilter}");
-        return satisfiesDynamicFilters && satisfiesPathFilter;
+        return !satisfiesDynamicFilters && !satisfiesPathFilter;
+    }
+
+    private static void ForceProcessFile(string filePath, string targetPath)
+    {
+        try
+        {
+            // 获取源文件的文件名
+            string sourceFileName = Path.GetFileName(filePath);
+            // 构建目标文件的完整路径
+            string destinationPath = Path.Combine(targetPath, sourceFileName);
+            // 使用 FileShare.ReadWrite 来允许其他进程共享访问文件
+            using (var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite))
+            using (var destinationStream = new FileStream(destinationPath, FileMode.Create, FileAccess.Write))
+            {
+                // 确保目标路径的目录存在
+                string targetDirectory = Path.GetDirectoryName(targetPath);
+                if (!Directory.Exists(targetDirectory))
+                {
+                    Directory.CreateDirectory(targetDirectory);  // 创建目标目录
+                }
+
+                byte[] buffer = new byte[4096];
+                int bytesRead;
+                while ((bytesRead = fileStream.Read(buffer, 0, buffer.Length)) > 0)
+                {
+                    destinationStream.Write(buffer, 0, bytesRead);
+                }
+            }
+        }
+        catch (IOException ex)
+        {
+            LogService.Logger.Error("文件打开失败：" + ex.Message);
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            LogService.Logger.Error("文件访问权限不足：" + ex.Message);
+        }
+    }
+
+    private static bool IsFileLocked(string filePath)
+    {
+        try
+        {
+            // 尝试以独占方式打开文件
+            using (FileStream stream = new FileStream(filePath, FileMode.Open, FileAccess.ReadWrite, FileShare.None))
+            {
+                // 文件成功打开，说明没有被占用
+                return false;
+            }
+        }
+        catch (IOException)
+        {
+            // 文件被占用
+            return true;
+        }
+        catch (UnauthorizedAccessException)
+        {
+            // 无权限访问文件
+            return true;
+        }
+        catch (Exception ex)
+        {
+            // 其他异常
+            LogService.Logger.Error("文件锁定检查失败：" + ex.Message);
+            return true;
+        }
     }
 
 }

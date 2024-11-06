@@ -95,8 +95,8 @@ public partial class MainViewModel : ObservableObject, ITitleBarAutoSuggestBoxAw
                     FileOperationType fileOperationType = Settings.GeneralConfig != null
                         ? Settings.GeneralConfig.FileOperationType
                         : default; // 使用 default 或者枚举中的某个默认值
-                                   // 执行操作
-                    var sub = Settings.GeneralConfig?.SubFolder ?? true;
+                    // 执行操作
+                    var sub = Settings.GeneralConfig?.SubFolder ?? false;
                     var parameters = new OperationParameters(
                         task.OperationMode,
                         task.TaskSource,
@@ -107,7 +107,7 @@ public partial class MainViewModel : ObservableObject, ITitleBarAutoSuggestBoxAw
                         FilterUtil.GetPathFilters(task.Filter),
                         rule
                         );
-                    FileEventHandler.MonitorFolder(parameters, Convert.ToInt32(item.DelaySeconds));
+                    FileEventHandler.MonitorFolder(parameters, Convert.ToInt32(string.IsNullOrEmpty(item.DelaySeconds) ? "5" : item.DelaySeconds));
 
                 }
             }

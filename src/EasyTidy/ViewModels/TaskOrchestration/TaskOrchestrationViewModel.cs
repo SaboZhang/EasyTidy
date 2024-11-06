@@ -539,9 +539,12 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         }
     }
 
+    /// <summary>
+    /// 加载规则菜单
+    /// </summary>
     private void LoadRulesMenu()
     {
-        var orderedFloderRules = FloderRulesMenuDescription.ToList(); // 转为 List 保留顺序
+        var orderedFolderRules = FolderRulesMenuDescription.ToList(); // 转为 List 保留顺序
         var orderedFileRules = FileRulesMenuDescription.ToList();
         MenuCategories =
         [
@@ -551,12 +554,12 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
             },
             new() {
                 Title = "HandlingFolderRules".GetLocalized(),
-                Items = orderedFloderRules.Select(kv => kv.Value + " = " + kv.Key.GetLocalized()).ToList()
+                Items = orderedFolderRules.Select(kv => kv.Value + " = " + kv.Key.GetLocalized()).ToList()
             }
         ];
     }
 
-    private readonly Dictionary<string, string> FloderRulesMenuDescription = new Dictionary<string, string>
+    private readonly Dictionary<string, string> FolderRulesMenuDescription = new Dictionary<string, string>
     {
         { "AllFoldersText","**" },
         { "AllFoldersWithoutOtherMatches","##" },
@@ -577,7 +580,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         { "All_FilesUnder","C:\\Folder\\*.jpg" },
         { "UseDelimiter","*.jpg;*.png" },
         { "UseDelimitersToExclude","*.jpg/sea*" },
-        { "CompressedFile","*.7z;*.bz2;*.gz;*.iso;*.rar;*.xz;*.z*;.zip" },
+        { "CompressedFile","*.7z;*.bz2;*.gz;*.iso;*.rar;*.xz;*.z;*.zip" },
         { "Document","*.djvu;*.doc;*.docx;*.epub;*.odt;*.pdf;*.rtp;*.tex;*.txt" },
         { "Photograph","*.bmp;*.gif;*.ico;*.jpg;*.jpeg;*.png;*.psd;*.tif;*.tiff" },
         { "Music","*.aac;*.flac;*.m4a;*mp3*.ogg;*.wma;*.wav" },

@@ -169,6 +169,7 @@ public partial class App : Application
         await QuartzConfig.InitQuartzConfigAsync();
         await QuartzHelper.StartAllJob();
 
+        Logger.Fatal("EasyTidy Initialized Success!");
     }
 
     private void OnNotificationInvoked(string message)

@@ -232,7 +232,7 @@ public class FilterUtil
         else
         {
             // 分割多个条件（后缀规则）
-            string[] conditions = rule.Split(new[] { ';', '|' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] conditions = rule.Split([';', '|'], StringSplitOptions.RemoveEmptyEntries);
 
             // 为每个条件创建过滤器
             foreach (var condition in conditions)
@@ -269,7 +269,6 @@ public class FilterUtil
         }
     }
 
-
     private static IEnumerable<Func<string, bool>> GenerateFolderFilters(string rule)
     {
         if (rule == "**")
@@ -278,7 +277,7 @@ public class FilterUtil
         }
         else
         {
-            string[] conditions = rule.Split(new[] { ';', '|' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] conditions = rule.Split([';', '|'], StringSplitOptions.RemoveEmptyEntries);
             foreach (var condition in conditions)
             {
                 string normalizedCondition = condition.Trim();
@@ -304,7 +303,7 @@ public class FilterUtil
 
         if (rule.Contains(';') || rule.Contains('|'))
         {
-            string[] parts = rule.Split(new[] { ';', '|' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] parts = rule.Split([';', '|'], StringSplitOptions.RemoveEmptyEntries);
             foreach (var part in parts)
             {
                 if (ContainsTwoConsecutiveChars(part, '*') || ContainsTwoConsecutiveChars(part, '#'))

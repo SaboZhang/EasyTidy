@@ -16,7 +16,8 @@ public class SerilogLogger : BaseLogger
                                                                                                          //shared: true,
                 rollingInterval: RollingInterval.Day,
                 restrictedToMinimumLevel: LogEventLevel.Verbose,
-                outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} [{Level:u3}] {Message:lj}{NewLine}{Exception}"
+                outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} [{Level:u3}] {Message:lj}{NewLine}{Exception}",
+                retainedFileCountLimit: 7
             )
             .MinimumLevel.Is(ConvertToSerilogLevel(minLevel));
 
