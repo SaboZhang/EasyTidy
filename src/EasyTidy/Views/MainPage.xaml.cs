@@ -1,4 +1,5 @@
-﻿using Microsoft.Windows.ApplicationModel.Resources;
+﻿using CommunityToolkit.WinUI;
+using Microsoft.Windows.ApplicationModel.Resources;
 
 namespace EasyTidy.Views;
 
@@ -10,6 +11,14 @@ public sealed partial class MainPage : Page
 
     private readonly ResourceContext _resourceContext;
 
+    private List<string> _list =
+    [
+        "NavGeneralText".GetLocalized(),
+        "NavFiltersText".GetLocalized(),
+        "NavTaskOrchestrationText".GetLocalized(),
+        "NavAutomaticText".GetLocalized()
+    ];
+
     public MainPage()
     {
         _resourceManager = new ResourceManager();
@@ -19,6 +28,7 @@ public sealed partial class MainPage : Page
         appTitleBar.Window = App.MainWindow;
         ViewModel.JsonNavigationViewService.Initialize(NavView, NavFrame);
         ViewModel.JsonNavigationViewService.ConfigJson("Assets/NavViewMenu/AppData.json");
+        // ViewModel.JsonNavigationViewService.ConfigAutoSuggestBox(autoSuggestBox);
         ViewModel.JsonNavigationViewService.ConfigLocalizer(_resourceManager, _resourceContext);
         Logger.Fatal("MainPage Initialized");
     }
@@ -57,11 +67,14 @@ public sealed partial class MainPage : Page
 
     private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
     {
+        // AutoSuggestBoxHelper.LoadSuggestions(sender, args, _list);
+        // sender.Text = sender.Text.GetLocalized();
         var viewModel = NavFrame.GetPageViewModel();
         if (viewModel != null && viewModel is ITitleBarAutoSuggestBoxAware titleBarAutoSuggestBoxAware)
         {
             titleBarAutoSuggestBoxAware.OnAutoSuggestBoxTextChanged(sender, args);
         }
+
     }
 
     private void AutoSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
@@ -71,6 +84,11 @@ public sealed partial class MainPage : Page
         {
             titleBarAutoSuggestBoxAware.OnAutoSuggestBoxQuerySubmitted(sender, args);
         }
+    }
+
+    private void AutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+    {
+        // autoSuggestBox.Text = args.SelectedItem.ToString();
     }
 
     private void NavViewPaneDisplayModeButton_Click(object sender, RoutedEventArgs e)

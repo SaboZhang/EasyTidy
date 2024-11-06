@@ -111,9 +111,12 @@ public partial class App : Application
 
     protected async override void OnLaunched(LaunchActivatedEventArgs args)
     {
+#if !DEBUG
         // 开启日志服务
+        LogService.Register("", LogLevel.Error, AppVersion);
+#else
         LogService.Register("", LogLevel.Debug, AppVersion);
-
+#endif
         if (!string.IsNullOrEmpty(Settings.Language))
         {
             Logger.Info($"当前语言被设置为：{Settings.Language}");

@@ -52,11 +52,14 @@
             Grid.Row="1"
             IsBackButtonVisible="Collapsed"
             IsPaneToggleButtonVisible="False">
-            <NavigationView.AutoSuggestBox>
+            <!-- <NavigationView.AutoSuggestBox>
                 <AutoSuggestBox Name="autoSuggestBox"
-                        x:Uid="MainSuggestBox"
-                        QueryIcon="Find" />
-            </NavigationView.AutoSuggestBox>
+                                x:Uid="MainSuggestBox"
+                                QueryIcon="Find"
+                                TextChanged="AutoSuggestBox_TextChanged"
+                                QuerySubmitted="AutoSuggestBox_QuerySubmitted"
+                                SuggestionChosen="AutoSuggestBox_SuggestionChosen"/>
+            </NavigationView.AutoSuggestBox> -->
 
             <Frame x:Name="NavFrame" Navigated="NavFrame_Navigated" />
         </NavigationView>

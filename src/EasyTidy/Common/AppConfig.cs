@@ -12,7 +12,7 @@ public partial class AppConfig : JsonSettings, IVersionable
 
     public virtual string LastUpdateCheck { get; set; }
 
-    public virtual NavigationViewPaneDisplayMode NavigationViewPaneDisplayMode { get; set; } = NavigationViewPaneDisplayMode.Left;
+    public virtual NavigationViewPaneDisplayMode NavigationViewPaneDisplayMode { get; set; } = NavigationViewPaneDisplayMode.Auto;
 
     // Docs: https://github.com/Nucs/JsonSettings
 
