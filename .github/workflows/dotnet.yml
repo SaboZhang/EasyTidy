@@ -72,7 +72,7 @@ jobs:
 
     # - name: Setup Git
       # run: |
-        # git config --global user.email "easytidy@luckyits.com"
+        # git config --global user.email "rick@luckyits.com"
         # git config --global user.name "SaboZhang"
 
     # - name: Sync with upstream
