@@ -80,7 +80,8 @@ public partial class MainViewModel : ObservableObject, ITitleBarAutoSuggestBoxAw
     {
         try
         {
-            var list = _dbContext.Automatic.Include(a => a.TaskOrchestrationList).Where(a => a.RegularTaskRunning == true).ToList();
+            var list = _dbContext.Automatic.Include(a => a.TaskOrchestrationList).Where(a => a.IsFileChange == true).ToList();
+            Dictionary<string, List<string>> sourceToTargetsCache = new Dictionary<string, List<string>>();
             foreach (var item in list)
             {
                 foreach (var task in item.TaskOrchestrationList.Where(t => t.IsRelated))
@@ -107,8 +108,10 @@ public partial class MainViewModel : ObservableObject, ITitleBarAutoSuggestBoxAw
                         FilterUtil.GetPathFilters(task.Filter),
                         rule
                         );
-                    FileEventHandler.MonitorFolder(parameters, Convert.ToInt32(string.IsNullOrEmpty(item.DelaySeconds) ? "5" : item.DelaySeconds));
-
+                    Task.Run(() =>
+                    {
+                        FileEventHandler.MonitorFolder(parameters, Convert.ToInt32(string.IsNullOrEmpty(item.DelaySeconds) ? "5" : item.DelaySeconds));
+                    });
                 }
             }
         }

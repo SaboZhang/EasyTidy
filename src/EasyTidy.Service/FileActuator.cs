@@ -194,12 +194,12 @@ public static class FileActuator
         }
         catch (Exception ex)
         {
-            if (IsFileLocked(sourcePath)) 
+            if (IsFileLocked(sourcePath))
             {
                 HandleFileConflict(sourcePath, targetPath, fileOperationType, () =>
                 {
                     ForceProcessFile(sourcePath, targetPath);
-                }, false, true);
+                }, true, true);
             }
             // 处理异常（记录日志等）
             LogService.Logger.Error($"Error moving file: {ex.Message}");
@@ -377,7 +377,7 @@ public static class FileActuator
                         (isMove ? (Action)(() => File.Move(sourcePath, newPath)) 
                         : () => File.Copy(sourcePath, newPath))();
                     }else{
-                        ForceProcessFile(sourcePath, newPath);
+                        ForceProcessFile(sourcePath, newPath + "_ForceProcessFile");
                     }
                     break;
                 case FileOperationType.ReNameAddDate:
@@ -387,7 +387,7 @@ public static class FileActuator
                         (isMove ? (Action)(() => File.Move(sourcePath, newPath)) 
                         : () => File.Copy(sourcePath, newPath))();
                     }else{
-                        ForceProcessFile(sourcePath, newPath);
+                        ForceProcessFile(sourcePath, newPath + "_ForceProcessFile");
                     }
                     break;
                 default:

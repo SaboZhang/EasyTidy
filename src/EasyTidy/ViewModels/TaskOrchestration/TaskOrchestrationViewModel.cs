@@ -179,7 +179,8 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         if (taskGroup != null && taskGroup.IsUsed)
         {
             taskGroup.IsUsed = false;
-            await _dbContext.TaskGroup.UpdateAsync(taskGroup);
+            // _dbContext.Entry(taskGroup).State = EntityState.Modified;
+            await _dbContext.TaskGroup.AddAsync(taskGroup);
             await _dbContext.SaveChangesAsync();
         }
 
