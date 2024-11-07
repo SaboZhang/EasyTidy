@@ -77,7 +77,7 @@ public static class OperationHandler
         {
             if (_executedOperations.Contains(operationId))
             {
-                LogService.Logger.Info($"Move operation already in progress, skipping execution. {parameter.Id}");
+                LogService.Logger.Info($"Move operation already in progress, skipping execution. {parameter.TargetPath}");
                 return;
             }
             _executedOperations.Add(operationId);
@@ -143,7 +143,7 @@ public static class OperationHandler
         {
             if (_executedOperations.Contains(operationId))
             {
-                LogService.Logger.Info($"Move operation already in progress, skipping execution. {parameter.Id}");
+                LogService.Logger.Info($"Move operation already in progress, skipping execution. {parameter.TargetPath}");
                 return;
             }
             _executedOperations.Add(operationId);

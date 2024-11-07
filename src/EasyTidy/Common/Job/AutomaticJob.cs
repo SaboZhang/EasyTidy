@@ -40,10 +40,8 @@ public class AutomaticJob : IJob
             handleSubfolders: Settings.GeneralConfig.SubFolder ?? false,
             funcs: FilterUtil.GeneratePathFilters(task.TaskRule, task.RuleType),
             pathFilter: FilterUtil.GetPathFilters(task.Filter),
-            ruleModel: new RuleModel { Filter = task.Filter, Rule = task.TaskRule, RuleType = task.RuleType },
-            id: task.ID,
-            ruleName: task.TaskRule
-            );
+            ruleModel: new RuleModel { Filter = task.Filter, Rule = task.TaskRule, RuleType = task.RuleType })
+        { RuleName = task.TaskRule };
 
         Logger.Info($"Executing task with SourcePath: {operationParameters.SourcePath}, TargetPath: {operationParameters.TargetPath}");
         // 启动独立的线程来执行操作，避免参数冲突

@@ -6,7 +6,6 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -154,14 +153,14 @@ public static class FileActuator
     {
         if (ShouldSkip(parameters.Funcs, parameters.SourcePath, parameters.PathFilter) && parameters.OperationMode != OperationMode.RecycleBin)
         {
-            LogService.Logger.Info($"执行文件操作 ShouldSkip {parameters.RuleName}{parameters.Id}");
+            LogService.Logger.Info($"执行文件操作 ShouldSkip {parameters.TargetPath}");
             return;
         }
 
+        LogService.Logger.Info($"执行文件操作 ProcessFileAsync {parameters.TargetPath}, 操作模式: {parameters.OperationMode}");
         switch (parameters.OperationMode)
-        {
+        { 
             case OperationMode.Move:
-                LogService.Logger.Info($"执行文件操作 ProcessFileAsync {parameters.RuleName}{parameters.Id}");
                 await MoveFile(parameters.SourcePath, parameters.TargetPath, parameters.FileOperationType);
                 break;
             case OperationMode.Copy:
