@@ -9,6 +9,12 @@ if ([string]::IsNullOrEmpty($version)) {
     exit
 }
 
+# 确保 publish 目录存在
+if (!(Test-Path -Path ./publish)) {
+    New-Item -ItemType Directory -Path ./publish
+}
+
+# 执行文件复制操作
 Copy-Item -Path ./run.bat -Destination ./publish/run.bat
 
 # 使用7-Zip创建ZIP文件
