@@ -280,6 +280,9 @@ public partial class GeneralViewModel : ObservableRecipient
 
     #endregion
 
+    /// <summary>
+    ///     初始化
+    /// </summary>
     [RelayCommand]
     private void OnPageLoaded()
     {
@@ -339,6 +342,10 @@ public partial class GeneralViewModel : ObservableRecipient
         }
     }
 
+    /// <summary>
+    ///     备份
+    /// </summary>
+    /// <returns></returns>
     [RelayCommand]
     private async Task BackupConfigsClickAsync()
     {
@@ -374,6 +381,10 @@ public partial class GeneralViewModel : ObservableRecipient
 
     }
 
+    /// <summary>
+    ///     本地备份
+    /// </summary>
+    /// <returns></returns>
     private async Task LocalBackupAsync()
     {
         try
@@ -406,6 +417,10 @@ public partial class GeneralViewModel : ObservableRecipient
         }
     }
 
+    /// <summary>
+    ///     显示备份信息
+    /// </summary>
+    /// <param name="file"></param>
     private void ShowBackInfo(string file)
     {
 
@@ -421,6 +436,10 @@ public partial class GeneralViewModel : ObservableRecipient
         Settings.Save();
     }
 
+    /// <summary>
+    ///     WebDav备份
+    /// </summary>
+    /// <returns></returns>
     private async Task WebDavBackupAsync()
     {
         try
@@ -451,6 +470,10 @@ public partial class GeneralViewModel : ObservableRecipient
         }
     }
 
+    /// <summary>
+    /// 延时关闭提示
+    /// </summary>
+    /// <returns></returns>
     private async Task DelayCloseMessageVisible()
     {
         await Task.Delay(10000);

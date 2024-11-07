@@ -84,6 +84,10 @@ public partial class FilterViewModel : ObservableRecipient
         IsActive = false;
     }
 
+    /// <summary>
+    /// 添加
+    /// </summary>
+    /// <returns></returns>
     [RelayCommand]
     private async Task OnAddFilterClickedAsync()
     {

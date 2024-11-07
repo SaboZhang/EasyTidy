@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommunityToolkit.WinUI;
+using System;
 using System.Collections.Generic;
 
 namespace EasyTidy.Model;
@@ -40,7 +41,9 @@ public class OperationParameters
     {
         return new OperationParameters(
             parameter.OperationMode,
-            parameter.SourcePath,
+            parameter.SourcePath = parameter.SourcePath.Equals("DesktopText".GetLocalized()) 
+            ? Environment.GetFolderPath(Environment.SpecialFolder.Desktop) 
+            : parameter.SourcePath,
             parameter.TargetPath,
             parameter.FileOperationType,
             parameter.HandleSubfolders,

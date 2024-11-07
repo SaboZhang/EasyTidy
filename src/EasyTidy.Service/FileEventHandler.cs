@@ -44,6 +44,10 @@ public static class FileEventHandler
         _watchers[parameter.SourcePath] = watcher; 
     }
 
+    /// <summary>
+    /// 更新源路径和目标路径的缓存
+    /// </summary>
+    /// <param name="parameter"></param>
     private static void UpdateSourceCache(OperationParameters parameter)
     {
         var operationParams = OperationParameters.CreateOperationParameters(parameter);
@@ -53,6 +57,11 @@ public static class FileEventHandler
             : new List<OperationParameters> { operationParams };
     }
 
+    /// <summary>
+    /// 创建文件系统监控器
+    /// </summary>
+    /// <param name="sourcePath"></param>
+    /// <returns></returns>
     private static FileSystemWatcher CreateFileSystemWatcher(string sourcePath)
     {
         return new FileSystemWatcher
@@ -65,6 +74,12 @@ public static class FileEventHandler
         };
     }
 
+    /// <summary>
+    /// 绑定文件变化事件
+    /// </summary>
+    /// <param name="watcher"></param>
+    /// <param name="delaySeconds"></param>
+    /// <param name="parameter"></param>
     private static void BindFileSystemEvents(FileSystemWatcher watcher, int delaySeconds, OperationParameters parameter)
     {
         void onChange(FileSystemEventArgs e) => OnFileChange(e, delaySeconds, () => HandleFileChange(e.FullPath, parameter));
@@ -75,6 +90,12 @@ public static class FileEventHandler
         watcher.Renamed += (sender, e) => onChange(e);
     }
 
+    /// <summary>
+    /// 延时执行
+    /// </summary>
+    /// <param name="e"></param>
+    /// <param name="delaySeconds"></param>
+    /// <param name="action"></param>
     private static void OnFileChange(FileSystemEventArgs e, int delaySeconds, Action action)
     {
         ThreadPool.QueueUserWorkItem(state =>
@@ -92,6 +113,11 @@ public static class FileEventHandler
         });
     }
 
+    /// <summary>
+    /// 处理文件变化
+    /// </summary>
+    /// <param name="path"></param>
+    /// <param name="parameter"></param>
     private static void HandleFileChange(string path, OperationParameters parameter)
     {
         try
@@ -163,6 +189,9 @@ public static class FileEventHandler
 
     }
 
+    /// <summary>
+    /// 停止监控
+    /// </summary>
     public static void StopAllMonitoring()
     {
         foreach (var watcher in _watchers.Values)

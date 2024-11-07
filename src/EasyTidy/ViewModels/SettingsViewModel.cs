@@ -41,6 +41,9 @@ public partial class SettingsViewModel : ObservableObject
         }
     }
 
+    /// <summary>
+    /// 语言标签和语言ID
+    /// </summary>
     private Dictionary<string, string> langTagsAndIds = new Dictionary<string, string>
     {
         { string.Empty, "Default_language" },
@@ -68,6 +71,9 @@ public partial class SettingsViewModel : ObservableObject
         { "zh-TW", "Chinese_Traditional_Language" },
     };
 
+    /// <summary>
+    /// 初始化
+    /// </summary>
     private void InitializeLanguages()
     {
         var lang = Settings.Language ?? string.Empty;
@@ -136,6 +142,12 @@ public partial class SettingsViewModel : ObservableObject
         }
     }
 
+    /// <summary>
+    /// 获取语言index
+    /// </summary>
+    /// <param name="language"></param>
+    /// <param name="isDefault"></param>
+    /// <returns></returns>
     private int GetLanguageIndex(string language, bool isDefault)
     {
         if (Languages.Count == 0 || isDefault)
@@ -154,6 +166,9 @@ public partial class SettingsViewModel : ObservableObject
         return Languages.Count;
     }
 
+    /// <summary>
+    /// 重启
+    /// </summary>
     public void Restart()
     {
         Logger.Info("Restarting application");
@@ -163,6 +178,9 @@ public partial class SettingsViewModel : ObservableObject
         Environment.Exit(0);
     }
 
+    /// <summary>
+    /// 通知语言更改
+    /// </summary>
     private void NotifyLanguageChanged()
     {
         // 更改语言
