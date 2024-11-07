@@ -164,6 +164,6 @@ public static class OperationHandler
                 LogService.Logger.Info("Removed operation from executed operations.");
             }
         }
-        
+
     }
 }

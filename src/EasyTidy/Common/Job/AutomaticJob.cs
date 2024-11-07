@@ -122,7 +122,7 @@ public class AutomaticJob : IJob
             if (automaticTable.IsFileChange)
             {
                 var delay = Convert.ToInt32(automaticTable.DelaySeconds);
-                var sub = Settings.GeneralConfig?.SubFolder ?? true;
+                var sub = Settings.GeneralConfig?.SubFolder ?? false;
                 var parameters = new OperationParameters(
                     operationMode: item.OperationMode,
                     sourcePath: item.TaskSource.Equals("DesktopText".GetLocalized())
@@ -130,10 +130,9 @@ public class AutomaticJob : IJob
                     : item.TaskSource,
                     targetPath: item.TaskTarget,
                     fileOperationType: Settings.GeneralConfig.FileOperationType,
-                    handleSubfolders: Settings.GeneralConfig.SubFolder ?? true,
+                    handleSubfolders: Settings.GeneralConfig.SubFolder ?? false,
                     funcs: new List<Func<string, bool>>(FilterUtil.GeneratePathFilters(item.TaskRule, item.RuleType)),
-                    pathFilter: FilterUtil.GetPathFilters(item.Filter)
-                    );
+                    pathFilter: FilterUtil.GetPathFilters(item.Filter));
                 FileEventHandler.MonitorFolder(parameters, delay);
 
                 if (automaticTable.RegularTaskRunning)

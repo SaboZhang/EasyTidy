@@ -159,7 +159,7 @@ public static class FileActuator
 
         LogService.Logger.Info($"执行文件操作 ProcessFileAsync {parameters.TargetPath}, 操作模式: {parameters.OperationMode}");
         switch (parameters.OperationMode)
-        { 
+        {
             case OperationMode.Move:
                 await MoveFile(parameters.SourcePath, parameters.TargetPath, parameters.FileOperationType);
                 break;
@@ -173,7 +173,7 @@ public static class FileActuator
                 await RenameFile(parameters.SourcePath, parameters.TargetPath);
                 break;
             case OperationMode.RecycleBin:
-                await MoveToRecycleBin(parameters.TargetPath, new List<Func<string, bool>>(parameters.Funcs), 
+                await MoveToRecycleBin(parameters.TargetPath, new List<Func<string, bool>>(parameters.Funcs),
                     parameters.PathFilter, parameters.RuleModel.RuleType, parameters.HandleSubfolders);
                 break;
             default:
@@ -261,7 +261,7 @@ public static class FileActuator
 
         }
         catch (Exception ex)
-        { 
+        {
             // 处理异常（记录日志等）
             LogService.Logger.Error($"Error renaming file: {ex.Message}");
         }
@@ -271,7 +271,7 @@ public static class FileActuator
         }
     }
 
-    private static async Task MoveToRecycleBin(string path, List<Func<string, bool>> dynamicFilters, 
+    private static async Task MoveToRecycleBin(string path, List<Func<string, bool>> dynamicFilters,
         Func<string, bool>? pathFilter, TaskRuleType ruleType, bool deleteSubfolders = false)
     {
         await _semaphore.WaitAsync(); // 请求对文件操作的独占访问
@@ -293,12 +293,12 @@ public static class FileActuator
                         }
                         await MoveToRecycleBin(subfolder, dynamicFilters, pathFilter, ruleType, true); // 递归处理子文件夹
                         // 将当前目录移到回收站（在子文件夹中文件处理完成后进行）
-                        if (IsFolderEmpty(subfolder)) 
+                        if (IsFolderEmpty(subfolder))
                         {
                             FileSystem.DeleteDirectory(subfolder, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
                         }
                     }
-                    
+
                 }
 
                 // 获取目录中的所有文件并移到回收站
@@ -311,7 +311,7 @@ public static class FileActuator
                     }
                     FileSystem.DeleteFile(path, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
                 }
-                
+
             }
             else
             {
@@ -372,20 +372,25 @@ public static class FileActuator
                     break;
                 case FileOperationType.ReNameAppend:
                     string newPath = GetUniqueFilePath(targetPath);
-                    if (!inUse) {
-                        (isMove ? (Action)(() => File.Move(sourcePath, newPath)) 
+                    if (!inUse)
+                    {
+                        (isMove ? (Action)(() => File.Move(sourcePath, newPath))
                         : () => File.Copy(sourcePath, newPath))();
-                    }else{
+                    }
+                    else
+                    {
                         ForceProcessFile(sourcePath, newPath + "_ForceProcessFile");
                     }
                     break;
                 case FileOperationType.ReNameAddDate:
                     newPath = GetUniqueFilePathWithDate(targetPath);
-                    if (!inUse) 
+                    if (!inUse)
                     {
-                        (isMove ? (Action)(() => File.Move(sourcePath, newPath)) 
+                        (isMove ? (Action)(() => File.Move(sourcePath, newPath))
                         : () => File.Copy(sourcePath, newPath))();
-                    }else{
+                    }
+                    else
+                    {
                         ForceProcessFile(sourcePath, newPath + "_ForceProcessFile");
                     }
                     break;

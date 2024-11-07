@@ -28,46 +28,51 @@ public static class FileEventHandler
     /// <param name="fileOperationType"></param>
     public static void MonitorFolder(OperationParameters parameter, int delaySeconds = 5)
     {
-        _sourceToTargetsCache[parameter.SourcePath] = _sourceToTargetsCache.TryGetValue(parameter.SourcePath, out var targets)
-            ? targets.Concat(new List<OperationParameters> { new OperationParameters (
-                parameter.OperationMode,
-                parameter.SourcePath,
-                parameter.TargetPath,
-                parameter.FileOperationType,
-                parameter.HandleSubfolders,
-                parameter.Funcs,
-                parameter.PathFilter,
-                parameter.RuleModel) { }}).ToList()
-            : new List<OperationParameters> { new OperationParameters (
-                parameter.OperationMode,
-                parameter.SourcePath,
-                parameter.TargetPath,
-                parameter.FileOperationType,
-                parameter.HandleSubfolders,
-                parameter.Funcs,
-                parameter.PathFilter,
-                parameter.RuleModel) { }};
+        UpdateSourceCache(parameter);
 
         if (_watchers.ContainsKey(parameter.SourcePath)) return; // 防止重复监控
 
         LogService.Logger.Info($"监控文件变化：{parameter.SourcePath}");
 
-        var watcher = new FileSystemWatcher
+        // 创建并配置文件监控器
+        var watcher = CreateFileSystemWatcher(parameter.SourcePath);
+
+        // 绑定文件变化事件
+        BindFileSystemEvents(watcher, delaySeconds, parameter);
+
+        // 存储监控器
+        _watchers[parameter.SourcePath] = watcher; 
+    }
+
+    private static void UpdateSourceCache(OperationParameters parameter)
+    {
+        var operationParams = OperationParameters.CreateOperationParameters(parameter);
+
+        _sourceToTargetsCache[parameter.SourcePath] = _sourceToTargetsCache.TryGetValue(parameter.SourcePath, out var targets)
+            ? targets.Concat(new List<OperationParameters> { operationParams }).ToList()
+            : new List<OperationParameters> { operationParams };
+    }
+
+    private static FileSystemWatcher CreateFileSystemWatcher(string sourcePath)
+    {
+        return new FileSystemWatcher
         {
-            Path = parameter.SourcePath.Equals("DesktopText".GetLocalized()) 
-            ? Environment.GetFolderPath(Environment.SpecialFolder.Desktop) 
-            : parameter.SourcePath,
+            Path = sourcePath.Equals("DesktopText".GetLocalized())
+                ? Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
+                : sourcePath,
             NotifyFilter = NotifyFilters.FileName | NotifyFilters.DirectoryName | NotifyFilters.LastWrite | NotifyFilters.Size,
             Filter = "*.*"
         };
+    }
 
-        watcher.Created += (sender, e) => OnFileChange(e, delaySeconds, () => HandleFileChange(e.FullPath, parameter));
-        watcher.Deleted += (sender, e) => OnFileChange(e, delaySeconds, () => HandleFileChange(e.FullPath, parameter));
-        watcher.Changed += (sender, e) => OnFileChange(e, delaySeconds, () => HandleFileChange(e.FullPath, parameter));
-        watcher.Renamed += (sender, e) => OnFileChange(e, delaySeconds, () => HandleFileChange(e.FullPath, parameter));
-        watcher.EnableRaisingEvents = true;
+    private static void BindFileSystemEvents(FileSystemWatcher watcher, int delaySeconds, OperationParameters parameter)
+    {
+        void onChange(FileSystemEventArgs e) => OnFileChange(e, delaySeconds, () => HandleFileChange(e.FullPath, parameter));
 
-        _watchers[parameter.SourcePath] = watcher; // 存储监控器
+        watcher.Created += (sender, e) => onChange(e);
+        watcher.Deleted += (sender, e) => onChange(e);
+        watcher.Changed += (sender, e) => onChange(e);
+        watcher.Renamed += (sender, e) => onChange(e);
     }
 
     private static void OnFileChange(FileSystemEventArgs e, int delaySeconds, Action action)
@@ -134,17 +139,7 @@ public static class FileEventHandler
             }
             else
             {
-                var operationParams = new OperationParameters(
-                    parameter.OperationMode,
-                    path,
-                    parameter.TargetPath,
-                    parameter.FileOperationType,
-                    parameter.HandleSubfolders,
-                    parameter.Funcs,
-                    parameter.PathFilter,
-                    parameter.RuleModel
-                );
-
+                var operationParams = OperationParameters.CreateOperationParameters(parameter);
                 Task.Run(async () =>
                 {
                     if (File.Exists(path))

@@ -36,4 +36,18 @@ public class OperationParameters
         PathFilter = pathFilter;
     }
 
+    public static OperationParameters CreateOperationParameters(OperationParameters parameter)
+    {
+        return new OperationParameters(
+            parameter.OperationMode,
+            parameter.SourcePath,
+            parameter.TargetPath,
+            parameter.FileOperationType,
+            parameter.HandleSubfolders,
+            parameter.Funcs,
+            parameter.PathFilter,
+            parameter.RuleModel
+        );
+    }
+
 }
