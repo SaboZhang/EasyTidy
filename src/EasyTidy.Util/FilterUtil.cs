@@ -311,28 +311,56 @@ public class FilterUtil
 
     private static IEnumerable<Func<string, bool>> GenerateFolderFilters(string rule)
     {
+        // 处理 ** 的情况，匹配全部文件夹
         if (rule == "**")
         {
             yield return folderPath => Directory.Exists(folderPath);
+            yield break;
         }
-        else
+
+        // 分割多个条件
+        string[] conditions = rule.Split(new[] { ';', '|' }, StringSplitOptions.RemoveEmptyEntries);
+
+        foreach (var condition in conditions)
         {
-            string[] conditions = rule.Split([';', '|'], StringSplitOptions.RemoveEmptyEntries);
-            foreach (var condition in conditions)
+            string normalizedCondition = condition.Trim();
+
+            // ** 开头，表示包含的匹配
+            if (normalizedCondition.StartsWith("**/"))
             {
-                string normalizedCondition = condition.Trim();
-                if (normalizedCondition == "**")
+                string excludeKeyword = normalizedCondition.Substring(3); // 去掉前缀 **/
+                yield return folderPath =>
                 {
-                    yield return folderPath => Directory.Exists(folderPath);
-                }
-                else
+                    string folderName = Path.GetFileName(folderPath);
+                    return Directory.Exists(folderPath) && !folderName.Contains(excludeKeyword);
+                };
+            }
+            else if (normalizedCondition.StartsWith("**"))
+            {
+                string keyword = normalizedCondition.Substring(2); // 去掉前缀 **
+                yield return folderPath =>
                 {
-                    yield return folderPath =>
-                    {
-                        string folderName = Path.GetFileName(folderPath);
-                        return folderName == normalizedCondition.Replace("**", "");
-                    };
-                }
+                    string folderName = Path.GetFileName(folderPath);
+                    return Directory.Exists(folderPath) && folderName.Contains(keyword);
+                };
+            }
+            // 处理指定前缀的情况（如 reboot**）
+            else if (normalizedCondition.EndsWith("**"))
+            {
+                string prefix = normalizedCondition.Substring(0, normalizedCondition.Length - 2); // 去掉后缀 **
+                yield return folderPath =>
+                {
+                    string folderName = Path.GetFileName(folderPath);
+                    return Directory.Exists(folderPath) && folderName.StartsWith(prefix);
+                };
+            }
+            else // 处理其他特定规则
+            {
+                yield return folderPath =>
+                {
+                    string folderName = Path.GetFileName(folderPath);
+                    return Directory.Exists(folderPath) && folderName == normalizedCondition;
+                };
             }
         }
     }
@@ -366,7 +394,7 @@ public class FilterUtil
         return filters;
     }
 
-    private static bool ContainsTwoConsecutiveChars(string input, char character)
+    public static bool ContainsTwoConsecutiveChars(string input, char character)
     {
         var pattern = new string(character, 2); // 创建一个包含两个指定字符的字符串
         return input.Contains(pattern); // 检查字符串是否包含这个模式

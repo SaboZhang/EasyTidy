@@ -57,7 +57,9 @@ public class AutomaticJob : IJob
         if (!string.IsNullOrEmpty(taskId) && int.TryParse(taskId, out int parsedTaskId))
         {
             Logger.Info($"Retrieving task with ID: {parsedTaskId}");
-            return await _dbContext.TaskOrchestration.FirstOrDefaultAsync(t => t.ID == parsedTaskId && t.IsEnabled == true);
+            return await _dbContext.TaskOrchestration
+                .Include(t => t.GroupName)
+                .FirstOrDefaultAsync(t => t.ID == parsedTaskId && t.IsEnabled == true);
         }
 
         string jobName = context.JobDetail.Key.Name;
@@ -70,7 +72,9 @@ public class AutomaticJob : IJob
         var idPart = jobName.Split('#').LastOrDefault();
         if (int.TryParse(idPart, out int parsedId))
         {
-            return await _dbContext.TaskOrchestration.FirstOrDefaultAsync(t => t.ID == parsedId && t.IsEnabled == true);
+            return await _dbContext.TaskOrchestration
+                .Include(t => t.GroupName)
+                .FirstOrDefaultAsync(t => t.ID == parsedId && t.IsEnabled == true);
         }
 
         Logger.Error($"Failed to parse ID from JobName: {jobName}");
