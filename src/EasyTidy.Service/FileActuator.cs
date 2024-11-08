@@ -29,7 +29,8 @@ public static class FileActuator
         try
         {
 
-            if (Path.GetExtension(parameters.SourcePath).Equals(".lnk", StringComparison.OrdinalIgnoreCase))
+            if (Path.GetExtension(parameters.SourcePath).Equals(".lnk", StringComparison.OrdinalIgnoreCase) 
+                || string.IsNullOrEmpty(parameters.SourcePath))
             {
                 return;
             }

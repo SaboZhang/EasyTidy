@@ -221,52 +221,92 @@ public class FilterUtil
         return filters;
     }
 
-
     public static IEnumerable<Func<string, bool>> GenerateFileFilters(string rule)
     {
-        // 检查是否为“处理所有文件”的规则
+        // 如果规则是 "*"，则返回一个文件存在检查器
         if (rule == "*")
         {
             yield return filePath => File.Exists(filePath);
         }
-        else
+        else if (rule.StartsWith('#'))
         {
-            // 分割多个条件（后缀规则）
-            string[] conditions = rule.Split([';', '|'], StringSplitOptions.RemoveEmptyEntries);
-
-            // 为每个条件创建过滤器
-            foreach (var condition in conditions)
+            // 处理包含 # 的规则，反转所有条件
+            var parts = rule.Split('&', StringSplitOptions.RemoveEmptyEntries)
+            .Select(part => part.TrimStart('#'));
+            foreach (var part in parts)
             {
-                string trimmedCondition = condition.Trim().ToLower();
-
-                if (trimmedCondition.Contains('/'))
+                foreach (var filter in GenerateFiltersForRule(part.Trim()))
                 {
-                    // 包含斜杠处理包含-排除模式
-                    var parts = trimmedCondition.Split('/');
-                    string includePattern = parts[0].Trim();
-                    string excludePattern = parts[1].Trim();
-
-                    yield return filePath =>
-                    {
-                        string fileName = Path.GetFileName(filePath).ToLower();
-                        return Regex.IsMatch(fileName, "^" + Regex.Escape(includePattern).Replace(@"\*", ".*") + "$") &&
-                               !Regex.IsMatch(fileName, "^" + Regex.Escape(excludePattern).Replace(@"\*", ".*") + "$");
-                    };
-                }
-                else if (trimmedCondition.StartsWith("*."))
-                {
-                    // 处理常见的扩展名匹配，确保严格匹配指定的扩展名
-                    string requiredExtension = trimmedCondition.Substring(1); // 去掉 "*"
-
-                    yield return filePath =>
-                    {
-                        // 确保前面加上点，并进行匹配
-                        string fileExtension = Path.GetExtension(filePath).ToLower();
-                        return fileExtension == requiredExtension; // 确保前面加上点
-                    };
+                    // 反转每个过滤器
+                    yield return filePath => !filter(filePath);
                 }
             }
         }
+        else
+        {
+            // 处理不包含 # 的普通规则
+            foreach (var filter in GenerateFiltersForRule(rule))
+            {
+                yield return filter;
+            }
+        }
+    }
+
+    private static IEnumerable<Func<string, bool>> GenerateFiltersForRule(string rule)
+    {
+        var conditions = rule.Split(new[] { ';', '|' }, StringSplitOptions.RemoveEmptyEntries);
+
+        foreach (var condition in conditions)
+        {
+            string trimmedCondition = condition.Trim().ToLower();
+
+            if (trimmedCondition.Contains('/'))
+            {
+                // 包含斜杠的规则，处理包含-排除模式
+                foreach (var filter in GenerateIncludeExcludeFilter(trimmedCondition))
+                {
+                    yield return filter;
+                }
+            }
+            else if (trimmedCondition.StartsWith("*"))
+            {
+                // 扩展名匹配规则
+                yield return GenerateExtensionFilter(trimmedCondition);
+            }
+            else
+            {
+                // 默认规则，处理其他可能的条件
+                yield return filePath => false; // 无匹配规则的情况
+            }
+        }
+    }
+
+    private static IEnumerable<Func<string, bool>> GenerateIncludeExcludeFilter(string condition)
+    {
+        var parts = condition.Split('/');
+        if (parts.Length != 2) yield break; // 如果规则不合法则跳过
+
+        string includePattern = parts[0].Trim();
+        string excludePattern = parts[1].Trim();
+
+        yield return filePath =>
+        {
+            string fileName = Path.GetFileName(filePath).ToLower();
+            return Regex.IsMatch(fileName, "^" + Regex.Escape(includePattern).Replace(@"\*", ".*") + "$") &&
+                   !Regex.IsMatch(fileName, "^" + Regex.Escape(excludePattern).Replace(@"\*", ".*") + "$");
+        };
+    }
+
+    private static Func<string, bool> GenerateExtensionFilter(string condition)
+    {
+        string requiredExtension = condition.StartsWith("*.") ? condition.Substring(1) : condition;
+
+        return filePath =>
+        {
+            string fileExtension = Path.GetExtension(filePath).ToLower();
+            // 使用小写扩展名进行匹配
+            return fileExtension == requiredExtension; 
+        };
     }
 
     private static IEnumerable<Func<string, bool>> GenerateFolderFilters(string rule)

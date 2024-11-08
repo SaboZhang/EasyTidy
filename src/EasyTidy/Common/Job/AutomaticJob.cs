@@ -12,7 +12,6 @@ namespace EasyTidy.Common.Job;
 public class AutomaticJob : IJob
 {
     private readonly AppDbContext _dbContext;
-    private static readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1);
 
     public AutomaticJob()
     {
@@ -30,6 +29,7 @@ public class AutomaticJob : IJob
             return;
         }
 
+        var rule = await GetSpecialCasesRule(task.GroupName.Id, task.TaskRule);
         var operationParameters = new OperationParameters(
             operationMode: task.OperationMode,
             sourcePath: task.TaskSource.Equals("DesktopText".GetLocalized())
@@ -38,7 +38,7 @@ public class AutomaticJob : IJob
             targetPath: task.TaskTarget,
             fileOperationType: Settings.GeneralConfig.FileOperationType,
             handleSubfolders: Settings.GeneralConfig.SubFolder ?? false,
-            funcs: FilterUtil.GeneratePathFilters(task.TaskRule, task.RuleType),
+            funcs: FilterUtil.GeneratePathFilters(rule, task.RuleType),
             pathFilter: FilterUtil.GetPathFilters(task.Filter),
             ruleModel: new RuleModel { Filter = task.Filter, Rule = task.TaskRule, RuleType = task.RuleType })
         { RuleName = task.TaskRule };
@@ -75,6 +75,23 @@ public class AutomaticJob : IJob
 
         Logger.Error($"Failed to parse ID from JobName: {jobName}");
         return null;
+    }
+
+    /// <summary>
+    /// 判断分组是否存在"#"或者"##"规则
+    /// </summary>
+    /// <param name="groupId"></param>
+    /// <param name="taskRule"></param>
+    /// <returns></returns>
+    private async Task<string> GetSpecialCasesRule(int groupId, string taskRule)
+    {
+        if(taskRule.Trim().Equals("#") || taskRule.Trim().Equals("##"))
+        {
+            var list = await _dbContext.TaskOrchestration.Where(t => t.GroupName.Id == groupId && t.TaskRule != taskRule).ToListAsync();
+            string delimiter = "&";
+            return taskRule + string.Join(delimiter, list.Select(x => x.TaskRule));
+        }
+        return taskRule;
     }
 
     /// <summary>

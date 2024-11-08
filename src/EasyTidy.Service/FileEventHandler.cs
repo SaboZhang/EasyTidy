@@ -202,4 +202,33 @@ public static class FileEventHandler
         _watchers.Clear();
     }
 
+    /// <summary>
+    /// 停止监控某个路径
+    /// </summary>
+    /// <param name="sourcePath"></param>
+    /// <param name="targetPath"></param>
+    public static void StopMonitor(string sourcePath, string targetPath)
+    {
+        if (_sourceToTargetsCache.TryGetValue(sourcePath, out var list))
+        {
+            // 尝试从列表中移除指定的 value
+            var itemToRemove = list.FirstOrDefault(o => o.TargetPath == targetPath);
+
+            if (itemToRemove != null)
+            {
+                list.Remove(itemToRemove);
+                // 如果移除成功，检查该 key 是否还有其他的值
+                if (list.Count == 0)
+                {
+                    // 如果列表为空，则移除该 key
+                    _sourceToTargetsCache.TryRemove(sourcePath, out _);
+                    _watchers.TryGetValue(sourcePath, out var watcher);
+                    watcher.EnableRaisingEvents = false;
+                    watcher.Dispose();
+                    _watchers.TryRemove(sourcePath, out _);
+                }
+            }
+        }
+    }
+
 }
