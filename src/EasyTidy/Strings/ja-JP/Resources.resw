@@ -393,7 +393,7 @@
     <value>実行に失敗しました</value>
   </data>
   <data name="DisabledSuccessfullyText" xml:space="preserve">
-    <value>処理が完了しました。</value>
+    <value>処理が完了しました</value>
   </data>
   <data name="DisablingFailedText" xml:space="preserve">
     <value>操作が失敗しました</value>
@@ -1012,5 +1012,104 @@
   </data>
   <data name="ReleaseNotes" xml:space="preserve">
     <value>リリースノート</value>
+  </data>
+  <data name="NewNameAndPath" xml:space="preserve">
+    <value>新しい名前とパス:</value>
+  </data>
+  <data name="DateTimeCheatSheet.Text" xml:space="preserve">
+    <value>ファイルの作成日時の使用を置き換える</value>
+  </data>
+  <data name="DateTimeCheatSheet_FullYear" xml:space="preserve">
+    <value>Years may be represented by four or five digits, depending on the calendaring system used.</value>
+  </data>
+  <data name="DateTimeCheatSheet_YearLastTwoDigits" xml:space="preserve">
+    <value>Years represented only by the last two digits. For single-digit years, a leading zero has been added.</value>
+  </data>
+  <data name="DateTimeCheatSheet_YearLastDigit" xml:space="preserve">
+    <value>Only the last digit of the year is represented.</value>
+  </data>
+  <data name="DateTimeCheatSheet_MonthName" xml:space="preserve">
+    <value>Month Names.</value>
+  </data>
+  <data name="DateTimeCheatSheet_MonthNameAbbr" xml:space="preserve">
+    <value>Abbreviated names of the months.</value>
+  </data>
+  <data name="DateTimeCheatSheet_MonthDigitLZero" xml:space="preserve">
+    <value>1か月を数値として表すときに、先頭のゼロは月の単位を表す。</value>
+  </data>
+  <data name="DateTimeCheatSheet_DayName" xml:space="preserve">
+    <value>曜日の名前。</value>
+  </data>
+  <data name="DateTimeCheatSheet_MonthDigit" xml:space="preserve">
+    <value>単位の桁に先行ゼロのない月。</value>
+  </data>
+  <data name="DateTimeCheatSheet_DayNameAbbr" xml:space="preserve">
+    <value>曜日の略称。</value>
+  </data>
+  <data name="DateTimeCheatSheet_DayDigitLZero" xml:space="preserve">
+    <value>数値で表記した日付で、先頭にゼロを付けて、桁数が 1 つの日の表記法を示すもの。</value>
+  </data>
+  <data name="DateTimeCheatSheet_DayDigit" xml:space="preserve">
+    <value>1桁の場合はゼロ埋めなしの数字で表される1か月のうちの日付。</value>
+  </data>
+  <data name="DateTimeCheatSheet_HoursLZero" xml:space="preserve">
+    <value>1桁の時間で先頭にゼロが付く時間の数。</value>
+  </data>
+  <data name="DateTimeCheatSheet_Hours" xml:space="preserve">
+    <value>一桁の時間の数値に先頭にゼロを追加しない時（時間の数）。</value>
+  </data>
+  <data name="DateTimeCheatSheet_MinutesLZero" xml:space="preserve">
+    <value>先頭に0を置いた分数(分を1桁の数で)。</value>
+  </data>
+  <data name="DateTimeCheatSheet_Minutes" xml:space="preserve">
+    <value>ゼロ埋めされていない分数部分の分。</value>
+  </data>
+  <data name="DateTimeCheatSheet_SecondsLZero" xml:space="preserve">
+    <value>ゼロ埋めされた一桁の秒で始まる秒数。</value>
+  </data>
+  <data name="DateTimeCheatSheet_Seconds" xml:space="preserve">
+    <value>一桁の数値にゼロパディングしない秒数。</value>
+  </data>
+  <data name="DateTimeCheatSheet_MilliSeconds3D" xml:space="preserve">
+    <value>ミリ秒は、3桁のゼロパディングで表されます。</value>
+  </data>
+  <data name="DateTimeCheatSheet_MilliSeconds2D" xml:space="preserve">
+    <value>Millisecond count represented by just the first two digits.</value>
+  </data>
+  <data name="DateTimeCheatSheet_MilliSeconds1D" xml:space="preserve">
+    <value>エポックからのミリ秒を整数ミリ秒として表現したもの。</value>
+  </data>
+  <data name="CounterCheatSheet_Simple" xml:space="preserve">
+    <value>置換文字列の任意の位置で使用できる単純なカウンタです。</value>
+  </data>
+  <data name="CounterCheatSheet_Start" xml:space="preserve">
+    <value>カスタムの初期値を持つカウンター。</value>
+  </data>
+  <data name="CounterCheatSheet_Increment" xml:space="preserve">
+    <value>カスタマイズ可能なインクリメント値を備えたカウンタ。</value>
+  </data>
+  <data name="CounterCheatSheet_Padding" xml:space="preserve">
+    <value>パディングのためにカスタマイズ可能な先頭ゼロの数を持つカウンター。</value>
+  </data>
+  <data name="CounterCheatSheet_Complex" xml:space="preserve">
+    <value>複数のカスタム属性のカウンタを表示する。</value>
+  </data>
+  <data name="RandomizerCheatSheet_Alnum" xml:space="preserve">
+    <value>カスタム長のランダム文字列、大文字、小文字、0-9の数字を含む。</value>
+  </data>
+  <data name="RandomizerCheatSheet_Alpha" xml:space="preserve">
+    <value>大文字と小文字を使用したランダムな文字列、カスタムの長さ。</value>
+  </data>
+  <data name="RandomizerCheatSheet_Digit" xml:space="preserve">
+    <value>0-9の数を含むランダムな文字列で、カスタムの長さがあります。</value>
+  </data>
+  <data name="RandomizerCheatSheet_Uuid" xml:space="preserve">
+    <value>v4 仕様で定義されているランダムな UUID。</value>
+  </data>
+  <data name="CounterCheatSheet_Title.Text" xml:space="preserve">
+    <value>より高度なカウンター文法に置き換える</value>
+  </data>
+  <data name="RandomizerCheatSheet_Title.Text" xml:space="preserve">
+    <value>ランダムな値に置き換え</value>
   </data>
 </root>

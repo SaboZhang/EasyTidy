@@ -116,6 +116,10 @@ public static class FileActuator
                 parameters.PathFilter);
             await ExecuteFolderOperationAsync(newParameters);
         }
+        if (parameters.OperationMode == OperationMode.Rename) 
+        {
+            Renamer.ResetIncrement();
+        }
     }
 
     /// <summary>
@@ -192,6 +196,11 @@ public static class FileActuator
             await ProcessFileAsync(fileParameters);
         }
 
+        if (parameters.OperationMode == OperationMode.Rename)
+        {
+            Renamer.ResetIncrement();
+        }
+
         // 递归处理子文件夹
         if (parameters.HandleSubfolders)
         {
@@ -217,6 +226,11 @@ public static class FileActuator
                     parameters.Funcs,
                     parameters.PathFilter
                     ));
+            }
+
+            if (parameters.OperationMode == OperationMode.Rename)
+            {
+                Renamer.ResetIncrement();
             }
         }
     }
@@ -454,7 +468,8 @@ public static class FileActuator
         await _semaphore.WaitAsync(); // 请求对文件操作的独占访问
         try
         {
-            File.Move(sourcePath, targetPath);
+            var newPath = Renamer.ParseTemplate(sourcePath, targetPath);
+            File.Move(sourcePath, newPath);
 
         }
         catch (Exception ex)
@@ -473,7 +488,8 @@ public static class FileActuator
         await _semaphore.WaitAsync(); // 请求对文件操作的独占访问
         try
         {
-            Directory.Move(sourcePath, targetPath);
+            var newPath = Renamer.ParseTemplate(sourcePath, targetPath);
+            Directory.Move(sourcePath, newPath);
         }
         catch (Exception ex)
         {

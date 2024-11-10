@@ -396,7 +396,7 @@
     <value>L'opération a réussi</value>
   </data>
   <data name="DisablingFailedText" xml:space="preserve">
-    <value>L'opération a échoué.</value>
+    <value>L'opération a échoué</value>
   </data>
   <data name="DialogFilterNameBlock.Text" xml:space="preserve">
     <value>Nom du filtre:</value>
@@ -1012,5 +1012,104 @@
   </data>
   <data name="ReleaseNotes" xml:space="preserve">
     <value>Notes de mise à jour</value>
+  </data>
+  <data name="NewNameAndPath" xml:space="preserve">
+    <value>Nouveau nom et chemin:</value>
+  </data>
+  <data name="DateTimeCheatSheet.Text" xml:space="preserve">
+    <value>Remplacer par la date et l'heure de création du fichier</value>
+  </data>
+  <data name="DateTimeCheatSheet_FullYear" xml:space="preserve">
+    <value>Les années peuvent être représentées par quatre ou cinq chiffres, selon le système de calendrier utilisé.</value>
+  </data>
+  <data name="DateTimeCheatSheet_YearLastTwoDigits" xml:space="preserve">
+    <value>Années représentées par only par les deux derniers chiffres. Pour les années à un seul chiffre, un zéro à été ajouté à gauche.</value>
+  </data>
+  <data name="DateTimeCheatSheet_YearLastDigit" xml:space="preserve">
+    <value>Seul le dernier chiffre de l’année est représenté.</value>
+  </data>
+  <data name="DateTimeCheatSheet_MonthName" xml:space="preserve">
+    <value>Noms des mois.</value>
+  </data>
+  <data name="DateTimeCheatSheet_MonthNameAbbr" xml:space="preserve">
+    <value>Abréviations des mois.</value>
+  </data>
+  <data name="DateTimeCheatSheet_MonthDigitLZero" xml:space="preserve">
+    <value>Un mois en tant que nombre, le zéro de tête signifie mois unitaire.</value>
+  </data>
+  <data name="DateTimeCheatSheet_DayName" xml:space="preserve">
+    <value>Noms des jours de la semaine.</value>
+  </data>
+  <data name="DateTimeCheatSheet_MonthDigit" xml:space="preserve">
+    <value>Mois sans zéro non significatif comme chiffre pour la position des unités.</value>
+  </data>
+  <data name="DateTimeCheatSheet_DayNameAbbr" xml:space="preserve">
+    <value>Abréviations des noms des jours de la semaine.</value>
+  </data>
+  <data name="DateTimeCheatSheet_DayDigitLZero" xml:space="preserve">
+    <value>Un jour du mois, écrit avec un chiffre, les zéros non significatifs indiquant les jours n'ayant qu'une décimale significative.</value>
+  </data>
+  <data name="DateTimeCheatSheet_DayDigit" xml:space="preserve">
+    <value>Un jour du mois représenté par un nombre, sans zéro devant pour les jours à un chiffre.</value>
+  </data>
+  <data name="DateTimeCheatSheet_HoursLZero" xml:space="preserve">
+    <value>Nombre d'heures avec des zéros non significatifs dans les heures à 1 chiffre.</value>
+  </data>
+  <data name="DateTimeCheatSheet_Hours" xml:space="preserve">
+    <value>Un numéro d'heure sans zéro initial pour une heure à un chiffre.</value>
+  </data>
+  <data name="DateTimeCheatSheet_MinutesLZero" xml:space="preserve">
+    <value>Nombre de minutes avec un zéro non significatif (les minutes sous forme d'un nombre à un chiffre).</value>
+  </data>
+  <data name="DateTimeCheatSheet_Minutes" xml:space="preserve">
+    <value>Le nombre de minutes sans zéros à gauche.</value>
+  </data>
+  <data name="DateTimeCheatSheet_SecondsLZero" xml:space="preserve">
+    <value>Secondes précédées d'un seul chiffre précédé d'un zéro.</value>
+  </data>
+  <data name="DateTimeCheatSheet_Seconds" xml:space="preserve">
+    <value>Nombre de secondes sans les zéros non significatifs des chiffres d'un seul chiffre.</value>
+  </data>
+  <data name="DateTimeCheatSheet_MilliSeconds3D" xml:space="preserve">
+    <value>Millisecond, représenté par le remplissage à trois chiffres.</value>
+  </data>
+  <data name="DateTimeCheatSheet_MilliSeconds2D" xml:space="preserve">
+    <value>Compte de millisecondes représenté uniquement par les deux premiers chiffres.</value>
+  </data>
+  <data name="DateTimeCheatSheet_MilliSeconds1D" xml:space="preserve">
+    <value>Millisecondes depuis l'époque exprimées sous la forme du nombre de millisecondes entières.</value>
+  </data>
+  <data name="CounterCheatSheet_Simple" xml:space="preserve">
+    <value>Un compteur simple qui peut être utilisé à n'importe quelle position dans la chaîne de remplacement.</value>
+  </data>
+  <data name="CounterCheatSheet_Start" xml:space="preserve">
+    <value>Compteur avec une valeur initiale personnalisée.</value>
+  </data>
+  <data name="CounterCheatSheet_Increment" xml:space="preserve">
+    <value>Un compteur avec une valeur d'incrémentation personnalisable.</value>
+  </data>
+  <data name="CounterCheatSheet_Padding" xml:space="preserve">
+    <value>Un compteur avec un nombre personnalisable de zéros non significatifs pour le remplissage.</value>
+  </data>
+  <data name="CounterCheatSheet_Complex" xml:space="preserve">
+    <value>Afficher un compteur de plusieurs attributs personnalisés.</value>
+  </data>
+  <data name="RandomizerCheatSheet_Alnum" xml:space="preserve">
+    <value>Chaîne aléatoire de longueur personnalisée, contenant des majuscules, des minuscules et des chiffres de 0 à 9.</value>
+  </data>
+  <data name="RandomizerCheatSheet_Alpha" xml:space="preserve">
+    <value>Chaîne aléatoire comportant des lettres en majuscules et minuscules, longueur personnalisée.</value>
+  </data>
+  <data name="RandomizerCheatSheet_Digit" xml:space="preserve">
+    <value>Une chaîne aléatoire contenant les chiffres de 0 à 9 et de longueur personnalisée.</value>
+  </data>
+  <data name="RandomizerCheatSheet_Uuid" xml:space="preserve">
+    <value>Un UUID aléatoire tel que défini par la spécification v4.</value>
+  </data>
+  <data name="CounterCheatSheet_Title.Text" xml:space="preserve">
+    <value>Remplacer par une grammaire de contre avancée</value>
+  </data>
+  <data name="RandomizerCheatSheet_Title.Text" xml:space="preserve">
+    <value>Remplacer par une valeur aléatoire</value>
   </data>
 </root>

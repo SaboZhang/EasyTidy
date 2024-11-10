@@ -1297,8 +1297,7 @@
         </trans-unit>
         <trans-unit id="HandlingRulesForCustom" translate="yes" xml:space="preserve">
           <source>None</source>
-          <target state="needs-review-translation">None</target>
-          <note from="MultilingualUpdate" priority="2">通过 MAT 添加 XLIFF 文件支持后，找到并自动导入了现有资源。此源字符串和目标字符串包含相同的值，因此资源已标记为“需要审阅”，以确保可以轻松地审阅翻译。</note>
+          <target state="translated">None</target>
         </trans-unit>
         <trans-unit id="ExecutionDate.Title" translate="yes" xml:space="preserve">
           <source>Execution Date</source>
@@ -1347,6 +1346,138 @@
         <trans-unit id="ReleaseNotes" translate="yes" xml:space="preserve">
           <source>Release Notes</source>
           <target state="translated">发行说明</target>
+        </trans-unit>
+        <trans-unit id="NewNameAndPath" translate="yes" xml:space="preserve">
+          <source>New name and path:</source>
+          <target state="translated">路径及新名称:</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet.Text" translate="yes" xml:space="preserve">
+          <source>Replace Using File Creation Date &amp; Time</source>
+          <target state="translated">替换使用文件创建日期和时间</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_FullYear" translate="yes" xml:space="preserve">
+          <source>Years may be represented by four or five digits, depending on the calendaring system used.</source>
+          <target state="translated">由四位或者五位数字表示年份，具体取决于使用的日历。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_YearLastTwoDigits" translate="yes" xml:space="preserve">
+          <source>Years represented only by the last two digits. For single-digit years, a leading zero has been added.</source>
+          <target state="translated">仅由最后两位数字表示的年份，对于单位数年份，添加了前导零。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_YearLastDigit" translate="yes" xml:space="preserve">
+          <source>Only the last digit of the year is represented.</source>
+          <target state="translated">仅由最后一位数字表示年份。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_MonthName" translate="yes" xml:space="preserve">
+          <source>Month Names.</source>
+          <target state="translated">月份名称。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_MonthNameAbbr" translate="yes" xml:space="preserve">
+          <source>Abbreviated names of the months.</source>
+          <target state="translated">月份缩写名称。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_MonthDigitLZero" translate="yes" xml:space="preserve">
+          <source>A month as a numeral, leading zero means unit month.</source>
+          <target state="translated">月作为数字，前导零表示单位月。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_DayName" translate="yes" xml:space="preserve">
+          <source>Names of days of the week.</source>
+          <target state="translated">星期的名称。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_MonthDigit" translate="yes" xml:space="preserve">
+          <source>Months without a leading zero as a digit for the units place.</source>
+          <target state="translated">单位数月份没有前导零的月份作为数字。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_DayNameAbbr" translate="yes" xml:space="preserve">
+          <source>Abbreviated names of the days of the week.</source>
+          <target state="translated">星期几的缩写名称。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_DayDigitLZero" translate="yes" xml:space="preserve">
+          <source>A day of the month, written with a numeral, with leading zeros indicating days with only one significant digit.</source>
+          <target state="translated">一个月中的某一天，以数字表示，前导零表示一位数的天数。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_DayDigit" translate="yes" xml:space="preserve">
+          <source>A day of the month represented as a number, without a leading zero for single-digit days.</source>
+          <target state="translated">一个月中的某一天为数字，在一位数的天数中不带前导零。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_HoursLZero" translate="yes" xml:space="preserve">
+          <source>The number of hours with leading zeros in 1-digit hours.</source>
+          <target state="translated">以1位数小时为前导零的小时数。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_Hours" translate="yes" xml:space="preserve">
+          <source>An hour number without any leading zero for a one-digit hour count.</source>
+          <target state="translated">一位数小时数不带前导零的小时数。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_MinutesLZero" translate="yes" xml:space="preserve">
+          <source>Number of minutes with leading zero (the minutes as a one-digit number).</source>
+          <target state="translated">带前导零的分钟数(以一位数为单位的分钟数)。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_Minutes" translate="yes" xml:space="preserve">
+          <source>The number of minutes without leading zeros.</source>
+          <target state="translated">一位数分钟数不带前导零的分钟数。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_SecondsLZero" translate="yes" xml:space="preserve">
+          <source>Seconds leading with a single digit second prepended with a zero.</source>
+          <target state="translated">以1位数秒为前导零的秒数。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_Seconds" translate="yes" xml:space="preserve">
+          <source>Number of seconds without leading zeros in single digits.</source>
+          <target state="translated">在一位数秒内不带前导零的秒数。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_MilliSeconds3D" translate="yes" xml:space="preserve">
+          <source>Millisecond, represented by padding three digits.</source>
+          <target state="translated">用完整三位数表示的毫秒数。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_MilliSeconds2D" translate="yes" xml:space="preserve">
+          <source>Millisecond count represented by just the first two digits.</source>
+          <target state="translated">仅由前两位数字表示的毫秒数。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_MilliSeconds1D" translate="yes" xml:space="preserve">
+          <source>Milliseconds since the epoch expressed as the number of whole milliseconds.</source>
+          <target state="translated">仅由第一个数字表示的毫秒数。</target>
+        </trans-unit>
+        <trans-unit id="CounterCheatSheet_Simple" translate="yes" xml:space="preserve">
+          <source>A simple counter that can be used at any position in the replacement string.</source>
+          <target state="translated">一个简单的计数器，可在替换字符串中的任意位置使用。</target>
+        </trans-unit>
+        <trans-unit id="CounterCheatSheet_Start" translate="yes" xml:space="preserve">
+          <source>Counter with a custom initial value.</source>
+          <target state="translated">具有自定义起始值的计数器。</target>
+        </trans-unit>
+        <trans-unit id="CounterCheatSheet_Increment" translate="yes" xml:space="preserve">
+          <source>A counter with a customizable increment value.</source>
+          <target state="translated">具有自定义增量值的计数器。</target>
+        </trans-unit>
+        <trans-unit id="CounterCheatSheet_Padding" translate="yes" xml:space="preserve">
+          <source>A counter with a customizable number of leading zeros for padding.</source>
+          <target state="translated">具有自定义数量的前导填充零的计数器。</target>
+        </trans-unit>
+        <trans-unit id="CounterCheatSheet_Complex" translate="yes" xml:space="preserve">
+          <source>Display a counter of multiple custom attributes.</source>
+          <target state="translated">显示多个自定义属性的计数器。</target>
+        </trans-unit>
+        <trans-unit id="RandomizerCheatSheet_Alnum" translate="yes" xml:space="preserve">
+          <source>Random string of custom length, containing uppercase, lowercase letter and 0-9 digits.</source>
+          <target state="translated">包含大写字母、小写字母和 0-9 位、自定义长度的随机字符串。</target>
+        </trans-unit>
+        <trans-unit id="RandomizerCheatSheet_Alpha" translate="yes" xml:space="preserve">
+          <source>Random string with uppercase and lowercase letters, custom length.</source>
+          <target state="translated">包含大写字母和小写字母的随机字符串，自定义长度。</target>
+        </trans-unit>
+        <trans-unit id="RandomizerCheatSheet_Digit" translate="yes" xml:space="preserve">
+          <source>A random string that contains the number 0-9 and has a custom length.</source>
+          <target state="translated">包含数字 0-9 且具有自定义长度的随机字符串。</target>
+        </trans-unit>
+        <trans-unit id="RandomizerCheatSheet_Uuid" translate="yes" xml:space="preserve">
+          <source>A random UUID as defined by the v4 specification.</source>
+          <target state="translated">v4 规范中所载的随机 UUID。</target>
+        </trans-unit>
+        <trans-unit id="CounterCheatSheet_Title.Text" translate="yes" xml:space="preserve">
+          <source>Replace with advanced counter grammar</source>
+          <target state="translated">使用高级计数器语法替换</target>
+        </trans-unit>
+        <trans-unit id="RandomizerCheatSheet_Title.Text" translate="yes" xml:space="preserve">
+          <source>Replace with random value</source>
+          <target state="translated">使用随机值替换</target>
         </trans-unit>
       </group>
     </body>

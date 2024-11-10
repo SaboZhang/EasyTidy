@@ -8,6 +8,7 @@ using EasyTidy.Views.ContentDialogs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.UI.Dispatching;
 using System.Collections.ObjectModel;
+using System.Text.RegularExpressions;
 
 namespace EasyTidy.ViewModels;
 
@@ -21,6 +22,10 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         this.themeService = themeService;
         _dbContext = App.GetService<AppDbContext>();
         LoadRulesMenu();
+        DateTimeModel = new ObservableCollection<PatternSnippetModel>();
+        CounterModel = new ObservableCollection<PatternSnippetModel>();
+        RandomizerModel = new ObservableCollection<PatternSnippetModel>();
+        InitializeRenameModel();
     }
 
     [ObservableProperty]
@@ -72,6 +77,15 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
 
     public ObservableCollection<MenuCategory> MenuCategories { get; set; }
 
+    [ObservableProperty]
+    private ObservableCollection<PatternSnippetModel> _dateTimeModel;
+
+    [ObservableProperty]
+    public ObservableCollection<PatternSnippetModel> _counterModel;
+
+    [ObservableProperty]
+    public ObservableCollection<PatternSnippetModel> _randomizerModel;
+
     /// <summary>
     /// 添加
     /// </summary>
@@ -110,7 +124,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 TaskName = dialog.TaskName,
                 TaskRule = dialog.TaskRule,
                 TaskSource = SelectedOperationMode == OperationMode.Delete || SelectedOperationMode == OperationMode.RecycleBin
-                ? TaskTarget : TaskSource.Equals("DesktopText".GetLocalized())
+                ? ExtractBasePath(TaskTarget) : TaskSource.Equals("DesktopText".GetLocalized())
                 ? Environment.GetFolderPath(Environment.SpecialFolder.Desktop) : TaskSource,
                 Shortcut = dialog.Shortcut,
                 TaskTarget = TaskTarget,
@@ -164,6 +178,11 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
             Logger.Error($"TaskOrchestrationViewModel: OnAddTaskClick 异常信息 {ex}");
         }
 
+    }
+
+    private string ExtractBasePath(string path)
+    {
+        return TargetRegex().Replace(path, "").TrimEnd('\\');
     }
 
     /// <summary>
@@ -587,6 +606,45 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         { "Video","*.avi;*.fly;*.m4v;*.mkv;*.mov;*.mp4;*.mpeg;*.mpg;*.wmv" },
     };
 
+    private void InitializeRenameModel()
+    {
+        // 初始化日期时间方式
+        DateTimeModel.Add(new PatternSnippetModel("$YYYY", "DateTimeCheatSheet_FullYear".GetLocalized()));
+        DateTimeModel.Add(new PatternSnippetModel("$YY", "DateTimeCheatSheet_YearLastTwoDigits".GetLocalized()));
+        DateTimeModel.Add(new PatternSnippetModel("$Y", "DateTimeCheatSheet_YearLastDigit".GetLocalized()));
+        DateTimeModel.Add(new PatternSnippetModel("$MMMM", "DateTimeCheatSheet_MonthName".GetLocalized()));
+        DateTimeModel.Add(new PatternSnippetModel("$MMM", "DateTimeCheatSheet_MonthNameAbbr".GetLocalized()));
+        DateTimeModel.Add(new PatternSnippetModel("$MM", "DateTimeCheatSheet_MonthDigitLZero".GetLocalized()));
+        DateTimeModel.Add(new PatternSnippetModel("$M", "DateTimeCheatSheet_MonthDigit".GetLocalized()));
+        DateTimeModel.Add(new PatternSnippetModel("$DDDD", "DateTimeCheatSheet_DayName".GetLocalized()));
+        DateTimeModel.Add(new PatternSnippetModel("$DDD", "DateTimeCheatSheet_DayNameAbbr".GetLocalized()));
+        DateTimeModel.Add(new PatternSnippetModel("$DD", "DateTimeCheatSheet_DayDigitLZero".GetLocalized()));
+        DateTimeModel.Add(new PatternSnippetModel("$D", "DateTimeCheatSheet_DayDigit".GetLocalized()));
+        DateTimeModel.Add(new PatternSnippetModel("$hh", "DateTimeCheatSheet_HoursLZero".GetLocalized()));
+        DateTimeModel.Add(new PatternSnippetModel("$h", "DateTimeCheatSheet_Hours".GetLocalized()));
+        DateTimeModel.Add(new PatternSnippetModel("$mm", "DateTimeCheatSheet_MinutesLZero".GetLocalized()));
+        DateTimeModel.Add(new PatternSnippetModel("$m", "DateTimeCheatSheet_Minutes".GetLocalized()));
+        DateTimeModel.Add(new PatternSnippetModel("$ss", "DateTimeCheatSheet_SecondsLZero".GetLocalized()));
+        DateTimeModel.Add(new PatternSnippetModel("$s", "DateTimeCheatSheet_Seconds".GetLocalized()));
+        DateTimeModel.Add(new PatternSnippetModel("$fff", "DateTimeCheatSheet_MilliSeconds3D".GetLocalized()));
+        DateTimeModel.Add(new PatternSnippetModel("$ff", "DateTimeCheatSheet_MilliSeconds2D".GetLocalized()));
+        DateTimeModel.Add(new PatternSnippetModel("$f", "DateTimeCheatSheet_MilliSeconds1D".GetLocalized()));
 
+        // 初始化计数器方式
+        CounterModel.Add(new PatternSnippetModel("${}", "CounterCheatSheet_Simple".GetLocalized()));
+        CounterModel.Add(new PatternSnippetModel("${start=10}", "CounterCheatSheet_Start".GetLocalized()));
+        CounterModel.Add(new PatternSnippetModel("${increment=5}", "CounterCheatSheet_Increment".GetLocalized()));
+        CounterModel.Add(new PatternSnippetModel("${padding=8}", "CounterCheatSheet_Padding".GetLocalized()));
+        CounterModel.Add(new PatternSnippetModel("${increment=3,padding=4,start=900}", "CounterCheatSheet_Complex".GetLocalized()));
+
+        // 初始化随机化方式
+        RandomizerModel.Add(new PatternSnippetModel("${rstringalnum=9}", "RandomizerCheatSheet_Alnum".GetLocalized()));
+        RandomizerModel.Add(new PatternSnippetModel("${rstringalpha=13}", "RandomizerCheatSheet_Alpha".GetLocalized()));
+        RandomizerModel.Add(new PatternSnippetModel("${rstringdigit=36}", "RandomizerCheatSheet_Digit".GetLocalized()));
+        RandomizerModel.Add(new PatternSnippetModel("${ruuidv4}", "RandomizerCheatSheet_Uuid".GetLocalized()));
+    }
+
+    [GeneratedRegex(@"\$\{.*?\}")]
+    private static partial Regex TargetRegex();
 }
 

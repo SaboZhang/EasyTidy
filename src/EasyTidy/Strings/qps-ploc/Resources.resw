@@ -1164,4 +1164,19 @@
   <data name="ReleaseNotes" xml:space="preserve">
     <value>Release Notes</value>
   </data>
+  <data name="NewNameAndPath" xml:space="preserve">
+    <value>New name and path:</value>
+  </data>
+  <data name="DateTimeCheatSheet.Text" xml:space="preserve">
+    <value>Replace Using File Creation Date &amp; Time</value>
+  </data>
+  <data name="DateTimeCheatSheet_FullYear" xml:space="preserve">
+    <value>Years may be represented by four or five digits, depending on the calendaring system used</value>
+  </data>
+  <data name="DateTimeCheatSheet_YearLastTwoDigits" xml:space="preserve">
+    <value>Years represented only by the last two digits. For single-digit years, a leading zero has been added</value>
+  </data>
+  <data name="DateTimeCheatSheet_YearLastDigit" xml:space="preserve">
+    <value>Only the last digit of the year is represented</value>
+  </data>
 </root>

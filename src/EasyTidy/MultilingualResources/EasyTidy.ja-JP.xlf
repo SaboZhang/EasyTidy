@@ -521,7 +521,7 @@
         </trans-unit>
         <trans-unit id="DisabledSuccessfullyText" translate="yes" xml:space="preserve">
           <source>Operation succeeded</source>
-          <target state="translated">処理が完了しました。</target>
+          <target state="translated">処理が完了しました</target>
         </trans-unit>
         <trans-unit id="DisablingFailedText" translate="yes" xml:space="preserve">
           <source>Operation failed</source>
@@ -1299,8 +1299,7 @@
         </trans-unit>
         <trans-unit id="HandlingRulesForCustom" translate="yes" xml:space="preserve">
           <source>None</source>
-          <target state="needs-review-translation">None</target>
-          <note from="MultilingualUpdate" priority="2">通过 MAT 添加 XLIFF 文件支持后，找到并自动导入了现有资源。此源字符串和目标字符串包含相同的值，因此资源已标记为“需要审阅”，以确保可以轻松地审阅翻译。</note>
+          <target state="translated">None</target>
         </trans-unit>
         <trans-unit id="ExecutionDate.Title" translate="yes" xml:space="preserve">
           <source>Execution Date</source>
@@ -1349,6 +1348,138 @@
         <trans-unit id="ReleaseNotes" translate="yes" xml:space="preserve">
           <source>Release Notes</source>
           <target state="translated">リリースノート</target>
+        </trans-unit>
+        <trans-unit id="NewNameAndPath" translate="yes" xml:space="preserve">
+          <source>New name and path:</source>
+          <target state="translated">新しい名前とパス:</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet.Text" translate="yes" xml:space="preserve">
+          <source>Replace Using File Creation Date &amp; Time</source>
+          <target state="translated">ファイルの作成日時の使用を置き換える</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_FullYear" translate="yes" xml:space="preserve">
+          <source>Years may be represented by four or five digits, depending on the calendaring system used.</source>
+          <target state="translated">Years may be represented by four or five digits, depending on the calendaring system used.</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_YearLastTwoDigits" translate="yes" xml:space="preserve">
+          <source>Years represented only by the last two digits. For single-digit years, a leading zero has been added.</source>
+          <target state="translated">Years represented only by the last two digits. For single-digit years, a leading zero has been added.</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_YearLastDigit" translate="yes" xml:space="preserve">
+          <source>Only the last digit of the year is represented.</source>
+          <target state="translated">Only the last digit of the year is represented.</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_MonthName" translate="yes" xml:space="preserve">
+          <source>Month Names.</source>
+          <target state="translated">Month Names.</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_MonthNameAbbr" translate="yes" xml:space="preserve">
+          <source>Abbreviated names of the months.</source>
+          <target state="translated">Abbreviated names of the months.</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_MonthDigitLZero" translate="yes" xml:space="preserve">
+          <source>A month as a numeral, leading zero means unit month.</source>
+          <target state="translated">1か月を数値として表すときに、先頭のゼロは月の単位を表す。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_DayName" translate="yes" xml:space="preserve">
+          <source>Names of days of the week.</source>
+          <target state="translated">曜日の名前。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_MonthDigit" translate="yes" xml:space="preserve">
+          <source>Months without a leading zero as a digit for the units place.</source>
+          <target state="translated">単位の桁に先行ゼロのない月。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_DayNameAbbr" translate="yes" xml:space="preserve">
+          <source>Abbreviated names of the days of the week.</source>
+          <target state="translated">曜日の略称。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_DayDigitLZero" translate="yes" xml:space="preserve">
+          <source>A day of the month, written with a numeral, with leading zeros indicating days with only one significant digit.</source>
+          <target state="translated">数値で表記した日付で、先頭にゼロを付けて、桁数が 1 つの日の表記法を示すもの。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_DayDigit" translate="yes" xml:space="preserve">
+          <source>A day of the month represented as a number, without a leading zero for single-digit days.</source>
+          <target state="translated">1桁の場合はゼロ埋めなしの数字で表される1か月のうちの日付。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_HoursLZero" translate="yes" xml:space="preserve">
+          <source>The number of hours with leading zeros in 1-digit hours.</source>
+          <target state="translated">1桁の時間で先頭にゼロが付く時間の数。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_Hours" translate="yes" xml:space="preserve">
+          <source>An hour number without any leading zero for a one-digit hour count.</source>
+          <target state="translated">一桁の時間の数値に先頭にゼロを追加しない時（時間の数）。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_MinutesLZero" translate="yes" xml:space="preserve">
+          <source>Number of minutes with leading zero (the minutes as a one-digit number).</source>
+          <target state="translated">先頭に0を置いた分数(分を1桁の数で)。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_Minutes" translate="yes" xml:space="preserve">
+          <source>The number of minutes without leading zeros.</source>
+          <target state="translated">ゼロ埋めされていない分数部分の分。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_SecondsLZero" translate="yes" xml:space="preserve">
+          <source>Seconds leading with a single digit second prepended with a zero.</source>
+          <target state="translated">ゼロ埋めされた一桁の秒で始まる秒数。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_Seconds" translate="yes" xml:space="preserve">
+          <source>Number of seconds without leading zeros in single digits.</source>
+          <target state="translated">一桁の数値にゼロパディングしない秒数。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_MilliSeconds3D" translate="yes" xml:space="preserve">
+          <source>Millisecond, represented by padding three digits.</source>
+          <target state="translated">ミリ秒は、3桁のゼロパディングで表されます。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_MilliSeconds2D" translate="yes" xml:space="preserve">
+          <source>Millisecond count represented by just the first two digits.</source>
+          <target state="translated">Millisecond count represented by just the first two digits.</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_MilliSeconds1D" translate="yes" xml:space="preserve">
+          <source>Milliseconds since the epoch expressed as the number of whole milliseconds.</source>
+          <target state="translated">エポックからのミリ秒を整数ミリ秒として表現したもの。</target>
+        </trans-unit>
+        <trans-unit id="CounterCheatSheet_Simple" translate="yes" xml:space="preserve">
+          <source>A simple counter that can be used at any position in the replacement string.</source>
+          <target state="translated">置換文字列の任意の位置で使用できる単純なカウンタです。</target>
+        </trans-unit>
+        <trans-unit id="CounterCheatSheet_Start" translate="yes" xml:space="preserve">
+          <source>Counter with a custom initial value.</source>
+          <target state="translated">カスタムの初期値を持つカウンター。</target>
+        </trans-unit>
+        <trans-unit id="CounterCheatSheet_Increment" translate="yes" xml:space="preserve">
+          <source>A counter with a customizable increment value.</source>
+          <target state="translated">カスタマイズ可能なインクリメント値を備えたカウンタ。</target>
+        </trans-unit>
+        <trans-unit id="CounterCheatSheet_Padding" translate="yes" xml:space="preserve">
+          <source>A counter with a customizable number of leading zeros for padding.</source>
+          <target state="translated">パディングのためにカスタマイズ可能な先頭ゼロの数を持つカウンター。</target>
+        </trans-unit>
+        <trans-unit id="CounterCheatSheet_Complex" translate="yes" xml:space="preserve">
+          <source>Display a counter of multiple custom attributes.</source>
+          <target state="translated">複数のカスタム属性のカウンタを表示する。</target>
+        </trans-unit>
+        <trans-unit id="RandomizerCheatSheet_Alnum" translate="yes" xml:space="preserve">
+          <source>Random string of custom length, containing uppercase, lowercase letter and 0-9 digits.</source>
+          <target state="translated">カスタム長のランダム文字列、大文字、小文字、0-9の数字を含む。</target>
+        </trans-unit>
+        <trans-unit id="RandomizerCheatSheet_Alpha" translate="yes" xml:space="preserve">
+          <source>Random string with uppercase and lowercase letters, custom length.</source>
+          <target state="translated">大文字と小文字を使用したランダムな文字列、カスタムの長さ。</target>
+        </trans-unit>
+        <trans-unit id="RandomizerCheatSheet_Digit" translate="yes" xml:space="preserve">
+          <source>A random string that contains the number 0-9 and has a custom length.</source>
+          <target state="translated">0-9の数を含むランダムな文字列で、カスタムの長さがあります。</target>
+        </trans-unit>
+        <trans-unit id="RandomizerCheatSheet_Uuid" translate="yes" xml:space="preserve">
+          <source>A random UUID as defined by the v4 specification.</source>
+          <target state="translated">v4 仕様で定義されているランダムな UUID。</target>
+        </trans-unit>
+        <trans-unit id="CounterCheatSheet_Title.Text" translate="yes" xml:space="preserve">
+          <source>Replace with advanced counter grammar</source>
+          <target state="translated">より高度なカウンター文法に置き換える</target>
+        </trans-unit>
+        <trans-unit id="RandomizerCheatSheet_Title.Text" translate="yes" xml:space="preserve">
+          <source>Replace with random value</source>
+          <target state="translated">ランダムな値に置き換え</target>
         </trans-unit>
       </group>
     </body>

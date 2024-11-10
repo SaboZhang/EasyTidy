@@ -1164,4 +1164,103 @@
   <data name="ReleaseNotes" xml:space="preserve">
     <value>Release Notes</value>
   </data>
+  <data name="NewNameAndPath" xml:space="preserve">
+    <value>New name and path:</value>
+  </data>
+  <data name="DateTimeCheatSheet.Text" xml:space="preserve">
+    <value>Replace Using File Creation Date &amp; Time</value>
+  </data>
+  <data name="DateTimeCheatSheet_FullYear" xml:space="preserve">
+    <value>Years may be represented by four or five digits, depending on the calendaring system used.</value>
+  </data>
+  <data name="DateTimeCheatSheet_YearLastTwoDigits" xml:space="preserve">
+    <value>Years represented only by the last two digits. For single-digit years, a leading zero has been added.</value>
+  </data>
+  <data name="DateTimeCheatSheet_YearLastDigit" xml:space="preserve">
+    <value>Only the last digit of the year is represented.</value>
+  </data>
+  <data name="DateTimeCheatSheet_MonthName" xml:space="preserve">
+    <value>Month Names.</value>
+  </data>
+  <data name="DateTimeCheatSheet_MonthNameAbbr" xml:space="preserve">
+    <value>Abbreviated names of the months.</value>
+  </data>
+  <data name="DateTimeCheatSheet_MonthDigitLZero" xml:space="preserve">
+    <value>A month as a numeral, leading zero means unit month.</value>
+  </data>
+  <data name="DateTimeCheatSheet_DayName" xml:space="preserve">
+    <value>Names of days of the week.</value>
+  </data>
+  <data name="DateTimeCheatSheet_MonthDigit" xml:space="preserve">
+    <value>Months without a leading zero as a digit for the units place.</value>
+  </data>
+  <data name="DateTimeCheatSheet_DayNameAbbr" xml:space="preserve">
+    <value>Abbreviated names of the days of the week.</value>
+  </data>
+  <data name="DateTimeCheatSheet_DayDigitLZero" xml:space="preserve">
+    <value>A day of the month, written with a numeral, with leading zeros indicating days with only one significant digit.</value>
+  </data>
+  <data name="DateTimeCheatSheet_DayDigit" xml:space="preserve">
+    <value>A day of the month represented as a number, without a leading zero for single-digit days.</value>
+  </data>
+  <data name="DateTimeCheatSheet_HoursLZero" xml:space="preserve">
+    <value>The number of hours with leading zeros in 1-digit hours.</value>
+  </data>
+  <data name="DateTimeCheatSheet_Hours" xml:space="preserve">
+    <value>An hour number without any leading zero for a one-digit hour count.</value>
+  </data>
+  <data name="DateTimeCheatSheet_MinutesLZero" xml:space="preserve">
+    <value>Number of minutes with leading zero (the minutes as a one-digit number).</value>
+  </data>
+  <data name="DateTimeCheatSheet_Minutes" xml:space="preserve">
+    <value>The number of minutes without leading zeros.</value>
+  </data>
+  <data name="DateTimeCheatSheet_SecondsLZero" xml:space="preserve">
+    <value>Seconds leading with a single digit second prepended with a zero.</value>
+  </data>
+  <data name="DateTimeCheatSheet_Seconds" xml:space="preserve">
+    <value>Number of seconds without leading zeros in single digits.</value>
+  </data>
+  <data name="DateTimeCheatSheet_MilliSeconds3D" xml:space="preserve">
+    <value>Millisecond, represented by padding three digits.</value>
+  </data>
+  <data name="DateTimeCheatSheet_MilliSeconds2D" xml:space="preserve">
+    <value>Millisecond count represented by just the first two digits.</value>
+  </data>
+  <data name="DateTimeCheatSheet_MilliSeconds1D" xml:space="preserve">
+    <value>Milliseconds since the epoch expressed as the number of whole milliseconds.</value>
+  </data>
+  <data name="CounterCheatSheet_Simple" xml:space="preserve">
+    <value>A simple counter that can be used at any position in the replacement string.</value>
+  </data>
+  <data name="CounterCheatSheet_Start" xml:space="preserve">
+    <value>Counter with a custom initial value.</value>
+  </data>
+  <data name="CounterCheatSheet_Increment" xml:space="preserve">
+    <value>A counter with a customizable increment value.</value>
+  </data>
+  <data name="CounterCheatSheet_Padding" xml:space="preserve">
+    <value>A counter with a customizable number of leading zeros for padding.</value>
+  </data>
+  <data name="CounterCheatSheet_Complex" xml:space="preserve">
+    <value>Display a counter of multiple custom attributes.</value>
+  </data>
+  <data name="RandomizerCheatSheet_Alnum" xml:space="preserve">
+    <value>Random string of custom length, containing uppercase, lowercase letter and 0-9 digits.</value>
+  </data>
+  <data name="RandomizerCheatSheet_Alpha" xml:space="preserve">
+    <value>Random string with uppercase and lowercase letters, custom length.</value>
+  </data>
+  <data name="RandomizerCheatSheet_Digit" xml:space="preserve">
+    <value>A random string that contains the number 0-9 and has a custom length.</value>
+  </data>
+  <data name="RandomizerCheatSheet_Uuid" xml:space="preserve">
+    <value>A random UUID as defined by the v4 specification.</value>
+  </data>
+  <data name="CounterCheatSheet_Title.Text" xml:space="preserve">
+    <value>Replace with advanced counter grammar</value>
+  </data>
+  <data name="RandomizerCheatSheet_Title.Text" xml:space="preserve">
+    <value>Replace with random value</value>
+  </data>
 </root>

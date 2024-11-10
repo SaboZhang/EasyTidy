@@ -261,14 +261,35 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
             var selected = sender as ComboBox;
             if (selected != null && selected.SelectedItem != null)
             {
-                TaskSourcePanel.Visibility = selected.SelectedItem switch
+                switch (selected.SelectedItem)
                 {
-                    OperationMode.Delete => Visibility.Collapsed,
-                    OperationMode.RecycleBin => Visibility.Collapsed,
-                    OperationMode.Rename => Visibility.Collapsed,
-                    _ => Visibility.Visible,
-                };
+                    case OperationMode.Delete:
+                        RenameButton.Visibility = Visibility.Collapsed;
+                        break;
+                    case OperationMode.RecycleBin:
+                        TaskSourcePanel.Visibility = Visibility.Collapsed;
+                        RenameButton.Visibility = Visibility.Collapsed;
+                        break;
+                    case OperationMode.Rename:
+                        RenameButton.Visibility = Visibility.Visible;
+                        TaskTargetTitle.Text = "NewNameAndPath".GetLocalized();
+                        TaskSourcePanel.Visibility = Visibility.Collapsed;
+                        break;
+                    default:
+                        RenameButton.Visibility = Visibility.Collapsed;
+                        TaskSourcePanel.Visibility = Visibility.Visible;
+                        break;
+                }
             }
+        }
+    }
+
+    private void RenameItemClick(object sender, ItemClickEventArgs e)
+    {
+        if (e.ClickedItem is PatternSnippetModel s)
+        {
+            RenameFlyout.Hide();
+            Target.Text += "\\" + s.Code;
         }
     }
 }

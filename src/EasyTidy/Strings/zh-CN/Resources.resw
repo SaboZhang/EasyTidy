@@ -1013,4 +1013,103 @@
   <data name="ReleaseNotes" xml:space="preserve">
     <value>发行说明</value>
   </data>
+  <data name="NewNameAndPath" xml:space="preserve">
+    <value>路径及新名称:</value>
+  </data>
+  <data name="DateTimeCheatSheet.Text" xml:space="preserve">
+    <value>替换使用文件创建日期和时间</value>
+  </data>
+  <data name="DateTimeCheatSheet_FullYear" xml:space="preserve">
+    <value>由四位或者五位数字表示年份，具体取决于使用的日历。</value>
+  </data>
+  <data name="DateTimeCheatSheet_YearLastTwoDigits" xml:space="preserve">
+    <value>仅由最后两位数字表示的年份，对于单位数年份，添加了前导零。</value>
+  </data>
+  <data name="DateTimeCheatSheet_YearLastDigit" xml:space="preserve">
+    <value>仅由最后一位数字表示年份。</value>
+  </data>
+  <data name="DateTimeCheatSheet_MonthName" xml:space="preserve">
+    <value>月份名称。</value>
+  </data>
+  <data name="DateTimeCheatSheet_MonthNameAbbr" xml:space="preserve">
+    <value>月份缩写名称。</value>
+  </data>
+  <data name="DateTimeCheatSheet_MonthDigitLZero" xml:space="preserve">
+    <value>月作为数字，前导零表示单位月。</value>
+  </data>
+  <data name="DateTimeCheatSheet_DayName" xml:space="preserve">
+    <value>星期的名称。</value>
+  </data>
+  <data name="DateTimeCheatSheet_MonthDigit" xml:space="preserve">
+    <value>单位数月份没有前导零的月份作为数字。</value>
+  </data>
+  <data name="DateTimeCheatSheet_DayNameAbbr" xml:space="preserve">
+    <value>星期几的缩写名称。</value>
+  </data>
+  <data name="DateTimeCheatSheet_DayDigitLZero" xml:space="preserve">
+    <value>一个月中的某一天，以数字表示，前导零表示一位数的天数。</value>
+  </data>
+  <data name="DateTimeCheatSheet_DayDigit" xml:space="preserve">
+    <value>一个月中的某一天为数字，在一位数的天数中不带前导零。</value>
+  </data>
+  <data name="DateTimeCheatSheet_HoursLZero" xml:space="preserve">
+    <value>以1位数小时为前导零的小时数。</value>
+  </data>
+  <data name="DateTimeCheatSheet_Hours" xml:space="preserve">
+    <value>一位数小时数不带前导零的小时数。</value>
+  </data>
+  <data name="DateTimeCheatSheet_MinutesLZero" xml:space="preserve">
+    <value>带前导零的分钟数(以一位数为单位的分钟数)。</value>
+  </data>
+  <data name="DateTimeCheatSheet_Minutes" xml:space="preserve">
+    <value>一位数分钟数不带前导零的分钟数。</value>
+  </data>
+  <data name="DateTimeCheatSheet_SecondsLZero" xml:space="preserve">
+    <value>以1位数秒为前导零的秒数。</value>
+  </data>
+  <data name="DateTimeCheatSheet_Seconds" xml:space="preserve">
+    <value>在一位数秒内不带前导零的秒数。</value>
+  </data>
+  <data name="DateTimeCheatSheet_MilliSeconds3D" xml:space="preserve">
+    <value>用完整三位数表示的毫秒数。</value>
+  </data>
+  <data name="DateTimeCheatSheet_MilliSeconds2D" xml:space="preserve">
+    <value>仅由前两位数字表示的毫秒数。</value>
+  </data>
+  <data name="DateTimeCheatSheet_MilliSeconds1D" xml:space="preserve">
+    <value>仅由第一个数字表示的毫秒数。</value>
+  </data>
+  <data name="CounterCheatSheet_Simple" xml:space="preserve">
+    <value>一个简单的计数器，可在替换字符串中的任意位置使用。</value>
+  </data>
+  <data name="CounterCheatSheet_Start" xml:space="preserve">
+    <value>具有自定义起始值的计数器。</value>
+  </data>
+  <data name="CounterCheatSheet_Increment" xml:space="preserve">
+    <value>具有自定义增量值的计数器。</value>
+  </data>
+  <data name="CounterCheatSheet_Padding" xml:space="preserve">
+    <value>具有自定义数量的前导填充零的计数器。</value>
+  </data>
+  <data name="CounterCheatSheet_Complex" xml:space="preserve">
+    <value>显示多个自定义属性的计数器。</value>
+  </data>
+  <data name="RandomizerCheatSheet_Alnum" xml:space="preserve">
+    <value>包含大写字母、小写字母和 0-9 位、自定义长度的随机字符串。</value>
+  </data>
+  <data name="RandomizerCheatSheet_Alpha" xml:space="preserve">
+    <value>包含大写字母和小写字母的随机字符串，自定义长度。</value>
+  </data>
+  <data name="RandomizerCheatSheet_Digit" xml:space="preserve">
+    <value>包含数字 0-9 且具有自定义长度的随机字符串。</value>
+  </data>
+  <data name="RandomizerCheatSheet_Uuid" xml:space="preserve">
+    <value>v4 规范中所载的随机 UUID。</value>
+  </data>
+  <data name="CounterCheatSheet_Title.Text" xml:space="preserve">
+    <value>使用高级计数器语法替换</value>
+  </data>
+  <data name="RandomizerCheatSheet_Title.Text" xml:space="preserve">
+    <value>使用随机值替换</value>
+  </data>
 </root>

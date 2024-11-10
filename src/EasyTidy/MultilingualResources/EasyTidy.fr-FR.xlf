@@ -524,7 +524,7 @@
         </trans-unit>
         <trans-unit id="DisablingFailedText" translate="yes" xml:space="preserve">
           <source>Operation failed</source>
-          <target state="translated">L'opération a échoué.</target>
+          <target state="translated">L'opération a échoué</target>
         </trans-unit>
         <trans-unit id="DialogFilterNameBlock.Text" translate="yes" xml:space="preserve">
           <source>Filter Name:</source>
@@ -1303,8 +1303,7 @@
         </trans-unit>
         <trans-unit id="HandlingRulesForCustom" translate="yes" xml:space="preserve">
           <source>None</source>
-          <target state="needs-review-translation">None</target>
-          <note from="MultilingualUpdate" priority="2">通过 MAT 添加 XLIFF 文件支持后，找到并自动导入了现有资源。此源字符串和目标字符串包含相同的值，因此资源已标记为“需要审阅”，以确保可以轻松地审阅翻译。</note>
+          <target state="translated">None</target>
         </trans-unit>
         <trans-unit id="ExecutionDate.Title" translate="yes" xml:space="preserve">
           <source>Execution Date</source>
@@ -1324,8 +1323,7 @@
         </trans-unit>
         <trans-unit id="Test" translate="yes" xml:space="preserve">
           <source>Test</source>
-          <target state="needs-review-translation">Test</target>
-          <note from="MultilingualUpdate" priority="2">通过 MAT 添加 XLIFF 文件支持后，找到并自动导入了现有资源。此源字符串和目标字符串包含相同的值，因此资源已标记为“需要审阅”，以确保可以轻松地审阅翻译。</note>
+          <target state="translated">Test</target>
         </trans-unit>
         <trans-unit id="Status" translate="yes" xml:space="preserve">
           <source>Status</source>
@@ -1354,6 +1352,138 @@
         <trans-unit id="ReleaseNotes" translate="yes" xml:space="preserve">
           <source>Release Notes</source>
           <target state="translated">Notes de mise à jour</target>
+        </trans-unit>
+        <trans-unit id="NewNameAndPath" translate="yes" xml:space="preserve">
+          <source>New name and path:</source>
+          <target state="translated">Nouveau nom et chemin:</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet.Text" translate="yes" xml:space="preserve">
+          <source>Replace Using File Creation Date &amp; Time</source>
+          <target state="translated">Remplacer par la date et l'heure de création du fichier</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_FullYear" translate="yes" xml:space="preserve">
+          <source>Years may be represented by four or five digits, depending on the calendaring system used.</source>
+          <target state="translated">Les années peuvent être représentées par quatre ou cinq chiffres, selon le système de calendrier utilisé.</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_YearLastTwoDigits" translate="yes" xml:space="preserve">
+          <source>Years represented only by the last two digits. For single-digit years, a leading zero has been added.</source>
+          <target state="translated">Années représentées par only par les deux derniers chiffres. Pour les années à un seul chiffre, un zéro à été ajouté à gauche.</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_YearLastDigit" translate="yes" xml:space="preserve">
+          <source>Only the last digit of the year is represented.</source>
+          <target state="translated">Seul le dernier chiffre de l’année est représenté.</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_MonthName" translate="yes" xml:space="preserve">
+          <source>Month Names.</source>
+          <target state="translated">Noms des mois.</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_MonthNameAbbr" translate="yes" xml:space="preserve">
+          <source>Abbreviated names of the months.</source>
+          <target state="translated">Abréviations des mois.</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_MonthDigitLZero" translate="yes" xml:space="preserve">
+          <source>A month as a numeral, leading zero means unit month.</source>
+          <target state="translated">Un mois en tant que nombre, le zéro de tête signifie mois unitaire.</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_DayName" translate="yes" xml:space="preserve">
+          <source>Names of days of the week.</source>
+          <target state="translated">Noms des jours de la semaine.</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_MonthDigit" translate="yes" xml:space="preserve">
+          <source>Months without a leading zero as a digit for the units place.</source>
+          <target state="translated">Mois sans zéro non significatif comme chiffre pour la position des unités.</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_DayNameAbbr" translate="yes" xml:space="preserve">
+          <source>Abbreviated names of the days of the week.</source>
+          <target state="translated">Abréviations des noms des jours de la semaine.</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_DayDigitLZero" translate="yes" xml:space="preserve">
+          <source>A day of the month, written with a numeral, with leading zeros indicating days with only one significant digit.</source>
+          <target state="translated">Un jour du mois, écrit avec un chiffre, les zéros non significatifs indiquant les jours n'ayant qu'une décimale significative.</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_DayDigit" translate="yes" xml:space="preserve">
+          <source>A day of the month represented as a number, without a leading zero for single-digit days.</source>
+          <target state="translated">Un jour du mois représenté par un nombre, sans zéro devant pour les jours à un chiffre.</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_HoursLZero" translate="yes" xml:space="preserve">
+          <source>The number of hours with leading zeros in 1-digit hours.</source>
+          <target state="translated">Nombre d'heures avec des zéros non significatifs dans les heures à 1 chiffre.</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_Hours" translate="yes" xml:space="preserve">
+          <source>An hour number without any leading zero for a one-digit hour count.</source>
+          <target state="translated">Un numéro d'heure sans zéro initial pour une heure à un chiffre.</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_MinutesLZero" translate="yes" xml:space="preserve">
+          <source>Number of minutes with leading zero (the minutes as a one-digit number).</source>
+          <target state="translated">Nombre de minutes avec un zéro non significatif (les minutes sous forme d'un nombre à un chiffre).</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_Minutes" translate="yes" xml:space="preserve">
+          <source>The number of minutes without leading zeros.</source>
+          <target state="translated">Le nombre de minutes sans zéros à gauche.</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_SecondsLZero" translate="yes" xml:space="preserve">
+          <source>Seconds leading with a single digit second prepended with a zero.</source>
+          <target state="translated">Secondes précédées d'un seul chiffre précédé d'un zéro.</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_Seconds" translate="yes" xml:space="preserve">
+          <source>Number of seconds without leading zeros in single digits.</source>
+          <target state="translated">Nombre de secondes sans les zéros non significatifs des chiffres d'un seul chiffre.</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_MilliSeconds3D" translate="yes" xml:space="preserve">
+          <source>Millisecond, represented by padding three digits.</source>
+          <target state="translated">Millisecond, représenté par le remplissage à trois chiffres.</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_MilliSeconds2D" translate="yes" xml:space="preserve">
+          <source>Millisecond count represented by just the first two digits.</source>
+          <target state="translated">Compte de millisecondes représenté uniquement par les deux premiers chiffres.</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_MilliSeconds1D" translate="yes" xml:space="preserve">
+          <source>Milliseconds since the epoch expressed as the number of whole milliseconds.</source>
+          <target state="translated">Millisecondes depuis l'époque exprimées sous la forme du nombre de millisecondes entières.</target>
+        </trans-unit>
+        <trans-unit id="CounterCheatSheet_Simple" translate="yes" xml:space="preserve">
+          <source>A simple counter that can be used at any position in the replacement string.</source>
+          <target state="translated">Un compteur simple qui peut être utilisé à n'importe quelle position dans la chaîne de remplacement.</target>
+        </trans-unit>
+        <trans-unit id="CounterCheatSheet_Start" translate="yes" xml:space="preserve">
+          <source>Counter with a custom initial value.</source>
+          <target state="translated">Compteur avec une valeur initiale personnalisée.</target>
+        </trans-unit>
+        <trans-unit id="CounterCheatSheet_Increment" translate="yes" xml:space="preserve">
+          <source>A counter with a customizable increment value.</source>
+          <target state="translated">Un compteur avec une valeur d'incrémentation personnalisable.</target>
+        </trans-unit>
+        <trans-unit id="CounterCheatSheet_Padding" translate="yes" xml:space="preserve">
+          <source>A counter with a customizable number of leading zeros for padding.</source>
+          <target state="translated">Un compteur avec un nombre personnalisable de zéros non significatifs pour le remplissage.</target>
+        </trans-unit>
+        <trans-unit id="CounterCheatSheet_Complex" translate="yes" xml:space="preserve">
+          <source>Display a counter of multiple custom attributes.</source>
+          <target state="translated">Afficher un compteur de plusieurs attributs personnalisés.</target>
+        </trans-unit>
+        <trans-unit id="RandomizerCheatSheet_Alnum" translate="yes" xml:space="preserve">
+          <source>Random string of custom length, containing uppercase, lowercase letter and 0-9 digits.</source>
+          <target state="translated">Chaîne aléatoire de longueur personnalisée, contenant des majuscules, des minuscules et des chiffres de 0 à 9.</target>
+        </trans-unit>
+        <trans-unit id="RandomizerCheatSheet_Alpha" translate="yes" xml:space="preserve">
+          <source>Random string with uppercase and lowercase letters, custom length.</source>
+          <target state="translated">Chaîne aléatoire comportant des lettres en majuscules et minuscules, longueur personnalisée.</target>
+        </trans-unit>
+        <trans-unit id="RandomizerCheatSheet_Digit" translate="yes" xml:space="preserve">
+          <source>A random string that contains the number 0-9 and has a custom length.</source>
+          <target state="translated">Une chaîne aléatoire contenant les chiffres de 0 à 9 et de longueur personnalisée.</target>
+        </trans-unit>
+        <trans-unit id="RandomizerCheatSheet_Uuid" translate="yes" xml:space="preserve">
+          <source>A random UUID as defined by the v4 specification.</source>
+          <target state="translated">Un UUID aléatoire tel que défini par la spécification v4.</target>
+        </trans-unit>
+        <trans-unit id="CounterCheatSheet_Title.Text" translate="yes" xml:space="preserve">
+          <source>Replace with advanced counter grammar</source>
+          <target state="translated">Remplacer par une grammaire de contre avancée</target>
+        </trans-unit>
+        <trans-unit id="RandomizerCheatSheet_Title.Text" translate="yes" xml:space="preserve">
+          <source>Replace with random value</source>
+          <target state="translated">Remplacer par une valeur aléatoire</target>
         </trans-unit>
       </group>
     </body>

@@ -143,9 +143,12 @@
     <Content Remove="Assets\Store\Wide310x150Logo.scale-150.png" />
     <Content Remove="Assets\Store\Wide310x150Logo.scale-400.png" />
     <Content Remove="Assets\Wide310x150Logo.scale-200.png" />
+    <Content Remove="Strings\en-US\Resources.resw" />
     <Content Remove="Strings\fr-FR\Resources.resw" />
     <Content Remove="Strings\ja-JP\Resources.resw" />
     <Content Remove="Strings\qps-ploc\Resources.resw" />
+    <Content Remove="Strings\zh-CN\Resources.resw" />
+    <Content Remove="Strings\zh-Hant\Resources.resw" />
     <Content Remove="Strings\zh-TW\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
@@ -320,19 +323,17 @@
     <None Include="..\.editorconfig" Link=".editorconfig" />
   </ItemGroup>
   <ItemGroup>
-    <Content Update="Strings\zh-CN\Resources.resw">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <PRIResource Remove="Strings\zh-CN\Resources.resw" />
-  </ItemGroup>
-  <ItemGroup>
     <XliffResource Include="MultilingualResources\EasyTidy.fr-FR.xlf" />
     <XliffResource Include="MultilingualResources\EasyTidy.ja-JP.xlf" />
     <XliffResource Include="MultilingualResources\EasyTidy.qps-ploc.xlf" />
     <XliffResource Include="MultilingualResources\EasyTidy.zh-CN.xlf" />
     <XliffResource Include="MultilingualResources\EasyTidy.zh-Hant.xlf" />
     <XliffResource Include="MultilingualResources\EasyTidy.zh-TW.xlf" />
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Remove="Strings\fr-FR\Resources.resw" />
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Remove="Strings\en-US\Resources.resw" />
   </ItemGroup>
 </Project>
