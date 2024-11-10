@@ -218,6 +218,10 @@ public partial class Renamer
         return Guid.NewGuid().ToString();
     }
 
+    /// <summary>
+    /// 正则匹配
+    /// </summary>
+    /// <returns></returns>
     [GeneratedRegex(@"\$\{(.*?)\}")]
     private static partial Regex TemplateRegex();
 }
