@@ -331,9 +331,6 @@
     <XliffResource Include="MultilingualResources\EasyTidy.zh-TW.xlf" />
   </ItemGroup>
   <ItemGroup>
-    <PRIResource Remove="Strings\fr-FR\Resources.resw" />
-  </ItemGroup>
-  <ItemGroup>
     <PRIResource Remove="Strings\en-US\Resources.resw" />
   </ItemGroup>
 </Project>
