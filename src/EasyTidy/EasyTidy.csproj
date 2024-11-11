@@ -333,11 +333,4 @@
   <ItemGroup>
     <PRIResource Remove="Strings\en-US\Resources.resw" />
   </ItemGroup>
-  <Target Name="RemoveFoldersWithMuiFiles" AfterTargets="Build">
-    <ItemGroup>
-      <RemovingFiles Include="$(OutDir)*\*.mui" Exclude="$(OutDir)en-us\*.mui" />
-      <RemovingFolders Include="@(RemovingFiles->'%(RootDir)%(Directory)')" />
-    </ItemGroup>
-    <RemoveDir Directories="@(RemovingFolders)" />
-  </Target>
 </Project>

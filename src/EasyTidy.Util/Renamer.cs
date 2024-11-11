@@ -28,7 +28,7 @@ public partial class Renamer
     {
         DateTime? creationTime = File.Exists(source) ? File.GetCreationTime(source) : Directory.GetCreationTime(source);
 
-        if (!TemplateRegex().IsMatch(target))
+        if (!target.Contains('$'))
         {
             return target; // 无模板参数，直接返回原字符串
         }
@@ -65,7 +65,20 @@ public partial class Renamer
         // 替换日期模板
         result = ReplaceDateTemplates(result, creationTime);
 
-        return result;
+        return File.Exists(source) ? ReplaceFileName(source, result) : result;
+    }
+
+    /// <summary>
+    /// 使用生成的新文件名替换 source 文件路径中的文件名，并返回完整路径
+    /// </summary>
+    /// <param name="source"></param>
+    /// <param name="newFileName"></param>
+    /// <returns></returns>
+    private static string ReplaceFileName(string source, string newFileName)
+    {
+        string sourceDirectory = Path.GetDirectoryName(source) ?? string.Empty;
+        string sourceExtension = Path.GetExtension(source);
+        return Path.Combine(sourceDirectory, newFileName + sourceExtension);
     }
 
     /// <summary>

@@ -96,7 +96,7 @@ public static class FileActuator
     /// <returns></returns>
     private static async Task ProcessFoldersAsync(OperationParameters parameters)
     {
-        if (!Directory.Exists(parameters.TargetPath))
+        if (!Directory.Exists(parameters.TargetPath) && parameters.OperationMode != OperationMode.Rename)
         {
             Directory.CreateDirectory(parameters.TargetPath);
         }
@@ -106,6 +106,12 @@ public static class FileActuator
 
         foreach (var floder in floderList)
         {
+            if (ShouldSkip(parameters.Funcs, floder, parameters.PathFilter))
+            {
+                LogService.Logger.Info($"执行文件夹操作 ShouldSkip {parameters.TargetPath}");
+                continue;
+            }
+
             var newParameters = new OperationParameters(
                 parameters.OperationMode,
                 floder,
@@ -113,7 +119,8 @@ public static class FileActuator
                 parameters.FileOperationType,
                 parameters.HandleSubfolders,
                 parameters.Funcs,
-                parameters.PathFilter);
+                parameters.PathFilter)
+            { OldTargetPath = parameters.TargetPath };
             await ExecuteFolderOperationAsync(newParameters);
         }
         if (parameters.OperationMode == OperationMode.Rename) 
@@ -149,7 +156,7 @@ public static class FileActuator
                 await DeleteFolder(parameters.TargetPath);
                 break;
             case OperationMode.Rename:
-                await RenameFolder(parameters.SourcePath, parameters.TargetPath);
+                await RenameFolder(parameters.SourcePath, parameters.OldTargetPath);
                 break;
             case OperationMode.RecycleBin:
                 await MoveToRecycleBin(parameters.TargetPath, new List<Func<string, bool>>(parameters.Funcs),
@@ -163,7 +170,7 @@ public static class FileActuator
     private static async Task ProcessDirectoryAsync(OperationParameters parameters)
     {
         // 创建目标目录
-        if (!Directory.Exists(parameters.TargetPath))
+        if (!Directory.Exists(parameters.TargetPath) && parameters.OperationMode != OperationMode.Rename)
         {
             Directory.CreateDirectory(parameters.TargetPath);
         }
@@ -183,6 +190,7 @@ public static class FileActuator
 
             // 更新目标路径
             var targetFilePath = Path.Combine(parameters.TargetPath, Path.GetFileName(filePath));
+            var oldPath = Path.Combine(parameters.SourcePath, Path.GetFileName(filePath));
             var fileParameters = new OperationParameters(
                 parameters.OperationMode,
                 filePath,
@@ -191,7 +199,11 @@ public static class FileActuator
                 parameters.HandleSubfolders,
                 parameters.Funcs,
                 parameters.PathFilter
-                );
+                )
+            { 
+                OldTargetPath = parameters.TargetPath,
+                OldSourcePath = oldPath,
+            };
 
             await ProcessFileAsync(fileParameters);
         }
@@ -214,6 +226,7 @@ public static class FileActuator
 
                 // 为子文件夹生成新的目标路径
                 var newTargetPath = Path.Combine(parameters.TargetPath, Path.GetFileName(subDir));
+                var oldPath = Path.Combine(parameters.SourcePath, Path.GetFileName(subDir));
                 LogService.Logger.Info($"执行文件操作，递归处理子文件夹: {newTargetPath}");
 
                 // 递归调用，传递新的目标路径
@@ -225,7 +238,11 @@ public static class FileActuator
                     parameters.HandleSubfolders,
                     parameters.Funcs,
                     parameters.PathFilter
-                    ));
+                    )
+                {
+                    OldTargetPath = parameters.TargetPath,
+                    OldSourcePath = oldPath,
+                });
             }
 
             if (parameters.OperationMode == OperationMode.Rename)
@@ -262,7 +279,7 @@ public static class FileActuator
                 await DeleteFile(parameters.TargetPath);
                 break;
             case OperationMode.Rename:
-                await RenameFile(parameters.SourcePath, parameters.TargetPath);
+                await RenameFile(parameters.OldSourcePath, parameters.OldTargetPath);
                 break;
             case OperationMode.RecycleBin:
                 await MoveToRecycleBin(parameters.TargetPath, new List<Func<string, bool>>(parameters.Funcs),
@@ -772,9 +789,9 @@ public static class FileActuator
 
         if (ruleType == TaskRuleType.FileRule) 
         {
-            return true;
+            return false;
         }
-        if (ruleType == TaskRuleType.FolderRule && (isAllFolders || isFolder))
+        if (ruleType == TaskRuleType.FolderRule)
         {
             return true;
         }

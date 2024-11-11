@@ -8,7 +8,6 @@ using EasyTidy.Views.ContentDialogs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.UI.Dispatching;
 using System.Collections.ObjectModel;
-using System.Text.RegularExpressions;
 
 namespace EasyTidy.ViewModels;
 
@@ -124,8 +123,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 TaskName = dialog.TaskName,
                 TaskRule = dialog.TaskRule,
                 TaskSource = SelectedOperationMode == OperationMode.Delete || SelectedOperationMode == OperationMode.RecycleBin
-                ? ExtractBasePath(TaskTarget) : TaskSource.Equals("DesktopText".GetLocalized())
-                ? Environment.GetFolderPath(Environment.SpecialFolder.Desktop) : TaskSource,
+                ? TaskTarget : ExtractBasePath(TaskTarget, SelectedOperationMode, TaskSource),
                 Shortcut = dialog.Shortcut,
                 TaskTarget = TaskTarget,
                 OperationMode = SelectedOperationMode,
@@ -180,9 +178,52 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
 
     }
 
-    private string ExtractBasePath(string path)
+    /// <summary>
+    /// 处理路径
+    /// </summary>
+    /// <param name="targetPath"></param>
+    /// <param name="operation"></param>
+    /// <param name="sourcePath"></param>
+    /// <returns></returns>
+    private string ExtractBasePath(string targetPath, OperationMode operation, string sourcePath)
     {
-        return TargetRegex().Replace(path, "").TrimEnd('\\');
+        // 处理重命名模式
+        if (operation == OperationMode.Rename)
+        {
+            // 获取所有模式代码并替换
+            targetPath = RemovePatternsFromPath(targetPath);
+            return targetPath.TrimEnd('\\');
+        }
+
+        // 处理特殊路径 Desktop
+        return IsLocalizedDesktopPath(sourcePath)
+            ? Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
+            : sourcePath;
+    }
+
+    // 获取所有模式代码并移除
+    private string RemovePatternsFromPath(string path)
+    {
+        var allPatterns = GetAllPatterns();
+        foreach (var pattern in allPatterns)
+        {
+            path = path.Replace(pattern, "");
+        }
+        return path;
+    }
+
+    // 获取 DateTimeModel、CounterModel 和 RandomizerModel 的所有代码模式
+    private IEnumerable<string> GetAllPatterns()
+    {
+        return DateTimeModel.Select(x => x.Code)
+            .Concat(CounterModel.Select(x => x.Code))
+            .Concat(RandomizerModel.Select(x => x.Code));
+    }
+
+    // 判断 sourcePath 是否为桌面路径
+    private bool IsLocalizedDesktopPath(string path)
+    {
+        return path.Equals("DesktopText".GetLocalized(), StringComparison.OrdinalIgnoreCase);
     }
 
     /// <summary>
@@ -385,6 +426,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 }
                 await _dbContext.SaveChangesAsync();
                 await QuartzHelper.DeleteJob(task.TaskName + "#" + task.ID.ToString(), task.GroupName.GroupName);
+                FileEventHandler.StopMonitor(task.TaskSource, task.TaskTarget);
                 await OnPageLoaded();
                 Growl.Success(new GrowlInfo
                 {
@@ -644,7 +686,5 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         RandomizerModel.Add(new PatternSnippetModel("${ruuidv4}", "RandomizerCheatSheet_Uuid".GetLocalized()));
     }
 
-    [GeneratedRegex(@"\$\{.*?\}")]
-    private static partial Regex TargetRegex();
 }
 

@@ -24,6 +24,10 @@ public class OperationParameters
 
     public string RuleName { get; set; }
 
+    public string OldTargetPath { get; set; }
+
+    public string OldSourcePath { get; set; }
+
     public OperationParameters(OperationMode operationMode, string sourcePath, string targetPath, FileOperationType fileOperationType, bool handleSubfolders,
         List<Func<string, bool>> funcs, Func<string, bool> pathFilter, RuleModel ruleModel = null)
     {
