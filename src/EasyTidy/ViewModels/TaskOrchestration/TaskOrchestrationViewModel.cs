@@ -118,6 +118,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 args.Cancel = true;
                 return;
             }
+            int newPriority = dialog.Priority - 5;
             await _dbContext.TaskOrchestration.AddAsync(new TaskOrchestrationTable
             {
                 TaskName = dialog.TaskName,
@@ -130,6 +131,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 IsEnabled = dialog.EnabledFlag,
                 RuleType = dialog.RuleType,
                 CreateTime = DateTime.Now,
+                Priority = newPriority < 0 ? 5 : newPriority,
                 GroupName = !string.IsNullOrEmpty(SelectedTaskGroupName) && SelectedTaskGroupName != "AllText".GetLocalized()
                 ? await GetOrUpdateTaskGroupAsync(SelectedTaskGroupName)
                 : new TaskGroupTable

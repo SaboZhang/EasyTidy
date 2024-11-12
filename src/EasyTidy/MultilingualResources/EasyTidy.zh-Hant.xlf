@@ -1479,6 +1479,18 @@
           <source>Replace with random value</source>
           <target state="translated">使用隨機值替換</target>
         </trans-unit>
+        <trans-unit id="PriorityRules.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>If multiple rules match, which rule takes precedence</source>
+          <target state="translated">如果有好幾個規則，選擇執行哪個優先規則</target>
+        </trans-unit>
+        <trans-unit id="GeneralMultipleInstanceCard.Header" translate="yes" xml:space="preserve">
+          <source>Multiple instances configuration</source>
+          <target state="translated">多實例配置</target>
+        </trans-unit>
+        <trans-unit id="GeneralMultipleInstanceCard.Description" translate="yes" xml:space="preserve">
+          <source>Can multiple instances be provisioned</source>
+          <target state="translated">設定是否允許運行多個實例</target>
+        </trans-unit>
       </group>
     </body>
   </file>

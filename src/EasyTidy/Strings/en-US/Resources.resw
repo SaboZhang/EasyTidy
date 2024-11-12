@@ -1263,4 +1263,13 @@
   <data name="RandomizerCheatSheet_Title.Text" xml:space="preserve">
     <value>Replace with random value</value>
   </data>
+  <data name="PriorityRules.ToolTipService.ToolTip" xml:space="preserve">
+    <value>If multiple rules match, which rule takes precedence</value>
+  </data>
+  <data name="GeneralMultipleInstanceCard.Header" xml:space="preserve">
+    <value>Multiple instances configuration</value>
+  </data>
+  <data name="GeneralMultipleInstanceCard.Description" xml:space="preserve">
+    <value>Can multiple instances be provisioned</value>
+  </data>
 </root>

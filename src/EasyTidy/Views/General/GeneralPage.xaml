@@ -100,6 +100,12 @@
                         </wuc:SettingsCard.HeaderIcon>
                         <ToggleSwitch IsOn="{x:Bind ViewModel.Minimize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </wuc:SettingsCard>
+                    <wuc:SettingsCard x:Uid="GeneralMultipleInstanceCard">
+                        <wuc:SettingsCard.HeaderIcon>
+                            <FontIcon Glyph="&#xE762;"/>
+                        </wuc:SettingsCard.HeaderIcon>
+                        <ToggleSwitch IsOn="{x:Bind ViewModel.EnableMultiInstance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </wuc:SettingsCard>
                 </wuc:SimpleSettingsGroup>
                 <wuc:SimpleSettingsGroup x:Uid="GeneralBack"
                                          Visibility="Visible">

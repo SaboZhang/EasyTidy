@@ -133,6 +133,7 @@ public class AutomaticJob : IJob
         foreach (var item in taskOrchestrationList)
         {
             var param = new Dictionary<string, object> { { "TaskId", item.ID.ToString() } };
+            int priority = item.Priority == 0 ? 10 : 5;
             var ruleModel = new RuleModel
             {
                 Rule = item.TaskRule,
@@ -153,17 +154,21 @@ public class AutomaticJob : IJob
                     fileOperationType: Settings.GeneralConfig.FileOperationType,
                     handleSubfolders: Settings.GeneralConfig.SubFolder ?? false,
                     funcs: new List<Func<string, bool>>(FilterUtil.GeneratePathFilters(item.TaskRule, item.RuleType)),
-                    pathFilter: FilterUtil.GetPathFilters(item.Filter));
+                    pathFilter: FilterUtil.GetPathFilters(item.Filter))
+                {
+                    Priority = item.Priority,
+                    CreateTime = item.CreateTime
+                };
                 FileEventHandler.MonitorFolder(parameters, delay);
 
                 if (automaticTable.RegularTaskRunning)
                 {
-                    await QuartzHelper.AddSimpleJobOfMinuteAsync<AutomaticJob>($"{item.TaskName}#{item.ID}", item.GroupName.GroupName, interval, param);
+                    await QuartzHelper.AddSimpleJobOfMinuteAsync<AutomaticJob>($"{item.TaskName}#{item.ID}", item.GroupName.GroupName, interval, param, priority);
                 }
             }
             else if (automaticTable.RegularTaskRunning)
             {
-                await QuartzHelper.AddSimpleJobOfMinuteAsync<AutomaticJob>($"{item.TaskName}#{item.ID}", item.GroupName.GroupName, interval, param);
+                await QuartzHelper.AddSimpleJobOfMinuteAsync<AutomaticJob>($"{item.TaskName}#{item.ID}", item.GroupName.GroupName, interval, param, priority);
             }
         }
     }

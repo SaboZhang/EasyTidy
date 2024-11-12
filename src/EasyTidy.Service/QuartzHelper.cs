@@ -16,14 +16,14 @@ public class QuartzHelper
         _scheduler = scheduler;
     }
 
-    public static async Task AddSimpleJobOfSecondAsync<T>(string jobName, string groupName, int second, Dictionary<string, object> param = null) where T : IJob
+    public static async Task AddSimpleJobOfSecondAsync<T>(string jobName, string groupName, int second, Dictionary<string, object> param = null, int priority = 5) where T : IJob
     {
-        await AddSimpleJobAsync<T>(jobName, groupName, (x) => { x.WithIntervalInSeconds(second).RepeatForever(); }, param);
+        await AddSimpleJobAsync<T>(jobName, groupName, (x) => { x.WithIntervalInSeconds(second).RepeatForever(); }, param, priority);
     }
 
-    public static async Task AddSimpleJobOfMinuteAsync<T>(string jobName, string groupName, int minute, Dictionary<string, object> param = null) where T : IJob
+    public static async Task AddSimpleJobOfMinuteAsync<T>(string jobName, string groupName, int minute, Dictionary<string, object> param = null, int priority = 5) where T : IJob
     {
-        await AddSimpleJobAsync<T>(jobName, groupName, (x) => { x.WithIntervalInMinutes(minute).RepeatForever(); }, param);
+        await AddSimpleJobAsync<T>(jobName, groupName, (x) => { x.WithIntervalInMinutes(minute).RepeatForever(); }, param, priority);
     }
 
     public static async Task AddSimpleJobAsync<T>(string jobName, string groupName, Action<SimpleScheduleBuilder> action, Dictionary<string, object> param = null, int priority = 5) where T : IJob

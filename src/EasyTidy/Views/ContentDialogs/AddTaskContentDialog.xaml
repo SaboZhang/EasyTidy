@@ -72,13 +72,18 @@
                      Width="210"
                      Text="{x:Bind TaskName, Mode=TwoWay}"/>
             <ToggleButton 
-                Content="&#xEB51;"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Center"
+                Width="52"
+                Height="32"
                 Background="Transparent"
                 BorderBrush="Transparent"
                 Click="ToggleButton_Click"
-                FontFamily="{ThemeResource SymbolThemeFontFamily}"/>
+                x:Uid="PriorityRules">
+                <ToggleButton.Content>
+                    <Image Source="/Assets/Fluent/heartfolder.png" Stretch="Uniform"/>
+                </ToggleButton.Content>
+            </ToggleButton>
         </StackPanel>
         <StackPanel x:Name="TaskRulePanel"
                     Orientation="Horizontal"

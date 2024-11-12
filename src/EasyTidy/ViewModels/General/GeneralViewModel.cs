@@ -78,6 +78,8 @@ public partial class GeneralViewModel : ObservableRecipient
         _dbContext = App.GetService<AppDbContext>();
     }
 
+    private bool _enableMultiInstance;
+
     /// <summary>
     /// 是否处理子文件夹
     /// </summary>
@@ -273,6 +275,23 @@ public partial class GeneralViewModel : ObservableRecipient
             {
                 _autoBackup = value;
                 Settings.BackupConfig.AutoBackup = value;
+                NotifyPropertyChanged();
+            }
+        }
+    }
+
+    public bool EnableMultiInstance
+    {
+        get
+        {
+            return _enableMultiInstance = Settings.GeneralConfig.EnableMultiInstance;
+        }
+        set
+        {
+            if (_enableMultiInstance != value)
+            {
+                _enableMultiInstance = value;
+                Settings.GeneralConfig.EnableMultiInstance = value;
                 NotifyPropertyChanged();
             }
         }
