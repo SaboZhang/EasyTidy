@@ -62,6 +62,7 @@ public sealed partial class TrayIconView : UserControl
     [RelayCommand]
     private void ExitApplication()
     {
+        App._mutex?.ReleaseMutex();
         App.HandleClosedEvents = false;
         TrayIcon.Dispose();
         App.MainWindow?.Close();
@@ -75,12 +76,14 @@ public sealed partial class TrayIconView : UserControl
     private void RestartApplication()
     {
         Logger.Info("Restarting application");
-        App._mutex.ReleaseMutex();
+        App._mutex?.ReleaseMutex();
         var appPath = Environment.ProcessPath;
         Process.Start(appPath);
         App.HandleClosedEvents = false;
         TrayIcon.Dispose();
         App.MainWindow?.Close();
+        // Application.Current.Exit();
+        Environment.Exit(0);
     }
 
     /// <summary>

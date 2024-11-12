@@ -22,4 +22,6 @@ public class ConfigModel
     public bool? HiddenFiles { get; set; } = false;
 
     public FileOperationType FileOperationType { get; set; } = FileOperationType.Skip;
+
+    public bool EnableMultiInstance { get; set; } = false;
 }

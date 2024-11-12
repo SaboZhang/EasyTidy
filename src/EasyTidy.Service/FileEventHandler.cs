@@ -53,8 +53,8 @@ public static class FileEventHandler
         var operationParams = OperationParameters.CreateOperationParameters(parameter);
 
         _sourceToTargetsCache[parameter.SourcePath] = _sourceToTargetsCache.TryGetValue(parameter.SourcePath, out var targets)
-            ? targets.Concat(new List<OperationParameters> { operationParams }).ToList()
-            : new List<OperationParameters> { operationParams };
+            ? targets.Concat(new List<OperationParameters> { operationParams }).OrderBy(op => op.Priority).ThenBy(op => op.CreateTime).ToList()
+            : new List<OperationParameters> { operationParams }.OrderBy(op => op.Priority).ThenBy(op => op.CreateTime).ToList();
     }
 
     /// <summary>

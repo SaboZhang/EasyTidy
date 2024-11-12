@@ -71,6 +71,14 @@
                      Margin="6,0,0,0"
                      Width="210"
                      Text="{x:Bind TaskName, Mode=TwoWay}"/>
+            <ToggleButton 
+                Content="&#xEB51;"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Background="Transparent"
+                BorderBrush="Transparent"
+                Click="ToggleButton_Click"
+                FontFamily="{ThemeResource SymbolThemeFontFamily}"/>
         </StackPanel>
         <StackPanel x:Name="TaskRulePanel"
                     Orientation="Horizontal"

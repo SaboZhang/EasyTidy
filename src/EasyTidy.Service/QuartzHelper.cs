@@ -26,7 +26,7 @@ public class QuartzHelper
         await AddSimpleJobAsync<T>(jobName, groupName, (x) => { x.WithIntervalInMinutes(minute).RepeatForever(); }, param);
     }
 
-    public static async Task AddSimpleJobAsync<T>(string jobName, string groupName, Action<SimpleScheduleBuilder> action, Dictionary<string, object> param = null) where T : IJob
+    public static async Task AddSimpleJobAsync<T>(string jobName, string groupName, Action<SimpleScheduleBuilder> action, Dictionary<string, object> param = null, int priority = 5) where T : IJob
     {
         var jobKey = new JobKey(jobName, groupName);
         if (await _scheduler.CheckExists(jobKey))
@@ -48,14 +48,14 @@ public class QuartzHelper
 
         var trigger = TriggerBuilder.Create()
             .WithIdentity($"{jobName}Trigger", groupName)
-            // .ForJob(job)
             .WithSimpleSchedule(action)
+            .WithPriority(priority)
             .Build();
 
         await _scheduler.ScheduleJob(job, trigger);
     }
 
-    public static async Task AddJob<T>(string jobName, string groupName, string cronExpression) where T : IJob
+    public static async Task AddJob<T>(string jobName, string groupName, string cronExpression, int priority = 5) where T : IJob
     {
         var jobKey = new JobKey(jobName, groupName);
         if (await _scheduler.CheckExists(jobKey))
@@ -70,6 +70,7 @@ public class QuartzHelper
         var trigger = TriggerBuilder.Create()
             .WithIdentity($"{jobName}Trigger", groupName)
             .WithCronSchedule(cronExpression)
+            .WithPriority(priority)
             .Build();
 
         await _scheduler.ScheduleJob(job, trigger);

@@ -111,35 +111,61 @@ public partial class App : Application
 
     protected async override void OnLaunched(LaunchActivatedEventArgs args)
     {
+        InitializeLogging();
+        SetApplicationLanguage();
+
+        if (!IsSingleInstance())
+        {
+            NotifyAppAlreadyRunning();
+            Environment.Exit(0);
+        }
+
+        InitializeMainWindow();
+        SetWindowBehavior();
+        await PerformStartupChecksAsync();
+
+        Logger.Fatal("EasyTidy Initialized Successfully!");
+    }
+
+    private void InitializeLogging()
+    {
 #if !DEBUG
-        // 开启日志服务
         LogService.Register("", LogLevel.Error, AppVersion);
 #else
         LogService.Register("", LogLevel.Debug, AppVersion);
 #endif
+    }
+
+    private void SetApplicationLanguage()
+    {
         if (!string.IsNullOrEmpty(Settings.Language))
         {
             Logger.Info($"当前语言被设置为：{Settings.Language}");
             ApplicationLanguages.PrimaryLanguageOverride = Settings.Language;
         }
+    }
 
-        if (!PackageHelper.IsPackaged)
+    private bool IsSingleInstance()
+    {
+        if (!Settings.GeneralConfig.EnableMultiInstance) 
         {
-            _notificationManager.Init(_notificationManager, OnNotificationInvoked);
+            _mutex = new Mutex(true, AppName, out _createdNew);
+            return _createdNew;
         }
-        _mutex = new Mutex(true, AppName, out _createdNew);
+        _mutex = new Mutex(false, AppName, out _createdNew);
+        return true;
+    }
 
-        if (!_createdNew)
-        {
-            ToastWithAvatar.Instance.Description = "ToastWithAvatarDescriptionText".GetLocalized();
-            ToastWithAvatar.Instance.ScenarioName = "RemindText".GetLocalized();
-            //应用程序已经在运行！当前的执行退出。
-            ToastWithAvatar.Instance.SendToast();
-            Environment.Exit(0);
-        }
+    private void NotifyAppAlreadyRunning()
+    {
+        ToastWithAvatar.Instance.Description = "ToastWithAvatarDescriptionText".GetLocalized();
+        ToastWithAvatar.Instance.ScenarioName = "RemindText".GetLocalized();
+        ToastWithAvatar.Instance.SendToast();
+    }
 
+    private void InitializeMainWindow()
+    {
         MainWindow = new Window();
-
         MainWindow.AppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
         MainWindow.AppWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
 
@@ -147,12 +173,14 @@ public partial class App : Application
         {
             MainWindow.Content = rootFrame = new Frame();
         }
-
         rootFrame.Navigate(typeof(MainPage));
 
         MainWindow.Title = MainWindow.AppWindow.Title = $"{AppName} v{AppVersion}";
         MainWindow.AppWindow.SetIcon("Assets/icon.ico");
+    }
 
+    private void SetWindowBehavior()
+    {
         MainWindow.Closed += (sender, args) =>
         {
             if (HandleClosedEvents)
@@ -162,7 +190,19 @@ public partial class App : Application
             }
         };
 
-        MainWindow.Activate();
+        if ((bool)Settings.GeneralConfig.Minimize)
+        {
+            // MainWindow.Activate();
+            MainWindow.Hide();
+        }
+        else
+        {
+            MainWindow.Activate();
+        }
+    }
+
+    private async Task PerformStartupChecksAsync()
+    {
         if ((bool)Settings.GeneralConfig.IsStartupCheck)
         {
             var app = new AppUpdateSettingViewModel();
@@ -171,8 +211,6 @@ public partial class App : Application
 
         await QuartzConfig.InitQuartzConfigAsync();
         await QuartzHelper.StartAllJob();
-
-        Logger.Fatal("EasyTidy Initialized Success!");
     }
 
     private void OnNotificationInvoked(string message)
@@ -181,7 +219,7 @@ public partial class App : Application
         Logger.Info($"Notification Invoked: {message}");
     }
 
-    void OnProcessExit(object sender, EventArgs e)
+    async void OnProcessExit(object sender, EventArgs e)
     {
         // 记录日志
         if (Logger != null && !HandleClosedEvents)
@@ -190,7 +228,7 @@ public partial class App : Application
             LogService.UnRegister();
         }
         _notificationManager.Unregister();
-        QuartzHelper.StopAllJob().Wait();
+        await QuartzHelper.StopAllJob();
         FileEventHandler.StopAllMonitoring();
     }
 

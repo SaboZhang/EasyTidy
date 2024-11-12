@@ -59,8 +59,11 @@ public partial class MainViewModel : ObservableObject, ITitleBarAutoSuggestBoxAw
                             Settings.GeneralConfig.FileOperationType,
                             (bool)Settings.GeneralConfig.SubFolder,
                             new List<Func<string, bool>>(FilterUtil.GeneratePathFilters(task.TaskRule, task.RuleType)),
-                            FilterUtil.GetPathFilters(task.Filter)
-                            ));
+                            FilterUtil.GetPathFilters(task.Filter))
+                        {
+                            CreateTime = task.CreateTime,
+                            Priority = task.Priority
+                        });
                     }));
 
             // 启动所有任务，但不等待它们完成
@@ -106,8 +109,11 @@ public partial class MainViewModel : ObservableObject, ITitleBarAutoSuggestBoxAw
                         sub,
                         FilterUtil.GeneratePathFilters(task.TaskRule, task.RuleType),
                         FilterUtil.GetPathFilters(task.Filter),
-                        rule
-                        );
+                        rule)
+                        {
+                            CreateTime = task.CreateTime,
+                            Priority = task.Priority
+                        };
                     Task.Run(() =>
                     {
                         FileEventHandler.MonitorFolder(parameters, Convert.ToInt32(string.IsNullOrEmpty(item.DelaySeconds) ? "5" : item.DelaySeconds));

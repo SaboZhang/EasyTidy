@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EasyTidy.Model;
@@ -37,5 +38,9 @@ public class TaskOrchestrationTable
     public TaskGroupTable GroupName { get; set; }
 
     public FilterTable Filter { get; set; }
+
+    public int Priority { get; set; } = 5;
+
+    public DateTime CreateTime { get; set; } = DateTime.Now;
 
 }

@@ -129,6 +129,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 OperationMode = SelectedOperationMode,
                 IsEnabled = dialog.EnabledFlag,
                 RuleType = dialog.RuleType,
+                CreateTime = DateTime.Now,
                 GroupName = !string.IsNullOrEmpty(SelectedTaskGroupName) && SelectedTaskGroupName != "AllText".GetLocalized()
                 ? await GetOrUpdateTaskGroupAsync(SelectedTaskGroupName)
                 : new TaskGroupTable

@@ -28,6 +28,10 @@ public class OperationParameters
 
     public string OldSourcePath { get; set; }
 
+    public int Priority { get; set; } = 5;
+
+    public DateTime CreateTime { get; set; }
+
     public OperationParameters(OperationMode operationMode, string sourcePath, string targetPath, FileOperationType fileOperationType, bool handleSubfolders,
         List<Func<string, bool>> funcs, Func<string, bool> pathFilter, RuleModel ruleModel = null)
     {
@@ -54,7 +58,13 @@ public class OperationParameters
             parameter.Funcs,
             parameter.PathFilter,
             parameter.RuleModel
-        );
+        )
+        {
+            OldTargetPath = parameter.OldTargetPath,
+            OldSourcePath = parameter.OldSourcePath,
+            CreateTime = parameter.CreateTime,
+            Priority = parameter.Priority
+        };
     }
 
 }

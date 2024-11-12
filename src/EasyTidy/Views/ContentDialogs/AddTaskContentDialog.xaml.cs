@@ -87,6 +87,8 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
 
     public bool EnabledFlag { get; set; } = true;
 
+    public int Priority { get; set; } = 0;
+
     public bool IsRegex
     {
         get => _isRegex;
@@ -291,5 +293,10 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
             RenameFlyout.Hide();
             Target.Text += "\\" + s.Code;
         }
+    }
+
+    private void ToggleButton_Click(object sender, RoutedEventArgs e)
+    {
+        
     }
 }

@@ -44,7 +44,8 @@ public static partial class AppHelper
             IsStartupCheck = Settings?.GeneralConfig.IsStartupCheck ?? false,
             EmptyFiles = Settings?.GeneralConfig.EmptyFiles ?? true,
             HiddenFiles = Settings?.GeneralConfig.HiddenFiles ?? false,
-            FileOperationType = Settings?.GeneralConfig.FileOperationType ?? FileOperationType.Skip
+            FileOperationType = Settings?.GeneralConfig.FileOperationType ?? FileOperationType.Skip,
+            EnableMultiInstance = Settings?.GeneralConfig.EnableMultiInstance ?? false
         };
     }
 
