@@ -55,7 +55,7 @@ jobs:
 
     # Upload the app
     - name: Upload app
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: Upload app
         path: ${{ env.Solution_Name }}\\bin
