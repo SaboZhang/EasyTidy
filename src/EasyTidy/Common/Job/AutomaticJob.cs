@@ -108,7 +108,8 @@ public class AutomaticJob : IJob
     {
         if (automaticTable == null) return;
 
-        var taskOrchestrationList = automaticTable.TaskOrchestrationList;
+        // 对任务进行优先级排序，避免简单任务触发时间不一致而优先级不生效
+        var taskOrchestrationList = automaticTable.TaskOrchestrationList.OrderBy(x => x.Priority).ToList();
 
         // Handle custom scheduling
         if (customSchedule)
@@ -119,10 +120,12 @@ public class AutomaticJob : IJob
 
             foreach (var item in taskOrchestrationList)
             {
+                int priority = item.Priority == 0 ? 10 : 5;
                 await QuartzHelper.AddJob<AutomaticJob>(
                     $"{item.TaskName}#{item.ID}",
                     item.GroupName.GroupName,
-                    cronExpression);
+                    cronExpression,
+                    priority);
             }
             return;
         }
@@ -170,6 +173,8 @@ public class AutomaticJob : IJob
             {
                 await QuartzHelper.AddSimpleJobOfMinuteAsync<AutomaticJob>($"{item.TaskName}#{item.ID}", item.GroupName.GroupName, interval, param, priority);
             }
+            // 保证简单定时任务拥有不同的执行起始时间
+            await Task.Delay(100);
         }
     }
 
