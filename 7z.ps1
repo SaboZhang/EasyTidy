@@ -17,7 +17,41 @@ if (Test-Path -Path $sourceDir) {
     Rename-Item -Path $sourceDir -NewName "EasyTidy"
 }
 
-# 确保 publish 目录存在
+# 检查并删除发布目录
+function CheckAndDeletePublishDir($publishDir) {
+    if (Test-Path $publishDir) {
+		Write-Host ""
+		Write-Host "[Cache] Starting clear."
+		Write-Host "========================================"
+		Write-Host "[Cache] Deleting existing publish directory $publishDir..."
+		Write-Host "========================================"
+        try {
+            Remove-Item -Path $publishDir -Recurse -Force
+			Write-Host ""
+			Write-Host "========================================"
+            Write-Host "[Cache] Deleted $publishDir successfully."
+			Write-Host "========================================"
+        } catch {
+			Write-Host ""
+			Write-Host "========================================"
+            Write-Host "[Cache] Failed to delete $publishDir. Stopping script."
+			Write-Host "========================================"
+            exit
+        }
+    } else {
+		Write-Host ""
+		Write-Host "========================================"
+		Write-Host "[Cache] $publishDir not existing."
+		Write-Host "========================================"
+	}
+}
+
+# 将相对发布目录路径转换为绝对路径
+$publishDirAbsolute = [System.IO.Path]::GetFullPath("publish")
+
+CheckAndDeletePublishDir $publishDirAbsolute
+
+# 重新创建 publish
 if (!(Test-Path -Path ./publish)) {
     New-Item -ItemType Directory -Path ./publish
 }
