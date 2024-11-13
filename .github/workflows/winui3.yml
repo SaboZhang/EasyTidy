@@ -3,6 +3,9 @@
 
 name: WinUI 3 unpackaged app
 
+permissions:
+  contents: write
+
 on:
   push:
     branches: [ main ]
@@ -48,14 +51,24 @@ jobs:
 
     # Create the app by building and publishing the project
     - name: Create the app
-      run: msbuild $env:Solution_Name /t:Publish /p:Configuration=$env:Configuration /p:Platform=$env:Platform
+      run: msbuild $env:Solution_Name /t:Publish /p:Configuration=$env:Configuration /p:Platform=$env:Platform /p:DebugType=None
       env:
         Configuration: ${{ matrix.configuration }}
         Platform: ${{ matrix.platform }}
 
     # Upload the app
     - name: Upload app
-      uses: actions/upload-artifact@v4
+      run: |
+        .\7z.ps1 ${{ github.ref_name }}
+
+    - name: Release
+      uses: softprops/action-gh-release@v2
+      if: startsWith(github.ref, 'refs/tags/')
       with:
-        name: Upload app
-        path: ${{ env.Solution_Name }}\\bin
+        tag_name: ${{ github.ref_name }}
+        body_path: CHANGELOG.md
+        draft: false # 设置为 false 可立即发布版本
+        files: |
+          EasyTidy_${{ github.ref_name }}_win-x64.zip
+          EasyTidy_${{ github.ref_name }}_win-x64_7z.7z
+          EasyTidy_${{ github.ref_name }}_win-x64_sha256.txt
