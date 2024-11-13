@@ -12,9 +12,6 @@ if ([string]::IsNullOrEmpty($version)) {
 $sourceDir = "src\EasyTidy\bin\x64\Release\net8.0-windows10.0.22621.0\win-x64"
 $targetDir = "src\EasyTidy\bin\x64\Release\net8.0-windows10.0.22621.0"
 
-# 执行文件复制操作
-Copy-Item -Path ./run.bat -Destination $targetDir/run.bat
-
 # 重命名目录
 if (Test-Path -Path $sourceDir) {
     Rename-Item -Path $sourceDir -NewName "EasyTidy"
@@ -27,7 +24,7 @@ if (!(Test-Path -Path ./publish)) {
 
 Copy-Item -Path ./run.bat -Destination ./publish/run.bat
 
-Copy-Item -Path "$targetDir\*" -Destination ./publish -Recurse
+Copy-Item -Path "$targetDir\EasyTidy" -Destination ./publish -Recurse
 
 # 使用7-Zip创建ZIP文件
 & 7z a -tzip "EasyTidy_${version}_win-x64.zip" ./publish/*
