@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentDialog
+    x:Class="EasyTidy.Views.ContentDialogs.PlanExecutionContentDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:EasyTidy.Views.ContentDialogs"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:wuc="using:WinUICommunity"
+    CornerRadius="{ThemeResource OverlayCornerRadius}"
+    DefaultButton="Primary"
+    mc:Ignorable="d">
+
+    <ContentDialog.Resources>
+        <DataTemplate x:Key="ValidationTemplate"
+                      x:DataType="x:String">
+            <TextBlock Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+                       Text="{x:Bind}"/>
+        </DataTemplate>
+    </ContentDialog.Resources>
+
+    <StackPanel>
+        <TextBlock x:Uid="DialogFirst"
+                   Margin="0,20,0,5"/>
+        <TextBlock x:Uid="DialogNotice"
+                   Margin="0,0,0,20"
+                   TextWrapping="Wrap"/>
+        <StackPanel Orientation="Horizontal"
+                    Spacing="8"
+                    Margin="0,10,0,0">
+            <TextBlock x:Uid="DialogMinute"
+                       Margin="0,5,0,0"
+                       Width="150"
+                       TextWrapping="Wrap"/>
+            <TextBox x:Name="MinutesBox"
+                     Margin="12,0,10,0"
+                     MinWidth="190"
+                     Text="{x:Bind Minute, Mode=TwoWay}"
+                     wuc:Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
+                     wuc:Validation.ValidationPropertyName="Minute"
+                     wuc:Validation.ValidationProvider="{x:Bind}"
+                     Style="{StaticResource ValidatingTextBoxStyle}"/>
+            <TextBlock Text="(0 to 59)"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal"
+                    Margin="0,10,0,0"
+                    Spacing="20">
+            <TextBlock x:Uid="DialogHour"
+                       Margin="0,5,0,0"
+                       Width="150"
+                       TextWrapping="Wrap"/>
+            <TextBox MinWidth="190"
+                     Text="{x:Bind Hour, Mode=TwoWay}"
+                     wuc:Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
+                     wuc:Validation.ValidationPropertyName="Hour"
+                     wuc:Validation.ValidationProvider="{x:Bind}"
+                     Style="{StaticResource ValidatingTextBoxStyle}"/>
+            <TextBlock Text="(0 to 23)"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal"
+                    Spacing="20"
+                    Margin="0,10,0,0">
+            <TextBlock x:Uid="DialogWeek"
+                       Margin="0,5,0,0"
+                       Width="150"
+                       TextWrapping="Wrap"/>
+            <TextBox MinWidth="190"
+                     Text="{x:Bind DayOfWeek, Mode=TwoWay}"
+                     wuc:Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
+                     wuc:Validation.ValidationPropertyName="DayOfWeek"
+                     wuc:Validation.ValidationProvider="{x:Bind}"
+                     Style="{StaticResource ValidatingTextBoxStyle}"/>
+            <TextBlock x:Uid="DialogDayOfWeekBlock"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal"
+                    Spacing="20"
+                    Margin="0,10,0,0">
+            <TextBlock x:Uid="DialogDayOfMonth"
+                       Margin="0,5,0,0"
+                       Width="150"
+                       TextWrapping="Wrap"/>
+            <TextBox MinWidth="190"
+                     Text="{x:Bind DayOfMonth, Mode=TwoWay}"
+                     wuc:Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
+                     wuc:Validation.ValidationPropertyName="DayOfMonth"
+                     wuc:Validation.ValidationProvider="{x:Bind}"
+                     Style="{StaticResource ValidatingTextBoxStyle}"/>
+            <TextBlock Text="(1 to 31)"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal"
+                    Spacing="20"
+                    Margin="0,10,0,0">
+            <TextBlock x:Uid="DialogMonth"
+                       Margin="0,5,0,0"
+                       Width="150"
+                       TextWrapping="Wrap"/>
+            <TextBox MinWidth="190"
+                     Text="{x:Bind MonthlyDay, Mode=TwoWay}"
+                     wuc:Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
+                     wuc:Validation.ValidationPropertyName="MonthlyDay"
+                     wuc:Validation.ValidationProvider="{x:Bind}"
+                     Style="{StaticResource ValidatingTextBoxStyle}"/>
+            <TextBlock Text="(1 to 12)"/>
+        </StackPanel>
+        <wuc:Divider/>
+        <StackPanel Orientation="Horizontal"
+                    Spacing="20">
+            <TextBlock x:Uid="DialogExpression"
+                       Margin="0,5,0,0"
+                       Width="150"
+                       TextWrapping="Wrap"/>
+            <TextBox Name="CronExpressionBox"
+                     MinWidth="190"
+                     Text="{x:Bind CronExpression, Mode=TwoWay}"
+                     wuc:Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
+                     wuc:Validation.ValidationPropertyName="CronExpression"
+                     wuc:Validation.ValidationProvider="{x:Bind}"
+                     Style="{StaticResource ValidatingTextBoxStyle}"/>
+        </StackPanel>
+
+        <TextBlock x:Uid="DialogExplanation1"
+                   Margin="0,40,0,20"/>
+        <TextBlock x:Uid="DialogExplanation2"
+                   Margin="0,-20,0,20"/>
+        <TextBlock x:Uid="DialogExplanation3"
+                   Margin="0,-20,0,20"/>
+        <TextBlock x:Uid="DialogExplanation4"
+                   Margin="0,-20,0,20"/>
+        <TextBlock x:Uid="DialogExplanation5"
+                   Margin="0,-20,0,20"
+                   TextWrapping="Wrap"/>
+    </StackPanel>
+</ContentDialog>

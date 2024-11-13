@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "EasyTidy (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "EasyTidy (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

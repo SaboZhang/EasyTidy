@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="EasyTidy.Views.TaskOrchestrationPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:EasyTidy.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:wuc="using:WinUICommunity"
+    xmlns:model="using:EasyTidy.Model"
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    mc:Ignorable="d">
+
+    <i:Interaction.Behaviors>
+        <ic:EventTriggerBehavior EventName="Loaded">
+            <ic:EventTriggerBehavior.Actions>
+                <ic:InvokeCommandAction Command="{x:Bind ViewModel.PageLoadedCommand}"/>
+            </ic:EventTriggerBehavior.Actions>
+        </ic:EventTriggerBehavior>
+    </i:Interaction.Behaviors>
+
+    <StackPanel x:Name="Root">
+        <StackPanel x:Name="Growl"
+                    MinWidth="340"
+                    wuc:Growl.GrowlParent="True"/>
+        <wuc:SettingsPageControl
+            x:Name="SettingsControl"
+            x:Uid="TaskSettingsPage"
+            ModuleImageSource="ms-appx:///Assets/Modules/FileTask.png">
+            <wuc:SettingsPageControl.ModuleContent>
+                <StackPanel>
+                    <wuc:SettingsCard x:Name="AddTask"
+                                      x:Uid="TaskAddTask">
+                        <wuc:SettingsCard.HeaderIcon>
+                            <FontIcon Glyph="&#xE7C4;"/>
+                        </wuc:SettingsCard.HeaderIcon>
+                        <StackPanel Orientation="Horizontal"
+                                    Spacing="10">
+                            <Button x:Uid="TaskAddTaskButton"
+                                    x:Name="TaskButton"
+                                    Style="{StaticResource AccentButtonStyle}"
+                                    Command="{x:Bind ViewModel.AddTaskClickCommand}"/>
+                            <ComboBox x:Name="GroupNameComboBox"
+                                      x:Uid="TaskDisplay"
+                                      ItemsSource="{x:Bind ViewModel.GroupNameList, Mode=OneWay}"
+                                      SelectedItem="{x:Bind ViewModel.SelectedGroupName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                <i:Interaction.Behaviors>
+                                    <ic:EventTriggerBehavior EventName="SelectionChanged">
+                                        <ic:EventTriggerBehavior.Actions>
+                                            <ic:InvokeCommandAction Command="{x:Bind ViewModel.GroupNameChangedCommand}"/>
+                                        </ic:EventTriggerBehavior.Actions>
+                                    </ic:EventTriggerBehavior>
+                                </i:Interaction.Behaviors>
+                            </ComboBox>
+                        </StackPanel>
+                    </wuc:SettingsCard>
+                    <StackPanel>
+                        <TextBlock x:Name="TaskList"
+                                   TextWrapping="Wrap"
+                                   x:Uid="TaskListView"
+                                   Margin="0,20,20,0"/>
+                        <wuc:LoadingIndicator x:Name="Load"
+                                              Mode="Arcs"
+                                              IsActive="{x:Bind ViewModel.IsActive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <StackPanel>
+                            <ListView ItemsSource="{x:Bind ViewModel.TaskListACV, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      HorizontalContentAlignment="Stretch"
+                                      Height="600">
+                                <ListView.Header>
+                                    <Grid Padding="16,12"
+                                          ColumnSpacing="16">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="40"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="200"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="ID"
+                                                   HorizontalAlignment="Left"
+                                                   VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="1"
+                                                   x:Uid="TaskListTaskName"
+                                                   VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="2"
+                                                   x:Uid="TaskListSource"
+                                                   VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="3"
+                                                   x:Uid="TaskListTarget"
+                                                   VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="4"
+                                                   x:Uid="TaskListShortcuts"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Center"/>
+                                        <TextBlock Grid.Column="5"
+                                                   x:Uid="TaskListEnable"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Center"/>
+                                        <TextBlock Grid.Column="6"
+                                                   x:Uid="TaskListOperation"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"/>
+                                    </Grid>
+                                </ListView.Header>
+                                <ListView.ItemTemplate>
+                                    <DataTemplate x:DataType="model:TaskOrchestrationTable">
+                                        <Grid ColumnSpacing="16">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="40"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="200"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Text="{x:Bind ID}"
+                                                       VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Column="1"
+                                                       Text="{x:Bind TaskName}"
+                                                       VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Column="2"
+                                                       Text="{x:Bind TaskSource}"
+                                                       VerticalAlignment="Center"
+                                                       ToolTipService.ToolTip="{x:Bind TaskSource}"/>
+                                            <TextBlock Grid.Column="3"
+                                                       Text="{x:Bind TaskTarget}"
+                                                       VerticalAlignment="Center"
+                                                       ToolTipService.ToolTip="{x:Bind TaskTarget}"/>
+                                            <TextBlock Grid.Column="4"
+                                                       Text="{x:Bind Shortcut, Mode=TwoWay, Converter={StaticResource BoolToStringConverter}}"
+                                                       VerticalAlignment="Center"
+                                                       HorizontalAlignment="Center"/>
+                                            <TextBlock Grid.Column="5"
+                                                       Text="{x:Bind IsEnabled, Mode=TwoWay, Converter={StaticResource BoolToStringConverter}}"
+                                                       VerticalAlignment="Center"
+                                                       HorizontalAlignment="Center"/>
+                                            <StackPanel HorizontalAlignment="Center"
+                                                        Orientation="Horizontal"
+                                                        Spacing="8"
+                                                        Grid.Column="6">
+                                                <Button x:Name="EditButton"
+                                                        Style="{StaticResource SubtleButtonStyle}"
+                                                        DataContext="{x:Bind}"
+                                                        Width="42"
+                                                        Height="42"
+                                                        x:Uid="EditButton"
+                                                        Click="EditButton_Click">
+                                                    <Image Source="/Assets/Fluent/edit.png"/>
+                                                </Button>
+                                                <Button x:Name="DeleteButton"
+                                                        Style="{StaticResource SubtleButtonStyle}"
+                                                        DataContext="{x:Bind}"
+                                                        Width="42"
+                                                        Height="42"
+                                                        x:Uid="DeleteButton"
+                                                        Click="DeleteButton_Click">
+                                                    <Image Source="/Assets/Fluent/delete.png"/>
+                                                </Button>
+                                                <Button x:Name="RunButton"
+                                                        Content="{wuc:BitmapIcon Source=Assets/Fluent/run.png}"
+                                                        Style="{StaticResource SubtleButtonStyle}"
+                                                        DataContext="{x:Bind}"
+                                                        Width="42"
+                                                        Height="42"
+                                                        x:Uid="RunButton"
+                                                        Click="RunButton_Click"/>
+                                                <Button x:Name="IsEnableButton"
+                                                        Content="{wuc:BitmapIcon Source=Assets/Fluent/isanble.png}"
+                                                        Style="{StaticResource SubtleButtonStyle}"
+                                                        DataContext="{x:Bind}"
+                                                        Width="42"
+                                                        Height="42"
+                                                        x:Uid="IsEnableButton"
+                                                        Click="IsEnableButton_Click"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+            </wuc:SettingsPageControl.ModuleContent>
+        </wuc:SettingsPageControl>
+
+    </StackPanel>
+</Page>
