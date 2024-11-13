@@ -1,0 +1,52 @@
+﻿{
+  "Groups": [
+    {
+      "UniqueId": "EasyTidy",
+      "Title": "EasyTidy",
+      "ImagePath": "ms-appx:///Assets/icon.png",
+      "ImageIconPath": "ms-appx:///Assets/icon.png",
+      "IsSpecialSection": false,
+      "HideGroup": false,
+      "ShowItemsWithoutGroup": true,
+      "IsExpanded": false,
+      "Items": [
+        {
+          "UniqueId": "EasyTidy.Views.GeneralPage",
+          "Title": "NavGeneralText",
+          "Subtitle": "EasyTidy",
+          "ImagePath": "ms-appx:///Assets/Fluent/general.png",
+          "ImageIconPath": "ms-appx:///Assets/Fluent/general.png",
+          "HideItem": true,
+          "UsexUid": true
+        },
+        {
+          "UniqueId": "EasyTidy.Views.FiltersPage",
+          "Title": "NavFiltersText",
+          "Subtitle": "Filters",
+          "ImagePath": "ms-appx:///Assets/Fluent/Filters.png",
+          "ImageIconPath": "ms-appx:///Assets/Fluent/Filters.png",
+          "IsUpdated": true,
+          "UsexUid": true
+        },
+        {
+          "UniqueId": "EasyTidy.Views.TaskOrchestrationPage",
+          "Title": "NavTaskOrchestrationText",
+          "Subtitle": "TaskOrchestration",
+          "ImagePath": "ms-appx:///Assets/Fluent/task1.png",
+          "ImageIconPath": "ms-appx:///Assets/Fluent/task1.png",
+          "IsUpdated": true,
+          "UsexUid": true
+        },
+        {
+          "UniqueId": "EasyTidy.Views.AutomaticPage",
+          "Title": "NavAutomaticText",
+          "Subtitle": "Automatic",
+          "ImagePath": "ms-appx:///Assets/Fluent/auto.png",
+          "ImageIconPath": "ms-appx:///Assets/Fluent/auto.png",
+          "IsUpdated": true,
+          "UsexUid": true
+        }
+      ]
+    }
+  ]
+}

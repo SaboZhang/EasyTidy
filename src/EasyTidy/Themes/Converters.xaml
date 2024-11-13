@@ -1,0 +1,14 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:common="using:EasyTidy.Common"
+                    xmlns:converter="using:CommunityToolkit.WinUI.Converters" 
+                    xmlns:cover="using:EasyTidy.Converters">
+
+    <cover:EnumDisplayNameConverter x:Key="EnumDisplayNameConverter"/>
+    <cover:EnumToVisibilityConverter x:Key="EnumToVisibilityConverter" />
+    <cover:BoolToStringConverter x:Key="BoolToStringConverter" />
+    <cover:StringToBoolConverter x:Key="StringToBoolConverter" />
+
+    <converter:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    
+</ResourceDictionary>

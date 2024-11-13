@@ -1,0 +1,1124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="NavAutomaticText" xml:space="preserve">
+    <value>Automatique</value>
+  </data>
+  <data name="NavTaskOrchestrationText" xml:space="preserve">
+    <value>Orchestration des tâches</value>
+  </data>
+  <data name="NavFiltersText" xml:space="preserve">
+    <value>Filtres</value>
+  </data>
+  <data name="Backup" xml:space="preserve">
+    <value>Sauvegarde</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Paramètres</value>
+  </data>
+  <data name="SettingsPageControl.ModuleTitle" xml:space="preserve">
+    <value>Automatique</value>
+  </data>
+  <data name="SettingsPageControl.ModuleDescription" xml:space="preserve">
+    <value>Le module d'automatisation peut surveiller les modifications des fichiers et des dossiers. En fonction des paramètres personnalisés et des tâches de traitement de fichiers associées, ce module peut effectuer automatiquement les actions correspondantes.</value>
+  </data>
+  <data name="StartupExecutionCard.Header" xml:space="preserve">
+    <value>Au démarrage</value>
+  </data>
+  <data name="StartupExecutionCard.Description" xml:space="preserve">
+    <value>Easytidy exécute une fois au démarrage</value>
+  </data>
+  <data name="RegularTaskRunningCard.Header" xml:space="preserve">
+    <value>Exécution régulière</value>
+  </data>
+  <data name="ScheduledExecutionCard.Header" xml:space="preserve">
+    <value>Selon le calendrier</value>
+  </data>
+  <data name="FileChangeDelay.Text" xml:space="preserve">
+    <value>Retard:</value>
+  </data>
+  <data name="FileChangeSecond.Text" xml:space="preserve">
+    <value>Deuxième</value>
+  </data>
+  <data name="AutoAnalysisGlobal.Header" xml:space="preserve">
+    <value>Autoanalyse (Global)</value>
+  </data>
+  <data name="FileChange.Description" xml:space="preserve">
+    <value>Options de traitement de fichiers automatiques</value>
+  </data>
+  <data name="FileChangeCard.Header" xml:space="preserve">
+    <value>Lorsque les fichiers changent</value>
+  </data>
+  <data name="RegularTaskRunningCard.Description" xml:space="preserve">
+    <value>Exécuter régulièrement en fonction de l'heure définie</value>
+  </data>
+  <data name="ScheduledExecutionCard.Description" xml:space="preserve">
+    <value>Effectuer une exécution périodique en fonction du plan définitif</value>
+  </data>
+  <data name="ConfigurationButton.Content" xml:space="preserve">
+    <value>Configuration</value>
+  </data>
+  <data name="TaskAssociation.Header" xml:space="preserve">
+    <value>Association des tâches</value>
+  </data>
+  <data name="ConfigurationTask.Header" xml:space="preserve">
+    <value>Tâche de configuration</value>
+  </data>
+  <data name="ConfigurationTask.Description" xml:space="preserve">
+    <value>Associez les tâches configurées au plan global ou configurez-les séparément</value>
+  </data>
+  <data name="TaskSelection.Header" xml:space="preserve">
+    <value>Sélection des tâches</value>
+  </data>
+  <data name="TaskButton.Content" xml:space="preserve">
+    <value>Groupe de travail</value>
+  </data>
+  <data name="TaskGroup.Title" xml:space="preserve">
+    <value>Sélectionnez le groupe de travail</value>
+  </data>
+  <data name="SingleTask.Content" xml:space="preserve">
+    <value>Tâche</value>
+  </data>
+  <data name="SelectTask.Title" xml:space="preserve">
+    <value>Sélectionner la tâche</value>
+  </data>
+  <data name="Separate.Content" xml:space="preserve">
+    <value>Est-il configuré séparément</value>
+  </data>
+  <data name="Customize.Content" xml:space="preserve">
+    <value>Personnaliser</value>
+  </data>
+  <data name="ResetButton.Content" xml:space="preserve">
+    <value>Configuration de la révocation</value>
+  </data>
+  <data name="SaveButton.Content" xml:space="preserve">
+    <value>Enregistrer la configuration</value>
+  </data>
+  <data name="TaskList.Title" xml:space="preserve">
+    <value>Liste de tâches</value>
+  </data>
+  <data name="FileChangeBlock.Text" xml:space="preserve">
+    <value>Lorsque les fichiers changent</value>
+  </data>
+  <data name="RegularTaskRunningText.Text" xml:space="preserve">
+    <value>Exécution régulière</value>
+  </data>
+  <data name="SelectTaskBlock.Text" xml:space="preserve">
+    <value>Sélection des tâches:</value>
+  </data>
+  <data name="ScheduleText" xml:space="preserve">
+    <value>calendrier</value>
+  </data>
+  <data name="UpdateBlock.Text" xml:space="preserve">
+    <value>Vérification de la dernière mise à jour</value>
+  </data>
+  <data name="CheckButton.Content" xml:space="preserve">
+    <value>Vérifiez la nouvelle version</value>
+  </data>
+  <data name="ReleaseNote.Content" xml:space="preserve">
+    <value>Note de sortie</value>
+  </data>
+  <data name="DownloadButton.Content" xml:space="preserve">
+    <value>Télécharger la mise à jour</value>
+  </data>
+  <data name="CodeButton.Content" xml:space="preserve">
+    <value>Référentiel GitHub</value>
+  </data>
+  <data name="LinkBlock.Text" xml:space="preserve">
+    <value>Liens connexes</value>
+  </data>
+  <data name="AboutUsSetting.Description" xml:space="preserve">
+    <value>Easytidy peut traiter et organiser automatiquement les fichiers et les dossiers. Il peut filtrer les fichiers par diverses conditions telles que le nom et le répertoire. Prend en charge l'exécution manuelle et automatique. Vous pouvez définir un délai, un intervalle de temps ou personnaliser le cycle d'exécution avec l'expression CRON pour une gestion de fichiers facile et efficace.</value>
+    <comment>EasyTidy can automatically process and organize files and folders. It can filter files by various conditions such as name and directory. Supports manual and automatic execution. You can set delay, time interval or customize the execution cycle with CRON expression for easy and efficient file management.</comment>
+  </data>
+  <data name="ThemeSettingsCard.Description" xml:space="preserve">
+    <value>Sélectionnez le thème qui convient à votre humeur et à votre préférence. Vous pouvez choisir parmi les thèmes sombres, légers ou système.</value>
+  </data>
+  <data name="ThemeSettingsCard.Header" xml:space="preserve">
+    <value>Thème de l'application</value>
+  </data>
+  <data name="Light.Content" xml:space="preserve">
+    <value>Lumière</value>
+  </data>
+  <data name="Dark.Content" xml:space="preserve">
+    <value>Sombre</value>
+  </data>
+  <data name="Default.Content" xml:space="preserve">
+    <value>Windows par défaut</value>
+    <comment>Default</comment>
+  </data>
+  <data name="ColorSettingsCard.Description" xml:space="preserve">
+    <value>Synchronisez la couleur de votre application avec la couleur de votre accent Windows. Vous pouvez ouvrir le paramètre Couleur de l'accent Windows en cliquant sur cette carte.</value>
+  </data>
+  <data name="ColorSettingsCard.Header" xml:space="preserve">
+    <value>Couleur accent</value>
+  </data>
+  <data name="FilterSettingsControl.ModuleDescription" xml:space="preserve">
+    <value>Ajouter facilement des fichiers qui doivent être filtrés pour réaliser une gestion précise de fichiers spécifiques. En ajoutant des règles de traitement de fichiers, vous pouvez personnaliser la façon dont les fichiers sont traités pour répondre aux besoins individuels. Dans le même temps, vous pouvez également utiliser la fonction de correspondance de motifs puissante des expressions régulières pour affiner davantage la logique de filtrage et de traitement des fichiers, ce qui rend la gestion des fichiers plus efficace et intelligente. Que vous souhaitiez exclure des types spécifiques de fichiers ou effectuer un traitement spécial sur des fichiers qui correspondent aux modèles spécifiques, vous pouvez facilement le faire ici.</value>
+  </data>
+  <data name="FilterSettingsControl.ModuleTitle" xml:space="preserve">
+    <value>Filtre</value>
+  </data>
+  <data name="ThemeSettingPage.Description" xml:space="preserve">
+    <value>Explorez les différentes façons de personnaliser l'apparence et le comportement de votre application. Vous pouvez modifier le matériel, le thème, l'accent et plus d'options pour répondre à votre style et à votre préférence.</value>
+  </data>
+  <data name="ThemeSettingPage.Header" xml:space="preserve">
+    <value>Comportement et animation</value>
+  </data>
+  <data name="AppUpdateSetting.Description" xml:space="preserve">
+    <value>Vérifier les mises à jour</value>
+  </data>
+  <data name="AppUpdateSetting.Header" xml:space="preserve">
+    <value>Vérifier les mises à jour</value>
+  </data>
+  <data name="AboutUsSettingPage.Description" xml:space="preserve">
+    <value>À propos d'Easytidy et de développeur</value>
+  </data>
+  <data name="AboutUsSettingPage.Header" xml:space="preserve">
+    <value>À propos</value>
+  </data>
+  <data name="GeneralPageControl.ModuleDescription" xml:space="preserve">
+    <value>EasyTidy est un outil de gestion professionnelle des fichiers open-source conçu pour fournir aux utilisateurs des solutions de classification de fichiers et d'organisation efficaces et pratiques. Grâce à des paramètres personnalisés, les utilisateurs peuvent réaliser diverses méthodes de tri telles que le tri automatique, le tri planifié, le tri en temps réel et le tri manuel pour répondre aux besoins de gestion des fichiers dans différents scénarios. Utilisé par l'auteur ♥ faire.</value>
+  </data>
+  <data name="GeneralPageControl.ModuleTitle" xml:space="preserve">
+    <value>Général</value>
+  </data>
+  <data name="AtLeastOneWord" xml:space="preserve">
+    <value>Au moins un mot</value>
+  </data>
+  <data name="YesStr" xml:space="preserve">
+    <value>OUI</value>
+  </data>
+  <data name="NoStr" xml:space="preserve">
+    <value>NON</value>
+  </data>
+  <data name="AtLeastOneWordCaseSensitive" xml:space="preserve">
+    <value>Au moins un mot (cas sensible)</value>
+  </data>
+  <data name="AllWordsInAnyOrder" xml:space="preserve">
+    <value>Tous les mots dans un ordre aléatoire</value>
+  </data>
+  <data name="AllWordsInAnyOrderCaseSensitive" xml:space="preserve">
+    <value>Tous les mots dans l'ordre arbitraire (sensible à la casse)</value>
+  </data>
+  <data name="RegularExpression" xml:space="preserve">
+    <value>expression régulière</value>
+  </data>
+  <data name="StringText" xml:space="preserve">
+    <value>Chaîne</value>
+  </data>
+  <data name="StringCaseSensitive" xml:space="preserve">
+    <value>Chaîne (casse sensible)</value>
+  </data>
+  <data name="LocalBackText" xml:space="preserve">
+    <value>Sauvegarde locale</value>
+  </data>
+  <data name="WebDavText" xml:space="preserve">
+    <value>Webdav</value>
+  </data>
+  <data name="SkipText" xml:space="preserve">
+    <value>Sauter</value>
+  </data>
+  <data name="OverrideText" xml:space="preserve">
+    <value>Outrepasser</value>
+  </data>
+  <data name="OverwriteIfNewerText" xml:space="preserve">
+    <value>Écraser si plus récent</value>
+  </data>
+  <data name="OverrideIfSizesDifferText" xml:space="preserve">
+    <value>Si les tailles sont différentes, couvrez-les</value>
+  </data>
+  <data name="ReNameAppendText" xml:space="preserve">
+    <value>Renommer (01)</value>
+  </data>
+  <data name="ReNameAddDateText" xml:space="preserve">
+    <value>Renommer - Date actuelle</value>
+  </data>
+  <data name="MoveText" xml:space="preserve">
+    <value>Se déplacer</value>
+  </data>
+  <data name="CopyText" xml:space="preserve">
+    <value>Copie</value>
+  </data>
+  <data name="DeleteText" xml:space="preserve">
+    <value>Supprimer</value>
+  </data>
+  <data name="RenameText" xml:space="preserve">
+    <value>Rebaptiser</value>
+  </data>
+  <data name="RecycleBinText" xml:space="preserve">
+    <value>Recyclage</value>
+  </data>
+  <data name="GreaterThanText" xml:space="preserve">
+    <value>&gt;</value>
+  </data>
+  <data name="EqualToText" xml:space="preserve">
+    <value>=</value>
+  </data>
+  <data name="LessThanText" xml:space="preserve">
+    <value>&lt;</value>
+  </data>
+  <data name="ByteText" xml:space="preserve">
+    <value>octet</value>
+  </data>
+  <data name="KilobyteText" xml:space="preserve">
+    <value>Kb</value>
+  </data>
+  <data name="MegabyteText" xml:space="preserve">
+    <value>Mb</value>
+  </data>
+  <data name="GigabyteText" xml:space="preserve">
+    <value>GB</value>
+  </data>
+  <data name="SecondText" xml:space="preserve">
+    <value>Deuxième</value>
+  </data>
+  <data name="MinuteText" xml:space="preserve">
+    <value>Minute</value>
+  </data>
+  <data name="HourText" xml:space="preserve">
+    <value>Heure</value>
+  </data>
+  <data name="DayText" xml:space="preserve">
+    <value>Jour</value>
+  </data>
+  <data name="MonthText" xml:space="preserve">
+    <value>Mois</value>
+  </data>
+  <data name="YearText" xml:space="preserve">
+    <value>Année</value>
+  </data>
+  <data name="AllText" xml:space="preserve">
+    <value>TOUS</value>
+  </data>
+  <data name="FileProcessing.Header" xml:space="preserve">
+    <value>Traitement des fichiers</value>
+  </data>
+  <data name="FileProcessingCard.Header" xml:space="preserve">
+    <value>Faire face aux conflits</value>
+  </data>
+  <data name="FileProcessingCard.Description" xml:space="preserve">
+    <value>Options de résolution des conflits automatiques</value>
+  </data>
+  <data name="FileProcessingComboBox.PlaceholderText" xml:space="preserve">
+    <value>Méthodes de traitement des conflits</value>
+  </data>
+  <data name="ToastWithAvatarDescriptionText" xml:space="preserve">
+    <value>L'application Easytidy est en cours d'exécution</value>
+  </data>
+  <data name="RemindText" xml:space="preserve">
+    <value>Plus de rappel</value>
+  </data>
+  <data name="AddFilterSettingsCard.Header" xml:space="preserve">
+    <value>Ajouter le filtre</value>
+  </data>
+  <data name="AddFilterSettingsCard.Description" xml:space="preserve">
+    <value>Ajouter des filtres supplémentaires personnalisés</value>
+  </data>
+  <data name="FilterButton.Content" xml:space="preserve">
+    <value>Ajouter le filtre</value>
+  </data>
+  <data name="FiltersListBlock.Text" xml:space="preserve">
+    <value>Liste de filtre</value>
+  </data>
+  <data name="AttributeBlock.Text" xml:space="preserve">
+    <value>Attribut</value>
+  </data>
+  <data name="FilterNameBlock.Text" xml:space="preserve">
+    <value>Nom de filtre</value>
+  </data>
+  <data name="FeaturesBlock.Text" xml:space="preserve">
+    <value>Caractéristiques</value>
+  </data>
+  <data name="OtherBlock.Text" xml:space="preserve">
+    <value>Autre</value>
+  </data>
+  <data name="OperationBlock.Text" xml:space="preserve">
+    <value>Opération</value>
+  </data>
+  <data name="EditButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Modifier</value>
+  </data>
+  <data name="NavGeneralText" xml:space="preserve">
+    <value>Général</value>
+  </data>
+  <data name="DesktopText" xml:space="preserve">
+    <value>Bureau</value>
+  </data>
+  <data name="ModifyText" xml:space="preserve">
+    <value>Modifier</value>
+  </data>
+  <data name="SaveText" xml:space="preserve">
+    <value>Sauvegarder</value>
+  </data>
+  <data name="CancelText" xml:space="preserve">
+    <value>Annuler</value>
+  </data>
+  <data name="AdditionalText" xml:space="preserve">
+    <value>Supplémentaire</value>
+  </data>
+  <data name="SaveSuccessfulText" xml:space="preserve">
+    <value>Sauver réussi</value>
+  </data>
+  <data name="SaveFailedText" xml:space="preserve">
+    <value>Échec de l'échec</value>
+  </data>
+  <data name="CustomConfigurationText" xml:space="preserve">
+    <value>Configuration personnalisée</value>
+  </data>
+  <data name="ModifySuccessfullyText" xml:space="preserve">
+    <value>Modifier avec succès</value>
+  </data>
+  <data name="ModificationFailedText" xml:space="preserve">
+    <value>Modification a échoué</value>
+  </data>
+  <data name="DeleteSuccessfulText" xml:space="preserve">
+    <value>Supprimer le succès</value>
+  </data>
+  <data name="DeleteFailedText" xml:space="preserve">
+    <value>Supprimer l'échec</value>
+  </data>
+  <data name="ExecutionFailedText" xml:space="preserve">
+    <value>L'exécution a échoué</value>
+  </data>
+  <data name="DisabledSuccessfullyText" xml:space="preserve">
+    <value>L'opération a réussi</value>
+  </data>
+  <data name="DisablingFailedText" xml:space="preserve">
+    <value>L'opération a échoué</value>
+  </data>
+  <data name="DialogFilterNameBlock.Text" xml:space="preserve">
+    <value>Nom du filtre:</value>
+  </data>
+  <data name="DividerAttribute.Content" xml:space="preserve">
+    <value>Attribut</value>
+  </data>
+  <data name="DialogFileSize.Content" xml:space="preserve">
+    <value>Taille du fichier:</value>
+  </data>
+  <data name="DialogCreationTime.Content" xml:space="preserve">
+    <value>Temps de création:</value>
+  </data>
+  <data name="DialogModifyTime.Content" xml:space="preserve">
+    <value>Modifier le temps:</value>
+  </data>
+  <data name="DialogVisitTime.Content" xml:space="preserve">
+    <value>Temps de visite:</value>
+  </data>
+  <data name="DialogDividerCharacteristics.Content" xml:space="preserve">
+    <value>Caractéristiques</value>
+  </data>
+  <data name="DialogArchive.Content" xml:space="preserve">
+    <value>Archive:</value>
+  </data>
+  <data name="DialogHide.Content" xml:space="preserve">
+    <value>Caché:</value>
+  </data>
+  <data name="DialogReadonly.Content" xml:space="preserve">
+    <value>Lire uniquement:</value>
+  </data>
+  <data name="DialogSystem.Content" xml:space="preserve">
+    <value>Système:</value>
+  </data>
+  <data name="DialogTemporary.Content" xml:space="preserve">
+    <value>Temporaire:</value>
+  </data>
+  <data name="DialogDividerOthers.Content" xml:space="preserve">
+    <value>Autres</value>
+  </data>
+  <data name="DialogIncludedFiles.Content" xml:space="preserve">
+    <value>Fichiers inclus:</value>
+  </data>
+  <data name="DialogFileContent.Content" xml:space="preserve">
+    <value>Contenu de fichier:</value>
+  </data>
+  <data name="DeleteButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Supprimer</value>
+  </data>
+  <data name="DialogTaskGroupName.Text" xml:space="preserve">
+    <value>Nom du groupe de travail:</value>
+  </data>
+  <data name="TaskGroupBox.PlaceholderText" xml:space="preserve">
+    <value>Veuillez saisir ou sélectionner</value>
+  </data>
+  <data name="DialogTaskName.Text" xml:space="preserve">
+    <value>Nom de la tâche:</value>
+  </data>
+  <data name="TaskNameBoxPlaceholder.PlaceholderText" xml:space="preserve">
+    <value>Veuillez saisir le nom de la tâche</value>
+  </data>
+  <data name="DialogProcessingRules.Text" xml:space="preserve">
+    <value>Règles de traitement:</value>
+  </data>
+  <data name="DialogTaskRulePlaceholder.PlaceholderText" xml:space="preserve">
+    <value>Veuillez saisir les règles de traitement / regex</value>
+  </data>
+  <data name="DialogRuleButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Exemple de règle</value>
+  </data>
+  <data name="DialogFilterButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Filtre</value>
+  </data>
+  <data name="DialogOperatingMethod.Text" xml:space="preserve">
+    <value>Mode de fonctionnement:</value>
+  </data>
+  <data name="DialogTaskOperateListPlaceholder.PlaceholderText" xml:space="preserve">
+    <value>Veuillez sélectionner le mode de fonctionnement</value>
+  </data>
+  <data name="DialogSourceFolder.Text" xml:space="preserve">
+    <value>Dossier source:</value>
+  </data>
+  <data name="DialogSourcePlaceholder.PlaceholderText" xml:space="preserve">
+    <value>Veuillez sélectionner un dossier, la valeur par défaut est le bureau</value>
+  </data>
+  <data name="DialogSourceButton.Content" xml:space="preserve">
+    <value>Choix</value>
+  </data>
+  <data name="DiaalogShortcut.Content" xml:space="preserve">
+    <value>Raccourci du bureau vers le dossier de destination</value>
+  </data>
+  <data name="DialogTargetFolder.Text" xml:space="preserve">
+    <value>Dossier cible:</value>
+  </data>
+  <data name="DialogTargetPlaceholder.PlaceholderText" xml:space="preserve">
+    <value>Choisissez ou entrez directement le dossier</value>
+  </data>
+  <data name="DialogTargetButton.Content" xml:space="preserve">
+    <value>Choix</value>
+  </data>
+  <data name="DialogTaskEnable.Text" xml:space="preserve">
+    <value>Activer:</value>
+  </data>
+  <data name="DialogTaskGroup.PlaceholderText" xml:space="preserve">
+    <value>Choix</value>
+  </data>
+  <data name="DialogAtStartup.Text" xml:space="preserve">
+    <value>Startup Easytidy:</value>
+  </data>
+  <data name="DialogAsPlanned.Text" xml:space="preserve">
+    <value>Selon le plan</value>
+  </data>
+  <data name="DialogMinute.Text" xml:space="preserve">
+    <value>Minute</value>
+  </data>
+  <data name="DialogHour.Text" xml:space="preserve">
+    <value>Heure</value>
+  </data>
+  <data name="DialogWeek.Text" xml:space="preserve">
+    <value>Quel jour de la semaine</value>
+  </data>
+  <data name="DialogDayOfWeekBlock.Text" xml:space="preserve">
+    <value>(0 = dim. à 6 = sam)</value>
+  </data>
+  <data name="DialogDayOfMonth.Text" xml:space="preserve">
+    <value>Jour du mois</value>
+  </data>
+  <data name="DialogMonth.Text" xml:space="preserve">
+    <value>Mois</value>
+  </data>
+  <data name="DialogExpression.Text" xml:space="preserve">
+    <value>Expression cron</value>
+  </data>
+  <data name="DialogNotice.Text" xml:space="preserve">
+    <value>Soutenir l'expression de Cron et l'expression de Cron a une priorité plus élevée que les valeurs des cinq premiers éléments</value>
+  </data>
+  <data name="DialogFirst.Text" xml:space="preserve">
+    <value>Il fonctionnera lorsque l'unité d'heure correspondra à la valeur ci-dessous.</value>
+  </data>
+  <data name="DialogExplanation1.Text" xml:space="preserve">
+    <value>(String vide) correspond à n'importe quelle valeur</value>
+  </data>
+  <data name="DialogExplanation2.Text" xml:space="preserve">
+    <value>Val1, Val2, ..., Valn Match Value List</value>
+  </data>
+  <data name="DialogExplanation3.Text" xml:space="preserve">
+    <value>Les valeurs de correspondance varient de N1 à N2</value>
+  </data>
+  <data name="DialogExplanation4.Text" xml:space="preserve">
+    <value>N1-N2 / N3 correspond à la plage N1 à N2 pour l'étape N3</value>
+  </data>
+  <data name="DialogExplanation5.Text" xml:space="preserve">
+    <value>Exemple : Minutes = 15 Heures = 03 Mois = 3-10/3 Jour de la semaine = 1,3,5 Les tâches s'exécuteront à 3h15 du matin les lundis, mercredis et vendredis en mars, juin et septembre.</value>
+  </data>
+  <data name="GeneralSubFloderCard.Description" xml:space="preserve">
+    <value>Dossiers de processus, mais pas de scanner à l'intérieur des dossiers</value>
+  </data>
+  <data name="GeneralSubFloderCard.Header" xml:space="preserve">
+    <value>Sous-dossier</value>
+  </data>
+  <data name="GeneraIgnoreCard.Description" xml:space="preserve">
+    <value>Ignorez les fichiers actuellement utilisés par d'autres applications</value>
+  </data>
+  <data name="GeneraIgnoreCard.Header" xml:space="preserve">
+    <value>Fichiers utilisés</value>
+  </data>
+  <data name="GeneralIrrelevantFilesCard.Description" xml:space="preserve">
+    <value>Ignorez des fichiers ou des dossiers non pertinents ainsi que des dossiers de fichiers système</value>
+  </data>
+  <data name="GeneralIrrelevantFilesCard.Header" xml:space="preserve">
+    <value>Fichier non pertinent</value>
+  </data>
+  <data name="GeneralEmptyFileCard.Description" xml:space="preserve">
+    <value>Ignorez les fichiers que la taille = 0 ou le dossier vide</value>
+  </data>
+  <data name="GeneralEmptyFileCard.Header" xml:space="preserve">
+    <value>Fichier</value>
+  </data>
+  <data name="GeneralHiddenFileCard.Description" xml:space="preserve">
+    <value>Ignorer les fichiers cachés</value>
+  </data>
+  <data name="GeneralHiddenFileCard.Header" xml:space="preserve">
+    <value>Fichiers cachés</value>
+  </data>
+  <data name="GeneralAppSettings.Header" xml:space="preserve">
+    <value>Paramètres de l'application</value>
+  </data>
+  <data name="GeneralAutoStartCard.Description" xml:space="preserve">
+    <value>Démarrer Easytidy au démarrage du système</value>
+  </data>
+  <data name="GeneralAutoStartCard.Header" xml:space="preserve">
+    <value>Démarrage automatique</value>
+  </data>
+  <data name="GeneralCheckCard.Description" xml:space="preserve">
+    <value>Vérifiez les mises à jour au démarrage</value>
+  </data>
+  <data name="GeneralCheckCard.Header" xml:space="preserve">
+    <value>Vérifier les mises à jour</value>
+  </data>
+  <data name="GeneralMinimizeCard.Description" xml:space="preserve">
+    <value>Minimiser la zone de notification en démarrage</value>
+  </data>
+  <data name="GeneralMinimizeCard.Header" xml:space="preserve">
+    <value>Minimiser</value>
+  </data>
+  <data name="GeneralBack.Header" xml:space="preserve">
+    <value>Sauvegarde / restauration</value>
+  </data>
+  <data name="GeneralBackCard.Description" xml:space="preserve">
+    <value>Si nécessaire, Easytidy redémarre automatiquement. Vérifiez la sauvegarde automatique pour sauvegarder chaque fois que le logiciel commence</value>
+  </data>
+  <data name="GeneralBackCard.Header" xml:space="preserve">
+    <value>Paramètres de sauvegarde et de restauration</value>
+  </data>
+  <data name="GeneralBackButton.Content" xml:space="preserve">
+    <value>Sauvegarde</value>
+  </data>
+  <data name="GeneralRestoreButton.Content" xml:space="preserve">
+    <value>Restaurer</value>
+  </data>
+  <data name="GeneralAutoBackup.Content" xml:space="preserve">
+    <value>Sauvegarde automatique</value>
+  </data>
+  <data name="GeneralLocationCard.Header" xml:space="preserve">
+    <value>Emplacement</value>
+  </data>
+  <data name="GeneralBackupMethod.PlaceholderText" xml:space="preserve">
+    <value>Sélectionnez la méthode de sauvegarde</value>
+  </data>
+  <data name="GeneralAddress.Text" xml:space="preserve">
+    <value>Adresse:</value>
+  </data>
+  <data name="GeneralUsername.Text" xml:space="preserve">
+    <value>Nom d'utilisateur:</value>
+  </data>
+  <data name="GeneralPassword.Text" xml:space="preserve">
+    <value>Mot de passe:</value>
+  </data>
+  <data name="GeneralBackupInformation.Header" xml:space="preserve">
+    <value>Informations de sauvegarde</value>
+  </data>
+  <data name="GeneralStatus.Text" xml:space="preserve">
+    <value>Version:</value>
+  </data>
+  <data name="GeneralRefresh.Text" xml:space="preserve">
+    <value>Rafraîchir</value>
+  </data>
+  <data name="GeneralFilename.Text" xml:space="preserve">
+    <value>Nom de fichier:</value>
+  </data>
+  <data name="GeneralSourceComputer.Text" xml:space="preserve">
+    <value>Ordinateur source:</value>
+  </data>
+  <data name="GeneralCreatedOn.Text" xml:space="preserve">
+    <value>Créé sur:</value>
+  </data>
+  <data name="GeneralUseDocumentation.Text" xml:space="preserve">
+    <value>Documentation</value>
+  </data>
+  <data name="GereralReport.Text" xml:space="preserve">
+    <value>Bug de rapport</value>
+  </data>
+  <data name="GeneralRequestFeature.Text" xml:space="preserve">
+    <value>Demande de demande</value>
+  </data>
+  <data name="TaskSettingsPage.ModuleDescription" xml:space="preserve">
+    <value>Les utilisateurs peuvent ajouter des tâches de traitement de fichiers et configurer professionnellement le mode d'exécution, y compris la sélection de l'exécution automatique, l'exécution unique et la création de raccourcis de bureau et l'ajout de tâches de sauvegarde.</value>
+  </data>
+  <data name="TaskSettingsPage.ModuleTitle" xml:space="preserve">
+    <value>Gestion des tâches</value>
+  </data>
+  <data name="TaskAddTask.Description" xml:space="preserve">
+    <value>Ajouter des fichiers à une tâche bien rangée</value>
+  </data>
+  <data name="TaskAddTask.Header" xml:space="preserve">
+    <value>Ajouter une tâche</value>
+  </data>
+  <data name="TaskAddTaskButton.Content" xml:space="preserve">
+    <value>Ajouter une tâche</value>
+  </data>
+  <data name="TaskDisplay.PlaceholderText" xml:space="preserve">
+    <value>Affichage par groupe</value>
+  </data>
+  <data name="TaskDisplay.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Filtre par groupe</value>
+  </data>
+  <data name="TaskListView.Text" xml:space="preserve">
+    <value>Liste de tâches</value>
+  </data>
+  <data name="TaskListTaskName.Text" xml:space="preserve">
+    <value>Nom de tâche</value>
+  </data>
+  <data name="TaskListSource.Text" xml:space="preserve">
+    <value>Dossier source</value>
+  </data>
+  <data name="TaskListTarget.Text" xml:space="preserve">
+    <value>Dossier cible</value>
+  </data>
+  <data name="TaskListShortcuts.Text" xml:space="preserve">
+    <value>Raccourcis de bureau</value>
+  </data>
+  <data name="TaskListEnable.Text" xml:space="preserve">
+    <value>Activer</value>
+  </data>
+  <data name="TaskListOperation.Text" xml:space="preserve">
+    <value>Opération</value>
+  </data>
+  <data name="RunButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Exécuter une fois</value>
+  </data>
+  <data name="IsEnableButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Activer</value>
+  </data>
+  <data name="ThemeMaterial.Header" xml:space="preserve">
+    <value>Matériel</value>
+  </data>
+  <data name="ThemeMaterial.Description" xml:space="preserve">
+    <value>Changez l'apparence du matériel de toile de fond derrière votre application. Vous pouvez choisir parmi les options de mica, d'acrylique ou transparentes.</value>
+  </data>
+  <data name="ThemeNone.Content" xml:space="preserve">
+    <value>Aucun</value>
+  </data>
+  <data name="ThemeMica.Content" xml:space="preserve">
+    <value>Mica</value>
+  </data>
+  <data name="ThemeMicaAlt.Content" xml:space="preserve">
+    <value>Mica alt</value>
+  </data>
+  <data name="ThemeDesktopAcrylic.Content" xml:space="preserve">
+    <value>Acrylique de bureau</value>
+  </data>
+  <data name="ThemeAcrylicBase.Content" xml:space="preserve">
+    <value>Base acrylique</value>
+  </data>
+  <data name="ThemeAcrylicThin.Content" xml:space="preserve">
+    <value>Acrylique mince</value>
+  </data>
+  <data name="ThemeTransparent.Content" xml:space="preserve">
+    <value>Transparent</value>
+  </data>
+  <data name="TrayIconStopMonitoring.Text" xml:space="preserve">
+    <value>Arrêter la surveillance</value>
+  </data>
+  <data name="TrayIconExecuteOnce.Text" xml:space="preserve">
+    <value>Exécuter une fois</value>
+  </data>
+  <data name="TrayIconPreferences.Text" xml:space="preserve">
+    <value>Préférences</value>
+  </data>
+  <data name="TrayIconScreen.Text" xml:space="preserve">
+    <value>Afficher / masquer</value>
+  </data>
+  <data name="TrayIconRestart.Text" xml:space="preserve">
+    <value>Redémarrage</value>
+  </data>
+  <data name="TrayIconExit.Text" xml:space="preserve">
+    <value>Sortie</value>
+  </data>
+  <data name="MainTitleBarTheme.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Thème basculer</value>
+  </data>
+  <data name="MainTitleBarNav.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Changer la navigation</value>
+  </data>
+  <data name="MainSuggestBox.PlaceholderText" xml:space="preserve">
+    <value>Recherche</value>
+  </data>
+  <data name="SettingsLanguageCard.Header" xml:space="preserve">
+    <value>Langue d'application</value>
+  </data>
+  <data name="SettingsLanguageCard.Description" xml:space="preserve">
+    <value>Easytidy utilisera le langage OS par défaut</value>
+  </data>
+  <data name="Default_language" xml:space="preserve">
+    <value>Windows par défaut</value>
+  </data>
+  <data name="Arabic_Saudi_Arabia_Language" xml:space="preserve">
+    <value>Arabe (Arabie saoudite)</value>
+  </data>
+  <data name="LanguageRestartInfo.Title" xml:space="preserve">
+    <value>Redémarrez Easytidy pour le changement de langue à effet</value>
+  </data>
+  <data name="LanguageRestartInfoButton.Content" xml:space="preserve">
+    <value>Redémarrage</value>
+  </data>
+  <data name="Czech_Language" xml:space="preserve">
+    <value>tchèque</value>
+  </data>
+  <data name="German_Language" xml:space="preserve">
+    <value>Allemand</value>
+  </data>
+  <data name="English_Language" xml:space="preserve">
+    <value>Anglais</value>
+  </data>
+  <data name="Spanish_Language" xml:space="preserve">
+    <value>Espagnol</value>
+  </data>
+  <data name="Persian_Farsi_Language" xml:space="preserve">
+    <value>Persan (farsi)</value>
+  </data>
+  <data name="French_Language" xml:space="preserve">
+    <value>Français</value>
+  </data>
+  <data name="Hebrew_Israel_Language" xml:space="preserve">
+    <value>Hébreu (Israël)</value>
+  </data>
+  <data name="Hungarian_Language" xml:space="preserve">
+    <value>hongrois</value>
+  </data>
+  <data name="Italian_Language" xml:space="preserve">
+    <value>italien</value>
+  </data>
+  <data name="Japanese_Language" xml:space="preserve">
+    <value>japonais</value>
+  </data>
+  <data name="Korean_Language" xml:space="preserve">
+    <value>coréen</value>
+  </data>
+  <data name="Dutch_Language" xml:space="preserve">
+    <value>Néerlandais</value>
+  </data>
+  <data name="Polish_Language" xml:space="preserve">
+    <value>polonais</value>
+  </data>
+  <data name="Portuguese_Brazil_Language" xml:space="preserve">
+    <value>Portugais (Brésil)</value>
+  </data>
+  <data name="Portuguese_Portugal_Language" xml:space="preserve">
+    <value>Portugais (Portugal)</value>
+  </data>
+  <data name="Russian_Language" xml:space="preserve">
+    <value>russe</value>
+  </data>
+  <data name="Swedish_Language" xml:space="preserve">
+    <value>suédois</value>
+  </data>
+  <data name="Turkish_Language" xml:space="preserve">
+    <value>turc</value>
+  </data>
+  <data name="Ukrainian_Language" xml:space="preserve">
+    <value>ukrainien</value>
+  </data>
+  <data name="Chinese_Simplified_Language" xml:space="preserve">
+    <value>Chinois (simplifié)</value>
+  </data>
+  <data name="Chinese_Traditional_Language" xml:space="preserve">
+    <value>Chinois (traditionnel)</value>
+  </data>
+  <data name="BackupSuccessTips" xml:space="preserve">
+    <value>Sauvegarde réussie</value>
+  </data>
+  <data name="BackupFailedTips" xml:space="preserve">
+    <value>La sauvegarde a échoué</value>
+  </data>
+  <data name="BackupSelectionTips" xml:space="preserve">
+    <value>Veuillez sélectionner le type de sauvegarde</value>
+  </data>
+  <data name="DialogRegularTaskRunningTime.Header" xml:space="preserve">
+    <value>Intervalle</value>
+  </data>
+  <data name="RegularTaskRunningBlock.Text" xml:space="preserve">
+    <value>Chaque:</value>
+  </data>
+  <data name="FileChangeDelayText.Header" xml:space="preserve">
+    <value>Délai(Deuxième)</value>
+  </data>
+  <data name="MinuteFormatInfo" xml:space="preserve">
+    <value>Erreur de format de minute</value>
+  </data>
+  <data name="HourFormatInfo" xml:space="preserve">
+    <value>Erreur de format d'heure</value>
+  </data>
+  <data name="WeeksFormatInfo" xml:space="preserve">
+    <value>Erreur de format des semaines</value>
+  </data>
+  <data name="DateFormatInfo" xml:space="preserve">
+    <value>Erreur de format de date</value>
+  </data>
+  <data name="MonthFormatInfo" xml:space="preserve">
+    <value>Erreur de format du mois</value>
+  </data>
+  <data name="CronExpressionInfo" xml:space="preserve">
+    <value>Format d'expression CRON invalide</value>
+  </data>
+  <data name="GroupInformationVerification" xml:space="preserve">
+    <value>Le nom du groupe ne peut pas être vide</value>
+  </data>
+  <data name="GroupInformationVerificationAdd" xml:space="preserve">
+    <value>Veuillez entrer ou sélectionner un nom de groupe</value>
+  </data>
+  <data name="FilterNameValidation" xml:space="preserve">
+    <value>Veuillez saisir un nom de filtre</value>
+  </data>
+  <data name="ValidateDelay" xml:space="preserve">
+    <value>Le délai ne doit être saisi qu'en secondes</value>
+  </data>
+  <data name="CreateShortcutFailedText" xml:space="preserve">
+    <value>Impossible de créer un raccourci sur le bureau</value>
+  </data>
+  <data name="BackupPathText" xml:space="preserve">
+    <value>Veuillez sélectionner un dossier de sauvegarde</value>
+  </data>
+  <data name="BackupStatusText" xml:space="preserve">
+    <value>Paramètres actuels correspondants</value>
+  </data>
+  <data name="RegardedExpressionText" xml:space="preserve">
+    <value>Considérer comme une expression régulière</value>
+  </data>
+  <data name="AllFoldersText" xml:space="preserve">
+    <value>Tous les dossiers</value>
+  </data>
+  <data name="AllFoldersWithoutOtherMatches" xml:space="preserve">
+    <value>Tous les dossiers sans autres correspondances</value>
+  </data>
+  <data name="AllFoldersStartingWithrobot" xml:space="preserve">
+    <value>Tous les dossiers qui commencent par "robot"</value>
+  </data>
+  <data name="AllFoldersContainingrobot" xml:space="preserve">
+    <value>Tous les dossiers contenant "robot"</value>
+  </data>
+  <data name="AllFoldersNamed_robot_LocatedUnder" xml:space="preserve">
+    <value>Tous les dossiers nommés "robot" situés dans "C:\"</value>
+  </data>
+  <data name="Use_Or_ToSeparate" xml:space="preserve">
+    <value>Utilisez ";" ou "|" pour séparer</value>
+  </data>
+  <data name="UseToExcludeFoldersStartingWithmy" xml:space="preserve">
+    <value>Utilisez "/" pour exclure les dossiers commençant par "my"</value>
+  </data>
+  <data name="AllFiles" xml:space="preserve">
+    <value>Tous les fichiers</value>
+  </data>
+  <data name="AllFilesWithNoOtherMatches" xml:space="preserve">
+    <value>Tous les fichiers sans autres correspondance</value>
+  </data>
+  <data name="AllFilesWithTheExtension" xml:space="preserve">
+    <value>Tous les fichiers avec l'extension "jpg"</value>
+  </data>
+  <data name="AllFilesBeginningWith" xml:space="preserve">
+    <value>Tous les fichiers commençant par "penguin"</value>
+  </data>
+  <data name="AllFilesContains" xml:space="preserve">
+    <value>Tous les fichiers contenant "penguin"</value>
+  </data>
+  <data name="All_FilesUnder" xml:space="preserve">
+    <value>Tous les fichiers "jpg" dans le "Dossier"</value>
+  </data>
+  <data name="UseDelimiter" xml:space="preserve">
+    <value>Utiliser ";" ou "|" se séparer</value>
+  </data>
+  <data name="UseDelimitersToExclude" xml:space="preserve">
+    <value>Utilisez "/" pour exclure les fichiers commençant par "sea"</value>
+  </data>
+  <data name="CompressedFile" xml:space="preserve">
+    <value>Fichier compressé</value>
+  </data>
+  <data name="Document" xml:space="preserve">
+    <value>Document</value>
+  </data>
+  <data name="Photograph" xml:space="preserve">
+    <value>Image</value>
+  </data>
+  <data name="Music" xml:space="preserve">
+    <value>Musique</value>
+  </data>
+  <data name="PresentationAndWorksheet" xml:space="preserve">
+    <value>Présentations et fiches de travail</value>
+  </data>
+  <data name="Video" xml:space="preserve">
+    <value>Vidéo</value>
+  </data>
+  <data name="HandlingFolderRules" xml:space="preserve">
+    <value>Règles pour la gestion des dossiers</value>
+  </data>
+  <data name="HandlingRulesForFiles" xml:space="preserve">
+    <value>Règles de traitement des dossiers</value>
+  </data>
+  <data name="HandlingRulesForCustom" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="ExecutionDate.Title" xml:space="preserve">
+    <value>Date d'exécution</value>
+  </data>
+  <data name="VerificationSuccessful" xml:space="preserve">
+    <value>La validation a été réussie, temps d'exécution des {0} dernières fois</value>
+  </data>
+  <data name="VerificationFailed" xml:space="preserve">
+    <value>Échec de vérification, conflit entre le jour de la semaine et le jour du mois</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Fermé</value>
+  </data>
+  <data name="Test" xml:space="preserve">
+    <value>Test</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Statut</value>
+  </data>
+  <data name="CurrentVersion" xml:space="preserve">
+    <value>Version actuelle v{0}</value>
+  </data>
+  <data name="CheckingForNewVersion" xml:space="preserve">
+    <value>Vérification de la nouvelle version</value>
+  </data>
+  <data name="FoundANewVersion" xml:space="preserve">
+    <value>Nous avons trouvé une nouvelle version {0} créée à {1} et publiée à {2}</value>
+  </data>
+  <data name="LatestVersion" xml:space="preserve">
+    <value>Vous utilisez la dernière version</value>
+  </data>
+  <data name="ErrorConnection" xml:space="preserve">
+    <value>Erreur de connexion</value>
+  </data>
+  <data name="ReleaseNotes" xml:space="preserve">
+    <value>Notes de mise à jour</value>
+  </data>
+  <data name="NewNameAndPath" xml:space="preserve">
+    <value>Nouveau nom et chemin:</value>
+  </data>
+  <data name="DateTimeCheatSheet.Text" xml:space="preserve">
+    <value>Remplacer par la date et l'heure de création du fichier</value>
+  </data>
+  <data name="DateTimeCheatSheet_FullYear" xml:space="preserve">
+    <value>Les années peuvent être représentées par quatre ou cinq chiffres, selon le système de calendrier utilisé.</value>
+  </data>
+  <data name="DateTimeCheatSheet_YearLastTwoDigits" xml:space="preserve">
+    <value>Années représentées par only par les deux derniers chiffres. Pour les années à un seul chiffre, un zéro à été ajouté à gauche.</value>
+  </data>
+  <data name="DateTimeCheatSheet_YearLastDigit" xml:space="preserve">
+    <value>Seul le dernier chiffre de l’année est représenté.</value>
+  </data>
+  <data name="DateTimeCheatSheet_MonthName" xml:space="preserve">
+    <value>Noms des mois.</value>
+  </data>
+  <data name="DateTimeCheatSheet_MonthNameAbbr" xml:space="preserve">
+    <value>Abréviations des mois.</value>
+  </data>
+  <data name="DateTimeCheatSheet_MonthDigitLZero" xml:space="preserve">
+    <value>Un mois en tant que nombre, le zéro de tête signifie mois unitaire.</value>
+  </data>
+  <data name="DateTimeCheatSheet_DayName" xml:space="preserve">
+    <value>Noms des jours de la semaine.</value>
+  </data>
+  <data name="DateTimeCheatSheet_MonthDigit" xml:space="preserve">
+    <value>Mois sans zéro non significatif comme chiffre pour la position des unités.</value>
+  </data>
+  <data name="DateTimeCheatSheet_DayNameAbbr" xml:space="preserve">
+    <value>Abréviations des noms des jours de la semaine.</value>
+  </data>
+  <data name="DateTimeCheatSheet_DayDigitLZero" xml:space="preserve">
+    <value>Un jour du mois, écrit avec un chiffre, les zéros non significatifs indiquant les jours n'ayant qu'une décimale significative.</value>
+  </data>
+  <data name="DateTimeCheatSheet_DayDigit" xml:space="preserve">
+    <value>Un jour du mois représenté par un nombre, sans zéro devant pour les jours à un chiffre.</value>
+  </data>
+  <data name="DateTimeCheatSheet_HoursLZero" xml:space="preserve">
+    <value>Nombre d'heures avec des zéros non significatifs dans les heures à 1 chiffre.</value>
+  </data>
+  <data name="DateTimeCheatSheet_Hours" xml:space="preserve">
+    <value>Un numéro d'heure sans zéro initial pour une heure à un chiffre.</value>
+  </data>
+  <data name="DateTimeCheatSheet_MinutesLZero" xml:space="preserve">
+    <value>Nombre de minutes avec un zéro non significatif (les minutes sous forme d'un nombre à un chiffre).</value>
+  </data>
+  <data name="DateTimeCheatSheet_Minutes" xml:space="preserve">
+    <value>Le nombre de minutes sans zéros à gauche.</value>
+  </data>
+  <data name="DateTimeCheatSheet_SecondsLZero" xml:space="preserve">
+    <value>Secondes précédées d'un seul chiffre précédé d'un zéro.</value>
+  </data>
+  <data name="DateTimeCheatSheet_Seconds" xml:space="preserve">
+    <value>Nombre de secondes sans les zéros non significatifs des chiffres d'un seul chiffre.</value>
+  </data>
+  <data name="DateTimeCheatSheet_MilliSeconds3D" xml:space="preserve">
+    <value>Millisecond, représenté par le remplissage à trois chiffres.</value>
+  </data>
+  <data name="DateTimeCheatSheet_MilliSeconds2D" xml:space="preserve">
+    <value>Compte de millisecondes représenté uniquement par les deux premiers chiffres.</value>
+  </data>
+  <data name="DateTimeCheatSheet_MilliSeconds1D" xml:space="preserve">
+    <value>Millisecondes depuis l'époque exprimées sous la forme du nombre de millisecondes entières.</value>
+  </data>
+  <data name="CounterCheatSheet_Simple" xml:space="preserve">
+    <value>Un compteur simple qui peut être utilisé à n'importe quelle position dans la chaîne de remplacement.</value>
+  </data>
+  <data name="CounterCheatSheet_Start" xml:space="preserve">
+    <value>Compteur avec une valeur initiale personnalisée.</value>
+  </data>
+  <data name="CounterCheatSheet_Increment" xml:space="preserve">
+    <value>Un compteur avec une valeur d'incrémentation personnalisable.</value>
+  </data>
+  <data name="CounterCheatSheet_Padding" xml:space="preserve">
+    <value>Un compteur avec un nombre personnalisable de zéros non significatifs pour le remplissage.</value>
+  </data>
+  <data name="CounterCheatSheet_Complex" xml:space="preserve">
+    <value>Afficher un compteur de plusieurs attributs personnalisés.</value>
+  </data>
+  <data name="RandomizerCheatSheet_Alnum" xml:space="preserve">
+    <value>Chaîne aléatoire de longueur personnalisée, contenant des majuscules, des minuscules et des chiffres de 0 à 9.</value>
+  </data>
+  <data name="RandomizerCheatSheet_Alpha" xml:space="preserve">
+    <value>Chaîne aléatoire comportant des lettres en majuscules et minuscules, longueur personnalisée.</value>
+  </data>
+  <data name="RandomizerCheatSheet_Digit" xml:space="preserve">
+    <value>Une chaîne aléatoire contenant les chiffres de 0 à 9 et de longueur personnalisée.</value>
+  </data>
+  <data name="RandomizerCheatSheet_Uuid" xml:space="preserve">
+    <value>Un UUID aléatoire tel que défini par la spécification v4.</value>
+  </data>
+  <data name="CounterCheatSheet_Title.Text" xml:space="preserve">
+    <value>Remplacer par une grammaire de contre avancée</value>
+  </data>
+  <data name="RandomizerCheatSheet_Title.Text" xml:space="preserve">
+    <value>Remplacer par une valeur aléatoire</value>
+  </data>
+  <data name="PriorityRules.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Si plusieurs règles correspondent, quelle règle a priorité</value>
+  </data>
+  <data name="GeneralMultipleInstanceCard.Header" xml:space="preserve">
+    <value>Configuration de plusieurs instances</value>
+  </data>
+  <data name="GeneralMultipleInstanceCard.Description" xml:space="preserve">
+    <value>Plusieurs instances peuvent-elles être provisionnées</value>
+  </data>
+</root>

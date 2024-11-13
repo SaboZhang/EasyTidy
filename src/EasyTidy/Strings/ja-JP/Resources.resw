@@ -1,0 +1,1124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="NavAutomaticText" xml:space="preserve">
+    <value>自動化</value>
+  </data>
+  <data name="NavTaskOrchestrationText" xml:space="preserve">
+    <value>タスクオーケストレーション</value>
+  </data>
+  <data name="NavFiltersText" xml:space="preserve">
+    <value>フィルタ</value>
+  </data>
+  <data name="Backup" xml:space="preserve">
+    <value>バックアップ</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>設定</value>
+  </data>
+  <data name="SettingsPageControl.ModuleTitle" xml:space="preserve">
+    <value>自動化</value>
+  </data>
+  <data name="SettingsPageControl.ModuleDescription" xml:space="preserve">
+    <value>自動化モジュールは、ファイルとフォルダの変更を監視します。カスタム設定と関連するファイル処理タスクに基づいて、モジュールは自動的に適切な操作を実行できます。</value>
+  </data>
+  <data name="StartupExecutionCard.Header" xml:space="preserve">
+    <value>起動時</value>
+  </data>
+  <data name="StartupExecutionCard.Description" xml:space="preserve">
+    <value>EasyTidy起動時に1回実行</value>
+  </data>
+  <data name="RegularTaskRunningCard.Header" xml:space="preserve">
+    <value>定期的に実行</value>
+  </data>
+  <data name="ScheduledExecutionCard.Header" xml:space="preserve">
+    <value>スケジュールによると</value>
+  </data>
+  <data name="FileChangeDelay.Text" xml:space="preserve">
+    <value>遅延：</value>
+  </data>
+  <data name="FileChangeSecond.Text" xml:space="preserve">
+    <value>2番目</value>
+  </data>
+  <data name="AutoAnalysisGlobal.Header" xml:space="preserve">
+    <value>自動分析（グローバル）</value>
+  </data>
+  <data name="FileChange.Description" xml:space="preserve">
+    <value>自動ファイル処理オプション</value>
+  </data>
+  <data name="FileChangeCard.Header" xml:space="preserve">
+    <value>ファイル変更時</value>
+  </data>
+  <data name="RegularTaskRunningCard.Description" xml:space="preserve">
+    <value>設定時間に従って定期的に実行</value>
+  </data>
+  <data name="ScheduledExecutionCard.Description" xml:space="preserve">
+    <value>既定の計画に基づいて定期的に実行</value>
+  </data>
+  <data name="ConfigurationButton.Content" xml:space="preserve">
+    <value>構成</value>
+  </data>
+  <data name="TaskAssociation.Header" xml:space="preserve">
+    <value>タスクの関連付け</value>
+  </data>
+  <data name="ConfigurationTask.Header" xml:space="preserve">
+    <value>タスクの構成</value>
+  </data>
+  <data name="ConfigurationTask.Description" xml:space="preserve">
+    <value>構成されたタスクをグローバル計画に関連付けるか、個別に構成する</value>
+  </data>
+  <data name="TaskSelection.Header" xml:space="preserve">
+    <value>タスク選択</value>
+  </data>
+  <data name="TaskButton.Content" xml:space="preserve">
+    <value>作業チーム</value>
+  </data>
+  <data name="TaskGroup.Title" xml:space="preserve">
+    <value>タスクグループの選択</value>
+  </data>
+  <data name="SingleTask.Content" xml:space="preserve">
+    <value>単一タスク</value>
+  </data>
+  <data name="SelectTask.Title" xml:space="preserve">
+    <value>タスクの選択</value>
+  </data>
+  <data name="Separate.Content" xml:space="preserve">
+    <value>個別に構成するかどうか</value>
+  </data>
+  <data name="Customize.Content" xml:space="preserve">
+    <value>カスタマイズ</value>
+  </data>
+  <data name="ResetButton.Content" xml:space="preserve">
+    <value>構成を元に戻す</value>
+  </data>
+  <data name="SaveButton.Content" xml:space="preserve">
+    <value>構成の保存</value>
+  </data>
+  <data name="TaskList.Title" xml:space="preserve">
+    <value>タスク・リスト</value>
+  </data>
+  <data name="FileChangeBlock.Text" xml:space="preserve">
+    <value>ファイル変更時</value>
+  </data>
+  <data name="RegularTaskRunningText.Text" xml:space="preserve">
+    <value>定期的に実行</value>
+  </data>
+  <data name="SelectTaskBlock.Text" xml:space="preserve">
+    <value>タスクの選択：</value>
+  </data>
+  <data name="ScheduleText" xml:space="preserve">
+    <value>スケジュール</value>
+  </data>
+  <data name="UpdateBlock.Text" xml:space="preserve">
+    <value>最終更新チェック</value>
+  </data>
+  <data name="CheckButton.Content" xml:space="preserve">
+    <value>新しいバージョンの確認</value>
+  </data>
+  <data name="ReleaseNote.Content" xml:space="preserve">
+    <value>リリースノート</value>
+  </data>
+  <data name="DownloadButton.Content" xml:space="preserve">
+    <value>アップデートのダウンロード</value>
+  </data>
+  <data name="CodeButton.Content" xml:space="preserve">
+    <value>GitHubリポジトリ</value>
+  </data>
+  <data name="LinkBlock.Text" xml:space="preserve">
+    <value>関連リンク</value>
+  </data>
+  <data name="AboutUsSetting.Description" xml:space="preserve">
+    <value>EasyTidyはファイルとフォルダを自動的に処理して整理することができます。名前やディレクトリなどのさまざまな条件に基づいてファイルをフィルタリングできます。手動および自動実行をサポートします。CRON式を使用して遅延、時間間隔、またはカスタム実行サイクルを設定することで、簡単で効率的なファイル管理を実現できます。</value>
+    <comment>EasyTidy can automatically process and organize files and folders. It can filter files by various conditions such as name and directory. Supports manual and automatic execution. You can set delay, time interval or customize the execution cycle with CRON expression for easy and efficient file management.</comment>
+  </data>
+  <data name="ThemeSettingsCard.Description" xml:space="preserve">
+    <value>あなたの気持ちや好みに合ったテーマを選びましょう。濃い色、薄い色、またはシステムテーマから選択できます。</value>
+  </data>
+  <data name="ThemeSettingsCard.Header" xml:space="preserve">
+    <value>トピックの適用</value>
+  </data>
+  <data name="Light.Content" xml:space="preserve">
+    <value>ライトらいと</value>
+  </data>
+  <data name="Dark.Content" xml:space="preserve">
+    <value>暗い</value>
+  </data>
+  <data name="Default.Content" xml:space="preserve">
+    <value>Windowsのデフォルト</value>
+    <comment>Default</comment>
+  </data>
+  <data name="ColorSettingsCard.Description" xml:space="preserve">
+    <value>アプリケーションの色をWindowsの強変色と同期させます。このカードをクリックしてWindowsの強変色設定を開くことができます。</value>
+  </data>
+  <data name="ColorSettingsCard.Header" xml:space="preserve">
+    <value>強調色</value>
+  </data>
+  <data name="FilterSettingsControl.ModuleDescription" xml:space="preserve">
+    <value>特定のファイルを正確に管理するためにフィルタリングする必要があるファイルを簡単に追加できます。ファイル処理ルールを追加することで、個人のニーズに合わせてファイルの処理方法をカスタマイズできます。また、正規表現の強力なパターンマッチング機能を使用して、ファイルのフィルタリングと処理ロジックをさらに洗練することができ、ファイル管理をより効率的かつインテリジェントにすることができます。特定のタイプのファイルを除外する場合でも、特定のパターンに一致するファイルに対して特別な処理を実行する場合でも、ここで簡単に行うことができます。</value>
+  </data>
+  <data name="FilterSettingsControl.ModuleTitle" xml:space="preserve">
+    <value>フィルタ</value>
+  </data>
+  <data name="ThemeSettingPage.Description" xml:space="preserve">
+    <value>アプリケーションの外観と動作をカスタマイズするための異なる方法を模索します。スタイルや好みに合わせて、マテリアル、テーマ、アクセント、その他のオプションを変更できます。</value>
+  </data>
+  <data name="ThemeSettingPage.Header" xml:space="preserve">
+    <value>動作とアニメーション</value>
+  </data>
+  <data name="AppUpdateSetting.Description" xml:space="preserve">
+    <value>更新のチェック</value>
+  </data>
+  <data name="AppUpdateSetting.Header" xml:space="preserve">
+    <value>更新のチェック</value>
+  </data>
+  <data name="AboutUsSettingPage.Description" xml:space="preserve">
+    <value>EasyTidyと開発者について</value>
+  </data>
+  <data name="AboutUsSettingPage.Header" xml:space="preserve">
+    <value>について</value>
+  </data>
+  <data name="GeneralPageControl.ModuleDescription" xml:space="preserve">
+    <value>EasyTidyはオープンソースの専門的なファイル管理ツールで、ユーザーに効率的で便利なファイル分類と組織ソリューションを提供することを目的としています。カスタム設定により、ユーザーは、さまざまなシーンでのファイル管理要件を満たすために、自動ソート、タイミングソート、リアルタイムソート、手動ソートなどのさまざまなソート方法を実現することができます。作者使用♥  製造。</value>
+  </data>
+  <data name="GeneralPageControl.ModuleTitle" xml:space="preserve">
+    <value>概要</value>
+  </data>
+  <data name="AtLeastOneWord" xml:space="preserve">
+    <value>少なくとも1文字</value>
+  </data>
+  <data name="YesStr" xml:space="preserve">
+    <value>はい</value>
+  </data>
+  <data name="NoStr" xml:space="preserve">
+    <value>いいえ</value>
+  </data>
+  <data name="AtLeastOneWordCaseSensitive" xml:space="preserve">
+    <value>少なくとも1つの単語（大文字と小文字を区別）</value>
+  </data>
+  <data name="AllWordsInAnyOrder" xml:space="preserve">
+    <value>すべての単語をランダムな順序で並べ替える</value>
+  </data>
+  <data name="AllWordsInAnyOrderCaseSensitive" xml:space="preserve">
+    <value>すべての単語を任意の順序で並べ替える（大文字と小文字を区別）</value>
+  </data>
+  <data name="RegularExpression" xml:space="preserve">
+    <value>正規表現</value>
+  </data>
+  <data name="StringText" xml:space="preserve">
+    <value>文字列</value>
+  </data>
+  <data name="StringCaseSensitive" xml:space="preserve">
+    <value>文字列（大文字と小文字を区別）</value>
+  </data>
+  <data name="LocalBackText" xml:space="preserve">
+    <value>ローカルバックアップ</value>
+  </data>
+  <data name="WebDavText" xml:space="preserve">
+    <value>WebDav</value>
+  </data>
+  <data name="SkipText" xml:space="preserve">
+    <value>スキップ</value>
+  </data>
+  <data name="OverrideText" xml:space="preserve">
+    <value>拒否する</value>
+  </data>
+  <data name="OverwriteIfNewerText" xml:space="preserve">
+    <value>更新する場合は、上書き</value>
+  </data>
+  <data name="OverrideIfSizesDifferText" xml:space="preserve">
+    <value>サイズが異なる場合は、カバーしてください</value>
+  </data>
+  <data name="ReNameAppendText" xml:space="preserve">
+    <value>名前変更（01）</value>
+  </data>
+  <data name="ReNameAddDateText" xml:space="preserve">
+    <value>名前変更-現在の日付</value>
+  </data>
+  <data name="MoveText" xml:space="preserve">
+    <value>移動</value>
+  </data>
+  <data name="CopyText" xml:space="preserve">
+    <value>レプリケーション</value>
+  </data>
+  <data name="DeleteText" xml:space="preserve">
+    <value>削除</value>
+  </data>
+  <data name="RenameText" xml:space="preserve">
+    <value>名前を変更</value>
+  </data>
+  <data name="RecycleBinText" xml:space="preserve">
+    <value>かいしゅうばこ</value>
+  </data>
+  <data name="GreaterThanText" xml:space="preserve">
+    <value>&gt;</value>
+  </data>
+  <data name="EqualToText" xml:space="preserve">
+    <value>=</value>
+  </data>
+  <data name="LessThanText" xml:space="preserve">
+    <value>&lt;</value>
+  </data>
+  <data name="ByteText" xml:space="preserve">
+    <value>バイト数</value>
+  </data>
+  <data name="KilobyteText" xml:space="preserve">
+    <value>KB</value>
+  </data>
+  <data name="MegabyteText" xml:space="preserve">
+    <value>MB</value>
+  </data>
+  <data name="GigabyteText" xml:space="preserve">
+    <value>GB</value>
+  </data>
+  <data name="SecondText" xml:space="preserve">
+    <value>2番目</value>
+  </data>
+  <data name="MinuteText" xml:space="preserve">
+    <value>分</value>
+  </data>
+  <data name="HourText" xml:space="preserve">
+    <value>時間</value>
+  </data>
+  <data name="DayText" xml:space="preserve">
+    <value>日</value>
+  </data>
+  <data name="MonthText" xml:space="preserve">
+    <value>月</value>
+  </data>
+  <data name="YearText" xml:space="preserve">
+    <value>年</value>
+  </data>
+  <data name="AllText" xml:space="preserve">
+    <value>すべて</value>
+  </data>
+  <data name="FileProcessing.Header" xml:space="preserve">
+    <value>ファイル処理</value>
+  </data>
+  <data name="FileProcessingCard.Header" xml:space="preserve">
+    <value>競合の処理</value>
+  </data>
+  <data name="FileProcessingCard.Description" xml:space="preserve">
+    <value>競合を自動的に解決するオプション</value>
+  </data>
+  <data name="FileProcessingComboBox.PlaceholderText" xml:space="preserve">
+    <value>競合処理方法</value>
+  </data>
+  <data name="ToastWithAvatarDescriptionText" xml:space="preserve">
+    <value>Easytidyアプリケーションが実行中です</value>
+  </data>
+  <data name="RemindText" xml:space="preserve">
+    <value>その他の注意事項</value>
+  </data>
+  <data name="AddFilterSettingsCard.Header" xml:space="preserve">
+    <value>フィルタの追加</value>
+  </data>
+  <data name="AddFilterSettingsCard.Description" xml:space="preserve">
+    <value>カスタム追加フィルタの追加</value>
+  </data>
+  <data name="FilterButton.Content" xml:space="preserve">
+    <value>フィルタの追加</value>
+  </data>
+  <data name="FiltersListBlock.Text" xml:space="preserve">
+    <value>フィルタリスト</value>
+  </data>
+  <data name="AttributeBlock.Text" xml:space="preserve">
+    <value>プロパティ</value>
+  </data>
+  <data name="FilterNameBlock.Text" xml:space="preserve">
+    <value>フィルタ名</value>
+  </data>
+  <data name="FeaturesBlock.Text" xml:space="preserve">
+    <value>特徴</value>
+  </data>
+  <data name="OtherBlock.Text" xml:space="preserve">
+    <value>その他</value>
+  </data>
+  <data name="OperationBlock.Text" xml:space="preserve">
+    <value>操作</value>
+  </data>
+  <data name="EditButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>編集</value>
+  </data>
+  <data name="NavGeneralText" xml:space="preserve">
+    <value>概要</value>
+  </data>
+  <data name="DesktopText" xml:space="preserve">
+    <value>デスクトップ</value>
+  </data>
+  <data name="ModifyText" xml:space="preserve">
+    <value>変更</value>
+  </data>
+  <data name="SaveText" xml:space="preserve">
+    <value>保存する</value>
+  </data>
+  <data name="CancelText" xml:space="preserve">
+    <value>キャンセル</value>
+  </data>
+  <data name="AdditionalText" xml:space="preserve">
+    <value>その他</value>
+  </data>
+  <data name="SaveSuccessfulText" xml:space="preserve">
+    <value>保存に成功しました</value>
+  </data>
+  <data name="SaveFailedText" xml:space="preserve">
+    <value>保存に失敗しました</value>
+  </data>
+  <data name="CustomConfigurationText" xml:space="preserve">
+    <value>カスタム構成</value>
+  </data>
+  <data name="ModifySuccessfullyText" xml:space="preserve">
+    <value>変更に成功しました</value>
+  </data>
+  <data name="ModificationFailedText" xml:space="preserve">
+    <value>変更に失敗しました</value>
+  </data>
+  <data name="DeleteSuccessfulText" xml:space="preserve">
+    <value>削除に成功しました</value>
+  </data>
+  <data name="DeleteFailedText" xml:space="preserve">
+    <value>削除に失敗しました</value>
+  </data>
+  <data name="ExecutionFailedText" xml:space="preserve">
+    <value>実行に失敗しました</value>
+  </data>
+  <data name="DisabledSuccessfullyText" xml:space="preserve">
+    <value>処理が完了しました</value>
+  </data>
+  <data name="DisablingFailedText" xml:space="preserve">
+    <value>操作が失敗しました</value>
+  </data>
+  <data name="DialogFilterNameBlock.Text" xml:space="preserve">
+    <value>フィルタ名：</value>
+  </data>
+  <data name="DividerAttribute.Content" xml:space="preserve">
+    <value>属性</value>
+  </data>
+  <data name="DialogFileSize.Content" xml:space="preserve">
+    <value>ファイルサイズ：</value>
+  </data>
+  <data name="DialogCreationTime.Content" xml:space="preserve">
+    <value>作成時間：</value>
+  </data>
+  <data name="DialogModifyTime.Content" xml:space="preserve">
+    <value>変更日時：</value>
+  </data>
+  <data name="DialogVisitTime.Content" xml:space="preserve">
+    <value>見学時間：</value>
+  </data>
+  <data name="DialogDividerCharacteristics.Content" xml:space="preserve">
+    <value>特徴</value>
+  </data>
+  <data name="DialogArchive.Content" xml:space="preserve">
+    <value>アーカイブ：</value>
+  </data>
+  <data name="DialogHide.Content" xml:space="preserve">
+    <value>非表示:</value>
+  </data>
+  <data name="DialogReadonly.Content" xml:space="preserve">
+    <value>読み取り専用：</value>
+  </data>
+  <data name="DialogSystem.Content" xml:space="preserve">
+    <value>システム：</value>
+  </data>
+  <data name="DialogTemporary.Content" xml:space="preserve">
+    <value>一時的：</value>
+  </data>
+  <data name="DialogDividerOthers.Content" xml:space="preserve">
+    <value>その他</value>
+  </data>
+  <data name="DialogIncludedFiles.Content" xml:space="preserve">
+    <value>含まれるファイル：</value>
+  </data>
+  <data name="DialogFileContent.Content" xml:space="preserve">
+    <value>ファイルの内容：</value>
+  </data>
+  <data name="DeleteButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>削除</value>
+  </data>
+  <data name="DialogTaskGroupName.Text" xml:space="preserve">
+    <value>タスクグループ名：</value>
+  </data>
+  <data name="TaskGroupBox.PlaceholderText" xml:space="preserve">
+    <value>入力または選択してください</value>
+  </data>
+  <data name="DialogTaskName.Text" xml:space="preserve">
+    <value>タスク名：</value>
+  </data>
+  <data name="TaskNameBoxPlaceholder.PlaceholderText" xml:space="preserve">
+    <value>タスク名を入力してください</value>
+  </data>
+  <data name="DialogProcessingRules.Text" xml:space="preserve">
+    <value>処理ルール：</value>
+  </data>
+  <data name="DialogTaskRulePlaceholder.PlaceholderText" xml:space="preserve">
+    <value>処理ルール/正規表現を入力してください</value>
+  </data>
+  <data name="DialogRuleButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>ルールの例</value>
+  </data>
+  <data name="DialogFilterButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>フィルタ</value>
+  </data>
+  <data name="DialogOperatingMethod.Text" xml:space="preserve">
+    <value>動作モード：</value>
+  </data>
+  <data name="DialogTaskOperateListPlaceholder.PlaceholderText" xml:space="preserve">
+    <value>動作モードを選択してください</value>
+  </data>
+  <data name="DialogSourceFolder.Text" xml:space="preserve">
+    <value>ソースフォルダ:</value>
+  </data>
+  <data name="DialogSourcePlaceholder.PlaceholderText" xml:space="preserve">
+    <value>フォルダを選択してください。デフォルトはデスクトップです</value>
+  </data>
+  <data name="DialogSourceButton.Content" xml:space="preserve">
+    <value>せんたく</value>
+  </data>
+  <data name="DiaalogShortcut.Content" xml:space="preserve">
+    <value>デスクトップのショートカットを目的のフォルダーに作成する</value>
+  </data>
+  <data name="DialogTargetFolder.Text" xml:space="preserve">
+    <value>宛先フォルダ：</value>
+  </data>
+  <data name="DialogTargetPlaceholder.PlaceholderText" xml:space="preserve">
+    <value>フォルダを直接選択または入力する</value>
+  </data>
+  <data name="DialogTargetButton.Content" xml:space="preserve">
+    <value>選択</value>
+  </data>
+  <data name="DialogTaskEnable.Text" xml:space="preserve">
+    <value>有効化：</value>
+  </data>
+  <data name="DialogTaskGroup.PlaceholderText" xml:space="preserve">
+    <value>チョイス</value>
+  </data>
+  <data name="DialogAtStartup.Text" xml:space="preserve">
+    <value>EasyTidy起動：</value>
+  </data>
+  <data name="DialogAsPlanned.Text" xml:space="preserve">
+    <value>計画に基づいて</value>
+  </data>
+  <data name="DialogMinute.Text" xml:space="preserve">
+    <value>分</value>
+  </data>
+  <data name="DialogHour.Text" xml:space="preserve">
+    <value>時間</value>
+  </data>
+  <data name="DialogWeek.Text" xml:space="preserve">
+    <value>週のうちの何日</value>
+  </data>
+  <data name="DialogDayOfWeekBlock.Text" xml:space="preserve">
+    <value>（0＝日～6＝土）</value>
+  </data>
+  <data name="DialogDayOfMonth.Text" xml:space="preserve">
+    <value>月のどの日</value>
+  </data>
+  <data name="DialogMonth.Text" xml:space="preserve">
+    <value>月</value>
+  </data>
+  <data name="DialogExpression.Text" xml:space="preserve">
+    <value>CRON表現</value>
+  </data>
+  <data name="DialogNotice.Text" xml:space="preserve">
+    <value>CRON式をサポートし、CRON式の優先度は上位5項の値より高い</value>
+  </data>
+  <data name="DialogFirst.Text" xml:space="preserve">
+    <value>時間単位が次の値と一致すると、実行されます。</value>
+  </data>
+  <data name="DialogExplanation1.Text" xml:space="preserve">
+    <value>（空の文字列）任意の値に一致</value>
+  </data>
+  <data name="DialogExplanation2.Text" xml:space="preserve">
+    <value>Val1，Val2。。。，ValNマッチ値リスト</value>
+  </data>
+  <data name="DialogExplanation3.Text" xml:space="preserve">
+    <value>一致値の範囲はn 1からn 2</value>
+  </data>
+  <data name="DialogExplanation4.Text" xml:space="preserve">
+    <value>n 1−n 2／n 3はステップn 3のn 1〜n 2の範囲に一致する</value>
+  </data>
+  <data name="DialogExplanation5.Text" xml:space="preserve">
+    <value>例えば 分 = 15 時 = 03 月 = 3-10/3 曜日 = 1、3、5 タスクは 3 月、6 月、9 月の月曜日、水曜日、金曜日の午前 3:15 に実行されます。</value>
+  </data>
+  <data name="GeneralSubFloderCard.Description" xml:space="preserve">
+    <value>フォルダの内部をスキャンせずにフォルダを処理する</value>
+  </data>
+  <data name="GeneralSubFloderCard.Header" xml:space="preserve">
+    <value>サブフォルダ</value>
+  </data>
+  <data name="GeneraIgnoreCard.Description" xml:space="preserve">
+    <value>他のアプリケーションが現在使用しているファイルを無視する</value>
+  </data>
+  <data name="GeneraIgnoreCard.Header" xml:space="preserve">
+    <value>使用中のファイル</value>
+  </data>
+  <data name="GeneralIrrelevantFilesCard.Description" xml:space="preserve">
+    <value>関連しないファイルやフォルダ、システムフォルダを無視する</value>
+  </data>
+  <data name="GeneralIrrelevantFilesCard.Header" xml:space="preserve">
+    <value>無関係ファイル</value>
+  </data>
+  <data name="GeneralEmptyFileCard.Description" xml:space="preserve">
+    <value>サイズ0のファイルまたは空のフォルダを無視する</value>
+  </data>
+  <data name="GeneralEmptyFileCard.Header" xml:space="preserve">
+    <value>空のファイル</value>
+  </data>
+  <data name="GeneralHiddenFileCard.Description" xml:space="preserve">
+    <value>隠しファイルを無視</value>
+  </data>
+  <data name="GeneralHiddenFileCard.Header" xml:space="preserve">
+    <value>隠しファイル</value>
+  </data>
+  <data name="GeneralAppSettings.Header" xml:space="preserve">
+    <value>アプリケーション設定</value>
+  </data>
+  <data name="GeneralAutoStartCard.Description" xml:space="preserve">
+    <value>システム起動時にEasyTidyを起動する</value>
+  </data>
+  <data name="GeneralAutoStartCard.Header" xml:space="preserve">
+    <value>自動起動</value>
+  </data>
+  <data name="GeneralCheckCard.Description" xml:space="preserve">
+    <value>起動時に更新をチェック</value>
+  </data>
+  <data name="GeneralCheckCard.Header" xml:space="preserve">
+    <value>更新のチェック</value>
+  </data>
+  <data name="GeneralMinimizeCard.Description" xml:space="preserve">
+    <value>起動時に通知領域に最小化</value>
+  </data>
+  <data name="GeneralMinimizeCard.Header" xml:space="preserve">
+    <value>削減</value>
+  </data>
+  <data name="GeneralBack.Header" xml:space="preserve">
+    <value>バックアップ/リストア</value>
+  </data>
+  <data name="GeneralBackCard.Description" xml:space="preserve">
+    <value>必要に応じて、EasyTidyは自動的に再起動します。ソフトウェアが起動するたびにバックアップするための自動バックアップをチェックする</value>
+  </data>
+  <data name="GeneralBackCard.Header" xml:space="preserve">
+    <value>バックアップとリストアの設定</value>
+  </data>
+  <data name="GeneralBackButton.Content" xml:space="preserve">
+    <value>バックアップ</value>
+  </data>
+  <data name="GeneralRestoreButton.Content" xml:space="preserve">
+    <value>リストア</value>
+  </data>
+  <data name="GeneralAutoBackup.Content" xml:space="preserve">
+    <value>自動バックアップ</value>
+  </data>
+  <data name="GeneralLocationCard.Header" xml:space="preserve">
+    <value>場所</value>
+  </data>
+  <data name="GeneralBackupMethod.PlaceholderText" xml:space="preserve">
+    <value>バックアップ方法の選択</value>
+  </data>
+  <data name="GeneralAddress.Text" xml:space="preserve">
+    <value>住所：</value>
+  </data>
+  <data name="GeneralUsername.Text" xml:space="preserve">
+    <value>ユーザー名：</value>
+  </data>
+  <data name="GeneralPassword.Text" xml:space="preserve">
+    <value>パスワード：</value>
+  </data>
+  <data name="GeneralBackupInformation.Header" xml:space="preserve">
+    <value>バックアップ情報</value>
+  </data>
+  <data name="GeneralStatus.Text" xml:space="preserve">
+    <value>バージョン：</value>
+  </data>
+  <data name="GeneralRefresh.Text" xml:space="preserve">
+    <value>リフレッシュ</value>
+  </data>
+  <data name="GeneralFilename.Text" xml:space="preserve">
+    <value>ファイル名：</value>
+  </data>
+  <data name="GeneralSourceComputer.Text" xml:space="preserve">
+    <value>ソースコンピュータ：</value>
+  </data>
+  <data name="GeneralCreatedOn.Text" xml:space="preserve">
+    <value>作成日：</value>
+  </data>
+  <data name="GeneralUseDocumentation.Text" xml:space="preserve">
+    <value>ドキュメント</value>
+  </data>
+  <data name="GereralReport.Text" xml:space="preserve">
+    <value>レポートBUG</value>
+  </data>
+  <data name="GeneralRequestFeature.Text" xml:space="preserve">
+    <value>要求機能</value>
+  </data>
+  <data name="TaskSettingsPage.ModuleDescription" xml:space="preserve">
+    <value>ユーザーはファイル処理タスクを追加し、自動実行の選択、一括実行のみの選択、デスクトップショートカットの作成、バックアップタスクの追加などの実行モードを専門に構成できます。</value>
+  </data>
+  <data name="TaskSettingsPage.ModuleTitle" xml:space="preserve">
+    <value>タスク管理</value>
+  </data>
+  <data name="TaskAddTask.Description" xml:space="preserve">
+    <value>クリーンなタスクにファイルを追加する</value>
+  </data>
+  <data name="TaskAddTask.Header" xml:space="preserve">
+    <value>タスクの追加</value>
+  </data>
+  <data name="TaskAddTaskButton.Content" xml:space="preserve">
+    <value>タスクの追加</value>
+  </data>
+  <data name="TaskDisplay.PlaceholderText" xml:space="preserve">
+    <value>グループ別に表示</value>
+  </data>
+  <data name="TaskDisplay.ToolTipService.ToolTip" xml:space="preserve">
+    <value>グループによるフィルタ</value>
+  </data>
+  <data name="TaskListView.Text" xml:space="preserve">
+    <value>タスク・リスト</value>
+  </data>
+  <data name="TaskListTaskName.Text" xml:space="preserve">
+    <value>タスク名</value>
+  </data>
+  <data name="TaskListSource.Text" xml:space="preserve">
+    <value>ソースフォルダ</value>
+  </data>
+  <data name="TaskListTarget.Text" xml:space="preserve">
+    <value>ターゲットフォルダ</value>
+  </data>
+  <data name="TaskListShortcuts.Text" xml:space="preserve">
+    <value>デスクトップショートカット</value>
+  </data>
+  <data name="TaskListEnable.Text" xml:space="preserve">
+    <value>有効化</value>
+  </data>
+  <data name="TaskListOperation.Text" xml:space="preserve">
+    <value>操作</value>
+  </data>
+  <data name="RunButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>1回実行</value>
+  </data>
+  <data name="IsEnableButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>有効化</value>
+  </data>
+  <data name="ThemeMaterial.Header" xml:space="preserve">
+    <value>ざいりょう</value>
+  </data>
+  <data name="ThemeMaterial.Description" xml:space="preserve">
+    <value>アプリケーションの背後にあるバックグラウンドマテリアルの外観を変更します。マイカ、アクリル、透明のオプションから選択できます。</value>
+  </data>
+  <data name="ThemeNone.Content" xml:space="preserve">
+    <value>なし</value>
+  </data>
+  <data name="ThemeMica.Content" xml:space="preserve">
+    <value>Mica</value>
+  </data>
+  <data name="ThemeMicaAlt.Content" xml:space="preserve">
+    <value>Mica Alt</value>
+  </data>
+  <data name="ThemeDesktopAcrylic.Content" xml:space="preserve">
+    <value>デスクトップアクリル</value>
+  </data>
+  <data name="ThemeAcrylicBase.Content" xml:space="preserve">
+    <value>アクリルきそ</value>
+  </data>
+  <data name="ThemeAcrylicThin.Content" xml:space="preserve">
+    <value>アクリルフィルム</value>
+  </data>
+  <data name="ThemeTransparent.Content" xml:space="preserve">
+    <value>透過性</value>
+  </data>
+  <data name="TrayIconStopMonitoring.Text" xml:space="preserve">
+    <value>監視の停止</value>
+  </data>
+  <data name="TrayIconExecuteOnce.Text" xml:space="preserve">
+    <value>1回実行</value>
+  </data>
+  <data name="TrayIconPreferences.Text" xml:space="preserve">
+    <value>に好都合である</value>
+  </data>
+  <data name="TrayIconScreen.Text" xml:space="preserve">
+    <value>表示/非表示</value>
+  </data>
+  <data name="TrayIconRestart.Text" xml:space="preserve">
+    <value>再起動</value>
+  </data>
+  <data name="TrayIconExit.Text" xml:space="preserve">
+    <value>アウトレット</value>
+  </data>
+  <data name="MainTitleBarTheme.ToolTipService.ToolTip" xml:space="preserve">
+    <value>トピックの切り替え</value>
+  </data>
+  <data name="MainTitleBarNav.ToolTipService.ToolTip" xml:space="preserve">
+    <value>ナビゲーションの変更</value>
+  </data>
+  <data name="MainSuggestBox.PlaceholderText" xml:space="preserve">
+    <value>検索けんさく</value>
+  </data>
+  <data name="SettingsLanguageCard.Header" xml:space="preserve">
+    <value>応用言語</value>
+  </data>
+  <data name="SettingsLanguageCard.Description" xml:space="preserve">
+    <value>EasyTidyはOS言語をデフォルトで使用しています</value>
+  </data>
+  <data name="Default_language" xml:space="preserve">
+    <value>Windowsのデフォルト</value>
+  </data>
+  <data name="Arabic_Saudi_Arabia_Language" xml:space="preserve">
+    <value>アラビア語（サウジアラビア）</value>
+  </data>
+  <data name="LanguageRestartInfo.Title" xml:space="preserve">
+    <value>EasyTidyを再起動して言語変更を有効にする</value>
+  </data>
+  <data name="LanguageRestartInfoButton.Content" xml:space="preserve">
+    <value>再起動</value>
+  </data>
+  <data name="Czech_Language" xml:space="preserve">
+    <value>チェコ人人</value>
+  </data>
+  <data name="German_Language" xml:space="preserve">
+    <value>ドイツ</value>
+  </data>
+  <data name="English_Language" xml:space="preserve">
+    <value>英語</value>
+  </data>
+  <data name="Spanish_Language" xml:space="preserve">
+    <value>スペイン人人</value>
+  </data>
+  <data name="Persian_Farsi_Language" xml:space="preserve">
+    <value>ペルシア語（ペルシア語）</value>
+  </data>
+  <data name="French_Language" xml:space="preserve">
+    <value>フランス語</value>
+  </data>
+  <data name="Hebrew_Israel_Language" xml:space="preserve">
+    <value>ヘブライ語（イスラエル）</value>
+  </data>
+  <data name="Hungarian_Language" xml:space="preserve">
+    <value>ハンガリー語</value>
+  </data>
+  <data name="Italian_Language" xml:space="preserve">
+    <value>イタリア人人</value>
+  </data>
+  <data name="Japanese_Language" xml:space="preserve">
+    <value>日本語</value>
+  </data>
+  <data name="Korean_Language" xml:space="preserve">
+    <value>韓国語</value>
+  </data>
+  <data name="Dutch_Language" xml:space="preserve">
+    <value>オランダ語</value>
+  </data>
+  <data name="Polish_Language" xml:space="preserve">
+    <value>ポーランド語</value>
+  </data>
+  <data name="Portuguese_Brazil_Language" xml:space="preserve">
+    <value>ポルトガル語（ブラジル）</value>
+  </data>
+  <data name="Portuguese_Portugal_Language" xml:space="preserve">
+    <value>ポルトガル語（ポルトガル）</value>
+  </data>
+  <data name="Russian_Language" xml:space="preserve">
+    <value>ロシア語</value>
+  </data>
+  <data name="Swedish_Language" xml:space="preserve">
+    <value>スウェーデン</value>
+  </data>
+  <data name="Turkish_Language" xml:space="preserve">
+    <value>トルコ語</value>
+  </data>
+  <data name="Ukrainian_Language" xml:space="preserve">
+    <value>ウクライナ語</value>
+  </data>
+  <data name="Chinese_Simplified_Language" xml:space="preserve">
+    <value>中国語（簡体字）</value>
+  </data>
+  <data name="Chinese_Traditional_Language" xml:space="preserve">
+    <value>中国語（繁体字）</value>
+  </data>
+  <data name="BackupSuccessTips" xml:space="preserve">
+    <value>バックアップが成功しました</value>
+  </data>
+  <data name="BackupFailedTips" xml:space="preserve">
+    <value>バックアップ失敗</value>
+  </data>
+  <data name="BackupSelectionTips" xml:space="preserve">
+    <value>バックアップの種類を選択してください</value>
+  </data>
+  <data name="DialogRegularTaskRunningTime.Header" xml:space="preserve">
+    <value>インターバル</value>
+  </data>
+  <data name="RegularTaskRunningBlock.Text" xml:space="preserve">
+    <value>各：</value>
+  </data>
+  <data name="FileChangeDelayText.Header" xml:space="preserve">
+    <value>遅延(二番目 (にばんめ))</value>
+  </data>
+  <data name="MinuteFormatInfo" xml:space="preserve">
+    <value>分のフォーマットエラー</value>
+  </data>
+  <data name="HourFormatInfo" xml:space="preserve">
+    <value>時間形式エラー</value>
+  </data>
+  <data name="WeeksFormatInfo" xml:space="preserve">
+    <value>週の形式エラー</value>
+  </data>
+  <data name="DateFormatInfo" xml:space="preserve">
+    <value>日付形式エラー</value>
+  </data>
+  <data name="MonthFormatInfo" xml:space="preserve">
+    <value>月の形式エラー</value>
+  </data>
+  <data name="CronExpressionInfo" xml:space="preserve">
+    <value>無効なCRON式のフォーマット</value>
+  </data>
+  <data name="GroupInformationVerification" xml:space="preserve">
+    <value>「グループ名」が入力されていません</value>
+  </data>
+  <data name="GroupInformationVerificationAdd" xml:space="preserve">
+    <value>グループ名を入力または選択してください</value>
+  </data>
+  <data name="FilterNameValidation" xml:space="preserve">
+    <value>フィルタ名を入力してください</value>
+  </data>
+  <data name="ValidateDelay" xml:space="preserve">
+    <value>遅延は秒数のみ入力できます</value>
+  </data>
+  <data name="CreateShortcutFailedText" xml:space="preserve">
+    <value>デスクトップショートカットを作成できませんでした</value>
+  </data>
+  <data name="BackupPathText" xml:space="preserve">
+    <value>バックアップフォルダのパスを選択してください</value>
+  </data>
+  <data name="BackupStatusText" xml:space="preserve">
+    <value>現在の設定は一致</value>
+  </data>
+  <data name="RegardedExpressionText" xml:space="preserve">
+    <value>正規表現として考慮する</value>
+  </data>
+  <data name="AllFoldersText" xml:space="preserve">
+    <value>すべてのフォルダー</value>
+  </data>
+  <data name="AllFoldersWithoutOtherMatches" xml:space="preserve">
+    <value>他のマッチングなしのすべてのフォルダー</value>
+  </data>
+  <data name="AllFoldersStartingWithrobot" xml:space="preserve">
+    <value>「robot」で始まるすべてのフォルダー</value>
+  </data>
+  <data name="AllFoldersContainingrobot" xml:space="preserve">
+    <value>「robot」を含むすべてのフォルダ</value>
+  </data>
+  <data name="AllFoldersNamed_robot_LocatedUnder" xml:space="preserve">
+    <value>"C:\"にある"robot"という名前のすべてのフォルダー</value>
+  </data>
+  <data name="Use_Or_ToSeparate" xml:space="preserve">
+    <value>";" または "|" を使って区切ります</value>
+  </data>
+  <data name="UseToExcludeFoldersStartingWithmy" xml:space="preserve">
+    <value>「my」で始まるフォルダを除外するには「/」を使用する</value>
+  </data>
+  <data name="AllFiles" xml:space="preserve">
+    <value>すべてのファイル</value>
+  </data>
+  <data name="AllFilesWithNoOtherMatches" xml:space="preserve">
+    <value>他の照合を持たない、すべてのファイル</value>
+  </data>
+  <data name="AllFilesWithTheExtension" xml:space="preserve">
+    <value>拡張子が「jpg」であるすべてのファイル</value>
+  </data>
+  <data name="AllFilesBeginningWith" xml:space="preserve">
+    <value>「penguin」ではじまるすべてのファイル</value>
+  </data>
+  <data name="AllFilesContains" xml:space="preserve">
+    <value>「ペンギン」を含むすべてのファイル</value>
+  </data>
+  <data name="All_FilesUnder" xml:space="preserve">
+    <value>「フォルダ」にある「jpg」ファイルすべて</value>
+  </data>
+  <data name="UseDelimiter" xml:space="preserve">
+    <value>";" または "|" を使用して区切る</value>
+  </data>
+  <data name="UseDelimitersToExclude" xml:space="preserve">
+    <value>"sea"で始まるファイルを除外するには"/"を使用してください</value>
+  </data>
+  <data name="CompressedFile" xml:space="preserve">
+    <value>圧縮ファイル</value>
+  </data>
+  <data name="Document" xml:space="preserve">
+    <value>ドキュメント</value>
+  </data>
+  <data name="Photograph" xml:space="preserve">
+    <value>画像</value>
+  </data>
+  <data name="Music" xml:space="preserve">
+    <value>音楽</value>
+  </data>
+  <data name="PresentationAndWorksheet" xml:space="preserve">
+    <value>プレゼンテーションとワークシート</value>
+  </data>
+  <data name="Video" xml:space="preserve">
+    <value>ビデオ</value>
+  </data>
+  <data name="HandlingFolderRules" xml:space="preserve">
+    <value>フォルダーの扱い方のルール</value>
+  </data>
+  <data name="HandlingRulesForFiles" xml:space="preserve">
+    <value>ファイルの処理ルール</value>
+  </data>
+  <data name="HandlingRulesForCustom" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="ExecutionDate.Title" xml:space="preserve">
+    <value>執行日</value>
+  </data>
+  <data name="VerificationSuccessful" xml:space="preserve">
+    <value>検証は成功しました，過去{0}回の試行の実行時間</value>
+  </data>
+  <data name="VerificationFailed" xml:space="preserve">
+    <value>検証失敗、曜日と月日の衝突</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>閉じる</value>
+  </data>
+  <data name="Test" xml:space="preserve">
+    <value>テスト</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>ステータス</value>
+  </data>
+  <data name="CurrentVersion" xml:space="preserve">
+    <value>現在のバージョン v{0}</value>
+  </data>
+  <data name="CheckingForNewVersion" xml:space="preserve">
+    <value>新しいバージョンをチェックしています</value>
+  </data>
+  <data name="FoundANewVersion" xml:space="preserve">
+    <value>新しいバージョンである{0}が発見されました。{1}に作成されました{2}にリリースされました</value>
+  </data>
+  <data name="LatestVersion" xml:space="preserve">
+    <value>最新バージョンを使用しています</value>
+  </data>
+  <data name="ErrorConnection" xml:space="preserve">
+    <value>接続エラー</value>
+  </data>
+  <data name="ReleaseNotes" xml:space="preserve">
+    <value>リリースノート</value>
+  </data>
+  <data name="NewNameAndPath" xml:space="preserve">
+    <value>新しい名前とパス:</value>
+  </data>
+  <data name="DateTimeCheatSheet.Text" xml:space="preserve">
+    <value>ファイルの作成日時の使用を置き換える</value>
+  </data>
+  <data name="DateTimeCheatSheet_FullYear" xml:space="preserve">
+    <value>Years may be represented by four or five digits, depending on the calendaring system used.</value>
+  </data>
+  <data name="DateTimeCheatSheet_YearLastTwoDigits" xml:space="preserve">
+    <value>Years represented only by the last two digits. For single-digit years, a leading zero has been added.</value>
+  </data>
+  <data name="DateTimeCheatSheet_YearLastDigit" xml:space="preserve">
+    <value>Only the last digit of the year is represented.</value>
+  </data>
+  <data name="DateTimeCheatSheet_MonthName" xml:space="preserve">
+    <value>Month Names.</value>
+  </data>
+  <data name="DateTimeCheatSheet_MonthNameAbbr" xml:space="preserve">
+    <value>Abbreviated names of the months.</value>
+  </data>
+  <data name="DateTimeCheatSheet_MonthDigitLZero" xml:space="preserve">
+    <value>1か月を数値として表すときに、先頭のゼロは月の単位を表す。</value>
+  </data>
+  <data name="DateTimeCheatSheet_DayName" xml:space="preserve">
+    <value>曜日の名前。</value>
+  </data>
+  <data name="DateTimeCheatSheet_MonthDigit" xml:space="preserve">
+    <value>単位の桁に先行ゼロのない月。</value>
+  </data>
+  <data name="DateTimeCheatSheet_DayNameAbbr" xml:space="preserve">
+    <value>曜日の略称。</value>
+  </data>
+  <data name="DateTimeCheatSheet_DayDigitLZero" xml:space="preserve">
+    <value>数値で表記した日付で、先頭にゼロを付けて、桁数が 1 つの日の表記法を示すもの。</value>
+  </data>
+  <data name="DateTimeCheatSheet_DayDigit" xml:space="preserve">
+    <value>1桁の場合はゼロ埋めなしの数字で表される1か月のうちの日付。</value>
+  </data>
+  <data name="DateTimeCheatSheet_HoursLZero" xml:space="preserve">
+    <value>1桁の時間で先頭にゼロが付く時間の数。</value>
+  </data>
+  <data name="DateTimeCheatSheet_Hours" xml:space="preserve">
+    <value>一桁の時間の数値に先頭にゼロを追加しない時（時間の数）。</value>
+  </data>
+  <data name="DateTimeCheatSheet_MinutesLZero" xml:space="preserve">
+    <value>先頭に0を置いた分数(分を1桁の数で)。</value>
+  </data>
+  <data name="DateTimeCheatSheet_Minutes" xml:space="preserve">
+    <value>ゼロ埋めされていない分数部分の分。</value>
+  </data>
+  <data name="DateTimeCheatSheet_SecondsLZero" xml:space="preserve">
+    <value>ゼロ埋めされた一桁の秒で始まる秒数。</value>
+  </data>
+  <data name="DateTimeCheatSheet_Seconds" xml:space="preserve">
+    <value>一桁の数値にゼロパディングしない秒数。</value>
+  </data>
+  <data name="DateTimeCheatSheet_MilliSeconds3D" xml:space="preserve">
+    <value>ミリ秒は、3桁のゼロパディングで表されます。</value>
+  </data>
+  <data name="DateTimeCheatSheet_MilliSeconds2D" xml:space="preserve">
+    <value>Millisecond count represented by just the first two digits.</value>
+  </data>
+  <data name="DateTimeCheatSheet_MilliSeconds1D" xml:space="preserve">
+    <value>エポックからのミリ秒を整数ミリ秒として表現したもの。</value>
+  </data>
+  <data name="CounterCheatSheet_Simple" xml:space="preserve">
+    <value>置換文字列の任意の位置で使用できる単純なカウンタです。</value>
+  </data>
+  <data name="CounterCheatSheet_Start" xml:space="preserve">
+    <value>カスタムの初期値を持つカウンター。</value>
+  </data>
+  <data name="CounterCheatSheet_Increment" xml:space="preserve">
+    <value>カスタマイズ可能なインクリメント値を備えたカウンタ。</value>
+  </data>
+  <data name="CounterCheatSheet_Padding" xml:space="preserve">
+    <value>パディングのためにカスタマイズ可能な先頭ゼロの数を持つカウンター。</value>
+  </data>
+  <data name="CounterCheatSheet_Complex" xml:space="preserve">
+    <value>複数のカスタム属性のカウンタを表示する。</value>
+  </data>
+  <data name="RandomizerCheatSheet_Alnum" xml:space="preserve">
+    <value>カスタム長のランダム文字列、大文字、小文字、0-9の数字を含む。</value>
+  </data>
+  <data name="RandomizerCheatSheet_Alpha" xml:space="preserve">
+    <value>大文字と小文字を使用したランダムな文字列、カスタムの長さ。</value>
+  </data>
+  <data name="RandomizerCheatSheet_Digit" xml:space="preserve">
+    <value>0-9の数を含むランダムな文字列で、カスタムの長さがあります。</value>
+  </data>
+  <data name="RandomizerCheatSheet_Uuid" xml:space="preserve">
+    <value>v4 仕様で定義されているランダムな UUID。</value>
+  </data>
+  <data name="CounterCheatSheet_Title.Text" xml:space="preserve">
+    <value>より高度なカウンター文法に置き換える</value>
+  </data>
+  <data name="RandomizerCheatSheet_Title.Text" xml:space="preserve">
+    <value>ランダムな値に置き換え</value>
+  </data>
+  <data name="PriorityRules.ToolTipService.ToolTip" xml:space="preserve">
+    <value>複数のルールが一致した場合、どちらのルールを優先するか</value>
+  </data>
+  <data name="GeneralMultipleInstanceCard.Header" xml:space="preserve">
+    <value>複数インスタンス構成</value>
+  </data>
+  <data name="GeneralMultipleInstanceCard.Description" xml:space="preserve">
+    <value>複数のインスタンスをプロビジョニングできますか</value>
+  </data>
+</root>

@@ -1,0 +1,1497 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en-US" target-language="zh-CN" original="EASYTIDY/STRINGS/EN-US/RESOURCES.RESW" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
+    <header>
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="1.0.0.0" tool-company="Microsoft" />
+    </header>
+    <body>
+      <group id="EASYTIDY/STRINGS/EN-US/RESOURCES.RESW" datatype="resx">
+        <trans-unit id="NavAutomaticText" translate="yes" xml:space="preserve">
+          <source>Automatic</source>
+          <target state="translated">自动化</target>
+        </trans-unit>
+        <trans-unit id="NavTaskOrchestrationText" translate="yes" xml:space="preserve">
+          <source>Task Orchestration</source>
+          <target state="translated">任务编排</target>
+        </trans-unit>
+        <trans-unit id="NavFiltersText" translate="yes" xml:space="preserve">
+          <source>Filters</source>
+          <target state="translated">过滤器</target>
+        </trans-unit>
+        <trans-unit id="Backup" translate="yes" xml:space="preserve">
+          <source>Backup</source>
+          <target state="translated">备份</target>
+        </trans-unit>
+        <trans-unit id="Settings" translate="yes" xml:space="preserve">
+          <source>Settings</source>
+          <target state="translated">设置</target>
+        </trans-unit>
+        <trans-unit id="SettingsPageControl.ModuleTitle" translate="yes" xml:space="preserve">
+          <source>Automatic</source>
+          <target state="translated">自动化</target>
+        </trans-unit>
+        <trans-unit id="SettingsPageControl.ModuleDescription" translate="yes" xml:space="preserve">
+          <source>The automation module can monitor changes to files and folders. Based on custom settings and associated file processing tasks, this module can automatically perform the corresponding actions.</source>
+          <target state="translated">自动化模块能够对文件和文件夹的变动进行监控。依据自定义设置以及与之关联的文件处理任务，该模块可自动执行相应的操作。</target>
+        </trans-unit>
+        <trans-unit id="StartupExecutionCard.Header" translate="yes" xml:space="preserve">
+          <source>On startup</source>
+          <target state="translated">启动时</target>
+        </trans-unit>
+        <trans-unit id="StartupExecutionCard.Description" translate="yes" xml:space="preserve">
+          <source>EasyTidy Execute once at startup</source>
+          <target state="translated">EasyTidy启动时执行一次</target>
+        </trans-unit>
+        <trans-unit id="RegularTaskRunningCard.Header" translate="yes" xml:space="preserve">
+          <source>Regular execution</source>
+          <target state="translated">定期执行</target>
+        </trans-unit>
+        <trans-unit id="ScheduledExecutionCard.Header" translate="yes" xml:space="preserve">
+          <source>According to schedule</source>
+          <target state="translated">按照计划</target>
+        </trans-unit>
+        <trans-unit id="FileChangeDelay.Text" translate="yes" xml:space="preserve">
+          <source>Delay：</source>
+          <target state="translated">延迟：</target>
+        </trans-unit>
+        <trans-unit id="FileChangeSecond.Text" translate="yes" xml:space="preserve">
+          <source>Second</source>
+          <target state="translated">秒</target>
+        </trans-unit>
+        <trans-unit id="AutoAnalysisGlobal.Header" translate="yes" xml:space="preserve">
+          <source>AutoAnalysis(Global)</source>
+          <target state="translated">自动分析（全局）</target>
+        </trans-unit>
+        <trans-unit id="FileChange.Description" translate="yes" xml:space="preserve">
+          <source>Automatic file processing options</source>
+          <target state="translated">文件自动处理选项</target>
+        </trans-unit>
+        <trans-unit id="FileChangeCard.Header" translate="yes" xml:space="preserve">
+          <source>When files change</source>
+          <target state="translated">文件更改时</target>
+        </trans-unit>
+        <trans-unit id="RegularTaskRunningCard.Description" translate="yes" xml:space="preserve">
+          <source>Regularly execute according to the set time</source>
+          <target state="translated">根据设定的时间定期执行</target>
+        </trans-unit>
+        <trans-unit id="ScheduledExecutionCard.Description" translate="yes" xml:space="preserve">
+          <source>Perform periodic execution according to the set plan</source>
+          <target state="translated">根据设定的计划进行周期性执行</target>
+        </trans-unit>
+        <trans-unit id="ConfigurationButton.Content" translate="yes" xml:space="preserve">
+          <source>Configuration</source>
+          <target state="translated">配置</target>
+        </trans-unit>
+        <trans-unit id="TaskAssociation.Header" translate="yes" xml:space="preserve">
+          <source>Task association</source>
+          <target state="translated">任务关联</target>
+        </trans-unit>
+        <trans-unit id="ConfigurationTask.Header" translate="yes" xml:space="preserve">
+          <source>Configuration Task</source>
+          <target state="translated">配置任务</target>
+        </trans-unit>
+        <trans-unit id="ConfigurationTask.Description" translate="yes" xml:space="preserve">
+          <source>Associate the configured tasks with the global plan or configure them separately</source>
+          <target state="translated">将配置的任务与全局计划关联，或者单独配置</target>
+        </trans-unit>
+        <trans-unit id="TaskSelection.Header" translate="yes" xml:space="preserve">
+          <source>Task selection</source>
+          <target state="translated">任务选择</target>
+        </trans-unit>
+        <trans-unit id="TaskButton.Content" translate="yes" xml:space="preserve">
+          <source>Task force</source>
+          <target state="translated">任务组</target>
+        </trans-unit>
+        <trans-unit id="TaskGroup.Title" translate="yes" xml:space="preserve">
+          <source>Select Task Group</source>
+          <target state="translated">选择任务组</target>
+        </trans-unit>
+        <trans-unit id="SingleTask.Content" translate="yes" xml:space="preserve">
+          <source>Single Task</source>
+          <target state="translated">单个任务</target>
+        </trans-unit>
+        <trans-unit id="SelectTask.Title" translate="yes" xml:space="preserve">
+          <source>Select Task</source>
+          <target state="translated">选择任务</target>
+        </trans-unit>
+        <trans-unit id="Separate.Content" translate="yes" xml:space="preserve">
+          <source>Is it configured separately</source>
+          <target state="translated">是否单独配置</target>
+        </trans-unit>
+        <trans-unit id="Customize.Content" translate="yes" xml:space="preserve">
+          <source>Customize</source>
+          <target state="translated">自定义</target>
+        </trans-unit>
+        <trans-unit id="ResetButton.Content" translate="yes" xml:space="preserve">
+          <source>Revoke configuration</source>
+          <target state="translated">撤销配置</target>
+        </trans-unit>
+        <trans-unit id="SaveButton.Content" translate="yes" xml:space="preserve">
+          <source>Save Configuration</source>
+          <target state="translated">保存配置</target>
+        </trans-unit>
+        <trans-unit id="TaskList.Title" translate="yes" xml:space="preserve">
+          <source>Task list</source>
+          <target state="translated">任务列表</target>
+        </trans-unit>
+        <trans-unit id="FileChangeBlock.Text" translate="yes" xml:space="preserve">
+          <source>When files change</source>
+          <target state="translated">文件更改时</target>
+        </trans-unit>
+        <trans-unit id="RegularTaskRunningText.Text" translate="yes" xml:space="preserve">
+          <source>Regular execution</source>
+          <target state="translated">定时执行</target>
+        </trans-unit>
+        <trans-unit id="SelectTaskBlock.Text" translate="yes" xml:space="preserve">
+          <source>Task selection：</source>
+          <target state="translated">选择任务：</target>
+        </trans-unit>
+        <trans-unit id="ScheduleText" translate="yes" xml:space="preserve">
+          <source>schedule</source>
+          <target state="translated">时间表</target>
+        </trans-unit>
+        <trans-unit id="UpdateBlock.Text" translate="yes" xml:space="preserve">
+          <source>Last Update Check</source>
+          <target state="translated">上次检测更新</target>
+        </trans-unit>
+        <trans-unit id="CheckButton.Content" translate="yes" xml:space="preserve">
+          <source>Check for New Version</source>
+          <target state="translated">检查更新</target>
+        </trans-unit>
+        <trans-unit id="ReleaseNote.Content" translate="yes" xml:space="preserve">
+          <source>Release Note</source>
+          <target state="translated">发行日志</target>
+        </trans-unit>
+        <trans-unit id="DownloadButton.Content" translate="yes" xml:space="preserve">
+          <source>Download Update</source>
+          <target state="translated">下载更新</target>
+        </trans-unit>
+        <trans-unit id="CodeButton.Content" translate="yes" xml:space="preserve">
+          <source>GitHub Repository</source>
+          <target state="translated">GitHub 存储库</target>
+        </trans-unit>
+        <trans-unit id="LinkBlock.Text" translate="yes" xml:space="preserve">
+          <source>Related Links</source>
+          <target state="translated">相关链接</target>
+        </trans-unit>
+        <trans-unit id="AboutUsSetting.Description" translate="yes" xml:space="preserve">
+          <source>EasyTidy can automatically process and organize files and folders. It can filter files by various conditions such as name and directory. Supports manual and automatic execution. You can set delay, time interval or customize the execution cycle with CRON expression for easy and efficient file management.</source>
+          <target state="translated">EasyTidy 可自动处理和组织文件及文件夹。能按名称、目录等多种条件过滤文件，支持手动和自动执行，可设置延时、时间间隔或用 CRON 表达式自定义执行周期，让文件管理轻松高效。</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">EasyTidy can automatically process and organize files and folders. It can filter files by various conditions such as name and directory. Supports manual and automatic execution. You can set delay, time interval or customize the execution cycle with CRON expression for easy and efficient file management.</note>
+        </trans-unit>
+        <trans-unit id="ThemeSettingsCard.Description" translate="yes" xml:space="preserve">
+          <source>Select the theme that suits your mood and preference. You can choose from dark, light, or system themes.</source>
+          <target state="translated">选择适合您心情和偏好的主题。您可以从深色、浅色或系统主题中进行选择。</target>
+        </trans-unit>
+        <trans-unit id="ThemeSettingsCard.Header" translate="yes" xml:space="preserve">
+          <source>App theme</source>
+          <target state="translated">应用主题</target>
+        </trans-unit>
+        <trans-unit id="Light.Content" translate="yes" xml:space="preserve">
+          <source>Light</source>
+          <target state="translated">浅色</target>
+        </trans-unit>
+        <trans-unit id="Dark.Content" translate="yes" xml:space="preserve">
+          <source>Dark</source>
+          <target state="translated">深色</target>
+        </trans-unit>
+        <trans-unit id="Default.Content" translate="yes" xml:space="preserve">
+          <source>Windows Default</source>
+          <target state="translated">Windows默认</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Default</note>
+        </trans-unit>
+        <trans-unit id="ColorSettingsCard.Description" translate="yes" xml:space="preserve">
+          <source>Sync your app’s color with your Windows accent color. You can open the Windows accent color setting by clicking this card.</source>
+          <target state="translated">将应用程序的颜色与 Windows 强调色同步。您可以通过单击此卡打开 Windows 强调色设置。</target>
+        </trans-unit>
+        <trans-unit id="ColorSettingsCard.Header" translate="yes" xml:space="preserve">
+          <source>Accent color</source>
+          <target state="translated">强调色</target>
+        </trans-unit>
+        <trans-unit id="FilterSettingsControl.ModuleDescription" translate="yes" xml:space="preserve">
+          <source>Easily add files that need to be filtered to achieve precise management of specific files. By adding file processing rules, you can customize the way files are processed to meet individual needs. At the same time, you can also use the powerful pattern matching function of regular expressions to further refine the filtering and processing logic of files, making file management more efficient and intelligent. Whether you want to exclude specific types of files or perform special processing on files that match specific patterns, you can easily do it here.</source>
+          <target state="translated">轻松地添加需要过滤的文件，实现对特定文件的精准管理。通过增加文件处理规则，你能够自定义文件的处理方式，满足个性化的需求。同时，还可以利用正则表达式强大的模式匹配功能，进一步细化文件的筛选和处理逻辑，让文件管理更加高效、智能。无论是排除特定类型的文件，还是对符合特定模式的文件进行特殊处理，都能在这里轻松实现。</target>
+        </trans-unit>
+        <trans-unit id="FilterSettingsControl.ModuleTitle" translate="yes" xml:space="preserve">
+          <source>Filter</source>
+          <target state="translated">过滤器</target>
+        </trans-unit>
+        <trans-unit id="ThemeSettingPage.Description" translate="yes" xml:space="preserve">
+          <source>Explore the different ways to customize the appearance and behavior of your app. You can change the material, theme, accent, and more options to suit your style and preference.</source>
+          <target state="translated">自定义应用程序外观和行为的不同方法。可以更改材质、主题、重音和更多选项，以适应您的风格和偏好。</target>
+        </trans-unit>
+        <trans-unit id="ThemeSettingPage.Header" translate="yes" xml:space="preserve">
+          <source>Behavior &amp; animation</source>
+          <target state="translated">行为和动画</target>
+        </trans-unit>
+        <trans-unit id="AppUpdateSetting.Description" translate="yes" xml:space="preserve">
+          <source>Check for Updates</source>
+          <target state="translated">检查和更新应用程序</target>
+        </trans-unit>
+        <trans-unit id="AppUpdateSetting.Header" translate="yes" xml:space="preserve">
+          <source>Check for Updates</source>
+          <target state="translated">检查更新</target>
+        </trans-unit>
+        <trans-unit id="AboutUsSettingPage.Description" translate="yes" xml:space="preserve">
+          <source>About EasyTidy and Developer</source>
+          <target state="translated">关于 EasyTidy 的开发</target>
+        </trans-unit>
+        <trans-unit id="AboutUsSettingPage.Header" translate="yes" xml:space="preserve">
+          <source>About</source>
+          <target state="translated">关于</target>
+        </trans-unit>
+        <trans-unit id="GeneralPageControl.ModuleDescription" translate="yes" xml:space="preserve">
+          <source>EasyTidy is an open-source, professional file management tool designed to provide users with efficient and convenient file classification and organization solutions. Through custom settings, users can achieve various sorting methods such as automatic sorting, scheduled sorting, real-time sorting, and manual sorting to meet the file management needs in different scenarios. Used by the author ♥  make.</source>
+          <target state="translated">EasyTidy是一款开源的，专业的文件管理工具，旨在为用户提供高效、便捷的文件分类整理解决方案。通过自定义设置，用户可以实现自动整理、定时整理、实时整理以及手动整理等多种整理方式，以满足不同场景下的文件管理需求。由作者用 ♥ 制作。</target>
+        </trans-unit>
+        <trans-unit id="GeneralPageControl.ModuleTitle" translate="yes" xml:space="preserve">
+          <source>General</source>
+          <target state="translated">常规</target>
+        </trans-unit>
+        <trans-unit id="AtLeastOneWord" translate="yes" xml:space="preserve">
+          <source>At least one word</source>
+          <target state="translated">至少一个单词</target>
+        </trans-unit>
+        <trans-unit id="YesStr" translate="yes" xml:space="preserve">
+          <source>YES</source>
+          <target state="translated">是</target>
+        </trans-unit>
+        <trans-unit id="NoStr" translate="yes" xml:space="preserve">
+          <source>NO</source>
+          <target state="translated">否</target>
+        </trans-unit>
+        <trans-unit id="AtLeastOneWordCaseSensitive" translate="yes" xml:space="preserve">
+          <source>At least one word (case sensitive)</source>
+          <target state="translated">至少一个单词（区分大小写）</target>
+        </trans-unit>
+        <trans-unit id="AllWordsInAnyOrder" translate="yes" xml:space="preserve">
+          <source>All words in a random order</source>
+          <target state="translated">以随意的顺序的所有单词</target>
+        </trans-unit>
+        <trans-unit id="AllWordsInAnyOrderCaseSensitive" translate="yes" xml:space="preserve">
+          <source>All words in arbitrary order (case sensitive)</source>
+          <target state="translated">以随意的顺序的所有单词（区分大小写）</target>
+        </trans-unit>
+        <trans-unit id="RegularExpression" translate="yes" xml:space="preserve">
+          <source>regular expression</source>
+          <target state="translated">正则表达式</target>
+        </trans-unit>
+        <trans-unit id="StringText" translate="yes" xml:space="preserve">
+          <source>String</source>
+          <target state="translated">字符串</target>
+        </trans-unit>
+        <trans-unit id="StringCaseSensitive" translate="yes" xml:space="preserve">
+          <source>String (case sensitive)</source>
+          <target state="translated">字符串（区分大小写）</target>
+        </trans-unit>
+        <trans-unit id="LocalBackText" translate="yes" xml:space="preserve">
+          <source>Local backup</source>
+          <target state="translated">本地备份</target>
+        </trans-unit>
+        <trans-unit id="WebDavText" translate="yes" xml:space="preserve">
+          <source>WebDav</source>
+          <target state="needs-review-translation">WebDav</target>
+          <note from="MultilingualUpdate" priority="2">通过 MAT 添加 XLIFF 文件支持后，找到并自动导入了现有资源。此源字符串和目标字符串包含相同的值，因此资源已标记为“需要审阅”，以确保可以轻松地审阅翻译。</note>
+        </trans-unit>
+        <trans-unit id="SkipText" translate="yes" xml:space="preserve">
+          <source>Skip</source>
+          <target state="translated">跳过</target>
+        </trans-unit>
+        <trans-unit id="OverrideText" translate="yes" xml:space="preserve">
+          <source>Override</source>
+          <target state="translated">覆盖</target>
+        </trans-unit>
+        <trans-unit id="OverwriteIfNewerText" translate="yes" xml:space="preserve">
+          <source>Overwrite If Newer</source>
+          <target state="translated">如果较新则覆盖</target>
+        </trans-unit>
+        <trans-unit id="OverrideIfSizesDifferText" translate="yes" xml:space="preserve">
+          <source>If the sizes are different, cover them</source>
+          <target state="translated">如果大小不同则覆盖</target>
+        </trans-unit>
+        <trans-unit id="ReNameAppendText" translate="yes" xml:space="preserve">
+          <source>Rename(01)</source>
+          <target state="translated">重命名(01)</target>
+        </trans-unit>
+        <trans-unit id="ReNameAddDateText" translate="yes" xml:space="preserve">
+          <source>Rename - Current Date</source>
+          <target state="translated">重命名-当前日期</target>
+        </trans-unit>
+        <trans-unit id="MoveText" translate="yes" xml:space="preserve">
+          <source>Move</source>
+          <target state="translated">移动</target>
+        </trans-unit>
+        <trans-unit id="CopyText" translate="yes" xml:space="preserve">
+          <source>Copy</source>
+          <target state="translated">复制</target>
+        </trans-unit>
+        <trans-unit id="DeleteText" translate="yes" xml:space="preserve">
+          <source>Delete</source>
+          <target state="translated">删除</target>
+        </trans-unit>
+        <trans-unit id="RenameText" translate="yes" xml:space="preserve">
+          <source>Rename</source>
+          <target state="translated">重命名</target>
+        </trans-unit>
+        <trans-unit id="RecycleBinText" translate="yes" xml:space="preserve">
+          <source>RecycleBin</source>
+          <target state="translated">回收站</target>
+        </trans-unit>
+        <trans-unit id="GreaterThanText" translate="yes" xml:space="preserve">
+          <source>&gt;</source>
+          <target state="needs-review-translation">&gt;</target>
+          <note from="MultilingualUpdate" priority="2">通过 MAT 添加 XLIFF 文件支持后，找到并自动导入了现有资源。此源字符串和目标字符串包含相同的值，因此资源已标记为“需要审阅”，以确保可以轻松地审阅翻译。</note>
+        </trans-unit>
+        <trans-unit id="EqualToText" translate="yes" xml:space="preserve">
+          <source>=</source>
+          <target state="needs-review-translation">=</target>
+          <note from="MultilingualUpdate" priority="2">通过 MAT 添加 XLIFF 文件支持后，找到并自动导入了现有资源。此源字符串和目标字符串包含相同的值，因此资源已标记为“需要审阅”，以确保可以轻松地审阅翻译。</note>
+        </trans-unit>
+        <trans-unit id="LessThanText" translate="yes" xml:space="preserve">
+          <source>&lt;</source>
+          <target state="needs-review-translation">&lt;</target>
+          <note from="MultilingualUpdate" priority="2">通过 MAT 添加 XLIFF 文件支持后，找到并自动导入了现有资源。此源字符串和目标字符串包含相同的值，因此资源已标记为“需要审阅”，以确保可以轻松地审阅翻译。</note>
+        </trans-unit>
+        <trans-unit id="ByteText" translate="yes" xml:space="preserve">
+          <source>byte</source>
+          <target state="translated">字节</target>
+        </trans-unit>
+        <trans-unit id="KilobyteText" translate="yes" xml:space="preserve">
+          <source>KB</source>
+          <target state="needs-review-translation">KB</target>
+          <note from="MultilingualUpdate" priority="2">通过 MAT 添加 XLIFF 文件支持后，找到并自动导入了现有资源。此源字符串和目标字符串包含相同的值，因此资源已标记为“需要审阅”，以确保可以轻松地审阅翻译。</note>
+        </trans-unit>
+        <trans-unit id="MegabyteText" translate="yes" xml:space="preserve">
+          <source>MB</source>
+          <target state="needs-review-translation">MB</target>
+          <note from="MultilingualUpdate" priority="2">通过 MAT 添加 XLIFF 文件支持后，找到并自动导入了现有资源。此源字符串和目标字符串包含相同的值，因此资源已标记为“需要审阅”，以确保可以轻松地审阅翻译。</note>
+        </trans-unit>
+        <trans-unit id="GigabyteText" translate="yes" xml:space="preserve">
+          <source>GB</source>
+          <target state="needs-review-translation">GB</target>
+          <note from="MultilingualUpdate" priority="2">通过 MAT 添加 XLIFF 文件支持后，找到并自动导入了现有资源。此源字符串和目标字符串包含相同的值，因此资源已标记为“需要审阅”，以确保可以轻松地审阅翻译。</note>
+        </trans-unit>
+        <trans-unit id="SecondText" translate="yes" xml:space="preserve">
+          <source>Second</source>
+          <target state="translated">秒</target>
+        </trans-unit>
+        <trans-unit id="MinuteText" translate="yes" xml:space="preserve">
+          <source>Minute</source>
+          <target state="translated">分钟</target>
+        </trans-unit>
+        <trans-unit id="HourText" translate="yes" xml:space="preserve">
+          <source>Hour</source>
+          <target state="translated">小时</target>
+        </trans-unit>
+        <trans-unit id="DayText" translate="yes" xml:space="preserve">
+          <source>Day</source>
+          <target state="translated">天</target>
+        </trans-unit>
+        <trans-unit id="MonthText" translate="yes" xml:space="preserve">
+          <source>Month</source>
+          <target state="translated">月</target>
+        </trans-unit>
+        <trans-unit id="YearText" translate="yes" xml:space="preserve">
+          <source>Year</source>
+          <target state="translated">年</target>
+        </trans-unit>
+        <trans-unit id="AllText" translate="yes" xml:space="preserve">
+          <source>ALL</source>
+          <target state="translated">全部</target>
+        </trans-unit>
+        <trans-unit id="FileProcessing.Header" translate="yes" xml:space="preserve">
+          <source>File processing</source>
+          <target state="translated">文件处理</target>
+        </trans-unit>
+        <trans-unit id="FileProcessingCard.Header" translate="yes" xml:space="preserve">
+          <source>Dealing with conflicts</source>
+          <target state="translated">处理冲突</target>
+        </trans-unit>
+        <trans-unit id="FileProcessingCard.Description" translate="yes" xml:space="preserve">
+          <source>Options for automatic conflict resolution</source>
+          <target state="translated">自动处理冲突的选项</target>
+        </trans-unit>
+        <trans-unit id="FileProcessingComboBox.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>Conflict handling methods</source>
+          <target state="translated">冲突处理方式</target>
+        </trans-unit>
+        <trans-unit id="ToastWithAvatarDescriptionText" translate="yes" xml:space="preserve">
+          <source>Easytidy application is running</source>
+          <target state="translated">EasyTidy应用程序已在运行中</target>
+        </trans-unit>
+        <trans-unit id="RemindText" translate="yes" xml:space="preserve">
+          <source>More reminder</source>
+          <target state="translated">多开提醒</target>
+        </trans-unit>
+        <trans-unit id="AddFilterSettingsCard.Header" translate="yes" xml:space="preserve">
+          <source>Add filter</source>
+          <target state="translated">添加过滤器</target>
+        </trans-unit>
+        <trans-unit id="AddFilterSettingsCard.Description" translate="yes" xml:space="preserve">
+          <source>Add custom additional filters</source>
+          <target state="translated">添加自定义附加的过滤器</target>
+        </trans-unit>
+        <trans-unit id="FilterButton.Content" translate="yes" xml:space="preserve">
+          <source>Add filter</source>
+          <target state="translated">添加过滤器</target>
+        </trans-unit>
+        <trans-unit id="FiltersListBlock.Text" translate="yes" xml:space="preserve">
+          <source>Filter List</source>
+          <target state="translated">过滤器列表</target>
+        </trans-unit>
+        <trans-unit id="AttributeBlock.Text" translate="yes" xml:space="preserve">
+          <source>Attribute</source>
+          <target state="translated">属性</target>
+        </trans-unit>
+        <trans-unit id="FilterNameBlock.Text" translate="yes" xml:space="preserve">
+          <source>Filter Name</source>
+          <target state="translated">过滤器名称</target>
+        </trans-unit>
+        <trans-unit id="FeaturesBlock.Text" translate="yes" xml:space="preserve">
+          <source>Characteristics</source>
+          <target state="translated">特性</target>
+        </trans-unit>
+        <trans-unit id="OtherBlock.Text" translate="yes" xml:space="preserve">
+          <source>Other</source>
+          <target state="translated">其他</target>
+        </trans-unit>
+        <trans-unit id="OperationBlock.Text" translate="yes" xml:space="preserve">
+          <source>Operation</source>
+          <target state="translated">操作</target>
+        </trans-unit>
+        <trans-unit id="EditButton.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Edit</source>
+          <target state="translated">编辑</target>
+        </trans-unit>
+        <trans-unit id="NavGeneralText" translate="yes" xml:space="preserve">
+          <source>General</source>
+          <target state="translated">常规</target>
+        </trans-unit>
+        <trans-unit id="DesktopText" translate="yes" xml:space="preserve">
+          <source>Desktop</source>
+          <target state="translated">桌面</target>
+        </trans-unit>
+        <trans-unit id="ModifyText" translate="yes" xml:space="preserve">
+          <source>Modify</source>
+          <target state="translated">修改</target>
+        </trans-unit>
+        <trans-unit id="SaveText" translate="yes" xml:space="preserve">
+          <source>Save</source>
+          <target state="translated">保存</target>
+        </trans-unit>
+        <trans-unit id="CancelText" translate="yes" xml:space="preserve">
+          <source>Cancel</source>
+          <target state="translated">取消</target>
+        </trans-unit>
+        <trans-unit id="AdditionalText" translate="yes" xml:space="preserve">
+          <source>Additional</source>
+          <target state="translated">新增</target>
+        </trans-unit>
+        <trans-unit id="SaveSuccessfulText" translate="yes" xml:space="preserve">
+          <source>Save Successful</source>
+          <target state="translated">保存成功</target>
+        </trans-unit>
+        <trans-unit id="SaveFailedText" translate="yes" xml:space="preserve">
+          <source>Save Failed</source>
+          <target state="translated">保存失败</target>
+        </trans-unit>
+        <trans-unit id="CustomConfigurationText" translate="yes" xml:space="preserve">
+          <source>Custom Configuration</source>
+          <target state="translated">自定义配置</target>
+        </trans-unit>
+        <trans-unit id="ModifySuccessfullyText" translate="yes" xml:space="preserve">
+          <source>Modify Successfully</source>
+          <target state="translated">修改成功</target>
+        </trans-unit>
+        <trans-unit id="ModificationFailedText" translate="yes" xml:space="preserve">
+          <source>Modification Failed</source>
+          <target state="translated">修改失败</target>
+        </trans-unit>
+        <trans-unit id="DeleteSuccessfulText" translate="yes" xml:space="preserve">
+          <source>Delete Successful</source>
+          <target state="translated">删除成功</target>
+        </trans-unit>
+        <trans-unit id="DeleteFailedText" translate="yes" xml:space="preserve">
+          <source>Delete Failed</source>
+          <target state="translated">删除失败</target>
+        </trans-unit>
+        <trans-unit id="ExecutionFailedText" translate="yes" xml:space="preserve">
+          <source>Execution Failed</source>
+          <target state="translated">执行失败</target>
+        </trans-unit>
+        <trans-unit id="DisabledSuccessfullyText" translate="yes" xml:space="preserve">
+          <source>Operation succeeded</source>
+          <target state="translated">操作成功</target>
+        </trans-unit>
+        <trans-unit id="DisablingFailedText" translate="yes" xml:space="preserve">
+          <source>Operation failed</source>
+          <target state="translated">操作失败</target>
+        </trans-unit>
+        <trans-unit id="DialogFilterNameBlock.Text" translate="yes" xml:space="preserve">
+          <source>Filter Name:</source>
+          <target state="translated">过滤器名称：</target>
+        </trans-unit>
+        <trans-unit id="DividerAttribute.Content" translate="yes" xml:space="preserve">
+          <source>Attribute</source>
+          <target state="translated">属性</target>
+        </trans-unit>
+        <trans-unit id="DialogFileSize.Content" translate="yes" xml:space="preserve">
+          <source>File Size:</source>
+          <target state="translated">文件大小：</target>
+        </trans-unit>
+        <trans-unit id="DialogCreationTime.Content" translate="yes" xml:space="preserve">
+          <source>Creation Time:</source>
+          <target state="translated">创建时间：</target>
+        </trans-unit>
+        <trans-unit id="DialogModifyTime.Content" translate="yes" xml:space="preserve">
+          <source>Modify Time:</source>
+          <target state="translated">修改时间：</target>
+        </trans-unit>
+        <trans-unit id="DialogVisitTime.Content" translate="yes" xml:space="preserve">
+          <source>Visit Time:</source>
+          <target state="translated">访问时间：</target>
+        </trans-unit>
+        <trans-unit id="DialogDividerCharacteristics.Content" translate="yes" xml:space="preserve">
+          <source>Characteristics</source>
+          <target state="translated">特性</target>
+        </trans-unit>
+        <trans-unit id="DialogArchive.Content" translate="yes" xml:space="preserve">
+          <source>Archive:</source>
+          <target state="translated">存档：</target>
+        </trans-unit>
+        <trans-unit id="DialogHide.Content" translate="yes" xml:space="preserve">
+          <source>Hidden:</source>
+          <target state="translated">隐藏：</target>
+        </trans-unit>
+        <trans-unit id="DialogReadonly.Content" translate="yes" xml:space="preserve">
+          <source>Read only:</source>
+          <target state="translated">只读：</target>
+        </trans-unit>
+        <trans-unit id="DialogSystem.Content" translate="yes" xml:space="preserve">
+          <source>System:</source>
+          <target state="translated">系统：</target>
+        </trans-unit>
+        <trans-unit id="DialogTemporary.Content" translate="yes" xml:space="preserve">
+          <source>Temporary:</source>
+          <target state="translated">临时：</target>
+        </trans-unit>
+        <trans-unit id="DialogDividerOthers.Content" translate="yes" xml:space="preserve">
+          <source>Others</source>
+          <target state="translated">其他</target>
+        </trans-unit>
+        <trans-unit id="DialogIncludedFiles.Content" translate="yes" xml:space="preserve">
+          <source>Included files:</source>
+          <target state="translated">包含的文件：</target>
+        </trans-unit>
+        <trans-unit id="DialogFileContent.Content" translate="yes" xml:space="preserve">
+          <source>File content:</source>
+          <target state="translated">文件内容：</target>
+        </trans-unit>
+        <trans-unit id="DeleteButton.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Delete</source>
+          <target state="translated">删除</target>
+        </trans-unit>
+        <trans-unit id="DialogTaskGroupName.Text" translate="yes" xml:space="preserve">
+          <source>Task Group Name:</source>
+          <target state="translated">任务组名：</target>
+        </trans-unit>
+        <trans-unit id="TaskGroupBox.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>Please enter or select</source>
+          <target state="translated">请输入或者选择</target>
+        </trans-unit>
+        <trans-unit id="DialogTaskName.Text" translate="yes" xml:space="preserve">
+          <source>Task Name:</source>
+          <target state="translated">任务名称：</target>
+        </trans-unit>
+        <trans-unit id="TaskNameBoxPlaceholder.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>Please enter the task name</source>
+          <target state="translated">请输入任务名称</target>
+        </trans-unit>
+        <trans-unit id="DialogProcessingRules.Text" translate="yes" xml:space="preserve">
+          <source>Processing Rules:</source>
+          <target state="translated">处理规则：</target>
+        </trans-unit>
+        <trans-unit id="DialogTaskRulePlaceholder.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>Please enter processing rules/regex</source>
+          <target state="translated">请输入处理规则/正则</target>
+        </trans-unit>
+        <trans-unit id="DialogRuleButton.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Rule example</source>
+          <target state="translated">规则示列</target>
+        </trans-unit>
+        <trans-unit id="DialogFilterButton.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Filter</source>
+          <target state="translated">筛选器</target>
+        </trans-unit>
+        <trans-unit id="DialogOperatingMethod.Text" translate="yes" xml:space="preserve">
+          <source>Mode of operation:</source>
+          <target state="translated">操作方式：</target>
+        </trans-unit>
+        <trans-unit id="DialogTaskOperateListPlaceholder.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>Please Select Operation Mode</source>
+          <target state="translated">请选择操作方式</target>
+        </trans-unit>
+        <trans-unit id="DialogSourceFolder.Text" translate="yes" xml:space="preserve">
+          <source>Source folder:</source>
+          <target state="translated">源文件夹：</target>
+        </trans-unit>
+        <trans-unit id="DialogSourcePlaceholder.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>Please select a folder, the default is the desktop</source>
+          <target state="translated">请选择文件夹，默认为桌面</target>
+        </trans-unit>
+        <trans-unit id="DialogSourceButton.Content" translate="yes" xml:space="preserve">
+          <source>Choice</source>
+          <target state="translated">选择</target>
+        </trans-unit>
+        <trans-unit id="DiaalogShortcut.Content" translate="yes" xml:space="preserve">
+          <source>Desktop shortcut to the destination folder</source>
+          <target state="translated">目标文件夹桌面快捷方式</target>
+        </trans-unit>
+        <trans-unit id="DialogTargetFolder.Text" translate="yes" xml:space="preserve">
+          <source>Target Folder:</source>
+          <target state="translated">目标文件夹：</target>
+        </trans-unit>
+        <trans-unit id="DialogTargetPlaceholder.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>Choose or enter folder directly</source>
+          <target state="translated">请选择或输入文件夹</target>
+        </trans-unit>
+        <trans-unit id="DialogTargetButton.Content" translate="yes" xml:space="preserve">
+          <source>Choice</source>
+          <target state="translated">选择</target>
+        </trans-unit>
+        <trans-unit id="DialogTaskEnable.Text" translate="yes" xml:space="preserve">
+          <source>Enable:</source>
+          <target state="translated">是否启用：</target>
+        </trans-unit>
+        <trans-unit id="DialogTaskGroup.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>Choice</source>
+          <target state="translated">选择</target>
+        </trans-unit>
+        <trans-unit id="DialogAtStartup.Text" translate="yes" xml:space="preserve">
+          <source>EasyTidy Startup:</source>
+          <target state="translated">EasyTidy启动时：</target>
+        </trans-unit>
+        <trans-unit id="DialogAsPlanned.Text" translate="yes" xml:space="preserve">
+          <source>According to the plan</source>
+          <target state="translated">按照计划</target>
+        </trans-unit>
+        <trans-unit id="DialogMinute.Text" translate="yes" xml:space="preserve">
+          <source>Minute</source>
+          <target state="translated">分钟</target>
+        </trans-unit>
+        <trans-unit id="DialogHour.Text" translate="yes" xml:space="preserve">
+          <source>Hour</source>
+          <target state="translated">小时</target>
+        </trans-unit>
+        <trans-unit id="DialogWeek.Text" translate="yes" xml:space="preserve">
+          <source>Which day of the week</source>
+          <target state="translated">每个星期的第几天</target>
+        </trans-unit>
+        <trans-unit id="DialogDayOfWeekBlock.Text" translate="yes" xml:space="preserve">
+          <source>(0=Sun to 6=Sat)</source>
+          <target state="translated">(0=周日 to 6=周六)</target>
+        </trans-unit>
+        <trans-unit id="DialogDayOfMonth.Text" translate="yes" xml:space="preserve">
+          <source>Day of the Month</source>
+          <target state="translated">每个月第几天</target>
+        </trans-unit>
+        <trans-unit id="DialogMonth.Text" translate="yes" xml:space="preserve">
+          <source>Month</source>
+          <target state="translated">月份</target>
+        </trans-unit>
+        <trans-unit id="DialogExpression.Text" translate="yes" xml:space="preserve">
+          <source>CRON expression</source>
+          <target state="translated">CRON 表达式</target>
+        </trans-unit>
+        <trans-unit id="DialogNotice.Text" translate="yes" xml:space="preserve">
+          <source>Support CRON expression, and CRON expression has higher priority than the values of the first five items</source>
+          <target state="translated">支持CRON表达式，CRON表达式优先级高于前5项的值</target>
+        </trans-unit>
+        <trans-unit id="DialogFirst.Text" translate="yes" xml:space="preserve">
+          <source>It will run when the time unit matches the value below.</source>
+          <target state="translated">时间单位匹配下方的值时，将会运行。</target>
+        </trans-unit>
+        <trans-unit id="DialogExplanation1.Text" translate="yes" xml:space="preserve">
+          <source>(Empty String) Matches any value</source>
+          <target state="translated">（空字符串）匹配任何值</target>
+        </trans-unit>
+        <trans-unit id="DialogExplanation2.Text" translate="yes" xml:space="preserve">
+          <source>Val1, Val2, ..., ValN Match Value List</source>
+          <target state="translated">Val1,Val2,...,ValN 匹配值列表</target>
+        </trans-unit>
+        <trans-unit id="DialogExplanation3.Text" translate="yes" xml:space="preserve">
+          <source>Match values range from n1 to n2</source>
+          <target state="translated">n1-n2 匹配n1到n2的值范围</target>
+        </trans-unit>
+        <trans-unit id="DialogExplanation4.Text" translate="yes" xml:space="preserve">
+          <source>n1-n2/n3 matches the range n1 to n2 for step n3</source>
+          <target state="translated">n1-n2/n3 与步骤n3匹配范围n1到n2</target>
+        </trans-unit>
+        <trans-unit id="DialogExplanation5.Text" translate="yes" xml:space="preserve">
+          <source>Example: Minutes = 15 Hours = 03 Month = 3-10/3 Day of the week = 1,3,5 The tasks will run at 3:15 AM on Mondays, Wednesdays, and Fridays in March, June, and September.</source>
+          <target state="translated">示列：分钟=15 小时=03 月份=3-10/3 每个星期的第几天=1,3,5任务将会在3，6，9月的每周1，3，5早上3点15分运行。</target>
+        </trans-unit>
+        <trans-unit id="GeneralSubFloderCard.Description" translate="yes" xml:space="preserve">
+          <source>Process folders, but not scan inside folders</source>
+          <target state="translated">处理文件夹，但不扫描文件夹内</target>
+        </trans-unit>
+        <trans-unit id="GeneralSubFloderCard.Header" translate="yes" xml:space="preserve">
+          <source>Subfolder</source>
+          <target state="translated">子文件夹</target>
+        </trans-unit>
+        <trans-unit id="GeneraIgnoreCard.Description" translate="yes" xml:space="preserve">
+          <source>Ignore files that are currently in use by other applications</source>
+          <target state="translated">忽略正在被其他应用程序使用的文件</target>
+        </trans-unit>
+        <trans-unit id="GeneraIgnoreCard.Header" translate="yes" xml:space="preserve">
+          <source>Files in use</source>
+          <target state="translated">使用中的文件</target>
+        </trans-unit>
+        <trans-unit id="GeneralIrrelevantFilesCard.Description" translate="yes" xml:space="preserve">
+          <source>Ignore irrelevant files or folders as well as system file folders</source>
+          <target state="translated">忽略无关的文件或者文件夹以及系统文件文件夹</target>
+        </trans-unit>
+        <trans-unit id="GeneralIrrelevantFilesCard.Header" translate="yes" xml:space="preserve">
+          <source>Irrelevant file</source>
+          <target state="translated">无关文件</target>
+        </trans-unit>
+        <trans-unit id="GeneralEmptyFileCard.Description" translate="yes" xml:space="preserve">
+          <source>Ignore files that size = 0 or empty folder</source>
+          <target state="translated">忽略大小为0的文件或者空文件夹</target>
+        </trans-unit>
+        <trans-unit id="GeneralEmptyFileCard.Header" translate="yes" xml:space="preserve">
+          <source>Empty file</source>
+          <target state="translated">空文件</target>
+        </trans-unit>
+        <trans-unit id="GeneralHiddenFileCard.Description" translate="yes" xml:space="preserve">
+          <source>Ignore hidden files</source>
+          <target state="translated">忽略隐藏的文件</target>
+        </trans-unit>
+        <trans-unit id="GeneralHiddenFileCard.Header" translate="yes" xml:space="preserve">
+          <source>Hidden files</source>
+          <target state="translated">隐藏文件</target>
+        </trans-unit>
+        <trans-unit id="GeneralAppSettings.Header" translate="yes" xml:space="preserve">
+          <source>App settings</source>
+          <target state="translated">应用设置</target>
+        </trans-unit>
+        <trans-unit id="GeneralAutoStartCard.Description" translate="yes" xml:space="preserve">
+          <source>Start EasyTidy at System Startup</source>
+          <target state="translated">系统启动时启动EasyTidy</target>
+        </trans-unit>
+        <trans-unit id="GeneralAutoStartCard.Header" translate="yes" xml:space="preserve">
+          <source>Auto start</source>
+          <target state="translated">自动启动</target>
+        </trans-unit>
+        <trans-unit id="GeneralCheckCard.Description" translate="yes" xml:space="preserve">
+          <source>Check for updates at startup</source>
+          <target state="translated">启动时检查更新</target>
+        </trans-unit>
+        <trans-unit id="GeneralCheckCard.Header" translate="yes" xml:space="preserve">
+          <source>Check for updates</source>
+          <target state="translated">检查更新</target>
+        </trans-unit>
+        <trans-unit id="GeneralMinimizeCard.Description" translate="yes" xml:space="preserve">
+          <source>Minimize to the notification area on startup</source>
+          <target state="translated">启动时最小化到通知区域</target>
+        </trans-unit>
+        <trans-unit id="GeneralMinimizeCard.Header" translate="yes" xml:space="preserve">
+          <source>Minimize</source>
+          <target state="translated">最小化</target>
+        </trans-unit>
+        <trans-unit id="GeneralBack.Header" translate="yes" xml:space="preserve">
+          <source>Backup/Restore</source>
+          <target state="translated">备份/还原</target>
+        </trans-unit>
+        <trans-unit id="GeneralBackCard.Description" translate="yes" xml:space="preserve">
+          <source>If necessary, EasyTidy will automatically restart. Check the automatic backup to back up every time the software starts</source>
+          <target state="translated">如果有需要，EasyTidy将自动重启，勾选自动备份将在每次软件启动时进行备份</target>
+        </trans-unit>
+        <trans-unit id="GeneralBackCard.Header" translate="yes" xml:space="preserve">
+          <source>Backup and restore settings</source>
+          <target state="translated">备份和还原设置</target>
+        </trans-unit>
+        <trans-unit id="GeneralBackButton.Content" translate="yes" xml:space="preserve">
+          <source>Backup</source>
+          <target state="translated">备份</target>
+        </trans-unit>
+        <trans-unit id="GeneralRestoreButton.Content" translate="yes" xml:space="preserve">
+          <source>Restore</source>
+          <target state="translated">还原</target>
+        </trans-unit>
+        <trans-unit id="GeneralAutoBackup.Content" translate="yes" xml:space="preserve">
+          <source>Auto backup</source>
+          <target state="translated">自动备份</target>
+        </trans-unit>
+        <trans-unit id="GeneralLocationCard.Header" translate="yes" xml:space="preserve">
+          <source>Location</source>
+          <target state="translated">位置</target>
+        </trans-unit>
+        <trans-unit id="GeneralBackupMethod.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>Select Backup method</source>
+          <target state="translated">选择备份方式</target>
+        </trans-unit>
+        <trans-unit id="GeneralAddress.Text" translate="yes" xml:space="preserve">
+          <source>Address:</source>
+          <target state="translated">地址：</target>
+        </trans-unit>
+        <trans-unit id="GeneralUsername.Text" translate="yes" xml:space="preserve">
+          <source>Username:</source>
+          <target state="translated">用户名：</target>
+        </trans-unit>
+        <trans-unit id="GeneralPassword.Text" translate="yes" xml:space="preserve">
+          <source>Password:</source>
+          <target state="translated">密码：</target>
+        </trans-unit>
+        <trans-unit id="GeneralBackupInformation.Header" translate="yes" xml:space="preserve">
+          <source>Backup information</source>
+          <target state="translated">备份信息</target>
+        </trans-unit>
+        <trans-unit id="GeneralStatus.Text" translate="yes" xml:space="preserve">
+          <source>Version:</source>
+          <target state="translated">版本：</target>
+        </trans-unit>
+        <trans-unit id="GeneralRefresh.Text" translate="yes" xml:space="preserve">
+          <source>Refresh</source>
+          <target state="translated">刷新</target>
+        </trans-unit>
+        <trans-unit id="GeneralFilename.Text" translate="yes" xml:space="preserve">
+          <source>Filename:</source>
+          <target state="translated">文件名：</target>
+        </trans-unit>
+        <trans-unit id="GeneralSourceComputer.Text" translate="yes" xml:space="preserve">
+          <source>Source Computer:</source>
+          <target state="translated">源计算机：</target>
+        </trans-unit>
+        <trans-unit id="GeneralCreatedOn.Text" translate="yes" xml:space="preserve">
+          <source>Created on:</source>
+          <target state="translated">创建于：</target>
+        </trans-unit>
+        <trans-unit id="GeneralUseDocumentation.Text" translate="yes" xml:space="preserve">
+          <source>Documentation</source>
+          <target state="translated">使用文档</target>
+        </trans-unit>
+        <trans-unit id="GereralReport.Text" translate="yes" xml:space="preserve">
+          <source>Report BUG</source>
+          <target state="translated">报告BUG</target>
+        </trans-unit>
+        <trans-unit id="GeneralRequestFeature.Text" translate="yes" xml:space="preserve">
+          <source>Request Feature</source>
+          <target state="translated">申请功能</target>
+        </trans-unit>
+        <trans-unit id="TaskSettingsPage.ModuleDescription" translate="yes" xml:space="preserve">
+          <source>Users can add file processing tasks and professionally configure the execution mode, including selecting automatic execution, one-time execution only, and creating desktop shortcuts and adding backup tasks.</source>
+          <target state="translated">用户可添加文件处理任务，并能够对其执行方式进行专业设置，包括选择自动执行、仅执行一次，亦或是创建桌面快捷方式、添加备份任务等操作。</target>
+        </trans-unit>
+        <trans-unit id="TaskSettingsPage.ModuleTitle" translate="yes" xml:space="preserve">
+          <source>Task Management</source>
+          <target state="translated">任务管理</target>
+        </trans-unit>
+        <trans-unit id="TaskAddTask.Description" translate="yes" xml:space="preserve">
+          <source>Add files to a tidy task</source>
+          <target state="translated">添加文件自动整理的任务</target>
+        </trans-unit>
+        <trans-unit id="TaskAddTask.Header" translate="yes" xml:space="preserve">
+          <source>Add Task</source>
+          <target state="translated">添加任务</target>
+        </trans-unit>
+        <trans-unit id="TaskAddTaskButton.Content" translate="yes" xml:space="preserve">
+          <source>Add Task</source>
+          <target state="translated">添加任务</target>
+        </trans-unit>
+        <trans-unit id="TaskDisplay.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>Display by group</source>
+          <target state="translated">按分组显示</target>
+        </trans-unit>
+        <trans-unit id="TaskDisplay.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Filter by group</source>
+          <target state="translated">按分组筛选</target>
+        </trans-unit>
+        <trans-unit id="TaskListView.Text" translate="yes" xml:space="preserve">
+          <source>Task List</source>
+          <target state="translated">任务列表</target>
+        </trans-unit>
+        <trans-unit id="TaskListTaskName.Text" translate="yes" xml:space="preserve">
+          <source>Task Name</source>
+          <target state="translated">任务名称</target>
+        </trans-unit>
+        <trans-unit id="TaskListSource.Text" translate="yes" xml:space="preserve">
+          <source>Source Folder</source>
+          <target state="translated">源文件夹</target>
+        </trans-unit>
+        <trans-unit id="TaskListTarget.Text" translate="yes" xml:space="preserve">
+          <source>Target folder</source>
+          <target state="translated">目标文件夹</target>
+        </trans-unit>
+        <trans-unit id="TaskListShortcuts.Text" translate="yes" xml:space="preserve">
+          <source>Desktop shortcuts</source>
+          <target state="translated">桌面快捷方式</target>
+        </trans-unit>
+        <trans-unit id="TaskListEnable.Text" translate="yes" xml:space="preserve">
+          <source>Enable</source>
+          <target state="translated">是否启用</target>
+        </trans-unit>
+        <trans-unit id="TaskListOperation.Text" translate="yes" xml:space="preserve">
+          <source>Operation</source>
+          <target state="translated">操作</target>
+        </trans-unit>
+        <trans-unit id="RunButton.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Execute once</source>
+          <target state="translated">执行一次</target>
+        </trans-unit>
+        <trans-unit id="IsEnableButton.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Enable</source>
+          <target state="translated">是否禁用</target>
+        </trans-unit>
+        <trans-unit id="ThemeMaterial.Header" translate="yes" xml:space="preserve">
+          <source>Material</source>
+          <target state="translated">材质</target>
+        </trans-unit>
+        <trans-unit id="ThemeMaterial.Description" translate="yes" xml:space="preserve">
+          <source>Change the appearance of the backdrop material behind your app. You can choose from mica, acrylic, or transparent options.</source>
+          <target state="translated">更改您应用程序背景的外观效果。您可以选择云母、亚克力或透明选项。</target>
+        </trans-unit>
+        <trans-unit id="ThemeNone.Content" translate="yes" xml:space="preserve">
+          <source>None</source>
+          <target state="translated">无</target>
+        </trans-unit>
+        <trans-unit id="ThemeMica.Content" translate="yes" xml:space="preserve">
+          <source>Mica</source>
+          <target state="translated">云母</target>
+        </trans-unit>
+        <trans-unit id="ThemeMicaAlt.Content" translate="yes" xml:space="preserve">
+          <source>Mica Alt</source>
+          <target state="translated">云母 Alt</target>
+        </trans-unit>
+        <trans-unit id="ThemeDesktopAcrylic.Content" translate="yes" xml:space="preserve">
+          <source>Desktop Acrylic</source>
+          <target state="translated">背景亚克力</target>
+        </trans-unit>
+        <trans-unit id="ThemeAcrylicBase.Content" translate="yes" xml:space="preserve">
+          <source>Acrylic Base</source>
+          <target state="translated">亚克力</target>
+        </trans-unit>
+        <trans-unit id="ThemeAcrylicThin.Content" translate="yes" xml:space="preserve">
+          <source>Acrylic Thin</source>
+          <target state="translated">半透明亚克力</target>
+        </trans-unit>
+        <trans-unit id="ThemeTransparent.Content" translate="yes" xml:space="preserve">
+          <source>Transparent</source>
+          <target state="translated">透明</target>
+        </trans-unit>
+        <trans-unit id="TrayIconStopMonitoring.Text" translate="yes" xml:space="preserve">
+          <source>Stop monitoring</source>
+          <target state="translated">停止监控</target>
+        </trans-unit>
+        <trans-unit id="TrayIconExecuteOnce.Text" translate="yes" xml:space="preserve">
+          <source>Execute once</source>
+          <target state="translated">执行一次</target>
+        </trans-unit>
+        <trans-unit id="TrayIconPreferences.Text" translate="yes" xml:space="preserve">
+          <source>Preferences</source>
+          <target state="translated">偏好设置</target>
+        </trans-unit>
+        <trans-unit id="TrayIconScreen.Text" translate="yes" xml:space="preserve">
+          <source>Show/Hide</source>
+          <target state="translated">显示/隐藏界面</target>
+        </trans-unit>
+        <trans-unit id="TrayIconRestart.Text" translate="yes" xml:space="preserve">
+          <source>Restart</source>
+          <target state="translated">重启应用</target>
+        </trans-unit>
+        <trans-unit id="TrayIconExit.Text" translate="yes" xml:space="preserve">
+          <source>Exit</source>
+          <target state="translated">退出程序</target>
+        </trans-unit>
+        <trans-unit id="MainTitleBarTheme.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Toggle Theme</source>
+          <target state="translated">切换主题</target>
+        </trans-unit>
+        <trans-unit id="MainTitleBarNav.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Change Navigation</source>
+          <target state="translated">变更导航</target>
+        </trans-unit>
+        <trans-unit id="MainSuggestBox.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>Search</source>
+          <target state="translated">搜索</target>
+        </trans-unit>
+        <trans-unit id="SettingsLanguageCard.Header" translate="yes" xml:space="preserve">
+          <source>Application language</source>
+          <target state="translated">应用程序语言</target>
+        </trans-unit>
+        <trans-unit id="SettingsLanguageCard.Description" translate="yes" xml:space="preserve">
+          <source>EasyTidy will use OS language by default</source>
+          <target state="translated">默认情况下 EasyTidy 将使用 OS 语言</target>
+        </trans-unit>
+        <trans-unit id="Default_language" translate="yes" xml:space="preserve">
+          <source>Windows default</source>
+          <target state="translated">Windows默认</target>
+        </trans-unit>
+        <trans-unit id="Arabic_Saudi_Arabia_Language" translate="yes" xml:space="preserve">
+          <source>Arabic(Saudi Arabia)</source>
+          <target state="translated">阿拉伯语（沙特阿拉伯）</target>
+        </trans-unit>
+        <trans-unit id="LanguageRestartInfo.Title" translate="yes" xml:space="preserve">
+          <source>Restart EasyTidy for language change to effect</source>
+          <target state="translated">重启 EasyTidy 以使语言更改生效</target>
+        </trans-unit>
+        <trans-unit id="LanguageRestartInfoButton.Content" translate="yes" xml:space="preserve">
+          <source>Restart</source>
+          <target state="translated">重启</target>
+        </trans-unit>
+        <trans-unit id="Czech_Language" translate="yes" xml:space="preserve">
+          <source>Czech</source>
+          <target state="translated">捷克语</target>
+        </trans-unit>
+        <trans-unit id="German_Language" translate="yes" xml:space="preserve">
+          <source>German</source>
+          <target state="translated">德语</target>
+        </trans-unit>
+        <trans-unit id="English_Language" translate="yes" xml:space="preserve">
+          <source>English</source>
+          <target state="translated">英语</target>
+        </trans-unit>
+        <trans-unit id="Spanish_Language" translate="yes" xml:space="preserve">
+          <source>Spanish</source>
+          <target state="translated">西班牙语</target>
+        </trans-unit>
+        <trans-unit id="Persian_Farsi_Language" translate="yes" xml:space="preserve">
+          <source>Persian (Farsi)</source>
+          <target state="translated">波斯语(法尔西语)</target>
+        </trans-unit>
+        <trans-unit id="French_Language" translate="yes" xml:space="preserve">
+          <source>French</source>
+          <target state="translated">法语</target>
+        </trans-unit>
+        <trans-unit id="Hebrew_Israel_Language" translate="yes" xml:space="preserve">
+          <source>Hebrew (Israel)</source>
+          <target state="translated">希伯来语(以色列)</target>
+        </trans-unit>
+        <trans-unit id="Hungarian_Language" translate="yes" xml:space="preserve">
+          <source>Hungarian</source>
+          <target state="translated">匈牙利语</target>
+        </trans-unit>
+        <trans-unit id="Italian_Language" translate="yes" xml:space="preserve">
+          <source>Italian</source>
+          <target state="translated">意大利语</target>
+        </trans-unit>
+        <trans-unit id="Japanese_Language" translate="yes" xml:space="preserve">
+          <source>Japanese</source>
+          <target state="translated">日语</target>
+        </trans-unit>
+        <trans-unit id="Korean_Language" translate="yes" xml:space="preserve">
+          <source>Korean</source>
+          <target state="translated">韩语</target>
+        </trans-unit>
+        <trans-unit id="Dutch_Language" translate="yes" xml:space="preserve">
+          <source>Dutch</source>
+          <target state="translated">荷兰语</target>
+        </trans-unit>
+        <trans-unit id="Polish_Language" translate="yes" xml:space="preserve">
+          <source>Polish</source>
+          <target state="translated">波兰语</target>
+        </trans-unit>
+        <trans-unit id="Portuguese_Brazil_Language" translate="yes" xml:space="preserve">
+          <source>Portuguese (Brazil)</source>
+          <target state="translated">葡萄牙语(巴西)</target>
+        </trans-unit>
+        <trans-unit id="Portuguese_Portugal_Language" translate="yes" xml:space="preserve">
+          <source>Portuguese (Portugal)</source>
+          <target state="translated">葡萄牙语(葡萄牙)</target>
+        </trans-unit>
+        <trans-unit id="Russian_Language" translate="yes" xml:space="preserve">
+          <source>Russian</source>
+          <target state="translated">俄语</target>
+        </trans-unit>
+        <trans-unit id="Swedish_Language" translate="yes" xml:space="preserve">
+          <source>Swedish</source>
+          <target state="translated">瑞典语</target>
+        </trans-unit>
+        <trans-unit id="Turkish_Language" translate="yes" xml:space="preserve">
+          <source>Turkish</source>
+          <target state="translated">土耳其语</target>
+        </trans-unit>
+        <trans-unit id="Ukrainian_Language" translate="yes" xml:space="preserve">
+          <source>Ukrainian</source>
+          <target state="translated">乌克兰语</target>
+        </trans-unit>
+        <trans-unit id="Chinese_Simplified_Language" translate="yes" xml:space="preserve">
+          <source>Chinese (Simplified)</source>
+          <target state="translated">简体中文</target>
+        </trans-unit>
+        <trans-unit id="Chinese_Traditional_Language" translate="yes" xml:space="preserve">
+          <source>Chinese (Traditional)</source>
+          <target state="translated">中文(繁体)</target>
+        </trans-unit>
+        <trans-unit id="BackupSuccessTips" translate="yes" xml:space="preserve">
+          <source>Backup successful</source>
+          <target state="translated">备份成功</target>
+        </trans-unit>
+        <trans-unit id="BackupFailedTips" translate="yes" xml:space="preserve">
+          <source>Backup failed</source>
+          <target state="translated">备份失败</target>
+        </trans-unit>
+        <trans-unit id="BackupSelectionTips" translate="yes" xml:space="preserve">
+          <source>Please select the backup type</source>
+          <target state="translated">请选择备份类型</target>
+        </trans-unit>
+        <trans-unit id="DialogRegularTaskRunningTime.Header" translate="yes" xml:space="preserve">
+          <source>Interval</source>
+          <target state="translated">间隔</target>
+        </trans-unit>
+        <trans-unit id="RegularTaskRunningBlock.Text" translate="yes" xml:space="preserve">
+          <source>Every:</source>
+          <target state="translated">每：</target>
+        </trans-unit>
+        <trans-unit id="FileChangeDelayText.Header" translate="yes" xml:space="preserve">
+          <source>Delay(Second)</source>
+          <target state="translated">延迟(秒)</target>
+        </trans-unit>
+        <trans-unit id="MinuteFormatInfo" translate="yes" xml:space="preserve">
+          <source>Minute format error</source>
+          <target state="translated">分钟格式错误</target>
+        </trans-unit>
+        <trans-unit id="HourFormatInfo" translate="yes" xml:space="preserve">
+          <source>Hour format error</source>
+          <target state="translated">小时格式错误</target>
+        </trans-unit>
+        <trans-unit id="WeeksFormatInfo" translate="yes" xml:space="preserve">
+          <source>Weeks format error</source>
+          <target state="translated">星期格式错误</target>
+        </trans-unit>
+        <trans-unit id="DateFormatInfo" translate="yes" xml:space="preserve">
+          <source>Date format error</source>
+          <target state="translated">日期格式错误</target>
+        </trans-unit>
+        <trans-unit id="MonthFormatInfo" translate="yes" xml:space="preserve">
+          <source>Month format error</source>
+          <target state="translated">月份格式错误</target>
+        </trans-unit>
+        <trans-unit id="CronExpressionInfo" translate="yes" xml:space="preserve">
+          <source>Invalid CRON expression format</source>
+          <target state="translated">无效的CRON表达式</target>
+        </trans-unit>
+        <trans-unit id="GroupInformationVerification" translate="yes" xml:space="preserve">
+          <source>Group name can't be empty</source>
+          <target state="translated">组名不能为空</target>
+        </trans-unit>
+        <trans-unit id="GroupInformationVerificationAdd" translate="yes" xml:space="preserve">
+          <source>Please enter or select a group name</source>
+          <target state="translated">请选择或者输入组名</target>
+        </trans-unit>
+        <trans-unit id="FilterNameValidation" translate="yes" xml:space="preserve">
+          <source>Please enter a filter name</source>
+          <target state="translated">请输入过滤器名称</target>
+        </trans-unit>
+        <trans-unit id="ValidateDelay" translate="yes" xml:space="preserve">
+          <source>Delay can only enter seconds</source>
+          <target state="translated">延迟只能输入秒数</target>
+        </trans-unit>
+        <trans-unit id="CreateShortcutFailedText" translate="yes" xml:space="preserve">
+          <source>Failed to create desktop shortcut</source>
+          <target state="translated">桌面快捷方式创建失败</target>
+        </trans-unit>
+        <trans-unit id="BackupPathText" translate="yes" xml:space="preserve">
+          <source>Please select a backup folder path</source>
+          <target state="translated">请选择备份文件夹路径</target>
+        </trans-unit>
+        <trans-unit id="BackupStatusText" translate="yes" xml:space="preserve">
+          <source>Current setting match</source>
+          <target state="translated">当前设置匹配</target>
+        </trans-unit>
+        <trans-unit id="RegardedExpressionText" translate="yes" xml:space="preserve">
+          <source>Regarded as a regular expression</source>
+          <target state="translated">视为正则表达式</target>
+        </trans-unit>
+        <trans-unit id="AllFoldersText" translate="yes" xml:space="preserve">
+          <source>All folders</source>
+          <target state="translated">所有文件夹</target>
+        </trans-unit>
+        <trans-unit id="AllFoldersWithoutOtherMatches" translate="yes" xml:space="preserve">
+          <source>All folders without other matches</source>
+          <target state="translated">所有不含其他匹配的文件夹</target>
+        </trans-unit>
+        <trans-unit id="AllFoldersStartingWithrobot" translate="yes" xml:space="preserve">
+          <source>All folders that start with "robot"</source>
+          <target state="translated">所有以 "robot" 开头的文件夹</target>
+        </trans-unit>
+        <trans-unit id="AllFoldersContainingrobot" translate="yes" xml:space="preserve">
+          <source>All folders containing "robot"</source>
+          <target state="translated">所有包含 "robot" 的文件夹</target>
+        </trans-unit>
+        <trans-unit id="AllFoldersNamed_robot_LocatedUnder" translate="yes" xml:space="preserve">
+          <source>All folders named "robot" located in "C:\"</source>
+          <target state="translated">所有位于"C:下的名为 "robot" 的文件夹</target>
+        </trans-unit>
+        <trans-unit id="Use_Or_ToSeparate" translate="yes" xml:space="preserve">
+          <source>Use ";" or "|" to separate</source>
+          <target state="translated">使用 ";" 或 "|" 来分隔</target>
+        </trans-unit>
+        <trans-unit id="UseToExcludeFoldersStartingWithmy" translate="yes" xml:space="preserve">
+          <source>Use "/" to exclude folders starting with "my"</source>
+          <target state="translated">使用 "/" 来不包含由 "my" 开头的文件夹</target>
+        </trans-unit>
+        <trans-unit id="AllFiles" translate="yes" xml:space="preserve">
+          <source>All files</source>
+          <target state="translated">所有文件</target>
+        </trans-unit>
+        <trans-unit id="AllFilesWithNoOtherMatches" translate="yes" xml:space="preserve">
+          <source>All other unmatched files</source>
+          <target state="translated">所有不含其他匹配的文件</target>
+        </trans-unit>
+        <trans-unit id="AllFilesWithTheExtension" translate="yes" xml:space="preserve">
+          <source>All files with the extension "jpg"</source>
+          <target state="translated">所有扩展名为 "jpg" 的文件</target>
+        </trans-unit>
+        <trans-unit id="AllFilesBeginningWith" translate="yes" xml:space="preserve">
+          <source>All files beginning with "penguin"</source>
+          <target state="translated">所有以 "penguin" 开头的文件</target>
+        </trans-unit>
+        <trans-unit id="AllFilesContains" translate="yes" xml:space="preserve">
+          <source>All files containing "penguin"</source>
+          <target state="translated">所有包含 "penguin" 的文件</target>
+        </trans-unit>
+        <trans-unit id="All_FilesUnder" translate="yes" xml:space="preserve">
+          <source>All "jpg" files under the "Folder"</source>
+          <target state="translated">文件夹下的所有"jpg"文件</target>
+        </trans-unit>
+        <trans-unit id="UseDelimiter" translate="yes" xml:space="preserve">
+          <source>Use ";" or "|" to separate</source>
+          <target state="translated">使用 ";" 或 "|" 來分隔</target>
+        </trans-unit>
+        <trans-unit id="UseDelimitersToExclude" translate="yes" xml:space="preserve">
+          <source>Use "/" to exclude files starting with "sea"</source>
+          <target state="translated">使用 "/" 排除以 "sea "开头的文件</target>
+        </trans-unit>
+        <trans-unit id="CompressedFile" translate="yes" xml:space="preserve">
+          <source>Compressed file</source>
+          <target state="translated">压缩文件</target>
+        </trans-unit>
+        <trans-unit id="Document" translate="yes" xml:space="preserve">
+          <source>Document</source>
+          <target state="translated">文档</target>
+        </trans-unit>
+        <trans-unit id="Photograph" translate="yes" xml:space="preserve">
+          <source>Pictures</source>
+          <target state="translated">图片</target>
+        </trans-unit>
+        <trans-unit id="Music" translate="yes" xml:space="preserve">
+          <source>Music</source>
+          <target state="translated">音乐</target>
+        </trans-unit>
+        <trans-unit id="PresentationAndWorksheet" translate="yes" xml:space="preserve">
+          <source>Presentations &amp; Worksheets</source>
+          <target state="translated">演示文稿和工作表</target>
+        </trans-unit>
+        <trans-unit id="Video" translate="yes" xml:space="preserve">
+          <source>Video</source>
+          <target state="translated">视频</target>
+        </trans-unit>
+        <trans-unit id="HandlingFolderRules" translate="yes" xml:space="preserve">
+          <source>Rules for handling folders</source>
+          <target state="translated">用于处理文件夹的规则</target>
+        </trans-unit>
+        <trans-unit id="HandlingRulesForFiles" translate="yes" xml:space="preserve">
+          <source>Rules for processing files</source>
+          <target state="translated">用于处理文件的规则</target>
+        </trans-unit>
+        <trans-unit id="HandlingRulesForCustom" translate="yes" xml:space="preserve">
+          <source>None</source>
+          <target state="translated">None</target>
+        </trans-unit>
+        <trans-unit id="ExecutionDate.Title" translate="yes" xml:space="preserve">
+          <source>Execution Date</source>
+          <target state="translated">执行日期</target>
+        </trans-unit>
+        <trans-unit id="VerificationSuccessful" translate="yes" xml:space="preserve">
+          <source>Validation was successful, execution time of the past {0} times</source>
+          <target state="translated">验证成功，最近{0}次的执行时间</target>
+        </trans-unit>
+        <trans-unit id="VerificationFailed" translate="yes" xml:space="preserve">
+          <source>Verification failed, conflict between day of the week and day of the month</source>
+          <target state="translated">验证失败，每个星期第几天跟每月第几天存在冲突</target>
+        </trans-unit>
+        <trans-unit id="Close" translate="yes" xml:space="preserve">
+          <source>Close</source>
+          <target state="translated">关闭</target>
+        </trans-unit>
+        <trans-unit id="Test" translate="yes" xml:space="preserve">
+          <source>Test</source>
+          <target state="translated">测试</target>
+        </trans-unit>
+        <trans-unit id="Status" translate="yes" xml:space="preserve">
+          <source>Status</source>
+          <target state="translated">状态</target>
+        </trans-unit>
+        <trans-unit id="CurrentVersion" translate="yes" xml:space="preserve">
+          <source>Current version v{0}</source>
+          <target state="translated">当前版本 v{0}</target>
+        </trans-unit>
+        <trans-unit id="CheckingForNewVersion" translate="yes" xml:space="preserve">
+          <source>Checking for new version</source>
+          <target state="translated">检查新版本</target>
+        </trans-unit>
+        <trans-unit id="FoundANewVersion" translate="yes" xml:space="preserve">
+          <source>We found a new version {0} Created at {1} and Published at {2}</source>
+          <target state="translated">我们发现了一个新版本{0}创建于{1}发布于{2}</target>
+        </trans-unit>
+        <trans-unit id="LatestVersion" translate="yes" xml:space="preserve">
+          <source>You are using latest version</source>
+          <target state="translated">您正在使用最新版本</target>
+        </trans-unit>
+        <trans-unit id="ErrorConnection" translate="yes" xml:space="preserve">
+          <source>Error Connection</source>
+          <target state="translated">连接错误</target>
+        </trans-unit>
+        <trans-unit id="ReleaseNotes" translate="yes" xml:space="preserve">
+          <source>Release Notes</source>
+          <target state="translated">发行说明</target>
+        </trans-unit>
+        <trans-unit id="NewNameAndPath" translate="yes" xml:space="preserve">
+          <source>New name and path:</source>
+          <target state="translated">路径及新名称:</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet.Text" translate="yes" xml:space="preserve">
+          <source>Replace Using File Creation Date &amp; Time</source>
+          <target state="translated">替换使用文件创建日期和时间</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_FullYear" translate="yes" xml:space="preserve">
+          <source>Years may be represented by four or five digits, depending on the calendaring system used.</source>
+          <target state="translated">由四位或者五位数字表示年份，具体取决于使用的日历。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_YearLastTwoDigits" translate="yes" xml:space="preserve">
+          <source>Years represented only by the last two digits. For single-digit years, a leading zero has been added.</source>
+          <target state="translated">仅由最后两位数字表示的年份，对于单位数年份，添加了前导零。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_YearLastDigit" translate="yes" xml:space="preserve">
+          <source>Only the last digit of the year is represented.</source>
+          <target state="translated">仅由最后一位数字表示年份。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_MonthName" translate="yes" xml:space="preserve">
+          <source>Month Names.</source>
+          <target state="translated">月份名称。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_MonthNameAbbr" translate="yes" xml:space="preserve">
+          <source>Abbreviated names of the months.</source>
+          <target state="translated">月份缩写名称。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_MonthDigitLZero" translate="yes" xml:space="preserve">
+          <source>A month as a numeral, leading zero means unit month.</source>
+          <target state="translated">月作为数字，前导零表示单位月。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_DayName" translate="yes" xml:space="preserve">
+          <source>Names of days of the week.</source>
+          <target state="translated">星期的名称。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_MonthDigit" translate="yes" xml:space="preserve">
+          <source>Months without a leading zero as a digit for the units place.</source>
+          <target state="translated">单位数月份没有前导零的月份作为数字。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_DayNameAbbr" translate="yes" xml:space="preserve">
+          <source>Abbreviated names of the days of the week.</source>
+          <target state="translated">星期几的缩写名称。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_DayDigitLZero" translate="yes" xml:space="preserve">
+          <source>A day of the month, written with a numeral, with leading zeros indicating days with only one significant digit.</source>
+          <target state="translated">一个月中的某一天，以数字表示，前导零表示一位数的天数。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_DayDigit" translate="yes" xml:space="preserve">
+          <source>A day of the month represented as a number, without a leading zero for single-digit days.</source>
+          <target state="translated">一个月中的某一天为数字，在一位数的天数中不带前导零。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_HoursLZero" translate="yes" xml:space="preserve">
+          <source>The number of hours with leading zeros in 1-digit hours.</source>
+          <target state="translated">以1位数小时为前导零的小时数。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_Hours" translate="yes" xml:space="preserve">
+          <source>An hour number without any leading zero for a one-digit hour count.</source>
+          <target state="translated">一位数小时数不带前导零的小时数。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_MinutesLZero" translate="yes" xml:space="preserve">
+          <source>Number of minutes with leading zero (the minutes as a one-digit number).</source>
+          <target state="translated">带前导零的分钟数(以一位数为单位的分钟数)。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_Minutes" translate="yes" xml:space="preserve">
+          <source>The number of minutes without leading zeros.</source>
+          <target state="translated">一位数分钟数不带前导零的分钟数。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_SecondsLZero" translate="yes" xml:space="preserve">
+          <source>Seconds leading with a single digit second prepended with a zero.</source>
+          <target state="translated">以1位数秒为前导零的秒数。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_Seconds" translate="yes" xml:space="preserve">
+          <source>Number of seconds without leading zeros in single digits.</source>
+          <target state="translated">在一位数秒内不带前导零的秒数。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_MilliSeconds3D" translate="yes" xml:space="preserve">
+          <source>Millisecond, represented by padding three digits.</source>
+          <target state="translated">用完整三位数表示的毫秒数。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_MilliSeconds2D" translate="yes" xml:space="preserve">
+          <source>Millisecond count represented by just the first two digits.</source>
+          <target state="translated">仅由前两位数字表示的毫秒数。</target>
+        </trans-unit>
+        <trans-unit id="DateTimeCheatSheet_MilliSeconds1D" translate="yes" xml:space="preserve">
+          <source>Milliseconds since the epoch expressed as the number of whole milliseconds.</source>
+          <target state="translated">仅由第一个数字表示的毫秒数。</target>
+        </trans-unit>
+        <trans-unit id="CounterCheatSheet_Simple" translate="yes" xml:space="preserve">
+          <source>A simple counter that can be used at any position in the replacement string.</source>
+          <target state="translated">一个简单的计数器，可在替换字符串中的任意位置使用。</target>
+        </trans-unit>
+        <trans-unit id="CounterCheatSheet_Start" translate="yes" xml:space="preserve">
+          <source>Counter with a custom initial value.</source>
+          <target state="translated">具有自定义起始值的计数器。</target>
+        </trans-unit>
+        <trans-unit id="CounterCheatSheet_Increment" translate="yes" xml:space="preserve">
+          <source>A counter with a customizable increment value.</source>
+          <target state="translated">具有自定义增量值的计数器。</target>
+        </trans-unit>
+        <trans-unit id="CounterCheatSheet_Padding" translate="yes" xml:space="preserve">
+          <source>A counter with a customizable number of leading zeros for padding.</source>
+          <target state="translated">具有自定义数量的前导填充零的计数器。</target>
+        </trans-unit>
+        <trans-unit id="CounterCheatSheet_Complex" translate="yes" xml:space="preserve">
+          <source>Display a counter of multiple custom attributes.</source>
+          <target state="translated">显示多个自定义属性的计数器。</target>
+        </trans-unit>
+        <trans-unit id="RandomizerCheatSheet_Alnum" translate="yes" xml:space="preserve">
+          <source>Random string of custom length, containing uppercase, lowercase letter and 0-9 digits.</source>
+          <target state="translated">包含大写字母、小写字母和 0-9 位、自定义长度的随机字符串。</target>
+        </trans-unit>
+        <trans-unit id="RandomizerCheatSheet_Alpha" translate="yes" xml:space="preserve">
+          <source>Random string with uppercase and lowercase letters, custom length.</source>
+          <target state="translated">包含大写字母和小写字母的随机字符串，自定义长度。</target>
+        </trans-unit>
+        <trans-unit id="RandomizerCheatSheet_Digit" translate="yes" xml:space="preserve">
+          <source>A random string that contains the number 0-9 and has a custom length.</source>
+          <target state="translated">包含数字 0-9 且具有自定义长度的随机字符串。</target>
+        </trans-unit>
+        <trans-unit id="RandomizerCheatSheet_Uuid" translate="yes" xml:space="preserve">
+          <source>A random UUID as defined by the v4 specification.</source>
+          <target state="translated">v4 规范中所载的随机 UUID。</target>
+        </trans-unit>
+        <trans-unit id="CounterCheatSheet_Title.Text" translate="yes" xml:space="preserve">
+          <source>Replace with advanced counter grammar</source>
+          <target state="translated">使用高级计数器语法替换</target>
+        </trans-unit>
+        <trans-unit id="RandomizerCheatSheet_Title.Text" translate="yes" xml:space="preserve">
+          <source>Replace with random value</source>
+          <target state="translated">使用随机值替换</target>
+        </trans-unit>
+        <trans-unit id="PriorityRules.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>If multiple rules match, which rule takes precedence</source>
+          <target state="translated">如果有多个规则，选择优先处理哪个规则</target>
+        </trans-unit>
+        <trans-unit id="GeneralMultipleInstanceCard.Header" translate="yes" xml:space="preserve">
+          <source>Multiple instances configuration</source>
+          <target state="translated">多实例配置</target>
+        </trans-unit>
+        <trans-unit id="GeneralMultipleInstanceCard.Description" translate="yes" xml:space="preserve">
+          <source>Can multiple instances be provisioned</source>
+          <target state="translated">配置是否允许运行多个实例</target>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
+</xliff>
