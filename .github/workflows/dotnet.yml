@@ -29,6 +29,18 @@ jobs:
       with:
         dotnet-version: '8.0.x'
 
+    - name: Install Chocolatey
+      run: |
+          Set-ExecutionPolicy Bypass -Scope Process -Force
+          [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
+          iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+    
+    - name: Install Multilingual App Toolkit
+      run: choco install multilingualappstoolkit -y
+    
+    - name: Setup Visual Studio Build Tools
+      uses: microsoft/setup-msbuild@v2
+
     - name: Publish
       run: |
         .\publish.ps1
