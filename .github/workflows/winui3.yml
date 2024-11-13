@@ -3,14 +3,17 @@
 
 name: WinUI 3 unpackaged app
 
+# https://github.com/softprops/action-gh-release/issues/236#issuecomment-1150530128
+# 无需 Token 即可发布
 permissions:
   contents: write
 
 on:
+  release:
+    types: [published]
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    tags:
+      - "*" # Push events to matching *, i.e. 1.0, 20.15.10
 
 jobs:
 
@@ -35,7 +38,7 @@ jobs:
 
     # Install the .NET Core workload
     - name: Install .NET Core
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
 
