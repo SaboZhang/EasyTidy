@@ -102,11 +102,11 @@ public static class FileActuator
         }
 
         LogService.Logger.Info($"执行文件夹操作 ProcessFoldersAsync {parameters.TargetPath}");
-        var floderList = Directory.GetDirectories(parameters.SourcePath).ToList();
+        var folderList = Directory.GetDirectories(parameters.SourcePath).ToList();
 
-        foreach (var floder in floderList)
+        foreach (var folder in folderList)
         {
-            if (ShouldSkip(parameters.Funcs, floder, parameters.PathFilter))
+            if (ShouldSkip(parameters.Funcs, folder, parameters.PathFilter))
             {
                 LogService.Logger.Info($"执行文件夹操作 ShouldSkip {parameters.TargetPath}");
                 continue;
@@ -114,8 +114,8 @@ public static class FileActuator
 
             var newParameters = new OperationParameters(
                 parameters.OperationMode,
-                floder,
-                Path.Combine(parameters.TargetPath, Path.GetFileName(floder)),
+                folder,
+                Path.Combine(parameters.TargetPath, Path.GetFileName(folder)),
                 parameters.FileOperationType,
                 parameters.HandleSubfolders,
                 parameters.Funcs,
@@ -219,11 +219,11 @@ public static class FileActuator
             var subDirList = Directory.GetDirectories(parameters.SourcePath).ToList();
             foreach (var subDir in subDirList)
             {
-                if (ShouldSkip(parameters.Funcs, subDir, parameters.PathFilter))
+                if (subDir.Equals(parameters.TargetPath, StringComparison.OrdinalIgnoreCase))
                 {
-                    continue; // 跳过不符合条件的文件夹
+                    LogService.Logger.Warn($"跳过递归目标目录 {subDir}");
+                    continue;
                 }
-
                 // 为子文件夹生成新的目标路径
                 var newTargetPath = Path.Combine(parameters.TargetPath, Path.GetFileName(subDir));
                 var oldPath = Path.Combine(parameters.SourcePath, Path.GetFileName(subDir));
@@ -237,8 +237,7 @@ public static class FileActuator
                     parameters.FileOperationType,
                     parameters.HandleSubfolders,
                     parameters.Funcs,
-                    parameters.PathFilter
-                    )
+                    parameters.PathFilter)
                 {
                     OldTargetPath = parameters.TargetPath,
                     OldSourcePath = oldPath,
@@ -697,7 +696,7 @@ public static class FileActuator
 
         // 如果 pathFilter 不为 null，要求 satisfiesDynamicFilters 和 satisfiesPathFilter 同时满足
         LogService.Logger.Info($"satisfiesDynamicFilters: {satisfiesDynamicFilters}, satisfiesPathFilter: {satisfiesPathFilter}");
-        return !satisfiesDynamicFilters && !satisfiesPathFilter;
+        return satisfiesDynamicFilters ^ satisfiesPathFilter;
     }
 
     /// <summary>
