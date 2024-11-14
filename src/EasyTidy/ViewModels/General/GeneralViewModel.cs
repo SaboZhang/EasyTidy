@@ -443,7 +443,7 @@ public partial class GeneralViewModel : ObservableRecipient
     private void ShowBackInfo(string file)
     {
 
-        BackupStatus = AssemblyInfoHelper.GetAssemblyVersion();
+        BackupStatus = ProcessInfoHelper.VersionWithPrefix;
         BackupCreateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         BackupFileName = Path.GetFileName(file);
         BackupHostName = WebDavIsShow ? WebDavUrl + "/EasyTidy" : Environment.MachineName;

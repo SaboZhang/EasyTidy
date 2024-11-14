@@ -23,17 +23,18 @@ public sealed partial class MainPage : Page
     {
         _resourceManager = new ResourceManager();
         _resourceContext = _resourceManager.CreateResourceContext();
-        ViewModel = App.GetService<MainViewModel>();
         this.InitializeComponent();
-        appTitleBar.Window = App.MainWindow;
-        ViewModel.JsonNavigationViewService.Initialize(NavView, NavFrame);
-        ViewModel.JsonNavigationViewService.ConfigJson("Assets/NavViewMenu/AppData.json");
-        // ViewModel.JsonNavigationViewService.ConfigAutoSuggestBox(autoSuggestBox);
-        ViewModel.JsonNavigationViewService.ConfigLocalizer(_resourceManager, _resourceContext);
+        var jsonNavigationViewService = App.GetService<IJsonNavigationViewService>() as JsonNavigationViewService;
+        if (jsonNavigationViewService != null)
+        {
+            jsonNavigationViewService.Initialize(NavView, NavFrame, NavigationPageMappings.PageDictionary);
+            jsonNavigationViewService.ConfigJson("Assets/NavViewMenu/AppData.json");
+            jsonNavigationViewService.ConfigLocalizer(_resourceManager, _resourceContext);
+        }
         Logger.Fatal("MainPage Initialized");
     }
 
-    private void appTitleBar_BackButtonClick(object sender, RoutedEventArgs e)
+    private void AppTitleBar_BackRequested(TitleBar sender, object args)
     {
         if (NavFrame.CanGoBack)
         {
@@ -41,54 +42,34 @@ public sealed partial class MainPage : Page
         }
     }
 
-    private void appTitleBar_PaneButtonClick(object sender, RoutedEventArgs e)
+    private void AppTitleBar_PaneToggleRequested(TitleBar sender, object args)
     {
         NavView.IsPaneOpen = !NavView.IsPaneOpen;
     }
 
     private void NavFrame_Navigated(object sender, NavigationEventArgs e)
     {
-        appTitleBar.IsBackButtonVisible = NavFrame.CanGoBack;
+        AppTitleBar.IsBackButtonVisible = NavFrame.CanGoBack;
     }
 
     private void ThemeButton_Click(object sender, RoutedEventArgs e)
     {
-        var element = App.MainWindow.Content as FrameworkElement;
-
-        if (element.ActualTheme == ElementTheme.Light)
-        {
-            element.RequestedTheme = ElementTheme.Dark;
-        }
-        else if (element.ActualTheme == ElementTheme.Dark)
-        {
-            element.RequestedTheme = ElementTheme.Light;
-        }
-    }
-
-    private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
-    {
-        // AutoSuggestBoxHelper.LoadSuggestions(sender, args, _list);
-        // sender.Text = sender.Text.GetLocalized();
-        var viewModel = NavFrame.GetPageViewModel();
-        if (viewModel != null && viewModel is ITitleBarAutoSuggestBoxAware titleBarAutoSuggestBoxAware)
-        {
-            titleBarAutoSuggestBoxAware.OnAutoSuggestBoxTextChanged(sender, args);
-        }
-
-    }
-
-    private void AutoSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
-    {
-        var viewModel = NavFrame.GetPageViewModel();
-        if (viewModel != null && viewModel is ITitleBarAutoSuggestBoxAware titleBarAutoSuggestBoxAware)
-        {
-            titleBarAutoSuggestBoxAware.OnAutoSuggestBoxQuerySubmitted(sender, args);
-        }
+        ThemeService.ChangeThemeWithoutSave(App.MainWindow);
     }
 
     private void AutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
     {
         // autoSuggestBox.Text = args.SelectedItem.ToString();
+    }
+
+    private void OnTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+    {
+        AutoSuggestBoxHelper.OnITitleBarAutoSuggestBoxTextChangedEvent(sender, args, NavFrame);
+    }
+
+    private void OnQuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+    {
+        AutoSuggestBoxHelper.OnITitleBarAutoSuggestBoxQuerySubmittedEvent(sender, args, NavFrame);
     }
 
     private void NavViewPaneDisplayModeButton_Click(object sender, RoutedEventArgs e)
