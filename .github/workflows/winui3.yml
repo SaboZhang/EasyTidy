@@ -58,7 +58,6 @@ jobs:
       env:
         Configuration: ${{ matrix.configuration }}
         Platform: ${{ matrix.platform }}
-      continue-on-error: true
 
     # Upload the app
     - name: Upload app
