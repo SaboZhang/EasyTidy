@@ -1,6 +1,6 @@
 
-# v1.0.0.1113正式版更新
+# 更新
 
-- 增加：优先级选项
-- 增加：多实例运行开关
-- 优化：重命名逻辑
+- 验证更新模块
+
+**Full Changelog**: https://github.com/SaboZhang/EasyTidy/compare/1.0.1.1114...1.0.1.1117

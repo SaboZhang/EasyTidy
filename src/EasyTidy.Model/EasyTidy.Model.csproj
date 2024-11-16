@@ -17,6 +17,313 @@
     <DebugType>none</DebugType>
 	<DebugSymbols>false</DebugSymbols>
   </PropertyGroup>
+  <ItemGroup>
+    <Content Remove="Assets\Cover\CoverDark.png" />
+    <Content Remove="Assets\Cover\CoverLight.png" />
+    <Content Remove="Assets\Fluent\auto.png" />
+    <Content Remove="Assets\Fluent\auto.svg" />
+    <Content Remove="Assets\Fluent\autoScrollView.png" />
+    <Content Remove="Assets\Fluent\autoSuggestBox.png" />
+    <Content Remove="Assets\Fluent\awake.png" />
+    <Content Remove="Assets\Fluent\backdrop.png" />
+    <Content Remove="Assets\Fluent\behaviors.png" />
+    <Content Remove="Assets\Fluent\canvas.png" />
+    <Content Remove="Assets\Fluent\color.png" />
+    <Content Remove="Assets\Fluent\colorPicker.png" />
+    <Content Remove="Assets\Fluent\commandBar.png" />
+    <Content Remove="Assets\Fluent\contentDialog.png" />
+    <Content Remove="Assets\Fluent\dataGrid.png" />
+    <Content Remove="Assets\Fluent\delete.png" />
+    <Content Remove="Assets\Fluent\delete1.png" />
+    <Content Remove="Assets\Fluent\devMode.png" />
+    <Content Remove="Assets\Fluent\divider.png" />
+    <Content Remove="Assets\Fluent\edit.png" />
+    <Content Remove="Assets\Fluent\extensions.png" />
+    <Content Remove="Assets\Fluent\external.png" />
+    <Content Remove="Assets\Fluent\fancyZones.png" />
+    <Content Remove="Assets\Fluent\fileExplorerPreview.png" />
+    <Content Remove="Assets\Fluent\filter.png" />
+    <Content Remove="Assets\Fluent\Filters.png" />
+    <Content Remove="Assets\Fluent\Filters.svg" />
+    <Content Remove="Assets\Fluent\frame.png" />
+    <Content Remove="Assets\Fluent\general.png" />
+    <Content Remove="Assets\Fluent\gooey.png" />
+    <Content Remove="Assets\Fluent\gravatar.png" />
+    <Content Remove="Assets\Fluent\heartfolder.png" />
+    <Content Remove="Assets\Fluent\imageResizer.png" />
+    <Content Remove="Assets\Fluent\info.png" />
+    <Content Remove="Assets\Fluent\isanble.png" />
+    <Content Remove="Assets\Fluent\keyboardManager.png" />
+    <Content Remove="Assets\Fluent\language.png" />
+    <Content Remove="Assets\Fluent\loading.png" />
+    <Content Remove="Assets\Fluent\logo.png" />
+    <Content Remove="Assets\Fluent\morph.png" />
+    <Content Remove="Assets\Fluent\navigationView.png" />
+    <Content Remove="Assets\Fluent\notification.png" />
+    <Content Remove="Assets\Fluent\oneDrive.png" />
+    <Content Remove="Assets\Fluent\optionsPageControl.png" />
+    <Content Remove="Assets\Fluent\pagerControl.png" />
+    <Content Remove="Assets\Fluent\particle.png" />
+    <Content Remove="Assets\Fluent\powerRename.png" />
+    <Content Remove="Assets\Fluent\powerToys.png" />
+    <Content Remove="Assets\Fluent\powerToysRun.png" />
+    <Content Remove="Assets\Fluent\print.png" />
+    <Content Remove="Assets\Fluent\progressBar.png" />
+    <Content Remove="Assets\Fluent\rule.png" />
+    <Content Remove="Assets\Fluent\run.png" />
+    <Content Remove="Assets\Fluent\segmented.png" />
+    <Content Remove="Assets\Fluent\settings.png" />
+    <Content Remove="Assets\Fluent\settingsControl.png" />
+    <Content Remove="Assets\Fluent\shield.png" />
+    <Content Remove="Assets\Fluent\shortcutGuide.png" />
+    <Content Remove="Assets\Fluent\styles.png" />
+    <Content Remove="Assets\Fluent\switchPresenter.png" />
+    <Content Remove="Assets\Fluent\Task1.png" />
+    <Content Remove="Assets\Fluent\task2.png" />
+    <Content Remove="Assets\Fluent\theme.png" />
+    <Content Remove="Assets\Fluent\tint.png" />
+    <Content Remove="Assets\Fluent\tintOpacity.png" />
+    <Content Remove="Assets\Fluent\uniformGrid.png" />
+    <Content Remove="Assets\Fluent\update.png" />
+    <Content Remove="Assets\Fluent\watermark.png" />
+    <Content Remove="Assets\Fluent\window.png" />
+    <Content Remove="Assets\icon.ico" />
+    <Content Remove="Assets\icon.png" />
+    <Content Remove="Assets\Inactive.ico" />
+    <Content Remove="Assets\LockScreenLogo.scale-200.png" />
+    <Content Remove="Assets\Modules\Auto.png" />
+    <Content Remove="Assets\Modules\Awake.png" />
+    <Content Remove="Assets\Modules\ColorPicker.png" />
+    <Content Remove="Assets\Modules\FancyZones.png" />
+    <Content Remove="Assets\Modules\FileTask.png" />
+    <Content Remove="Assets\Modules\Filters.png" />
+    <Content Remove="Assets\Modules\ImageResizer.png" />
+    <Content Remove="Assets\Modules\KBM.png" />
+    <Content Remove="Assets\Modules\OOBE\FileExplorer.png" />
+    <Content Remove="Assets\Modules\PowerLauncher.png" />
+    <Content Remove="Assets\Modules\PowerPreview.png" />
+    <Content Remove="Assets\Modules\PowerRename.png" />
+    <Content Remove="Assets\Modules\PT.png" />
+    <Content Remove="Assets\Modules\ShortcutGuide.png" />
+    <Content Remove="Assets\Modules\VideoConference.png" />
+    <Content Remove="Assets\NavViewMenu\AppData.json" />
+    <Content Remove="Assets\Red.ico" />
+    <Content Remove="Assets\Script\quartz_sqlite.sql" />
+    <Content Remove="Assets\SplashScreen.scale-200.png" />
+    <Content Remove="Assets\Square150x150Logo.scale-200.png" />
+    <Content Remove="Assets\Square44x44Logo.scale-200.png" />
+    <Content Remove="Assets\StoreLogo.png" />
+    <Content Remove="Assets\Store\LargeTile.scale-100.png" />
+    <Content Remove="Assets\Store\LargeTile.scale-125.png" />
+    <Content Remove="Assets\Store\LargeTile.scale-150.png" />
+    <Content Remove="Assets\Store\LargeTile.scale-200.png" />
+    <Content Remove="Assets\Store\LargeTile.scale-400.png" />
+    <Content Remove="Assets\Store\LockScreenLogo.scale-200.png" />
+    <Content Remove="Assets\Store\SmallTile.scale-100.png" />
+    <Content Remove="Assets\Store\SmallTile.scale-125.png" />
+    <Content Remove="Assets\Store\SmallTile.scale-150.png" />
+    <Content Remove="Assets\Store\SmallTile.scale-200.png" />
+    <Content Remove="Assets\Store\SmallTile.scale-400.png" />
+    <Content Remove="Assets\Store\SplashScreen.scale-100.png" />
+    <Content Remove="Assets\Store\SplashScreen.scale-125.png" />
+    <Content Remove="Assets\Store\SplashScreen.scale-150.png" />
+    <Content Remove="Assets\Store\SplashScreen.scale-200.png" />
+    <Content Remove="Assets\Store\SplashScreen.scale-400.png" />
+    <Content Remove="Assets\Store\Square150x150Logo.scale-100.png" />
+    <Content Remove="Assets\Store\Square150x150Logo.scale-125.png" />
+    <Content Remove="Assets\Store\Square150x150Logo.scale-150.png" />
+    <Content Remove="Assets\Store\Square150x150Logo.scale-200.png" />
+    <Content Remove="Assets\Store\Square150x150Logo.scale-400.png" />
+    <Content Remove="Assets\Store\Square44x44Logo.altform-lightunplated_targetsize-16.png" />
+    <Content Remove="Assets\Store\Square44x44Logo.altform-lightunplated_targetsize-24.png" />
+    <Content Remove="Assets\Store\Square44x44Logo.altform-lightunplated_targetsize-256.png" />
+    <Content Remove="Assets\Store\Square44x44Logo.altform-lightunplated_targetsize-32.png" />
+    <Content Remove="Assets\Store\Square44x44Logo.altform-lightunplated_targetsize-48.png" />
+    <Content Remove="Assets\Store\Square44x44Logo.altform-unplated_targetsize-16.png" />
+    <Content Remove="Assets\Store\Square44x44Logo.altform-unplated_targetsize-256.png" />
+    <Content Remove="Assets\Store\Square44x44Logo.altform-unplated_targetsize-32.png" />
+    <Content Remove="Assets\Store\Square44x44Logo.altform-unplated_targetsize-48.png" />
+    <Content Remove="Assets\Store\Square44x44Logo.scale-100.png" />
+    <Content Remove="Assets\Store\Square44x44Logo.scale-125.png" />
+    <Content Remove="Assets\Store\Square44x44Logo.scale-150.png" />
+    <Content Remove="Assets\Store\Square44x44Logo.scale-200.png" />
+    <Content Remove="Assets\Store\Square44x44Logo.scale-400.png" />
+    <Content Remove="Assets\Store\Square44x44Logo.targetsize-16.png" />
+    <Content Remove="Assets\Store\Square44x44Logo.targetsize-24.png" />
+    <Content Remove="Assets\Store\Square44x44Logo.targetsize-24_altform-unplated.png" />
+    <Content Remove="Assets\Store\Square44x44Logo.targetsize-256.png" />
+    <Content Remove="Assets\Store\Square44x44Logo.targetsize-32.png" />
+    <Content Remove="Assets\Store\Square44x44Logo.targetsize-48.png" />
+    <Content Remove="Assets\Store\StoreLogo.backup.png" />
+    <Content Remove="Assets\Store\StoreLogo.scale-100.png" />
+    <Content Remove="Assets\Store\StoreLogo.scale-125.png" />
+    <Content Remove="Assets\Store\StoreLogo.scale-150.png" />
+    <Content Remove="Assets\Store\StoreLogo.scale-200.png" />
+    <Content Remove="Assets\Store\StoreLogo.scale-400.png" />
+    <Content Remove="Assets\Store\Wide310x150Logo.scale-100.png" />
+    <Content Remove="Assets\Store\Wide310x150Logo.scale-125.png" />
+    <Content Remove="Assets\Store\Wide310x150Logo.scale-150.png" />
+    <Content Remove="Assets\Store\Wide310x150Logo.scale-200.png" />
+    <Content Remove="Assets\Store\Wide310x150Logo.scale-400.png" />
+    <Content Remove="Assets\Wide310x150Logo.scale-200.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Cover\CoverDark.png" />
+    <None Include="Assets\Cover\CoverLight.png" />
+    <None Include="Assets\Fluent\auto.png" />
+    <None Include="Assets\Fluent\autoScrollView.png" />
+    <None Include="Assets\Fluent\autoSuggestBox.png" />
+    <None Include="Assets\Fluent\awake.png" />
+    <None Include="Assets\Fluent\backdrop.png" />
+    <None Include="Assets\Fluent\behaviors.png" />
+    <None Include="Assets\Fluent\canvas.png" />
+    <None Include="Assets\Fluent\color.png" />
+    <None Include="Assets\Fluent\colorPicker.png" />
+    <None Include="Assets\Fluent\commandBar.png" />
+    <None Include="Assets\Fluent\contentDialog.png" />
+    <None Include="Assets\Fluent\dataGrid.png" />
+    <None Include="Assets\Fluent\delete.png" />
+    <None Include="Assets\Fluent\delete1.png" />
+    <None Include="Assets\Fluent\devMode.png" />
+    <None Include="Assets\Fluent\divider.png" />
+    <None Include="Assets\Fluent\edit.png" />
+    <None Include="Assets\Fluent\extensions.png" />
+    <None Include="Assets\Fluent\external.png" />
+    <None Include="Assets\Fluent\fancyZones.png" />
+    <None Include="Assets\Fluent\fileExplorerPreview.png" />
+    <None Include="Assets\Fluent\filter.png" />
+    <None Include="Assets\Fluent\Filters.png" />
+    <None Include="Assets\Fluent\frame.png" />
+    <None Include="Assets\Fluent\general.png" />
+    <None Include="Assets\Fluent\gooey.png" />
+    <None Include="Assets\Fluent\gravatar.png" />
+    <None Include="Assets\Fluent\heartfolder.png" />
+    <None Include="Assets\Fluent\imageResizer.png" />
+    <None Include="Assets\Fluent\info.png" />
+    <None Include="Assets\Fluent\isanble.png" />
+    <None Include="Assets\Fluent\keyboardManager.png" />
+    <None Include="Assets\Fluent\language.png" />
+    <None Include="Assets\Fluent\loading.png" />
+    <None Include="Assets\Fluent\logo.png" />
+    <None Include="Assets\Fluent\morph.png" />
+    <None Include="Assets\Fluent\navigationView.png" />
+    <None Include="Assets\Fluent\notification.png" />
+    <None Include="Assets\Fluent\oneDrive.png" />
+    <None Include="Assets\Fluent\optionsPageControl.png" />
+    <None Include="Assets\Fluent\pagerControl.png" />
+    <None Include="Assets\Fluent\particle.png" />
+    <None Include="Assets\Fluent\powerRename.png" />
+    <None Include="Assets\Fluent\powerToys.png" />
+    <None Include="Assets\Fluent\powerToysRun.png" />
+    <None Include="Assets\Fluent\print.png" />
+    <None Include="Assets\Fluent\progressBar.png" />
+    <None Include="Assets\Fluent\rule.png" />
+    <None Include="Assets\Fluent\run.png" />
+    <None Include="Assets\Fluent\segmented.png" />
+    <None Include="Assets\Fluent\settings.png" />
+    <None Include="Assets\Fluent\settingsControl.png" />
+    <None Include="Assets\Fluent\shield.png" />
+    <None Include="Assets\Fluent\shortcutGuide.png" />
+    <None Include="Assets\Fluent\styles.png" />
+    <None Include="Assets\Fluent\switchPresenter.png" />
+    <None Include="Assets\Fluent\Task1.png" />
+    <None Include="Assets\Fluent\task2.png" />
+    <None Include="Assets\Fluent\theme.png" />
+    <None Include="Assets\Fluent\tint.png" />
+    <None Include="Assets\Fluent\tintOpacity.png" />
+    <None Include="Assets\Fluent\uniformGrid.png" />
+    <None Include="Assets\Fluent\update.png" />
+    <None Include="Assets\Fluent\watermark.png" />
+    <None Include="Assets\Fluent\window.png" />
+    <None Include="Assets\icon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\LockScreenLogo.scale-200.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Modules\Auto.png" />
+    <None Include="Assets\Modules\Awake.png" />
+    <None Include="Assets\Modules\ColorPicker.png" />
+    <None Include="Assets\Modules\FancyZones.png" />
+    <None Include="Assets\Modules\FileTask.png" />
+    <None Include="Assets\Modules\Filters.png" />
+    <None Include="Assets\Modules\ImageResizer.png" />
+    <None Include="Assets\Modules\KBM.png" />
+    <None Include="Assets\Modules\OOBE\FileExplorer.png" />
+    <None Include="Assets\Modules\PowerLauncher.png" />
+    <None Include="Assets\Modules\PowerPreview.png" />
+    <None Include="Assets\Modules\PowerRename.png" />
+    <None Include="Assets\Modules\PT.png" />
+    <None Include="Assets\Modules\ShortcutGuide.png" />
+    <None Include="Assets\Modules\VideoConference.png" />
+    <None Include="Assets\SplashScreen.scale-200.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Square150x150Logo.scale-200.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Square44x44Logo.scale-200.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\StoreLogo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Store\LargeTile.scale-100.png" />
+    <None Include="Assets\Store\LargeTile.scale-125.png" />
+    <None Include="Assets\Store\LargeTile.scale-150.png" />
+    <None Include="Assets\Store\LargeTile.scale-200.png" />
+    <None Include="Assets\Store\LargeTile.scale-400.png" />
+    <None Include="Assets\Store\LockScreenLogo.scale-200.png" />
+    <None Include="Assets\Store\SmallTile.scale-100.png" />
+    <None Include="Assets\Store\SmallTile.scale-125.png" />
+    <None Include="Assets\Store\SmallTile.scale-150.png" />
+    <None Include="Assets\Store\SmallTile.scale-200.png" />
+    <None Include="Assets\Store\SmallTile.scale-400.png" />
+    <None Include="Assets\Store\SplashScreen.scale-100.png" />
+    <None Include="Assets\Store\SplashScreen.scale-125.png" />
+    <None Include="Assets\Store\SplashScreen.scale-150.png" />
+    <None Include="Assets\Store\SplashScreen.scale-200.png" />
+    <None Include="Assets\Store\SplashScreen.scale-400.png" />
+    <None Include="Assets\Store\Square150x150Logo.scale-100.png" />
+    <None Include="Assets\Store\Square150x150Logo.scale-125.png" />
+    <None Include="Assets\Store\Square150x150Logo.scale-150.png" />
+    <None Include="Assets\Store\Square150x150Logo.scale-200.png" />
+    <None Include="Assets\Store\Square150x150Logo.scale-400.png" />
+    <None Include="Assets\Store\Square44x44Logo.altform-lightunplated_targetsize-16.png" />
+    <None Include="Assets\Store\Square44x44Logo.altform-lightunplated_targetsize-24.png" />
+    <None Include="Assets\Store\Square44x44Logo.altform-lightunplated_targetsize-256.png" />
+    <None Include="Assets\Store\Square44x44Logo.altform-lightunplated_targetsize-32.png" />
+    <None Include="Assets\Store\Square44x44Logo.altform-lightunplated_targetsize-48.png" />
+    <None Include="Assets\Store\Square44x44Logo.altform-unplated_targetsize-16.png" />
+    <None Include="Assets\Store\Square44x44Logo.altform-unplated_targetsize-256.png" />
+    <None Include="Assets\Store\Square44x44Logo.altform-unplated_targetsize-32.png" />
+    <None Include="Assets\Store\Square44x44Logo.altform-unplated_targetsize-48.png" />
+    <None Include="Assets\Store\Square44x44Logo.scale-100.png" />
+    <None Include="Assets\Store\Square44x44Logo.scale-125.png" />
+    <None Include="Assets\Store\Square44x44Logo.scale-150.png" />
+    <None Include="Assets\Store\Square44x44Logo.scale-200.png" />
+    <None Include="Assets\Store\Square44x44Logo.scale-400.png" />
+    <None Include="Assets\Store\Square44x44Logo.targetsize-16.png" />
+    <None Include="Assets\Store\Square44x44Logo.targetsize-24.png" />
+    <None Include="Assets\Store\Square44x44Logo.targetsize-24_altform-unplated.png" />
+    <None Include="Assets\Store\Square44x44Logo.targetsize-256.png" />
+    <None Include="Assets\Store\Square44x44Logo.targetsize-32.png" />
+    <None Include="Assets\Store\Square44x44Logo.targetsize-48.png" />
+    <None Include="Assets\Store\StoreLogo.backup.png" />
+    <None Include="Assets\Store\StoreLogo.scale-100.png" />
+    <None Include="Assets\Store\StoreLogo.scale-125.png" />
+    <None Include="Assets\Store\StoreLogo.scale-150.png" />
+    <None Include="Assets\Store\StoreLogo.scale-200.png" />
+    <None Include="Assets\Store\StoreLogo.scale-400.png" />
+    <None Include="Assets\Store\Wide310x150Logo.scale-100.png" />
+    <None Include="Assets\Store\Wide310x150Logo.scale-125.png" />
+    <None Include="Assets\Store\Wide310x150Logo.scale-150.png" />
+    <None Include="Assets\Store\Wide310x150Logo.scale-200.png" />
+    <None Include="Assets\Store\Wide310x150Logo.scale-400.png" />
+    <None Include="Assets\Wide310x150Logo.scale-200.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
       <PackageReference Include="CommunityToolkit.WinUI.Extensions" Version="8.1.240916" />
@@ -25,5 +332,20 @@
       <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
       <PackageReference Include="Nucs.JsonSettings2" Version="2.0.3" />
       <PackageReference Include="WinUICommunity.Core" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Assets\icon.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\Inactive.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\Red.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\Script\quartz_sqlite.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>
