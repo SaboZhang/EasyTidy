@@ -8,11 +8,11 @@
   IgnorableNamespaces="uap rescap">
 
   <Identity
-    Name="1c7d2681-8e99-479b-b0cc-605f097ce33a"
+    Name="18865919-2087-4bff-bb9c-635a3ae6bcc4"
     Publisher="CN=tao99"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="1c7d2681-8e99-479b-b0cc-605f097ce33a" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="18865919-2087-4bff-bb9c-635a3ae6bcc4" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>EasyTidy.UpdateLauncher</DisplayName>

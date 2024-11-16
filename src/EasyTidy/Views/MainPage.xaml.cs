@@ -11,21 +11,12 @@ public sealed partial class MainPage : Page
 
     private readonly ResourceContext _resourceContext;
 
-    private List<string> _list =
-    [
-        "NavGeneralText".GetLocalized(),
-        "NavFiltersText".GetLocalized(),
-        "NavTaskOrchestrationText".GetLocalized(),
-        "NavAutomaticText".GetLocalized()
-    ];
-
     public MainPage()
     {
         _resourceManager = new ResourceManager();
         _resourceContext = _resourceManager.CreateResourceContext();
         this.InitializeComponent();
-        var jsonNavigationViewService = App.GetService<IJsonNavigationViewService>() as JsonNavigationViewService;
-        if (jsonNavigationViewService != null)
+        if (App.GetService<IJsonNavigationViewService>() is JsonNavigationViewService jsonNavigationViewService)
         {
             jsonNavigationViewService.Initialize(NavView, NavFrame, NavigationPageMappings.PageDictionary);
             jsonNavigationViewService.ConfigJson("Assets/NavViewMenu/AppData.json");

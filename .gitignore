@@ -4,6 +4,7 @@ obj/
 *.user
 .idea/
 .vscode/
+.vsconfig
 
 packages/
 

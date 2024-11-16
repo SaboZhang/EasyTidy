@@ -16,10 +16,10 @@ public partial class App : Application
 
     public static Window MainWindow = Window.Current;
     public IServiceProvider Services { get; }
-    public new static App Current => (App)Application.Current;
+    public static new App Current => (App)Application.Current;
     public string AppVersion { get; set; } = ProcessInfoHelper.Version;
-
     public IJsonNavigationViewService GetJsonNavigationViewService => GetService<IJsonNavigationViewService>();
+    public IThemeService GetThemeService => GetService<IThemeService>();
     public string AppName { get; set; } = "EasyTidy";
 
     private bool _createdNew;
@@ -172,9 +172,15 @@ public partial class App : Application
         {
             MainWindow.Content = rootFrame = new Frame();
         }
+
+        if (GetThemeService != null)
+        {
+            GetThemeService.AutoInitialize(MainWindow);
+        }
+
         rootFrame.Navigate(typeof(MainPage));
 
-        MainWindow.Title = MainWindow.AppWindow.Title = $"{AppName} v{AppVersion}";
+        MainWindow.Title = MainWindow.AppWindow.Title = ProcessInfoHelper.ProductNameAndVersion;
         MainWindow.AppWindow.SetIcon("Assets/icon.ico");
     }
 
