@@ -7,7 +7,7 @@ public partial class AppDbContext : DbContext
 {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
-        InitializeDatabaseAsync().Wait();
+        
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -28,7 +28,6 @@ public partial class AppDbContext : DbContext
     public async Task InitializeDatabaseAsync()
     {
         await Database.EnsureCreatedAsync();
-        await Database.MigrateAsync();
 
         if (!await ScriptExecutionStatus.AnyAsync(s => s.ScriptName == "quartz_sqlite" && s.Status == "executed"))
         {

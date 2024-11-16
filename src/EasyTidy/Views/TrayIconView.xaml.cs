@@ -95,9 +95,6 @@ public sealed partial class TrayIconView : UserControl
         Settings.AutomaticConfig.RegularTaskRunning = false;
         Settings.Save();
         FileEventHandler.StopAllMonitoring();
-        ToastWithAvatar.Instance.ScenarioName = "停止监视";
-        ToastWithAvatar.Instance.Description = "EasyTidy停止监视成功";
-        ToastWithAvatar.Instance.SendToast();
     }
 
     [RelayCommand]

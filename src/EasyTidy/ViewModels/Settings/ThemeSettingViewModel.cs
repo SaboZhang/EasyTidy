@@ -8,22 +8,5 @@ public partial class ThemeSettingViewModel : ObservableObject
     {
         ThemeService = themeService;
     }
-
-    [RelayCommand]
-    private void OnBackdropChanged(object sender)
-    {
-        ThemeService.OnBackdropComboBoxSelectionChanged(sender);
-    }
-
-    [RelayCommand]
-    private void OnThemeChanged(object sender)
-    {
-        ThemeService.OnThemeComboBoxSelectionChanged(sender);
-    }
-
-    [RelayCommand]
-    private async Task OpenWindowsColorSettings()
-    {
-        _ = await Launcher.LaunchUriAsync(new Uri("ms-settings:colors"));
-    }
+   
 }

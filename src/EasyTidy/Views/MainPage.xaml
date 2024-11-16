@@ -14,15 +14,14 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <wuc:TitleBar
-            x:Name="appTitleBar"
-            Title="{x:Bind local:App.Current.AppName}"
-            BackButtonClick="appTitleBar_BackButtonClick"
-            Icon="{wuc:BitmapIcon Source=ms-appx:///Assets/icon.png}"
-            IsBackButtonVisible="True"
-            IsPaneButtonVisible="True"
-            PaneButtonClick="appTitleBar_PaneButtonClick"
-            Subtitle="{x:Bind local:App.Current.AppVersion}">
+        <wuc:TitleBar x:Name="AppTitleBar"
+                  Title="{x:Bind wuc:ProcessInfoHelper.ProductName}"
+                  BackRequested="AppTitleBar_BackRequested"
+                  IconSource="{wuc:BitmapIconSource Source=ms-appx:///Assets/icon.png}"
+                  IsBackButtonVisible="True"
+                  IsPaneToggleButtonVisible="True"
+                  PaneToggleRequested="AppTitleBar_PaneToggleRequested"
+                  Subtitle="{x:Bind wuc:ProcessInfoHelper.VersionWithPrefix}">
             <wuc:TitleBar.Footer>
                 <StackPanel Orientation="Horizontal" Spacing="5">
                     <Button
@@ -52,14 +51,13 @@
             Grid.Row="1"
             IsBackButtonVisible="Collapsed"
             IsPaneToggleButtonVisible="False">
-            <!-- <NavigationView.AutoSuggestBox>
+            <NavigationView.AutoSuggestBox>
                 <AutoSuggestBox Name="autoSuggestBox"
                                 x:Uid="MainSuggestBox"
                                 QueryIcon="Find"
-                                TextChanged="AutoSuggestBox_TextChanged"
-                                QuerySubmitted="AutoSuggestBox_QuerySubmitted"
-                                SuggestionChosen="AutoSuggestBox_SuggestionChosen"/>
-            </NavigationView.AutoSuggestBox> -->
+                                TextChanged="OnTextChanged"
+                                QuerySubmitted="OnQuerySubmitted"/>
+            </NavigationView.AutoSuggestBox>
 
             <Frame x:Name="NavFrame" Navigated="NavFrame_Navigated" />
         </NavigationView>

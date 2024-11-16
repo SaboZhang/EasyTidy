@@ -5,7 +5,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:wuc="using:WinUICommunity"
+    xmlns:wuc="using:WinUICommunity" 
+    xmlns:local="using:EasyTidy"
+    xmlns:views="using:EasyTidy.Views"
     mc:Ignorable="d">
     <ScrollView
         Margin="{ThemeResource ContentPageMargin}"
@@ -14,6 +16,7 @@
         <StackPanel
             Margin="10"
             wuc:PanelAttach.ChildrenTransitions="Default"
+            wuc:SettingsNavigationAttach.JsonNavigationViewService="{x:Bind local:App.Current.GetJsonNavigationViewService}"
             Spacing="5">
             <wuc:SettingsCard x:Name="ChangeLanguageSetting"
                               x:Uid="SettingsLanguageCard"
@@ -37,22 +40,19 @@
                 </InfoBar.ActionButton>
             </InfoBar>
             <wuc:SettingsCard x:Name="ThemeSetting"
-                              Command="{x:Bind ViewModel.GoToSettingPageCommand}"
-                              CommandParameter="{Binding ElementName=ThemeSetting}"
+                              wuc:NavigationHelperEx.NavigateToSetting="views:ThemeSettingPage"
                               x:Uid="ThemeSettingPage"
                               HeaderIcon="{wuc:BitmapIcon Source=Assets/Fluent/theme.png}"
                               IsClickEnabled="True"
                               Tag="ThemeSettingPage"/>
             <wuc:SettingsCard x:Name="AppUpdateSetting"
-                              Command="{x:Bind ViewModel.GoToSettingPageCommand}"
-                              CommandParameter="{Binding ElementName=AppUpdateSetting}"
+                              wuc:NavigationHelperEx.NavigateToSetting="views:AppUpdateSettingPage"
                               x:Uid="AppUpdateSetting"
                               HeaderIcon="{wuc:BitmapIcon Source=Assets/Fluent/update.png}"
                               IsClickEnabled="True"
                               Tag="AppUpdateSettingPage"/>
             <wuc:SettingsCard x:Name="AboutSetting"
-                              Command="{x:Bind ViewModel.GoToSettingPageCommand}"
-                              CommandParameter="{Binding ElementName=AboutSetting}"
+                              wuc:NavigationHelperEx.NavigateToSetting="views:AboutUsSettingPage"
                               x:Uid="AboutUsSettingPage"
                               HeaderIcon="{wuc:BitmapIcon Source=Assets/Fluent/info.png}"
                               IsClickEnabled="True"

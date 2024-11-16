@@ -16,13 +16,13 @@ public partial class App : Application
 
     public static Window MainWindow = Window.Current;
     public IServiceProvider Services { get; }
-    public new static App Current => (App)Application.Current;
-    public string AppVersion { get; set; } = AssemblyInfoHelper.GetAssemblyVersion();
+    public static new App Current => (App)Application.Current;
+    public string AppVersion { get; set; } = ProcessInfoHelper.Version;
+    public IJsonNavigationViewService GetJsonNavigationViewService => GetService<IJsonNavigationViewService>();
+    public IThemeService GetThemeService => GetService<IThemeService>();
     public string AppName { get; set; } = "EasyTidy";
 
     private bool _createdNew;
-
-    private NotificationManager _notificationManager;
 
     public static bool HandleClosedEvents { get; set; } = true;
 
@@ -48,11 +48,6 @@ public partial class App : Application
         if (!PackageHelper.IsPackaged)
         {
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
-            var c_notificationHandlers = new Dictionary<int, Action<AppNotificationActivatedEventArgs>>
-            {
-                { ToastWithAvatar.Instance.ScenarioId, ToastWithAvatar.Instance.NotificationReceived }
-            };
-            _notificationManager = new NotificationManager(c_notificationHandlers);
         }
         Services = ConfigureServices();
         this.InitializeComponent();
@@ -104,9 +99,21 @@ public partial class App : Application
         // 注册 AppDbContext
         services.AddDbContext<AppDbContext>(options =>
             options.UseSqlite($"Data Source={Path.Combine(Constants.CnfPath, "EasyTidy.db")}"),
-            ServiceLifetime.Singleton); // 使用 Singleton 确保唯一实例
+            ServiceLifetime.Scoped);
 
-        return services.BuildServiceProvider();
+        var serviceProvider = services.BuildServiceProvider();
+        InitializeDatabase(serviceProvider);
+
+        return serviceProvider;
+    }
+
+    private static void InitializeDatabase(ServiceProvider serviceProvider)
+    {
+        using (var scope = serviceProvider.CreateScope())
+        {
+            var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            dbContext.InitializeDatabaseAsync().GetAwaiter().GetResult();
+        }
     }
 
     protected async override void OnLaunched(LaunchActivatedEventArgs args)
@@ -116,7 +123,6 @@ public partial class App : Application
 
         if (!IsSingleInstance())
         {
-            NotifyAppAlreadyRunning();
             Environment.Exit(0);
         }
 
@@ -156,13 +162,6 @@ public partial class App : Application
         return true;
     }
 
-    private void NotifyAppAlreadyRunning()
-    {
-        ToastWithAvatar.Instance.Description = "ToastWithAvatarDescriptionText".GetLocalized();
-        ToastWithAvatar.Instance.ScenarioName = "RemindText".GetLocalized();
-        ToastWithAvatar.Instance.SendToast();
-    }
-
     private void InitializeMainWindow()
     {
         MainWindow = new Window();
@@ -173,9 +172,15 @@ public partial class App : Application
         {
             MainWindow.Content = rootFrame = new Frame();
         }
+
+        if (GetThemeService != null)
+        {
+            GetThemeService.AutoInitialize(MainWindow);
+        }
+
         rootFrame.Navigate(typeof(MainPage));
 
-        MainWindow.Title = MainWindow.AppWindow.Title = $"{AppName} v{AppVersion}";
+        MainWindow.Title = MainWindow.AppWindow.Title = ProcessInfoHelper.ProductNameAndVersion;
         MainWindow.AppWindow.SetIcon("Assets/icon.ico");
     }
 
@@ -227,7 +232,6 @@ public partial class App : Application
             Logger.Info($"{AppName}_{AppVersion} Closed...\n");
             LogService.UnRegister();
         }
-        _notificationManager.Unregister();
         await QuartzHelper.StopAllJob();
         FileEventHandler.StopAllMonitoring();
     }

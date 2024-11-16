@@ -6,12 +6,12 @@ namespace EasyTidy.Model;
 
 public static class Constants
 {
-    public static readonly string AppName = AssemblyInfoHelper.GetAppInfo().Name;
-    public static readonly string RootDirectoryPath = Path.Combine(PathHelper.GetLocalFolderPath(), AppName);
+    public static readonly string AppName = ProcessInfoHelper.ProductName;
+    public static readonly string RootDirectoryPath = Path.Combine(PathHelper.GetAppDataFolderPath(), ProcessInfoHelper.ProductName);
     public static readonly string AppConfigPath = Path.Combine(RootDirectoryPath, "AppConfig.json");
     public static readonly string CommonAppConfigPath = Path.Combine(RootDirectoryPath, "CommonAppConfig.json");
 
-    public static readonly string LogPathName = AssemblyInfoHelper.GetAppInfo().Version.ToString();
+    public static readonly string LogPathName = ProcessInfoHelper.Version;
 
     private const string PortableConfig = "portable_config";
 

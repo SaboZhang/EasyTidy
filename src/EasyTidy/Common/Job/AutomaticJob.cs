@@ -59,6 +59,7 @@ public class AutomaticJob : IJob
             Logger.Info($"Retrieving task with ID: {parsedTaskId}");
             return await _dbContext.TaskOrchestration
                 .Include(t => t.GroupName)
+                .Include(t => t.Filter)
                 .FirstOrDefaultAsync(t => t.ID == parsedTaskId && t.IsEnabled == true);
         }
 
@@ -74,6 +75,7 @@ public class AutomaticJob : IJob
         {
             return await _dbContext.TaskOrchestration
                 .Include(t => t.GroupName)
+                .Include(t => t.Filter)
                 .FirstOrDefaultAsync(t => t.ID == parsedId && t.IsEnabled == true);
         }
 

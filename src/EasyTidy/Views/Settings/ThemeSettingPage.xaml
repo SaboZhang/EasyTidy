@@ -8,7 +8,8 @@
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:views="using:EasyTidy.Views"
-    xmlns:wuc="using:WinUICommunity"
+    xmlns:wuc="using:WinUICommunity" 
+    xmlns:local="using:EasyTidy"
     mc:Ignorable="d">
     <ScrollView Margin="{ThemeResource ContentPageMargin}" VerticalScrollBarVisibility="Auto">
         <StackPanel
@@ -21,23 +22,16 @@
             <wuc:SettingsCard
                 x:Uid="ThemeSettingsCard"
                 HeaderIcon="{wuc:BitmapIcon Source=Assets/Fluent/theme.png}">
-                <ComboBox x:Name="CmbTheme">
+                <ComboBox x:Name="CmbTheme" wuc:ThemeServiceAttach.ThemeService="{x:Bind local:App.Current.GetThemeService}">
                     <ComboBoxItem x:Uid="Light" Tag="Light" />
                     <ComboBoxItem x:Uid="Dark" Tag="Dark" />
                     <ComboBoxItem x:Uid="Default" Tag="Default" />
-                    <i:Interaction.Behaviors>
-                        <ic:EventTriggerBehavior EventName="SelectionChanged">
-                            <ic:EventTriggerBehavior.Actions>
-                                <ic:InvokeCommandAction Command="{x:Bind ViewModel.ThemeChangedCommand}" CommandParameter="{Binding ElementName=CmbTheme}" />
-                            </ic:EventTriggerBehavior.Actions>
-                        </ic:EventTriggerBehavior>
-                    </i:Interaction.Behaviors>
                 </ComboBox>
             </wuc:SettingsCard>
             <wuc:SettingsCard
                 x:Uid="ThemeMaterial"
                 HeaderIcon="{wuc:BitmapIcon Source=Assets/Fluent/backdrop.png}">
-                <ComboBox x:Name="CmbBackdrop">
+                <ComboBox x:Name="CmbBackdrop" wuc:ThemeServiceAttach.ThemeService="{x:Bind local:App.Current.GetThemeService}">
                     <ComboBoxItem x:Uid="ThemeNone" Tag="None" />
                     <ComboBoxItem x:Uid="ThemeMica" Tag="Mica" />
                     <ComboBoxItem x:Uid="ThemeMicaAlt" Tag="MicaAlt" />
@@ -45,13 +39,6 @@
                     <ComboBoxItem x:Uid="ThemeAcrylicBase" Tag="AcrylicBase" />
                     <ComboBoxItem x:Uid="ThemeAcrylicThin" Tag="AcrylicThin" />
                     <ComboBoxItem x:Uid="ThemeTransparent" Tag="Transparent" />
-                    <i:Interaction.Behaviors>
-                        <ic:EventTriggerBehavior EventName="SelectionChanged">
-                            <ic:EventTriggerBehavior.Actions>
-                                <ic:InvokeCommandAction Command="{x:Bind ViewModel.BackdropChangedCommand}" CommandParameter="{Binding ElementName=CmbBackdrop}" />
-                            </ic:EventTriggerBehavior.Actions>
-                        </ic:EventTriggerBehavior>
-                    </i:Interaction.Behaviors>
                 </ComboBox>
             </wuc:SettingsCard>
             <wuc:SettingsCard
