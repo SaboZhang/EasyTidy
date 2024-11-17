@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-      <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240829007" />
+	  <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.241106002" />
 	  <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
       <PackageReference Include="Serilog" Version="4.0.1" />
       <PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
