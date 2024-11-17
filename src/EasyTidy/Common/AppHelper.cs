@@ -77,5 +77,6 @@ public static partial class AppHelper
         Settings.AutomaticConfig.OnScheduleExecution = viewModel.OnScheduleExecution;
         Settings.AutomaticConfig = Settings.AutomaticConfig;
     }
+
 }
 

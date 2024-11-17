@@ -192,7 +192,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.241106002" />
+	<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.241106002" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.9" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Nucs.JsonSettings2.Autosave" Version="2.0.3" />
@@ -205,9 +205,9 @@
     <PackageReference Include="WinUICommunity.LandingPages" Version="7.0.0" />
   </ItemGroup>
   <ItemGroup>
+	<ProjectReference Include="..\EasyTidy.Model\EasyTidy.Model.csproj" />
     <ProjectReference Include="..\EasyTidy.Service\EasyTidy.Service.csproj" />
     <ProjectReference Include="..\EasyTidy.Log\EasyTidy.Log.csproj" />
-    <ProjectReference Include="..\EasyTidy.Model\EasyTidy.Model.csproj" />
     <ProjectReference Include="..\EasyTidy.Util\EasyTidy.Util.csproj" />
   </ItemGroup>
   <ItemGroup>
