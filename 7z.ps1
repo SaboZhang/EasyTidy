@@ -64,7 +64,7 @@ Copy-Item -Path "$targetDir\EasyTidy" -Destination ./publish -Recurse
 # 复制项目文件，跳过同名文件
 $sourceFiles = Get-ChildItem -Path $updateSourceDir -Recurse
 foreach ($file in $sourceFiles) {
-    $destinationPath = Join-Path -Path "./publish" -ChildPath $file.FullName.Substring($sourceDir.Length)
+    $destinationPath = Join-Path -Path "./publish/EasyTidy" -ChildPath $file.FullName.Substring($sourceDir.Length)
     $destinationDir = [System.IO.Path]::GetDirectoryName($destinationPath)
 
     if (-not (Test-Path -Path $destinationDir)) {
