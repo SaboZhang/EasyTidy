@@ -27,12 +27,12 @@ namespace EasyTidy.UpdateLauncher;
 public sealed partial class MainWindow : WindowEx
 {
     /// <summary>
-    ///     ĞÂ°æ±¾±£´æÄ¿Â¼Â·¾¶
+    ///    ä¿å­˜è·¯å¾„
     /// </summary>
     private readonly string SaveDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory);
 
     /// <summary>
-    ///     ĞÂ°æ±¾±£´æÃû×Ö
+    ///     å‹ç¼©åŒ…åç§°
     /// </summary>
     private readonly string SaveName = "update.zip";
 
@@ -44,16 +44,16 @@ public sealed partial class MainWindow : WindowEx
     }
 
     /// <summary>
-    ///     ´¦ÀíÏÂÔØºÃµÄĞÂ°æÈí¼ş
+    ///   å¤„ç†å‹ç¼©åŒ…
     /// </summary>
     /// <returns></returns>
     private async Task ProcessDownloadedFile()
     {
-        // ×¼±¸¸üĞÂ
+        // è¿›è¡Œå‡çº§
         var process = Process.GetProcessesByName("EasyTidy");
         if (process != null && process.Length > 0) process[0].Kill();
 
-        SetStatus("ÏÂÔØÍê³É£¬ÕıÔÚ½âÑ¹ÇëÎğ¹Ø±Õ´Ë´°¿Ú...");
+        SetStatus("ä¸‹è½½å®Œæˆï¼Œæ­£åœ¨è§£å‹è¯·å‹¿å…³é—­æ­¤çª—å£...");
 
         var unpath = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory)!.Parent!.FullName;
 
@@ -65,12 +65,12 @@ public sealed partial class MainWindow : WindowEx
 
         if (unresult)
         {
-            SetStatus("¸üĞÂÍê³É£¡", false);
+            SetStatus("æ›´æ–°æˆåŠŸ", false);
             Process.Start(Path.Combine(unpath, "EasyTidy.exe"));
         }
         else
         {
-            SetStatus("½âÑ¹ÎÄ¼şÊ±·¢ÉúÒì³££¬ÇëÖØÊÔ£¡Í¨³£Çé¿ö¿ÉÄÜÊÇÒòÎª EasyTidy Ö÷³ÌĞòÉĞÎ´ÍË³ö¡£", false);
+            SetStatus("è§£å‹æ–‡ä»¶æ—¶å‘ç”Ÿå¼‚å¸¸ï¼Œè¯·é‡è¯•ï¼é€šå¸¸æƒ…å†µå¯èƒ½æ˜¯å› ä¸º EasyTidy ä¸»ç¨‹åºå°šæœªé€€å‡ºã€‚", false);
         }
     }
 
