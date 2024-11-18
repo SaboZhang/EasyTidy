@@ -1,9 +1,8 @@
 
 # 更新
 
-- 验证更新模块
-- 修复Model 错误问题
-- 优化代码
-- 更新 WinUICommunity 6.9 => 7.0
+- 修复: 初始化异常，导致无法启动
+- 修复：注释乱码
+- 新增：更新模块
 
-**Full Changelog**: https://github.com/SaboZhang/EasyTidy/compare/1.0.1.1113...1.0.2.1117
+**Full Changelog**: https://github.com/SaboZhang/EasyTidy/compare/1.0.2.1117...1.0.2.1118

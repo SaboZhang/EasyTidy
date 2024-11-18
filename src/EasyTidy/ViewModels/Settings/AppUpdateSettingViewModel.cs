@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.WinUI;
+using EasyTidy.Model;
 using Windows.System;
 
 namespace EasyTidy.ViewModels;
@@ -153,8 +154,7 @@ public partial class AppUpdateSettingViewModel : ObservableObject
             // 打开下载链接或实现下载逻辑
             try
             {
-                var uri = new Uri(downloadUrl);
-                await Launcher.LaunchUriAsync(uri);
+                Download(downloadUrl);
             }
             catch (Exception ex)
             {
@@ -169,6 +169,44 @@ public partial class AppUpdateSettingViewModel : ObservableObject
 
         // 显示对话框
         await updateDialog.ShowAsync();
+    }
+
+    private async void Download(string downloadUrl)
+    {
+        var httpClient = new HttpClient(new SocketsHttpHandler());
+
+        try
+        {
+            if (!Directory.Exists(Constants.SaveDir)) Directory.CreateDirectory(Constants.SaveDir);
+
+            using (var response =
+                   await httpClient.GetAsync(new Uri(downloadUrl), HttpCompletionOption.ResponseHeadersRead))
+            using (var stream = await response.Content.ReadAsStreamAsync())
+            using (var fileStream = new FileStream(Path.Combine(Constants.SaveDir, Constants.SaveName), FileMode.Create))
+            {
+                var totalBytes = response.Content.Headers.ContentLength ?? -1;
+                long totalDownloadedByte = 0;
+                var buffer = new byte[1024];
+                int bytesRead;
+
+                while ((bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length)) > 0)
+                {
+                    await fileStream.WriteAsync(buffer, 0, bytesRead);
+
+                    totalDownloadedByte += bytesRead;
+                    var process = Math.Round((double)totalDownloadedByte / totalBytes * 100, 2);
+                }
+            }
+
+        }
+        catch (Exception)
+        {
+            Logger.Error("下载失败");
+        }
+        finally
+        {
+            httpClient.Dispose();
+        }
     }
 
     [RelayCommand]
