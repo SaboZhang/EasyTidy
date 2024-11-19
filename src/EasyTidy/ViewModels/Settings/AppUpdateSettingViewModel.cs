@@ -284,7 +284,7 @@ public partial class AppUpdateSettingViewModel : ObservableObject
 
                 foreach (var file in requiredFiles) File.Copy(GetPath(file), GetCachePath(file), true);
 
-                CommonUtil.ExecuteProgram(GetCachePath("EasyTidy.UpdateLauncher.exe"), Constants.Version);
+                CommonUtil.ExecuteProgram(GetCachePath("EasyTidy.UpdateLauncher.exe"), [Constants.Version]);
             }
         }
         catch (Exception ex)
