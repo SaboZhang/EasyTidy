@@ -54,4 +54,14 @@ public static class Constants
     /// </summary>
     public static readonly string CnfPath;
 
+    /// <summary>
+    ///     新版本保存目录路径
+    /// </summary>
+    public static readonly string SaveDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory);
+
+    /// <summary>
+    ///     新版本保存名字
+    /// </summary>
+    public static readonly string SaveName = "update.zip";
+
 }

@@ -27,12 +27,12 @@ namespace EasyTidy.UpdateLauncher;
 public sealed partial class MainWindow : WindowEx
 {
     /// <summary>
-    ///    保存路径
+    ///    新版本保存目录路径
     /// </summary>
     private readonly string SaveDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory);
 
     /// <summary>
-    ///     压缩包名称
+    ///   新版本保存名字
     /// </summary>
     private readonly string SaveName = "update.zip";
 
@@ -44,12 +44,12 @@ public sealed partial class MainWindow : WindowEx
     }
 
     /// <summary>
-    ///   处理压缩包
+    ///     处理下载好的新版软件
     /// </summary>
     /// <returns></returns>
     private async Task ProcessDownloadedFile()
     {
-        // 进行升级
+        // 处理更新
         var process = Process.GetProcessesByName("EasyTidy");
         if (process != null && process.Length > 0) process[0].Kill();
 
@@ -65,7 +65,7 @@ public sealed partial class MainWindow : WindowEx
 
         if (unresult)
         {
-            SetStatus("更新成功", false);
+            SetStatus("更新完成！", false);
             Process.Start(Path.Combine(unpath, "EasyTidy.exe"));
         }
         else
