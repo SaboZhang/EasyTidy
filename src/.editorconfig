@@ -2,3 +2,6 @@
 
 # IDE0044: 添加只读修饰符
 dotnet_diagnostic.IDE0044.severity = suggestion
+
+# CS8632: 只能在 "#nullable" 注释上下文内的代码中使用可为 null 的引用类型的注释。
+dotnet_diagnostic.CS8632.severity = suggestion

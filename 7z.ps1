@@ -11,7 +11,7 @@ if ([string]::IsNullOrEmpty($version)) {
 
 $sourceDir = "src\EasyTidy\bin\x64\Release\net8.0-windows10.0.22621.0\win-x64"
 $targetDir = "src\EasyTidy\bin\x64\Release\net8.0-windows10.0.22621.0"
-$updateSourceDir = "src\EasyTidy.UpdateLauncher\bin\x64\Release\net8.0-windows10.0.19041.0\win-x64"
+$updateSourceDir = "src\EasyTidy.UpdateLauncher\bin\x64\Release\net8.0-windows10.0.22621.0\win-x64"
 
 # 重命名目录
 if (Test-Path -Path $sourceDir) {
