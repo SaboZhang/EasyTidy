@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.WinUI;
 using EasyTidy.Model;
+using EasyTidy.Util;
 using Windows.System;
 
 namespace EasyTidy.ViewModels;
@@ -49,7 +50,6 @@ public partial class AppUpdateSettingViewModel : ObservableObject
         {
             try
             {
-                //Todo: Fix UserName and Repo
                 string username = "SaboZhang";
                 string repo = "EasyTidy";
                 LastUpdateCheck = DateTime.Now.ToShortDateString();
@@ -91,7 +91,6 @@ public partial class AppUpdateSettingViewModel : ObservableObject
         {
             try
             {
-                //Todo: Fix UserName and Repo
                 string username = "SaboZhang";
                 string repo = "EasyTidy";
                 LastUpdateCheck = DateTime.Now.ToShortDateString();
@@ -132,18 +131,40 @@ public partial class AppUpdateSettingViewModel : ObservableObject
             throw new InvalidOperationException("Main window is not initialized.");
         }
 
+        var isShow = false;
+
+        // 创建进度条控件
+        var progressBar = new ProgressBar
+        {
+            IsIndeterminate = false,
+            Minimum = 0,
+            Maximum = 100,
+            Value = 0,
+            Margin = new Thickness(0, 10, 0, 0)
+        };
+
+        var progressText = new TextBlock
+        {
+            Text = "Preparing to download...",
+            Margin = new Thickness(0, 5, 0, 0)
+        };
+
+        var stackPanel = new StackPanel();
+        stackPanel.Children.Add(new TextBlock
+        {
+            Text = $"Changelog:\n\n{changelog}",
+            TextWrapping = TextWrapping.Wrap
+        });
+        stackPanel.Children.Add(progressText);
+        stackPanel.Children.Add(progressBar);
+
         // 创建 ContentDialog 来显示更新信息
         var updateDialog = new ContentDialog
         {
             Title = "ReleaseNotes".GetLocalized(),
-            Content = new TextBlock
-            {
-                Text = $"Changelog:\n\n{changelog}",
-                TextWrapping = TextWrapping.Wrap
-            },
+            Content = stackPanel,
             CloseButtonText = "Close".GetLocalized(),
             PrimaryButtonText = "Download",
-
             XamlRoot = mainWindow.Content.XamlRoot,
             RequestedTheme = themeService.GetElementTheme()
         };
@@ -151,19 +172,47 @@ public partial class AppUpdateSettingViewModel : ObservableObject
         // 下载按钮的点击事件
         updateDialog.PrimaryButtonClick += async (sender, args) =>
         {
+            var deferral = args.GetDeferral();
             // 打开下载链接或实现下载逻辑
             try
             {
-                Download(downloadUrl);
+                // 创建进度报告器
+                var progressReporter = new Progress<double>(progress =>
+                {
+                    progressBar.Value = progress;
+                    progressText.Text = $"Downloading... {progress:F1}%".GetLocalized();
+                });
+                await Download(downloadUrl, progressReporter);
+                progressText.Text = "Download complete!";
+                isShow = true;
+                await Task.Delay(2000);
             }
             catch (Exception ex)
             {
+                isShow = false;
                 await new ContentDialog
                 {
-                    Title = "Error".GetLocalized(),
+                    Title = "Error",
                     Content = $"Could not open download link. {ex.Message}",
-                    CloseButtonText = "OK".GetLocalized()
+                    CloseButtonText = "OK".GetLocalized(),
+                    XamlRoot = App.MainWindow.Content.XamlRoot
                 }.ShowAsync();
+            }
+            finally
+            {
+                deferral.Complete();
+                if (isShow)
+                {
+                    await new ContentDialog
+                    {
+                        Title = "Update Ready".GetLocalized(),
+                        Content = "The update has been downloaded. The installation will begin shortly.",
+                        CloseButtonText = "OK",
+                        XamlRoot = App.MainWindow.Content.XamlRoot,
+                        RequestedTheme = themeService.GetElementTheme()
+                    }.ShowAsync();
+                    InstallUpdate();
+                }
             }
         };
 
@@ -171,7 +220,7 @@ public partial class AppUpdateSettingViewModel : ObservableObject
         await updateDialog.ShowAsync();
     }
 
-    private async void Download(string downloadUrl)
+    private async Task Download(string downloadUrl, IProgress<double> progress)
     {
         var httpClient = new HttpClient(new SocketsHttpHandler());
 
@@ -195,6 +244,7 @@ public partial class AppUpdateSettingViewModel : ObservableObject
 
                     totalDownloadedByte += bytesRead;
                     var process = Math.Round((double)totalDownloadedByte / totalBytes * 100, 2);
+                    progress.Report(process);
                 }
             }
 
@@ -206,6 +256,40 @@ public partial class AppUpdateSettingViewModel : ObservableObject
         finally
         {
             httpClient.Dispose();
+        }
+    }
+
+    private void InstallUpdate()
+    {
+        Logger.Info("Starting update installation...");
+        try
+        {
+            const string updateFolder = "Update";
+
+            string GetPath(string fileName)
+            {
+                return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
+            }
+
+            string GetCachePath(string fileName)
+            {
+                return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, updateFolder, fileName);
+            }
+
+            string[] requiredFiles = ["EasyTidy.UpdateLauncher.exe"];
+
+            if (requiredFiles.All(file => File.Exists(GetPath(file))))
+            {
+                Directory.CreateDirectory(GetPath(updateFolder));
+
+                foreach (var file in requiredFiles) File.Copy(GetPath(file), GetCachePath(file), true);
+
+                CommonUtil.ExecuteProgram(GetCachePath("EasyTidy.UpdateLauncher.exe"), Constants.Version);
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.Error($"安装失败：{ex}");
         }
     }
 
