@@ -28,7 +28,8 @@ jobs:
                              # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
 
     env:
-      Solution_Name: src\\EasyTidy                         # Replace with your solution name, i.e. App1.sln.
+      Solution_Name: src\\EasyTidy
+      Solution_Update: src\\EasyTidy.UpdateLauncher
 
     steps:
     - name: Checkout
@@ -48,13 +49,17 @@ jobs:
 
     # Restore the application to populate the obj folder with RuntimeIdentifiers
     - name: Restore the application
-      run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration
+      run: |
+        msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration
+        msbuild $env:Solution_Update /t:Restore /p:Configuration=$env:Configuration
       env:
         Configuration: ${{ matrix.configuration }}
 
     # Create the app by building and publishing the project
     - name: Create the app
-      run: msbuild $env:Solution_Name /t:Publish /p:Configuration=$env:Configuration /p:Platform=$env:Platform /p:DebugType=None
+      run: |
+        msbuild $env:Solution_Name /t:Publish /p:Configuration=$env:Configuration /p:Platform=$env:Platform /p:DebugType=None
+        msbuild $env:Solution_Update /t:Publish /p:Configuration=$env:Configuration /p:Platform=$env:Platform /p:DebugType=None
       env:
         Configuration: ${{ matrix.configuration }}
         Platform: ${{ matrix.platform }}

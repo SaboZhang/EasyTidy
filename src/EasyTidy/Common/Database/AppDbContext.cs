@@ -27,6 +27,11 @@ public partial class AppDbContext : DbContext
 
     public async Task InitializeDatabaseAsync()
     {
+        var DirPath = Constants.CnfPath;
+        if (!Directory.Exists(DirPath))
+        {
+            Directory.CreateDirectory(DirPath);
+        }
         await Database.EnsureCreatedAsync();
 
         if (!await ScriptExecutionStatus.AnyAsync(s => s.ScriptName == "quartz_sqlite" && s.Status == "executed"))
