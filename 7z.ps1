@@ -61,21 +61,6 @@ Copy-Item -Path ./run.bat -Destination ./publish/run.bat
 
 Copy-Item -Path "$targetDir\EasyTidy" -Destination ./publish -Recurse
 
-# 复制项目文件，跳过同名文件
-$sourceFiles = Get-ChildItem -Path $updateSourceDir -Recurse
-foreach ($file in $sourceFiles) {
-    $destinationPath = Join-Path -Path "./publish/EasyTidy" -ChildPath $file.FullName.Substring($sourceDir.Length)
-    $destinationDir = [System.IO.Path]::GetDirectoryName($destinationPath)
-
-    if (-not (Test-Path -Path $destinationDir)) {
-        New-Item -ItemType Directory -Path $destinationDir -Force
-    }
-
-    if (-not (Test-Path -Path $destinationPath)) {
-        Copy-Item -Path $file.FullName -Destination $destinationPath
-    }
-}
-
 # 使用7-Zip创建ZIP文件
 & 7z a -tzip "EasyTidy_${version}_win-x64.zip" ./publish/*
 
