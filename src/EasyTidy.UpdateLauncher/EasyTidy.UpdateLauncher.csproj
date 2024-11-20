@@ -14,7 +14,7 @@
 	<WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
 	<PackageIcon>update.png</PackageIcon>
 	<WindowsPackageType>None</WindowsPackageType>
-	<PublishReadyToRun>false</PublishReadyToRun>
+	<PublishReadyToRun>true</PublishReadyToRun>
 	<RestoreReadyToRun>true</RestoreReadyToRun>
   </PropertyGroup>
   <ItemGroup>

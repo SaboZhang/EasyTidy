@@ -11,7 +11,6 @@ if ([string]::IsNullOrEmpty($version)) {
 
 $sourceDir = "src\EasyTidy\bin\x64\Release\net8.0-windows10.0.22621.0\win-x64"
 $targetDir = "src\EasyTidy\bin\x64\Release\net8.0-windows10.0.22621.0"
-$updateSourceDir = "src\EasyTidy.UpdateLauncher\bin\x64\Release\net8.0-windows10.0.22621.0\win-x64"
 
 # 重命名目录
 if (Test-Path -Path $sourceDir) {
@@ -26,6 +25,7 @@ function CheckAndDeletePublishDir($publishDir) {
 		Write-Host "========================================"
 		Write-Host "[Cache] Deleting existing publish directory $publishDir..."
 		Write-Host "========================================"
+        Copy-Item -Path $publishDir/EasyTidy.UpdateLauncher.exe -Destination ./EasyTidy.UpdateLauncher.exe
         try {
             Remove-Item -Path $publishDir -Recurse -Force
 			Write-Host ""
@@ -60,6 +60,8 @@ if (!(Test-Path -Path ./publish)) {
 Copy-Item -Path ./run.bat -Destination ./publish/run.bat
 
 Copy-Item -Path "$targetDir\EasyTidy" -Destination ./publish -Recurse
+
+Copy-Item -Path ./EasyTidy.UpdateLauncher.exe -Destination ./publish/EasyTidy/EasyTidy.UpdateLauncher.exe
 
 # 使用7-Zip创建ZIP文件
 & 7z a -tzip "EasyTidy_${version}_win-x64.zip" ./publish/*
