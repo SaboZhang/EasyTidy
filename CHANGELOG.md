@@ -5,4 +5,4 @@
 - 修复：注释乱码
 - 新增：更新模块
 
-**Full Changelog**: https://github.com/SaboZhang/EasyTidy/compare/1.0.2.1117...1.0.2.1118
+**Full Changelog**: https://github.com/SaboZhang/EasyTidy/compare/1.0.2.1117...1.0.2.1120
