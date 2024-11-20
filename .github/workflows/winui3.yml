@@ -59,6 +59,7 @@ jobs:
     - name: Create the app
       run: |
         msbuild $env:Solution_Name /t:Publish /p:Configuration=$env:Configuration /p:Platform=$env:Platform /p:DebugType=None
+        msbuild $env:Solution_Update /t:Publish /p:Configuration=$env:Configuration /p:Platform=$env:Platform /p:DebugType=None /p:PublishSingleFile=true /p:RuntimeIdentifier=win-x64
       env:
         Configuration: ${{ matrix.configuration }}
         Platform: ${{ matrix.platform }}
@@ -67,13 +68,6 @@ jobs:
     - name: Upload app
       run: |
         .\7z.ps1 ${{ github.ref_name }}
-
-    - name: Create update app
-      run: |
-          msbuild $env:Solution_Update /t:Publish /p:Configuration=$env:Configuration /p:Platform=$env:Platform /p:DebugType=None /p:PublishSingleFile=true /p:RuntimeIdentifier=win-x64
-      env:
-        Configuration: ${{ matrix.configuration }}
-        Platform: ${{ matrix.platform }}
 
     - name: Release
       uses: softprops/action-gh-release@v2
