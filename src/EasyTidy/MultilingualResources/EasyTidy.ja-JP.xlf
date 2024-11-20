@@ -1491,7 +1491,7 @@
         </trans-unit>
         <trans-unit id="AutoAnalysisGlobal.Header" translate="yes" xml:space="preserve">
           <source>AutoAnalysis(Global)</source>
-          <target state="new">AutoAnalysis(Global)</target>
+          <target state="translated">自動分析（グローバル）</target>
         </trans-unit>
       </group>
     </body>

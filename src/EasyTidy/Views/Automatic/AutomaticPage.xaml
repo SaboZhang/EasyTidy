@@ -29,7 +29,7 @@
         <etc:SettingsPageControl x:Name="SettingsControl" x:Uid="SettingsPageControl" ModuleImageSource="ms-appx:///Assets/Modules/Auto.png">
             <etc:SettingsPageControl.ModuleContent>
                 <StackPanel ChildrenTransitions="{StaticResource SettingsCardsAnimations}" Orientation="Vertical">
-                    <etc:SettingsGroup Margin="0,0,0,0" x:Uid="AutoAnalysisGlobal">
+                    <etc:SettingsGroup Margin="0,-32,0,0" x:Uid="AutoAnalysisGlobal">
                         <ctk:SettingsCard x:Uid="FileChangeCard">
                             <ctk:SettingsCard.HeaderIcon>
                                 <FontIcon Glyph="&#xF0E4;"/>

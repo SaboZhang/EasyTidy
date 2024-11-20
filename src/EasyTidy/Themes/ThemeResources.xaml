@@ -13,4 +13,7 @@
             
         </ResourceDictionary>
     </ResourceDictionary.ThemeDictionaries>
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="ms-appx:///Views/UserControls/SettingsGroup.xaml" />
+    </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
