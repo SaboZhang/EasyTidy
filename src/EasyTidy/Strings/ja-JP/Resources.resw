@@ -51,9 +51,6 @@
   <data name="FileChangeSecond.Text" xml:space="preserve">
     <value>2番目</value>
   </data>
-  <data name="AutoAnalysisGlobal.Header" xml:space="preserve">
-    <value>自動分析（グローバル）</value>
-  </data>
   <data name="FileChange.Description" xml:space="preserve">
     <value>自動ファイル処理オプション</value>
   </data>

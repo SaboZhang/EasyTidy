@@ -58,10 +58,6 @@
           <source>Second</source>
           <target state="translated">秒</target>
         </trans-unit>
-        <trans-unit id="AutoAnalysisGlobal.Header" translate="yes" xml:space="preserve">
-          <source>AutoAnalysis(Global)</source>
-          <target state="translated">自動分析（全域）</target>
-        </trans-unit>
         <trans-unit id="FileChange.Description" translate="yes" xml:space="preserve">
           <source>Automatic file processing options</source>
           <target state="translated">檔案自動處理選項</target>
@@ -1490,6 +1486,10 @@
         <trans-unit id="GeneralMultipleInstanceCard.Description" translate="yes" xml:space="preserve">
           <source>Can multiple instances be provisioned</source>
           <target state="translated">設定是否允許運行多個實例</target>
+        </trans-unit>
+        <trans-unit id="AutoAnalysisGlobal.Header" translate="yes" xml:space="preserve">
+          <source>AutoAnalysis(Global)</source>
+          <target state="translated">自動分析（全局）</target>
         </trans-unit>
       </group>
     </body>

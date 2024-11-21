@@ -7,9 +7,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:wuc="using:WinUICommunity"
+    xmlns:ctk="using:CommunityToolkit.WinUI.Controls"
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
-    xmlns:model="using:EasyTidy.Model"
+    xmlns:model="using:EasyTidy.Model" 
+    xmlns:etc="using:EasyTidy.Views.UserControls"
+    AutomationProperties.LandmarkType="Main"
     mc:Ignorable="d">
 
     <i:Interaction.Behaviors>
@@ -22,21 +25,15 @@
 
     <StackPanel x:Name="Root">
         <StackPanel x:Name="Growl"
-                    MinWidth="340"
-                    wuc:Growl.GrowlParent="True"/>
-        <wuc:SettingsPageControl
-            x:Name="SettingsControl"
-            x:Uid="SettingsPageControl"
-            ModuleImageSource="ms-appx:///Assets/Modules/Auto.png">
-            <wuc:SettingsPageControl.ModuleContent>
-                <StackPanel wuc:PanelAttach.ChildrenTransitions="Default"
-                            Orientation="Vertical">
-                    <wuc:SimpleSettingsGroup Margin="0,-32,0,0"
-                                             x:Uid="AutoAnalysisGlobal">
-                        <wuc:SettingsCard x:Uid="FileChangeCard">
-                            <wuc:SettingsCard.HeaderIcon>
+                    MinWidth="340"/>
+        <etc:SettingsPageControl x:Name="SettingsControl" x:Uid="SettingsPageControl" ModuleImageSource="ms-appx:///Assets/Modules/Auto.png">
+            <etc:SettingsPageControl.ModuleContent>
+                <StackPanel ChildrenTransitions="{StaticResource SettingsCardsAnimations}" Orientation="Vertical">
+                    <etc:SettingsGroup Margin="0,-32,0,0" x:Uid="AutoAnalysisGlobal">
+                        <ctk:SettingsCard x:Uid="FileChangeCard">
+                            <ctk:SettingsCard.HeaderIcon>
                                 <FontIcon Glyph="&#xF0E4;"/>
-                            </wuc:SettingsCard.HeaderIcon>
+                            </ctk:SettingsCard.HeaderIcon>
                             <StackPanel Orientation="Horizontal"
                                         Spacing="8">
                                 <ToggleSwitch x:Name="FileChange"
@@ -48,18 +45,18 @@
                                 <TextBlock x:Uid="FileChangeSecond"
                                            Margin="0,8,0,0"/>
                             </StackPanel>
-                        </wuc:SettingsCard>
-                        <wuc:SettingsCard x:Uid="StartupExecutionCard">
-                            <wuc:SettingsCard.HeaderIcon>
+                        </ctk:SettingsCard>
+                        <ctk:SettingsCard x:Uid="StartupExecutionCard">
+                            <ctk:SettingsCard.HeaderIcon>
                                 <FontIcon Glyph="&#xE7E8;"/>
-                            </wuc:SettingsCard.HeaderIcon>
+                            </ctk:SettingsCard.HeaderIcon>
                             <ToggleSwitch x:Name="StartupExecution"
                                           IsOn="{x:Bind ViewModel.IsStartupExecution, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        </wuc:SettingsCard>
-                        <wuc:SettingsCard x:Uid="RegularTaskRunningCard">
-                            <wuc:SettingsCard.HeaderIcon>
+                        </ctk:SettingsCard>
+                        <ctk:SettingsCard x:Uid="RegularTaskRunningCard">
+                            <ctk:SettingsCard.HeaderIcon>
                                 <FontIcon Glyph="&#xE916;"/>
-                            </wuc:SettingsCard.HeaderIcon>
+                            </ctk:SettingsCard.HeaderIcon>
                             <StackPanel Orientation="Horizontal"
                                         Spacing="8">
                                 <ToggleSwitch x:Name="RegularTaskRunning"
@@ -70,11 +67,11 @@
                                             IsEnabled="{x:Bind ViewModel.RegularTaskRunning, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                             SelectedTime="{x:Bind ViewModel.SelectTaskTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             </StackPanel>
-                        </wuc:SettingsCard>
-                        <wuc:SettingsCard x:Uid="ScheduledExecutionCard">
-                            <wuc:SettingsCard.HeaderIcon>
+                        </ctk:SettingsCard>
+                        <ctk:SettingsCard x:Uid="ScheduledExecutionCard">
+                            <ctk:SettingsCard.HeaderIcon>
                                 <FontIcon Glyph="&#xED28;"/>
-                            </wuc:SettingsCard.HeaderIcon>
+                            </ctk:SettingsCard.HeaderIcon>
                             <StackPanel Orientation="Horizontal"
                                         Spacing="8">
                                 <ToggleSwitch x:Name="OnScheduleExecutionSwitch"
@@ -83,15 +80,15 @@
                                         Command="{x:Bind ViewModel.PlanExecutionCommand}"
                                         IsEnabled="{x:Bind ViewModel.OnScheduleExecution, Mode=OneWay}"/>
                             </StackPanel>
-                        </wuc:SettingsCard>
+                        </ctk:SettingsCard>
 
-                    </wuc:SimpleSettingsGroup>
-                    <wuc:SimpleSettingsGroup x:Uid="TaskAssociation">
-                        <wuc:SettingsExpander x:Uid="ConfigurationTask"
+                    </etc:SettingsGroup>
+                    <etc:SettingsGroup x:Uid="TaskAssociation">
+                        <ctk:SettingsExpander x:Uid="ConfigurationTask"
                                               HeaderIcon="{wuc:FontIcon FontFamily={StaticResource SymbolThemeFontFamily}, Glyph=&#xEA65;}"
                                               IsExpanded="True">
-                            <wuc:SettingsExpander.Items>
-                                <wuc:SettingsCard x:Uid="TaskSelection">
+                            <ctk:SettingsExpander.Items>
+                                <ctk:SettingsCard x:Uid="TaskSelection">
                                     <StackPanel Orientation="Horizontal"
                                                 Spacing="8">
                                         <Button x:Name="GroupButton"
@@ -128,12 +125,12 @@
                                                 Command="{x:Bind ViewModel.CustomConfigCommand}"
                                                 IsEnabled="{x:Bind ViewModel.FeatureIndependentConfigFlag, Mode=OneWay}"/>
                                     </StackPanel>
-                                </wuc:SettingsCard>
-                            </wuc:SettingsExpander.Items>
+                                </ctk:SettingsCard>
+                            </ctk:SettingsExpander.Items>
 
-                        </wuc:SettingsExpander>
+                        </ctk:SettingsExpander>
 
-                    </wuc:SimpleSettingsGroup>
+                    </etc:SettingsGroup>
                     <StackPanel Orientation="Horizontal"
                                 Spacing="8"
                                 HorizontalAlignment="Right"
@@ -148,9 +145,9 @@
                                 Command="{x:Bind ViewModel.SaveTaskConfigCommand}"/>
                     </StackPanel>
                 </StackPanel>
-            </wuc:SettingsPageControl.ModuleContent>
+            </etc:SettingsPageControl.ModuleContent>
 
-        </wuc:SettingsPageControl>
+        </etc:SettingsPageControl>
         <wuc:LoadingIndicator x:Name="Load"
                               Mode="Arcs"
                               IsActive="{x:Bind ViewModel.IsActive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>

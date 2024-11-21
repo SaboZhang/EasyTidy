@@ -58,10 +58,6 @@
           <source>Second</source>
           <target state="new">Second</target>
         </trans-unit>
-        <trans-unit id="AutoAnalysisGlobal.Header" translate="yes" xml:space="preserve">
-          <source>AutoAnalysis(Global)</source>
-          <target state="new">AutoAnalysis(Global)</target>
-        </trans-unit>
         <trans-unit id="FileChange.Description" translate="yes" xml:space="preserve">
           <source>Automatic file processing options</source>
           <target state="new">Automatic file processing options</target>
@@ -1483,6 +1479,10 @@
         <trans-unit id="GeneralMultipleInstanceCard.Description" translate="yes" xml:space="preserve">
           <source>Can multiple instances be provisioned</source>
           <target state="new">Can multiple instances be provisioned</target>
+        </trans-unit>
+        <trans-unit id="AutoAnalysisGlobal.Header" translate="yes" xml:space="preserve">
+          <source>AutoAnalysis(Global)</source>
+          <target state="new">AutoAnalysis(Global)</target>
         </trans-unit>
       </group>
     </body>
