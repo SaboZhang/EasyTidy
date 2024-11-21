@@ -32,4 +32,7 @@ TODO:
 
 - [ ] 增加解压操作
 - [ ] 增加文件WebDav备份
+- [ ] 前端界面显示Log
+- [ ] [#25](https://github.com/SaboZhang/EasyTidy/issues/25)相关问题
+- [ ] 移除WinUICommunity相关依赖，作者已停止维护
 - [ ] 想到再添加吧！！！
