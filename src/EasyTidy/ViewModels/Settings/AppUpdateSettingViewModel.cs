@@ -277,7 +277,7 @@ public partial class AppUpdateSettingViewModel : ObservableObject
                 return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, updateFolder, fileName);
             }
 
-            string[] requiredFiles = ["EasyTidy.UpdateLauncher.exe"];
+            string[] requiredFiles = ["UpdateLauncher.exe"];
 
             if (requiredFiles.All(file => File.Exists(GetPath(file))))
             {
@@ -285,7 +285,7 @@ public partial class AppUpdateSettingViewModel : ObservableObject
 
                 foreach (var file in requiredFiles) File.Copy(GetPath(file), GetCachePath(file), true);
 
-                CommonUtil.ExecuteProgram(GetCachePath("EasyTidy.UpdateLauncher.exe"), [Constants.Version]);
+                CommonUtil.ExecuteProgram(GetCachePath("UpdateLauncher.exe"), [Constants.Version]);
             }
         }
         catch (Exception ex)
