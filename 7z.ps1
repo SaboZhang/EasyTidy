@@ -25,7 +25,6 @@ function CheckAndDeletePublishDir($publishDir) {
 		Write-Host "========================================"
 		Write-Host "[Cache] Deleting existing publish directory $publishDir..."
 		Write-Host "========================================"
-        Copy-Item -Path $publishDir/EasyTidy.UpdateLauncher.exe -Destination ./EasyTidy.UpdateLauncher.exe
         try {
             Remove-Item -Path $publishDir -Recurse -Force
 			Write-Host ""
