@@ -30,7 +30,7 @@ public partial class App : Application
 
     private bool IsAlreadyRunning()
     {
-        mutex = new Mutex(true, "EasyTidy.UpdateLauncher", out var isCreatedNew);
+        mutex = new Mutex(true, "UpdateLauncher", out var isCreatedNew);
         return !isCreatedNew;
     }
 
