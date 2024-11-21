@@ -1118,4 +1118,7 @@
   <data name="GeneralMultipleInstanceCard.Description" xml:space="preserve">
     <value>Plusieurs instances peuvent-elles être provisionnées</value>
   </data>
+  <data name="AutoAnalysisGlobal.Header" xml:space="preserve">
+    <value>Autoanalyse (Global)</value>
+  </data>
 </root>

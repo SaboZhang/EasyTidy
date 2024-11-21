@@ -1,8 +1,8 @@
 # 关闭回显
 $ErrorActionPreference = "SilentlyContinue"
 
-$main = "src/EasyTidy/EasyTidy.csproj"
-$mainProfile = "src/EasyTidy/Properties/PublishProfiles/FolderProfile.pubxml"
+$main = "src/EasyTidy.UpdateLauncher/EasyTidy.UpdateLauncher.csproj"
+$mainProfile = "src/EasyTidy.UpdateLauncher/Properties/PublishProfiles/FolderProfile.pubxml"
 
 # 检查并删除发布目录
 function CheckAndDeletePublishDir($publishDir) {
@@ -34,7 +34,7 @@ function CheckAndDeletePublishDir($publishDir) {
 }
 
 # 将相对发布目录路径转换为绝对路径
-$publishDirAbsolute = [System.IO.Path]::GetFullPath("publish")
+$publishDirAbsolute = [System.IO.Path]::GetFullPath("update")
 
 CheckAndDeletePublishDir $publishDirAbsolute
 

@@ -29,7 +29,6 @@ jobs:
 
     env:
       Solution_Name: src\\EasyTidy
-      Solution_Update: src\\EasyTidy.UpdateLauncher
 
     steps:
     - name: Checkout
@@ -51,7 +50,6 @@ jobs:
     - name: Restore the application
       run: |
         msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration
-        msbuild $env:Solution_Update /t:Restore /p:Configuration=$env:Configuration
       env:
         Configuration: ${{ matrix.configuration }}
 
@@ -59,7 +57,6 @@ jobs:
     - name: Create the app
       run: |
         msbuild $env:Solution_Name /t:Publish /p:Configuration=$env:Configuration /p:Platform=$env:Platform /p:DebugType=None
-        msbuild $env:Solution_Update /t:Publish /p:Configuration=$env:Configuration /p:Platform=$env:Platform /p:DebugType=None /p:PublishSingleFile=true /p:RuntimeIdentifier=win-x64
       env:
         Configuration: ${{ matrix.configuration }}
         Platform: ${{ matrix.platform }}
@@ -67,6 +64,7 @@ jobs:
     # Upload the app
     - name: Upload app
       run: |
+        .\publish.ps1
         .\7z.ps1 ${{ github.ref_name }}
 
     - name: Release
