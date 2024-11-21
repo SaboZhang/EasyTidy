@@ -177,12 +177,12 @@ public partial class AppUpdateSettingViewModel : ObservableObject
             try
             {
                 // 创建进度报告器
-                var progressReporter = new Progress<double>(progress =>
-                {
-                    progressBar.Value = progress;
-                    progressText.Text = $"Downloading... {progress:F1}%".GetLocalized();
-                });
-                await Download(downloadUrl, progressReporter);
+                //var progressReporter = new Progress<double>(progress =>
+                //{
+                //    progressBar.Value = progress;
+                //    progressText.Text = $"Downloading... {progress:F1}%".GetLocalized();
+                //});
+                //await Download(downloadUrl, progressReporter);
                 progressText.Text = "Download complete!";
                 isShow = true;
                 await Task.Delay(2000);
@@ -273,6 +273,7 @@ public partial class AppUpdateSettingViewModel : ObservableObject
 
             string GetCachePath(string fileName)
             {
+                var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, updateFolder, fileName);
                 return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, updateFolder, fileName);
             }
 

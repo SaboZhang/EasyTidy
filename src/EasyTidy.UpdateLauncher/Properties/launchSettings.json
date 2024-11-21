@@ -1,10 +1,8 @@
 {
   "profiles": {
-    "EasyTidy.UpdateLauncher (Package)": {
-      "commandName": "MsixPackage"
-    },
-    "EasyTidy.UpdateLauncher (Unpackaged)": {
-      "commandName": "Project"
+    "EasyTidy.UpdateLauncher": {
+      "commandName": "Project",
+      "commandLineArgs": "1.0.3.1119"
     }
   }
 }

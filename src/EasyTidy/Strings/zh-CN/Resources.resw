@@ -1118,4 +1118,7 @@
   <data name="GeneralMultipleInstanceCard.Description" xml:space="preserve">
     <value>配置是否允许运行多个实例</value>
   </data>
+  <data name="AutoAnalysisGlobal.Header" xml:space="preserve">
+    <value>自动分析（全局）</value>
+  </data>
 </root>

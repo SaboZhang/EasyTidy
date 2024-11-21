@@ -10,7 +10,9 @@
     xmlns:wuc="using:WinUICommunity"
     xmlns:model="using:EasyTidy.Model" 
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core" 
-    xmlns:i="using:Microsoft.Xaml.Interactivity">
+    xmlns:i="using:Microsoft.Xaml.Interactivity" 
+    xmlns:etc="using:EasyTidy.Views.UserControls" 
+    xmlns:ctk="using:CommunityToolkit.WinUI.Controls">
 
     <i:Interaction.Behaviors>
         <ic:EventTriggerBehavior EventName="Loaded">
@@ -20,32 +22,31 @@
         </ic:EventTriggerBehavior>
     </i:Interaction.Behaviors>
     
-    <wuc:SettingsPageControl
+    <etc:SettingsPageControl
         x:Name="settingsControl"
         x:Uid="FilterSettingsControl"
         ModuleImageSource="ms-appx:///Assets/Modules/Filters.png">
-        <wuc:SettingsPageControl.ModuleContent>
+        <etc:SettingsPageControl.ModuleContent>
             <StackPanel>
-                <wuc:SettingsCard x:Name="AddFilterCard"
+                <ctk:SettingsCard x:Name="AddFilterCard"
                                   x:Uid="AddFilterSettingsCard">
-                    <wuc:SettingsCard.HeaderIcon>
+                    <ctk:SettingsCard.HeaderIcon>
                         <FontIcon Glyph="&#xE71C;"/>
-                    </wuc:SettingsCard.HeaderIcon>
+                    </ctk:SettingsCard.HeaderIcon>
                     <StackPanel>
                         <Button x:Uid="FilterButton"
                                 x:Name="FiltersButton"
                                 Style="{StaticResource AccentButtonStyle}"
                                 Command="{x:Bind ViewModel.AddFilterClickedCommand}"/>
                     </StackPanel>
-                </wuc:SettingsCard>
+                </ctk:SettingsCard>
                 <StackPanel>
                     <TextBlock x:Name="FiltersList"
                                TextWrapping="Wrap"
                                x:Uid="FiltersListBlock"
                                Margin="0,20,20,0"/>
-                    <wuc:LoadingIndicator x:Name="Load"
-                                          Mode="Arcs"
-                                          IsActive="{x:Bind ViewModel.IsActive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <ProgressRing x:Name="Load" 
+                                  IsActive="{x:Bind ViewModel.IsActive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     <StackPanel x:Name="List">
                         <ListView x:Name="FiltersListView"
                                   Height="600"
@@ -144,7 +145,7 @@
                     </StackPanel>
                 </StackPanel>
             </StackPanel>
-        </wuc:SettingsPageControl.ModuleContent>
+        </etc:SettingsPageControl.ModuleContent>
 
-    </wuc:SettingsPageControl>
+    </etc:SettingsPageControl>
 </Page>

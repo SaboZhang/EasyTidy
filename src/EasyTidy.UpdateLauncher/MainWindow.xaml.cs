@@ -1,35 +1,27 @@
-using System;
-using System.Collections.Generic;
+﻿using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
-using WinUIEx;
-using System.Diagnostics;
-using System.Threading.Tasks;
-
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 
 namespace EasyTidy.UpdateLauncher;
 
 /// <summary>
-/// An empty window that can be used on its own or navigated to within a Frame.
+/// Interaction logic for MainWindow.xaml
 /// </summary>
-public sealed partial class MainWindow : WindowEx
+public partial class MainWindow : Window
 {
     /// <summary>
     ///    新版本保存目录路径
     /// </summary>
-    private readonly string SaveDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory);
+    private readonly string SaveDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory);
 
     /// <summary>
     ///   新版本保存名字
@@ -38,9 +30,15 @@ public sealed partial class MainWindow : WindowEx
 
     public MainWindow()
     {
-        this.InitializeComponent();
-        Task.Run(() => ProcessDownloadedFile());
+        InitializeComponent();
+        VersionText.Text = $"当前版本号：v{App.CurrentVersion}";
+        Loaded += MainWindow_Loaded;
+        
+    }
 
+    private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+    {
+        Task task = ProcessDownloadedFile();
     }
 
     /// <summary>
@@ -51,22 +49,35 @@ public sealed partial class MainWindow : WindowEx
     {
         // 处理更新
         var process = Process.GetProcessesByName("EasyTidy");
-        if (process != null && process.Length > 0) process[0].Kill();
+        // if (process != null && process.Length > 0) process[0].Kill();
 
-        SetStatus("下载完成，正在解压请勿关闭此窗口...");
+        if (process != null && process.Length > 0)
+        {
+            try
+            {
+                process[0].Kill();
+                process[0].WaitForExit(5000); // 等待进程终止（可选，超时为5秒）
+            }
+            catch (Exception ex)
+            {
+                SetStatus($"终止进程时发生错误：{ex.Message}", false);
+            }
+        }
+
+        SetStatus("正在解压，请勿关闭此窗口...");
 
         var unpath = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory)!.Parent!.FullName;
 
         var unresult = await Task.Run(async () =>
         {
             await Task.Delay(3000);
-            return Unzip.ExtractZipFile(Path.Combine(SaveDir, SaveName), unpath);
+            return Unzip.ExtractZipFile(System.IO.Path.Combine(SaveDir, SaveName), unpath);
         });
 
         if (unresult)
         {
             SetStatus("更新完成！", false);
-            Process.Start(Path.Combine(unpath, "EasyTidy.exe"));
+            Process.Start(System.IO.Path.Combine(unpath, "EasyTidy.exe"));
         }
         else
         {
@@ -77,12 +88,16 @@ public sealed partial class MainWindow : WindowEx
     private void SetStatus(string statusText, bool isLoading = true)
     {
         UpdateStatus.Text = statusText;
-        UpdateRing.IsActive = isLoading;
+        UpdateRing.IsIndeterminate = isLoading;
         if (isLoading)
-            UpdateRing.IsActive = true;
+        {
+            UpdateRing.IsIndeterminate = true;
+            UpdateRing.Visibility = Visibility.Visible;
+        }
         else
-            UpdateRing.IsActive = false;
+        {
+            UpdateRing.IsIndeterminate = false;
+            UpdateRing.Visibility = Visibility.Collapsed;
+        }  
     }
-
-
 }

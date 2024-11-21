@@ -61,7 +61,7 @@ Copy-Item -Path ./run.bat -Destination ./publish/run.bat
 
 Copy-Item -Path "$targetDir\EasyTidy" -Destination ./publish -Recurse
 
-Copy-Item -Path ./EasyTidy.UpdateLauncher.exe -Destination ./publish/EasyTidy/EasyTidy.UpdateLauncher.exe
+Copy-Item -Path ./update/EasyTidy.UpdateLauncher.exe -Destination ./publish/EasyTidy/EasyTidy.UpdateLauncher.exe
 
 # 使用7-Zip创建ZIP文件
 & 7z a -tzip "EasyTidy_${version}_win-x64.zip" ./publish/*

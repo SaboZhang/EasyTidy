@@ -1118,4 +1118,7 @@
   <data name="GeneralMultipleInstanceCard.Description" xml:space="preserve">
     <value>複数のインスタンスをプロビジョニングできますか</value>
   </data>
+  <data name="AutoAnalysisGlobal.Header" xml:space="preserve">
+    <value>自動分析（グローバル）</value>
+  </data>
 </root>
