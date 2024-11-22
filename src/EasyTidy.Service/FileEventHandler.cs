@@ -37,6 +37,7 @@ public static class FileEventHandler
         // 创建并配置文件监控器
         var watcher = CreateFileSystemWatcher(parameter.SourcePath);
 
+        watcher.IncludeSubdirectories = (bool)ServiceConfig.CurConfig.SubFolder;
         // 绑定文件变化事件
         BindFileSystemEvents(watcher, delaySeconds, parameter);
 
@@ -88,6 +89,7 @@ public static class FileEventHandler
         watcher.Deleted += (sender, e) => onChange(e);
         watcher.Changed += (sender, e) => onChange(e);
         watcher.Renamed += (sender, e) => onChange(e);
+        watcher.EnableRaisingEvents = true;
     }
 
     /// <summary>

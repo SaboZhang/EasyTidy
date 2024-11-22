@@ -11,7 +11,7 @@ namespace EasyTidy.UpdateLauncher;
 public partial class App : Application
 {
 
-    private readonly string defaultVersion = "1.0.0.0";
+    private readonly string defaultVersion = "1.0.0.1115";
 
     public static string CurrentVersion = "";
 

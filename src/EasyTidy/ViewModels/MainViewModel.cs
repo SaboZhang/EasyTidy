@@ -42,6 +42,7 @@ public partial class MainViewModel : ObservableObject, ITitleBarAutoSuggestBoxAw
         try
         {
             var list = _dbContext.Automatic.Include(a => a.TaskOrchestrationList).Where(a => a.IsStartupExecution).ToList();
+            if (list.Count == 0) return;
 
             // 并行执行任务，但不等待
             var tasks = list.SelectMany(item =>
@@ -84,7 +85,7 @@ public partial class MainViewModel : ObservableObject, ITitleBarAutoSuggestBoxAw
         try
         {
             var list = _dbContext.Automatic.Include(a => a.TaskOrchestrationList).Where(a => a.IsFileChange == true).ToList();
-            Dictionary<string, List<string>> sourceToTargetsCache = new Dictionary<string, List<string>>();
+            if (list.Count == 0) return;
             foreach (var item in list)
             {
                 foreach (var task in item.TaskOrchestrationList.Where(t => t.IsRelated))
