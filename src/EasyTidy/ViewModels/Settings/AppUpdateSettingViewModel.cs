@@ -26,6 +26,8 @@ public partial class AppUpdateSettingViewModel : ObservableObject
 
     private string ChangeLog = string.Empty;
 
+    private string DownloadUrl = string.Empty;
+
     public IThemeService themeService;
 
     public AppUpdateSettingViewModel()
@@ -59,6 +61,7 @@ public partial class AppUpdateSettingViewModel : ObservableObject
                 {
                     IsUpdateAvailable = true;
                     ChangeLog = update.Changelog;
+                    DownloadUrl = update.Assets[0].Url;
                     LoadingStatus = string.Format("FoundANewVersion".GetLocalized(), update.TagName, update.CreatedAt, update.PublishedAt);
                 }
                 else
@@ -152,7 +155,7 @@ public partial class AppUpdateSettingViewModel : ObservableObject
         var stackPanel = new StackPanel();
         stackPanel.Children.Add(new TextBlock
         {
-            Text = $"Changelog:\n\n{changelog}",
+            Text = $"{changelog}",
             TextWrapping = TextWrapping.Wrap
         });
         stackPanel.Children.Add(progressText);
@@ -177,12 +180,12 @@ public partial class AppUpdateSettingViewModel : ObservableObject
             try
             {
                 // 创建进度报告器
-                //var progressReporter = new Progress<double>(progress =>
-                //{
-                //    progressBar.Value = progress;
-                //    progressText.Text = $"Downloading... {progress:F1}%".GetLocalized();
-                //});
-                //await Download(downloadUrl, progressReporter);
+                var progressReporter = new Progress<double>(progress =>
+                {
+                   progressBar.Value = progress;
+                   progressText.Text = $"Downloading... {progress:F1}%".GetLocalized();
+                });
+                await Download(downloadUrl, progressReporter);
                 progressText.Text = "Download complete!";
                 isShow = true;
                 await Task.Delay(2000);
@@ -220,7 +223,7 @@ public partial class AppUpdateSettingViewModel : ObservableObject
         await updateDialog.ShowAsync();
     }
 
-    private async Task Download(string downloadUrl, IProgress<double> progress)
+    private async Task Download(string downloadUrl, IProgress<double>? progress = null)
     {
         var httpClient = new HttpClient(new SocketsHttpHandler());
 
@@ -244,14 +247,14 @@ public partial class AppUpdateSettingViewModel : ObservableObject
 
                     totalDownloadedByte += bytesRead;
                     var process = Math.Round((double)totalDownloadedByte / totalBytes * 100, 2);
-                    progress.Report(process);
+                    progress?.Report(process);
                 }
             }
 
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            Logger.Error("下载失败");
+            Logger.Error($"下载失败：{ex}");
         }
         finally
         {
@@ -277,7 +280,7 @@ public partial class AppUpdateSettingViewModel : ObservableObject
                 return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, updateFolder, fileName);
             }
 
-            string[] requiredFiles = ["EasyTidy.UpdateLauncher.exe"];
+            string[] requiredFiles = ["UpdateLauncher.exe"];
 
             if (requiredFiles.All(file => File.Exists(GetPath(file))))
             {
@@ -285,7 +288,7 @@ public partial class AppUpdateSettingViewModel : ObservableObject
 
                 foreach (var file in requiredFiles) File.Copy(GetPath(file), GetCachePath(file), true);
 
-                CommonUtil.ExecuteProgram(GetCachePath("EasyTidy.UpdateLauncher.exe"), [Constants.Version]);
+                CommonUtil.ExecuteProgram(GetCachePath("UpdateLauncher.exe"), [Constants.Version]);
             }
         }
         catch (Exception ex)
@@ -297,8 +300,18 @@ public partial class AppUpdateSettingViewModel : ObservableObject
     [RelayCommand]
     private async Task GoToUpdateAsync()
     {
-        //Todo: Change Uri
-        await Launcher.LaunchUriAsync(new Uri("https://github.com/SaboZhang/Organize/releases"));
+        try
+        {
+            await Task.Run(async () =>
+            {
+                await Download(DownloadUrl);
+                InstallUpdate();
+            });
+        }
+        catch (Exception ex)
+        {
+            Logger.Error($"更新失败: {ex}");
+        }
     }
 
     [RelayCommand]

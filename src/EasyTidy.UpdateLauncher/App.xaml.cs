@@ -11,7 +11,7 @@ namespace EasyTidy.UpdateLauncher;
 public partial class App : Application
 {
 
-    private readonly string defaultVersion = "1.0.0.0";
+    private readonly string defaultVersion = "1.0.0.1115";
 
     public static string CurrentVersion = "";
 
@@ -30,7 +30,7 @@ public partial class App : Application
 
     private bool IsAlreadyRunning()
     {
-        mutex = new Mutex(true, "EasyTidy.UpdateLauncher", out var isCreatedNew);
+        mutex = new Mutex(true, "UpdateLauncher", out var isCreatedNew);
         return !isCreatedNew;
     }
 

@@ -25,7 +25,6 @@ function CheckAndDeletePublishDir($publishDir) {
 		Write-Host "========================================"
 		Write-Host "[Cache] Deleting existing publish directory $publishDir..."
 		Write-Host "========================================"
-        Copy-Item -Path $publishDir/EasyTidy.UpdateLauncher.exe -Destination ./EasyTidy.UpdateLauncher.exe
         try {
             Remove-Item -Path $publishDir -Recurse -Force
 			Write-Host ""
@@ -61,7 +60,7 @@ Copy-Item -Path ./run.bat -Destination ./publish/run.bat
 
 Copy-Item -Path "$targetDir\EasyTidy" -Destination ./publish -Recurse
 
-Copy-Item -Path ./update/EasyTidy.UpdateLauncher.exe -Destination ./publish/EasyTidy/EasyTidy.UpdateLauncher.exe
+Copy-Item -Path ./update/UpdateLauncher.exe -Destination ./publish/EasyTidy/UpdateLauncher.exe
 
 # 使用7-Zip创建ZIP文件
 & 7z a -tzip "EasyTidy_${version}_win-x64.zip" ./publish/*

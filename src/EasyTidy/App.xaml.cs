@@ -3,6 +3,7 @@ using EasyTidy.Common.Database;
 using EasyTidy.Log;
 using EasyTidy.Model;
 using EasyTidy.Service;
+using EasyTidy.Util.SettingsInterface;
 using H.NotifyIcon;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Windows.AppNotifications;
@@ -76,6 +77,14 @@ public partial class App : Application
     {
         var services = new ServiceCollection();
         services.AddSingleton<IThemeService, ThemeService>();
+        services.AddSingleton<ISettingsManager, SettingsHelper>();
+        services.AddSingleton<ServiceConfig>(factory => {
+
+            var settingsManager = factory.GetRequiredService<ISettingsManager>();
+            var serviceConfig = new ServiceConfig(settingsManager);
+            serviceConfig.SetConfigModel();
+            return serviceConfig;
+        });
         services.AddSingleton<IJsonNavigationViewService>(factory =>
         {
             var json = new JsonNavigationViewService();
