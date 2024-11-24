@@ -117,15 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="NavAutomaticText" xml:space="preserve">
+  <data name="NavAutomaticText.Content" xml:space="preserve">
     <value>Automatic</value>
     <comment />
   </data>
-  <data name="NavTaskOrchestrationText" xml:space="preserve">
+  <data name="NavTaskOrchestrationText.Content" xml:space="preserve">
     <value>Task Orchestration</value>
     <comment />
   </data>
-  <data name="NavFiltersText" xml:space="preserve">
+  <data name="NavFiltersText.Content" xml:space="preserve">
     <value>Filters</value>
     <comment />
   </data>
@@ -501,7 +501,7 @@
   <data name="EditButton.ToolTipService.ToolTip" xml:space="preserve">
     <value>Edit</value>
   </data>
-  <data name="NavGeneralText" xml:space="preserve">
+  <data name="NavGeneralText.Content" xml:space="preserve">
     <value>General</value>
   </data>
   <data name="DesktopText" xml:space="preserve">

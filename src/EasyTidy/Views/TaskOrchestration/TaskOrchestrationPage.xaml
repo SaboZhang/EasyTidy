@@ -9,7 +9,9 @@
     xmlns:wuc="using:WinUICommunity"
     xmlns:model="using:EasyTidy.Model"
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
-    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:i="using:Microsoft.Xaml.Interactivity" 
+    xmlns:etc="using:EasyTidy.Views.UserControls" 
+    xmlns:ctk="using:CommunityToolkit.WinUI.Controls"
     mc:Ignorable="d">
 
     <i:Interaction.Behaviors>
@@ -20,21 +22,21 @@
         </ic:EventTriggerBehavior>
     </i:Interaction.Behaviors>
 
-    <StackPanel x:Name="Root">
+    <StackPanel x:Name="ContentArea" Margin="0,-42,0,0" >
         <StackPanel x:Name="Growl"
                     MinWidth="340"
                     wuc:Growl.GrowlParent="True"/>
-        <wuc:SettingsPageControl
+        <etc:SettingsPageControl
             x:Name="SettingsControl"
             x:Uid="TaskSettingsPage"
             ModuleImageSource="ms-appx:///Assets/Modules/FileTask.png">
-            <wuc:SettingsPageControl.ModuleContent>
+            <etc:SettingsPageControl.ModuleContent>
                 <StackPanel>
-                    <wuc:SettingsCard x:Name="AddTask"
+                    <ctk:SettingsCard x:Name="AddTask"
                                       x:Uid="TaskAddTask">
-                        <wuc:SettingsCard.HeaderIcon>
+                        <ctk:SettingsCard.HeaderIcon>
                             <FontIcon Glyph="&#xE7C4;"/>
-                        </wuc:SettingsCard.HeaderIcon>
+                        </ctk:SettingsCard.HeaderIcon>
                         <StackPanel Orientation="Horizontal"
                                     Spacing="10">
                             <Button x:Uid="TaskAddTaskButton"
@@ -54,15 +56,14 @@
                                 </i:Interaction.Behaviors>
                             </ComboBox>
                         </StackPanel>
-                    </wuc:SettingsCard>
+                    </ctk:SettingsCard>
                     <StackPanel>
                         <TextBlock x:Name="TaskList"
                                    TextWrapping="Wrap"
                                    x:Uid="TaskListView"
                                    Margin="0,20,20,0"/>
-                        <wuc:LoadingIndicator x:Name="Load"
-                                              Mode="Arcs"
-                                              IsActive="{x:Bind ViewModel.IsActive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <ProgressRing x:Name="Load"
+                                      IsActive="{x:Bind ViewModel.IsActive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         <StackPanel>
                             <ListView ItemsSource="{x:Bind ViewModel.TaskListACV, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       HorizontalContentAlignment="Stretch"
@@ -184,8 +185,8 @@
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>
-            </wuc:SettingsPageControl.ModuleContent>
-        </wuc:SettingsPageControl>
+            </etc:SettingsPageControl.ModuleContent>
+        </etc:SettingsPageControl>
 
     </StackPanel>
 </Page>

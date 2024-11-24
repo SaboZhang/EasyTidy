@@ -222,7 +222,7 @@ public sealed partial class AddFilterContentDialog : ContentDialog, INotifyDataE
         ViewModel = App.GetService<FilterViewModel>();
         this.InitializeComponent();
         XamlRoot = App.MainWindow.Content.XamlRoot;
-        RequestedTheme = ViewModel.themeService.GetElementTheme();
+        // RequestedTheme = ViewModel.themeService.GetElementTheme();
         ValidateFilterName(_filterName);
     }
 

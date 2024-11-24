@@ -14,11 +14,9 @@ namespace EasyTidy.ViewModels;
 public partial class TaskOrchestrationViewModel : ObservableRecipient
 {
     private readonly AppDbContext _dbContext;
-    public IThemeService themeService;
 
-    public TaskOrchestrationViewModel(IThemeService themeService)
+    public TaskOrchestrationViewModel()
     {
-        this.themeService = themeService;
         _dbContext = App.GetService<AppDbContext>();
         LoadRulesMenu();
         DateTimeModel = new ObservableCollection<PatternSnippetModel>();

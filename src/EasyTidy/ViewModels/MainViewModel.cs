@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.WinUI;
 using EasyTidy.Common.Database;
+using EasyTidy.Contracts.Service;
 using EasyTidy.Model;
 using EasyTidy.Service;
 using EasyTidy.Util;
@@ -10,13 +11,26 @@ public partial class MainViewModel : ObservableObject, ITitleBarAutoSuggestBoxAw
 {
     private readonly AppDbContext _dbContext;
 
-    public IJsonNavigationViewService JsonNavigationViewService;
-    public MainViewModel(IJsonNavigationViewService jsonNavigationViewService, IThemeService themeService)
+    [ObservableProperty]
+    private bool isBackEnabled;
+
+    [ObservableProperty]
+    private object? selected;
+
+    public INavigationService NavigationService
     {
-        JsonNavigationViewService = jsonNavigationViewService;
-        themeService.Initialize(App.MainWindow, true, Constants.CommonAppConfigPath);
-        themeService.ConfigBackdrop();
-        themeService.ConfigElementTheme();
+        get;
+    }
+
+    public INavigationViewService NavigationViewService
+    {
+        get;
+    }
+    public MainViewModel()
+    {
+        //themeService.Initialize(App.MainWindow, true, Constants.CommonAppConfigPath);
+        //themeService.ConfigBackdrop();
+        //themeService.ConfigElementTheme();
         _dbContext = App.GetService<AppDbContext>();
         // 启动时执行，不等待
         OnStartupExecutionAsync();

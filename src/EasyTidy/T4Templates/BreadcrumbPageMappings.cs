@@ -11,6 +11,5 @@ public partial class BreadcrumbPageMappings
 {
     public static Dictionary<Type, BreadcrumbPageConfig> PageDictionary = new()
     {
-        {typeof(EasyTidy.Views.SettingsPage), new BreadcrumbPageConfig { PageTitle = null, IsHeaderVisible = true, ClearNavigation = false}},
     };
 }

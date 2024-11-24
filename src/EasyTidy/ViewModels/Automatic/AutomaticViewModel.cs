@@ -15,18 +15,11 @@ namespace EasyTidy.ViewModels;
 public partial class AutomaticViewModel : ObservableRecipient
 {
     private readonly AppDbContext _dbContext;
-    public AutomaticViewModel(IThemeService themeService)
-    {
-        this.themeService = themeService;
-        _dbContext = App.GetService<AppDbContext>();
-    }
 
     public AutomaticViewModel()
     {
-
+        _dbContext = App.GetService<AppDbContext>();
     }
-
-    public IThemeService themeService;
 
     /// <summary>
     ///     当前配置实例
@@ -221,7 +214,6 @@ public partial class AutomaticViewModel : ObservableRecipient
             Title = "ScheduleText".GetLocalized(),
             PrimaryButtonText = "SaveText".GetLocalized(),
             CloseButtonText = "CancelText".GetLocalized(),
-            ThemeService = themeService,
             SecondaryButtonText = "Test".GetLocalized()
         };
         dialog.PrimaryButtonClick += OnOnAddPlanPrimaryButton;

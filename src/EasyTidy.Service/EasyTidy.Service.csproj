@@ -28,6 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\EasyTidy.Contracts\EasyTidy.Contracts.csproj" />
     <ProjectReference Include="..\EasyTidy.Log\EasyTidy.Log.csproj" />
     <ProjectReference Include="..\EasyTidy.Model\EasyTidy.Model.csproj" />
     <ProjectReference Include="..\EasyTidy.Util\EasyTidy.Util.csproj" />

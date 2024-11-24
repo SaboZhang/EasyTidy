@@ -14,18 +14,10 @@ public partial class FilterViewModel : ObservableRecipient
     private readonly AppDbContext _dbContext;
     public FilterViewModel()
     {
-
-    }
-
-    public FilterViewModel(IThemeService themeService)
-    {
-        this.themeService = themeService;
         _dbContext = App.GetService<AppDbContext>();
     }
 
     private readonly DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
-
-    public IThemeService themeService;
 
     [ObservableProperty]
     private IList<YesOrNo> yesOrNos = Enum.GetValues(typeof(YesOrNo)).Cast<YesOrNo>().ToList();

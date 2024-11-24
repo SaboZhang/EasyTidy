@@ -1,13 +1,19 @@
 ﻿using CommunityToolkit.WinUI;
+using EasyTidy.Activation;
 using EasyTidy.Common.Database;
+using EasyTidy.Contracts.Service;
 using EasyTidy.Log;
 using EasyTidy.Model;
 using EasyTidy.Service;
+using EasyTidy.Util;
 using EasyTidy.Util.SettingsInterface;
 using H.NotifyIcon;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Windows.AppNotifications;
 using Microsoft.Windows.Globalization;
+using WinUIEx;
 
 namespace EasyTidy;
 
@@ -15,23 +21,25 @@ public partial class App : Application
 {
     public static Mutex _mutex = null;
 
-    public static Window MainWindow = Window.Current;
+    public static WindowEx MainWindow { get; } = new MainWindow();
     public IServiceProvider Services { get; }
     public static new App Current => (App)Application.Current;
     public string AppVersion { get; set; } = ProcessInfoHelper.Version;
-    public IJsonNavigationViewService GetJsonNavigationViewService => GetService<IJsonNavigationViewService>();
-    public IThemeService GetThemeService => GetService<IThemeService>();
+    public IHost Host
+    {
+        get;
+    }
     public string AppName { get; set; } = "EasyTidy";
 
     private bool _createdNew;
 
     public static bool HandleClosedEvents { get; set; } = true;
 
-    private readonly AppDbContext _dbContext;
+    public static UIElement? AppTitlebar { get; set; }
 
     public static T GetService<T>() where T : class
     {
-        if ((App.Current as App)!.Services.GetService(typeof(T)) is not T service)
+        if ((App.Current as App)!.Host.Services.GetService(typeof(T)) is not T service)
         {
             throw new ArgumentException($"{typeof(T)} needs to be registered in ConfigureServices within App.xaml.cs.");
         }
@@ -46,13 +54,68 @@ public partial class App : Application
         // 注册应用程序的未处理异常事件
         Application.Current.UnhandledException += App_UnhandledException;
 
-        if (!PackageHelper.IsPackaged)
+        if (!RuntimeHelper.IsMSIX)
         {
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
         }
-        Services = ConfigureServices();
+        // 加载配置
+        Host = Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder()
+            .UseContentRoot(AppContext.BaseDirectory)
+            .ConfigureServices((context, services) =>
+            {
+                services.AddTransient<ActivationHandler<LaunchActivatedEventArgs>, DefaultActivationHandler>();
+                // Register Core Services
+                // services.AddSingleton<IThemeService, ThemeService>();
+                services.AddSingleton<ISettingsManager, SettingsHelper>();
+                services.AddSingleton<ILocalSettingsService, LocalSettingsService>();
+                services.AddSingleton<IThemeSelectorService, ThemeSelectorService>();
+                services.AddTransient<INavigationViewService, NavigationViewService>();
+                services.AddSingleton<IActivationService, ActivationService>();
+                services.AddSingleton<IPageService, PageService>();
+                services.AddSingleton<INavigationService, NavigationService>();
+
+                // Register ServiceConfig
+                services.AddSingleton<ServiceConfig>(factory =>
+                {
+                    var settingsManager = factory.GetRequiredService<ISettingsManager>();
+                    var serviceConfig = new ServiceConfig(settingsManager);
+                    serviceConfig.SetConfigModel();
+                    return serviceConfig;
+                });
+
+                // Register File Service
+                services.AddSingleton<IFileService, FileService>();
+
+                // Register ViewModels
+                services.AddTransient<GeneralViewModel>();
+                services.AddTransient<MainViewModel>();
+                services.AddTransient<GeneralSettingViewModel>();
+                services.AddTransient<ThemeSettingViewModel>();
+                services.AddTransient<AppUpdateSettingViewModel>();
+                services.AddTransient<AboutUsSettingViewModel>();
+                services.AddTransient<SettingsViewModel>();
+                services.AddTransient<BreadCrumbBarViewModel>();
+                services.AddTransient<AutomaticViewModel>();
+                services.AddTransient<TaskOrchestrationViewModel>();
+                services.AddTransient<FilterViewModel>();
+                services.AddTransient<ShellPage>();
+                services.AddTransient<ShellViewModel>();
+
+                // Register AppDbContext
+                services.AddDbContext<AppDbContext>(options =>
+                options.UseSqlite($"Data Source={Path.Combine(Constants.CnfPath, "EasyTidy.db")}"), ServiceLifetime.Scoped);
+
+                // Configuration
+                services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));
+
+                // Initialize Database
+                InitializeDatabase(services);
+            })
+            .Build();
+        //var configuration = new ConfigurationBuilder()
+        //    .Build();
+        // Services = ConfigureServices(configuration);
         this.InitializeComponent();
-        _dbContext = Services.GetRequiredService<AppDbContext>();
     }
 
     private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
@@ -73,48 +136,57 @@ public partial class App : Application
         Logger.Error($"Global exception caught: {ex}");
     }
 
-    private static ServiceProvider ConfigureServices()
-    {
-        var services = new ServiceCollection();
-        services.AddSingleton<IThemeService, ThemeService>();
-        services.AddSingleton<ISettingsManager, SettingsHelper>();
-        services.AddSingleton<ServiceConfig>(factory => {
+    //private static ServiceProvider ConfigureServices(IConfiguration configuration)
+    //{
+    //    var services = new ServiceCollection();
+    //    services.AddSingleton<IThemeService, ThemeService>();
+    //    services.AddSingleton<ISettingsManager, SettingsHelper>();
+    //    services.AddSingleton<ILocalSettingsService, LocalSettingsService>();
+    //    services.AddSingleton<IThemeSelectorService, ThemeSelectorService>();
+    //    services.AddTransient<INavigationViewService, NavigationViewService>();
+    //    services.AddSingleton<IPageService, PageService>();
+    //    services.AddSingleton<INavigationService, NavigationService>();
+    //    services.AddSingleton<ServiceConfig>(factory => {
 
-            var settingsManager = factory.GetRequiredService<ISettingsManager>();
-            var serviceConfig = new ServiceConfig(settingsManager);
-            serviceConfig.SetConfigModel();
-            return serviceConfig;
-        });
-        services.AddSingleton<IJsonNavigationViewService>(factory =>
-        {
-            var json = new JsonNavigationViewService();
-            json.ConfigDefaultPage(typeof(GeneralPage));
-            json.ConfigSettingsPage(typeof(SettingsPage));
-            return json;
-        });
+    //        var settingsManager = factory.GetRequiredService<ISettingsManager>();
+    //        var serviceConfig = new ServiceConfig(settingsManager);
+    //        serviceConfig.SetConfigModel();
+    //        return serviceConfig;
+    //    });
+    //    //services.AddSingleton<IJsonNavigationViewService>(factory =>
+    //    //{
+    //    //    var json = new JsonNavigationViewService();
+    //    //    json.ConfigDefaultPage(typeof(GeneralPage));
+    //    //    json.ConfigSettingsPage(typeof(SettingsPage));
+    //    //    return json;
+    //    //});
 
-        services.AddTransient<GeneralViewModel>();
-        services.AddTransient<MainViewModel>();
-        services.AddTransient<GeneralSettingViewModel>();
-        services.AddTransient<ThemeSettingViewModel>();
-        services.AddTransient<AppUpdateSettingViewModel>();
-        services.AddTransient<AboutUsSettingViewModel>();
-        services.AddTransient<SettingsViewModel>();
-        services.AddTransient<BreadCrumbBarViewModel>();
-        services.AddTransient<AutomaticViewModel>();
-        services.AddTransient<TaskOrchestrationViewModel>();
-        services.AddTransient<FilterViewModel>();
+    //    services.AddSingleton<IFileService, FileService>();
 
-        // 注册 AppDbContext
-        services.AddDbContext<AppDbContext>(options =>
-            options.UseSqlite($"Data Source={Path.Combine(Constants.CnfPath, "EasyTidy.db")}"),
-            ServiceLifetime.Scoped);
+    //    services.AddTransient<GeneralViewModel>();
+    //    services.AddTransient<MainViewModel>();
+    //    services.AddTransient<GeneralSettingViewModel>();
+    //    services.AddTransient<ThemeSettingViewModel>();
+    //    services.AddTransient<AppUpdateSettingViewModel>();
+    //    services.AddTransient<AboutUsSettingViewModel>();
+    //    services.AddTransient<SettingsViewModel>();
+    //    services.AddTransient<BreadCrumbBarViewModel>();
+    //    services.AddTransient<AutomaticViewModel>();
+    //    services.AddTransient<TaskOrchestrationViewModel>();
+    //    services.AddTransient<FilterViewModel>();
 
-        var serviceProvider = services.BuildServiceProvider();
-        InitializeDatabase(serviceProvider);
+    //    // 注册 AppDbContext
+    //    services.AddDbContext<AppDbContext>(options =>
+    //        options.UseSqlite($"Data Source={Path.Combine(Constants.CnfPath, "EasyTidy.db")}"),
+    //        ServiceLifetime.Scoped);
 
-        return serviceProvider;
-    }
+    //    services.Configure<LocalSettingsOptions>(configuration.GetSection(nameof(LocalSettingsOptions)));
+
+    //    var serviceProvider = services.BuildServiceProvider();
+    //    InitializeDatabase(serviceProvider);
+
+    //    return serviceProvider;
+    //}
 
     private static void InitializeDatabase(ServiceProvider serviceProvider)
     {
@@ -125,9 +197,22 @@ public partial class App : Application
         }
     }
 
+    private static void InitializeDatabase(IServiceCollection services)
+    {
+        using (var serviceProvider = services.BuildServiceProvider())
+        {
+            using (var scope = serviceProvider.CreateScope())
+            {
+                var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+                dbContext.InitializeDatabaseAsync().GetAwaiter().GetResult();
+            }
+        }
+    }
+
     protected async override void OnLaunched(LaunchActivatedEventArgs args)
     {
         InitializeLogging();
+        await App.GetService<IActivationService>().ActivateAsync(args);
         SetApplicationLanguage();
 
         if (!IsSingleInstance())
@@ -135,9 +220,8 @@ public partial class App : Application
             Environment.Exit(0);
         }
 
-        InitializeMainWindow();
         SetWindowBehavior();
-        await PerformStartupChecksAsync();
+        // await PerformStartupChecksAsync();
 
         Logger.Fatal("EasyTidy Initialized Successfully!");
     }
@@ -162,35 +246,13 @@ public partial class App : Application
 
     private bool IsSingleInstance()
     {
-        if (!Settings.GeneralConfig.EnableMultiInstance) 
+        if (!Settings.GeneralConfig.EnableMultiInstance)
         {
             _mutex = new Mutex(true, AppName, out _createdNew);
             return _createdNew;
         }
         _mutex = new Mutex(false, AppName, out _createdNew);
         return true;
-    }
-
-    private void InitializeMainWindow()
-    {
-        MainWindow = new Window();
-        MainWindow.AppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
-        MainWindow.AppWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
-
-        if (MainWindow.Content is not Frame rootFrame)
-        {
-            MainWindow.Content = rootFrame = new Frame();
-        }
-
-        if (GetThemeService != null)
-        {
-            GetThemeService.AutoInitialize(MainWindow);
-        }
-
-        rootFrame.Navigate(typeof(MainPage));
-
-        MainWindow.Title = MainWindow.AppWindow.Title = ProcessInfoHelper.ProductNameAndVersion;
-        MainWindow.AppWindow.SetIcon("Assets/icon.ico");
     }
 
     private void SetWindowBehavior()
@@ -225,12 +287,6 @@ public partial class App : Application
 
         await QuartzConfig.InitQuartzConfigAsync();
         await QuartzHelper.StartAllJob();
-    }
-
-    private void OnNotificationInvoked(string message)
-    {
-        // 记录日志
-        Logger.Info($"Notification Invoked: {message}");
     }
 
     async void OnProcessExit(object sender, EventArgs e)

@@ -1,12 +1,14 @@
-﻿namespace EasyTidy.Views;
+﻿using EasyTidy.Common.Views;
 
-public sealed partial class SettingsPage : Page
+namespace EasyTidy.Views;
+
+public sealed partial class SettingsPage : ToolPage
 {
     public SettingsViewModel ViewModel { get; set; }
     public SettingsPage()
     {
         this.InitializeComponent();
-        ViewModel = App.GetService<SettingsViewModel>();
+        ViewModel = App.Current.Host.Services.GetService<SettingsViewModel>();
         DataContext = ViewModel;
     }
 

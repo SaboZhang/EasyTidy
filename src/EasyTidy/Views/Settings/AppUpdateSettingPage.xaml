@@ -6,17 +6,18 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:views="using:EasyTidy.Views"
-    xmlns:wuc="using:WinUICommunity"
+    xmlns:ui="using:CommunityToolkit.WinUI"
+    xmlns:wuc="using:WinUICommunity" 
+    xmlns:ctk="using:CommunityToolkit.WinUI.Controls"
     mc:Ignorable="d">
-    <ScrollView Margin="{ThemeResource ContentPageMargin}" VerticalScrollBarVisibility="Auto">
+    <ScrollView x:Name="ContentArea" Margin="{ThemeResource ContentPageMargin}" VerticalScrollBarVisibility="Auto">
         <StackPanel
             Margin="10"
-            wuc:PanelAttach.ChildrenTransitions="Default"
             Spacing="5">
             <views:BreadcrumbBarUserControl SingleItem="{x:Bind BreadCrumbBarItemText, Mode=OneWay}" />
 
-            <wuc:SettingsCard Header="{x:Bind ViewModel.CurrentVersion}" HeaderIcon="{wuc:BitmapIcon Source=Assets/Fluent/update.png}">
-                <wuc:SettingsCard.Description>
+            <ctk:SettingsCard Header="{x:Bind ViewModel.CurrentVersion}" HeaderIcon="{ui:BitmapIcon Source=Assets/Fluent/update.png}">
+                <ctk:SettingsCard.Description>
                     <StackPanel Orientation="Horizontal" Spacing="5">
                         <TextBlock Style="{StaticResource SecondaryTextStyle}" x:Uid="UpdateBlock" />
                         <TextBlock
@@ -24,7 +25,7 @@
                             Style="{StaticResource SecondaryTextStyle}"
                             Text="{x:Bind ViewModel.LastUpdateCheck}" />
                     </StackPanel>
-                </wuc:SettingsCard.Description>
+                </ctk:SettingsCard.Description>
                 <StackPanel Orientation="Horizontal" Spacing="10">
                     <ProgressRing IsActive="{x:Bind ViewModel.IsLoading, Mode=OneWay}" />
                     <Button
@@ -34,16 +35,16 @@
                         IsEnabled="{x:Bind ViewModel.IsCheckButtonEnabled, Mode=OneWay}"
                         Style="{ThemeResource AccentButtonStyle}" />
                 </StackPanel>
-            </wuc:SettingsCard>
+            </ctk:SettingsCard>
 
-            <wuc:SettingsCard Header="{x:Bind ViewModel.LoadingStatus, Mode=OneWay}" HeaderIcon="{wuc:BitmapIcon Source=Assets/Fluent/info.png}">
-                <wuc:SettingsCard.Description>
+            <ctk:SettingsCard Header="{x:Bind ViewModel.LoadingStatus, Mode=OneWay}" HeaderIcon="{ui:BitmapIcon Source=Assets/Fluent/info.png}">
+                <ctk:SettingsCard.Description>
                     <HyperlinkButton
                         Padding="5,0"
                         Command="{x:Bind ViewModel.GetReleaseNotesCommand}"
                         x:Uid="ReleaseNote"
                         Visibility="{x:Bind ViewModel.IsUpdateAvailable, Mode=OneWay}" />
-                </wuc:SettingsCard.Description>
+                </ctk:SettingsCard.Description>
                 <StackPanel
                     VerticalAlignment="Center"
                     Orientation="Horizontal"
@@ -54,7 +55,7 @@
                         x:Uid="DownloadButton"
                         Visibility="{x:Bind ViewModel.IsUpdateAvailable, Mode=OneWay}" />
                 </StackPanel>
-            </wuc:SettingsCard>
+            </ctk:SettingsCard>
         </StackPanel>
     </ScrollView>
 </Page>

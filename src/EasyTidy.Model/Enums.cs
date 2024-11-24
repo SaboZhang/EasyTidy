@@ -127,3 +127,14 @@ public enum TaskRuleType
     [Display(Name = "RegardedExpressionText")] ExpressionRules
 
 }
+
+public enum BackdropType
+{
+    None,
+    Mica,
+    MicaAlt,
+    DesktopAcrylic,
+    AcrylicThin,
+    AcrylicBase,
+    Transparent
+}

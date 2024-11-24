@@ -12,15 +12,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="NavAutomaticText" xml:space="preserve">
-    <value>自动化</value>
-  </data>
-  <data name="NavTaskOrchestrationText" xml:space="preserve">
-    <value>任務編排</value>
-  </data>
-  <data name="NavFiltersText" xml:space="preserve">
-    <value>過濾器</value>
-  </data>
   <data name="Backup" xml:space="preserve">
     <value>備份</value>
   </data>
@@ -346,9 +337,6 @@
   </data>
   <data name="EditButton.ToolTipService.ToolTip" xml:space="preserve">
     <value>編輯</value>
-  </data>
-  <data name="NavGeneralText" xml:space="preserve">
-    <value>常規</value>
   </data>
   <data name="DesktopText" xml:space="preserve">
     <value>桌面</value>
@@ -1120,5 +1108,17 @@
   </data>
   <data name="AutoAnalysisGlobal.Header" xml:space="preserve">
     <value>自動分析（全局）</value>
+  </data>
+  <data name="NavAutomaticText.Content" xml:space="preserve">
+    <value>自动化</value>
+  </data>
+  <data name="NavTaskOrchestrationText.Content" xml:space="preserve">
+    <value>任務編排</value>
+  </data>
+  <data name="NavFiltersText.Content" xml:space="preserve">
+    <value>過濾器</value>
+  </data>
+  <data name="NavGeneralText.Content" xml:space="preserve">
+    <value>常規</value>
   </data>
 </root>

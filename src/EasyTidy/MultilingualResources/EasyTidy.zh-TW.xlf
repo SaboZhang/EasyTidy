@@ -6,18 +6,6 @@
     </header>
     <body>
       <group id="EASYTIDY/STRINGS/EN-US/RESOURCES.RESW" datatype="resx">
-        <trans-unit id="NavAutomaticText" translate="yes" xml:space="preserve">
-          <source>Automatic</source>
-          <target state="translated">自動化</target>
-        </trans-unit>
-        <trans-unit id="NavTaskOrchestrationText" translate="yes" xml:space="preserve">
-          <source>Task Orchestration</source>
-          <target state="translated">任務編排</target>
-        </trans-unit>
-        <trans-unit id="NavFiltersText" translate="yes" xml:space="preserve">
-          <source>Filters</source>
-          <target state="translated">篩檢程式</target>
-        </trans-unit>
         <trans-unit id="Backup" translate="yes" xml:space="preserve">
           <source>Backup</source>
           <target state="translated">備份</target>
@@ -458,10 +446,6 @@
         <trans-unit id="EditButton.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
           <source>Edit</source>
           <target state="translated">編輯</target>
-        </trans-unit>
-        <trans-unit id="NavGeneralText" translate="yes" xml:space="preserve">
-          <source>General</source>
-          <target state="translated">常規</target>
         </trans-unit>
         <trans-unit id="DesktopText" translate="yes" xml:space="preserve">
           <source>Desktop</source>
@@ -1490,6 +1474,22 @@
         <trans-unit id="AutoAnalysisGlobal.Header" translate="yes" xml:space="preserve">
           <source>AutoAnalysis(Global)</source>
           <target state="translated">自動分析（全局）</target>
+        </trans-unit>
+        <trans-unit id="NavAutomaticText.Content" translate="yes" xml:space="preserve">
+          <source>Automatic</source>
+          <target state="translated">自动化</target>
+        </trans-unit>
+        <trans-unit id="NavTaskOrchestrationText.Content" translate="yes" xml:space="preserve">
+          <source>Task Orchestration</source>
+          <target state="translated">任務編排</target>
+        </trans-unit>
+        <trans-unit id="NavFiltersText.Content" translate="yes" xml:space="preserve">
+          <source>Filters</source>
+          <target state="translated">過濾器</target>
+        </trans-unit>
+        <trans-unit id="NavGeneralText.Content" translate="yes" xml:space="preserve">
+          <source>General</source>
+          <target state="translated">常規</target>
         </trans-unit>
       </group>
     </body>

@@ -4,6 +4,10 @@
 
     <x:Double x:Key="TitleBarCompactHeight">48</x:Double>
 
-    <Thickness x:Key="ContentPageMargin">40,48,40,0</Thickness>
+    <Thickness x:Key="ContentPageMargin">40,0,40,0</Thickness>
+    <Thickness x:Key="SettingsCardMargin">0,0,0,4</Thickness>
+    
+    <x:Double x:Key="MaxPageBackgroundWidth">1266</x:Double>
+    <x:Double x:Key="MaxPageContentWidth">1236</x:Double>
 
 </ResourceDictionary>

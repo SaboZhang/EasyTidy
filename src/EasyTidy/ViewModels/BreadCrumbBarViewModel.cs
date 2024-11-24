@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using EasyTidy.Contracts.Service;
+using System.Collections.ObjectModel;
 
 namespace EasyTidy.ViewModels;
 public partial class BreadCrumbBarViewModel : ObservableRecipient
@@ -6,11 +7,11 @@ public partial class BreadCrumbBarViewModel : ObservableRecipient
     [ObservableProperty]
     public ObservableCollection<string> breadcrumbBarCollection;
 
-    public IJsonNavigationViewService JsonNavigationViewService;
+    private INavigationService _navigationService;
 
-    public BreadCrumbBarViewModel(IJsonNavigationViewService jsonNavigationViewService)
+    public BreadCrumbBarViewModel(INavigationService navigationService)
     {
-        JsonNavigationViewService = jsonNavigationViewService;
+        _navigationService = navigationService;
         breadcrumbBarCollection = [];
     }
 
@@ -20,7 +21,7 @@ public partial class BreadCrumbBarViewModel : ObservableRecipient
         int numItemsToGoBack = BreadcrumbBarCollection.Count - args.Index - 1;
         for (int i = 0; i < numItemsToGoBack; i++)
         {
-            JsonNavigationViewService.GoBack();
+            _navigationService.GoBack();
         }
     }
 }

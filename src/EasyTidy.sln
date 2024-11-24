@@ -20,6 +20,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyTidy.Model", "EasyTidy.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyTidy.UpdateLauncher", "EasyTidy.UpdateLauncher\EasyTidy.UpdateLauncher.csproj", "{FB97BF15-0710-4964-A9D7-6CCCD2CBBF5D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyTidy.Contracts", "EasyTidy.Contracts\EasyTidy.Contracts.csproj", "{C8F39396-8A80-49C5-91BB-51B37B4CD1C8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -134,13 +136,29 @@ Global
 		{FB97BF15-0710-4964-A9D7-6CCCD2CBBF5D}.Release|x64.Build.0 = Release|Any CPU
 		{FB97BF15-0710-4964-A9D7-6CCCD2CBBF5D}.Release|x86.ActiveCfg = Release|Any CPU
 		{FB97BF15-0710-4964-A9D7-6CCCD2CBBF5D}.Release|x86.Build.0 = Release|Any CPU
+		{C8F39396-8A80-49C5-91BB-51B37B4CD1C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8F39396-8A80-49C5-91BB-51B37B4CD1C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8F39396-8A80-49C5-91BB-51B37B4CD1C8}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{C8F39396-8A80-49C5-91BB-51B37B4CD1C8}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{C8F39396-8A80-49C5-91BB-51B37B4CD1C8}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C8F39396-8A80-49C5-91BB-51B37B4CD1C8}.Debug|x64.Build.0 = Debug|Any CPU
+		{C8F39396-8A80-49C5-91BB-51B37B4CD1C8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C8F39396-8A80-49C5-91BB-51B37B4CD1C8}.Debug|x86.Build.0 = Debug|Any CPU
+		{C8F39396-8A80-49C5-91BB-51B37B4CD1C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8F39396-8A80-49C5-91BB-51B37B4CD1C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8F39396-8A80-49C5-91BB-51B37B4CD1C8}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{C8F39396-8A80-49C5-91BB-51B37B4CD1C8}.Release|ARM64.Build.0 = Release|Any CPU
+		{C8F39396-8A80-49C5-91BB-51B37B4CD1C8}.Release|x64.ActiveCfg = Release|Any CPU
+		{C8F39396-8A80-49C5-91BB-51B37B4CD1C8}.Release|x64.Build.0 = Release|Any CPU
+		{C8F39396-8A80-49C5-91BB-51B37B4CD1C8}.Release|x86.ActiveCfg = Release|Any CPU
+		{C8F39396-8A80-49C5-91BB-51B37B4CD1C8}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		RESX_PrefixTranslations = False
-		RESX_SortFileContentOnSave = False
 		SolutionGuid = {EB9E585A-14A0-48D9-9D85-A56F72F4D785}
+		RESX_SortFileContentOnSave = False
+		RESX_PrefixTranslations = False
 	EndGlobalSection
 EndGlobal
