@@ -1272,4 +1272,7 @@
   <data name="GeneralMultipleInstanceCard.Description" xml:space="preserve">
     <value>Can multiple instances be provisioned</value>
   </data>
+  <data name="ExtractText" xml:space="preserve">
+    <value>Extract files</value>
+  </data>
 </root>

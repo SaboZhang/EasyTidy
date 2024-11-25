@@ -1485,7 +1485,7 @@
         </trans-unit>
         <trans-unit id="NavFiltersText.Content" translate="yes" xml:space="preserve">
           <source>Filters</source>
-          <target state="translated">附加规则</target>
+          <target state="translated">过滤规则</target>
         </trans-unit>
         <trans-unit id="NavGeneralText.Content" translate="yes" xml:space="preserve">
           <source>General</source>

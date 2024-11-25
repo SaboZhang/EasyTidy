@@ -49,7 +49,9 @@ public enum OperationMode
 
     [Display(Name = "RenameText")] Rename,
 
-    [Display(Name = "RecycleBinText")] RecycleBin
+    [Display(Name = "RecycleBinText")] RecycleBin,
+
+    [Display(Name = "ExtractText")] Extract
 
 }
 
