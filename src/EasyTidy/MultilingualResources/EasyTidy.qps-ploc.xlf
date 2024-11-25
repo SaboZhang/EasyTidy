@@ -200,30 +200,6 @@
           <source>Filter</source>
           <target state="new">Filter</target>
         </trans-unit>
-        <trans-unit id="ThemeSettingPage.Description" translate="yes" xml:space="preserve">
-          <source>Explore the different ways to customize the appearance and behavior of your app. You can change the material, theme, accent, and more options to suit your style and preference.</source>
-          <target state="new">Explore the different ways to customize the appearance and behavior of your app. You can change the material, theme, accent, and more options to suit your style and preference.</target>
-        </trans-unit>
-        <trans-unit id="ThemeSettingPage.Header" translate="yes" xml:space="preserve">
-          <source>Behavior &amp; animation</source>
-          <target state="new">Behavior &amp; animation</target>
-        </trans-unit>
-        <trans-unit id="AppUpdateSetting.Description" translate="yes" xml:space="preserve">
-          <source>Check for Updates</source>
-          <target state="new">Check for Updates</target>
-        </trans-unit>
-        <trans-unit id="AppUpdateSetting.Header" translate="yes" xml:space="preserve">
-          <source>Check for Updates</source>
-          <target state="new">Check for Updates</target>
-        </trans-unit>
-        <trans-unit id="AboutUsSettingPage.Description" translate="yes" xml:space="preserve">
-          <source>About EasyTidy and Developer</source>
-          <target state="new">About EasyTidy and Developer</target>
-        </trans-unit>
-        <trans-unit id="AboutUsSettingPage.Header" translate="yes" xml:space="preserve">
-          <source>About</source>
-          <target state="new">About</target>
-        </trans-unit>
         <trans-unit id="GeneralPageControl.ModuleDescription" translate="yes" xml:space="preserve">
           <source>EasyTidy is an open-source, professional file management tool designed to provide users with efficient and convenient file classification and organization solutions. Through custom settings, users can achieve various sorting methods such as automatic sorting, scheduled sorting, real-time sorting, and manual sorting to meet the file management needs in different scenarios. Used by the author ♥  make.</source>
           <target state="new">EasyTidy is an open-source, professional file management tool designed to provide users with efficient and convenient file classification and organization solutions. Through custom settings, users can achieve various sorting methods such as automatic sorting, scheduled sorting, real-time sorting, and manual sorting to meet the file management needs in different scenarios. Used by the author ♥  make.</target>
@@ -1483,6 +1459,62 @@
         <trans-unit id="NavGeneralText.Content" translate="yes" xml:space="preserve">
           <source>General</source>
           <target state="new">General</target>
+        </trans-unit>
+        <trans-unit id="ExtractText" translate="yes" xml:space="preserve">
+          <source>Extract files</source>
+          <target state="new">Extract files</target>
+        </trans-unit>
+        <trans-unit id="ThemeSettingPage_Description" translate="yes" xml:space="preserve">
+          <source>Explore the different ways to customize the appearance and behavior of your app. You can change the material, theme, accent, and more options to suit your style and preference.</source>
+          <target state="new">Explore the different ways to customize the appearance and behavior of your app. You can change the material, theme, accent, and more options to suit your style and preference.</target>
+        </trans-unit>
+        <trans-unit id="ThemeSettingPage_Header" translate="yes" xml:space="preserve">
+          <source>Behavior &amp; animation</source>
+          <target state="new">Behavior &amp; animation</target>
+        </trans-unit>
+        <trans-unit id="AppUpdateSetting_Description" translate="yes" xml:space="preserve">
+          <source>Check for Updates</source>
+          <target state="new">Check for Updates</target>
+        </trans-unit>
+        <trans-unit id="AppUpdateSetting_Header" translate="yes" xml:space="preserve">
+          <source>Check for Updates</source>
+          <target state="new">Check for Updates</target>
+        </trans-unit>
+        <trans-unit id="AboutUsSettingPage_Description" translate="yes" xml:space="preserve">
+          <source>About EasyTidy and Developer</source>
+          <target state="new">About EasyTidy and Developer</target>
+        </trans-unit>
+        <trans-unit id="AboutUsSettingPage_Header" translate="yes" xml:space="preserve">
+          <source>About</source>
+          <target state="new">About</target>
+        </trans-unit>
+        <trans-unit id="Download" translate="yes" xml:space="preserve">
+          <source>Download</source>
+          <target state="new">Download</target>
+        </trans-unit>
+        <trans-unit id="Downloading" translate="yes" xml:space="preserve">
+          <source>Downloading...</source>
+          <target state="new">Downloading...</target>
+        </trans-unit>
+        <trans-unit id="DownloadComplete" translate="yes" xml:space="preserve">
+          <source>Download complete!</source>
+          <target state="new">Download complete!</target>
+        </trans-unit>
+        <trans-unit id="OK" translate="yes" xml:space="preserve">
+          <source>OK</source>
+          <target state="new">OK</target>
+        </trans-unit>
+        <trans-unit id="UpdateReady" translate="yes" xml:space="preserve">
+          <source>Update Ready</source>
+          <target state="new">Update Ready</target>
+        </trans-unit>
+        <trans-unit id="Update_Ready_Content" translate="yes" xml:space="preserve">
+          <source>The update has been downloaded. The installation will begin shortly.</source>
+          <target state="new">The update has been downloaded. The installation will begin shortly.</target>
+        </trans-unit>
+        <trans-unit id="PreparingToDownload" translate="yes" xml:space="preserve">
+          <source>Preparing to download...</source>
+          <target state="new">Preparing to download...</target>
         </trans-unit>
       </group>
     </body>

@@ -1,20 +1,16 @@
-﻿namespace EasyTidy.Views;
+﻿using EasyTidy.Common.Views;
 
-public sealed partial class ThemeSettingPage : Page
+namespace EasyTidy.Views;
+
+public sealed partial class ThemeSettingPage : ToolPage
 {
     public ThemeSettingViewModel ViewModel { get; }
-    public string BreadCrumbBarItemText { get; set; }
 
     public ThemeSettingPage()
     {
-        ViewModel = App.GetService<ThemeSettingViewModel>();
         this.InitializeComponent();
-    }
-
-    protected override void OnNavigatedTo(NavigationEventArgs e)
-    {
-        base.OnNavigatedTo(e);
-        BreadCrumbBarItemText = e.Parameter as string;
+        ViewModel = App.GetService<ThemeSettingViewModel>();
+        DataContext = ViewModel;
     }
 }
 

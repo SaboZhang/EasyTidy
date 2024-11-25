@@ -158,24 +158,6 @@
   <data name="FilterSettingsControl.ModuleTitle" xml:space="preserve">
     <value>過濾器</value>
   </data>
-  <data name="ThemeSettingPage.Description" xml:space="preserve">
-    <value>自定義應用程序外觀和行為的不同方法。可以更改材質、主題、重音和更多選項，以適應您的風格和偏好。</value>
-  </data>
-  <data name="ThemeSettingPage.Header" xml:space="preserve">
-    <value>行為和動畫</value>
-  </data>
-  <data name="AppUpdateSetting.Description" xml:space="preserve">
-    <value>檢查和更新應用程序</value>
-  </data>
-  <data name="AppUpdateSetting.Header" xml:space="preserve">
-    <value>檢查更新</value>
-  </data>
-  <data name="AboutUsSettingPage.Description" xml:space="preserve">
-    <value>關於 EasyTidy 的開發</value>
-  </data>
-  <data name="AboutUsSettingPage.Header" xml:space="preserve">
-    <value>關於</value>
-  </data>
   <data name="GeneralPageControl.ModuleDescription" xml:space="preserve">
     <value>EasyTidy是一款開源的，專業的文件管理工具，旨在為用戶提供高效、便捷的文件分類整理解決方案。通過自定義設置，用戶可以實現自動整理、定時整理、實時整理以及手動整理等多種整理方式，以滿足不同場景下的文件管理需求。由作者用 ♥ 製作。</value>
   </data>
@@ -1120,5 +1102,26 @@
   </data>
   <data name="NavGeneralText.Content" xml:space="preserve">
     <value>常規</value>
+  </data>
+  <data name="ExtractText" xml:space="preserve">
+    <value>自動解壓</value>
+  </data>
+  <data name="ThemeSettingPage_Description" xml:space="preserve">
+    <value>自訂應用程式外觀及行為的不同方法。您可以變更材質、主題、重音及更多選項，以符合您的風格及喜好。</value>
+  </data>
+  <data name="ThemeSettingPage_Header" xml:space="preserve">
+    <value>行為和動畫</value>
+  </data>
+  <data name="AppUpdateSetting_Description" xml:space="preserve">
+    <value>检查和更新应用程序</value>
+  </data>
+  <data name="AppUpdateSetting_Header" xml:space="preserve">
+    <value>检查更新</value>
+  </data>
+  <data name="AboutUsSettingPage_Description" xml:space="preserve">
+    <value>關於 EasyTidy 的開發</value>
+  </data>
+  <data name="AboutUsSettingPage_Header" xml:space="preserve">
+    <value>關於</value>
   </data>
 </root>

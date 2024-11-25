@@ -158,24 +158,6 @@
   <data name="FilterSettingsControl.ModuleTitle" xml:space="preserve">
     <value>过滤器</value>
   </data>
-  <data name="ThemeSettingPage.Description" xml:space="preserve">
-    <value>自定义应用程序外观和行为的不同方法。可以更改材质、主题、重音和更多选项，以适应您的风格和偏好。</value>
-  </data>
-  <data name="ThemeSettingPage.Header" xml:space="preserve">
-    <value>行为和动画</value>
-  </data>
-  <data name="AppUpdateSetting.Description" xml:space="preserve">
-    <value>检查和更新应用程序</value>
-  </data>
-  <data name="AppUpdateSetting.Header" xml:space="preserve">
-    <value>检查更新</value>
-  </data>
-  <data name="AboutUsSettingPage.Description" xml:space="preserve">
-    <value>关于 EasyTidy 的开发</value>
-  </data>
-  <data name="AboutUsSettingPage.Header" xml:space="preserve">
-    <value>关于</value>
-  </data>
   <data name="GeneralPageControl.ModuleDescription" xml:space="preserve">
     <value>EasyTidy是一款开源的，专业的文件管理工具，旨在为用户提供高效、便捷的文件分类整理解决方案。通过自定义设置，用户可以实现自动整理、定时整理、实时整理以及手动整理等多种整理方式，以满足不同场景下的文件管理需求。由作者用 ♥ 制作。</value>
   </data>
@@ -1116,9 +1098,30 @@
     <value>任务编排</value>
   </data>
   <data name="NavFiltersText.Content" xml:space="preserve">
-    <value>附加规则</value>
+    <value>过滤规则</value>
   </data>
   <data name="NavGeneralText.Content" xml:space="preserve">
     <value>常规</value>
+  </data>
+  <data name="ExtractText" xml:space="preserve">
+    <value>自动解压</value>
+  </data>
+  <data name="ThemeSettingPage_Description" xml:space="preserve">
+    <value>自定义应用程序外观和行为的不同方法。可以更改材质、主题、重音和更多选项，以适应您的风格和偏好。</value>
+  </data>
+  <data name="ThemeSettingPage_Header" xml:space="preserve">
+    <value>行为和动画</value>
+  </data>
+  <data name="AppUpdateSetting_Description" xml:space="preserve">
+    <value>检查和更新应用程序</value>
+  </data>
+  <data name="AppUpdateSetting_Header" xml:space="preserve">
+    <value>检查更新</value>
+  </data>
+  <data name="AboutUsSettingPage_Description" xml:space="preserve">
+    <value>关于 EasyTidy 的开发</value>
+  </data>
+  <data name="AboutUsSettingPage_Header" xml:space="preserve">
+    <value>关于</value>
   </data>
 </root>

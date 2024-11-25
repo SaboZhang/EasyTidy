@@ -158,24 +158,6 @@
   <data name="FilterSettingsControl.ModuleTitle" xml:space="preserve">
     <value>Filtre</value>
   </data>
-  <data name="ThemeSettingPage.Description" xml:space="preserve">
-    <value>Explorez les différentes façons de personnaliser l'apparence et le comportement de votre application. Vous pouvez modifier le matériel, le thème, l'accent et plus d'options pour répondre à votre style et à votre préférence.</value>
-  </data>
-  <data name="ThemeSettingPage.Header" xml:space="preserve">
-    <value>Comportement et animation</value>
-  </data>
-  <data name="AppUpdateSetting.Description" xml:space="preserve">
-    <value>Vérifier les mises à jour</value>
-  </data>
-  <data name="AppUpdateSetting.Header" xml:space="preserve">
-    <value>Vérifier les mises à jour</value>
-  </data>
-  <data name="AboutUsSettingPage.Description" xml:space="preserve">
-    <value>À propos d'Easytidy et de développeur</value>
-  </data>
-  <data name="AboutUsSettingPage.Header" xml:space="preserve">
-    <value>À propos</value>
-  </data>
   <data name="GeneralPageControl.ModuleDescription" xml:space="preserve">
     <value>EasyTidy est un outil de gestion professionnelle des fichiers open-source conçu pour fournir aux utilisateurs des solutions de classification de fichiers et d'organisation efficaces et pratiques. Grâce à des paramètres personnalisés, les utilisateurs peuvent réaliser diverses méthodes de tri telles que le tri automatique, le tri planifié, le tri en temps réel et le tri manuel pour répondre aux besoins de gestion des fichiers dans différents scénarios. Utilisé par l'auteur ♥ faire.</value>
   </data>
@@ -1120,5 +1102,26 @@
   </data>
   <data name="NavGeneralText.Content" xml:space="preserve">
     <value>Général</value>
+  </data>
+  <data name="ExtractText" xml:space="preserve">
+    <value>Extraire les fichiers</value>
+  </data>
+  <data name="ThemeSettingPage_Description" xml:space="preserve">
+    <value>Explorez les différentes façons de personnaliser l'apparence et le comportement de votre application. Vous pouvez modifier le matériel, le thème, l'accent et plus d'options pour répondre à votre style et à votre préférence.</value>
+  </data>
+  <data name="ThemeSettingPage_Header" xml:space="preserve">
+    <value>Comportement et animation</value>
+  </data>
+  <data name="AppUpdateSetting_Description" xml:space="preserve">
+    <value>Vérifier les mises à jour</value>
+  </data>
+  <data name="AppUpdateSetting_Header" xml:space="preserve">
+    <value>Vérifier les mises à jour</value>
+  </data>
+  <data name="AboutUsSettingPage_Description" xml:space="preserve">
+    <value>À propos d'Easytidy et de développeur</value>
+  </data>
+  <data name="AboutUsSettingPage_Header" xml:space="preserve">
+    <value>À propos</value>
   </data>
 </root>

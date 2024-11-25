@@ -16,12 +16,6 @@ public partial class ShellViewModel : ObservableRecipient
     [ObservableProperty]
     private object? selected;
 
-    [ObservableProperty]
-    private bool _isHeaderVisible;
-
-    [ObservableProperty]
-    private bool _isTitleVisible;
-
     public INavigationService NavigationService
     {
         get;
@@ -46,16 +40,12 @@ public partial class ShellViewModel : ObservableRecipient
         if (e.SourcePageType == typeof(SettingsPage))
         {
             Selected = NavigationViewService.SettingsItem;
-            IsHeaderVisible = true;
-            IsTitleVisible = true;
             return;
         }
 
         var selectedItem = NavigationViewService.GetSelectedItem(e.SourcePageType);
         if (selectedItem != null)
         {
-            IsHeaderVisible = false;
-            IsTitleVisible = false;
             Selected = selectedItem;
         }
     }

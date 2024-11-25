@@ -22,7 +22,7 @@
     </i:Interaction.Behaviors>
 
     <etc:SettingsPageControl x:Name="ContentArea"
-                             Margin="0,-42,0,0"
+                             Margin="0,-38,0,0"
                              x:Uid="GeneralPageControl"
                              ModuleImageSource="ms-appx:///Assets/Modules/PT.png"
                              SecondaryLinksHeader="Related information">

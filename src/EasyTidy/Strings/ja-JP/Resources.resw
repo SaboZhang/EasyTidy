@@ -158,24 +158,6 @@
   <data name="FilterSettingsControl.ModuleTitle" xml:space="preserve">
     <value>フィルタ</value>
   </data>
-  <data name="ThemeSettingPage.Description" xml:space="preserve">
-    <value>アプリケーションの外観と動作をカスタマイズするための異なる方法を模索します。スタイルや好みに合わせて、マテリアル、テーマ、アクセント、その他のオプションを変更できます。</value>
-  </data>
-  <data name="ThemeSettingPage.Header" xml:space="preserve">
-    <value>動作とアニメーション</value>
-  </data>
-  <data name="AppUpdateSetting.Description" xml:space="preserve">
-    <value>更新のチェック</value>
-  </data>
-  <data name="AppUpdateSetting.Header" xml:space="preserve">
-    <value>更新のチェック</value>
-  </data>
-  <data name="AboutUsSettingPage.Description" xml:space="preserve">
-    <value>EasyTidyと開発者について</value>
-  </data>
-  <data name="AboutUsSettingPage.Header" xml:space="preserve">
-    <value>について</value>
-  </data>
   <data name="GeneralPageControl.ModuleDescription" xml:space="preserve">
     <value>EasyTidyはオープンソースの専門的なファイル管理ツールで、ユーザーに効率的で便利なファイル分類と組織ソリューションを提供することを目的としています。カスタム設定により、ユーザーは、さまざまなシーンでのファイル管理要件を満たすために、自動ソート、タイミングソート、リアルタイムソート、手動ソートなどのさまざまなソート方法を実現することができます。作者使用♥  製造。</value>
   </data>
@@ -1120,5 +1102,26 @@
   </data>
   <data name="NavGeneralText.Content" xml:space="preserve">
     <value>概要</value>
+  </data>
+  <data name="ExtractText" xml:space="preserve">
+    <value>ファイルを抽出する</value>
+  </data>
+  <data name="ThemeSettingPage_Description" xml:space="preserve">
+    <value>アプリケーションの外観と動作をカスタマイズするための異なる方法を模索します。スタイルや好みに合わせて、マテリアル、テーマ、アクセント、その他のオプションを変更できます。</value>
+  </data>
+  <data name="ThemeSettingPage_Header" xml:space="preserve">
+    <value>動作とアニメーション</value>
+  </data>
+  <data name="AppUpdateSetting_Description" xml:space="preserve">
+    <value>更新のチェック</value>
+  </data>
+  <data name="AppUpdateSetting_Header" xml:space="preserve">
+    <value>更新のチェック</value>
+  </data>
+  <data name="AboutUsSettingPage_Description" xml:space="preserve">
+    <value>EasyTidyと開発者について</value>
+  </data>
+  <data name="AboutUsSettingPage_Header" xml:space="preserve">
+    <value>について</value>
   </data>
 </root>

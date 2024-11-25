@@ -2,6 +2,7 @@
 using CommunityToolkit.WinUI.Collections;
 using EasyTidy.Common.Database;
 using EasyTidy.Common.Job;
+using EasyTidy.Contracts.Service;
 using EasyTidy.Model;
 using EasyTidy.Util;
 using EasyTidy.Views.ContentDialogs;
@@ -16,8 +17,12 @@ public partial class AutomaticViewModel : ObservableRecipient
 {
     private readonly AppDbContext _dbContext;
 
-    public AutomaticViewModel()
+    [ObservableProperty]
+    private IThemeSelectorService _themeSelectorService;
+
+    public AutomaticViewModel(IThemeSelectorService themeSelectorService)
     {
+        _themeSelectorService = themeSelectorService;
         _dbContext = App.GetService<AppDbContext>();
     }
 

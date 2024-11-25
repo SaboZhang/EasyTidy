@@ -138,7 +138,7 @@ public sealed partial class PlanExecutionContentDialog : ContentDialog, INotifyD
         ViewModel = App.GetService<AutomaticViewModel>();
         this.InitializeComponent();
         XamlRoot = App.MainWindow.Content.XamlRoot;
-        // RequestedTheme = ViewModel.themeService.GetElementTheme();
+        RequestedTheme = ViewModel.ThemeSelectorService.Theme;
         ValidateCron(_cronExpression);
         ValidateMinute(_minute);
         ValidateHour(_hour);

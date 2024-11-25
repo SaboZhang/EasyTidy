@@ -23,7 +23,7 @@
         </ic:EventTriggerBehavior>
     </i:Interaction.Behaviors>
 
-    <StackPanel x:Name="ContentArea" Margin="0,-42,0,0">
+    <StackPanel x:Name="ContentArea" Margin="0,-38,0,0">
         <StackPanel x:Name="Growl"
                     MinWidth="340"/>
         <etc:SettingsPageControl x:Name="SettingsControl" x:Uid="SettingsPageControl" ModuleImageSource="ms-appx:///Assets/Modules/Auto.png">

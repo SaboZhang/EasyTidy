@@ -23,18 +23,15 @@ public partial class SettingsViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<SettingViewModel> _settingsList = new();
 
-    private readonly INavigationService _navigationService;
-
-    public SettingsViewModel(INavigationService navigationService)
+    public SettingsViewModel()
     {
-        _navigationService = navigationService;
         InitializeLanguages();
         var settings = new[]
         {
-            new Setting("Theme", string.Empty, "Settings_Theme_Header".GetLocalized(), "Settings_Theme_Header".GetLocalized(), "ms-appx:///Assets/Fluent/theme.png", false, false),
-            new Setting("General", string.Empty, "Settings_General_Header".GetLocalized(), "Settings_General_Header".GetLocalized(), "ms-appx:///Assets/Fluent/update.png", false, false),
-            new Setting("About", string.Empty, "Settings_Theme_Header".GetLocalized(), "Settings_Theme_Header".GetLocalized(), "ms-appx:///Assets/Fluent/info.png", false, false),
-            new Setting("AppUpdate", string.Empty, "Settings_AppUpdate_Header".GetLocalized(), "Settings_AppUpdate_Header".GetLocalized(), "ms-appx:///Assets/Fluent/update.png", false, false),
+            new Setting("Theme", string.Empty, "ThemeSettingPage_Header".GetLocalized(), "ThemeSettingPage_Description".GetLocalized(), "ms-appx:///Assets/Fluent/theme.png", false, false),
+            // new Setting("General", string.Empty, "Settings_General_Header".GetLocalized(), "Settings_General_Header".GetLocalized(), "ms-appx:///Assets/Fluent/update.png", false, false),
+            new Setting("About", string.Empty, "AboutUsSettingPage_Header".GetLocalized(), "AboutUsSettingPage_Description".GetLocalized(), "ms-appx:///Assets/Fluent/info.png", false, false),
+            new Setting("AppUpdate", string.Empty, "AppUpdateSetting_Header".GetLocalized(), "AppUpdateSetting_Description".GetLocalized(), "ms-appx:///Assets/Fluent/update.png", false, false),
         };
 
         foreach (var setting in settings)
@@ -55,20 +52,6 @@ public partial class SettingsViewModel : ObservableObject
     private bool _languageChanged;
 
     public ObservableCollection<LanguageModel> Languages { get; } = [];
-
-
-    [RelayCommand]
-    private void GoToSettingPage(object sender)
-    {
-        IsBackEnabled = _navigationService.CanGoBack;
-        var item = sender as CommunityToolkit.WinUI.Controls.SettingsCard;
-
-        if (item.Tag != null)
-        {
-            Type pageType = Application.Current.GetType().Assembly.GetType($"EasyTidy.ViewModels.{item.Tag}");
-            _navigationService.NavigateTo(pageType.FullName!);
-        }
-    }
 
     public void Navigate(string path)
     {

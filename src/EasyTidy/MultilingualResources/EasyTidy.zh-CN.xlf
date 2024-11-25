@@ -200,30 +200,6 @@
           <source>Filter</source>
           <target state="translated">过滤器</target>
         </trans-unit>
-        <trans-unit id="ThemeSettingPage.Description" translate="yes" xml:space="preserve">
-          <source>Explore the different ways to customize the appearance and behavior of your app. You can change the material, theme, accent, and more options to suit your style and preference.</source>
-          <target state="translated">自定义应用程序外观和行为的不同方法。可以更改材质、主题、重音和更多选项，以适应您的风格和偏好。</target>
-        </trans-unit>
-        <trans-unit id="ThemeSettingPage.Header" translate="yes" xml:space="preserve">
-          <source>Behavior &amp; animation</source>
-          <target state="translated">行为和动画</target>
-        </trans-unit>
-        <trans-unit id="AppUpdateSetting.Description" translate="yes" xml:space="preserve">
-          <source>Check for Updates</source>
-          <target state="translated">检查和更新应用程序</target>
-        </trans-unit>
-        <trans-unit id="AppUpdateSetting.Header" translate="yes" xml:space="preserve">
-          <source>Check for Updates</source>
-          <target state="translated">检查更新</target>
-        </trans-unit>
-        <trans-unit id="AboutUsSettingPage.Description" translate="yes" xml:space="preserve">
-          <source>About EasyTidy and Developer</source>
-          <target state="translated">关于 EasyTidy 的开发</target>
-        </trans-unit>
-        <trans-unit id="AboutUsSettingPage.Header" translate="yes" xml:space="preserve">
-          <source>About</source>
-          <target state="translated">关于</target>
-        </trans-unit>
         <trans-unit id="GeneralPageControl.ModuleDescription" translate="yes" xml:space="preserve">
           <source>EasyTidy is an open-source, professional file management tool designed to provide users with efficient and convenient file classification and organization solutions. Through custom settings, users can achieve various sorting methods such as automatic sorting, scheduled sorting, real-time sorting, and manual sorting to meet the file management needs in different scenarios. Used by the author ♥  make.</source>
           <target state="translated">EasyTidy是一款开源的，专业的文件管理工具，旨在为用户提供高效、便捷的文件分类整理解决方案。通过自定义设置，用户可以实现自动整理、定时整理、实时整理以及手动整理等多种整理方式，以满足不同场景下的文件管理需求。由作者用 ♥ 制作。</target>
@@ -1490,6 +1466,62 @@
         <trans-unit id="NavGeneralText.Content" translate="yes" xml:space="preserve">
           <source>General</source>
           <target state="translated">常规</target>
+        </trans-unit>
+        <trans-unit id="ExtractText" translate="yes" xml:space="preserve">
+          <source>Extract files</source>
+          <target state="translated">自动解压</target>
+        </trans-unit>
+        <trans-unit id="ThemeSettingPage_Description" translate="yes" xml:space="preserve">
+          <source>Explore the different ways to customize the appearance and behavior of your app. You can change the material, theme, accent, and more options to suit your style and preference.</source>
+          <target state="translated">自定义应用程序外观和行为的不同方法。可以更改材质、主题、重音和更多选项，以适应您的风格和偏好。</target>
+        </trans-unit>
+        <trans-unit id="ThemeSettingPage_Header" translate="yes" xml:space="preserve">
+          <source>Behavior &amp; animation</source>
+          <target state="translated">行为和动画</target>
+        </trans-unit>
+        <trans-unit id="AppUpdateSetting_Description" translate="yes" xml:space="preserve">
+          <source>Check for Updates</source>
+          <target state="translated">检查和更新应用程序</target>
+        </trans-unit>
+        <trans-unit id="AppUpdateSetting_Header" translate="yes" xml:space="preserve">
+          <source>Check for Updates</source>
+          <target state="translated">检查更新</target>
+        </trans-unit>
+        <trans-unit id="AboutUsSettingPage_Description" translate="yes" xml:space="preserve">
+          <source>About EasyTidy and Developer</source>
+          <target state="translated">关于 EasyTidy 的开发</target>
+        </trans-unit>
+        <trans-unit id="AboutUsSettingPage_Header" translate="yes" xml:space="preserve">
+          <source>About</source>
+          <target state="translated">关于</target>
+        </trans-unit>
+        <trans-unit id="Download" translate="yes" xml:space="preserve">
+          <source>Download</source>
+          <target state="new">Download</target>
+        </trans-unit>
+        <trans-unit id="Downloading" translate="yes" xml:space="preserve">
+          <source>Downloading...</source>
+          <target state="new">Downloading...</target>
+        </trans-unit>
+        <trans-unit id="DownloadComplete" translate="yes" xml:space="preserve">
+          <source>Download complete!</source>
+          <target state="new">Download complete!</target>
+        </trans-unit>
+        <trans-unit id="OK" translate="yes" xml:space="preserve">
+          <source>OK</source>
+          <target state="new">OK</target>
+        </trans-unit>
+        <trans-unit id="UpdateReady" translate="yes" xml:space="preserve">
+          <source>Update Ready</source>
+          <target state="new">Update Ready</target>
+        </trans-unit>
+        <trans-unit id="Update_Ready_Content" translate="yes" xml:space="preserve">
+          <source>The update has been downloaded. The installation will begin shortly.</source>
+          <target state="new">The update has been downloaded. The installation will begin shortly.</target>
+        </trans-unit>
+        <trans-unit id="PreparingToDownload" translate="yes" xml:space="preserve">
+          <source>Preparing to download...</source>
+          <target state="new">Preparing to download...</target>
         </trans-unit>
       </group>
     </body>

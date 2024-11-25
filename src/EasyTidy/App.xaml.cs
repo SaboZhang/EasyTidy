@@ -65,7 +65,6 @@ public partial class App : Application
             {
                 services.AddTransient<ActivationHandler<LaunchActivatedEventArgs>, DefaultActivationHandler>();
                 // Register Core Services
-                // services.AddSingleton<IThemeService, ThemeService>();
                 services.AddSingleton<ISettingsManager, SettingsHelper>();
                 services.AddSingleton<ILocalSettingsService, LocalSettingsService>();
                 services.AddSingleton<IThemeSelectorService, ThemeSelectorService>();
@@ -94,7 +93,6 @@ public partial class App : Application
                 services.AddTransient<AppUpdateSettingViewModel>();
                 services.AddTransient<AboutUsSettingViewModel>();
                 services.AddTransient<SettingsViewModel>();
-                services.AddTransient<BreadCrumbBarViewModel>();
                 services.AddTransient<AutomaticViewModel>();
                 services.AddTransient<TaskOrchestrationViewModel>();
                 services.AddTransient<FilterViewModel>();
@@ -281,7 +279,7 @@ public partial class App : Application
     {
         if ((bool)Settings.GeneralConfig.IsStartupCheck)
         {
-            var app = new AppUpdateSettingViewModel();
+            var app = App.GetService<AppUpdateSettingViewModel>();
             await app.CheckForNewVersionAsync();
         }
 

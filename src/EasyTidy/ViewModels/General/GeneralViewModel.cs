@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.WinUI;
 using EasyTidy.Common.Database;
+using EasyTidy.Contracts.Service;
 using EasyTidy.Model;
 using EasyTidy.Util;
 using System.Runtime.CompilerServices;
@@ -11,6 +12,9 @@ public partial class GeneralViewModel : ObservableRecipient
     #region 字段 & 属性
 
     private readonly AppDbContext _dbContext;
+
+    [ObservableProperty]
+    private IThemeSelectorService _themeSelectorService;
     /// <summary>
     ///     当前配置实例
     /// </summary>
@@ -73,8 +77,9 @@ public partial class GeneralViewModel : ObservableRecipient
     [ObservableProperty]
     private int _backupTypeIndex = -1;
 
-    public GeneralViewModel()
+    public GeneralViewModel(IThemeSelectorService themeSelectorService)
     {
+        ThemeSelectorService = themeSelectorService;
         _dbContext = App.GetService<AppDbContext>();
     }
 

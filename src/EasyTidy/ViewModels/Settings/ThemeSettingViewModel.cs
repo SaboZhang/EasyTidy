@@ -112,7 +112,7 @@ public partial class ThemeSettingViewModel : ObservableObject
         Breadcrumbs = new ObservableCollection<Breadcrumb>
         {
             new("Settings".GetLocalized(), typeof(SettingsViewModel).FullName!),
-            new("Settings_Preferences_Header", typeof(ThemeSettingViewModel).FullName!),
+            new("ThemeSettingPage_Header".GetLocalized(), typeof(ThemeSettingViewModel).FullName!),
         };
     }
 

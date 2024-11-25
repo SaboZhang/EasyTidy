@@ -22,7 +22,7 @@
         </ic:EventTriggerBehavior>
     </i:Interaction.Behaviors>
 
-    <StackPanel x:Name="ContentArea" Margin="0,-42,0,0" >
+    <StackPanel x:Name="ContentArea" Margin="0,-38,0,0" >
         <StackPanel x:Name="Growl"
                     MinWidth="340"
                     wuc:Growl.GrowlParent="True"/>

@@ -8,7 +8,7 @@ public sealed partial class SettingsPage : ToolPage
     public SettingsPage()
     {
         this.InitializeComponent();
-        ViewModel = App.Current.Host.Services.GetService<SettingsViewModel>();
+        ViewModel = App.GetService<SettingsViewModel>();
         DataContext = ViewModel;
     }
 

@@ -159,7 +159,7 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
         ViewModel = App.GetService<AutomaticViewModel>();
         this.InitializeComponent();
         XamlRoot = App.MainWindow.Content.XamlRoot;
-        // RequestedTheme = ViewModel.themeService.GetElementTheme();
+        RequestedTheme = ViewModel.ThemeSelectorService.Theme;
         ValidateDelay(_delay);
         ValidateMinute(_minute);
         ValidateHour(_hour);
