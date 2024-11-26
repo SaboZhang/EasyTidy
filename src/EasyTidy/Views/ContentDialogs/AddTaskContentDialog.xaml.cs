@@ -108,7 +108,7 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
         ViewModel = App.GetService<TaskOrchestrationViewModel>();
         this.InitializeComponent();
         XamlRoot = App.MainWindow.Content.XamlRoot;
-        RequestedTheme = ViewModel.themeService.GetElementTheme();
+        RequestedTheme = ViewModel.ThemeSelectorService.Theme;
         PopulateMenu(ViewModel);
     }
 

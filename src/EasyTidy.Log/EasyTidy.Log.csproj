@@ -8,7 +8,7 @@
     <UseWinUI>true</UseWinUI>
     <SuportedOSPlatformsVersion>10.0.22621.0</SuportedOSPlatformsVersion>
     <WindowsSdkPackageVersion>10.0.22621.45</WindowsSdkPackageVersion>
-    <PlatformTarget>x64</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebugType>full</DebugType>

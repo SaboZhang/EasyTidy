@@ -1,18 +1,13 @@
-﻿namespace EasyTidy.Views;
+﻿using EasyTidy.Common.Views;
 
-public sealed partial class GeneralSettingPage : Page
+namespace EasyTidy.Views;
+
+public sealed partial class GeneralSettingPage : ToolPage
 {
-    public string BreadCrumbBarItemText { get; set; }
 
     public GeneralSettingPage()
     {
         this.InitializeComponent();
-    }
-
-    protected override void OnNavigatedTo(NavigationEventArgs e)
-    {
-        base.OnNavigatedTo(e);
-        BreadCrumbBarItemText = e.Parameter as string;
     }
 }
 

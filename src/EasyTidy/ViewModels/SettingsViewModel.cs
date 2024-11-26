@@ -1,17 +1,48 @@
 ﻿using CommunityToolkit.WinUI;
+using CommunityToolkit.WinUI.Controls;
+using EasyTidy.Common.Model;
+using EasyTidy.Contracts.Service;
 using EasyTidy.Model;
+using EasyTidy.Service;
 using Microsoft.UI.Xaml.Media.Animation;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using WebDAVClient.Model;
 
 namespace EasyTidy.ViewModels;
 public partial class SettingsViewModel : ObservableObject
 {
-    public IJsonNavigationViewService JsonNavigationViewService;
-    public SettingsViewModel(IJsonNavigationViewService jsonNavigationViewService)
+    [ObservableProperty]
+    private object? _selected;
+
+    [ObservableProperty]
+    private bool _isBackEnabled;
+
+    public ObservableCollection<Breadcrumb> Breadcrumbs { get; }
+
+    [ObservableProperty]
+    private ObservableCollection<SettingViewModel> _settingsList = new();
+
+    public SettingsViewModel()
     {
-        JsonNavigationViewService = jsonNavigationViewService;
         InitializeLanguages();
+        var settings = new[]
+        {
+            new Setting("Theme", string.Empty, "ThemeSettingPage_Header".GetLocalized(), "ThemeSettingPage_Description".GetLocalized(), "ms-appx:///Assets/Fluent/theme.png", false, false),
+            // new Setting("General", string.Empty, "Settings_General_Header".GetLocalized(), "Settings_General_Header".GetLocalized(), "ms-appx:///Assets/Fluent/update.png", false, false),
+            new Setting("About", string.Empty, "AboutUsSettingPage_Header".GetLocalized(), "AboutUsSettingPage_Description".GetLocalized(), "ms-appx:///Assets/Fluent/info.png", false, false),
+            new Setting("AppUpdate", string.Empty, "AppUpdateSetting_Header".GetLocalized(), "AppUpdateSetting_Description".GetLocalized(), "ms-appx:///Assets/Fluent/update.png", false, false),
+        };
+
+        foreach (var setting in settings)
+        {
+            SettingsList.Add(new SettingViewModel(setting, this));
+        }
+
+        Breadcrumbs = new ObservableCollection<Breadcrumb>
+        {
+            new("Settings".GetLocalized(), typeof(SettingsViewModel).FullName!),
+        };
     }
 
     private int _languagesIndex;
@@ -22,22 +53,26 @@ public partial class SettingsViewModel : ObservableObject
 
     public ObservableCollection<LanguageModel> Languages { get; } = [];
 
-    [RelayCommand]
-    private void GoToSettingPage(object sender)
+    public void Navigate(string path)
     {
-        var item = sender as SettingsCard;
-        if (item.Tag != null)
+        var navigationService = App.GetService<INavigationService>();
+        var segments = path.Split("/");
+        switch (segments[0])
         {
-            Type pageType = Application.Current.GetType().Assembly.GetType($"EasyTidy.Views.{item.Tag}");
-
-            if (pageType != null)
-            {
-                SlideNavigationTransitionInfo entranceNavigation = new()
-                {
-                    Effect = SlideNavigationTransitionEffect.FromRight
-                };
-                JsonNavigationViewService.NavigateTo(pageType, item.Header, false, entranceNavigation);
-            }
+            case "Theme":
+                navigationService.NavigateTo(typeof(ThemeSettingViewModel).FullName!);
+                return;
+            case "General":
+                navigationService.NavigateTo(typeof(GeneralSettingViewModel).FullName!);
+                return;
+            case "About":
+                navigationService.NavigateTo(typeof(AboutUsSettingViewModel).FullName!);
+                return;
+            case "AppUpdate":
+                navigationService.NavigateTo(typeof(AppUpdateSettingViewModel).FullName!);
+                return;
+            default:
+                return;
         }
     }
 

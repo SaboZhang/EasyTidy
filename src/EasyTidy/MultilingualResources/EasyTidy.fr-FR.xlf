@@ -6,18 +6,6 @@
     </header>
     <body>
       <group id="EASYTIDY/STRINGS/EN-US/RESOURCES.RESW" datatype="resx">
-        <trans-unit id="NavAutomaticText" translate="yes" xml:space="preserve">
-          <source>Automatic</source>
-          <target state="translated">Automatique</target>
-        </trans-unit>
-        <trans-unit id="NavTaskOrchestrationText" translate="yes" xml:space="preserve">
-          <source>Task Orchestration</source>
-          <target state="translated">Orchestration des tâches</target>
-        </trans-unit>
-        <trans-unit id="NavFiltersText" translate="yes" xml:space="preserve">
-          <source>Filters</source>
-          <target state="translated">Filtres</target>
-        </trans-unit>
         <trans-unit id="Backup" translate="yes" xml:space="preserve">
           <source>Backup</source>
           <target state="translated">Sauvegarde</target>
@@ -212,30 +200,6 @@
         <trans-unit id="FilterSettingsControl.ModuleTitle" translate="yes" xml:space="preserve">
           <source>Filter</source>
           <target state="translated">Filtre</target>
-        </trans-unit>
-        <trans-unit id="ThemeSettingPage.Description" translate="yes" xml:space="preserve">
-          <source>Explore the different ways to customize the appearance and behavior of your app. You can change the material, theme, accent, and more options to suit your style and preference.</source>
-          <target state="translated">Explorez les différentes façons de personnaliser l'apparence et le comportement de votre application. Vous pouvez modifier le matériel, le thème, l'accent et plus d'options pour répondre à votre style et à votre préférence.</target>
-        </trans-unit>
-        <trans-unit id="ThemeSettingPage.Header" translate="yes" xml:space="preserve">
-          <source>Behavior &amp; animation</source>
-          <target state="translated">Comportement et animation</target>
-        </trans-unit>
-        <trans-unit id="AppUpdateSetting.Description" translate="yes" xml:space="preserve">
-          <source>Check for Updates</source>
-          <target state="translated">Vérifier les mises à jour</target>
-        </trans-unit>
-        <trans-unit id="AppUpdateSetting.Header" translate="yes" xml:space="preserve">
-          <source>Check for Updates</source>
-          <target state="translated">Vérifier les mises à jour</target>
-        </trans-unit>
-        <trans-unit id="AboutUsSettingPage.Description" translate="yes" xml:space="preserve">
-          <source>About EasyTidy and Developer</source>
-          <target state="translated">À propos d'Easytidy et de développeur</target>
-        </trans-unit>
-        <trans-unit id="AboutUsSettingPage.Header" translate="yes" xml:space="preserve">
-          <source>About</source>
-          <target state="translated">À propos</target>
         </trans-unit>
         <trans-unit id="GeneralPageControl.ModuleDescription" translate="yes" xml:space="preserve">
           <source>EasyTidy is an open-source, professional file management tool designed to provide users with efficient and convenient file classification and organization solutions. Through custom settings, users can achieve various sorting methods such as automatic sorting, scheduled sorting, real-time sorting, and manual sorting to meet the file management needs in different scenarios. Used by the author ♥  make.</source>
@@ -457,10 +421,6 @@
         <trans-unit id="EditButton.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
           <source>Edit</source>
           <target state="translated">Modifier</target>
-        </trans-unit>
-        <trans-unit id="NavGeneralText" translate="yes" xml:space="preserve">
-          <source>General</source>
-          <target state="translated">Général</target>
         </trans-unit>
         <trans-unit id="DesktopText" translate="yes" xml:space="preserve">
           <source>Desktop</source>
@@ -1496,6 +1456,86 @@
         <trans-unit id="AutoAnalysisGlobal.Header" translate="yes" xml:space="preserve">
           <source>AutoAnalysis(Global)</source>
           <target state="translated">Autoanalyse (Global)</target>
+        </trans-unit>
+        <trans-unit id="NavAutomaticText.Content" translate="yes" xml:space="preserve">
+          <source>Automatic</source>
+          <target state="translated">Automatique</target>
+        </trans-unit>
+        <trans-unit id="NavTaskOrchestrationText.Content" translate="yes" xml:space="preserve">
+          <source>Task Orchestration</source>
+          <target state="translated">Orchestration des tâches</target>
+        </trans-unit>
+        <trans-unit id="NavFiltersText.Content" translate="yes" xml:space="preserve">
+          <source>Filters</source>
+          <target state="translated">Filters</target>
+        </trans-unit>
+        <trans-unit id="NavGeneralText.Content" translate="yes" xml:space="preserve">
+          <source>General</source>
+          <target state="translated">Général</target>
+        </trans-unit>
+        <trans-unit id="ExtractText" translate="yes" xml:space="preserve">
+          <source>Extract files</source>
+          <target state="translated">Extraire les fichiers</target>
+        </trans-unit>
+        <trans-unit id="ThemeSettingPage_Description" translate="yes" xml:space="preserve">
+          <source>Explore the different ways to customize the appearance and behavior of your app. You can change the material, theme, accent, and more options to suit your style and preference.</source>
+          <target state="translated">Explorez les différentes façons de personnaliser l'apparence et le comportement de votre application. Vous pouvez modifier le matériel, le thème, l'accent et plus d'options pour répondre à votre style et à votre préférence.</target>
+        </trans-unit>
+        <trans-unit id="ThemeSettingPage_Header" translate="yes" xml:space="preserve">
+          <source>Behavior &amp; animation</source>
+          <target state="translated">Comportement et animation</target>
+        </trans-unit>
+        <trans-unit id="AppUpdateSetting_Description" translate="yes" xml:space="preserve">
+          <source>Check for Updates</source>
+          <target state="translated">Vérifier les mises à jour</target>
+        </trans-unit>
+        <trans-unit id="AppUpdateSetting_Header" translate="yes" xml:space="preserve">
+          <source>Check for Updates</source>
+          <target state="translated">Vérifier les mises à jour</target>
+        </trans-unit>
+        <trans-unit id="AboutUsSettingPage_Description" translate="yes" xml:space="preserve">
+          <source>About EasyTidy and Developer</source>
+          <target state="translated">À propos d'Easytidy et de développeur</target>
+        </trans-unit>
+        <trans-unit id="AboutUsSettingPage_Header" translate="yes" xml:space="preserve">
+          <source>About</source>
+          <target state="translated">À propos</target>
+        </trans-unit>
+        <trans-unit id="Download" translate="yes" xml:space="preserve">
+          <source>Download</source>
+          <target state="translated">Télécharger</target>
+        </trans-unit>
+        <trans-unit id="Downloading" translate="yes" xml:space="preserve">
+          <source>Downloading...</source>
+          <target state="translated">Téléchargement...</target>
+        </trans-unit>
+        <trans-unit id="DownloadComplete" translate="yes" xml:space="preserve">
+          <source>Download complete!</source>
+          <target state="translated">Téléchargement terminé !</target>
+        </trans-unit>
+        <trans-unit id="OK" translate="yes" xml:space="preserve">
+          <source>OK</source>
+          <target state="translated">D'accord</target>
+        </trans-unit>
+        <trans-unit id="UpdateReady" translate="yes" xml:space="preserve">
+          <source>Update Ready</source>
+          <target state="translated">Mise à jour prête</target>
+        </trans-unit>
+        <trans-unit id="Update_Ready_Content" translate="yes" xml:space="preserve">
+          <source>The update has been downloaded. The installation will begin shortly.</source>
+          <target state="translated">La mise à jour a été téléchargée. L'installation va bientôt démarrer.</target>
+        </trans-unit>
+        <trans-unit id="PreparingToDownload" translate="yes" xml:space="preserve">
+          <source>Preparing to download...</source>
+          <target state="translated">Préparation au téléchargement...</target>
+        </trans-unit>
+        <trans-unit id="CompressText" translate="yes" xml:space="preserve">
+          <source>zip file</source>
+          <target state="translated">Fichier zip</target>
+        </trans-unit>
+        <trans-unit id="UploadWebDavText" translate="yes" xml:space="preserve">
+          <source>Upload to WebDAV</source>
+          <target state="translated">Télécharger sur WebDAV</target>
         </trans-unit>
       </group>
     </body>

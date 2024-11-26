@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Page
+<ev:ToolPage
     x:Class="EasyTidy.Views.ThemeSettingPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -8,30 +8,33 @@
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:views="using:EasyTidy.Views"
-    xmlns:wuc="using:WinUICommunity" 
-    xmlns:local="using:EasyTidy"
+    xmlns:ui="using:CommunityToolkit.WinUI"
+    xmlns:local="using:EasyTidy" 
+    xmlns:ev ="using:EasyTidy.Common.Views"
+    xmlns:ctk="using:CommunityToolkit.WinUI.Controls"
+    xmlns:behaviors="using:EasyTidy.Behaviors"
+    behaviors:NavigationViewHeaderBehavior.HeaderTemplate="{StaticResource BreadcrumbBarDataTemplate}"
+    behaviors:NavigationViewHeaderBehavior.HeaderContext="{Binding}"
     mc:Ignorable="d">
-    <ScrollView Margin="{ThemeResource ContentPageMargin}" VerticalScrollBarVisibility="Auto">
+    <ScrollView x:Name="ContentArea" VerticalAlignment="Top" VerticalScrollBarVisibility="Auto">
         <StackPanel
             Margin="10"
-            wuc:PanelAttach.ChildrenTransitions="Default"
             Spacing="5">
-
-            <views:BreadcrumbBarUserControl SingleItem="{x:Bind BreadCrumbBarItemText, Mode=OneWay}" />
-
-            <wuc:SettingsCard
+            <ctk:SettingsCard
                 x:Uid="ThemeSettingsCard"
-                HeaderIcon="{wuc:BitmapIcon Source=Assets/Fluent/theme.png}">
-                <ComboBox x:Name="CmbTheme" wuc:ThemeServiceAttach.ThemeService="{x:Bind local:App.Current.GetThemeService}">
+                HeaderIcon="{ui:BitmapIcon Source=Assets/Fluent/theme.png}"
+                MaxWidth="{ThemeResource MaxPageContentWidth}" Margin="{ThemeResource ContentPageMargin}">
+                <ComboBox x:Name="CmbTheme" SelectedIndex="{x:Bind ViewModel.ThemeIndex, Mode=TwoWay}">
                     <ComboBoxItem x:Uid="Light" Tag="Light" />
                     <ComboBoxItem x:Uid="Dark" Tag="Dark" />
                     <ComboBoxItem x:Uid="Default" Tag="Default" />
                 </ComboBox>
-            </wuc:SettingsCard>
-            <wuc:SettingsCard
+            </ctk:SettingsCard>
+            <ctk:SettingsCard
                 x:Uid="ThemeMaterial"
-                HeaderIcon="{wuc:BitmapIcon Source=Assets/Fluent/backdrop.png}">
-                <ComboBox x:Name="CmbBackdrop" wuc:ThemeServiceAttach.ThemeService="{x:Bind local:App.Current.GetThemeService}">
+                HeaderIcon="{ui:BitmapIcon Source=Assets/Fluent/backdrop.png}"
+                MaxWidth="{ThemeResource MaxPageContentWidth}" Margin="{ThemeResource ContentPageMargin}">
+                <ComboBox x:Name="CmbBackdrop" SelectedIndex="{x:Bind ViewModel.BackDropIndex, Mode=TwoWay}" >
                     <ComboBoxItem x:Uid="ThemeNone" Tag="None" />
                     <ComboBoxItem x:Uid="ThemeMica" Tag="Mica" />
                     <ComboBoxItem x:Uid="ThemeMicaAlt" Tag="MicaAlt" />
@@ -40,14 +43,14 @@
                     <ComboBoxItem x:Uid="ThemeAcrylicThin" Tag="AcrylicThin" />
                     <ComboBoxItem x:Uid="ThemeTransparent" Tag="Transparent" />
                 </ComboBox>
-            </wuc:SettingsCard>
-            <wuc:SettingsCard
-                ActionIcon="{wuc:BitmapIcon Source=Assets/Fluent/external.png}"
-                LaunchUri="ms-settings:colors"
+            </ctk:SettingsCard>
+            <ctk:SettingsCard
+                ActionIcon="{ui:BitmapIcon Source=Assets/Fluent/external.png}"
                 x:Uid="ColorSettingsCard"
-                HeaderIcon="{wuc:BitmapIcon Source=Assets/Fluent/color.png}"
-                IsClickEnabled="True" />
+                HeaderIcon="{ui:BitmapIcon Source=Assets/Fluent/color.png}"
+                IsClickEnabled="True" 
+                MaxWidth="{ThemeResource MaxPageContentWidth}" Margin="{ThemeResource ContentPageMargin}"/>
         </StackPanel>
     </ScrollView>
-</Page>
+</ev:ToolPage>
 

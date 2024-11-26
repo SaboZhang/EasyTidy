@@ -7,60 +7,13 @@
     xmlns:local="using:EasyTidy"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:wuc="using:WinUICommunity"
-    xmlns:views="using:EasyTidy.Views"
+    xmlns:views="using:EasyTidy.Views" 
+    xmlns:animations="using:CommunityToolkit.WinUI.Animations"
+    xmlns:ui="using:CommunityToolkit.WinUI"
+    xmlns:helpers="using:EasyTidy.Common"
+    xmlns:view="using:EasyTidy.Views"
     mc:Ignorable="d">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <wuc:TitleBar x:Name="AppTitleBar"
-                  Title="{x:Bind wuc:ProcessInfoHelper.ProductName}"
-                  BackRequested="AppTitleBar_BackRequested"
-                  IconSource="{wuc:BitmapIconSource Source=ms-appx:///Assets/icon.png}"
-                  IsBackButtonVisible="True"
-                  IsPaneToggleButtonVisible="True"
-                  PaneToggleRequested="AppTitleBar_PaneToggleRequested"
-                  Subtitle="{x:Bind wuc:ProcessInfoHelper.VersionWithPrefix}">
-            <wuc:TitleBar.Footer>
-                <StackPanel Orientation="Horizontal" Spacing="5">
-                    <Button
-                        x:Name="ThemeButton"
-                        Height="32"
-                        Margin="0,0,4,0"
-                        Click="ThemeButton_Click"
-                        Content="{wuc:FontIcon GlyphCode=E793,
-                           FontSize=16}"
-                        Style="{ThemeResource SubtleButtonStyle}"
-                        x:Uid="MainTitleBarTheme" />
-                    <Button
-                        x:Name="NavViewPaneDisplayModeButton"
-                        Height="32"
-                        Margin="0,0,4,0"
-                        Click="NavViewPaneDisplayModeButton_Click"
-                        Content="{wuc:FontIcon GlyphCode=F594,
-                            FontSize=16}"
-                        Style="{ThemeResource SubtleButtonStyle}"
-                        x:Uid="MainTitleBarNav" />
-                </StackPanel>
-
-            </wuc:TitleBar.Footer>
-        </wuc:TitleBar>
-        <NavigationView
-            x:Name="NavView"
-            Grid.Row="1"
-            IsBackButtonVisible="Collapsed"
-            IsPaneToggleButtonVisible="False">
-            <NavigationView.AutoSuggestBox>
-                <AutoSuggestBox Name="autoSuggestBox"
-                                x:Uid="MainSuggestBox"
-                                QueryIcon="Find"
-                                TextChanged="OnTextChanged"
-                                QuerySubmitted="OnQuerySubmitted"/>
-            </NavigationView.AutoSuggestBox>
-
-            <Frame x:Name="NavFrame" Navigated="NavFrame_Navigated" />
-        </NavigationView>
+    <Grid x:Name="ContentArea">
         <views:TrayIconView x:Name="TrayIconView" />
     </Grid>
 </Page>

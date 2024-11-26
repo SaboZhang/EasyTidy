@@ -12,15 +12,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="NavAutomaticText" xml:space="preserve">
-    <value>Automatique</value>
-  </data>
-  <data name="NavTaskOrchestrationText" xml:space="preserve">
-    <value>Orchestration des tâches</value>
-  </data>
-  <data name="NavFiltersText" xml:space="preserve">
-    <value>Filtres</value>
-  </data>
   <data name="Backup" xml:space="preserve">
     <value>Sauvegarde</value>
   </data>
@@ -166,24 +157,6 @@
   </data>
   <data name="FilterSettingsControl.ModuleTitle" xml:space="preserve">
     <value>Filtre</value>
-  </data>
-  <data name="ThemeSettingPage.Description" xml:space="preserve">
-    <value>Explorez les différentes façons de personnaliser l'apparence et le comportement de votre application. Vous pouvez modifier le matériel, le thème, l'accent et plus d'options pour répondre à votre style et à votre préférence.</value>
-  </data>
-  <data name="ThemeSettingPage.Header" xml:space="preserve">
-    <value>Comportement et animation</value>
-  </data>
-  <data name="AppUpdateSetting.Description" xml:space="preserve">
-    <value>Vérifier les mises à jour</value>
-  </data>
-  <data name="AppUpdateSetting.Header" xml:space="preserve">
-    <value>Vérifier les mises à jour</value>
-  </data>
-  <data name="AboutUsSettingPage.Description" xml:space="preserve">
-    <value>À propos d'Easytidy et de développeur</value>
-  </data>
-  <data name="AboutUsSettingPage.Header" xml:space="preserve">
-    <value>À propos</value>
   </data>
   <data name="GeneralPageControl.ModuleDescription" xml:space="preserve">
     <value>EasyTidy est un outil de gestion professionnelle des fichiers open-source conçu pour fournir aux utilisateurs des solutions de classification de fichiers et d'organisation efficaces et pratiques. Grâce à des paramètres personnalisés, les utilisateurs peuvent réaliser diverses méthodes de tri telles que le tri automatique, le tri planifié, le tri en temps réel et le tri manuel pour répondre aux besoins de gestion des fichiers dans différents scénarios. Utilisé par l'auteur ♥ faire.</value>
@@ -346,9 +319,6 @@
   </data>
   <data name="EditButton.ToolTipService.ToolTip" xml:space="preserve">
     <value>Modifier</value>
-  </data>
-  <data name="NavGeneralText" xml:space="preserve">
-    <value>Général</value>
   </data>
   <data name="DesktopText" xml:space="preserve">
     <value>Bureau</value>
@@ -1120,5 +1090,65 @@
   </data>
   <data name="AutoAnalysisGlobal.Header" xml:space="preserve">
     <value>Autoanalyse (Global)</value>
+  </data>
+  <data name="NavAutomaticText.Content" xml:space="preserve">
+    <value>Automatique</value>
+  </data>
+  <data name="NavTaskOrchestrationText.Content" xml:space="preserve">
+    <value>Orchestration des tâches</value>
+  </data>
+  <data name="NavFiltersText.Content" xml:space="preserve">
+    <value>Filters</value>
+  </data>
+  <data name="NavGeneralText.Content" xml:space="preserve">
+    <value>Général</value>
+  </data>
+  <data name="ExtractText" xml:space="preserve">
+    <value>Extraire les fichiers</value>
+  </data>
+  <data name="ThemeSettingPage_Description" xml:space="preserve">
+    <value>Explorez les différentes façons de personnaliser l'apparence et le comportement de votre application. Vous pouvez modifier le matériel, le thème, l'accent et plus d'options pour répondre à votre style et à votre préférence.</value>
+  </data>
+  <data name="ThemeSettingPage_Header" xml:space="preserve">
+    <value>Comportement et animation</value>
+  </data>
+  <data name="AppUpdateSetting_Description" xml:space="preserve">
+    <value>Vérifier les mises à jour</value>
+  </data>
+  <data name="AppUpdateSetting_Header" xml:space="preserve">
+    <value>Vérifier les mises à jour</value>
+  </data>
+  <data name="AboutUsSettingPage_Description" xml:space="preserve">
+    <value>À propos d'Easytidy et de développeur</value>
+  </data>
+  <data name="AboutUsSettingPage_Header" xml:space="preserve">
+    <value>À propos</value>
+  </data>
+  <data name="Download" xml:space="preserve">
+    <value>Télécharger</value>
+  </data>
+  <data name="Downloading" xml:space="preserve">
+    <value>Téléchargement...</value>
+  </data>
+  <data name="DownloadComplete" xml:space="preserve">
+    <value>Téléchargement terminé !</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>D'accord</value>
+  </data>
+  <data name="UpdateReady" xml:space="preserve">
+    <value>Mise à jour prête</value>
+  </data>
+  <data name="Update_Ready_Content" xml:space="preserve">
+    <value>La mise à jour a été téléchargée. L'installation va bientôt démarrer.</value>
+  </data>
+  <data name="PreparingToDownload" xml:space="preserve">
+    <value>Préparation au téléchargement...</value>
+  </data>
+  <data name="CompressText" xml:space="preserve">
+    <value>Fichier zip</value>
+  </data>
+  <data name="UploadWebDavText" xml:space="preserve">
+    <value>Télécharger sur WebDAV</value>
   </data>
 </root>

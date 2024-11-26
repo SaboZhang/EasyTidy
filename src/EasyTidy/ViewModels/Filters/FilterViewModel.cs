@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.WinUI;
 using CommunityToolkit.WinUI.Collections;
 using EasyTidy.Common.Database;
+using EasyTidy.Contracts.Service;
 using EasyTidy.Model;
 using EasyTidy.Views.ContentDialogs;
 using Microsoft.EntityFrameworkCore;
@@ -12,20 +13,17 @@ namespace EasyTidy.ViewModels;
 public partial class FilterViewModel : ObservableRecipient
 {
     private readonly AppDbContext _dbContext;
-    public FilterViewModel()
-    {
 
-    }
+    [ObservableProperty]
+    private IThemeSelectorService _themeSelectorService;
 
-    public FilterViewModel(IThemeService themeService)
+    public FilterViewModel(IThemeSelectorService themeSelectorService)
     {
-        this.themeService = themeService;
+        ThemeSelectorService = themeSelectorService;
         _dbContext = App.GetService<AppDbContext>();
     }
 
     private readonly DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
-
-    public IThemeService themeService;
 
     [ObservableProperty]
     private IList<YesOrNo> yesOrNos = Enum.GetValues(typeof(YesOrNo)).Cast<YesOrNo>().ToList();

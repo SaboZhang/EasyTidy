@@ -12,7 +12,7 @@
     <PublishProfile>win-$(Platform).pubxml</PublishProfile>
     <UseWinUI>true</UseWinUI>
     <EnableMsixTooling>true</EnableMsixTooling>
-    <Version>1.0.2.1113</Version>
+    <Version>1.0.3.1126</Version>
     <ImplicitUsings>true</ImplicitUsings>
     <SuportedOSPlatformsVersion>10.0.22621.0</SuportedOSPlatformsVersion>
     <WindowsSdkPackageVersion>10.0.22621.45</WindowsSdkPackageVersion>
@@ -29,6 +29,7 @@
     <MultilingualFallbackLanguage>en-Us</MultilingualFallbackLanguage>
     <TranslationReport Condition="'$(Configuration)' == 'Release'">true</TranslationReport>
     <SuppressPseudoWarning Condition="'$(Configuration)' == 'Debug'">true</SuppressPseudoWarning>
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
     <None Include="Assets\**\*">
@@ -152,12 +153,14 @@
     <Content Remove="Strings\zh-TW\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="MainWindow.xaml" />
     <None Remove="MultilingualResources\EasyTidy.fr-FR.xlf" />
     <None Remove="MultilingualResources\EasyTidy.ja-JP.xlf" />
     <None Remove="MultilingualResources\EasyTidy.qps-ploc.xlf" />
     <None Remove="MultilingualResources\EasyTidy.zh-CN.xlf" />
     <None Remove="MultilingualResources\EasyTidy.zh-Hant.xlf" />
     <None Remove="MultilingualResources\EasyTidy.zh-TW.xlf" />
+    <None Remove="Themes\BreadcrumbBar.xaml" />
     <None Remove="ViewModels\tmp.cs_back" />
     <None Remove="Views\Automatic\AutomaticPage.xaml" />
     <None Remove="Views\ContentDialogs\AddFilterContentDialog.xaml" />
@@ -167,6 +170,7 @@
     <None Remove="Views\Filters\FiltersPage.xaml" />
     <None Remove="Views\General\GeneralPage.xaml" />
     <None Remove="Views\NotificationView.xaml" />
+    <None Remove="Views\ShellPage.xaml" />
     <None Remove="Views\TaskOrchestration\TaskOrchestrationPage.xaml" />
     <None Remove="Views\TrayIconView.xaml" />
     <None Remove="Views\UserControls\SettingsGroup.xaml" />
@@ -185,6 +189,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
+    <PackageReference Include="CommunityToolkit.WinUI.Behaviors" Version="8.1.240916" />
     <PackageReference Include="CommunityToolkit.WinUI.Collections" Version="8.1.240916" />
     <PackageReference Include="CommunityToolkit.WinUI.Controls.Primitives" Version="8.1.240916" />
     <PackageReference Include="CommunityToolkit.WinUI.Converters" Version="8.1.240916" />
@@ -195,6 +200,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.0" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
 	<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.241106002" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.9" />
@@ -207,6 +213,7 @@
     <PackageReference Include="WinUICommunity.Components" Version="7.0.0" />
     <PackageReference Include="WinUICommunity.Core" Version="7.0.0" />
     <PackageReference Include="WinUICommunity.LandingPages" Version="7.0.0" />
+    <PackageReference Include="WinUIEx" Version="2.5.0" />
   </ItemGroup>
   <ItemGroup>
 	<ProjectReference Include="..\EasyTidy.Model\EasyTidy.Model.csproj" />
@@ -248,6 +255,15 @@
     <None Update="Assets\Wide310x150Logo.scale-200.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Page Update="Themes\BreadcrumbBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\ShellPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <None Update="quartz.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

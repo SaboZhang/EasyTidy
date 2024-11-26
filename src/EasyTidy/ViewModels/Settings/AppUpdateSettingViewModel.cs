@@ -1,11 +1,17 @@
-﻿using CommunityToolkit.WinUI;
+﻿using CommunityToolkit.Common;
+using CommunityToolkit.WinUI;
+using EasyTidy.Common.Model;
+using EasyTidy.Contracts.Service;
 using EasyTidy.Model;
 using EasyTidy.Util;
+using System.Collections.ObjectModel;
 using Windows.System;
 
 namespace EasyTidy.ViewModels;
 public partial class AppUpdateSettingViewModel : ObservableObject
 {
+    private readonly IThemeSelectorService _themeSelectorService;
+
     [ObservableProperty]
     public string currentVersion;
 
@@ -28,13 +34,20 @@ public partial class AppUpdateSettingViewModel : ObservableObject
 
     private string DownloadUrl = string.Empty;
 
-    public IThemeService themeService;
+    public ObservableCollection<Breadcrumb> Breadcrumbs { get; }
 
-    public AppUpdateSettingViewModel()
+    public AppUpdateSettingViewModel(IThemeSelectorService themeSelectorService)
     {
-        CurrentVersion = string.Format("CurrentVersion".GetLocalized(), App.Current.AppVersion);
+        _themeSelectorService = themeSelectorService;
+
+        CurrentVersion = string.Format("CurrentVersion".GetLocalized(), Constants.Version);
         LastUpdateCheck = Settings.LastUpdateCheck;
-        themeService = App.GetService<IThemeService>();
+
+        Breadcrumbs = new ObservableCollection<Breadcrumb>
+        {
+            new("Settings".GetLocalized(), typeof(SettingsViewModel).FullName!),
+            new("AppUpdateSetting_Header".GetLocalized(), typeof(AppUpdateSettingViewModel).FullName!),
+        };
     }
 
     /// <summary>
@@ -148,7 +161,7 @@ public partial class AppUpdateSettingViewModel : ObservableObject
 
         var progressText = new TextBlock
         {
-            Text = "Preparing to download...",
+            Text = "Preparing to download...".GetLocalized(),
             Margin = new Thickness(0, 5, 0, 0)
         };
 
@@ -167,9 +180,9 @@ public partial class AppUpdateSettingViewModel : ObservableObject
             Title = "ReleaseNotes".GetLocalized(),
             Content = stackPanel,
             CloseButtonText = "Close".GetLocalized(),
-            PrimaryButtonText = "Download",
+            PrimaryButtonText = "Download".GetLocalized(),
             XamlRoot = mainWindow.Content.XamlRoot,
-            RequestedTheme = themeService.GetElementTheme()
+            RequestedTheme = _themeSelectorService.Theme
         };
 
         // 下载按钮的点击事件
@@ -186,7 +199,7 @@ public partial class AppUpdateSettingViewModel : ObservableObject
                    progressText.Text = $"Downloading... {progress:F1}%".GetLocalized();
                 });
                 await Download(downloadUrl, progressReporter);
-                progressText.Text = "Download complete!";
+                progressText.Text = "Download complete!".GetLocalized();
                 isShow = true;
                 await Task.Delay(2000);
             }
@@ -209,10 +222,10 @@ public partial class AppUpdateSettingViewModel : ObservableObject
                     await new ContentDialog
                     {
                         Title = "Update Ready".GetLocalized(),
-                        Content = "The update has been downloaded. The installation will begin shortly.",
-                        CloseButtonText = "OK",
+                        Content = "The update has been downloaded. The installation will begin shortly.".GetLocalized(),
+                        CloseButtonText = "OK".GetLocalized(),
                         XamlRoot = App.MainWindow.Content.XamlRoot,
-                        RequestedTheme = themeService.GetElementTheme()
+                        RequestedTheme = _themeSelectorService.Theme
                     }.ShowAsync();
                     InstallUpdate();
                 }
@@ -333,7 +346,7 @@ public partial class AppUpdateSettingViewModel : ObservableObject
             Margin = new Thickness(10),
             DefaultButton = ContentDialogButton.Close,
             XamlRoot = App.MainWindow.Content.XamlRoot,
-            RequestedTheme = themeService.GetElementTheme()
+            RequestedTheme = _themeSelectorService.Theme
         };
 
         await dialog.ShowAsyncQueue();

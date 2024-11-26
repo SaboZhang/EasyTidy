@@ -6,18 +6,6 @@
     </header>
     <body>
       <group id="EASYTIDY/STRINGS/EN-US/RESOURCES.RESW" datatype="resx">
-        <trans-unit id="NavAutomaticText" translate="yes" xml:space="preserve">
-          <source>Automatic</source>
-          <target state="translated">自動化</target>
-        </trans-unit>
-        <trans-unit id="NavTaskOrchestrationText" translate="yes" xml:space="preserve">
-          <source>Task Orchestration</source>
-          <target state="translated">任務編排</target>
-        </trans-unit>
-        <trans-unit id="NavFiltersText" translate="yes" xml:space="preserve">
-          <source>Filters</source>
-          <target state="translated">篩檢程式</target>
-        </trans-unit>
         <trans-unit id="Backup" translate="yes" xml:space="preserve">
           <source>Backup</source>
           <target state="translated">備份</target>
@@ -211,30 +199,6 @@
         <trans-unit id="FilterSettingsControl.ModuleTitle" translate="yes" xml:space="preserve">
           <source>Filter</source>
           <target state="translated">篩檢程式</target>
-        </trans-unit>
-        <trans-unit id="ThemeSettingPage.Description" translate="yes" xml:space="preserve">
-          <source>Explore the different ways to customize the appearance and behavior of your app. You can change the material, theme, accent, and more options to suit your style and preference.</source>
-          <target state="translated">自定義應用程序外觀和行為的不同方法。 可以更改材質、主題、重音和更多選項，以適應您的風格和偏好。</target>
-        </trans-unit>
-        <trans-unit id="ThemeSettingPage.Header" translate="yes" xml:space="preserve">
-          <source>Behavior &amp; animation</source>
-          <target state="translated">行為和動畫</target>
-        </trans-unit>
-        <trans-unit id="AppUpdateSetting.Description" translate="yes" xml:space="preserve">
-          <source>Check for Updates</source>
-          <target state="translated">檢查和更新應用程序</target>
-        </trans-unit>
-        <trans-unit id="AppUpdateSetting.Header" translate="yes" xml:space="preserve">
-          <source>Check for Updates</source>
-          <target state="translated">檢查更新</target>
-        </trans-unit>
-        <trans-unit id="AboutUsSettingPage.Description" translate="yes" xml:space="preserve">
-          <source>About EasyTidy and Developer</source>
-          <target state="translated">關於EasyTidy的開發</target>
-        </trans-unit>
-        <trans-unit id="AboutUsSettingPage.Header" translate="yes" xml:space="preserve">
-          <source>About</source>
-          <target state="translated">關於</target>
         </trans-unit>
         <trans-unit id="GeneralPageControl.ModuleDescription" translate="yes" xml:space="preserve">
           <source>EasyTidy is an open-source, professional file management tool designed to provide users with efficient and convenient file classification and organization solutions. Through custom settings, users can achieve various sorting methods such as automatic sorting, scheduled sorting, real-time sorting, and manual sorting to meet the file management needs in different scenarios. Used by the author ♥  make.</source>
@@ -458,10 +422,6 @@
         <trans-unit id="EditButton.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
           <source>Edit</source>
           <target state="translated">編輯</target>
-        </trans-unit>
-        <trans-unit id="NavGeneralText" translate="yes" xml:space="preserve">
-          <source>General</source>
-          <target state="translated">常規</target>
         </trans-unit>
         <trans-unit id="DesktopText" translate="yes" xml:space="preserve">
           <source>Desktop</source>
@@ -1490,6 +1450,86 @@
         <trans-unit id="AutoAnalysisGlobal.Header" translate="yes" xml:space="preserve">
           <source>AutoAnalysis(Global)</source>
           <target state="translated">自動分析（全局）</target>
+        </trans-unit>
+        <trans-unit id="NavAutomaticText.Content" translate="yes" xml:space="preserve">
+          <source>Automatic</source>
+          <target state="translated">自动化</target>
+        </trans-unit>
+        <trans-unit id="NavTaskOrchestrationText.Content" translate="yes" xml:space="preserve">
+          <source>Task Orchestration</source>
+          <target state="translated">任務編排</target>
+        </trans-unit>
+        <trans-unit id="NavFiltersText.Content" translate="yes" xml:space="preserve">
+          <source>Filters</source>
+          <target state="translated">過濾器</target>
+        </trans-unit>
+        <trans-unit id="NavGeneralText.Content" translate="yes" xml:space="preserve">
+          <source>General</source>
+          <target state="translated">常規</target>
+        </trans-unit>
+        <trans-unit id="ExtractText" translate="yes" xml:space="preserve">
+          <source>Extract files</source>
+          <target state="translated">自動解壓</target>
+        </trans-unit>
+        <trans-unit id="ThemeSettingPage_Description" translate="yes" xml:space="preserve">
+          <source>Explore the different ways to customize the appearance and behavior of your app. You can change the material, theme, accent, and more options to suit your style and preference.</source>
+          <target state="translated">自訂應用程式外觀及行為的不同方法。您可以變更材質、主題、重音及更多選項，以符合您的風格及喜好。</target>
+        </trans-unit>
+        <trans-unit id="ThemeSettingPage_Header" translate="yes" xml:space="preserve">
+          <source>Behavior &amp; animation</source>
+          <target state="translated">行為和動畫</target>
+        </trans-unit>
+        <trans-unit id="AppUpdateSetting_Description" translate="yes" xml:space="preserve">
+          <source>Check for Updates</source>
+          <target state="translated">检查和更新应用程序</target>
+        </trans-unit>
+        <trans-unit id="AppUpdateSetting_Header" translate="yes" xml:space="preserve">
+          <source>Check for Updates</source>
+          <target state="translated">检查更新</target>
+        </trans-unit>
+        <trans-unit id="AboutUsSettingPage_Description" translate="yes" xml:space="preserve">
+          <source>About EasyTidy and Developer</source>
+          <target state="translated">關於 EasyTidy 的開發</target>
+        </trans-unit>
+        <trans-unit id="AboutUsSettingPage_Header" translate="yes" xml:space="preserve">
+          <source>About</source>
+          <target state="translated">關於</target>
+        </trans-unit>
+        <trans-unit id="Download" translate="yes" xml:space="preserve">
+          <source>Download</source>
+          <target state="translated">下載</target>
+        </trans-unit>
+        <trans-unit id="Downloading" translate="yes" xml:space="preserve">
+          <source>Downloading...</source>
+          <target state="translated">下載中...</target>
+        </trans-unit>
+        <trans-unit id="DownloadComplete" translate="yes" xml:space="preserve">
+          <source>Download complete!</source>
+          <target state="translated">下載完成!</target>
+        </trans-unit>
+        <trans-unit id="OK" translate="yes" xml:space="preserve">
+          <source>OK</source>
+          <target state="translated">確認</target>
+        </trans-unit>
+        <trans-unit id="UpdateReady" translate="yes" xml:space="preserve">
+          <source>Update Ready</source>
+          <target state="translated">更新已準備就緒</target>
+        </trans-unit>
+        <trans-unit id="Update_Ready_Content" translate="yes" xml:space="preserve">
+          <source>The update has been downloaded. The installation will begin shortly.</source>
+          <target state="translated">更新已下載，安裝即將開始。</target>
+        </trans-unit>
+        <trans-unit id="PreparingToDownload" translate="yes" xml:space="preserve">
+          <source>Preparing to download...</source>
+          <target state="translated">準備下載...</target>
+        </trans-unit>
+        <trans-unit id="CompressText" translate="yes" xml:space="preserve">
+          <source>zip file</source>
+          <target state="translated">壓縮檔案</target>
+        </trans-unit>
+        <trans-unit id="UploadWebDavText" translate="yes" xml:space="preserve">
+          <source>Upload to WebDAV</source>
+          <target state="translated">上傳至 WebDAV</target>
         </trans-unit>
       </group>
     </body>

@@ -5,8 +5,8 @@ using Nucs.JsonSettings.Modulation;
 namespace EasyTidy.Common;
 public partial class AppConfig : JsonSettings, IVersionable
 {
-    [EnforcedVersion("1.0.3.1120")]
-    public virtual Version Version { get; set; } = new Version(1, 0, 3, 1120);
+    [EnforcedVersion("1.0.3.1126")]
+    public virtual Version Version { get; set; } = new Version(1, 0, 3, 1126);
 
     public override string FileName { get; set; } = Constants.AppConfigPath;
 

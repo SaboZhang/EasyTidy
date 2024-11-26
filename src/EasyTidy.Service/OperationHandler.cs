@@ -26,6 +26,9 @@ public static class OperationHandler
             { OperationMode.Delete, DeleteAsync },
             { OperationMode.Rename, RenameAsync },
             { OperationMode.RecycleBin, RecycleBinAsync },
+            { OperationMode.Extract, ExtractAsync },
+            { OperationMode.ZipFile, CompressedFileAsync },
+            { OperationMode.UploadWebDAV, UploadFileAsync },
         };
     }
 
@@ -165,5 +168,29 @@ public static class OperationHandler
             }
         }
 
+    }
+
+    private static async Task ExtractAsync(OperationParameters parameter)
+    {
+        await Task.Run(async () =>
+        {
+            await FileActuator.ExecuteFileOperationAsync(parameter);
+        });
+    }
+
+    private static async Task CompressedFileAsync(OperationParameters parameter)
+    {
+        await Task.Run(async () =>
+        {
+            await FileActuator.ExecuteFileOperationAsync(parameter);
+        });
+    }
+
+    private static async Task UploadFileAsync(OperationParameters parameter)
+    {
+        await Task.Run(async () =>
+        {
+            await FileActuator.ExecuteFileOperationAsync(parameter);
+        });
     }
 }

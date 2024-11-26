@@ -49,7 +49,13 @@ public enum OperationMode
 
     [Display(Name = "RenameText")] Rename,
 
-    [Display(Name = "RecycleBinText")] RecycleBin
+    [Display(Name = "RecycleBinText")] RecycleBin,
+
+    [Display(Name = "ExtractText")] Extract,
+
+    [Display(Name = "CompressText")] ZipFile,
+
+    [Display(Name = "UploadWebDavText")] UploadWebDAV,
 
 }
 
@@ -126,4 +132,15 @@ public enum TaskRuleType
 
     [Display(Name = "RegardedExpressionText")] ExpressionRules
 
+}
+
+public enum BackdropType
+{
+    None,
+    Mica,
+    MicaAlt,
+    DesktopAcrylic,
+    AcrylicThin,
+    AcrylicBase,
+    Transparent
 }

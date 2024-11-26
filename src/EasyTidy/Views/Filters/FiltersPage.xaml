@@ -23,7 +23,8 @@
     </i:Interaction.Behaviors>
     
     <etc:SettingsPageControl
-        x:Name="settingsControl"
+        Margin="0,-38,0,0"
+        x:Name="ContentArea"
         x:Uid="FilterSettingsControl"
         ModuleImageSource="ms-appx:///Assets/Modules/Filters.png">
         <etc:SettingsPageControl.ModuleContent>

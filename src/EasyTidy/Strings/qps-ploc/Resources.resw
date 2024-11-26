@@ -117,15 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="NavAutomaticText" xml:space="preserve">
+  <data name="NavAutomaticText.Content" xml:space="preserve">
     <value>Automatic</value>
     <comment />
   </data>
-  <data name="NavTaskOrchestrationText" xml:space="preserve">
+  <data name="NavTaskOrchestrationText.Content" xml:space="preserve">
     <value>Task Orchestration</value>
     <comment />
   </data>
-  <data name="NavFiltersText" xml:space="preserve">
+  <data name="NavFiltersText.Content" xml:space="preserve">
     <value>Filters</value>
     <comment />
   </data>
@@ -321,22 +321,22 @@
   <data name="FilterSettingsControl.ModuleTitle" xml:space="preserve">
     <value>Filter</value>
   </data>
-  <data name="ThemeSettingPage.Description" xml:space="preserve">
+  <data name="ThemeSettingPage_Description" xml:space="preserve">
     <value>Explore the different ways to customize the appearance and behavior of your app. You can change the material, theme, accent, and more options to suit your style and preference.</value>
   </data>
-  <data name="ThemeSettingPage.Header" xml:space="preserve">
+  <data name="ThemeSettingPage_Header" xml:space="preserve">
     <value>Behavior &amp; animation</value>
   </data>
-  <data name="AppUpdateSetting.Description" xml:space="preserve">
+  <data name="AppUpdateSetting_Description" xml:space="preserve">
     <value>Check for Updates</value>
   </data>
-  <data name="AppUpdateSetting.Header" xml:space="preserve">
+  <data name="AppUpdateSetting_Header" xml:space="preserve">
     <value>Check for Updates</value>
   </data>
-  <data name="AboutUsSettingPage.Description" xml:space="preserve">
+  <data name="AboutUsSettingPage_Description" xml:space="preserve">
     <value>About EasyTidy and Developer</value>
   </data>
-  <data name="AboutUsSettingPage.Header" xml:space="preserve">
+  <data name="AboutUsSettingPage_Header" xml:space="preserve">
     <value>About</value>
   </data>
   <data name="GeneralPageControl.ModuleDescription" xml:space="preserve">
@@ -501,7 +501,7 @@
   <data name="EditButton.ToolTipService.ToolTip" xml:space="preserve">
     <value>Edit</value>
   </data>
-  <data name="NavGeneralText" xml:space="preserve">
+  <data name="NavGeneralText.Content" xml:space="preserve">
     <value>General</value>
   </data>
   <data name="DesktopText" xml:space="preserve">

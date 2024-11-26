@@ -2,6 +2,7 @@ using EasyTidy.Log;
 using EasyTidy.Model;
 using EasyTidy.Util;
 using Microsoft.VisualBasic.FileIO;
+using Quartz.Util;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -284,6 +285,9 @@ public static class FileActuator
                 await MoveToRecycleBin(parameters.TargetPath, new List<Func<string, bool>>(parameters.Funcs),
                     parameters.PathFilter, parameters.RuleModel.RuleType, parameters.HandleSubfolders);
                 break;
+            case OperationMode.Extract:
+                Extract(parameters.SourcePath, parameters.TargetPath, parameters.RuleModel.Rule);
+                break;
             default:
                 throw new NotSupportedException($"Operation mode '{parameters.OperationMode}' is not supported.");
         }
@@ -301,7 +305,7 @@ public static class FileActuator
         await _semaphore.WaitAsync(); // 请求对文件操作的独占访问
         try
         {
-            HandleFileConflict(sourcePath, targetPath, fileOperationType, () =>
+            FileResolver.HandleFileConflict(sourcePath, targetPath, fileOperationType, () =>
             {
                 File.Move(sourcePath, targetPath);
             });
@@ -310,7 +314,7 @@ public static class FileActuator
         {
             if (IsFileLocked(sourcePath))
             {
-                HandleFileConflict(sourcePath, targetPath, fileOperationType, () =>
+                FileResolver.HandleFileConflict(sourcePath, targetPath, fileOperationType, () =>
                 {
                     ForceProcessFile(sourcePath, targetPath);
                 }, true, true);
@@ -336,7 +340,7 @@ public static class FileActuator
         await _semaphore.WaitAsync(); // 请求对文件操作的独占访问
         try
         {
-            HandleFileConflict(sourcePath, targetPath, fileOperationType, () =>
+            FileResolver.HandleFileConflict(sourcePath, targetPath, fileOperationType, () =>
             {
                 Directory.Move(sourcePath, targetPath);
             });
@@ -364,7 +368,7 @@ public static class FileActuator
         await _semaphore.WaitAsync(); // 请求对文件操作的独占访问
         try
         {
-            HandleFileConflict(sourcePath, targetPath, fileOperationType, () =>
+            FileResolver.HandleFileConflict(sourcePath, targetPath, fileOperationType, () =>
             {
                 File.Copy(sourcePath, targetPath);
             });
@@ -386,7 +390,7 @@ public static class FileActuator
         await _semaphore.WaitAsync(); // 请求对文件操作的独占访问
         try
         {
-            HandleFileConflict(sourcePath, targetPath, fileOperationType, () =>
+            FileResolver.HandleFileConflict(sourcePath, targetPath, fileOperationType, () =>
             {
                 CopyDirectory(sourcePath, targetPath);
             });
@@ -594,6 +598,77 @@ public static class FileActuator
     }
 
     /// <summary>
+    /// 根据文件类型执行解压或提取。
+    /// </summary>
+    /// <param name="filePath">文件路径</param>
+    /// <param name="filterExtension">指定提取的文件扩展名（为空表示提取所有文件）</param>
+    public static void Extract(string filePath, string tragetPath, string filterExtension = null)
+    {
+        if (string.IsNullOrWhiteSpace(filePath) || !File.Exists(filePath))
+        {
+            LogService.Logger.Error($"无效路径: {filePath}");
+            return;
+        }
+
+        string extension = Path.GetExtension(filePath).ToLower();
+
+        // 判断是否为压缩包
+        if (FileResolver.IsArchiveFile(extension))
+        {
+            ExtractArchive(filePath, tragetPath ,filterExtension);
+        }
+        else
+        {
+            LogService.Logger.Info($"当前不支持处理 {extension} 文件，路径: {filePath}");
+        }
+    }
+
+    /// <summary>
+    /// 提取压缩文件的主逻辑。
+    /// </summary>
+    /// <param name="zipFilePath">压缩文件路径</param>
+    public static void ExtractArchive(string zipFilePath, string tragetPath, string filterExtension = null)
+    {
+        if (string.IsNullOrWhiteSpace(zipFilePath) || !File.Exists(zipFilePath))
+        {
+            LogService.Logger.Error($"无效路径: {zipFilePath}");
+            return;
+        }
+
+        // 获取文件的目录和名称
+        string directoryPath = Path.GetDirectoryName(zipFilePath);
+        if (!tragetPath.IsNullOrWhiteSpace()) 
+        {
+            directoryPath = tragetPath;
+        }
+        string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(zipFilePath);
+
+        // 解析压缩包内容
+        var (isSingleFile, isSingleDirectory, rootFolderName) = FileResolver.AnalyzeZipContent(zipFilePath);
+
+        // 根据解析结果选择提取方式
+        try
+        {
+            if (isSingleFile)
+            {
+                ZipUtil.ExtractSingleFile(zipFilePath, directoryPath, filterExtension);
+            }
+            else if (isSingleDirectory && rootFolderName != null)
+            {
+                ZipUtil.ExtractSingleDirectory(zipFilePath, directoryPath, rootFolderName, filterExtension);
+            }
+            else
+            {
+                ZipUtil.ExtractToNamedFolder(zipFilePath, directoryPath, fileNameWithoutExtension, filterExtension);
+            }
+        }
+        catch (Exception ex)
+        {
+            LogService.Logger.Error($"提取过程中出现错误: {ex.Message}");
+        }
+    }
+
+    /// <summary>
     /// 检查文件夹是否为空
     /// </summary>
     /// <param name="folderPath"></param>
@@ -613,57 +688,6 @@ public static class FileActuator
 
         // 如果文件夹不存在，返回 false
         return false;
-    }
-
-    /// <summary>
-    /// 处理文件冲突
-    /// </summary>
-    /// <param name="sourcePath"></param>
-    /// <param name="targetPath"></param>
-    /// <param name="fileOperationType"></param>
-    /// <param name="action"></param>
-    /// <param name="isMove"></param>
-    /// <param name="inUse"></param>
-    /// <exception cref="NotSupportedException"></exception>
-    private static void HandleFileConflict(string sourcePath, string targetPath, FileOperationType fileOperationType, Action action, bool isMove = false, bool inUse = false)
-    {
-        if (File.Exists(targetPath))
-        {
-            switch (fileOperationType)
-            {
-                case FileOperationType.Skip:
-                    // Do nothing
-                    break;
-                case FileOperationType.Override:
-                    action(); // 执行操作
-                    break;
-                case FileOperationType.OverwriteIfNewer:
-                    if (File.GetLastWriteTime(sourcePath) > File.GetLastWriteTime(targetPath) 
-                        || Directory.GetLastWriteTime(sourcePath) > Directory.GetLastWriteTime(targetPath))
-                    {
-                        action(); // 执行操作
-                    }
-                    break;
-                case FileOperationType.OverrideIfSizesDiffer:
-                    if (AreFileSizesEqual(sourcePath, targetPath))
-                    {
-                        action(); // 执行操作
-                    }
-                    break;
-                case FileOperationType.ReNameAppend:
-                    ProcessPath(sourcePath, targetPath, isMove, inUse, false);
-                    break;
-                case FileOperationType.ReNameAddDate:
-                    ProcessPath(sourcePath, targetPath, isMove, inUse, true);
-                    break;
-                default:
-                    throw new NotSupportedException($"File operation type '{fileOperationType}' is not supported.");
-            }
-        }
-        else
-        {
-            action(); // 如果目标文件不存在，直接执行操作
-        }
     }
 
     /// <summary>
@@ -704,7 +728,7 @@ public static class FileActuator
     /// </summary>
     /// <param name="filePath"></param>
     /// <param name="targetPath"></param>
-    private static void ForceProcessFile(string filePath, string targetPath)
+    internal static void ForceProcessFile(string filePath, string targetPath)
     {
         try
         {
@@ -799,159 +823,6 @@ public static class FileActuator
             return true;
         }
         return false;
-    }
-
-    /// <summary>
-    /// 获取文件夹的大小
-    /// </summary>
-    /// <param name="folderPath"></param>
-    /// <returns></returns>
-    /// <exception cref="DirectoryNotFoundException"></exception>
-    private static long GetDirectorySize(string folderPath)
-    {
-        if (!Directory.Exists(folderPath))
-            throw new DirectoryNotFoundException($"Directory not found: {folderPath}");
-
-        return Directory.GetFiles(folderPath, "*", System.IO.SearchOption.AllDirectories)
-                        .Sum(file => new FileInfo(file).Length);
-    }
-
-    /// <summary>
-    /// 检查两个文件夹的大小是否相等
-    /// </summary>
-    /// <param name="sourcePath"></param>
-    /// <param name="targetPath"></param>
-    /// <returns></returns>
-    private static bool AreFileSizesEqual(string sourcePath, string targetPath)
-    {
-        if (File.Exists(sourcePath) && File.Exists(targetPath))
-        {
-            // 比较文件大小
-            return new FileInfo(sourcePath).Length != new FileInfo(targetPath).Length;
-        }
-        else if (Directory.Exists(sourcePath) && Directory.Exists(targetPath))
-        {
-            // 如果是文件夹，调用自定义方法来比较文件夹大小
-            return GetDirectorySize(sourcePath) != GetDirectorySize(targetPath);
-        }
-        else
-        {
-            LogService.Logger.Error("无效文件夹或者文件路径");
-            return false;
-        }
-    }
-
-    /// <summary>
-    /// 获取唯一路径
-    /// </summary>
-    /// <param name="path"></param>
-    /// <param name="withDate"></param>
-    /// <returns></returns>
-    public static string GetUniquePath(string path, bool withDate = false)
-    {
-        if (File.Exists(path) || Directory.Exists(path))
-        {
-            return withDate ? GetUniquePathWithDate(path) : GetUniquePathWithoutDate(path);
-        }
-        return path;
-    }
-
-    // 无时间戳的唯一路径生成器
-    private static string GetUniquePathWithoutDate(string path)
-    {
-        string directory = Path.GetDirectoryName(path);
-        string name = Path.GetFileNameWithoutExtension(path);
-        string extension = Path.GetExtension(path);
-        int count = 1;
-
-        string newPath = path;
-
-        if (File.Exists(path)) // 如果是文件
-        {
-            while (File.Exists(newPath))
-            {
-                newPath = Path.Combine(directory, $"{name}_{count++}{extension}");
-            }
-        }
-        else if (Directory.Exists(path)) // 如果是文件夹
-        {
-            while (Directory.Exists(newPath))
-            {
-                newPath = Path.Combine(directory, $"{name}_{count++}");
-            }
-        }
-
-        return newPath;
-    }
-
-    // 带时间戳的唯一路径生成器
-    private static string GetUniquePathWithDate(string path)
-    {
-        string directory = Path.GetDirectoryName(path);
-        string name = Path.GetFileNameWithoutExtension(path);
-        string extension = Path.GetExtension(path);
-        string timestamp = DateTime.Now.ToString("yyyy-MM-dd-HHmmss");
-
-        string newPath;
-        if (File.Exists(path)) // 如果是文件
-        {
-            newPath = Path.Combine(directory, $"{name}_{timestamp}{extension}");
-        }
-        else // 如果是文件夹
-        {
-            newPath = Path.Combine(directory, $"{name}_{timestamp}");
-        }
-
-        return newPath;
-    }
-
-    /// <summary>
-    /// 处理路径
-    /// </summary>
-    /// <param name="sourcePath"></param>
-    /// <param name="targetPath"></param>
-    /// <param name="isMove"></param>
-    /// <param name="inUse"></param>
-    /// <param name="withData"></param>
-    private static void ProcessPath(string sourcePath, string targetPath, bool isMove, bool inUse, bool withData )
-    {
-        string newPath = GetUniquePath(targetPath, withData);
-
-        if (!inUse)
-        {
-            if (File.Exists(sourcePath))
-            {
-                // 如果是文件，则执行文件的移动或复制
-                if (isMove)
-                {
-                    File.Move(sourcePath, newPath);
-                }
-                else
-                {
-                    File.Copy(sourcePath, newPath);
-                }
-            }
-            else if (Directory.Exists(sourcePath))
-            {
-                // 如果是文件夹，则执行文件夹的移动或复制
-                if (isMove)
-                {
-                    Directory.Move(sourcePath, newPath);
-                }
-                else
-                {
-                    CopyDirectory(sourcePath, newPath);
-                }
-            }
-            else
-            {
-                LogService.Logger.Error("文件夹或者文件未找到 ProcessPath");
-            }
-        }
-        else if (inUse && File.Exists(sourcePath))
-        {
-            ForceProcessFile(sourcePath, newPath + "_ForceProcessFile");
-        }
     }
 
 }

@@ -23,7 +23,7 @@
         </ic:EventTriggerBehavior>
     </i:Interaction.Behaviors>
 
-    <StackPanel x:Name="Root">
+    <StackPanel x:Name="ContentArea" Margin="0,-38,0,0">
         <StackPanel x:Name="Growl"
                     MinWidth="340"/>
         <etc:SettingsPageControl x:Name="SettingsControl" x:Uid="SettingsPageControl" ModuleImageSource="ms-appx:///Assets/Modules/Auto.png">
@@ -148,9 +148,8 @@
             </etc:SettingsPageControl.ModuleContent>
 
         </etc:SettingsPageControl>
-        <wuc:LoadingIndicator x:Name="Load"
-                              Mode="Arcs"
-                              IsActive="{x:Bind ViewModel.IsActive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <ProgressRing x:Name="Load"
+                      IsActive="{x:Bind ViewModel.IsActive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
     </StackPanel>
 
 

@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.WinUI;
 using CommunityToolkit.WinUI.Collections;
 using EasyTidy.Common.Database;
+using EasyTidy.Contracts.Service;
 using EasyTidy.Model;
 using EasyTidy.Service;
 using EasyTidy.Util;
@@ -14,11 +15,13 @@ namespace EasyTidy.ViewModels;
 public partial class TaskOrchestrationViewModel : ObservableRecipient
 {
     private readonly AppDbContext _dbContext;
-    public IThemeService themeService;
 
-    public TaskOrchestrationViewModel(IThemeService themeService)
+    [ObservableProperty]
+    private IThemeSelectorService _themeSelectorService;
+
+    public TaskOrchestrationViewModel(IThemeSelectorService themeSelectorService)
     {
-        this.themeService = themeService;
+        _themeSelectorService = themeSelectorService;
         _dbContext = App.GetService<AppDbContext>();
         LoadRulesMenu();
         DateTimeModel = new ObservableCollection<PatternSnippetModel>();
