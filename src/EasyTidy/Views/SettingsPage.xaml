@@ -16,7 +16,7 @@
     xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d"
     behaviors:NavigationViewHeaderBehavior.HeaderTemplate="{StaticResource BreadcrumbBarDataTemplate}"
-    behaviors:NavigationViewHeaderBehavior.HeaderContext="{x:Bind ViewModel}">
+    behaviors:NavigationViewHeaderBehavior.HeaderContext="{Binding}">
 
     <ScrollViewer VerticalAlignment="Top"
                   VerticalScrollBarVisibility="Auto">
@@ -54,7 +54,7 @@
                 </InfoBar>
             </StackPanel>
             <ItemsRepeater ItemsSource="{x:Bind ViewModel.SettingsList, Mode=OneWay}"
-                           Grid.Row="0">
+                           Grid.Row="1">
                 <ItemsRepeater.ItemTemplate>
                     <DataTemplate x:DataType="vm:SettingViewModel">
                         <ctk:SettingsCard Header="{x:Bind Header}"

@@ -14,7 +14,7 @@
     xmlns:ctk="using:CommunityToolkit.WinUI.Controls"
     xmlns:behaviors="using:EasyTidy.Behaviors"
     behaviors:NavigationViewHeaderBehavior.HeaderTemplate="{StaticResource BreadcrumbBarDataTemplate}"
-    behaviors:NavigationViewHeaderBehavior.HeaderContext="{x:Bind ViewModel}"
+    behaviors:NavigationViewHeaderBehavior.HeaderContext="{Binding}"
     mc:Ignorable="d">
     <ScrollView x:Name="ContentArea" VerticalAlignment="Top" VerticalScrollBarVisibility="Auto">
         <StackPanel

@@ -1,10 +1,11 @@
-﻿using EasyTidy.Common.Views;
+﻿using System.Diagnostics;
+using EasyTidy.Common.Views;
 
 namespace EasyTidy.Views;
 
 public sealed partial class SettingsPage : ToolPage
 {
-    public SettingsViewModel ViewModel { get; set; }
+    public SettingsViewModel ViewModel { get; }
     public SettingsPage()
     {
         this.InitializeComponent();

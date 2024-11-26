@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EasyTidy.Common.Views;
 
-public partial class ToolPage : Page
+public abstract class ToolPage : Page
 {
     public ToolPage()
     {
