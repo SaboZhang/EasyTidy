@@ -51,7 +51,11 @@ public enum OperationMode
 
     [Display(Name = "RecycleBinText")] RecycleBin,
 
-    [Display(Name = "ExtractText")] Extract
+    [Display(Name = "ExtractText")] Extract,
+
+    [Display(Name = "CompressText")] ZipFile,
+
+    [Display(Name = "UploadWebDavText")] UploadWebDAV,
 
 }
 

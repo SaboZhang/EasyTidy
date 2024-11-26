@@ -1499,31 +1499,39 @@
         </trans-unit>
         <trans-unit id="Download" translate="yes" xml:space="preserve">
           <source>Download</source>
-          <target state="new">Download</target>
+          <target state="new">ダウンロード</target>
         </trans-unit>
         <trans-unit id="Downloading" translate="yes" xml:space="preserve">
           <source>Downloading...</source>
-          <target state="new">Downloading...</target>
+          <target state="new">ダウンロード中...</target>
         </trans-unit>
         <trans-unit id="DownloadComplete" translate="yes" xml:space="preserve">
           <source>Download complete!</source>
-          <target state="new">Download complete!</target>
+          <target state="new">ダウンロード完了!</target>
         </trans-unit>
         <trans-unit id="OK" translate="yes" xml:space="preserve">
           <source>OK</source>
-          <target state="new">OK</target>
+          <target state="new">了解</target>
         </trans-unit>
         <trans-unit id="UpdateReady" translate="yes" xml:space="preserve">
           <source>Update Ready</source>
-          <target state="new">Update Ready</target>
+          <target state="new">更新の準備ができました</target>
         </trans-unit>
         <trans-unit id="Update_Ready_Content" translate="yes" xml:space="preserve">
           <source>The update has been downloaded. The installation will begin shortly.</source>
-          <target state="new">The update has been downloaded. The installation will begin shortly.</target>
+          <target state="new">アップデートがダウンロードされました。まもなくインストールが開始されます。</target>
         </trans-unit>
         <trans-unit id="PreparingToDownload" translate="yes" xml:space="preserve">
           <source>Preparing to download...</source>
-          <target state="new">Preparing to download...</target>
+          <target state="new">ダウンロードの準備中...</target>
+        </trans-unit>
+        <trans-unit id="CompressText" translate="yes" xml:space="preserve">
+          <source>zip file</source>
+          <target state="new">ZIPファイル</target>
+        </trans-unit>
+        <trans-unit id="UploadWebDavText" translate="yes" xml:space="preserve">
+          <source>Upload to WebDAV</source>
+          <target state="new">WebDAV へアップロード</target>
         </trans-unit>
       </group>
     </body>

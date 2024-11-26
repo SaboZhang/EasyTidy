@@ -2,11 +2,11 @@ using EasyTidy.Log;
 using EasyTidy.Model;
 using EasyTidy.Util;
 using Microsoft.VisualBasic.FileIO;
+using Quartz.Util;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
-using System.IO.Compression;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -284,6 +284,9 @@ public static class FileActuator
             case OperationMode.RecycleBin:
                 await MoveToRecycleBin(parameters.TargetPath, new List<Func<string, bool>>(parameters.Funcs),
                     parameters.PathFilter, parameters.RuleModel.RuleType, parameters.HandleSubfolders);
+                break;
+            case OperationMode.Extract:
+                Extract(parameters.SourcePath, parameters.TargetPath, parameters.RuleModel.Rule);
                 break;
             default:
                 throw new NotSupportedException($"Operation mode '{parameters.OperationMode}' is not supported.");
@@ -595,11 +598,11 @@ public static class FileActuator
     }
 
     /// <summary>
-    /// 主逻辑入口，根据文件类型执行解压或提取。
+    /// 根据文件类型执行解压或提取。
     /// </summary>
     /// <param name="filePath">文件路径</param>
     /// <param name="filterExtension">指定提取的文件扩展名（为空表示提取所有文件）</param>
-    public static void Extract(string filePath, string filterExtension = null)
+    public static void Extract(string filePath, string tragetPath, string filterExtension = null)
     {
         if (string.IsNullOrWhiteSpace(filePath) || !File.Exists(filePath))
         {
@@ -612,7 +615,7 @@ public static class FileActuator
         // 判断是否为压缩包
         if (FileResolver.IsArchiveFile(extension))
         {
-            ExtractArchive(filePath, filterExtension);
+            ExtractArchive(filePath, tragetPath ,filterExtension);
         }
         else
         {
@@ -624,7 +627,7 @@ public static class FileActuator
     /// 提取压缩文件的主逻辑。
     /// </summary>
     /// <param name="zipFilePath">压缩文件路径</param>
-    public static void ExtractArchive(string zipFilePath, string filterExtension = null)
+    public static void ExtractArchive(string zipFilePath, string tragetPath, string filterExtension = null)
     {
         if (string.IsNullOrWhiteSpace(zipFilePath) || !File.Exists(zipFilePath))
         {
@@ -634,6 +637,10 @@ public static class FileActuator
 
         // 获取文件的目录和名称
         string directoryPath = Path.GetDirectoryName(zipFilePath);
+        if (!tragetPath.IsNullOrWhiteSpace()) 
+        {
+            directoryPath = tragetPath;
+        }
         string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(zipFilePath);
 
         // 解析压缩包内容
@@ -644,77 +651,21 @@ public static class FileActuator
         {
             if (isSingleFile)
             {
-                ExtractSingleFile(zipFilePath, directoryPath, filterExtension);
+                ZipUtil.ExtractSingleFile(zipFilePath, directoryPath, filterExtension);
             }
             else if (isSingleDirectory && rootFolderName != null)
             {
-                ExtractSingleDirectory(zipFilePath, directoryPath, rootFolderName, filterExtension);
+                ZipUtil.ExtractSingleDirectory(zipFilePath, directoryPath, rootFolderName, filterExtension);
             }
             else
             {
-                ExtractToNamedFolder(zipFilePath, directoryPath, fileNameWithoutExtension, filterExtension);
+                ZipUtil.ExtractToNamedFolder(zipFilePath, directoryPath, fileNameWithoutExtension, filterExtension);
             }
         }
         catch (Exception ex)
         {
             LogService.Logger.Error($"提取过程中出现错误: {ex.Message}");
         }
-    }
-
-    /// <summary>
-    /// 处理单一文件提取。
-    /// </summary>
-    private static void ExtractSingleFile(string zipFilePath, string directoryPath, string filterExtension = null)
-    {
-        using var archive = ZipFile.OpenRead(zipFilePath);
-        var entry = archive.Entries.First();
-
-        string destinationPath = Path.Combine(directoryPath, entry.Name);
-        FileResolver.HandleFileConflict(entry.FullName, destinationPath, FileOperationType.Override, () =>
-        {
-            // 过滤文件扩展名
-            if (!string.IsNullOrWhiteSpace(filterExtension) && !entry.FullName.EndsWith(filterExtension, StringComparison.OrdinalIgnoreCase))
-            {
-                return;
-            }
-            entry.ExtractToFile(destinationPath, overwrite: true);
-        });
-    }
-
-    /// <summary>
-    /// 处理单一文件夹提取。
-    /// </summary>
-    private static void ExtractSingleDirectory(string zipFilePath, string directoryPath, string rootFolderName, string filterExtension = null)
-    {
-        using var archive = ZipFile.OpenRead(zipFilePath);
-        foreach (var entry in archive.Entries)
-        {
-            // 过滤文件扩展名
-            if (!string.IsNullOrWhiteSpace(filterExtension) && !entry.FullName.EndsWith(filterExtension, StringComparison.OrdinalIgnoreCase))
-            {
-                continue;
-            }
-            if (string.IsNullOrWhiteSpace(entry.FullName) || entry.FullName.EndsWith("/"))
-                continue;
-
-            string relativePath = entry.FullName.Substring(rootFolderName.Length).TrimStart('/');
-            string destinationPath = Path.Combine(directoryPath, relativePath);
-
-            FileResolver.HandleFileConflict(entry.FullName, destinationPath, FileOperationType.Override, () =>
-            {
-                Directory.CreateDirectory(Path.GetDirectoryName(destinationPath));
-                entry.ExtractToFile(destinationPath, true);
-            });
-        }
-    }
-
-    /// <summary>
-    /// 处理提取到指定名称文件夹的逻辑。
-    /// </summary>
-    private static void ExtractToNamedFolder(string zipFilePath, string directoryPath, string folderName, string filterExtension = null)
-    {
-        string finalExtractPath = Path.Combine(directoryPath, folderName);
-        ZipUtil.DecompressToDirectory(zipFilePath, finalExtractPath, filterExtension);
     }
 
     /// <summary>

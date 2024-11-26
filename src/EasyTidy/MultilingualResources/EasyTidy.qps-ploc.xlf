@@ -1516,6 +1516,14 @@
           <source>Preparing to download...</source>
           <target state="new">Preparing to download...</target>
         </trans-unit>
+        <trans-unit id="CompressText" translate="yes" xml:space="preserve">
+          <source>zip file</source>
+          <target state="new">zip file</target>
+        </trans-unit>
+        <trans-unit id="UploadWebDavText" translate="yes" xml:space="preserve">
+          <source>Upload to WebDAV</source>
+          <target state="new">Upload to WebDAV</target>
+        </trans-unit>
       </group>
     </body>
   </file>

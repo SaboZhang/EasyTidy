@@ -1124,4 +1124,31 @@
   <data name="AboutUsSettingPage_Header" xml:space="preserve">
     <value>關於</value>
   </data>
+  <data name="Download" xml:space="preserve">
+    <value>下載</value>
+  </data>
+  <data name="Downloading" xml:space="preserve">
+    <value>下載中...</value>
+  </data>
+  <data name="DownloadComplete" xml:space="preserve">
+    <value>下載完成!</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>確認</value>
+  </data>
+  <data name="UpdateReady" xml:space="preserve">
+    <value>更新已準備就緒</value>
+  </data>
+  <data name="Update_Ready_Content" xml:space="preserve">
+    <value>更新已下載，安裝即將開始。</value>
+  </data>
+  <data name="PreparingToDownload" xml:space="preserve">
+    <value>準備下載...</value>
+  </data>
+  <data name="CompressText" xml:space="preserve">
+    <value>壓縮檔案</value>
+  </data>
+  <data name="UploadWebDavText" xml:space="preserve">
+    <value>上傳至 WebDAV</value>
+  </data>
 </root>

@@ -17,7 +17,6 @@
         <StackPanel
             Margin="10"
             Spacing="5">
-
             <ctk:SettingsCard 
                 MaxWidth="{ThemeResource MaxPageContentWidth}" Margin="{ThemeResource ContentPageMargin}"
                 Header="{x:Bind ViewModel.CurrentVersion}" 

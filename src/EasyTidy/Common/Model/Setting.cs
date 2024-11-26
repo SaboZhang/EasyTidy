@@ -9,7 +9,7 @@ namespace EasyTidy.Common.Model;
 
 public class Setting
 {
-    private bool _isExtensionEnabled;
+    //private bool _isExtensionEnabled;
 
     public string Path { get; }
 

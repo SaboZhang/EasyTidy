@@ -27,9 +27,8 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <StackPanel>
-                <ctk:SettingsCard Margin="0,0,0,0"
-                                  Grid.Row="0"
+            <StackPanel Margin="0,6,0,0">
+                <ctk:SettingsCard Grid.Row="0"
                                   x:Name="ChangeLanguageSetting"
                                   x:Uid="SettingsLanguageCard"
                                   HeaderIcon="{ui:BitmapIcon Source=Assets/Fluent/language.png}"

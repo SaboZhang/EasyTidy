@@ -1296,4 +1296,10 @@
   <data name="PreparingToDownload" xml:space="preserve">
     <value>Preparing to download...</value>
   </data>
+  <data name="CompressText" xml:space="preserve">
+    <value>zip file</value>
+  </data>
+  <data name="UploadWebDavText" xml:space="preserve">
+    <value>Upload to WebDAV</value>
+  </data>
 </root>

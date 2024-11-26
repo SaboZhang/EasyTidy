@@ -120,8 +120,7 @@
                                 QueryIcon="Find"/>
             </NavigationView.AutoSuggestBox>
 
-            <Frame x:Name="NavFrame"
-                   Navigated="NavFrame_Navigated"/>
+            <Frame x:Name="NavFrame"/>
         </NavigationView>
 
         <views:TrayIconView x:Name="TrayIconView" />

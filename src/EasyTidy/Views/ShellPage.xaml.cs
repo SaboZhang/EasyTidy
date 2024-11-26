@@ -49,11 +49,6 @@ public sealed partial class ShellPage : Page
         navigationView.IsPaneOpen = !navigationView.IsPaneOpen;
     }
 
-    private void NavFrame_Navigated(object sender, NavigationEventArgs e)
-    {
-        // AppTitleBar.IsBackButtonVisible = NavFrame.CanGoBack;
-    }
-
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
         TitleBarHelper.UpdateTitleBar(RequestedTheme);

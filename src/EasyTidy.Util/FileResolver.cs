@@ -2,10 +2,9 @@ using System;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
-using EasyTidy.Log;
 using EasyTidy.Model;
 
-namespace EasyTidy.Service;
+namespace EasyTidy.Util;
 
 public class FileResolver
 {
@@ -34,7 +33,7 @@ public class FileResolver
                     action(); // 执行操作
                     break;
                 case FileOperationType.OverwriteIfNewer:
-                    if (File.GetLastWriteTime(sourcePath) > File.GetLastWriteTime(targetPath) 
+                    if (File.GetLastWriteTime(sourcePath) > File.GetLastWriteTime(targetPath)
                         || Directory.GetLastWriteTime(sourcePath) > Directory.GetLastWriteTime(targetPath))
                     {
                         action(); // 执行操作
@@ -162,7 +161,7 @@ public class FileResolver
         if (!Directory.Exists(folderPath))
             throw new DirectoryNotFoundException($"Directory not found: {folderPath}");
 
-        return Directory.GetFiles(folderPath, "*", System.IO.SearchOption.AllDirectories)
+        return Directory.GetFiles(folderPath, "*", SearchOption.AllDirectories)
                         .Sum(file => new FileInfo(file).Length);
     }
 
@@ -175,7 +174,7 @@ public class FileResolver
     {
         Directory.CreateDirectory(destDir);
 
-        foreach (string filePath in Directory.GetFiles(sourceDir, "*", System.IO.SearchOption.AllDirectories))
+        foreach (string filePath in Directory.GetFiles(sourceDir, "*", SearchOption.AllDirectories))
         {
             string relativePath = Path.GetRelativePath(sourceDir, filePath);
             string destFilePath = Path.Combine(destDir, relativePath);
@@ -193,51 +192,40 @@ public class FileResolver
     /// <param name="isMove"></param>
     /// <param name="inUse"></param>
     /// <param name="withData"></param>
-    private static void ProcessPath(string sourcePath, string targetPath, bool isMove, bool inUse, bool withData )
+    private static void ProcessPath(string sourcePath, string targetPath, bool isMove, bool inUse, bool withData)
     {
         string newPath = GetUniquePath(targetPath, withData);
 
-        if (!inUse)
+        if (File.Exists(sourcePath))
         {
-            if (File.Exists(sourcePath))
+            // 如果是文件，则执行文件的移动或复制
+            if (isMove)
             {
-                // 如果是文件，则执行文件的移动或复制
-                if (isMove)
-                {
-                    File.Move(sourcePath, newPath);
-                }
-                else
-                {
-                    File.Copy(sourcePath, newPath);
-                }
-            }
-            else if (Directory.Exists(sourcePath))
-            {
-                // 如果是文件夹，则执行文件夹的移动或复制
-                if (isMove)
-                {
-                    Directory.Move(sourcePath, newPath);
-                }
-                else
-                {
-                    CopyDirectory(sourcePath, newPath);
-                }
+                File.Move(sourcePath, newPath);
             }
             else
             {
-                LogService.Logger.Error("文件夹或者文件未找到 ProcessPath");
+                File.Copy(sourcePath, newPath);
             }
         }
-        else if (inUse && File.Exists(sourcePath))
+        else if (Directory.Exists(sourcePath))
         {
-            FileActuator.ForceProcessFile(sourcePath, newPath + "_ForceProcessFile");
+            // 如果是文件夹，则执行文件夹的移动或复制
+            if (isMove)
+            {
+                Directory.Move(sourcePath, newPath);
+            }
+            else
+            {
+                CopyDirectory(sourcePath, newPath);
+            }
         }
     }
 
     /// <summary>
     /// 判断扩展名是否为压缩文件格式。
     /// </summary>
-    internal static bool IsArchiveFile(string extension)
+    public static bool IsArchiveFile(string extension)
     {
         return SupportedArchiveExtensions.Contains(extension);
     }
@@ -245,7 +233,7 @@ public class FileResolver
     /// <summary>
     /// 分析压缩包内容。
     /// </summary>
-    internal static (bool isSingleFile, bool isSingleDirectory, string rootFolderName) AnalyzeZipContent(string zipFilePath)
+    public static (bool isSingleFile, bool isSingleDirectory, string rootFolderName) AnalyzeZipContent(string zipFilePath)
     {
         using var archive = ZipFile.OpenRead(zipFilePath);
         var entries = archive.Entries;
