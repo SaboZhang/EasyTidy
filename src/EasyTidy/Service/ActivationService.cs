@@ -1,4 +1,5 @@
 ﻿using EasyTidy.Activation;
+using EasyTidy.Common.Extensions;
 using EasyTidy.Contracts.Service;
 using System;
 using System.Collections.Generic;
@@ -68,6 +69,7 @@ public class ActivationService : IActivationService
 
     private async Task StartupAsync()
     {
+        _themeSelectorService.ThemeChanged += (_, theme) => App.MainWindow.SetRequestedTheme(theme);
         await _themeSelectorService.SetRequestedThemeAsync();
         await Task.CompletedTask;
     }

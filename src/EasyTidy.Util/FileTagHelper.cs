@@ -12,7 +12,9 @@ public class FileTagHelper
     {
         await Task.Run(() =>
         {
-
+            var file = TagLib.File.Create(filePath);
+            file.Tag.Comment = keywords;
+            file.Save();
         });
     }
 }

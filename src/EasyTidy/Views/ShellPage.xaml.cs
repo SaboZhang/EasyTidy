@@ -37,8 +37,8 @@ public sealed partial class ShellPage : Page
         this.InitializeComponent();
         ViewModel.NavigationService.Frame = NavFrame;
         ViewModel.NavigationViewService.Initialize(navigationView);
-        App.MainWindow.AppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
-        App.MainWindow.AppWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
+        App.MainWindow.ExtendsContentIntoTitleBar = true;
+        // App.MainWindow.AppWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
         App.MainWindow.SetTitleBar(AppTitleBar);
         App.MainWindow.Activated += MainWindow_Activated;
         AppTitleBarText.Text = "EasyTidy";

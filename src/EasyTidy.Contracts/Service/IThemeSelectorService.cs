@@ -11,6 +11,10 @@ namespace EasyTidy.Contracts.Service;
 
 public interface IThemeSelectorService
 {
+    public event EventHandler<ElementTheme> ThemeChanged;
+
+    void SetRequestedTheme();
+
     Window Window { get; set; }
 
     ElementTheme Theme
@@ -29,4 +33,6 @@ public interface IThemeSelectorService
     BackdropType GetBackdropType(SystemBackdrop systemBackdrop);
 
     BackdropType GetBackdropType();
+
+    BackdropType BackdropType { get; }
 }

@@ -107,6 +107,8 @@ public partial class ThemeSettingViewModel : ObservableObject
                 break;
         }
 
+        _backDropIndex = GetSystemBackdrop(_themeSelectorService.BackdropType);
+
         Breadcrumbs = new ObservableCollection<Breadcrumb>
         {
             new("Settings".GetLocalized(), typeof(SettingsViewModel).FullName!),
@@ -114,25 +116,18 @@ public partial class ThemeSettingViewModel : ObservableObject
         };
     }
 
-    public SystemBackdrop GetSystemBackdrop(BackdropType backdropType)
+    public int GetSystemBackdrop(BackdropType backdropType)
     {
-        switch (backdropType)
+        return backdropType switch
         {
-            case BackdropType.None:
-                return null;
-            case BackdropType.Mica:
-                return new MicaBackdrop(){Kind = MicaKind.Base};
-            case BackdropType.MicaAlt:
-                return new MicaBackdrop(){Kind = MicaKind.BaseAlt};
-            case BackdropType.DesktopAcrylic:
-                return new DesktopAcrylicBackdrop();
-            case BackdropType.AcrylicBase:
-                return new Common.AcrylicSystemBackdrop(DesktopAcrylicKind.Base);
-            case BackdropType.AcrylicThin:
-                return new Common.AcrylicSystemBackdrop(DesktopAcrylicKind.Thin);
-            default:
-                return null;
-        }
+            BackdropType.None => 0,
+            BackdropType.Mica => 1,
+            BackdropType.MicaAlt => 2,
+            BackdropType.DesktopAcrylic => 3,
+            BackdropType.AcrylicBase => 4,
+            BackdropType.AcrylicThin => 5,
+            _ => 1,
+        };
     }
 
     private void ApplyThemeOrBackdrop<TEnum>(string text) where TEnum : struct
