@@ -1,4 +1,5 @@
 using CommunityToolkit.WinUI;
+using EasyTidy.Model;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -10,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -35,7 +37,7 @@ public sealed partial class MainWindow : WindowEx
     {
         this.InitializeComponent();
         Content = null;
-        Title = "EasyTidy";
+        Title = Constants.AppName;
 
         // Theme change code picked from https://github.com/microsoft/WinUI-Gallery/pull/1239
         _dispatcherQueue = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread();

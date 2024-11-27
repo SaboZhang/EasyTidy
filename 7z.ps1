@@ -9,8 +9,17 @@ if ([string]::IsNullOrEmpty($version)) {
     exit
 }
 
-$sourceDir = "src\EasyTidy\bin\x64\Release\net8.0-windows10.0.22621.0\win-x64"
-$targetDir = "src\EasyTidy\bin\x64\Release\net8.0-windows10.0.22621.0"
+# 查找符合条件的目录
+$baseDir = "src\EasyTidy\bin\x64\Release"
+$matchedDir = Get-ChildItem -Path $baseDir -Directory -Filter "net*-windows*" | Select-Object -First 1
+
+if ($matchedDir -eq $null) {
+    Write-Error "No matching directory found in $baseDir."
+    exit
+}
+
+$sourceDir = Join-Path -Path $matchedDir.FullName -ChildPath "win-x64"
+$targetDir = $matchedDir.FullName
 
 # 重命名目录
 if (Test-Path -Path $sourceDir) {

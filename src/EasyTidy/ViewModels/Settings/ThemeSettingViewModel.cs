@@ -4,6 +4,7 @@ using EasyTidy.Contracts.Service;
 using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Xaml.Media;
 using System.Collections.ObjectModel;
+using Windows.System;
 using BackdropType = EasyTidy.Model.BackdropType;
 
 namespace EasyTidy.ViewModels;
@@ -78,9 +79,6 @@ public partial class ThemeSettingViewModel : ObservableObject
                     case 4:
                         BackDrop = BackdropType.AcrylicThin;
                         break;
-                    case 5:
-                        BackDrop = BackdropType.Transparent;
-                        break;
                 }
 
                 _backDropIndex = value;
@@ -123,17 +121,15 @@ public partial class ThemeSettingViewModel : ObservableObject
             case BackdropType.None:
                 return null;
             case BackdropType.Mica:
-                return new MicaSystemBackdrop(MicaKind.Base);
+                return new MicaBackdrop(){Kind = MicaKind.Base};
             case BackdropType.MicaAlt:
-                return new MicaSystemBackdrop(MicaKind.BaseAlt);
+                return new MicaBackdrop(){Kind = MicaKind.BaseAlt};
             case BackdropType.DesktopAcrylic:
                 return new DesktopAcrylicBackdrop();
             case BackdropType.AcrylicBase:
-                return new AcrylicSystemBackdrop(DesktopAcrylicKind.Base);
+                return new Common.AcrylicSystemBackdrop(DesktopAcrylicKind.Base);
             case BackdropType.AcrylicThin:
-                return new AcrylicSystemBackdrop(DesktopAcrylicKind.Thin);
-            case BackdropType.Transparent:
-                return new TransparentBackdrop();
+                return new Common.AcrylicSystemBackdrop(DesktopAcrylicKind.Thin);
             default:
                 return null;
         }
@@ -152,6 +148,12 @@ public partial class ThemeSettingViewModel : ObservableObject
                 _themeSelectorService.SetThemeAsync(theme);
             }
         }
+    }
+
+    [RelayCommand]
+    private async Task OpenWindowsColorSettings()
+    {
+        _ = await Launcher.LaunchUriAsync(new Uri("ms-settings:colors"));
     }
 
 }

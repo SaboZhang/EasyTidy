@@ -29,7 +29,11 @@ public partial class App : Application
     {
         get;
     }
+#if DEBUG
+    public string AppName { get; set; } = "EasyTidyDev";
+#else
     public string AppName { get; set; } = "EasyTidy";
+#endif
 
     private bool _createdNew;
 

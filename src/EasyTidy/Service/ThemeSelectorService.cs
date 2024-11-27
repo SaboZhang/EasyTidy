@@ -13,9 +13,14 @@ namespace EasyTidy.Service;
 
 public class ThemeSelectorService : IThemeSelectorService
 {
+    public ThemeSelectorService()
+    {
+        Window = App.MainWindow;
+    }
+
     private void SetWindowSystemBackdrop(SystemBackdrop systemBackdrop)
     {
-        Window.SystemBackdrop = systemBackdrop;
+        App.MainWindow.SystemBackdrop = systemBackdrop;
     }
 
     public Window Window { get; set; }
@@ -108,15 +113,15 @@ public class ThemeSelectorService : IThemeSelectorService
             case BackdropType.None:
                 return null;
             case BackdropType.Mica:
-                return new MicaSystemBackdrop(MicaKind.Base);
+                return new MicaBackdrop(){Kind = MicaKind.Base};
             case BackdropType.MicaAlt:
-                return new MicaSystemBackdrop(MicaKind.BaseAlt);
+                return new MicaBackdrop(){Kind = MicaKind.BaseAlt};
             case BackdropType.DesktopAcrylic:
                 return new DesktopAcrylicBackdrop();
             case BackdropType.AcrylicBase:
-                return new AcrylicSystemBackdrop(DesktopAcrylicKind.Base);
+                return new Common.AcrylicSystemBackdrop(DesktopAcrylicKind.Base);
             case BackdropType.AcrylicThin:
-                return new AcrylicSystemBackdrop(DesktopAcrylicKind.Thin);
+                return new Common.AcrylicSystemBackdrop(DesktopAcrylicKind.Thin);
             case BackdropType.Transparent:
                 return new TransparentBackdrop();
             default:
@@ -131,15 +136,11 @@ public class ThemeSelectorService : IThemeSelectorService
 
     public BackdropType GetBackdropType(SystemBackdrop systemBackdrop)
     {
-        if (systemBackdrop is MicaSystemBackdrop mica)
+        if (systemBackdrop is MicaBackdrop mica)
         {
             return mica.Kind == MicaKind.Base ? BackdropType.Mica : BackdropType.MicaAlt;
         }
-        else if (systemBackdrop is TransparentBackdrop)
-        {
-            return BackdropType.Transparent;
-        }
-        else if (systemBackdrop is AcrylicSystemBackdrop acrylic)
+        else if (systemBackdrop is Common.AcrylicSystemBackdrop acrylic)
         {
             return acrylic.Kind == DesktopAcrylicKind.Base ? BackdropType.AcrylicBase : BackdropType.AcrylicThin;
         }
