@@ -20,7 +20,7 @@ public class ThemeSelectorService : IThemeSelectorService
 
     private void SetWindowSystemBackdrop(SystemBackdrop systemBackdrop)
     {
-        Window.SystemBackdrop = systemBackdrop;
+        App.MainWindow.SystemBackdrop = systemBackdrop;
     }
 
     public Window Window { get; set; }
