@@ -12,6 +12,8 @@
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:model="using:EasyTidy.Model" 
     xmlns:etc="using:EasyTidy.Views.UserControls"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls" 
+    xmlns:behaviors="using:CommunityToolkit.WinUI.Behaviors"
     AutomationProperties.LandmarkType="Main"
     mc:Ignorable="d">
 
@@ -24,8 +26,14 @@
     </i:Interaction.Behaviors>
 
     <StackPanel x:Name="ContentArea" Margin="0,-38,0,0">
-        <StackPanel x:Name="Growl"
-                    MinWidth="340"/>
+        <muxc:InfoBar MaxWidth="340"
+                      Margin="10"
+                      HorizontalAlignment="Right"
+                      VerticalAlignment="Bottom">
+            <i:Interaction.Behaviors>
+                <behaviors:StackedNotificationsBehavior x:Name="NotificationQueue" />
+            </i:Interaction.Behaviors>
+        </muxc:InfoBar>
         <etc:SettingsPageControl x:Name="SettingsControl" x:Uid="SettingsPageControl" ModuleImageSource="ms-appx:///Assets/Modules/Auto.png">
             <etc:SettingsPageControl.ModuleContent>
                 <StackPanel ChildrenTransitions="{StaticResource SettingsCardsAnimations}" Orientation="Vertical">

@@ -64,8 +64,7 @@
         </trans-unit>
         <trans-unit id="ConfigurationButton.Content" translate="yes" xml:space="preserve">
           <source>Configuration</source>
-          <target state="needs-review-translation">Configuration</target>
-          <note from="MultilingualUpdate" priority="2">通过 MAT 添加 XLIFF 文件支持后，找到并自动导入了现有资源。此源字符串和目标字符串包含相同的值，因此资源已标记为“需要审阅”，以确保可以轻松地审阅翻译。</note>
+          <target state="translated">Configuration</target>
         </trans-unit>
         <trans-unit id="TaskAssociation.Header" translate="yes" xml:space="preserve">
           <source>Task association</source>
@@ -299,18 +298,15 @@
         </trans-unit>
         <trans-unit id="GreaterThanText" translate="yes" xml:space="preserve">
           <source>&gt;</source>
-          <target state="needs-review-translation">&gt;</target>
-          <note from="MultilingualUpdate" priority="2">通过 MAT 添加 XLIFF 文件支持后，找到并自动导入了现有资源。此源字符串和目标字符串包含相同的值，因此资源已标记为“需要审阅”，以确保可以轻松地审阅翻译。</note>
+          <target state="translated">&gt;</target>
         </trans-unit>
         <trans-unit id="EqualToText" translate="yes" xml:space="preserve">
           <source>=</source>
-          <target state="needs-review-translation">=</target>
-          <note from="MultilingualUpdate" priority="2">通过 MAT 添加 XLIFF 文件支持后，找到并自动导入了现有资源。此源字符串和目标字符串包含相同的值，因此资源已标记为“需要审阅”，以确保可以轻松地审阅翻译。</note>
+          <target state="translated">=</target>
         </trans-unit>
         <trans-unit id="LessThanText" translate="yes" xml:space="preserve">
           <source>&lt;</source>
-          <target state="needs-review-translation">&lt;</target>
-          <note from="MultilingualUpdate" priority="2">通过 MAT 添加 XLIFF 文件支持后，找到并自动导入了现有资源。此源字符串和目标字符串包含相同的值，因此资源已标记为“需要审阅”，以确保可以轻松地审阅翻译。</note>
+          <target state="translated">&lt;</target>
         </trans-unit>
         <trans-unit id="ByteText" translate="yes" xml:space="preserve">
           <source>byte</source>
@@ -326,8 +322,7 @@
         </trans-unit>
         <trans-unit id="GigabyteText" translate="yes" xml:space="preserve">
           <source>GB</source>
-          <target state="needs-review-translation">GB</target>
-          <note from="MultilingualUpdate" priority="2">通过 MAT 添加 XLIFF 文件支持后，找到并自动导入了现有资源。此源字符串和目标字符串包含相同的值，因此资源已标记为“需要审阅”，以确保可以轻松地审阅翻译。</note>
+          <target state="translated">GB</target>
         </trans-unit>
         <trans-unit id="SecondText" translate="yes" xml:space="preserve">
           <source>Second</source>
@@ -335,8 +330,7 @@
         </trans-unit>
         <trans-unit id="MinuteText" translate="yes" xml:space="preserve">
           <source>Minute</source>
-          <target state="needs-review-translation">Minute</target>
-          <note from="MultilingualUpdate" priority="2">通过 MAT 添加 XLIFF 文件支持后，找到并自动导入了现有资源。此源字符串和目标字符串包含相同的值，因此资源已标记为“需要审阅”，以确保可以轻松地审阅翻译。</note>
+          <target state="translated">Minute</target>
         </trans-unit>
         <trans-unit id="HourText" translate="yes" xml:space="preserve">
           <source>Hour</source>
@@ -512,8 +506,7 @@
         </trans-unit>
         <trans-unit id="DialogArchive.Content" translate="yes" xml:space="preserve">
           <source>Archive:</source>
-          <target state="needs-review-translation">Archive:</target>
-          <note from="MultilingualUpdate" priority="2">通过 MAT 添加 XLIFF 文件支持后，找到并自动导入了现有资源。此源字符串和目标字符串包含相同的值，因此资源已标记为“需要审阅”，以确保可以轻松地审阅翻译。</note>
+          <target state="translated">Archive:</target>
         </trans-unit>
         <trans-unit id="DialogHide.Content" translate="yes" xml:space="preserve">
           <source>Hidden:</source>
@@ -633,8 +626,7 @@
         </trans-unit>
         <trans-unit id="DialogMinute.Text" translate="yes" xml:space="preserve">
           <source>Minute</source>
-          <target state="needs-review-translation">Minute</target>
-          <note from="MultilingualUpdate" priority="2">通过 MAT 添加 XLIFF 文件支持后，找到并自动导入了现有资源。此源字符串和目标字符串包含相同的值，因此资源已标记为“需要审阅”，以确保可以轻松地审阅翻译。</note>
+          <target state="translated">Minute</target>
         </trans-unit>
         <trans-unit id="DialogHour.Text" translate="yes" xml:space="preserve">
           <source>Hour</source>
@@ -806,8 +798,7 @@
         </trans-unit>
         <trans-unit id="GeneralStatus.Text" translate="yes" xml:space="preserve">
           <source>Version:</source>
-          <target state="needs-review-translation">Version:</target>
-          <note from="MultilingualUpdate" priority="2">通过 MAT 添加 XLIFF 文件支持后，找到并自动导入了现有资源。此源字符串和目标字符串包含相同的值，因此资源已标记为“需要审阅”，以确保可以轻松地审阅翻译。</note>
+          <target state="translated">Version:</target>
         </trans-unit>
         <trans-unit id="GeneralRefresh.Text" translate="yes" xml:space="preserve">
           <source>Refresh</source>
@@ -827,8 +818,7 @@
         </trans-unit>
         <trans-unit id="GeneralUseDocumentation.Text" translate="yes" xml:space="preserve">
           <source>Documentation</source>
-          <target state="needs-review-translation">Documentation</target>
-          <note from="MultilingualUpdate" priority="2">通过 MAT 添加 XLIFF 文件支持后，找到并自动导入了现有资源。此源字符串和目标字符串包含相同的值，因此资源已标记为“需要审阅”，以确保可以轻松地审阅翻译。</note>
+          <target state="translated">Documentation</target>
         </trans-unit>
         <trans-unit id="GereralReport.Text" translate="yes" xml:space="preserve">
           <source>Report BUG</source>
@@ -916,8 +906,7 @@
         </trans-unit>
         <trans-unit id="ThemeMica.Content" translate="yes" xml:space="preserve">
           <source>Mica</source>
-          <target state="needs-review-translation">Mica</target>
-          <note from="MultilingualUpdate" priority="2">通过 MAT 添加 XLIFF 文件支持后，找到并自动导入了现有资源。此源字符串和目标字符串包含相同的值，因此资源已标记为“需要审阅”，以确保可以轻松地审阅翻译。</note>
+          <target state="translated">Mica</target>
         </trans-unit>
         <trans-unit id="ThemeMicaAlt.Content" translate="yes" xml:space="preserve">
           <source>Mica Alt</source>
@@ -937,8 +926,7 @@
         </trans-unit>
         <trans-unit id="ThemeTransparent.Content" translate="yes" xml:space="preserve">
           <source>Transparent</source>
-          <target state="needs-review-translation">Transparent</target>
-          <note from="MultilingualUpdate" priority="2">通过 MAT 添加 XLIFF 文件支持后，找到并自动导入了现有资源。此源字符串和目标字符串包含相同的值，因此资源已标记为“需要审阅”，以确保可以轻松地审阅翻译。</note>
+          <target state="translated">Transparent</target>
         </trans-unit>
         <trans-unit id="TrayIconStopMonitoring.Text" translate="yes" xml:space="preserve">
           <source>Stop monitoring</source>
@@ -1230,8 +1218,7 @@
         </trans-unit>
         <trans-unit id="Document" translate="yes" xml:space="preserve">
           <source>Document</source>
-          <target state="needs-review-translation">Document</target>
-          <note from="MultilingualUpdate" priority="2">通过 MAT 添加 XLIFF 文件支持后，找到并自动导入了现有资源。此源字符串和目标字符串包含相同的值，因此资源已标记为“需要审阅”，以确保可以轻松地审阅翻译。</note>
+          <target state="translated">Document</target>
         </trans-unit>
         <trans-unit id="Photograph" translate="yes" xml:space="preserve">
           <source>Pictures</source>
@@ -1536,6 +1523,26 @@
         <trans-unit id="UploadWebDavText" translate="yes" xml:space="preserve">
           <source>Upload to WebDAV</source>
           <target state="translated">Télécharger sur WebDAV</target>
+        </trans-unit>
+        <trans-unit id="AppNotificationPayload" translate="yes" xml:space="preserve">
+          <source><bpt id="1">&lt;toast  launch="action=ToastClick"&gt;</bpt>
+    <bpt id="2">&lt;visual&gt;</bpt>
+        <bpt id="3">&lt;binding template="ToastGeneric"&gt;</bpt>
+            <bpt id="4">&lt;text&gt;</bpt><ept id="4">&lt;/text&gt;</ept>
+            <bpt id="5">&lt;text&gt;</bpt>EasyTidy {0} Started<ept id="5">&lt;/text&gt;</ept>
+            <bpt id="6">&lt;image placement="appLogoOverride" src="ms-appx:///Assets/icon.ico"&gt;</bpt><ept id="6">&lt;/image&gt;</ept>
+        <ept id="3">&lt;/binding&gt;</ept>
+    <ept id="2">&lt;/visual&gt;</ept>
+<ept id="1">&lt;/toast&gt;</ept></source>
+          <target state="new"><bpt id="1">&lt;toast  launch="action=ToastClick"&gt;</bpt>
+    <bpt id="2">&lt;visual&gt;</bpt>
+        <bpt id="3">&lt;binding template="ToastGeneric"&gt;</bpt>
+            <bpt id="4">&lt;text&gt;</bpt><ept id="4">&lt;/text&gt;</ept>
+            <bpt id="5">&lt;text&gt;</bpt>EasyTidy {0} Started<ept id="5">&lt;/text&gt;</ept>
+            <bpt id="6">&lt;image placement="appLogoOverride" src="ms-appx:///Assets/icon.ico"&gt;</bpt><ept id="6">&lt;/image&gt;</ept>
+        <ept id="3">&lt;/binding&gt;</ept>
+    <ept id="2">&lt;/visual&gt;</ept>
+<ept id="1">&lt;/toast&gt;</ept></target>
         </trans-unit>
       </group>
     </body>

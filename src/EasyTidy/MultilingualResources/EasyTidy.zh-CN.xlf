@@ -250,8 +250,7 @@
         </trans-unit>
         <trans-unit id="WebDavText" translate="yes" xml:space="preserve">
           <source>WebDav</source>
-          <target state="needs-review-translation">WebDav</target>
-          <note from="MultilingualUpdate" priority="2">通过 MAT 添加 XLIFF 文件支持后，找到并自动导入了现有资源。此源字符串和目标字符串包含相同的值，因此资源已标记为“需要审阅”，以确保可以轻松地审阅翻译。</note>
+          <target state="translated">WebDav</target>
         </trans-unit>
         <trans-unit id="SkipText" translate="yes" xml:space="preserve">
           <source>Skip</source>
@@ -299,18 +298,15 @@
         </trans-unit>
         <trans-unit id="GreaterThanText" translate="yes" xml:space="preserve">
           <source>&gt;</source>
-          <target state="needs-review-translation">&gt;</target>
-          <note from="MultilingualUpdate" priority="2">通过 MAT 添加 XLIFF 文件支持后，找到并自动导入了现有资源。此源字符串和目标字符串包含相同的值，因此资源已标记为“需要审阅”，以确保可以轻松地审阅翻译。</note>
+          <target state="translated">&gt;</target>
         </trans-unit>
         <trans-unit id="EqualToText" translate="yes" xml:space="preserve">
           <source>=</source>
-          <target state="needs-review-translation">=</target>
-          <note from="MultilingualUpdate" priority="2">通过 MAT 添加 XLIFF 文件支持后，找到并自动导入了现有资源。此源字符串和目标字符串包含相同的值，因此资源已标记为“需要审阅”，以确保可以轻松地审阅翻译。</note>
+          <target state="translated">=</target>
         </trans-unit>
         <trans-unit id="LessThanText" translate="yes" xml:space="preserve">
           <source>&lt;</source>
-          <target state="needs-review-translation">&lt;</target>
-          <note from="MultilingualUpdate" priority="2">通过 MAT 添加 XLIFF 文件支持后，找到并自动导入了现有资源。此源字符串和目标字符串包含相同的值，因此资源已标记为“需要审阅”，以确保可以轻松地审阅翻译。</note>
+          <target state="translated">&lt;</target>
         </trans-unit>
         <trans-unit id="ByteText" translate="yes" xml:space="preserve">
           <source>byte</source>
@@ -318,18 +314,15 @@
         </trans-unit>
         <trans-unit id="KilobyteText" translate="yes" xml:space="preserve">
           <source>KB</source>
-          <target state="needs-review-translation">KB</target>
-          <note from="MultilingualUpdate" priority="2">通过 MAT 添加 XLIFF 文件支持后，找到并自动导入了现有资源。此源字符串和目标字符串包含相同的值，因此资源已标记为“需要审阅”，以确保可以轻松地审阅翻译。</note>
+          <target state="translated">KB</target>
         </trans-unit>
         <trans-unit id="MegabyteText" translate="yes" xml:space="preserve">
           <source>MB</source>
-          <target state="needs-review-translation">MB</target>
-          <note from="MultilingualUpdate" priority="2">通过 MAT 添加 XLIFF 文件支持后，找到并自动导入了现有资源。此源字符串和目标字符串包含相同的值，因此资源已标记为“需要审阅”，以确保可以轻松地审阅翻译。</note>
+          <target state="translated">MB</target>
         </trans-unit>
         <trans-unit id="GigabyteText" translate="yes" xml:space="preserve">
           <source>GB</source>
-          <target state="needs-review-translation">GB</target>
-          <note from="MultilingualUpdate" priority="2">通过 MAT 添加 XLIFF 文件支持后，找到并自动导入了现有资源。此源字符串和目标字符串包含相同的值，因此资源已标记为“需要审阅”，以确保可以轻松地审阅翻译。</note>
+          <target state="translated">GB</target>
         </trans-unit>
         <trans-unit id="SecondText" translate="yes" xml:space="preserve">
           <source>Second</source>
@@ -1530,6 +1523,26 @@
         <trans-unit id="UploadWebDavText" translate="yes" xml:space="preserve">
           <source>Upload to WebDAV</source>
           <target state="translated">上传至 WebDAV</target>
+        </trans-unit>
+        <trans-unit id="AppNotificationPayload" translate="yes" xml:space="preserve">
+          <source><bpt id="1">&lt;toast  launch="action=ToastClick"&gt;</bpt>
+    <bpt id="2">&lt;visual&gt;</bpt>
+        <bpt id="3">&lt;binding template="ToastGeneric"&gt;</bpt>
+            <bpt id="4">&lt;text&gt;</bpt><ept id="4">&lt;/text&gt;</ept>
+            <bpt id="5">&lt;text&gt;</bpt>EasyTidy {0} Started<ept id="5">&lt;/text&gt;</ept>
+            <bpt id="6">&lt;image placement="appLogoOverride" src="ms-appx:///Assets/icon.ico"&gt;</bpt><ept id="6">&lt;/image&gt;</ept>
+        <ept id="3">&lt;/binding&gt;</ept>
+    <ept id="2">&lt;/visual&gt;</ept>
+<ept id="1">&lt;/toast&gt;</ept></source>
+          <target state="new"><bpt id="1">&lt;toast  launch="action=ToastClick"&gt;</bpt>
+    <bpt id="2">&lt;visual&gt;</bpt>
+        <bpt id="3">&lt;binding template="ToastGeneric"&gt;</bpt>
+            <bpt id="4">&lt;text&gt;</bpt><ept id="4">&lt;/text&gt;</ept>
+            <bpt id="5">&lt;text&gt;</bpt>EasyTidy {0} Started<ept id="5">&lt;/text&gt;</ept>
+            <bpt id="6">&lt;image placement="appLogoOverride" src="ms-appx:///Assets/icon.ico"&gt;</bpt><ept id="6">&lt;/image&gt;</ept>
+        <ept id="3">&lt;/binding&gt;</ept>
+    <ept id="2">&lt;/visual&gt;</ept>
+<ept id="1">&lt;/toast&gt;</ept></target>
         </trans-unit>
       </group>
     </body>

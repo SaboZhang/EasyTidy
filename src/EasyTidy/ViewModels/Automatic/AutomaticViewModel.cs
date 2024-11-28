@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.WinUI;
+using CommunityToolkit.WinUI.Behaviors;
 using CommunityToolkit.WinUI.Collections;
 using EasyTidy.Common.Database;
 using EasyTidy.Common.Job;
@@ -496,6 +497,11 @@ public partial class AutomaticViewModel : ObservableRecipient
             await _dbContext.SaveChangesAsync();
             await OnPageLoaded();
             await AutomaticJob.AddTaskConfig(automatic, OnScheduleExecution);
+            var notification = new Notification
+            {
+                Message = "SaveSuccessfulText".GetLocalized(),
+                Severity = InfoBarSeverity.Success,
+            };
             Growl.Success(new GrowlInfo
             {
                 Message = "SaveSuccessfulText".GetLocalized(),

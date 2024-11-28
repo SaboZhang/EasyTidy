@@ -56,7 +56,7 @@ public partial class App : Application
         // 注册全局异常处理
         AppDomain.CurrentDomain.UnhandledException += GlobalExceptionHandler;
         // 注册应用程序的未处理异常事件
-        Application.Current.UnhandledException += App_UnhandledException;
+        UnhandledException += App_UnhandledException;
 
         if (!RuntimeHelper.IsMSIX)
         {
@@ -68,6 +68,7 @@ public partial class App : Application
             .ConfigureServices((context, services) =>
             {
                 services.AddTransient<ActivationHandler<LaunchActivatedEventArgs>, DefaultActivationHandler>();
+                services.AddTransient<IActivationHandler, AppNotificationActivationHandler>();
                 // Register Core Services
                 services.AddSingleton<ISettingsManager, SettingsHelper>();
                 services.AddSingleton<ILocalSettingsService, LocalSettingsService>();
@@ -76,6 +77,7 @@ public partial class App : Application
                 services.AddSingleton<IActivationService, ActivationService>();
                 services.AddSingleton<IPageService, PageService>();
                 services.AddSingleton<INavigationService, NavigationService>();
+                services.AddSingleton<IAppNotificationService, AppNotificationService>();
 
                 // Register ServiceConfig
                 services.AddSingleton<ServiceConfig>(factory =>
@@ -114,6 +116,8 @@ public partial class App : Application
                 InitializeDatabase(services);
             })
             .Build();
+
+        App.GetService<IAppNotificationService>().Initialize();
         //var configuration = new ConfigurationBuilder()
         //    .Build();
         // Services = ConfigureServices(configuration);
@@ -214,6 +218,7 @@ public partial class App : Application
     protected async override void OnLaunched(LaunchActivatedEventArgs args)
     {
         InitializeLogging();
+        App.GetService<IAppNotificationService>().Show(string.Format("AppNotificationPayload".GetLocalized(), Constants.Version));
         await App.GetService<IActivationService>().ActivateAsync(args);
         SetApplicationLanguage();
 

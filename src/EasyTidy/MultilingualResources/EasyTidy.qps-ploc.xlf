@@ -1524,6 +1524,26 @@
           <source>Upload to WebDAV</source>
           <target state="new">Upload to WebDAV</target>
         </trans-unit>
+        <trans-unit id="AppNotificationPayload" translate="yes" xml:space="preserve">
+          <source><bpt id="1">&lt;toast  launch="action=ToastClick"&gt;</bpt>
+    <bpt id="2">&lt;visual&gt;</bpt>
+        <bpt id="3">&lt;binding template="ToastGeneric"&gt;</bpt>
+            <bpt id="4">&lt;text&gt;</bpt><ept id="4">&lt;/text&gt;</ept>
+            <bpt id="5">&lt;text&gt;</bpt>EasyTidy {0} Started<ept id="5">&lt;/text&gt;</ept>
+            <bpt id="6">&lt;image placement="appLogoOverride" src="ms-appx:///Assets/icon.ico"&gt;</bpt><ept id="6">&lt;/image&gt;</ept>
+        <ept id="3">&lt;/binding&gt;</ept>
+    <ept id="2">&lt;/visual&gt;</ept>
+<ept id="1">&lt;/toast&gt;</ept></source>
+          <target state="new"><bpt id="1">&lt;toast  launch="action=ToastClick"&gt;</bpt>
+    <bpt id="2">&lt;visual&gt;</bpt>
+        <bpt id="3">&lt;binding template="ToastGeneric"&gt;</bpt>
+            <bpt id="4">&lt;text&gt;</bpt><ept id="4">&lt;/text&gt;</ept>
+            <bpt id="5">&lt;text&gt;</bpt>EasyTidy {0} Started<ept id="5">&lt;/text&gt;</ept>
+            <bpt id="6">&lt;image placement="appLogoOverride" src="ms-appx:///Assets/icon.ico"&gt;</bpt><ept id="6">&lt;/image&gt;</ept>
+        <ept id="3">&lt;/binding&gt;</ept>
+    <ept id="2">&lt;/visual&gt;</ept>
+<ept id="1">&lt;/toast&gt;</ept></target>
+        </trans-unit>
       </group>
     </body>
   </file>

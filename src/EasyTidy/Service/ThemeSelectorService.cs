@@ -92,6 +92,11 @@ public class ThemeSelectorService : IThemeSelectorService
         var themeName = await _localSettingsService.ReadSettingsAsync();
         if (Enum.TryParse(themeName.BackdropType.ToString(), out BackdropType backdropType))
         {
+            if (themeName.IsFirstRun && backdropType == BackdropType.None)
+            {
+                await SetBackdropType(BackdropType.Mica);
+                backdropType = BackdropType.Mica;
+            }
             SetWindowSystemBackdrop(GetSystemBackdrop(backdropType));
             return backdropType;
         }
@@ -102,8 +107,15 @@ public class ThemeSelectorService : IThemeSelectorService
     public async Task SetBackdropType(BackdropType backdropType)
     {
         BackdropType = backdropType;
+        var settings = await _localSettingsService.ReadSettingsAsync();
+        if (settings.IsFirstRun)
+        {
+            settings.IsFirstRun = false;
+        }
+        settings.ElementTheme = Theme;
+        settings.BackdropType = backdropType;
         SetWindowSystemBackdrop(GetSystemBackdrop(backdropType));
-        await _localSettingsService.SaveSettingsAsync(new CoreSettings { BackdropType = backdropType, ElementTheme = Theme });
+        await _localSettingsService.SaveSettingsAsync(settings);
     }
 
     public SystemBackdrop GetSystemBackdrop(BackdropType backdropType)
