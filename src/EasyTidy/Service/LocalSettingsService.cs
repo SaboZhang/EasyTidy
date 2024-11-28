@@ -16,7 +16,7 @@ namespace EasyTidy.Service;
 
 public class LocalSettingsService : ILocalSettingsService
 {
-    private const string _defaultApplicationDataFolder = "EasyTidy";
+    private readonly string _defaultApplicationDataFolder = Constants.AppName;
     private const string _defaultLocalSettingsFile = "CommonApplicationData.json";
 
     private readonly IFileService _fileService;
