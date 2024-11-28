@@ -7,7 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    xmlns:wuc="using:WinUICommunity"
+    xmlns:ui="using:CommunityToolkit.WinUI"
     xmlns:model="using:EasyTidy.Model" 
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core" 
     xmlns:i="using:Microsoft.Xaml.Interactivity" 
@@ -123,7 +123,7 @@
                                                     Spacing="8"
                                                     Grid.Column="5">
                                             <Button x:Name="EditButton"
-                                                    Content="{wuc:BitmapIcon Source=Assets/Fluent/edit.png}"
+                                                    Content="{ui:BitmapIcon Source=Assets/Fluent/edit.png}"
                                                     Style="{StaticResource SubtleButtonStyle}"
                                                     DataContext="{x:Bind}"
                                                     Width="42"
@@ -131,7 +131,7 @@
                                                     x:Uid="EditButton"
                                                     Click="EditButton_Click"/>
                                             <Button x:Name="DeleteButton"
-                                                    Content="{wuc:BitmapIcon Source=Assets/Fluent/delete.png}"
+                                                    Content="{ui:BitmapIcon Source=Assets/Fluent/delete.png}"
                                                     Style="{StaticResource SubtleButtonStyle}"
                                                     DataContext="{x:Bind}"
                                                     Width="42"

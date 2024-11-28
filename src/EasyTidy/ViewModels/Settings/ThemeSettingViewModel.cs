@@ -4,6 +4,7 @@ using EasyTidy.Contracts.Service;
 using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Xaml.Media;
 using System.Collections.ObjectModel;
+using Windows.System;
 using BackdropType = EasyTidy.Model.BackdropType;
 
 namespace EasyTidy.ViewModels;
@@ -78,9 +79,6 @@ public partial class ThemeSettingViewModel : ObservableObject
                     case 4:
                         BackDrop = BackdropType.AcrylicThin;
                         break;
-                    case 5:
-                        BackDrop = BackdropType.Transparent;
-                        break;
                 }
 
                 _backDropIndex = value;
@@ -109,6 +107,8 @@ public partial class ThemeSettingViewModel : ObservableObject
                 break;
         }
 
+        _backDropIndex = GetSystemBackdrop(_themeSelectorService.BackdropType);
+
         Breadcrumbs = new ObservableCollection<Breadcrumb>
         {
             new("Settings".GetLocalized(), typeof(SettingsViewModel).FullName!),
@@ -116,27 +116,18 @@ public partial class ThemeSettingViewModel : ObservableObject
         };
     }
 
-    public SystemBackdrop GetSystemBackdrop(BackdropType backdropType)
+    public int GetSystemBackdrop(BackdropType backdropType)
     {
-        switch (backdropType)
+        return backdropType switch
         {
-            case BackdropType.None:
-                return null;
-            case BackdropType.Mica:
-                return new MicaSystemBackdrop(MicaKind.Base);
-            case BackdropType.MicaAlt:
-                return new MicaSystemBackdrop(MicaKind.BaseAlt);
-            case BackdropType.DesktopAcrylic:
-                return new DesktopAcrylicBackdrop();
-            case BackdropType.AcrylicBase:
-                return new AcrylicSystemBackdrop(DesktopAcrylicKind.Base);
-            case BackdropType.AcrylicThin:
-                return new AcrylicSystemBackdrop(DesktopAcrylicKind.Thin);
-            case BackdropType.Transparent:
-                return new TransparentBackdrop();
-            default:
-                return null;
-        }
+            BackdropType.None => 0,
+            BackdropType.Mica => 1,
+            BackdropType.MicaAlt => 2,
+            BackdropType.DesktopAcrylic => 3,
+            BackdropType.AcrylicBase => 4,
+            BackdropType.AcrylicThin => 5,
+            _ => 1,
+        };
     }
 
     private void ApplyThemeOrBackdrop<TEnum>(string text) where TEnum : struct
@@ -152,6 +143,12 @@ public partial class ThemeSettingViewModel : ObservableObject
                 _themeSelectorService.SetThemeAsync(theme);
             }
         }
+    }
+
+    [RelayCommand]
+    private async Task OpenWindowsColorSettings()
+    {
+        _ = await Launcher.LaunchUriAsync(new Uri("ms-settings:colors"));
     }
 
 }

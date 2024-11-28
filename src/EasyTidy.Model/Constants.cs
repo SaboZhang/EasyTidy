@@ -12,7 +12,11 @@ public static class Constants
     static Constants()
     {
         // 确保这些成员优先初始化
+#if DEBUG
+        AppName = "EasyTidyDev";
+ #else
         AppName = "EasyTidy";
+ #endif
         Version = InitializationConstants.GetAppVersion();
         RootDirectoryPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), AppName);
         AppConfigPath = Path.Combine(RootDirectoryPath, "AppConfig.json");

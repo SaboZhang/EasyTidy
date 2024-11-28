@@ -6,7 +6,7 @@
     xmlns:local="using:EasyTidy.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:wuc="using:WinUICommunity"
+    xmlns:ui="using:CommunityToolkit.WinUI"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core" 
     xmlns:etc="using:EasyTidy.Views.UserControls" 
@@ -113,7 +113,7 @@
                 <etc:SettingsGroup x:Uid="GeneralBack"
                                          Visibility="Visible">
                     <ctk:SettingsExpander x:Uid="GeneralBackCard"
-                                          HeaderIcon="{wuc:FontIcon FontFamily={StaticResource SymbolThemeFontFamily},
+                                          HeaderIcon="{ui:FontIcon FontFamily={StaticResource SymbolThemeFontFamily},
                           Glyph=&#xE777;}">
                         <StackPanel Orientation="Horizontal"
                                     Spacing="8">

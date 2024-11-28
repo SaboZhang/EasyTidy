@@ -29,7 +29,11 @@ public partial class App : Application
     {
         get;
     }
+#if DEBUG
+    public string AppName { get; set; } = "EasyTidyDev";
+#else
     public string AppName { get; set; } = "EasyTidy";
+#endif
 
     private bool _createdNew;
 
@@ -218,7 +222,7 @@ public partial class App : Application
             Environment.Exit(0);
         }
 
-        SetWindowBehavior();
+        // SetWindowBehavior();
         // await PerformStartupChecksAsync();
 
         Logger.Fatal("EasyTidy Initialized Successfully!");
@@ -251,40 +255,6 @@ public partial class App : Application
         }
         _mutex = new Mutex(false, AppName, out _createdNew);
         return true;
-    }
-
-    private void SetWindowBehavior()
-    {
-        MainWindow.Closed += (sender, args) =>
-        {
-            if (HandleClosedEvents)
-            {
-                args.Handled = true;
-                MainWindow.Hide();
-            }
-        };
-
-        if ((bool)Settings.GeneralConfig.Minimize)
-        {
-            // MainWindow.Activate();
-            MainWindow.Hide();
-        }
-        else
-        {
-            MainWindow.Activate();
-        }
-    }
-
-    private async Task PerformStartupChecksAsync()
-    {
-        if ((bool)Settings.GeneralConfig.IsStartupCheck)
-        {
-            var app = App.GetService<AppUpdateSettingViewModel>();
-            await app.CheckForNewVersionAsync();
-        }
-
-        await QuartzConfig.InitQuartzConfigAsync();
-        await QuartzHelper.StartAllJob();
     }
 
     async void OnProcessExit(object sender, EventArgs e)

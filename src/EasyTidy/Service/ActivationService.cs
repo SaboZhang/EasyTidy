@@ -1,10 +1,12 @@
 ﻿using EasyTidy.Activation;
+using EasyTidy.Common.Extensions;
 using EasyTidy.Contracts.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WinUIEx;
 
 namespace EasyTidy.Service;
 
@@ -38,7 +40,8 @@ public class ActivationService : IActivationService
         await HandleActivationAsync(activationArgs);
 
         // Activate the MainWindow.
-        App.MainWindow.Activate();
+        SetWindowBehavior();
+        // App.MainWindow.Activate();
 
         // Execute tasks after activation.
         await StartupAsync();
@@ -68,6 +71,7 @@ public class ActivationService : IActivationService
 
     private async Task StartupAsync()
     {
+        // _themeSelectorService.ThemeChanged += (_, theme) => App.MainWindow.SetRequestedTheme(theme);
         await _themeSelectorService.SetRequestedThemeAsync();
         await Task.CompletedTask;
     }
@@ -82,5 +86,27 @@ public class ActivationService : IActivationService
 
         await QuartzConfig.InitQuartzConfigAsync();
         await QuartzHelper.StartAllJob();
+    }
+
+    private void SetWindowBehavior()
+    {
+        App.MainWindow.Closed += (sender, args) =>
+        {
+            if (App.HandleClosedEvents)
+            {
+                args.Handled = true;
+                App.MainWindow.Hide();
+            }
+        };
+
+        if ((bool)Settings.GeneralConfig.Minimize)
+        {
+            // MainWindow.Activate();
+            App.MainWindow.Hide();
+        }
+        else
+        {
+            App.MainWindow.Activate();
+        }
     }
 }

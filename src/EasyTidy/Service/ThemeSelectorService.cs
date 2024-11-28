@@ -13,18 +13,25 @@ namespace EasyTidy.Service;
 
 public class ThemeSelectorService : IThemeSelectorService
 {
+    public ThemeSelectorService()
+    {
+        Window = App.MainWindow;
+    }
+
     private void SetWindowSystemBackdrop(SystemBackdrop systemBackdrop)
     {
-        Window.SystemBackdrop = systemBackdrop;
+        App.MainWindow.SystemBackdrop = systemBackdrop;
     }
 
     public Window Window { get; set; }
 
     public ElementTheme Theme { get; set; } = ElementTheme.Default;
 
-    public BackdropType Backdrop { get; set; } = BackdropType.Mica;
+    public BackdropType BackdropType { get; set; } = BackdropType.Mica;
 
     private readonly ILocalSettingsService _localSettingsService;
+
+    public event EventHandler<ElementTheme> ThemeChanged = (_, _) => { };
 
     public ThemeSelectorService(ILocalSettingsService localSettingsService)
     {
@@ -33,8 +40,8 @@ public class ThemeSelectorService : IThemeSelectorService
 
     public async Task InitializeAsync()
     {
+        BackdropType = await ConfigBackdrop();
         Theme = await LoadThemeFromSettingsAsync();
-        Backdrop = await ConfigBackdrop();
         await Task.CompletedTask;
     }
 
@@ -74,7 +81,8 @@ public class ThemeSelectorService : IThemeSelectorService
     {
         var settings = new CoreSettings
         {
-            ElementTheme = theme
+            ElementTheme = theme,
+            BackdropType = BackdropType
         };
         await _localSettingsService.SaveSettingsAsync(settings);
     }
@@ -84,6 +92,7 @@ public class ThemeSelectorService : IThemeSelectorService
         var themeName = await _localSettingsService.ReadSettingsAsync();
         if (Enum.TryParse(themeName.BackdropType.ToString(), out BackdropType backdropType))
         {
+            SetWindowSystemBackdrop(GetSystemBackdrop(backdropType));
             return backdropType;
         }
 
@@ -92,36 +101,24 @@ public class ThemeSelectorService : IThemeSelectorService
 
     public async Task SetBackdropType(BackdropType backdropType)
     {
-        var systemBackdrop = GetSystemBackdropFromLocalConfig(backdropType, false);
-
-        SetWindowSystemBackdrop(systemBackdrop);
-
-        AppData.Config.BackdropType = backdropType;
-        var settings = new CoreSettings { BackdropType = backdropType };
-        await _localSettingsService.SaveSettingsAsync(settings);
+        BackdropType = backdropType;
+        SetWindowSystemBackdrop(GetSystemBackdrop(backdropType));
+        await _localSettingsService.SaveSettingsAsync(new CoreSettings { BackdropType = backdropType, ElementTheme = Theme });
     }
 
     public SystemBackdrop GetSystemBackdrop(BackdropType backdropType)
     {
-        switch (backdropType)
+        return backdropType switch
         {
-            case BackdropType.None:
-                return null;
-            case BackdropType.Mica:
-                return new MicaSystemBackdrop(MicaKind.Base);
-            case BackdropType.MicaAlt:
-                return new MicaSystemBackdrop(MicaKind.BaseAlt);
-            case BackdropType.DesktopAcrylic:
-                return new DesktopAcrylicBackdrop();
-            case BackdropType.AcrylicBase:
-                return new AcrylicSystemBackdrop(DesktopAcrylicKind.Base);
-            case BackdropType.AcrylicThin:
-                return new AcrylicSystemBackdrop(DesktopAcrylicKind.Thin);
-            case BackdropType.Transparent:
-                return new TransparentBackdrop();
-            default:
-                return null;
-        }
+            BackdropType.None => null,
+            BackdropType.Mica => new MicaBackdrop() { Kind = MicaKind.Base },
+            BackdropType.MicaAlt => new MicaBackdrop() { Kind = MicaKind.BaseAlt },
+            BackdropType.DesktopAcrylic => new DesktopAcrylicBackdrop(),
+            BackdropType.AcrylicBase => new Common.AcrylicSystemBackdrop(DesktopAcrylicKind.Base),
+            BackdropType.AcrylicThin => new Common.AcrylicSystemBackdrop(DesktopAcrylicKind.Thin),
+            BackdropType.Transparent => new TransparentBackdrop(),
+            _ => null,
+        };
     }
 
     public BackdropType GetBackdropType()
@@ -131,15 +128,11 @@ public class ThemeSelectorService : IThemeSelectorService
 
     public BackdropType GetBackdropType(SystemBackdrop systemBackdrop)
     {
-        if (systemBackdrop is MicaSystemBackdrop mica)
+        if (systemBackdrop is MicaBackdrop mica)
         {
             return mica.Kind == MicaKind.Base ? BackdropType.Mica : BackdropType.MicaAlt;
         }
-        else if (systemBackdrop is TransparentBackdrop)
-        {
-            return BackdropType.Transparent;
-        }
-        else if (systemBackdrop is AcrylicSystemBackdrop acrylic)
+        else if (systemBackdrop is Common.AcrylicSystemBackdrop acrylic)
         {
             return acrylic.Kind == DesktopAcrylicKind.Base ? BackdropType.AcrylicBase : BackdropType.AcrylicThin;
         }
@@ -153,14 +146,6 @@ public class ThemeSelectorService : IThemeSelectorService
         }
     }
 
-    private SystemBackdrop GetSystemBackdropFromLocalConfig(BackdropType backdropType, bool ForceBackdrop)
-    {
-        BackdropType currentBackdrop = backdropType;
-        if (AppData.Config != null)
-        {
-            currentBackdrop = AppData.Config.BackdropType;
-        }
+    public void SetRequestedTheme() => ThemeChanged(null, Theme);
 
-        return ForceBackdrop ? GetSystemBackdrop(backdropType) : GetSystemBackdrop(currentBackdrop);
-    }
 }

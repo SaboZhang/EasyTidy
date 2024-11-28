@@ -41,11 +41,11 @@
                     <ComboBoxItem x:Uid="ThemeDesktopAcrylic" Tag="DesktopAcrylic" />
                     <ComboBoxItem x:Uid="ThemeAcrylicBase" Tag="AcrylicBase" />
                     <ComboBoxItem x:Uid="ThemeAcrylicThin" Tag="AcrylicThin" />
-                    <ComboBoxItem x:Uid="ThemeTransparent" Tag="Transparent" />
                 </ComboBox>
             </ctk:SettingsCard>
             <ctk:SettingsCard
                 ActionIcon="{ui:BitmapIcon Source=Assets/Fluent/external.png}"
+                Command="{x:Bind ViewModel.OpenWindowsColorSettingsCommand}"
                 x:Uid="ColorSettingsCard"
                 HeaderIcon="{ui:BitmapIcon Source=Assets/Fluent/color.png}"
                 IsClickEnabled="True" 
