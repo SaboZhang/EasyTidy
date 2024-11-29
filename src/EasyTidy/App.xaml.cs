@@ -80,13 +80,7 @@ public partial class App : Application
                 services.AddSingleton<IAppNotificationService, AppNotificationService>();
 
                 // Register ServiceConfig
-                services.AddSingleton<ServiceConfig>(factory =>
-                {
-                    var settingsManager = factory.GetRequiredService<ISettingsManager>();
-                    var serviceConfig = new ServiceConfig(settingsManager);
-                    serviceConfig.SetConfigModel();
-                    return serviceConfig;
-                });
+                services.AddSingleton<ISettingsManager, SettingsHelper>();
 
                 // Register File Service
                 services.AddSingleton<IFileService, FileService>();
@@ -112,8 +106,6 @@ public partial class App : Application
                 // Configuration
                 services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));
 
-                // Initialize Database
-                InitializeDatabase(services);
             })
             .Build();
 
@@ -142,81 +134,9 @@ public partial class App : Application
         Logger.Error($"Global exception caught: {ex}");
     }
 
-    //private static ServiceProvider ConfigureServices(IConfiguration configuration)
-    //{
-    //    var services = new ServiceCollection();
-    //    services.AddSingleton<IThemeService, ThemeService>();
-    //    services.AddSingleton<ISettingsManager, SettingsHelper>();
-    //    services.AddSingleton<ILocalSettingsService, LocalSettingsService>();
-    //    services.AddSingleton<IThemeSelectorService, ThemeSelectorService>();
-    //    services.AddTransient<INavigationViewService, NavigationViewService>();
-    //    services.AddSingleton<IPageService, PageService>();
-    //    services.AddSingleton<INavigationService, NavigationService>();
-    //    services.AddSingleton<ServiceConfig>(factory => {
-
-    //        var settingsManager = factory.GetRequiredService<ISettingsManager>();
-    //        var serviceConfig = new ServiceConfig(settingsManager);
-    //        serviceConfig.SetConfigModel();
-    //        return serviceConfig;
-    //    });
-    //    //services.AddSingleton<IJsonNavigationViewService>(factory =>
-    //    //{
-    //    //    var json = new JsonNavigationViewService();
-    //    //    json.ConfigDefaultPage(typeof(GeneralPage));
-    //    //    json.ConfigSettingsPage(typeof(SettingsPage));
-    //    //    return json;
-    //    //});
-
-    //    services.AddSingleton<IFileService, FileService>();
-
-    //    services.AddTransient<GeneralViewModel>();
-    //    services.AddTransient<MainViewModel>();
-    //    services.AddTransient<GeneralSettingViewModel>();
-    //    services.AddTransient<ThemeSettingViewModel>();
-    //    services.AddTransient<AppUpdateSettingViewModel>();
-    //    services.AddTransient<AboutUsSettingViewModel>();
-    //    services.AddTransient<SettingsViewModel>();
-    //    services.AddTransient<BreadCrumbBarViewModel>();
-    //    services.AddTransient<AutomaticViewModel>();
-    //    services.AddTransient<TaskOrchestrationViewModel>();
-    //    services.AddTransient<FilterViewModel>();
-
-    //    // 注册 AppDbContext
-    //    services.AddDbContext<AppDbContext>(options =>
-    //        options.UseSqlite($"Data Source={Path.Combine(Constants.CnfPath, "EasyTidy.db")}"),
-    //        ServiceLifetime.Scoped);
-
-    //    services.Configure<LocalSettingsOptions>(configuration.GetSection(nameof(LocalSettingsOptions)));
-
-    //    var serviceProvider = services.BuildServiceProvider();
-    //    InitializeDatabase(serviceProvider);
-
-    //    return serviceProvider;
-    //}
-
-    private static void InitializeDatabase(ServiceProvider serviceProvider)
-    {
-        using (var scope = serviceProvider.CreateScope())
-        {
-            var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-            dbContext.InitializeDatabaseAsync().GetAwaiter().GetResult();
-        }
-    }
-
-    private static void InitializeDatabase(IServiceCollection services)
-    {
-        using (var serviceProvider = services.BuildServiceProvider())
-        {
-            using (var scope = serviceProvider.CreateScope())
-            {
-                var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-                dbContext.InitializeDatabaseAsync().GetAwaiter().GetResult();
-            }
-        }
-    }
-
     protected async override void OnLaunched(LaunchActivatedEventArgs args)
     {
+        base.OnLaunched(args);
         InitializeLogging();
         App.GetService<IAppNotificationService>().Show(string.Format("AppNotificationPayload".GetLocalized(), Constants.Version));
         await App.GetService<IActivationService>().ActivateAsync(args);
@@ -226,9 +146,6 @@ public partial class App : Application
         {
             Environment.Exit(0);
         }
-
-        // SetWindowBehavior();
-        // await PerformStartupChecksAsync();
 
         Logger.Fatal("EasyTidy Initialized Successfully!");
     }

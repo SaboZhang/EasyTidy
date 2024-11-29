@@ -17,6 +17,7 @@ namespace EasyTidy.ViewModels;
 public partial class AutomaticViewModel : ObservableRecipient
 {
     private readonly AppDbContext _dbContext;
+    private StackedNotificationsBehavior? _notificationQueue;
 
     [ObservableProperty]
     private IThemeSelectorService _themeSelectorService;
@@ -210,6 +211,15 @@ public partial class AutomaticViewModel : ObservableRecipient
         }
     }
 
+    public void Initialize(StackedNotificationsBehavior notificationQueue)
+    {
+        _notificationQueue = notificationQueue;
+    }
+
+    public void Uninitialize()
+    {
+        _notificationQueue = null;
+    }
 
     [RelayCommand]
     private async Task OnPlanExecution()

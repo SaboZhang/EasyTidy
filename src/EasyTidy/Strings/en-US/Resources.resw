@@ -1257,7 +1257,7 @@
     <value>Upload to WebDAV</value>
   </data>
   <data name="AppNotificationPayload" xml:space="preserve">
-    <value>&lt;toast  launch="action=ToastClick"&gt;
+    <value>&lt;toast  launch="meetingId=9813"&gt;
     &lt;visual&gt;
         &lt;binding template="ToastGeneric"&gt;
             &lt;text&gt;&lt;/text&gt;
