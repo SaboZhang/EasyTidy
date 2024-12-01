@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.WinUI;
+using CommunityToolkit.WinUI.Behaviors;
 using CommunityToolkit.WinUI.Collections;
 using EasyTidy.Common.Database;
+using EasyTidy.Common.Extensions;
 using EasyTidy.Common.Job;
 using EasyTidy.Contracts.Service;
 using EasyTidy.Model;
@@ -16,6 +18,7 @@ namespace EasyTidy.ViewModels;
 public partial class AutomaticViewModel : ObservableRecipient
 {
     private readonly AppDbContext _dbContext;
+    private StackedNotificationsBehavior? _notificationQueue;
 
     [ObservableProperty]
     private IThemeSelectorService _themeSelectorService;
@@ -209,6 +212,15 @@ public partial class AutomaticViewModel : ObservableRecipient
         }
     }
 
+    public void Initialize(StackedNotificationsBehavior notificationQueue)
+    {
+        _notificationQueue = notificationQueue;
+    }
+
+    public void Uninitialize()
+    {
+        _notificationQueue = null;
+    }
 
     [RelayCommand]
     private async Task OnPlanExecution()
@@ -496,19 +508,13 @@ public partial class AutomaticViewModel : ObservableRecipient
             await _dbContext.SaveChangesAsync();
             await OnPageLoaded();
             await AutomaticJob.AddTaskConfig(automatic, OnScheduleExecution);
-            Growl.Success(new GrowlInfo
-            {
-                Message = "SaveSuccessfulText".GetLocalized(),
-                ShowDateTime = false
-            });
+            _notificationQueue.ShowWithWindowExtension("SaveSuccessfulText".GetLocalized(), InfoBarSeverity.Success);
+            _ = ClearNotificationAfterDelay(3000);
         }
         catch (Exception ex)
         {
-            Growl.Error(new GrowlInfo
-            {
-                Message = "SaveFailedText".GetLocalized(),
-                ShowDateTime = false
-            });
+            _notificationQueue.ShowWithWindowExtension("SaveFailedText".GetLocalized(), InfoBarSeverity.Error);
+            _ = ClearNotificationAfterDelay(3000);
             Logger.Error($"AutomaticViewModel: OnSaveTaskConfig 异常信息 {ex}");
             IsActive = false;
         }
@@ -532,5 +538,11 @@ public partial class AutomaticViewModel : ObservableRecipient
             return (false, "0");
         }
 
+    }
+
+    public async Task ClearNotificationAfterDelay(int delayMilliseconds)
+    {
+        await Task.Delay(delayMilliseconds);  // 延迟指定的毫秒数
+        _notificationQueue?.Clear();  // 清除通知
     }
 }

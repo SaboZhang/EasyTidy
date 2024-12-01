@@ -12,7 +12,9 @@
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:model="using:EasyTidy.Model" 
     xmlns:etc="using:EasyTidy.Views.UserControls"
-    AutomationProperties.LandmarkType="Main"
+    xmlns:behaviors="using:CommunityToolkit.WinUI.Behaviors"
+    Loaded="OnLoaded"
+    Unloaded="OnUnloaded"
     mc:Ignorable="d">
 
     <i:Interaction.Behaviors>
@@ -24,8 +26,14 @@
     </i:Interaction.Behaviors>
 
     <StackPanel x:Name="ContentArea" Margin="0,-38,0,0">
-        <StackPanel x:Name="Growl"
-                    MinWidth="340"/>
+        <InfoBar MaxWidth="480"
+                      Margin="10"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Bottom">
+            <i:Interaction.Behaviors>
+                <behaviors:StackedNotificationsBehavior x:Name="NotificationQueue" />
+            </i:Interaction.Behaviors>
+        </InfoBar>
         <etc:SettingsPageControl x:Name="SettingsControl" x:Uid="SettingsPageControl" ModuleImageSource="ms-appx:///Assets/Modules/Auto.png">
             <etc:SettingsPageControl.ModuleContent>
                 <StackPanel ChildrenTransitions="{StaticResource SettingsCardsAnimations}" Orientation="Vertical">

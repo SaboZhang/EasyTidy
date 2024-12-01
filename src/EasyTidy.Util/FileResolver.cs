@@ -3,12 +3,13 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using EasyTidy.Model;
+using SharpCompress.Archives;
 
 namespace EasyTidy.Util;
 
 public class FileResolver
 {
-    private static readonly string[] SupportedArchiveExtensions = { ".zip", ".rar", ".7z" };
+    private static readonly string[] SupportedArchiveExtensions = { ".zip", ".rar", ".7z", ".tar", ".gz", ".bz2", ".xz", ".z", ".lz", ".iso" };
 
     /// <summary>
     /// 处理文件冲突
@@ -233,7 +234,31 @@ public class FileResolver
     /// <summary>
     /// 分析压缩包内容。
     /// </summary>
-    public static (bool isSingleFile, bool isSingleDirectory, string rootFolderName) AnalyzeZipContent(string zipFilePath)
+    public static (bool isSingleFile, bool isSingleDirectory, string rootFolderName) AnalyzeCompressedContent(string compressedFilePath)
+    {
+        // 获取文件扩展名，判断文件类型
+        string extension = Path.GetExtension(compressedFilePath).ToLower();
+
+        // 根据文件扩展名调用不同的解压分析方法
+        if (extension == ".zip")
+        {
+            return AnalyzeZipContent(compressedFilePath);
+        }
+        else if (extension == ".tar" || extension == ".gz" || extension == ".tgz" || extension == ".tar.gz")
+        {
+            return AnalyzeTarGzContent(compressedFilePath);
+        }
+        else if (extension == ".rar" || extension == ".7z")
+        {
+            return AnalyzeRar7zContent(compressedFilePath);
+        }
+        else
+        {
+            throw new NotSupportedException($"The file format '{extension}' is not supported for analysis.");
+        }
+    }
+
+    private static (bool isSingleFile, bool isSingleDirectory, string rootFolderName) AnalyzeZipContent(string zipFilePath)
     {
         using var archive = ZipFile.OpenRead(zipFilePath);
         var entries = archive.Entries;
@@ -245,6 +270,54 @@ public class FileResolver
             .ToList();
 
         if (entries.Count == 1 && !entries.First().FullName.EndsWith("/"))
+        {
+            // 单个文件
+            return (true, false, null);
+        }
+        else if (rootFolders.Count == 1)
+        {
+            // 单个文件夹
+            return (false, true, rootFolders.First());
+        }
+
+        return (false, false, null);
+    }
+
+    private static (bool isSingleFile, bool isSingleDirectory, string rootFolderName) AnalyzeTarGzContent(string filePath)
+    {
+        using var archive = ArchiveFactory.Open(filePath);
+        var entries = archive.Entries.Where(e => !e.IsDirectory).ToList();
+
+        var rootFolders = entries
+            .Select(e => e.Key.Split('/', StringSplitOptions.RemoveEmptyEntries).FirstOrDefault())
+            .Distinct()
+            .ToList();
+
+        if (entries.Count == 1)
+        {
+            // 单个文件
+            return (true, false, null);
+        }
+        else if (rootFolders.Count == 1)
+        {
+            // 单个文件夹
+            return (false, true, rootFolders.First());
+        }
+
+        return (false, false, null);
+    }
+
+    private static (bool isSingleFile, bool isSingleDirectory, string rootFolderName) AnalyzeRar7zContent(string filePath)
+    {
+        using var archive = ArchiveFactory.Open(filePath);
+        var entries = archive.Entries.Where(e => !e.IsDirectory).ToList();
+
+        var rootFolders = entries
+            .Select(e => e.Key.Split('/', StringSplitOptions.RemoveEmptyEntries).FirstOrDefault())
+            .Distinct()
+            .ToList();
+
+        if (entries.Count == 1)
         {
             // 单个文件
             return (true, false, null);

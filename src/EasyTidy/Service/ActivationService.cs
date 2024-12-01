@@ -1,4 +1,5 @@
 ﻿using EasyTidy.Activation;
+using EasyTidy.Common.Database;
 using EasyTidy.Common.Extensions;
 using EasyTidy.Contracts.Service;
 using System;
@@ -16,12 +17,14 @@ public class ActivationService : IActivationService
     private readonly IEnumerable<IActivationHandler> _activationHandlers;
     private readonly IThemeSelectorService _themeSelectorService;
     private UIElement? _shell = null;
+    private readonly AppDbContext _dbContext;
 
     public ActivationService(ActivationHandler<LaunchActivatedEventArgs> defaultHandler, IEnumerable<IActivationHandler> activationHandlers, IThemeSelectorService themeSelectorService)
     {
         _defaultHandler = defaultHandler;
         _activationHandlers = activationHandlers;
         _themeSelectorService = themeSelectorService;
+        _dbContext = App.GetService<AppDbContext>();
     }
 
     public async Task ActivateAsync(object activationArgs)
@@ -44,6 +47,7 @@ public class ActivationService : IActivationService
         // App.MainWindow.Activate();
 
         // Execute tasks after activation.
+        await _dbContext.InitializeDatabaseAsync();
         await StartupAsync();
         await PerformStartupChecksAsync();
     }

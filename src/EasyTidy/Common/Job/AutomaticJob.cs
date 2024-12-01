@@ -89,7 +89,7 @@ public class AutomaticJob : IJob
     /// <param name="groupId"></param>
     /// <param name="taskRule"></param>
     /// <returns></returns>
-    private async Task<string> GetSpecialCasesRule(int groupId, string taskRule)
+    public async Task<string> GetSpecialCasesRule(int groupId, string taskRule)
     {
         if(taskRule.Trim().Equals("#") || taskRule.Trim().Equals("##"))
         {

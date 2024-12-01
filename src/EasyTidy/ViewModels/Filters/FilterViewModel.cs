@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.WinUI;
+using CommunityToolkit.WinUI.Behaviors;
 using CommunityToolkit.WinUI.Collections;
 using EasyTidy.Common.Database;
+using EasyTidy.Common.Extensions;
 using EasyTidy.Contracts.Service;
 using EasyTidy.Model;
 using EasyTidy.Views.ContentDialogs;
@@ -13,6 +15,8 @@ namespace EasyTidy.ViewModels;
 public partial class FilterViewModel : ObservableRecipient
 {
     private readonly AppDbContext _dbContext;
+
+    private StackedNotificationsBehavior? _notificationQueue;
 
     [ObservableProperty]
     private IThemeSelectorService _themeSelectorService;
@@ -45,6 +49,16 @@ public partial class FilterViewModel : ObservableRecipient
 
     [ObservableProperty]
     public AdvancedCollectionView _filtersListACV;
+
+    public void Initialize(StackedNotificationsBehavior notificationQueue)
+    {
+        _notificationQueue = notificationQueue;
+    }
+
+    public void Uninitialize()
+    {
+        _notificationQueue = null;
+    }
 
     /// <summary>
     /// 初始化加载页面
@@ -166,20 +180,14 @@ public partial class FilterViewModel : ObservableRecipient
             });
             await _dbContext.SaveChangesAsync();
             await OnPageLoaded();
-            Growl.Success(new GrowlInfo
-            {
-                Message = "SaveSuccessfulText".GetLocalized(),
-                ShowDateTime = false
-            });
+            _notificationQueue.ShowWithWindowExtension("SaveSuccessfulText".GetLocalized(), InfoBarSeverity.Success);
+            _ = ClearNotificationAfterDelay(3000);
         }
         catch (Exception ex)
         {
             Logger.Error($"添加过滤器失败：{ex}");
-            Growl.Error(new GrowlInfo
-            {
-                Message = "SaveFailedText".GetLocalized(),
-                ShowDateTime = false
-            });
+            _notificationQueue.ShowWithWindowExtension("SaveSuccessfulText".GetLocalized(), InfoBarSeverity.Error);
+            _ = ClearNotificationAfterDelay(3000);
         }
     }
 
@@ -204,20 +212,14 @@ public partial class FilterViewModel : ObservableRecipient
                 }
                 await _dbContext.SaveChangesAsync();
                 await OnPageLoaded();
-                Growl.Success(new GrowlInfo
-                {
-                    Message = "DeleteSuccessfulText".GetLocalized(),
-                    ShowDateTime = false
-                });
+                _notificationQueue.ShowWithWindowExtension("DeleteSuccessfulText".GetLocalized(), InfoBarSeverity.Success);
+                _ = ClearNotificationAfterDelay(3000);
             }
         }
         catch (Exception ex)
         {
-            Growl.Error(new GrowlInfo
-            {
-                Message = "DeleteFailedText".GetLocalized(),
-                ShowDateTime = false
-            });
+            _notificationQueue.ShowWithWindowExtension("DeleteFailedText".GetLocalized(), InfoBarSeverity.Error);
+            _ = ClearNotificationAfterDelay(3000);
             Logger.Error($"FilterViewModel: OnDeleteTask 异常信息 {ex}");
             IsActive = false;
         }
@@ -331,11 +333,8 @@ public partial class FilterViewModel : ObservableRecipient
 
                     await _dbContext.SaveChangesAsync();
                     await OnPageLoaded();
-                    Growl.Success(new GrowlInfo
-                    {
-                        Message = "ModifySuccessfullyText".GetLocalized(),
-                        ShowDateTime = false
-                    });
+                    _notificationQueue.ShowWithWindowExtension("ModifySuccessfullyText".GetLocalized(), InfoBarSeverity.Success);
+                    _ = ClearNotificationAfterDelay(3000);
                 };
 
                 await dialog.ShowAsync();
@@ -345,14 +344,17 @@ public partial class FilterViewModel : ObservableRecipient
         }
         catch (Exception ex)
         {
-            Growl.Error(new GrowlInfo
-            {
-                Message = "ModificationFailedText".GetLocalized(),
-                ShowDateTime = false
-            });
+            _notificationQueue.ShowWithWindowExtension("ModificationFailedText".GetLocalized(), InfoBarSeverity.Error);
+            _ = ClearNotificationAfterDelay(3000);
             Logger.Error($"FilterViewModel: OnUpdateTask 异常信息 {ex}");
         }
 
+    }
+
+    private async Task ClearNotificationAfterDelay(int delayMilliseconds)
+    {
+        await Task.Delay(delayMilliseconds);  // 延迟指定的毫秒数
+        _notificationQueue?.Clear();  // 清除通知
     }
 
 }

@@ -1124,4 +1124,54 @@
   <data name="AboutUsSettingPage_Header" xml:space="preserve">
     <value>について</value>
   </data>
+  <data name="Download" xml:space="preserve">
+    <value>ダウンロード</value>
+  </data>
+  <data name="Downloading" xml:space="preserve">
+    <value>ダウンロード中...</value>
+  </data>
+  <data name="DownloadComplete" xml:space="preserve">
+    <value>ダウンロード完了!</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>了解</value>
+  </data>
+  <data name="UpdateReady" xml:space="preserve">
+    <value>更新の準備ができました</value>
+  </data>
+  <data name="Update_Ready_Content" xml:space="preserve">
+    <value>アップデートがダウンロードされました。まもなくインストールが開始されます。</value>
+  </data>
+  <data name="PreparingToDownload" xml:space="preserve">
+    <value>ダウンロードの準備中...</value>
+  </data>
+  <data name="CompressText" xml:space="preserve">
+    <value>ZIPファイル</value>
+  </data>
+  <data name="UploadWebDavText" xml:space="preserve">
+    <value>WebDAV へアップロード</value>
+  </data>
+  <data name="AppNotificationPayload" xml:space="preserve">
+    <value>&lt;toast launch='meetingId=9813'&gt;
+    &lt;visual&gt;
+        &lt;binding template='ToastGeneric'&gt;
+            &lt;text&gt;&lt;/text&gt;
+            &lt;text&gt;EasyTidy {0} 起動しました&lt;/text&gt;
+            &lt;text&gt;&lt;/text&gt;
+        &lt;/binding&gt;
+    &lt;/visual&gt;
+&lt;/toast&gt;</value>
+  </data>
+  <data name="RepeatedStartup" xml:space="preserve">
+    <value>&lt;toast launch='meetingId=9813'&gt;
+    &lt;visual&gt;
+        &lt;binding template='ToastGeneric'&gt;
+            &lt;text hint-maxLines='1'&gt;EasyTidyが起動していますので、再度起動しないでください&lt;/text&gt;
+        &lt;/binding&gt;
+    &lt;/visual&gt;
+&lt;/toast&gt;</value>
+  </data>
+  <data name="ExecutionSuccessfulText" xml:space="preserve">
+    <value>実行に成功しました。</value>
+  </data>
 </root>

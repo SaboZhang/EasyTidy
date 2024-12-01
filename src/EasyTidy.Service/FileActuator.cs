@@ -121,7 +121,7 @@ public static class FileActuator
                 parameters.HandleSubfolders,
                 parameters.Funcs,
                 parameters.PathFilter)
-            { OldTargetPath = parameters.TargetPath };
+            { OldTargetPath = parameters.TargetPath, RuleModel = parameters.RuleModel };
             await ExecuteFolderOperationAsync(newParameters);
         }
         if (parameters.OperationMode == OperationMode.Rename) 
@@ -204,6 +204,7 @@ public static class FileActuator
             { 
                 OldTargetPath = parameters.TargetPath,
                 OldSourcePath = oldPath,
+                RuleModel = parameters.RuleModel
             };
 
             await ProcessFileAsync(fileParameters);
@@ -242,6 +243,7 @@ public static class FileActuator
                 {
                     OldTargetPath = parameters.TargetPath,
                     OldSourcePath = oldPath,
+                    RuleModel = parameters.RuleModel
                 });
             }
 
@@ -637,14 +639,14 @@ public static class FileActuator
 
         // 获取文件的目录和名称
         string directoryPath = Path.GetDirectoryName(zipFilePath);
-        if (!tragetPath.IsNullOrWhiteSpace()) 
+        if (!tragetPath.Equals(zipFilePath)) 
         {
             directoryPath = tragetPath;
         }
         string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(zipFilePath);
 
         // 解析压缩包内容
-        var (isSingleFile, isSingleDirectory, rootFolderName) = FileResolver.AnalyzeZipContent(zipFilePath);
+        var (isSingleFile, isSingleDirectory, rootFolderName) = FileResolver.AnalyzeCompressedContent(zipFilePath);
 
         // 根据解析结果选择提取方式
         try

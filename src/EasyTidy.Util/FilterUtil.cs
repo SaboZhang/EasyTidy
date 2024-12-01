@@ -400,4 +400,35 @@ public class FilterUtil
         return input.Contains(pattern); // 检查字符串是否包含这个模式
     }
 
+    public static string CheckAndCollectNonCompressedExtensions(string extensions)
+    {
+        // 定义压缩文件的后缀列表
+        HashSet<string> compressedExtensions = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        {
+            ".zip", ".rar", ".7z", ".tar", ".gz", ".bz2", ".xz", ".z", ".lz", ".iso"
+        };
+
+        // 分割传入字符串，支持两种分隔符 ';' 和 '|'
+        var extensionList = extensions
+            .Split(new[] { ';', '|' }, StringSplitOptions.RemoveEmptyEntries)
+            .Select(ext => ext.TrimStart('*').Trim())
+            .ToList();
+
+        // 用于存储非压缩文件后缀
+        List<string> nonCompressedExtensions = new List<string>();
+
+        // 检查每个后缀
+        foreach (var ext in extensionList)
+        {
+            if (!compressedExtensions.Contains(ext))
+            {
+                // 如果不是压缩文件后缀，添加到 nonCompressedExtensions 列表
+                nonCompressedExtensions.Add(ext);
+            }
+        }
+
+        // 将非压缩文件后缀用分号连接成一个字符串返回
+        return string.Join(";", nonCompressedExtensions);
+    }
+
 }

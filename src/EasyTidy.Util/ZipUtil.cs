@@ -1,4 +1,5 @@
 ﻿using EasyTidy.Model;
+using SharpCompress.Archives;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -102,6 +103,7 @@ public class ZipUtil
     {
         using var archive = ZipFile.OpenRead(zipFilePath);
         var entry = archive.Entries.First();
+        directoryPath = CreateFolderForFile(zipFilePath);
 
         string destinationPath = Path.Combine(directoryPath, entry.Name);
         FileResolver.HandleFileConflict(entry.FullName, destinationPath, FileOperationType.Override, () =>
@@ -120,19 +122,47 @@ public class ZipUtil
     /// </summary>
     public static void ExtractSingleDirectory(string zipFilePath, string directoryPath, string rootFolderName, string filterExtension = null)
     {
+        // 确保目标目录存在并创建根文件夹
+        string targetDirectory = Path.Combine(directoryPath, rootFolderName);
+        Directory.CreateDirectory(targetDirectory);
+
+        // 获取文件扩展名
+        string extension = Path.GetExtension(zipFilePath).ToLower();
+
+        // 根据文件扩展名判断解压方式
+        if (extension == ".zip")
+        {
+            ExtractZip(zipFilePath, targetDirectory, rootFolderName, filterExtension);
+        }
+        else if (extension == ".tar" || extension == ".gz" || extension == ".tgz" || extension == ".tar.gz")
+        {
+            ExtractTarGz(zipFilePath, targetDirectory, rootFolderName, filterExtension);
+        }
+        else if (extension == ".rar" || extension == ".7z")
+        {
+            ExtractRar7z(zipFilePath, targetDirectory, rootFolderName, filterExtension);
+        }
+        else
+        {
+            throw new NotSupportedException($"The file format '{extension}' is not supported.");
+        }
+    }
+
+    private static void ExtractZip(string zipFilePath, string targetDirectory, string rootFolderName, string filterExtension)
+    {
         using var archive = ZipFile.OpenRead(zipFilePath);
         foreach (var entry in archive.Entries)
         {
-            // 过滤文件扩展名
             if (!string.IsNullOrWhiteSpace(filterExtension) && !entry.FullName.EndsWith(filterExtension, StringComparison.OrdinalIgnoreCase))
             {
                 continue;
             }
+
             if (string.IsNullOrWhiteSpace(entry.FullName) || entry.FullName.EndsWith("/"))
                 continue;
 
             string relativePath = entry.FullName.Substring(rootFolderName.Length).TrimStart('/');
-            string destinationPath = Path.Combine(directoryPath, relativePath);
+            string destinationPath = Path.Combine(targetDirectory, relativePath);
 
             FileResolver.HandleFileConflict(entry.FullName, destinationPath, FileOperationType.Override, () =>
             {
@@ -142,14 +172,188 @@ public class ZipUtil
         }
     }
 
+    private static void ExtractTarGz(string filePath, string targetDirectory, string rootFolderName, string filterExtension)
+    {
+        using var archive = ArchiveFactory.Open(filePath);
+        foreach (var entry in archive.Entries)
+        {
+            if (!entry.IsDirectory)
+            {
+                if (!string.IsNullOrWhiteSpace(filterExtension) && !entry.Key.EndsWith(filterExtension, StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                if (string.IsNullOrWhiteSpace(entry.Key) || entry.Key.EndsWith("/"))
+                    continue;
+
+                string relativePath = entry.Key.Substring(rootFolderName.Length).TrimStart('/');
+                string destinationPath = Path.Combine(targetDirectory, relativePath);
+
+                FileResolver.HandleFileConflict(entry.Key, destinationPath, FileOperationType.Override, () =>
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(destinationPath));
+                    entry.WriteToDirectory(targetDirectory);
+                });
+            }
+        }
+    }
+
+    private static void ExtractRar7z(string filePath, string targetDirectory, string rootFolderName, string filterExtension)
+    {
+        using var archive = ArchiveFactory.Open(filePath);
+        foreach (var entry in archive.Entries)
+        {
+            if (!entry.IsDirectory)
+            {
+                if (!string.IsNullOrWhiteSpace(filterExtension) && !entry.Key.EndsWith(filterExtension, StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                if (string.IsNullOrWhiteSpace(entry.Key) || entry.Key.EndsWith("/"))
+                    continue;
+
+                string relativePath = entry.Key.Substring(rootFolderName.Length).TrimStart('/');
+                string destinationPath = Path.Combine(targetDirectory, relativePath);
+
+                FileResolver.HandleFileConflict(entry.Key, destinationPath, FileOperationType.Override, () =>
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(destinationPath));
+                    entry.WriteToDirectory(destinationPath);
+                });
+            }
+        }
+    }
+
+
     /// <summary>
     /// 处理提取到指定名称文件夹的逻辑。
     /// </summary>
     public static void ExtractToNamedFolder(string zipFilePath, string directoryPath, string folderName, string filterExtension = null)
     {
-        string finalExtractPath = Path.Combine(directoryPath, folderName);
-        DecompressToDirectory(zipFilePath, finalExtractPath, filterExtension);
+        // 获取文件扩展名
+        string extension = Path.GetExtension(zipFilePath).ToLower();
+        // string finalExtractPath = Path.Combine(directoryPath, folderName);
+
+        // 根据文件扩展名选择解压方式
+        if (extension == ".zip")
+        {
+            ExtractZipToFolder(zipFilePath, directoryPath, folderName, filterExtension);
+        }
+        else if (extension == ".tar" || extension == ".gz" || extension == ".tgz" || extension == ".tar.gz")
+        {
+            ExtractTarGzToFolder(zipFilePath, directoryPath, folderName, filterExtension);
+        }
+        else if (extension == ".rar" || extension == ".7z")
+        {
+            ExtractRar7zToFolder(zipFilePath, directoryPath, folderName, filterExtension);
+        }
+        else
+        {
+            throw new NotSupportedException($"The file format '{extension}' is not supported for extraction.");
+        }
+        // DecompressToDirectory(zipFilePath, finalExtractPath, filterExtension);
     }
+
+    private static void ExtractZipToFolder(string zipFilePath, string directoryPath, string folderName, string filterExtension)
+    {
+        string finalExtractPath = Path.Combine(directoryPath, folderName);
+        Directory.CreateDirectory(finalExtractPath);
+
+        using (var archive = ZipFile.OpenRead(zipFilePath))
+        {
+            foreach (var entry in archive.Entries)
+            {
+                if (!entry.FullName.EndsWith("/") && (string.IsNullOrWhiteSpace(filterExtension) || entry.FullName.EndsWith(filterExtension, StringComparison.OrdinalIgnoreCase)))
+                {
+                    string destinationPath = Path.Combine(finalExtractPath, entry.FullName);
+                    Directory.CreateDirectory(Path.GetDirectoryName(destinationPath)); // Ensure the directory exists
+                    entry.ExtractToFile(destinationPath, true);
+                }
+            }
+        }
+    }
+
+    private static void ExtractTarGzToFolder(string filePath, string directoryPath, string folderName, string filterExtension)
+    {
+        string finalExtractPath = Path.Combine(directoryPath, folderName);
+        Directory.CreateDirectory(finalExtractPath);
+
+        using (var archive = ArchiveFactory.Open(filePath))
+        {
+            foreach (var entry in archive.Entries)
+            {
+                if (!entry.IsDirectory && (string.IsNullOrWhiteSpace(filterExtension) || entry.Key.EndsWith(filterExtension, StringComparison.OrdinalIgnoreCase)))
+                {
+                    string destinationPath = Path.Combine(finalExtractPath, entry.Key);
+                    Directory.CreateDirectory(Path.GetDirectoryName(destinationPath)); // Ensure the directory exists
+                    entry.WriteToDirectory(destinationPath);
+                }
+            }
+        }
+    }
+
+    private static void ExtractRar7zToFolder(string filePath, string directoryPath, string folderName, string filterExtension)
+    {
+        // 创建最终的解压目录
+        string finalExtractPath = Path.Combine(directoryPath, folderName);
+        Directory.CreateDirectory(finalExtractPath);
+
+        using (var archive = ArchiveFactory.Open(filePath))
+        {
+            foreach (var entry in archive.Entries)
+            {
+                // 排除目录，并按扩展名进行过滤
+                if (!entry.IsDirectory &&
+                    (string.IsNullOrWhiteSpace(filterExtension) || entry.Key.EndsWith(filterExtension, StringComparison.OrdinalIgnoreCase)))
+                {
+                    // 获取完整的文件路径
+                    string destinationPath = Path.Combine(finalExtractPath, entry.Key.Replace('/', Path.DirectorySeparatorChar));
+
+                    // 确保文件的父目录存在
+                    string destinationDirectory = Path.GetDirectoryName(destinationPath);
+                    if (!string.IsNullOrWhiteSpace(destinationDirectory))
+                    {
+                        Directory.CreateDirectory(destinationDirectory);
+                    }
+
+                    // 写入文件
+                    using (var stream = File.Create(destinationPath))
+                    {
+                        entry.OpenEntryStream().CopyTo(stream);
+                    }
+                }
+            }
+        }
+    }
+
+    private static string CreateFolderForFile(string filePath)
+    {
+        if (string.IsNullOrWhiteSpace(filePath))
+            throw new ArgumentException("File path cannot be null or empty.", nameof(filePath));
+
+        if (!File.Exists(filePath))
+            throw new FileNotFoundException("The specified file does not exist.", filePath);
+
+        // 获取文件所在目录
+        string directoryPath = Path.GetDirectoryName(filePath);
+
+        // 获取文件名（不包含扩展名）
+        string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(filePath);
+
+        // 组合文件夹路径
+        string folderPath = Path.Combine(directoryPath, fileNameWithoutExtension);
+
+        // 创建文件夹（如果不存在）
+        if (!Directory.Exists(folderPath))
+        {
+            Directory.CreateDirectory(folderPath);
+        }
+
+        return folderPath;
+    }
+
 
     /// <summary>
     /// 解压到目标目录。
