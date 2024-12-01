@@ -1525,24 +1525,44 @@
           <target state="translated">WebDAV へアップロード</target>
         </trans-unit>
         <trans-unit id="AppNotificationPayload" translate="yes" xml:space="preserve">
-          <source><bpt id="1">&lt;toast  launch="action=ToastClick"&gt;</bpt>
+          <source><bpt id="1">&lt;toast launch='meetingId=9813'&gt;</bpt>
     <bpt id="2">&lt;visual&gt;</bpt>
-        <bpt id="3">&lt;binding template="ToastGeneric"&gt;</bpt>
+        <bpt id="3">&lt;binding template='ToastGeneric'&gt;</bpt>
             <bpt id="4">&lt;text&gt;</bpt><ept id="4">&lt;/text&gt;</ept>
             <bpt id="5">&lt;text&gt;</bpt>EasyTidy {0} Started<ept id="5">&lt;/text&gt;</ept>
-            <bpt id="6">&lt;image placement="appLogoOverride" src="ms-appx:///Assets/icon.ico"&gt;</bpt><ept id="6">&lt;/image&gt;</ept>
+            <bpt id="6">&lt;text&gt;</bpt><ept id="6">&lt;/text&gt;</ept>
         <ept id="3">&lt;/binding&gt;</ept>
     <ept id="2">&lt;/visual&gt;</ept>
 <ept id="1">&lt;/toast&gt;</ept></source>
-          <target state="new"><bpt id="1">&lt;toast  launch="action=ToastClick"&gt;</bpt>
+          <target state="translated"><bpt id="1">&lt;toast launch='meetingId=9813'&gt;</bpt>
     <bpt id="2">&lt;visual&gt;</bpt>
-        <bpt id="3">&lt;binding template="ToastGeneric"&gt;</bpt>
+        <bpt id="3">&lt;binding template='ToastGeneric'&gt;</bpt>
             <bpt id="4">&lt;text&gt;</bpt><ept id="4">&lt;/text&gt;</ept>
-            <bpt id="5">&lt;text&gt;</bpt>EasyTidy {0} Started<ept id="5">&lt;/text&gt;</ept>
-            <bpt id="6">&lt;image placement="appLogoOverride" src="ms-appx:///Assets/icon.ico"&gt;</bpt><ept id="6">&lt;/image&gt;</ept>
+            <bpt id="5">&lt;text&gt;</bpt>EasyTidy {0} 起動しました<ept id="5">&lt;/text&gt;</ept>
+            <bpt id="6">&lt;text&gt;</bpt><ept id="6">&lt;/text&gt;</ept>
         <ept id="3">&lt;/binding&gt;</ept>
     <ept id="2">&lt;/visual&gt;</ept>
 <ept id="1">&lt;/toast&gt;</ept></target>
+        </trans-unit>
+        <trans-unit id="RepeatedStartup" translate="yes" xml:space="preserve">
+          <source><bpt id="1">&lt;toast launch='meetingId=9813'&gt;</bpt>
+    <bpt id="2">&lt;visual&gt;</bpt>
+        <bpt id="3">&lt;binding template='ToastGeneric'&gt;</bpt>
+            <bpt id="4">&lt;text hint-maxLines='1'&gt;</bpt>EasyTidy has been started, please do not start it again<ept id="4">&lt;/text&gt;</ept>
+        <ept id="3">&lt;/binding&gt;</ept>
+    <ept id="2">&lt;/visual&gt;</ept>
+<ept id="1">&lt;/toast&gt;</ept></source>
+          <target state="translated"><bpt id="1">&lt;toast launch='meetingId=9813'&gt;</bpt>
+    <bpt id="2">&lt;visual&gt;</bpt>
+        <bpt id="3">&lt;binding template='ToastGeneric'&gt;</bpt>
+            <bpt id="4">&lt;text hint-maxLines='1'&gt;</bpt>EasyTidyが起動していますので、再度起動しないでください<ept id="4">&lt;/text&gt;</ept>
+        <ept id="3">&lt;/binding&gt;</ept>
+    <ept id="2">&lt;/visual&gt;</ept>
+<ept id="1">&lt;/toast&gt;</ept></target>
+        </trans-unit>
+        <trans-unit id="ExecutionSuccessfulText" translate="yes" xml:space="preserve">
+          <source>Execution Successful</source>
+          <target state="translated">実行に成功しました。</target>
         </trans-unit>
       </group>
     </body>

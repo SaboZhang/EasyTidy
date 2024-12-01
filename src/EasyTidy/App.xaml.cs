@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.WinUI;
 using EasyTidy.Activation;
 using EasyTidy.Common.Database;
+using EasyTidy.Common.Extensions;
 using EasyTidy.Contracts.Service;
 using EasyTidy.Log;
 using EasyTidy.Model;
@@ -11,6 +12,7 @@ using H.NotifyIcon;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using Microsoft.UI.Dispatching;
 using Microsoft.Windows.AppNotifications;
 using Microsoft.Windows.Globalization;
 using WinUIEx;
@@ -20,6 +22,8 @@ namespace EasyTidy;
 public partial class App : Application
 {
     public static Mutex _mutex = null;
+
+    private readonly DispatcherQueue _dispatcherQueue;
 
     public static WindowEx MainWindow { get; } = new MainWindow();
     public IServiceProvider Services { get; }
@@ -62,6 +66,7 @@ public partial class App : Application
         {
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
         }
+        _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
         // 加载配置
         Host = Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder()
             .UseContentRoot(AppContext.BaseDirectory)
@@ -85,6 +90,9 @@ public partial class App : Application
                 // Register File Service
                 services.AddSingleton<IFileService, FileService>();
 
+                services.AddSingleton(_ => MainWindow);
+                services.AddSingleton(_ => MainWindow.DispatcherQueue);
+
                 // Register ViewModels
                 services.AddTransient<GeneralViewModel>();
                 services.AddTransient<MainViewModel>();
@@ -100,7 +108,7 @@ public partial class App : Application
                 services.AddTransient<ShellViewModel>();
 
                 // Register AppDbContext
-                services.AddDbContext<AppDbContext>(options =>
+                services.AddDbContext<AppDbContext>(options => 
                 options.UseSqlite($"Data Source={Path.Combine(Constants.CnfPath, "EasyTidy.db")}"), ServiceLifetime.Scoped);
 
                 // Configuration
@@ -110,9 +118,6 @@ public partial class App : Application
             .Build();
 
         App.GetService<IAppNotificationService>().Initialize();
-        //var configuration = new ConfigurationBuilder()
-        //    .Build();
-        // Services = ConfigureServices(configuration);
         this.InitializeComponent();
     }
 
@@ -138,14 +143,14 @@ public partial class App : Application
     {
         base.OnLaunched(args);
         InitializeLogging();
+        if (!IsSingleInstance())
+        {
+            App.GetService<IAppNotificationService>().Show("RepeatedStartup".GetLocalized());
+            Environment.Exit(0);
+        }
         App.GetService<IAppNotificationService>().Show(string.Format("AppNotificationPayload".GetLocalized(), Constants.Version));
         await App.GetService<IActivationService>().ActivateAsync(args);
         SetApplicationLanguage();
-
-        if (!IsSingleInstance())
-        {
-            Environment.Exit(0);
-        }
 
         Logger.Fatal("EasyTidy Initialized Successfully!");
     }

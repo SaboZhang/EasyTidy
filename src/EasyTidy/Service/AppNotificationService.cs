@@ -43,11 +43,13 @@ public class AppNotificationService : IAppNotificationService
         ////        _navigationService.NavigateTo(typeof(SettingsViewModel).FullName!);
         ////    });
         //// }
-        /// hint-crop="circle" 
 
         App.MainWindow.DispatcherQueue.TryEnqueue(() =>
         {
-            App.MainWindow.ShowMessageDialogAsync("TODO: Handle notification invocations when your app is already running.", "Notification Invoked");
+            if (!string.IsNullOrEmpty(args.Argument))
+            {
+                App.MainWindow.ShowMessageDialogAsync("TODO: Handle notification invocations when your app is already running.", "Notification Invoked");
+            }
 
             App.MainWindow.BringToFront();
         });

@@ -34,4 +34,14 @@ public sealed partial class TaskOrchestrationPage : Page
     {
         ViewModel.IsEnableTaskCommand.Execute((sender as Button).DataContext);
     }
+
+    private void OnLoaded(object sender, RoutedEventArgs e)
+    {
+        ViewModel.Initialize(NotificationQueue);
+    }
+
+    private void OnUnloaded(object sender, RoutedEventArgs e)
+    {
+        ViewModel.Uninitialize();
+    }
 }

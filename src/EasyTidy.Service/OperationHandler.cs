@@ -1,5 +1,6 @@
 ﻿using EasyTidy.Log;
 using EasyTidy.Model;
+using EasyTidy.Util;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -172,6 +173,18 @@ public static class OperationHandler
 
     private static async Task ExtractAsync(OperationParameters parameter)
     {
+        if (string.IsNullOrEmpty(parameter.TargetPath))
+        {
+            parameter.TargetPath = parameter.SourcePath;
+        }
+        var rule = FilterUtil.CheckAndCollectNonCompressedExtensions(parameter.RuleModel.Rule);
+        var model = new RuleModel
+        {
+            Filter = parameter.RuleModel.Filter,
+            Rule = rule,
+            RuleType = parameter.RuleModel.RuleType
+        };
+        parameter.RuleModel = model;
         await Task.Run(async () =>
         {
             await FileActuator.ExecuteFileOperationAsync(parameter);

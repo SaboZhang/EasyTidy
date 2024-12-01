@@ -28,4 +28,14 @@ public sealed partial class FiltersPage : Page
     {
         ViewModel.DeleteFilterCommand.Execute((sender as Button).DataContext);
     }
+
+    private void OnLoaded(object sender, RoutedEventArgs e)
+    {
+        ViewModel.Initialize(NotificationQueue);
+    }
+
+    private void OnUnloaded(object sender, RoutedEventArgs e)
+    {
+        ViewModel.Uninitialize();
+    }
 }

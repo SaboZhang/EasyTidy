@@ -1,6 +1,9 @@
 ﻿using CommunityToolkit.WinUI;
+using CommunityToolkit.WinUI.Behaviors;
 using CommunityToolkit.WinUI.Collections;
 using EasyTidy.Common.Database;
+using EasyTidy.Common.Extensions;
+using EasyTidy.Common.Job;
 using EasyTidy.Contracts.Service;
 using EasyTidy.Model;
 using EasyTidy.Service;
@@ -9,12 +12,15 @@ using EasyTidy.Views.ContentDialogs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.UI.Dispatching;
 using System.Collections.ObjectModel;
+using System.Data;
 
 namespace EasyTidy.ViewModels;
 
 public partial class TaskOrchestrationViewModel : ObservableRecipient
 {
     private readonly AppDbContext _dbContext;
+
+    private StackedNotificationsBehavior? _notificationQueue;
 
     [ObservableProperty]
     private IThemeSelectorService _themeSelectorService;
@@ -88,6 +94,16 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
     [ObservableProperty]
     public ObservableCollection<PatternSnippetModel> _randomizerModel;
 
+    public void Initialize(StackedNotificationsBehavior notificationQueue)
+    {
+        _notificationQueue = notificationQueue;
+    }
+
+    public void Uninitialize()
+    {
+        _notificationQueue = null;
+    }
+
     /// <summary>
     /// 添加
     /// </summary>
@@ -152,11 +168,8 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 var result = ShortcutUtil.CreateShortcutDesktop(dialog.TaskName, TaskTarget);
                 if (!result)
                 {
-                    Growl.Error(new GrowlInfo
-                    {
-                        Message = "CreateShortcutFailedText".GetLocalized(),
-                        ShowDateTime = false
-                    });
+                    _notificationQueue.ShowWithWindowExtension("CreateShortcutFailedText".GetLocalized(), InfoBarSeverity.Error);
+                    _ = ClearNotificationAfterDelay(3000);
                     Logger.Error($"TaskOrchestrationViewModel: OnAddTaskClick 创建桌面快捷方式失败");
                 }
             }
@@ -166,19 +179,13 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
             SelectedGroupName = null;
             SelectedGroupIndex = -1;
             GroupTextName = string.Empty;
-            Growl.Success(new GrowlInfo
-            {
-                Message = "SaveSuccessfulText".GetLocalized(),
-                ShowDateTime = false
-            });
+            _notificationQueue.ShowWithWindowExtension("SaveSuccessfulText".GetLocalized(), InfoBarSeverity.Success);
+            _ = ClearNotificationAfterDelay(3000);
         }
         catch (Exception ex)
         {
-            Growl.Error(new GrowlInfo
-            {
-                Message = "SaveFailedText".GetLocalized(),
-                ShowDateTime = false
-            });
+            _notificationQueue.ShowWithWindowExtension("SaveFailedText".GetLocalized(), InfoBarSeverity.Error);
+            _ = ClearNotificationAfterDelay(3000);
             Logger.Error($"TaskOrchestrationViewModel: OnAddTaskClick 异常信息 {ex}");
         }
 
@@ -387,11 +394,8 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                     oldTask.Filter = await _dbContext.Filters.Where(x => x.Id == SelectedFilter.Id).FirstOrDefaultAsync();
                     await _dbContext.SaveChangesAsync();
                     await OnPageLoaded();
-                    Growl.Success(new GrowlInfo
-                    {
-                        Message = "ModifySuccessfullyText".GetLocalized(),
-                        ShowDateTime = false
-                    });
+                    _notificationQueue.ShowWithWindowExtension("ModifySuccessfullyText".GetLocalized(), InfoBarSeverity.Success);
+                    _ = ClearNotificationAfterDelay(3000);
                 };
 
                 await dialog.ShowAsync();
@@ -401,11 +405,8 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         }
         catch (Exception ex)
         {
-            Growl.Error(new GrowlInfo
-            {
-                Message = "ModificationFailedText".GetLocalized(),
-                ShowDateTime = false
-            });
+            _notificationQueue.ShowWithWindowExtension("ModificationFailedText".GetLocalized(), InfoBarSeverity.Success);
+            _ = ClearNotificationAfterDelay(3000);
             Logger.Error($"TaskOrchestrationViewModel: OnUpdateTask 异常信息 {ex}");
         }
 
@@ -434,20 +435,14 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 await QuartzHelper.DeleteJob(task.TaskName + "#" + task.ID.ToString(), task.GroupName.GroupName);
                 FileEventHandler.StopMonitor(task.TaskSource, task.TaskTarget);
                 await OnPageLoaded();
-                Growl.Success(new GrowlInfo
-                {
-                    Message = "DeleteSuccessfulText".GetLocalized(),
-                    ShowDateTime = false
-                });
+                _notificationQueue.ShowWithWindowExtension("DeleteSuccessfulText".GetLocalized(), InfoBarSeverity.Success);
+                _ = ClearNotificationAfterDelay(3000);
             }
         }
         catch (Exception ex)
         {
-            Growl.Error(new GrowlInfo
-            {
-                Message = "DeleteFailedText".GetLocalized(),
-                ShowDateTime = false
-            });
+            _notificationQueue.ShowWithWindowExtension("DeleteFailedText".GetLocalized(), InfoBarSeverity.Success);
+            _ = ClearNotificationAfterDelay(3000);
             Logger.Error($"TaskOrchestrationViewModel: OnDeleteTask 异常信息 {ex}");
             IsActive = false;
         }
@@ -469,15 +464,29 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
             {
                 var task = dataContext as TaskOrchestrationTable;
                 var list = await _dbContext.TaskOrchestration.Include(x => x.GroupName).ToListAsync();
+                var automatic = new AutomaticJob();
+                var rule = await automatic.GetSpecialCasesRule(task.GroupName.Id, task.TaskRule);
+                var operationParameters = new OperationParameters(
+                    operationMode: task.OperationMode,
+                    sourcePath: task.TaskSource.Equals("DesktopText".GetLocalized())
+                    ? Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
+                    : task.TaskSource,
+                    targetPath: task.TaskTarget,
+                    fileOperationType: Settings.GeneralConfig.FileOperationType,
+                    handleSubfolders: Settings.GeneralConfig.SubFolder ?? false,
+                    funcs: FilterUtil.GeneratePathFilters(rule, task.RuleType),
+                    pathFilter: FilterUtil.GetPathFilters(task.Filter),
+                    ruleModel: new RuleModel { Filter = task.Filter, Rule = task.TaskRule, RuleType = task.RuleType })
+                { RuleName = task.TaskRule };
+                await OperationHandler.ExecuteOperationAsync(task.OperationMode, operationParameters);
+                _notificationQueue.ShowWithWindowExtension("ExecutionSuccessfulText".GetLocalized(), InfoBarSeverity.Success);
+                _ = ClearNotificationAfterDelay(3000);
             }
         }
         catch (Exception ex)
         {
-            Growl.Error(new GrowlInfo
-            {
-                Message = "ExecutionFailedText".GetLocalized(),
-                ShowDateTime = false
-            });
+            _notificationQueue.ShowWithWindowExtension("ExecutionFailedText".GetLocalized(), InfoBarSeverity.Error);
+            _ = ClearNotificationAfterDelay(3000);
             Logger.Error($"TaskOrchestrationViewModel: OnExecuteTask 异常信息 {ex}");
             IsActive = false;
         }
@@ -505,20 +514,14 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                     ? QuartzHelper.ResumeJob(task.TaskName + "#" + task.ID.ToString(), task.GroupName.GroupName)
                     : QuartzHelper.PauseJob(task.TaskName + "#" + task.ID.ToString(), task.GroupName.GroupName));
                 await OnPageLoaded();
-                Growl.Success(new GrowlInfo
-                {
-                    Message = "DisabledSuccessfullyText".GetLocalized(),
-                    ShowDateTime = false
-                });
+                _notificationQueue.ShowWithWindowExtension("DisabledSuccessfullyText".GetLocalized(), InfoBarSeverity.Success);
+                _ = ClearNotificationAfterDelay(3000);
             }
         }
         catch (Exception ex)
         {
-            Growl.Error(new GrowlInfo
-            {
-                Message = "DisablingFailedText".GetLocalized(),
-                ShowDateTime = false
-            });
+            _notificationQueue.ShowWithWindowExtension("DisablingFailedText".GetLocalized(), InfoBarSeverity.Error);
+            _ = ClearNotificationAfterDelay(3000);
             Logger.Error($"FileExplorerViewModel: OnIsEnableTask 异常信息 {ex}");
             IsActive = false;
         }
@@ -690,6 +693,12 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         RandomizerModel.Add(new PatternSnippetModel("${rstringalpha=13}", "RandomizerCheatSheet_Alpha".GetLocalized()));
         RandomizerModel.Add(new PatternSnippetModel("${rstringdigit=36}", "RandomizerCheatSheet_Digit".GetLocalized()));
         RandomizerModel.Add(new PatternSnippetModel("${ruuidv4}", "RandomizerCheatSheet_Uuid".GetLocalized()));
+    }
+
+    private async Task ClearNotificationAfterDelay(int delayMilliseconds)
+    {
+        await Task.Delay(delayMilliseconds);  // 延迟指定的毫秒数
+        _notificationQueue?.Clear();  // 清除通知
     }
 
 }

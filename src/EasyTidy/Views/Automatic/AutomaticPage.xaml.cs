@@ -19,4 +19,14 @@ public sealed partial class AutomaticPage : Page
     {
         ViewModel.SelectGroupItemChangedCommand.Execute(sender);
     }
+
+    private void OnLoaded(object sender, RoutedEventArgs e)
+    {
+        ViewModel.Initialize(NotificationQueue);
+    }
+
+    private void OnUnloaded(object sender, RoutedEventArgs e)
+    {
+        ViewModel.Uninitialize();
+    }
 }
