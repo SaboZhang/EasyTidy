@@ -302,28 +302,40 @@ public class ZipUtil
 
         using (var archive = ArchiveFactory.Open(filePath))
         {
+            // 如果目标解压路径不存在，则创建
+            if (!Directory.Exists(finalExtractPath))
+            {
+                Directory.CreateDirectory(finalExtractPath);
+            }
+
             foreach (var entry in archive.Entries)
             {
-                // 排除目录，并按扩展名进行过滤
-                if (!entry.IsDirectory &&
-                    (string.IsNullOrWhiteSpace(filterExtension) || entry.Key.EndsWith(filterExtension, StringComparison.OrdinalIgnoreCase)))
+                // 过滤文件扩展名
+                if (!string.IsNullOrWhiteSpace(filterExtension) && !entry.Key.EndsWith(filterExtension, StringComparison.OrdinalIgnoreCase))
                 {
-                    // 获取完整的文件路径
-                    string destinationPath = Path.Combine(finalExtractPath, entry.Key.Replace('/', Path.DirectorySeparatorChar));
-
-                    // 确保文件的父目录存在
-                    string destinationDirectory = Path.GetDirectoryName(destinationPath);
-                    if (!string.IsNullOrWhiteSpace(destinationDirectory))
-                    {
-                        Directory.CreateDirectory(destinationDirectory);
-                    }
-
-                    // 写入文件
-                    using (var stream = File.Create(destinationPath))
-                    {
-                        entry.OpenEntryStream().CopyTo(stream);
-                    }
+                    continue;
                 }
+
+                // 如果是目录，则创建目录
+                if (entry.IsDirectory)
+                {
+                    string dirPath = Path.Combine(finalExtractPath, entry.Key);
+                    Directory.CreateDirectory(dirPath);
+                    continue;
+                }
+
+                // 解压文件
+                string entryDestination = Path.Combine(finalExtractPath, entry.Key);
+
+                // 确保父目录存在
+                string directory = Path.GetDirectoryName(entryDestination);
+                if (!Directory.Exists(directory))
+                {
+                    Directory.CreateDirectory(directory);
+                }
+
+                // 解压文件到目标路径
+                entry.WriteToFile(entryDestination);
             }
         }
     }
