@@ -30,5 +30,7 @@ public partial class AppConfig : JsonSettings, IVersionable
 
     public virtual string WebDavPassword { get; set; }
 
+    public virtual string UploadPrefix { get; set; } = "/EasyTidy_UploadFiles";
+
     public virtual BackupModel? BackupConfig { get; set; } = new();
 }

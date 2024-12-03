@@ -1,5 +1,6 @@
 ﻿using EasyTidy.Model;
 using SharpCompress.Archives;
+using SharpCompress.Common;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -325,17 +326,17 @@ public class ZipUtil
                 }
 
                 // 解压文件
-                string entryDestination = Path.Combine(finalExtractPath, entry.Key);
+                // string entryDestination = Path.Combine(finalExtractPath, entry.Key);
 
                 // 确保父目录存在
-                string directory = Path.GetDirectoryName(entryDestination);
+                string directory = Path.GetDirectoryName(finalExtractPath);
                 if (!Directory.Exists(directory))
                 {
                     Directory.CreateDirectory(directory);
                 }
 
                 // 解压文件到目标路径
-                entry.WriteToFile(entryDestination);
+                entry.WriteToDirectory(finalExtractPath, new ExtractionOptions { ExtractFullPath = true, Overwrite = true});
             }
         }
     }
@@ -365,44 +366,5 @@ public class ZipUtil
 
         return folderPath;
     }
-
-
-    /// <summary>
-    /// 解压到目标目录。
-    /// </summary>
-    // public static bool DecompressToDirectory(string zipFilePath, string extractPath)
-    // {
-    //     try
-    //     {
-    //         using var archive = ZipFile.OpenRead(zipFilePath);
-    //         foreach (var entry in archive.Entries)
-    //         {
-    //             if (string.IsNullOrWhiteSpace(entry.FullName)) continue;
-
-    //             string destinationPath = Path.Combine(extractPath, entry.FullName);
-
-    //             if (entry.FullName.EndsWith("/"))
-    //             {
-    //                 // 创建目录
-    //                 Directory.CreateDirectory(destinationPath);
-    //             }
-    //             else
-    //             {
-    //                 HandleFileConflict(entry.FullName, destinationPath, FileOperationType.Overwrite, () =>
-    //                 {
-    //                     Directory.CreateDirectory(Path.GetDirectoryName(destinationPath));
-    //                     entry.ExtractToFile(destinationPath, true);
-    //                 });
-    //             }
-    //         }
-
-    //         return true;
-    //     }
-    //     catch (Exception ex)
-    //     {
-    //         Debug.WriteLine("[FileExtractor] DecompressToDirectory Error: {0}", ex);
-    //         return false;
-    //     }
-    // }
 
 }

@@ -84,9 +84,6 @@ public partial class App : Application
                 services.AddSingleton<INavigationService, NavigationService>();
                 services.AddSingleton<IAppNotificationService, AppNotificationService>();
 
-                // Register ServiceConfig
-                services.AddSingleton<ISettingsManager, SettingsHelper>();
-
                 // Register File Service
                 services.AddSingleton<IFileService, FileService>();
 

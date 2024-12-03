@@ -8,7 +8,7 @@ public class ServiceConfig
 {
     private readonly ISettingsManager _config;
 
-    public static ConfigModel? CurConfig;
+    public static CommonConfigModel? CurConfig;
 
     public ServiceConfig(ISettingsManager config)
     {

@@ -6,16 +6,15 @@ namespace EasyTidy.Common;
 
 public class SettingsHelper : ISettingsManager
 {
-    public ConfigModel GetConfigModel()
+    public CommonConfigModel GetConfigModel()
     {
-        return new ConfigModel
+        return new CommonConfigModel
         {
-            Minimize = Settings?.GeneralConfig.Minimize ?? false,
-            IrrelevantFiles = Settings?.GeneralConfig.IrrelevantFiles ?? false,
-            FileInUse = Settings?.GeneralConfig.FileInUse ?? false,
-            SubFolder = Settings?.GeneralConfig.SubFolder ?? false,
-            IsStartup = Settings?.GeneralConfig.IsStartup ?? false,
-            IsStartupCheck = Settings?.GeneralConfig.IsStartupCheck?? false,
+            WebDavPassword = Settings.WebDavPassword,
+            WebDavUser = Settings.WebDavUser,
+            WebDavUrl = Settings.WebDavUrl,
+            SubFolder = Settings.GeneralConfig.SubFolder,
+            UploadPrefix = Settings.UploadPrefix
         };
     }
 }
