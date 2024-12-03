@@ -8,5 +8,6 @@
 - 修改：界面替换为自定义组件
 - 修改：部分页面改用官方方法实现
 - 新增：自动解压功能
+- 新增：WebDav 上传功能
 
-**Full Changelog**: https://github.com/SaboZhang/EasyTidy/compare/1.0.2.1117...v0.1.15-alpha
+**Full Changelog**: https://github.com/SaboZhang/EasyTidy/compare/1.0.3.1120...v0.1.18-alpha.1

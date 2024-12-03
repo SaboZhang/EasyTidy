@@ -290,6 +290,11 @@ public static class FileActuator
             case OperationMode.Extract:
                 Extract(parameters.SourcePath, parameters.TargetPath, parameters.RuleModel.Rule);
                 break;
+            case OperationMode.UploadWebDAV:
+                var password = DESUtil.DesDecrypt(ServiceConfig.CurConfig.WebDavPassword);
+                WebDavClient webDavClient = new(ServiceConfig.CurConfig.WebDavUrl, ServiceConfig.CurConfig.WebDavUser, password);
+                await webDavClient.UploadFileAsync(ServiceConfig.CurConfig.WebDavUrl + ServiceConfig.CurConfig.UploadPrefix, parameters.SourcePath);
+                break;
             default:
                 throw new NotSupportedException($"Operation mode '{parameters.OperationMode}' is not supported.");
         }

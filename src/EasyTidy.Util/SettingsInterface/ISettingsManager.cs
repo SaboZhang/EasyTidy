@@ -9,5 +9,5 @@ namespace EasyTidy.Util.SettingsInterface;
 
 public interface ISettingsManager
 {
-    public ConfigModel GetConfigModel();
+    public CommonConfigModel GetConfigModel();
 }

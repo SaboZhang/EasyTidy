@@ -2,6 +2,7 @@
 using EasyTidy.Common.Database;
 using EasyTidy.Common.Extensions;
 using EasyTidy.Contracts.Service;
+using EasyTidy.Util.SettingsInterface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -87,6 +88,8 @@ public class ActivationService : IActivationService
             var app = App.GetService<AppUpdateSettingViewModel>();
             await app.CheckForNewVersionAsync();
         }
+        var serviceConfig = new ServiceConfig(App.GetService<ISettingsManager>());
+        serviceConfig.SetConfigModel();
 
         await QuartzConfig.InitQuartzConfigAsync();
         await QuartzHelper.StartAllJob();
