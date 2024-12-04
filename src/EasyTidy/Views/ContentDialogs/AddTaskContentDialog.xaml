@@ -10,6 +10,7 @@
     xmlns:model="using:EasyTidy.Model"
     xmlns:wuc="using:WinUICommunity" 
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core" 
+    xmlns:ui="using:CommunityToolkit.WinUI"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     CornerRadius="{ThemeResource OverlayCornerRadius}"
     DefaultButton="Primary">
@@ -19,6 +20,18 @@
                   x:DataType="x:String">
             <TextBlock Foreground="{ThemeResource SystemFillColorCriticalBrush}"
                    Text="{x:Bind}"/>
+        </DataTemplate>
+        <Style x:Key="TextBoxRegexStyle"
+               TargetType="TextBox">
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style>
+        <DataTemplate x:Key="HeaderTemplate">
+            <StackPanel>
+                <TextBlock Text="{Binding}"
+                   TextWrapping="WrapWholeWords"
+                   Foreground="{ThemeResource SystemFillColorCriticalBrush}"/>
+            </StackPanel>
         </DataTemplate>
     </ContentDialog.Resources>
     
@@ -37,9 +50,8 @@
                      Width="210"
                      Margin="6,0,0,0"
                      x:Uid="TaskGroupBox"
-                     wuc:Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
-                     wuc:Validation.ValidationPropertyName="GroupName"
-                     wuc:Validation.ValidationProvider="{x:Bind}"
+                     ui:TextBoxExtensions.Regex="^(?!\s*$).+$"
+                     TextChanged="TaskGroupNameBox_TextChanged"
                      Style="{StaticResource ValidatingTextBoxStyle}"/>
             <ComboBox x:Name="TaskGroupNameComboBox"
                       x:Uid="DialogTaskGroup"
@@ -57,6 +69,12 @@
                 </i:Interaction.Behaviors>
             </ComboBox>
         </StackPanel>
+        <TextBlock Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+                   x:Name="ValidTextBlock"
+                   Margin="122,0,0,0"
+                   Tag="{Binding (ui:TextBoxExtensions.IsValid), ElementName=TaskGroupNameBox}">
+            <Run Text="" x:Name="ValidTaskGroupNameBox" />
+        </TextBlock>
         <StackPanel x:Name="TaskNamePanel"
                     Orientation="Horizontal"
                     Spacing="8"

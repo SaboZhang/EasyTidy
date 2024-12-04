@@ -4,6 +4,7 @@
 using CommunityToolkit.WinUI;
 using EasyTidy.Model;
 using Microsoft.UI.Xaml.Controls.Primitives;
+using Quartz.Util;
 using System.Collections;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -110,6 +111,7 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
         XamlRoot = App.MainWindow.Content.XamlRoot;
         RequestedTheme = ViewModel.ThemeSelectorService.Theme;
         PopulateMenu(ViewModel);
+        ValidTextBlock.Visibility = Visibility.Collapsed;
     }
 
     private void PopulateMenu(TaskOrchestrationViewModel viewModel)
@@ -306,6 +308,29 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
         else
         {
             Priority = 0;
+        }
+    }
+
+    private void TaskGroupNameBox_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        var res = ValidTextBlock.Tag;
+        if (res.ToString() == "False" && string.IsNullOrWhiteSpace(TaskGroupNameBox.Text))
+        {
+            ValidTextBlock.Visibility = Visibility.Visible;
+            ValidTaskGroupNameBox.Text = "GroupInformationVerificationAdd".GetLocalized() + "\n" + "GroupInformationVerification".GetLocalized();
+        }
+        else if (string.IsNullOrWhiteSpace(TaskGroupNameBox.Text))
+        {
+            ValidTextBlock.Visibility = Visibility.Visible;
+            ValidTaskGroupNameBox.Text = "GroupInformationVerificationAdd".GetLocalized() + "\n" + "GroupInformationVerification".GetLocalized();
+        } 
+        else if (res.ToString() == "True" && !string.IsNullOrWhiteSpace(TaskGroupNameBox.Text))
+        {
+            ValidTextBlock.Visibility = Visibility.Collapsed;
+        }
+        else if (res.ToString() == "False" &&!string.IsNullOrWhiteSpace(TaskGroupNameBox.Text))
+        {
+            ValidTextBlock.Visibility = Visibility.Collapsed;
         }
     }
 }
