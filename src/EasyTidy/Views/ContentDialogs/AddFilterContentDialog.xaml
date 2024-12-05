@@ -8,8 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:wuc="using:WinUICommunity" 
     xmlns:i="using:Microsoft.Xaml.Interactivity" 
-    xmlns:behaviors="using:CommunityToolkit.WinUI.Behaviors" 
-    xmlns:triggers="using:CommunityToolkit.WinUI"
+    xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d"
     CornerRadius="{ThemeResource OverlayCornerRadius}"
     DefaultButton="Primary">
@@ -21,33 +20,6 @@
                Text="{x:Bind}"/>
         </DataTemplate>
     </ContentDialog.Resources>
-    <VisualStateManager.VisualStateGroups>
-
-        <VisualStateGroup x:Name="TextBoxStates">
-            <VisualState x:Name="TextBoxNotEmptyState" />
-            <VisualState x:Name="TextBoxEmptyState">
-                <VisualState.StateTriggers>
-                    <triggers:IsNullOrEmptyStateTrigger Value="{Binding Text, ElementName=OurTextBox, Mode=OneWay}" />
-                </VisualState.StateTriggers>
-                <VisualState.Setters>
-                    <Setter Target="OurTextBox.BorderBrush" Value="Red" />
-                    <Setter Target="OurTextBoxError.Visibility" Value="Visible" />
-                </VisualState.Setters>
-            </VisualState>
-        </VisualStateGroup>
-        <VisualStateGroup x:Name="ListBoxStates">
-            <VisualState x:Name="ListNotEmptyState" />
-            <VisualState x:Name="ListEmptyState">
-                <VisualState.StateTriggers>
-                    <triggers:IsNullOrEmptyStateTrigger Value="{Binding Items, ElementName=OurList, Mode=OneWay}" />
-                </VisualState.StateTriggers>
-                <VisualState.Setters>
-                    <Setter Target="RemoveButton.IsEnabled" Value="False" />
-                    <Setter Target="ListEmptyMessage.Visibility" Value="Visible" />
-                </VisualState.Setters>
-            </VisualState>
-        </VisualStateGroup>
-    </VisualStateManager.VisualStateGroups>
 
     <StackPanel>
         <StackPanel Orientation="Horizontal"
