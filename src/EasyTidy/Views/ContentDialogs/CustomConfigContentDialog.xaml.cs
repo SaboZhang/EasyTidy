@@ -153,6 +153,7 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
         }
     }
 
+    public bool IsValid { get; set; }
 
     public CustomConfigContentDialog()
     {
@@ -172,9 +173,15 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
     {
         var errors = new List<string>(1);
         var pattern = new Regex(@"^\d+$");
-        if (!pattern.IsMatch(delay) && !string.IsNullOrWhiteSpace(delay))
+        if (!IsValid && string.IsNullOrEmpty(delay) && ViewModel.CustomFileChange)
         {
+            DelayValid.Text = "ValidateDelay".GetLocalized();
+            DelayValid.Visibility = Visibility.Visible;
             errors.Add("ValidateDelay".GetLocalized());
+        }
+        else
+        {
+            DelayValid.Visibility = Visibility.Collapsed;
         }
         SetErrors("Delay", errors);
     }
@@ -187,9 +194,15 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
     {
         var errors = new List<string>(1);
         var pattern = new Regex(@"^([1-9]|[1-5][0-9])(,(?=[1-9]|[1-5][0-9]))*$");
-        if (!pattern.IsMatch(minute) && !string.IsNullOrWhiteSpace(minute))
+        if (!IsValid && string.IsNullOrEmpty(minute))
         {
+            MinuteValid.Text = "MinuteFormatInfo".GetLocalized();
+            MinuteValid.Visibility = Visibility.Visible;
             errors.Add("MinuteFormatInfo".GetLocalized());
+        }
+        else
+        {
+            MinuteValid.Visibility = Visibility.Collapsed;
         }
         SetErrors("Minute", errors);
     }
@@ -202,9 +215,15 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
     {
         var errors = new List<string>(1);
         var pattern = new Regex(@"^(2[0-3]|[01]?[0-9])(,(2[0-3]|[01]?[0-9]))*$");
-        if (!pattern.IsMatch(hour) && !string.IsNullOrWhiteSpace(hour))
+        if (!IsValid && !string.IsNullOrEmpty(hour))
         {
+            HourValid.Text = "HourFormatInfo".GetLocalized();
+            HourValid.Visibility = Visibility.Visible;
             errors.Add("HourFormatInfo".GetLocalized());
+        }
+        else
+        {
+            HourValid.Visibility = Visibility.Collapsed;
         }
         SetErrors("Hour", errors);
     }
@@ -217,9 +236,15 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
     {
         var errors = new List<string>(1);
         var pattern = new Regex(@"^(0|1|2|3|4|5|6)(,(0|1|2|3|4|5|6))*$");
-        if (!pattern.IsMatch(dayOfWeek) && !string.IsNullOrWhiteSpace(dayOfWeek))
+        if (!IsValid && string.IsNullOrEmpty(dayOfWeek))
         {
+            DayOfWeekValid.Text = "WeeksFormatInfo".GetLocalized();
+            DayOfWeekValid.Visibility = Visibility.Visible;
             errors.Add("WeeksFormatInfo".GetLocalized());
+        }
+        else
+        {
+            DayOfWeekValid.Visibility = Visibility.Collapsed;
         }
         SetErrors("DayOfWeek", errors);
     }
@@ -232,9 +257,15 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
     {
         var errors = new List<string>(1);
         var pattern = new Regex(@"^(31|30|[12][0-9]|1?[1-9])(,(31|30|[12][0-9]|1?[1-9]))*$");
-        if (!pattern.IsMatch(dayOfMonth) && !string.IsNullOrWhiteSpace(dayOfMonth))
+        if (!IsValid && string.IsNullOrEmpty(dayOfMonth))
         {
+            DayOfMonthValid.Text = "DateFormatInfo".GetLocalized();
+            DayOfMonthValid.Visibility = Visibility.Visible;
             errors.Add("DateFormatInfo".GetLocalized());
+        }
+        else
+        {
+            DayOfMonthValid.Visibility = Visibility.Collapsed;
         }
         SetErrors("DayOfMonth", errors);
     }
@@ -247,9 +278,15 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
     {
         var errors = new List<string>(1);
         var pattern = new Regex(@"^(1|2|3|4|5|6|7|8|9|10|11|12)(,(1|2|3|4|5|6|7|8|9|10|11|12))*$");
-        if (!pattern.IsMatch(monthlyDay) && !string.IsNullOrWhiteSpace(monthlyDay))
+        if (!IsValid && string.IsNullOrEmpty(monthlyDay))
         {
+            MonthlyDayValid.Text = "MonthFormatInfo".GetLocalized();
+            MonthlyDayValid.Visibility = Visibility.Visible;
             errors.Add("MonthFormatInfo".GetLocalized());
+        }
+        else
+        {
+            MonthlyDayValid.Visibility = Visibility.Collapsed;
         }
         SetErrors("MonthlyDay", errors);
     }
@@ -261,9 +298,15 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
     private void ValidateCron(string cron)
     {
         var errors = new List<string>(1);
-        if (!CronExpression.IsValidExpression(cron) && !string.IsNullOrWhiteSpace(cron))
+        if (!CronExpression.IsValidExpression(cron) && !string.IsNullOrEmpty(cron))
         {
+            ExpressionValid.Text = "CronExpressionInfo".GetLocalized();
+            ExpressionValid.Visibility = Visibility.Visible;
             errors.Add("CronExpressionInfo".GetLocalized());
+        }
+        else
+        {
+            ExpressionValid.Visibility = Visibility.Collapsed;
         }
         SetErrors("Expression", errors);
     }
@@ -344,4 +387,12 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
         }
     }
 
+    private void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)
+    {
+        var resutl = sender as ToggleSwitch;
+        if (!resutl.IsOn)
+        {
+            DelayValid.Visibility = Visibility.Collapsed;
+        }
+    }
 }

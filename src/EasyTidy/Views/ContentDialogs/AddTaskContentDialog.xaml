@@ -15,26 +15,6 @@
     CornerRadius="{ThemeResource OverlayCornerRadius}"
     DefaultButton="Primary">
 
-    <ContentDialog.Resources>
-        <DataTemplate x:Key="ValidationTemplate"
-                  x:DataType="x:String">
-            <TextBlock Foreground="{ThemeResource SystemFillColorCriticalBrush}"
-                   Text="{x:Bind}"/>
-        </DataTemplate>
-        <Style x:Key="TextBoxRegexStyle"
-               TargetType="TextBox">
-            <Setter Property="VerticalAlignment" Value="Top" />
-            <Setter Property="TextWrapping" Value="Wrap" />
-        </Style>
-        <DataTemplate x:Key="HeaderTemplate">
-            <StackPanel>
-                <TextBlock Text="{Binding}"
-                   TextWrapping="WrapWholeWords"
-                   Foreground="{ThemeResource SystemFillColorCriticalBrush}"/>
-            </StackPanel>
-        </DataTemplate>
-    </ContentDialog.Resources>
-    
     <StackPanel>
         <StackPanel x:Name="TaskGroupPanel"
                     Orientation="Horizontal"
@@ -50,7 +30,8 @@
                      Width="210"
                      Margin="6,0,0,0"
                      x:Uid="TaskGroupBox"
-                     ui:TextBoxExtensions.Regex="^(?!\s*$).+$"
+                     ui:TextBoxExtensions.Regex="^(?!\s*$).+"
+                     ui:TextBoxExtensions.IsValid="{x:Bind IsValid, Mode=TwoWay}"
                      TextChanged="TaskGroupNameBox_TextChanged"
                      Style="{StaticResource ValidatingTextBoxStyle}"/>
             <ComboBox x:Name="TaskGroupNameComboBox"

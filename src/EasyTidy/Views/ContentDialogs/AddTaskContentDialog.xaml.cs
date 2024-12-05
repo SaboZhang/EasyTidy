@@ -104,6 +104,8 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
         }
     }
 
+    public bool IsValid { get; set;}
+
     public AddTaskContentDialog()
     {
         ViewModel = App.GetService<TaskOrchestrationViewModel>();
@@ -313,8 +315,7 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
 
     private void TaskGroupNameBox_TextChanged(object sender, TextChangedEventArgs e)
     {
-        var res = ValidTextBlock.Tag;
-        if (res.ToString() == "False" && string.IsNullOrWhiteSpace(TaskGroupNameBox.Text))
+        if (!IsValid && string.IsNullOrWhiteSpace(TaskGroupNameBox.Text))
         {
             ValidTextBlock.Visibility = Visibility.Visible;
             ValidTaskGroupNameBox.Text = "GroupInformationVerificationAdd".GetLocalized() + "\n" + "GroupInformationVerification".GetLocalized();
@@ -324,11 +325,11 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
             ValidTextBlock.Visibility = Visibility.Visible;
             ValidTaskGroupNameBox.Text = "GroupInformationVerificationAdd".GetLocalized() + "\n" + "GroupInformationVerification".GetLocalized();
         } 
-        else if (res.ToString() == "True" && !string.IsNullOrWhiteSpace(TaskGroupNameBox.Text))
+        else if (IsValid && !string.IsNullOrWhiteSpace(TaskGroupNameBox.Text))
         {
             ValidTextBlock.Visibility = Visibility.Collapsed;
         }
-        else if (res.ToString() == "False" &&!string.IsNullOrWhiteSpace(TaskGroupNameBox.Text))
+        else if (!IsValid &&!string.IsNullOrWhiteSpace(TaskGroupNameBox.Text))
         {
             ValidTextBlock.Visibility = Visibility.Collapsed;
         }
