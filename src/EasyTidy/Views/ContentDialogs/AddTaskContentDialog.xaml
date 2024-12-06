@@ -8,7 +8,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     xmlns:model="using:EasyTidy.Model"
-    xmlns:wuc="using:WinUICommunity" 
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core" 
     xmlns:ui="using:CommunityToolkit.WinUI"
     xmlns:i="using:Microsoft.Xaml.Interactivity"

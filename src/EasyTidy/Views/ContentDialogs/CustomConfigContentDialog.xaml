@@ -7,6 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:wuc="using:WinUICommunity"
+    xmlns:etc="using:EasyTidy.Views.UserControls"
     xmlns:model="using:EasyTidy.Model"
     xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d"
@@ -110,7 +111,7 @@
                         Margin="-60,0,0,0"
                         SelectedTime="{x:Bind SelectedTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
-        <wuc:Divider/>
+        <etc:Divider/>
         <StackPanel Orientation="Horizontal"
                     Spacing="8"
                     Margin="0,-8,0,0">

@@ -15,5 +15,6 @@
     </ResourceDictionary.ThemeDictionaries>
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="ms-appx:///Views/UserControls/SettingsGroup.xaml" />
+        <!-- <ResourceDictionary Source="ms-appx:///Themes/Divider.xaml" /> -->
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
