@@ -31,4 +31,4 @@
 - 修复：若干BUG
 - 修复：升级易受攻击的第三方引用
 
-**Full Changelog**: https://github.com/SaboZhang/EasyTidy/compare/1.0.3.1120...v0.1.18-alpha.3
+**Full Changelog**: https://github.com/SaboZhang/EasyTidy/compare/1.0.3.1120...1.0.4.1209-alpha.1
