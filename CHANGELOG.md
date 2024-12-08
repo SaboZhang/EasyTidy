@@ -1,6 +1,10 @@
 
 # 更新
 
+## [1.0.4.1209-alpha.1] - 更新程序存在BUG，请手动下载更新
+
+[更新下载](https://github.com/SaboZhang/EasyTidy/releases)
+
 - Refactor: Update module changes
 - Refactor: Remove WinUICommunity references
 - Refactor: Move general settings to the settings page
