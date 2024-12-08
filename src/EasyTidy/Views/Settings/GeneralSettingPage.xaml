@@ -8,12 +8,272 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:views="using:EasyTidy.Views"
+    xmlns:ctk="using:CommunityToolkit.WinUI.Controls"
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:etc="using:EasyTidy.Views.UserControls"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:ui="using:CommunityToolkit.WinUI"
+    xmlns:behaviors="using:EasyTidy.Behaviors"
+    behaviors:NavigationViewHeaderBehavior.HeaderTemplate="{StaticResource BreadcrumbBarDataTemplate}"
+    behaviors:NavigationViewHeaderBehavior.HeaderContext="{Binding}"
     mc:Ignorable="d">
-    <ScrollView x:Name="ContentArea" Margin="{ThemeResource ContentPageMargin}" VerticalScrollBarVisibility="Auto">
+    <ScrollView x:Name="ContentArea" Margin="160,0,160,0" VerticalScrollBarVisibility="Auto">
         <StackPanel
             Margin="10"
             Spacing="5">
 
+            <StackPanel ChildrenTransitions="{StaticResource SettingsCardsAnimations}"
+                        Orientation="Vertical">
+                <etc:SettingsGroup MaxWidth="{ThemeResource MaxPageContentWidth}"
+                                   Margin="{ThemeResource ContentPageMargin}"
+                                   x:Uid="FileProcessing">
+                    <ctk:SettingsCard x:Uid="FileProcessingCard">
+                        <ctk:SettingsCard.HeaderIcon>
+                            <FontIcon Glyph="&#xE7BA;"/>
+                        </ctk:SettingsCard.HeaderIcon>
+                        <ComboBox x:Uid="FileProcessingComboBox"
+                                  x:Name="FileConflictResolution"
+                                  ItemsSource="{x:Bind ViewModel.FileOperationTypes}"
+                                  SelectedItem="{x:Bind ViewModel.OperationType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Converter={StaticResource EnumDisplayNameConverter}}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                            <i:Interaction.Behaviors>
+                                <ic:EventTriggerBehavior EventName="SelectionChanged">
+                                    <ic:EventTriggerBehavior.Actions>
+                                        <ic:InvokeCommandAction Command="{x:Bind ViewModel.FileOperationTypeChangedCommand}"/>
+                                    </ic:EventTriggerBehavior.Actions>
+                                </ic:EventTriggerBehavior>
+                            </i:Interaction.Behaviors>
+                        </ComboBox>
+                    </ctk:SettingsCard>
+                    <ctk:SettingsCard x:Uid="GeneralSubFloderCard">
+                        <ctk:SettingsCard.HeaderIcon>
+                            <FontIcon Glyph="&#xEC50;"/>
+                        </ctk:SettingsCard.HeaderIcon>
+                        <ToggleSwitch IsOn="{x:Bind ViewModel.SubFolder, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </ctk:SettingsCard>
+                    <ctk:SettingsCard x:Uid="GeneraIgnoreCard">
+                        <ctk:SettingsCard.HeaderIcon>
+                            <FontIcon Glyph="&#xE8F6;"/>
+                        </ctk:SettingsCard.HeaderIcon>
+                        <ToggleSwitch IsOn="{x:Bind ViewModel.FileInUse, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </ctk:SettingsCard>
+                    <ctk:SettingsCard x:Uid="GeneralIrrelevantFilesCard">
+                        <ctk:SettingsCard.HeaderIcon>
+                            <FontIcon Glyph="&#xE8F6;"/>
+                        </ctk:SettingsCard.HeaderIcon>
+                        <ToggleSwitch IsOn="{x:Bind ViewModel.IrrelevantFiles, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </ctk:SettingsCard>
+                    <ctk:SettingsCard x:Uid="GeneralEmptyFileCard">
+                        <ctk:SettingsCard.HeaderIcon>
+                            <FontIcon Glyph="&#xE838;"/>
+                        </ctk:SettingsCard.HeaderIcon>
+                        <ToggleSwitch IsOn="{x:Bind ViewModel.EmptyFiles, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </ctk:SettingsCard>
+                    <ctk:SettingsCard x:Uid="GeneralHiddenFileCard">
+                        <ctk:SettingsCard.HeaderIcon>
+                            <FontIcon Glyph="&#xEC25;"/>
+                        </ctk:SettingsCard.HeaderIcon>
+                        <ToggleSwitch IsOn="{x:Bind ViewModel.HiddenFiles, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </ctk:SettingsCard>
+                </etc:SettingsGroup>
+
+                <etc:SettingsGroup x:Uid="GeneralAppSettings"
+                                   MaxWidth="{ThemeResource MaxPageContentWidth}"
+                                   Margin="{ThemeResource ContentPageMargin}">
+                    <ctk:SettingsCard x:Uid="GeneralAutoStartCard">
+                        <ctk:SettingsCard.HeaderIcon>
+                            <FontIcon Glyph="&#xE7E8;"/>
+                        </ctk:SettingsCard.HeaderIcon>
+                        <ToggleSwitch IsOn="{x:Bind ViewModel.IsStartup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </ctk:SettingsCard>
+                    <ctk:SettingsCard x:Uid="GeneralCheckCard">
+                        <ctk:SettingsCard.HeaderIcon>
+                            <FontIcon Glyph="&#xECC5;"/>
+                        </ctk:SettingsCard.HeaderIcon>
+                        <ToggleSwitch IsOn="{x:Bind ViewModel.IsStartupCheck, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </ctk:SettingsCard>
+                    <ctk:SettingsCard x:Uid="GeneralMinimizeCard">
+                        <ctk:SettingsCard.HeaderIcon>
+                            <FontIcon Glyph="&#xEE47;"/>
+                        </ctk:SettingsCard.HeaderIcon>
+                        <ToggleSwitch IsOn="{x:Bind ViewModel.Minimize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </ctk:SettingsCard>
+                    <ctk:SettingsCard x:Uid="GeneralMultipleInstanceCard">
+                        <ctk:SettingsCard.HeaderIcon>
+                            <FontIcon Glyph="&#xE762;"/>
+                        </ctk:SettingsCard.HeaderIcon>
+                        <ToggleSwitch IsOn="{x:Bind ViewModel.EnableMultiInstance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </ctk:SettingsCard>
+                </etc:SettingsGroup>
+                <etc:SettingsGroup x:Uid="GeneralBack"
+                                   MaxWidth="{ThemeResource MaxPageContentWidth}"
+                                   Margin="{ThemeResource ContentPageMargin}"
+                                   Visibility="Visible">
+                    <ctk:SettingsExpander x:Uid="GeneralBackCard"
+                                          HeaderIcon="{ui:FontIcon FontFamily={StaticResource SymbolThemeFontFamily},
+          Glyph=&#xE777;}">
+                        <StackPanel Orientation="Horizontal"
+                                    Spacing="8">
+                            <Button x:Uid="GeneralBackButton"
+                                    Command="{x:Bind ViewModel.BackupConfigsClickCommand}"/>
+                            <Button x:Uid="GeneralRestoreButton"/>
+                            <CheckBox x:Uid="GeneralAutoBackup"
+                                    IsChecked="{x:Bind ViewModel.AutoBackup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <ctk:SettingsExpander.Items>
+                            <ctk:SettingsCard x:Uid="GeneralLocationCard">
+                                <StackPanel HorizontalAlignment="Right"
+                                            Orientation="Horizontal"
+                                            Spacing="8">
+                                    <TextBlock x:Name="pathTextBlock"
+                                               Width="350"
+                                               HorizontalAlignment="Right"
+                                               VerticalAlignment="Center"
+                                               FontSize="12"
+                                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                               IsTextSelectionEnabled="True"
+                                               TextAlignment="Right"
+                                               TextTrimming="CharacterEllipsis"
+                                               Text="{x:Bind ViewModel.FloderPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <Button Content="&#xe8da;"
+                                            Visibility="{x:Bind ViewModel.PathTypeSelectedIndex, Mode=TwoWay, Converter={StaticResource BoolToVisibilityConverter}}"
+                                            FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                            Command="{x:Bind ViewModel.SelectPathCommand }">
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip>
+                                                <TextBlock Text="Select folder"/>
+                                            </ToolTip>
+                                        </ToolTipService.ToolTip>
+                                    </Button>
+                                    <ComboBox x:Uid="GeneralBackupMethod"
+                                              Width="140"
+                                              x:Name="CmbPathType"
+                                              SelectionChanged="CmbPathType_SelectionChanged"
+                                              ItemsSource="{x:Bind ViewModel.BackupTypes}"
+                                              SelectedIndex="{x:Bind ViewModel.BackupTypeIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Converter={StaticResource EnumDisplayNameConverter}}"/>
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </ComboBox>
+                                </StackPanel>
+                            </ctk:SettingsCard>
+                            <ctk:SettingsCard HorizontalContentAlignment="Left"
+                                              ContentAlignment="Vertical"
+                                              Visibility="{x:Bind ViewModel.WebDavIsShow, Mode=TwoWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                                <ctk:SettingsCard.Resources>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="FontSize"
+                                                Value="14"/>
+                                    </Style>
+                                </ctk:SettingsCard.Resources>
+
+                                <Grid Margin="0,12,0,6"
+                                      ColumnSpacing="8">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock Grid.Row="0"
+                                               x:Uid="GeneralAddress"/>
+                                    <TextBox Grid.Row="0"
+                                             Grid.Column="1"
+                                             Width="480"
+                                             Margin="0,-8,0,15"
+                                             Text="{x:Bind ViewModel.WebDavUrl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                                    <TextBlock Grid.Row="1"
+                                               x:Uid="GeneralUsername"/>
+                                    <TextBox Grid.Row="1"
+                                             Grid.Column="1"
+                                             Width="480"
+                                             Margin="0,-8,0,15"
+                                             Text="{x:Bind ViewModel.WebDavUserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <TextBlock Grid.Row="2"
+                                               x:Uid="GeneralPassword"/>
+                                    <PasswordBox Grid.Row="2"
+                                                 Grid.Column="1"
+                                                 Width="480"
+                                                 Margin="0,-8,0,15"
+                                                 Password="{x:Bind ViewModel.WebDavPassWord, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                </Grid>
+                            </ctk:SettingsCard>
+                            <ctk:SettingsCard HorizontalContentAlignment="Left"
+                                              ContentAlignment="Vertical"
+                                              x:Uid="GeneralBackupInformation">
+                                <ctk:SettingsCard.Resources>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="FontSize"
+                                                Value="12"/>
+                                    </Style>
+                                </ctk:SettingsCard.Resources>
+                                <Grid Margin="0,0,0,6"
+                                      ColumnSpacing="8">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock x:Uid="GeneralStatus"/>
+                                    <TextBlock Grid.Column="1"
+                                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                               Text="{x:Bind ViewModel.BackupStatus, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <Run/>
+                        <Hyperlink TextDecorations="Underline">
+                            <Run x:Uid="GeneralRefresh"/>
+                        </Hyperlink>
+                                    </TextBlock>
+
+                                    <TextBlock Grid.Row="1"
+                                               x:Uid="GeneralFilename"/>
+                                    <TextBlock Grid.Row="1"
+                                               Grid.Column="1"
+                                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                               Text="{x:Bind ViewModel.BackupFileName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                                    <TextBlock Grid.Row="2"
+                                               x:Uid="GeneralSourceComputer"/>
+                                    <TextBlock Grid.Row="2"
+                                               Grid.Column="1"
+                                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                               Text="{x:Bind ViewModel.BackupHostName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <TextBlock Grid.Row="3"
+                                               x:Uid="GeneralCreatedOn"/>
+                                    <TextBlock Grid.Row="3"
+                                               Grid.Column="1"
+                                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                               Text="{x:Bind ViewModel.BackupCreateTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                </Grid>
+                            </ctk:SettingsCard>
+                        </ctk:SettingsExpander.Items>
+
+                    </ctk:SettingsExpander>
+                </etc:SettingsGroup>
+                <InfoBar
+                    Title="{x:Bind ViewModel.SettingsBackupMessage, Mode=OneWay}"
+                    IsClosable="False"
+                    IsOpen="{x:Bind ViewModel.SettingsBackupRestoreMessageVisible, Mode=OneWay}"
+                    IsTabStop="{x:Bind ViewModel.SettingsBackupRestoreMessageVisible, Mode=OneWay}"
+                    Severity="{x:Bind ViewModel.BackupRestoreMessageSeverity, Mode=TwoWay}"/>
+            </StackPanel>
+            
+            <StackPanel Height="100"/>
         </StackPanel>
     </ScrollView>
 </ev:ToolPage>

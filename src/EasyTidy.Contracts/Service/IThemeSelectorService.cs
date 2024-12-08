@@ -2,9 +2,6 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace EasyTidy.Contracts.Service;
@@ -12,6 +9,8 @@ namespace EasyTidy.Contracts.Service;
 public interface IThemeSelectorService
 {
     public event EventHandler<ElementTheme> ThemeChanged;
+
+    void ApplyTheme();
 
     void SetRequestedTheme();
 

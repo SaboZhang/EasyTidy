@@ -339,10 +339,10 @@
   <data name="AboutUsSettingPage_Header" xml:space="preserve">
     <value>About</value>
   </data>
-  <data name="GeneralPageControl.ModuleDescription" xml:space="preserve">
+  <data name="LogsSettingsControl.ModuleDescription" xml:space="preserve">
     <value>EasyTidy is an open-source, professional file management tool designed to provide users with efficient and convenient file classification and organization solutions. Through custom settings, users can achieve various sorting methods such as automatic sorting, scheduled sorting, real-time sorting, and manual sorting to meet the file management needs in different scenarios. Used by the author ♥  make.</value>
   </data>
-  <data name="GeneralPageControl.ModuleTitle" xml:space="preserve">
+  <data name="LogsSettingsControl.ModuleTitle" xml:space="preserve">
     <value>General</value>
   </data>
   <data name="AtLeastOneWord" xml:space="preserve">

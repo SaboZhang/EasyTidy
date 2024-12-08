@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
+using Windows.Networking.Connectivity;
 
 namespace EasyTidy.Util;
 
@@ -44,5 +42,14 @@ public class CommonUtil
         WindowsPrincipal principal = new(identity);
 
         return principal.IsInRole(WindowsBuiltInRole.Administrator);
+    }
+
+    /// <summary>
+    ///   判断网络是否可用
+    /// </summary>
+    /// <returns></returns>
+    public static bool IsNetworkAvailable()
+    {
+        return NetworkInformation.GetInternetConnectionProfile()?.NetworkAdapter != null;
     }
 }

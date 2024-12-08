@@ -10,7 +10,7 @@
     <PackageVersion Include="CommunityToolkit.WinUI.Converters" Version="8.1.240916" />
     <PackageVersion Include="CommunityToolkit.WinUI.Controls.SettingsControls" Version="8.1.240916" />
     <PackageVersion Include="CommunityToolkit.WinUI.Extensions" Version="8.1.240916" />
-    <PackageVersion Include="H.NotifyIcon.WinUI" Version="2.1.4" />
+    <PackageVersion Include="H.NotifyIcon.WinUI" Version="2.2.0" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -18,7 +18,7 @@
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Hosting" Version="9.0.0" />
     <PackageVersion Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
-    <PackageVersion Include="Microsoft.WindowsAppSDK" Version="1.6.241106002" />
+    <PackageVersion Include="Microsoft.WindowsAppSDK" Version="1.6.241114003" />
     <PackageVersion Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.9" />
     <PackageVersion Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageVersion Include="Nucs.JsonSettings2.Autosave" Version="2.0.3" />
@@ -28,9 +28,6 @@
     <PackageVersion Include="System.Net.Http" Version="4.3.4" />
     <PackageVersion Include="System.Text.RegularExpressions" Version="4.3.1" />
     <PackageVersion Include="System.Data.SQLite.Core" Version="1.0.119" />
-    <PackageVersion Include="WinUICommunity.Components" Version="7.0.0" />
-    <PackageVersion Include="WinUICommunity.Core" Version="7.0.0" />
-    <PackageVersion Include="WinUICommunity.LandingPages" Version="7.0.0" />
     <PackageVersion Include="WinUIEx" Version="2.5.0" />
     <PackageVersion Include="Serilog" Version="4.0.1" />
     <PackageVersion Include="Serilog.Sinks.File" Version="6.0.0" />
@@ -39,5 +36,6 @@
     <PackageVersion Include="System.Text.Json" Version="9.0.0" />
     <PackageVersion Include="TagLibSharp" Version="2.3.0" />
     <PackageVersion Include="WebDAVClient" Version="2.2.1" />
+    <PackageVersion Include="XAMLTools.MSBuild" Version="1.0.0-alpha0167" />
   </ItemGroup>
 </Project>

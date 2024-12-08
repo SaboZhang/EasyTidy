@@ -86,6 +86,10 @@ dotnet_naming_style.pascal_case.required_prefix =
 dotnet_naming_style.pascal_case.required_suffix = 
 dotnet_naming_style.pascal_case.word_separator = 
 dotnet_naming_style.pascal_case.capitalization = pascal_case
+csharp_prefer_system_threading_lock = true:suggestion
+
+# CA1416: 验证平台兼容性
+dotnet_diagnostic.CA1416.severity = suggestion
 
 [*.vb]
 #### 命名样式 ####

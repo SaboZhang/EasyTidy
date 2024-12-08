@@ -1,22 +1,9 @@
-using CommunityToolkit.WinUI;
 using EasyTidy.Common.Extensions;
+using EasyTidy.Contracts.Service;
+using EasyTidy.Log;
 using EasyTidy.Model;
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using EasyTidy.Service;
+using EasyTidy.Util;
 using Windows.UI.ViewManagement;
 using WinUIEx;
 
@@ -45,6 +32,10 @@ public sealed partial class MainWindow : WindowEx
         _dispatcherQueue = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread();
         _settings = new UISettings();
         _settings.ColorValuesChanged += Settings_ColorValuesChanged; // cannot use FrameworkElement.ActualThemeChanged event
+        if (!RuntimeHelper.IsMSIX)
+        {
+            this.Closed += OnProcessExit;
+        }
     }
 
     // this handles updating the caption button colors correctly when indows system theme is changed
@@ -56,5 +47,17 @@ public sealed partial class MainWindow : WindowEx
         {
             TitleBarHelper.ApplySystemThemeToCaptionButtons();
         });
+    }
+
+    async void OnProcessExit(object sender, WindowEventArgs e)
+    {
+        await QuartzHelper.StopAllJob();
+        FileEventHandler.StopAllMonitoring();
+        // ¼ÇÂ¼ÈÕÖ¾
+        if (Logger != null && !App.HandleClosedEvents)
+        {
+            Logger.Info($"{Constants.AppName}_v{Constants.Version} Closed...\n");
+            LogService.UnRegister();
+        }
     }
 }

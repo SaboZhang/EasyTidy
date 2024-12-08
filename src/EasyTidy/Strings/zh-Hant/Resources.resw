@@ -158,12 +158,6 @@
   <data name="FilterSettingsControl.ModuleTitle" xml:space="preserve">
     <value>過濾器</value>
   </data>
-  <data name="GeneralPageControl.ModuleDescription" xml:space="preserve">
-    <value>EasyTidy是一款開源的，專業的文件管理工具，旨在為用戶提供高效、便捷的文件分類整理解決方案。通過自定義設置，用戶可以實現自動整理、定時整理、實時整理以及手動整理等多種整理方式，以滿足不同場景下的文件管理需求。由作者用 ♥ 製作。</value>
-  </data>
-  <data name="GeneralPageControl.ModuleTitle" xml:space="preserve">
-    <value>常規</value>
-  </data>
   <data name="AtLeastOneWord" xml:space="preserve">
     <value>至少一個單詞</value>
   </data>
@@ -1173,5 +1167,38 @@
   </data>
   <data name="ExecutionSuccessfulText" xml:space="preserve">
     <value>執行成功</value>
+  </data>
+  <data name="Settings_General_Header" xml:space="preserve">
+    <value>常規設定</value>
+  </data>
+  <data name="Settings_General_Description" xml:space="preserve">
+    <value>設定您的應用程式並調整其操作參數。</value>
+  </data>
+  <data name="NavLogsText.Content" xml:space="preserve">
+    <value>運行日誌</value>
+  </data>
+  <data name="LogsSettingsControl.ModuleDescription" xml:space="preserve">
+    <value>EasyTidy 是一款開源的專業文件管理工具，致力於為用戶提供高效且便捷的文件歸類整理方案。用戶可通過自訂設定，實現諸如自動歸類、定時歸類、即時歸類以及手動歸類等多種分類方式，滿足不同場景下的文件管理需求。作者自用 ♥ 製作。</value>
+  </data>
+  <data name="LogsSettingsControl.ModuleTitle" xml:space="preserve">
+    <value>運行日誌</value>
+  </data>
+  <data name="LogsSettingsCard.Header" xml:space="preserve">
+    <value>日誌</value>
+  </data>
+  <data name="LogsSettingsCard.Description" xml:space="preserve">
+    <value>展示應用程式的執行記錄。</value>
+  </data>
+  <data name="RefreshButton.Content" xml:space="preserve">
+    <value>刷新</value>
+  </data>
+  <data name="LogsGroup.Header" xml:space="preserve">
+    <value>即時日誌</value>
+  </data>
+  <data name="ClearButton.Content" xml:space="preserve">
+    <value>清理日誌</value>
+  </data>
+  <data name="LogsFolder.Content" xml:space="preserve">
+    <value>日誌目錄</value>
   </data>
 </root>

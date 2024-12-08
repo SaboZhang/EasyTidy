@@ -4,7 +4,6 @@
 using CommunityToolkit.WinUI;
 using EasyTidy.Model;
 using Microsoft.UI.Xaml.Controls.Primitives;
-using Quartz.Util;
 using System.Collections;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -104,7 +103,7 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
         }
     }
 
-    public bool IsValid { get; set;}
+    public bool IsValid { get; set; }
 
     public AddTaskContentDialog()
     {
@@ -302,7 +301,7 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
 
     private void ToggleButton_Click(object sender, RoutedEventArgs e)
     {
-        var priority = sender  as ToggleButton;
+        var priority = sender as ToggleButton;
         if (priority.IsChecked == true)
         {
             Priority += 5;
@@ -313,23 +312,15 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
         }
     }
 
-    private void TaskGroupNameBox_TextChanged(object sender, TextChangedEventArgs e)
+    private void TaskGroupNameBox_LosingFocus(UIElement sender, Microsoft.UI.Xaml.Input.LosingFocusEventArgs args)
     {
-        if (!IsValid && string.IsNullOrWhiteSpace(TaskGroupNameBox.Text))
+        var text = (sender as TextBox)?.Text;
+        if (string.IsNullOrWhiteSpace(text))
         {
             ValidTextBlock.Visibility = Visibility.Visible;
             ValidTaskGroupNameBox.Text = "GroupInformationVerificationAdd".GetLocalized() + "\n" + "GroupInformationVerification".GetLocalized();
         }
-        else if (string.IsNullOrWhiteSpace(TaskGroupNameBox.Text))
-        {
-            ValidTextBlock.Visibility = Visibility.Visible;
-            ValidTaskGroupNameBox.Text = "GroupInformationVerificationAdd".GetLocalized() + "\n" + "GroupInformationVerification".GetLocalized();
-        } 
-        else if (IsValid && !string.IsNullOrWhiteSpace(TaskGroupNameBox.Text))
-        {
-            ValidTextBlock.Visibility = Visibility.Collapsed;
-        }
-        else if (!IsValid &&!string.IsNullOrWhiteSpace(TaskGroupNameBox.Text))
+        else
         {
             ValidTextBlock.Visibility = Visibility.Collapsed;
         }

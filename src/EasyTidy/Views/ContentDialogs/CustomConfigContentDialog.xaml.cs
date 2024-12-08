@@ -7,7 +7,6 @@ using Quartz;
 using System.Collections;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text.RegularExpressions;
 
 namespace EasyTidy.Views.ContentDialogs;
 
@@ -172,7 +171,6 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
     private void ValidateDelay(string delay)
     {
         var errors = new List<string>(1);
-        var pattern = new Regex(@"^\d+$");
         if (!IsValid && string.IsNullOrEmpty(delay) && ViewModel.CustomFileChange)
         {
             DelayValid.Text = "ValidateDelay".GetLocalized();
@@ -193,8 +191,7 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
     private void ValidateMinute(string minute)
     {
         var errors = new List<string>(1);
-        var pattern = new Regex(@"^([1-9]|[1-5][0-9])(,(?=[1-9]|[1-5][0-9]))*$");
-        if (!IsValid && string.IsNullOrEmpty(minute))
+        if (!IsValid && !string.IsNullOrEmpty(minute))
         {
             MinuteValid.Text = "MinuteFormatInfo".GetLocalized();
             MinuteValid.Visibility = Visibility.Visible;
@@ -214,7 +211,6 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
     private void ValidateHour(string hour)
     {
         var errors = new List<string>(1);
-        var pattern = new Regex(@"^(2[0-3]|[01]?[0-9])(,(2[0-3]|[01]?[0-9]))*$");
         if (!IsValid && !string.IsNullOrEmpty(hour))
         {
             HourValid.Text = "HourFormatInfo".GetLocalized();
@@ -235,8 +231,7 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
     private void ValidateDayOfWeek(string dayOfWeek)
     {
         var errors = new List<string>(1);
-        var pattern = new Regex(@"^(0|1|2|3|4|5|6)(,(0|1|2|3|4|5|6))*$");
-        if (!IsValid && string.IsNullOrEmpty(dayOfWeek))
+        if (!IsValid && !string.IsNullOrEmpty(dayOfWeek))
         {
             DayOfWeekValid.Text = "WeeksFormatInfo".GetLocalized();
             DayOfWeekValid.Visibility = Visibility.Visible;
@@ -256,8 +251,7 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
     private void ValidateDayOfMonth(string dayOfMonth)
     {
         var errors = new List<string>(1);
-        var pattern = new Regex(@"^(31|30|[12][0-9]|1?[1-9])(,(31|30|[12][0-9]|1?[1-9]))*$");
-        if (!IsValid && string.IsNullOrEmpty(dayOfMonth))
+        if (!IsValid && !string.IsNullOrEmpty(dayOfMonth))
         {
             DayOfMonthValid.Text = "DateFormatInfo".GetLocalized();
             DayOfMonthValid.Visibility = Visibility.Visible;
@@ -277,8 +271,7 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
     private void ValidateMonthlyDay(string monthlyDay)
     {
         var errors = new List<string>(1);
-        var pattern = new Regex(@"^(1|2|3|4|5|6|7|8|9|10|11|12)(,(1|2|3|4|5|6|7|8|9|10|11|12))*$");
-        if (!IsValid && string.IsNullOrEmpty(monthlyDay))
+        if (!IsValid && !string.IsNullOrEmpty(monthlyDay))
         {
             MonthlyDayValid.Text = "MonthFormatInfo".GetLocalized();
             MonthlyDayValid.Visibility = Visibility.Visible;

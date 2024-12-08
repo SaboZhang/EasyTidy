@@ -1,8 +1,6 @@
 ﻿using CommunityToolkit.WinUI;
 using EasyTidy.Common.Model;
 using EasyTidy.Contracts.Service;
-using Microsoft.UI.Composition.SystemBackdrops;
-using Microsoft.UI.Xaml.Media;
 using System.Collections.ObjectModel;
 using Windows.System;
 using BackdropType = EasyTidy.Model.BackdropType;
@@ -58,11 +56,11 @@ public partial class ThemeSettingViewModel : ObservableObject
         {
             return _backDropIndex;
         }
-        set 
+        set
         {
-            if (_backDropIndex != value) 
+            if (_backDropIndex != value)
             {
-                switch (value) 
+                switch (value)
                 {
                     case 0:
                         BackDrop = BackdropType.None;

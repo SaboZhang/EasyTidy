@@ -1,22 +1,12 @@
-﻿using CommunityToolkit.WinUI;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.Windows.ApplicationModel.Resources;
-
-namespace EasyTidy.Views;
+﻿namespace EasyTidy.Views;
 
 public sealed partial class MainPage : Page
 {
     public MainViewModel ViewModel { get; }
 
-    //private readonly ResourceManager _resourceManager;
-
-    //private readonly ResourceContext _resourceContext;
-
     public MainPage()
     {
         ViewModel = App.GetService<MainViewModel>();
-        //_resourceManager = new ResourceManager();
-        //_resourceContext = _resourceManager.CreateResourceContext();
         this.InitializeComponent();
         Logger.Fatal("MainPage Initialized");
     }

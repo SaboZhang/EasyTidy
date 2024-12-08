@@ -8,6 +8,7 @@
     <cover:EnumToVisibilityConverter x:Key="EnumToVisibilityConverter" />
     <cover:BoolToStringConverter x:Key="BoolToStringConverter" />
     <cover:StringToBoolConverter x:Key="StringToBoolConverter" />
+    <cover:LineDashStrokeArrayConverter x:Key="LineDashStrokeArrayConverter" />
 
     <converter:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     

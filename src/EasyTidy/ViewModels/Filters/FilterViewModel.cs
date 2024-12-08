@@ -85,6 +85,7 @@ public partial class FilterViewModel : ObservableRecipient
                     FiltersList = new(list);
                     FiltersListACV = new AdvancedCollectionView(FiltersList, true);
                     FiltersListACV.SortDescriptions.Add(new SortDescription("Id", SortDirection.Ascending));
+                    Logger.Info($"查询到 {list.Count} 条附加规则记录");
                 });
             });
         }
@@ -135,11 +136,8 @@ public partial class FilterViewModel : ObservableRecipient
                 && string.IsNullOrWhiteSpace(dialog.IncludedFiles) && !dialog.IsArchiveSelected && !dialog.IsHiddenSelected
                 && !dialog.IsReadOnlySelected && !dialog.IsSystemSelected && !dialog.IsTempSelected))
             {
-                Growl.Warning(new GrowlInfo
-                {
-                    Message = "至少需要设置一个过滤条件。",
-                    ShowDateTime = false
-                });
+                _notificationQueue.ShowWithWindowExtension("至少需要设置一个过滤条件。", InfoBarSeverity.Warning);
+                _ = ClearNotificationAfterDelay(3000);
                 args.Cancel = true;
                 return;
             }
@@ -289,11 +287,8 @@ public partial class FilterViewModel : ObservableRecipient
                         && string.IsNullOrWhiteSpace(dialog.IncludedFiles) && !dialog.IsArchiveSelected && !dialog.IsHiddenSelected
                         && !dialog.IsReadOnlySelected && !dialog.IsSystemSelected && !dialog.IsTempSelected))
                     {
-                        Growl.Warning(new GrowlInfo
-                        {
-                            Message = "至少需要保留一个过滤条件。",
-                            ShowDateTime = false
-                        });
+                        _notificationQueue.ShowWithWindowExtension("至少需要保留一个过滤条件。", InfoBarSeverity.Warning);
+                        _ = ClearNotificationAfterDelay(3000);
                         e.Cancel = true;
                         return;
                     }

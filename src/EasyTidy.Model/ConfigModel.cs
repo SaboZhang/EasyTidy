@@ -7,7 +7,7 @@ public class ConfigModel
     /// <summary>
     ///     开机自启动
     /// </summary>
-    
+
     public ElementTheme ElementTheme { get; set; }
 
     public bool? IsStartup { get; set; } = false;

@@ -2,7 +2,6 @@ using EasyTidy.Log;
 using EasyTidy.Model;
 using EasyTidy.Util;
 using Microsoft.VisualBasic.FileIO;
-using Quartz.Util;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -31,7 +30,7 @@ public static class FileActuator
         try
         {
 
-            if (Path.GetExtension(parameters.SourcePath).Equals(".lnk", StringComparison.OrdinalIgnoreCase) 
+            if (Path.GetExtension(parameters.SourcePath).Equals(".lnk", StringComparison.OrdinalIgnoreCase)
                 || string.IsNullOrEmpty(parameters.TargetPath))
             {
                 return;
@@ -66,7 +65,7 @@ public static class FileActuator
         {
             operationLock.Release();
             _operationLocks.TryRemove(operationId, out _);
-            LogService.Logger.Info("Removed operation lock from executed operations.");
+            LogService.Logger.Debug("Removed operation lock from executed operations.");
         }
     }
 
@@ -102,14 +101,14 @@ public static class FileActuator
             Directory.CreateDirectory(parameters.TargetPath);
         }
 
-        LogService.Logger.Info($"执行文件夹操作 ProcessFoldersAsync {parameters.TargetPath}");
+        LogService.Logger.Info($"执行文件夹操作 {parameters.TargetPath}");
         var folderList = Directory.GetDirectories(parameters.SourcePath).ToList();
 
         foreach (var folder in folderList)
         {
             if (ShouldSkip(parameters.Funcs, folder, parameters.PathFilter))
             {
-                LogService.Logger.Info($"执行文件夹操作 ShouldSkip {parameters.TargetPath}");
+                LogService.Logger.Debug($"执行文件夹操作 ShouldSkip {parameters.TargetPath}");
                 continue;
             }
 
@@ -124,7 +123,7 @@ public static class FileActuator
             { OldTargetPath = parameters.TargetPath, RuleModel = parameters.RuleModel };
             await ExecuteFolderOperationAsync(newParameters);
         }
-        if (parameters.OperationMode == OperationMode.Rename) 
+        if (parameters.OperationMode == OperationMode.Rename)
         {
             Renamer.ResetIncrement();
         }
@@ -140,11 +139,11 @@ public static class FileActuator
     {
         if (ShouldSkip(parameters.Funcs, parameters.SourcePath, parameters.PathFilter) && parameters.OperationMode != OperationMode.RecycleBin)
         {
-            LogService.Logger.Info($"执行文件夹操作 ShouldSkip {parameters.TargetPath}");
+            LogService.Logger.Debug($"执行文件夹操作 {parameters.TargetPath}");
             return;
         }
 
-        LogService.Logger.Info($"执行文件夹操作 ExecuteFolderOperationAsync {parameters.TargetPath}, 操作模式: {parameters.OperationMode}");
+        LogService.Logger.Info($"执行文件夹操作 {parameters.TargetPath}, 操作模式: {parameters.OperationMode}");
         switch (parameters.OperationMode)
         {
             case OperationMode.Move:
@@ -185,7 +184,7 @@ public static class FileActuator
             var dynamicFilters = new List<Func<string, bool>>(parameters.Funcs);
             if (ShouldSkip(new List<Func<string, bool>>(parameters.Funcs), filePath, parameters.PathFilter))
             {
-                LogService.Logger.Info($"执行文件操作，获取所有文件跳过不符合条件的文件 filePath: {filePath}, RuleFilters: {parameters.RuleName},=== {fileCount}, sourcePath: {parameters.SourcePath}");
+                LogService.Logger.Debug($"执行文件操作，获取所有文件跳过不符合条件的文件 filePath: {filePath}, RuleFilters: {parameters.RuleName},=== {fileCount}, sourcePath: {parameters.SourcePath}");
                 continue; // 跳过不符合条件的文件
             }
 
@@ -201,7 +200,7 @@ public static class FileActuator
                 parameters.Funcs,
                 parameters.PathFilter
                 )
-            { 
+            {
                 OldTargetPath = parameters.TargetPath,
                 OldSourcePath = oldPath,
                 RuleModel = parameters.RuleModel
@@ -223,7 +222,7 @@ public static class FileActuator
             {
                 if (subDir.Equals(parameters.TargetPath, StringComparison.OrdinalIgnoreCase))
                 {
-                    LogService.Logger.Warn($"跳过递归目标目录 {subDir}");
+                    LogService.Logger.Debug($"跳过递归目标目录 {subDir}");
                     continue;
                 }
                 // 为子文件夹生成新的目标路径
@@ -264,11 +263,11 @@ public static class FileActuator
     {
         if (ShouldSkip(parameters.Funcs, parameters.SourcePath, parameters.PathFilter) && parameters.OperationMode != OperationMode.RecycleBin)
         {
-            LogService.Logger.Info($"执行文件操作 ShouldSkip {parameters.TargetPath}");
+            LogService.Logger.Debug($"执行文件操作 ShouldSkip {parameters.TargetPath}");
             return;
         }
 
-        LogService.Logger.Info($"执行文件操作 ProcessFileAsync {parameters.TargetPath}, 操作模式: {parameters.OperationMode}");
+        LogService.Logger.Info($"开始执行文件操作{parameters.TargetPath}, 操作模式: {parameters.OperationMode}");
         switch (parameters.OperationMode)
         {
             case OperationMode.Move:
@@ -613,7 +612,7 @@ public static class FileActuator
     {
         if (string.IsNullOrWhiteSpace(filePath) || !File.Exists(filePath))
         {
-            LogService.Logger.Error($"无效路径: {filePath}");
+            LogService.Logger.Warn($"无效路径: {filePath}");
             return;
         }
 
@@ -622,11 +621,11 @@ public static class FileActuator
         // 判断是否为压缩包
         if (FileResolver.IsArchiveFile(extension))
         {
-            ExtractArchive(filePath, tragetPath ,filterExtension);
+            ExtractArchive(filePath, tragetPath, filterExtension);
         }
         else
         {
-            LogService.Logger.Info($"当前不支持处理 {extension} 文件，路径: {filePath}");
+            LogService.Logger.Warn($"当前不支持处理 {extension} 文件，路径: {filePath}");
         }
     }
 
@@ -638,13 +637,13 @@ public static class FileActuator
     {
         if (string.IsNullOrWhiteSpace(zipFilePath) || !File.Exists(zipFilePath))
         {
-            LogService.Logger.Error($"无效路径: {zipFilePath}");
+            LogService.Logger.Warn($"无效路径: {zipFilePath}");
             return;
         }
 
         // 获取文件的目录和名称
         string directoryPath = Path.GetDirectoryName(zipFilePath);
-        if (!tragetPath.Equals(zipFilePath)) 
+        if (!tragetPath.Equals(zipFilePath))
         {
             directoryPath = tragetPath;
         }
@@ -671,7 +670,7 @@ public static class FileActuator
         }
         catch (Exception ex)
         {
-            LogService.Logger.Error($"提取过程中出现错误: {ex.Message}");
+            LogService.Logger.Error($"Error during extract process: {ex.Message}");
         }
     }
 
@@ -721,12 +720,12 @@ public static class FileActuator
         // 如果 pathFilter 为 null，仅根据 satisfiesDynamicFilters 的结果返回
         if (pathFilter == null)
         {
-            LogService.Logger.Info($"satisfiesDynamicFilters (no pathFilter): {satisfiesDynamicFilters}");
+            LogService.Logger.Debug($"satisfiesDynamicFilters (no pathFilter): {satisfiesDynamicFilters}");
             return !satisfiesDynamicFilters;
         }
 
         // 如果 pathFilter 不为 null，要求 satisfiesDynamicFilters 和 satisfiesPathFilter 同时满足
-        LogService.Logger.Info($"satisfiesDynamicFilters: {satisfiesDynamicFilters}, satisfiesPathFilter: {satisfiesPathFilter}");
+        LogService.Logger.Debug($"satisfiesDynamicFilters: {satisfiesDynamicFilters}, satisfiesPathFilter: {satisfiesPathFilter}");
         return satisfiesDynamicFilters ^ satisfiesPathFilter;
     }
 
@@ -739,6 +738,7 @@ public static class FileActuator
     {
         try
         {
+            LogService.Logger.Warn($"开始强制处理文件: {filePath}");
             // 获取源文件的文件名
             string sourceFileName = Path.GetFileName(filePath);
             // 构建目标文件的完整路径
@@ -812,12 +812,12 @@ public static class FileActuator
     /// <param name="rule"></param>
     /// <param name="ruleType"></param>
     /// <returns></returns>
-    private static bool IsFolder(string rule, TaskRuleType ruleType )
+    private static bool IsFolder(string rule, TaskRuleType ruleType)
     {
         bool isFolder = FilterUtil.ContainsTwoConsecutiveChars(rule, '#');
         bool isAllFolders = FilterUtil.ContainsTwoConsecutiveChars(rule, '*');
 
-        if (ruleType == TaskRuleType.FileRule) 
+        if (ruleType == TaskRuleType.FileRule)
         {
             return false;
         }

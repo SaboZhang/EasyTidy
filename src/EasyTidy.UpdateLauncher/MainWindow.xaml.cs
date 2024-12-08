@@ -1,15 +1,6 @@
 ﻿using System.Diagnostics;
 using System.IO;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace EasyTidy.UpdateLauncher;
 
@@ -37,7 +28,7 @@ public partial class MainWindow : Window
         string day = datePart.Substring(2, 2);
         VersionText.Text = $"新版本号：v{App.CurrentVersion}\n构建日期：{year}年{month}月{day}日";
         Loaded += MainWindow_Loaded;
-        
+
     }
 
     private void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -109,6 +100,6 @@ public partial class MainWindow : Window
             UpdateRing.IsIndeterminate = false;
             UpdateRing.Visibility = Visibility.Collapsed;
             RetryButton.Visibility = Visibility.Visible;
-        }  
+        }
     }
 }

@@ -293,11 +293,11 @@
   <data name="AboutUsSettingPage_Header" xml:space="preserve">
     <value>About</value>
   </data>
-  <data name="GeneralPageControl.ModuleDescription" xml:space="preserve">
+  <data name="LogsSettingsControl.ModuleDescription" xml:space="preserve">
     <value>EasyTidy is an open-source, professional file management tool designed to provide users with efficient and convenient file classification and organization solutions. Through custom settings, users can achieve various sorting methods such as automatic sorting, scheduled sorting, real-time sorting, and manual sorting to meet the file management needs in different scenarios. Used by the author ♥  make.</value>
   </data>
-  <data name="GeneralPageControl.ModuleTitle" xml:space="preserve">
-    <value>General</value>
+  <data name="LogsSettingsControl.ModuleTitle" xml:space="preserve">
+    <value>Operation log</value>
   </data>
   <data name="AtLeastOneWord" xml:space="preserve">
     <value>At least one word</value>
@@ -1278,5 +1278,64 @@
   </data>
   <data name="ExecutionSuccessfulText" xml:space="preserve">
     <value>Execution Successful</value>
+  </data>
+  <data name="FilterNameValidation_Text.Text" xml:space="preserve">
+    <value>Please enter a filter name</value>
+  </data>
+  <data name="Settings_General_Header" xml:space="preserve">
+    <value>General Settings</value>
+  </data>
+  <data name="Settings_General_Description" xml:space="preserve">
+    <value>Setting up your app and adjusting its operation parameters.</value>
+  </data>
+  <data name="NavLogsText.Content" xml:space="preserve">
+    <value>Operation log</value>
+  </data>
+  <data name="LogsSettingsCard.Header" xml:space="preserve">
+    <value>Logs</value>
+  </data>
+  <data name="LogsSettingsCard.Description" xml:space="preserve">
+    <value>Show the running log of the app.</value>
+  </data>
+  <data name="RefreshButton.Content" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="LogsGroup.Header" xml:space="preserve">
+    <value>Run log</value>
+  </data>
+  <data name="Verbose" xml:space="preserve">
+    <value>Verbose</value>
+  </data>
+  <data name="Debug" xml:space="preserve">
+    <value>Debug</value>
+  </data>
+  <data name="Information" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="Fatal" xml:space="preserve">
+    <value>Fatal</value>
+  </data>
+  <data name="ClearButton.Content" xml:space="preserve">
+    <value>Clear logs</value>
+  </data>
+  <data name="LogsFolder.Content" xml:space="preserve">
+    <value>Logs Folder</value>
+  </data>
+  <data name="AppNotificationPayloadInfo" xml:space="preserve">
+    <value>&lt;toast launch='meetingId=9813'&gt;
+    &lt;visual&gt;
+        &lt;binding template='ToastGeneric'&gt;
+            &lt;text&gt;&lt;/text&gt;
+            &lt;text&gt;{0}&lt;/text&gt;
+            &lt;text&gt;&lt;/text&gt;
+        &lt;/binding&gt;
+    &lt;/visual&gt;
+&lt;/toast&gt;</value>
   </data>
 </root>

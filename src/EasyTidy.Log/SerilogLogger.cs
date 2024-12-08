@@ -8,7 +8,7 @@ public class SerilogLogger : BaseLogger
 {
     private readonly Logger _logger;
 
-    public SerilogLogger(LogLevel minLevel = LogLevel.Debug, string version = "1.0.0.0")
+    public SerilogLogger(ILoggingService loggingService, LogLevel minLevel = LogLevel.Debug, string version = "1.0.0.0")
     {
         var logConfiguration = new LoggerConfiguration()
             .WriteTo.File(
@@ -17,8 +17,8 @@ public class SerilogLogger : BaseLogger
                 rollingInterval: RollingInterval.Day,
                 restrictedToMinimumLevel: LogEventLevel.Verbose,
                 outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} [{Level:u3}] {Message:lj}{NewLine}{Exception}",
-                retainedFileCountLimit: 7
-            )
+                retainedFileCountLimit: 7)
+            .WriteTo.Sink(new LogEntrySink(loggingService))
             .MinimumLevel.Is(ConvertToSerilogLevel(minLevel));
 
         _logger = logConfiguration.CreateLogger();

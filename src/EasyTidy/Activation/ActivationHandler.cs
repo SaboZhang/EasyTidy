@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EasyTidy.Activation;
+﻿namespace EasyTidy.Activation;
 
 public abstract class ActivationHandler<T> : IActivationHandler where T : class
 {

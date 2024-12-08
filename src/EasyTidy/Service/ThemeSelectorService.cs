@@ -1,12 +1,7 @@
 using EasyTidy.Contracts.Service;
 using EasyTidy.Model;
-using EasyTidy.Util.SettingsInterface;
 using Microsoft.UI.Composition.SystemBackdrops;
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Media;
-using System;
-using System.Threading.Tasks;
 using BackdropType = EasyTidy.Model.BackdropType;
 
 namespace EasyTidy.Service;
@@ -126,9 +121,8 @@ public class ThemeSelectorService : IThemeSelectorService
             BackdropType.Mica => new MicaBackdrop() { Kind = MicaKind.Base },
             BackdropType.MicaAlt => new MicaBackdrop() { Kind = MicaKind.BaseAlt },
             BackdropType.DesktopAcrylic => new DesktopAcrylicBackdrop(),
-            BackdropType.AcrylicBase => new Common.AcrylicSystemBackdrop(DesktopAcrylicKind.Base),
-            BackdropType.AcrylicThin => new Common.AcrylicSystemBackdrop(DesktopAcrylicKind.Thin),
-            BackdropType.Transparent => new TransparentBackdrop(),
+            BackdropType.AcrylicBase => new AcrylicSystemBackdrop(DesktopAcrylicKind.Base),
+            BackdropType.AcrylicThin => new AcrylicSystemBackdrop(DesktopAcrylicKind.Thin),
             _ => null,
         };
     }
@@ -144,7 +138,7 @@ public class ThemeSelectorService : IThemeSelectorService
         {
             return mica.Kind == MicaKind.Base ? BackdropType.Mica : BackdropType.MicaAlt;
         }
-        else if (systemBackdrop is Common.AcrylicSystemBackdrop acrylic)
+        else if (systemBackdrop is AcrylicSystemBackdrop acrylic)
         {
             return acrylic.Kind == DesktopAcrylicKind.Base ? BackdropType.AcrylicBase : BackdropType.AcrylicThin;
         }
@@ -160,4 +154,8 @@ public class ThemeSelectorService : IThemeSelectorService
 
     public void SetRequestedTheme() => ThemeChanged(null, Theme);
 
+    public async void ApplyTheme()
+    {
+        Theme = await LoadThemeFromSettingsAsync();
+    }
 }

@@ -22,9 +22,10 @@
   </ItemGroup>
 
   <ItemGroup>
-	  <PackageReference Include="Microsoft.WindowsAppSDK" />
-	  <PackageReference Include="Microsoft.Windows.SDK.BuildTools" />
+	<PackageReference Include="Microsoft.WindowsAppSDK" />
+	<PackageReference Include="Microsoft.Windows.SDK.BuildTools" />
     <PackageReference Include="Serilog" />
     <PackageReference Include="Serilog.Sinks.File" />
+	<PackageReference Include="CommunityToolkit.WinUI.Extensions" />
   </ItemGroup>
 </Project>

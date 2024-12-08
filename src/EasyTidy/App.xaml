@@ -7,16 +7,19 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
-                <ResourceDictionary Source="ms-appx:///WinUICommunity.Components/Themes/Generic.xaml" />
-                <ResourceDictionary Source="ms-appx:///WinUICommunity.LandingPages/Themes/Generic.xaml" />
-                
-                <ResourceDictionary Source="Themes/ThemeResources.xaml" />
+
                 <ResourceDictionary Source="Themes/Fonts.xaml" />
                 <ResourceDictionary Source="Themes/Converters.xaml" />
                 <ResourceDictionary Source="Themes/Styles.xaml" />
-                <ResourceDictionary Source="Themes/BreadcrumbBar.xaml" />
+                <ResourceDictionary Source="Themes/Generic.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <!--  Other app resources here  -->
+            <TransitionCollection x:Key="SettingsCardsAnimations">
+                <EntranceThemeTransition FromVerticalOffset="50" />
+                <!--  Animates cards when loaded  -->
+                <RepositionThemeTransition IsStaggeringEnabled="False" />
+                <!--  Smoothly animates individual cards upon whenever Expanders are expanded/collapsed  -->
+            </TransitionCollection>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

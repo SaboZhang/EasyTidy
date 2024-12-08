@@ -1,4 +1,3 @@
-using System;
 using EasyTidy.Model;
 using EasyTidy.Util.SettingsInterface;
 

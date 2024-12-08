@@ -1,14 +1,16 @@
-﻿namespace EasyTidy.Log;
+﻿
+
+namespace EasyTidy.Log;
 public class LogService
 {
 #if true
 
-    public static void Register(string name = "", LogLevel minLevel = LogLevel.Debug, string version = "1.0.0.0")
+    public static void Register(ILoggingService loggingService, string name = "", LogLevel minLevel = LogLevel.Debug, string version = "1.0.0.0")
     {
         _logger = name.ToLower() switch
         {
-            "serilog" => new SerilogLogger(minLevel, version),
-            _ => new SerilogLogger(minLevel, version)
+            "serilog" => new SerilogLogger(loggingService, minLevel, version),
+            _ => new SerilogLogger(loggingService, minLevel, version)
         };
     }
 

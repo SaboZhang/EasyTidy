@@ -42,7 +42,7 @@ public static class FileEventHandler
         BindFileSystemEvents(watcher, delaySeconds, parameter);
 
         // 存储监控器
-        _watchers[parameter.SourcePath] = watcher; 
+        _watchers[parameter.SourcePath] = watcher;
     }
 
     /// <summary>
@@ -129,7 +129,7 @@ public static class FileEventHandler
             // 防止重复处理同一个文件
             if (!_processingFiles.TryAdd(path, 0))
             {
-                LogService.Logger.Info($"文件 {path} 正在处理，跳过重复事件。");
+                LogService.Logger.Debug($"文件 {path} 正在处理，跳过重复事件。");
                 return;
             }
 
@@ -157,7 +157,7 @@ public static class FileEventHandler
                         }
                         else
                         {
-                            LogService.Logger.Warn($"文件 {path} 已不存在，无法执行操作。");
+                            LogService.Logger.Debug($"文件 {path} 已不存在，无法执行操作。");
                         }
 
                         // 操作完成后，从正在处理的集合中移除
@@ -176,7 +176,7 @@ public static class FileEventHandler
                     }
                     else
                     {
-                        LogService.Logger.Warn($"文件 {path} 已不存在，无法执行操作。");
+                        LogService.Logger.Debug($"文件 {path} 已不存在，无法执行操作。");
                     }
 
                     _processingFiles.TryRemove(path, out _);
@@ -202,6 +202,7 @@ public static class FileEventHandler
             watcher.Dispose();
         }
         _watchers.Clear();
+        LogService.Logger.Info("All monitoring has been stopped.");
     }
 
     /// <summary>
@@ -228,6 +229,7 @@ public static class FileEventHandler
                     watcher.EnableRaisingEvents = false;
                     watcher.Dispose();
                     _watchers.TryRemove(sourcePath, out _);
+                    LogService.Logger.Info($"停止监控：{sourcePath}");
                 }
             }
         }

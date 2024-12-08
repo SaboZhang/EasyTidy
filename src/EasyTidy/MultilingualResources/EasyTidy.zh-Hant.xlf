@@ -200,14 +200,6 @@
           <source>Filter</source>
           <target state="translated">過濾器</target>
         </trans-unit>
-        <trans-unit id="GeneralPageControl.ModuleDescription" translate="yes" xml:space="preserve">
-          <source>EasyTidy is an open-source, professional file management tool designed to provide users with efficient and convenient file classification and organization solutions. Through custom settings, users can achieve various sorting methods such as automatic sorting, scheduled sorting, real-time sorting, and manual sorting to meet the file management needs in different scenarios. Used by the author ♥  make.</source>
-          <target state="translated">EasyTidy是一款開源的，專業的文件管理工具，旨在為用戶提供高效、便捷的文件分類整理解決方案。通過自定義設置，用戶可以實現自動整理、定時整理、實時整理以及手動整理等多種整理方式，以滿足不同場景下的文件管理需求。由作者用 ♥ 製作。</target>
-        </trans-unit>
-        <trans-unit id="GeneralPageControl.ModuleTitle" translate="yes" xml:space="preserve">
-          <source>General</source>
-          <target state="translated">常規</target>
-        </trans-unit>
         <trans-unit id="AtLeastOneWord" translate="yes" xml:space="preserve">
           <source>At least one word</source>
           <target state="translated">至少一個單詞</target>
@@ -1563,6 +1555,98 @@
         <trans-unit id="ExecutionSuccessfulText" translate="yes" xml:space="preserve">
           <source>Execution Successful</source>
           <target state="translated">執行成功</target>
+        </trans-unit>
+        <trans-unit id="FilterNameValidation_Text.Text" translate="yes" xml:space="preserve">
+          <source>Please enter a filter name</source>
+          <target state="new">Please enter a filter name</target>
+        </trans-unit>
+        <trans-unit id="Settings_General_Header" translate="yes" xml:space="preserve">
+          <source>General Settings</source>
+          <target state="translated">常規設定</target>
+        </trans-unit>
+        <trans-unit id="Settings_General_Description" translate="yes" xml:space="preserve">
+          <source>Setting up your app and adjusting its operation parameters.</source>
+          <target state="translated">設定您的應用程式並調整其操作參數。</target>
+        </trans-unit>
+        <trans-unit id="NavLogsText.Content" translate="yes" xml:space="preserve">
+          <source>Operation log</source>
+          <target state="translated">運行日誌</target>
+        </trans-unit>
+        <trans-unit id="LogsSettingsControl.ModuleDescription" translate="yes" xml:space="preserve">
+          <source>EasyTidy is an open-source, professional file management tool designed to provide users with efficient and convenient file classification and organization solutions. Through custom settings, users can achieve various sorting methods such as automatic sorting, scheduled sorting, real-time sorting, and manual sorting to meet the file management needs in different scenarios. Used by the author ♥  make.</source>
+          <target state="translated">EasyTidy 是一款開源的專業文件管理工具，致力於為用戶提供高效且便捷的文件歸類整理方案。用戶可通過自訂設定，實現諸如自動歸類、定時歸類、即時歸類以及手動歸類等多種分類方式，滿足不同場景下的文件管理需求。作者自用 ♥ 製作。</target>
+        </trans-unit>
+        <trans-unit id="LogsSettingsControl.ModuleTitle" translate="yes" xml:space="preserve">
+          <source>Operation log</source>
+          <target state="translated">運行日誌</target>
+        </trans-unit>
+        <trans-unit id="LogsSettingsCard.Header" translate="yes" xml:space="preserve">
+          <source>Logs</source>
+          <target state="translated">日誌</target>
+        </trans-unit>
+        <trans-unit id="LogsSettingsCard.Description" translate="yes" xml:space="preserve">
+          <source>Show the running log of the app.</source>
+          <target state="translated">展示應用程式的執行記錄。</target>
+        </trans-unit>
+        <trans-unit id="RefreshButton.Content" translate="yes" xml:space="preserve">
+          <source>Refresh</source>
+          <target state="translated">刷新</target>
+        </trans-unit>
+        <trans-unit id="LogsGroup.Header" translate="yes" xml:space="preserve">
+          <source>Run log</source>
+          <target state="translated">即時日誌</target>
+        </trans-unit>
+        <trans-unit id="Verbose" translate="yes" xml:space="preserve">
+          <source>Verbose</source>
+          <target state="new">Verbose</target>
+        </trans-unit>
+        <trans-unit id="Debug" translate="yes" xml:space="preserve">
+          <source>Debug</source>
+          <target state="new">Debug</target>
+        </trans-unit>
+        <trans-unit id="Information" translate="yes" xml:space="preserve">
+          <source>Information</source>
+          <target state="new">Information</target>
+        </trans-unit>
+        <trans-unit id="Warning" translate="yes" xml:space="preserve">
+          <source>Warning</source>
+          <target state="new">Warning</target>
+        </trans-unit>
+        <trans-unit id="Error" translate="yes" xml:space="preserve">
+          <source>Error</source>
+          <target state="new">Error</target>
+        </trans-unit>
+        <trans-unit id="Fatal" translate="yes" xml:space="preserve">
+          <source>Fatal</source>
+          <target state="new">Fatal</target>
+        </trans-unit>
+        <trans-unit id="ClearButton.Content" translate="yes" xml:space="preserve">
+          <source>Clear logs</source>
+          <target state="translated">清理日誌</target>
+        </trans-unit>
+        <trans-unit id="LogsFolder.Content" translate="yes" xml:space="preserve">
+          <source>Logs Folder</source>
+          <target state="translated">日誌目錄</target>
+        </trans-unit>
+        <trans-unit id="AppNotificationPayloadInfo" translate="yes" xml:space="preserve">
+          <source><bpt id="1">&lt;toast launch='meetingId=9813'&gt;</bpt>
+    <bpt id="2">&lt;visual&gt;</bpt>
+        <bpt id="3">&lt;binding template='ToastGeneric'&gt;</bpt>
+            <bpt id="4">&lt;text&gt;</bpt><ept id="4">&lt;/text&gt;</ept>
+            <bpt id="5">&lt;text&gt;</bpt>{0}<ept id="5">&lt;/text&gt;</ept>
+            <bpt id="6">&lt;text&gt;</bpt><ept id="6">&lt;/text&gt;</ept>
+        <ept id="3">&lt;/binding&gt;</ept>
+    <ept id="2">&lt;/visual&gt;</ept>
+<ept id="1">&lt;/toast&gt;</ept></source>
+          <target state="new"><bpt id="1">&lt;toast launch='meetingId=9813'&gt;</bpt>
+    <bpt id="2">&lt;visual&gt;</bpt>
+        <bpt id="3">&lt;binding template='ToastGeneric'&gt;</bpt>
+            <bpt id="4">&lt;text&gt;</bpt><ept id="4">&lt;/text&gt;</ept>
+            <bpt id="5">&lt;text&gt;</bpt>{0}<ept id="5">&lt;/text&gt;</ept>
+            <bpt id="6">&lt;text&gt;</bpt><ept id="6">&lt;/text&gt;</ept>
+        <ept id="3">&lt;/binding&gt;</ept>
+    <ept id="2">&lt;/visual&gt;</ept>
+<ept id="1">&lt;/toast&gt;</ept></target>
         </trans-unit>
       </group>
     </body>

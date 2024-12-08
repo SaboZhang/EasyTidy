@@ -8,7 +8,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     xmlns:model="using:EasyTidy.Model"
-    xmlns:wuc="using:WinUICommunity" 
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core" 
     xmlns:ui="using:CommunityToolkit.WinUI"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
@@ -30,10 +29,7 @@
                      Width="210"
                      Margin="6,0,0,0"
                      x:Uid="TaskGroupBox"
-                     ui:TextBoxExtensions.Regex="^(?!\s*$).+"
-                     ui:TextBoxExtensions.IsValid="{x:Bind IsValid, Mode=TwoWay}"
-                     TextChanged="TaskGroupNameBox_TextChanged"
-                     Style="{StaticResource ValidatingTextBoxStyle}"/>
+                     LosingFocus="TaskGroupNameBox_LosingFocus" />
             <ComboBox x:Name="TaskGroupNameComboBox"
                       x:Uid="DialogTaskGroup"
                       MaxWidth="100"

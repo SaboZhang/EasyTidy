@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
-using System.Reflection;
-using Windows.ApplicationModel;
 
 namespace EasyTidy.Model;
 
@@ -14,9 +11,9 @@ public static class Constants
         // 确保这些成员优先初始化
 #if DEBUG
         AppName = "EasyTidyDev";
- #else
+#else
         AppName = "EasyTidy";
- #endif
+#endif
         Version = InitializationConstants.GetAppVersion();
         RootDirectoryPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), AppName);
         AppConfigPath = Path.Combine(RootDirectoryPath, "AppConfig.json");
@@ -34,6 +31,8 @@ public static class Constants
     public static readonly string CommonAppConfigPath;
 
     public static readonly string LogPathName = "v" + Version;
+
+    public static readonly string LogPath = $"{ExecutePath}logs";
 
     private const string PortableConfig = "portable_config";
 

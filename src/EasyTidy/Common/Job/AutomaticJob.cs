@@ -43,7 +43,7 @@ public class AutomaticJob : IJob
             ruleModel: new RuleModel { Filter = task.Filter, Rule = task.TaskRule, RuleType = task.RuleType })
         { RuleName = task.TaskRule };
 
-        Logger.Info($"Executing task with SourcePath: {operationParameters.SourcePath}, TargetPath: {operationParameters.TargetPath}");
+        Logger.Info($"开始定时执行 SourcePath: {operationParameters.SourcePath}, TargetPath: {operationParameters.TargetPath}");
         // 启动独立的线程来执行操作，避免参数冲突
         await Task.Run(async () =>
         {
@@ -91,7 +91,7 @@ public class AutomaticJob : IJob
     /// <returns></returns>
     public async Task<string> GetSpecialCasesRule(int groupId, string taskRule)
     {
-        if(taskRule.Trim().Equals("#") || taskRule.Trim().Equals("##"))
+        if (taskRule.Trim().Equals("#") || taskRule.Trim().Equals("##"))
         {
             var list = await _dbContext.TaskOrchestration.Where(t => t.GroupName.Id == groupId && t.TaskRule != taskRule).ToListAsync();
             string delimiter = "&";

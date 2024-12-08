@@ -1,11 +1,6 @@
 ﻿using EasyTidy.Contracts.Service;
 using Microsoft.Windows.AppNotifications;
-using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 
 namespace EasyTidy.Service;

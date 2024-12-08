@@ -1,9 +1,9 @@
+using EasyTidy.Model;
+using SharpCompress.Archives;
 using System;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
-using EasyTidy.Model;
-using SharpCompress.Archives;
 
 namespace EasyTidy.Util;
 

@@ -55,7 +55,7 @@
                     VerticalAlignment="Center"
                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                     Style="{StaticResource CaptionTextBlockStyle}"
-                    Text="Debug"
+                    Text="[Debug 模式]"
                     TextWrapping="NoWrap"
                     Visibility="Collapsed"/>
             </StackPanel>
@@ -66,7 +66,7 @@
             Canvas.ZIndex="0"
             CompactModeThresholdWidth="1007"
             DisplayModeChanged="NavigationViewControl_DisplayModeChanged"
-            IsBackButtonVisible="Visible"
+            IsBackButtonVisible="Collapsed"
             IsSettingsVisible="True"
             IsPaneToggleButtonVisible="False">
             <NavigationView.Resources>
@@ -85,9 +85,9 @@
                 <NavigationViewItem x:Uid="NavAutomaticText"
                                     Icon="{ui:BitmapIcon Source=/Assets/Fluent/behaviors.png}"
                                     helpers:NavigationHelper.NavigateTo="EasyTidy.ViewModels.AutomaticViewModel"/>
-                <NavigationViewItem x:Uid="NavGeneralText"
-                                    Icon="{ui:BitmapIcon Source=/Assets/Fluent/general.png}"
-                                    helpers:NavigationHelper.NavigateTo="EasyTidy.ViewModels.GeneralViewModel"/>
+                <NavigationViewItem x:Uid="NavLogsText"
+                                    Icon="{ui:BitmapIcon Source=/Assets/Fluent/logs.png}"
+                                    helpers:NavigationHelper.NavigateTo="EasyTidy.ViewModels.LogsViewModel"/>
             </NavigationView.MenuItems>
             <NavigationView.HeaderTemplate>
                 <DataTemplate>
@@ -114,12 +114,7 @@
                     </behaviors:NavigationViewHeaderBehavior.DefaultHeaderTemplate>
                 </behaviors:NavigationViewHeaderBehavior>
             </i:Interaction.Behaviors>
-            <NavigationView.AutoSuggestBox>
-                <AutoSuggestBox Name="autoSuggestBox"
-                                x:Uid="MainSuggestBox"
-                                QueryIcon="Find"/>
-            </NavigationView.AutoSuggestBox>
-
+            
             <Frame x:Name="NavFrame"/>
         </NavigationView>
 

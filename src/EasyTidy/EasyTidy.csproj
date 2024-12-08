@@ -168,7 +168,7 @@
     <None Remove="Views\ContentDialogs\CustomConfigContentDialog.xaml" />
     <None Remove="Views\ContentDialogs\PlanExecutionContentDialog.xaml" />
     <None Remove="Views\Filters\FiltersPage.xaml" />
-    <None Remove="Views\General\GeneralPage.xaml" />
+    <None Remove="Views\Logs\LogsPage.xaml" />
     <None Remove="Views\NotificationView.xaml" />
     <None Remove="Views\ShellPage.xaml" />
     <None Remove="Views\TaskOrchestration\TaskOrchestrationPage.xaml" />
@@ -210,10 +210,21 @@
     <PackageReference Include="Quartz.Serialization.Json" />
     <PackageReference Include="System.Net.Http" />
     <PackageReference Include="System.Text.RegularExpressions" />
-    <PackageReference Include="WinUICommunity.Components" />
-    <PackageReference Include="WinUICommunity.Core" />
-    <PackageReference Include="WinUICommunity.LandingPages" />
     <PackageReference Include="WinUIEx" />
+    <PackageReference Include="XAMLTools.MSBuild">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <XAMLCombineItems Include="Themes\Controls\*.xaml">
+      <TargetFile>Themes\Generic.xaml</TargetFile>
+      <Visible>True</Visible>
+    </XAMLCombineItems>
+    <XAMLCombineItems Include="Themes\Styles\*.xaml">
+      <TargetFile>Themes\Generic.xaml</TargetFile>
+      <Visible>True</Visible>
+    </XAMLCombineItems>
   </ItemGroup>
   <ItemGroup>
 	<ProjectReference Include="..\EasyTidy.Model\EasyTidy.Model.csproj" />
@@ -255,6 +266,15 @@
     <None Update="Assets\Wide310x150Logo.scale-200.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Themes\Styles\TextBlock.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <Page Update="Views\Logs\LogsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Themes\Styles\Button.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Themes\BreadcrumbBar.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -313,11 +333,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Page Update="Views\General\GeneralPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
   <!--
     Defining the "HasPackageAndPublishMenuAddedByProject" property here allows the Solution
     Explorer "Package and Publish" context menu entry to be enabled for this project even if
@@ -347,6 +362,9 @@
     <PRIResource Remove="Models\**" />
   </ItemGroup>
   <ItemGroup>
+    <Page Remove="Themes\Styles\TextBlock.xaml" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />
   </ItemGroup>
   <ItemGroup>
@@ -359,5 +377,13 @@
   </ItemGroup>
   <ItemGroup>
     <PRIResource Remove="Strings\en-US\Resources.resw" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Themes\Controls\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Themes\Styles\TextBlock.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 </Project>

@@ -49,7 +49,7 @@ public static partial class AppHelper
         };
     }
 
-    public static void UpdateCurConfig(GeneralViewModel viewModel)
+    public static void UpdateCurConfig(GeneralSettingViewModel viewModel)
     {
 
         Settings.GeneralConfig.Minimize = viewModel.Minimize;
