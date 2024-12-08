@@ -25,7 +25,7 @@
         </ic:EventTriggerBehavior>
     </i:Interaction.Behaviors>
 
-    <StackPanel x:Name="ContentArea" Margin="0,-38,0,0">
+    <StackPanel x:Name="ContentArea" Margin="0,-42,0,0">
         <InfoBar MaxWidth="480"
                       Margin="10"
                       HorizontalAlignment="Center"
@@ -154,6 +154,14 @@
                     </StackPanel>
                 </StackPanel>
             </etc:SettingsPageControl.ModuleContent>
+            <etc:SettingsPageControl.PrimaryLinks>
+                <etc:PageLink Link="https://easytidy.luckyits.com"
+              x:Uid="GeneralUseDocumentation"/>
+                <etc:PageLink Link="https://aka.luckyits.top/report_bug"
+              x:Uid="GereralReport"/>
+                <etc:PageLink Link="https://aka.luckyits.top/feature_request"
+              x:Uid="GeneralRequestFeature"/>
+            </etc:SettingsPageControl.PrimaryLinks>
 
         </etc:SettingsPageControl>
         <ProgressRing x:Name="Load"

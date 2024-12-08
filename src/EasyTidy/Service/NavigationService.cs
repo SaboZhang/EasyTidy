@@ -1,12 +1,6 @@
 ﻿using CommunityToolkit.WinUI.Animations;
 using EasyTidy.Contracts.Service;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WinUICommunity;
 
 namespace EasyTidy.Service;
 

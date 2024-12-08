@@ -5,11 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EasyTidy.UpdateLauncher"
         mc:Ignorable="d"
+        Opacity="0.95"
         Title="EasyTidy Update Launcher" Height="450" Width="620">
     <Grid>
         <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
             <StackPanel HorizontalAlignment="Center" Margin="0,40,0,0">
                 <Image Source="Assets\EasyTidy.png" Width="80" Height="120" Stretch="Uniform" />
+                <TextBlock x:Name="UpdateTitle" Text="EasyTidy" FontSize="28" Margin="0,-10,0,0" FontWeight="Normal" Foreground="#606060" />
             </StackPanel>
             <StackPanel 
                 Orientation="Vertical" 

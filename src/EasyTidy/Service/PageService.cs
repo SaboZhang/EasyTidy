@@ -1,9 +1,4 @@
 ﻿using EasyTidy.Contracts.Service;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EasyTidy.Service;
 
@@ -15,7 +10,7 @@ public class PageService : IPageService
     {
         Configure<MainViewModel, MainPage>();
         Configure<FilterViewModel, FiltersPage>();
-        Configure<GeneralViewModel, GeneralPage>();
+        Configure<LogsViewModel, LogsPage>();
         Configure<AutomaticViewModel, AutomaticPage>();
         Configure<TaskOrchestrationViewModel, TaskOrchestrationPage>();
         Configure<SettingsViewModel, SettingsPage>();

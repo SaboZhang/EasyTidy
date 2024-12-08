@@ -6,7 +6,8 @@
     xmlns:local="using:EasyTidy.Views.ContentDialogs"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:wuc="using:WinUICommunity"
+    xmlns:etc="using:EasyTidy.Views.UserControls"
+    xmlns:ui="using:CommunityToolkit.WinUI"
     CornerRadius="{ThemeResource OverlayCornerRadius}"
     DefaultButton="Primary"
     mc:Ignorable="d"
@@ -37,12 +38,14 @@
                      Margin="12,0,10,0"
                      MinWidth="180"
                      Text="{x:Bind Minute, Mode=TwoWay}"
-                     wuc:Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
-                     wuc:Validation.ValidationPropertyName="Minute"
-                     wuc:Validation.ValidationProvider="{x:Bind}"
-                     Style="{StaticResource ValidatingTextBoxStyle}"/>
+                     ui:TextBoxExtensions.Regex="^([1-9]|[1-5][0-9])(?:,([1-9]|[1-5][0-9]))*$"
+                     ui:TextBoxExtensions.IsValid="{x:Bind IsValid, Mode=TwoWay}"/>
             <TextBlock Text="(0 to 59)"/>
         </StackPanel>
+        <TextBlock Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+           x:Name="MinuteValid"
+           Margin="170,0,0,0"
+           Visibility="Collapsed"/>
         <StackPanel Orientation="Horizontal"
                     Margin="0,10,0,0"
                     Spacing="20">
@@ -52,12 +55,14 @@
                        TextWrapping="Wrap"/>
             <TextBox MinWidth="180"
                      Text="{x:Bind Hour, Mode=TwoWay}"
-                     wuc:Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
-                     wuc:Validation.ValidationPropertyName="Hour"
-                     wuc:Validation.ValidationProvider="{x:Bind}"
-                     Style="{StaticResource ValidatingTextBoxStyle}"/>
+                     ui:TextBoxExtensions.Regex="^(2[0-3]|[01]?[0-9])(,(2[0-3]|[01]?[0-9]))*$"
+                     ui:TextBoxExtensions.IsValid="{x:Bind IsValid, Mode=TwoWay}"/>
             <TextBlock Text="(0 to 23)"/>
         </StackPanel>
+        <TextBlock Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+           x:Name="HourValid"
+           Margin="170,0,0,0"
+           Visibility="Collapsed"/>
         <StackPanel Orientation="Horizontal"
                     Spacing="20"
                     Margin="0,10,0,0">
@@ -67,12 +72,14 @@
                        TextWrapping="Wrap"/>
             <TextBox MinWidth="180"
                      Text="{x:Bind DayOfWeek, Mode=TwoWay}"
-                     wuc:Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
-                     wuc:Validation.ValidationPropertyName="DayOfWeek"
-                     wuc:Validation.ValidationProvider="{x:Bind}"
-                     Style="{StaticResource ValidatingTextBoxStyle}"/>
+                     ui:TextBoxExtensions.Regex="^(0|1|2|3|4|5|6)(,(0|1|2|3|4|5|6))*$"
+                     ui:TextBoxExtensions.IsValid="{x:Bind IsValid, Mode=TwoWay}"/>
             <TextBlock x:Uid="DialogDayOfWeekBlock"/>
         </StackPanel>
+        <TextBlock Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+           x:Name="DayOfWeekValid"
+           Margin="170,0,0,0"
+           Visibility="Collapsed"/>
         <StackPanel Orientation="Horizontal"
                     Spacing="20"
                     Margin="0,10,0,0">
@@ -82,12 +89,14 @@
                        TextWrapping="Wrap"/>
             <TextBox MinWidth="180"
                      Text="{x:Bind DayOfMonth, Mode=TwoWay}"
-                     wuc:Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
-                     wuc:Validation.ValidationPropertyName="DayOfMonth"
-                     wuc:Validation.ValidationProvider="{x:Bind}"
-                     Style="{StaticResource ValidatingTextBoxStyle}"/>
+                     ui:TextBoxExtensions.Regex="^(31|30|[12][0-9]|1?[1-9])(,(31|30|[12][0-9]|1?[1-9]))*$"
+                     ui:TextBoxExtensions.IsValid="{x:Bind IsValid, Mode=TwoWay}"/>
             <TextBlock Text="(1 to 31)"/>
         </StackPanel>
+        <TextBlock Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+           x:Name="DayOfMonthValid"
+           Margin="170,0,0,0"
+           Visibility="Collapsed"/>
         <StackPanel Orientation="Horizontal"
                     Spacing="20"
                     Margin="0,10,0,0">
@@ -97,13 +106,15 @@
                        TextWrapping="Wrap"/>
             <TextBox MinWidth="180"
                      Text="{x:Bind MonthlyDay, Mode=TwoWay}"
-                     wuc:Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
-                     wuc:Validation.ValidationPropertyName="MonthlyDay"
-                     wuc:Validation.ValidationProvider="{x:Bind}"
-                     Style="{StaticResource ValidatingTextBoxStyle}"/>
+                     ui:TextBoxExtensions.Regex="^(1|2|3|4|5|6|7|8|9|10|11|12)(,(1|2|3|4|5|6|7|8|9|10|11|12))*$"
+                     ui:TextBoxExtensions.IsValid="{x:Bind IsValid, Mode=TwoWay}"/>
             <TextBlock Text="(1 to 12)"/>
         </StackPanel>
-        <wuc:Divider/>
+        <TextBlock Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+           x:Name="MonthlyDayValid"
+           Margin="170,0,0,0"
+           Visibility="Collapsed"/>
+        <etc:Divider/>
         <StackPanel Orientation="Horizontal"
                     Spacing="20">
             <TextBlock x:Uid="DialogExpression"
@@ -112,12 +123,12 @@
                        TextWrapping="Wrap"/>
             <TextBox Name="CronExpressionBox"
                      MinWidth="180"
-                     Text="{x:Bind CronExpression, Mode=TwoWay}"
-                     wuc:Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
-                     wuc:Validation.ValidationPropertyName="CronExpression"
-                     wuc:Validation.ValidationProvider="{x:Bind}"
-                     Style="{StaticResource ValidatingTextBoxStyle}"/>
+                     Text="{x:Bind CronExpression, Mode=TwoWay}"/>
         </StackPanel>
+        <TextBlock Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+           x:Name="ExpressionValid"
+           Margin="170,0,0,0"
+           Visibility="Collapsed"/>
 
         <TextBlock x:Uid="DialogExplanation1"
                    Margin="0,40,0,20"/>

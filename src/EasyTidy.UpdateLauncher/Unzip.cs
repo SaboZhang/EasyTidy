@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO.Compression;
+﻿using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO.Compression;
 
 namespace EasyTidy.UpdateLauncher;
 
@@ -29,7 +24,7 @@ public class Unzip
 
             foreach (var entry in archive.Entries)
             {
-                if (!IsIgnoreFile(entry.FullName)) 
+                if (!IsIgnoreFile(entry.FullName))
                 {
                     // 检查是否需要排除目标目录自身
                     if (IsExcludedDirectory(entry.FullName, ExcludeDirectory))

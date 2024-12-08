@@ -1,19 +1,14 @@
 ﻿using CommunityToolkit.WinUI;
 using EasyTidy.Activation;
 using EasyTidy.Common.Database;
-using EasyTidy.Common.Extensions;
 using EasyTidy.Contracts.Service;
 using EasyTidy.Log;
 using EasyTidy.Model;
 using EasyTidy.Service;
-using EasyTidy.Util;
 using EasyTidy.Util.SettingsInterface;
-using H.NotifyIcon;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Dispatching;
-using Microsoft.Windows.AppNotifications;
 using Microsoft.Windows.Globalization;
 using WinUIEx;
 
@@ -26,9 +21,8 @@ public partial class App : Application
     private readonly DispatcherQueue _dispatcherQueue;
 
     public static WindowEx MainWindow { get; } = new MainWindow();
-    public IServiceProvider Services { get; }
     public static new App Current => (App)Application.Current;
-    public string AppVersion { get; set; } = ProcessInfoHelper.Version;
+    public string AppVersion { get; set; } = Constants.Version;
     public IHost Host
     {
         get;
@@ -62,10 +56,6 @@ public partial class App : Application
         // 注册应用程序的未处理异常事件
         UnhandledException += App_UnhandledException;
 
-        if (!RuntimeHelper.IsMSIX)
-        {
-            AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
-        }
         _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
         // 加载配置
         Host = Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder()
@@ -83,6 +73,7 @@ public partial class App : Application
                 services.AddSingleton<IPageService, PageService>();
                 services.AddSingleton<INavigationService, NavigationService>();
                 services.AddSingleton<IAppNotificationService, AppNotificationService>();
+                services.AddSingleton<ILoggingService, LoggingService>();
 
                 // Register File Service
                 services.AddSingleton<IFileService, FileService>();
@@ -90,22 +81,31 @@ public partial class App : Application
                 services.AddSingleton(_ => MainWindow);
                 services.AddSingleton(_ => MainWindow.DispatcherQueue);
 
-                // Register ViewModels
-                services.AddTransient<GeneralViewModel>();
+                // Register Views ViewModels
+                services.AddTransient<MainPage>();
                 services.AddTransient<MainViewModel>();
+                services.AddTransient<LogsPage>();
+                services.AddTransient<LogsViewModel>();
+                services.AddTransient<GeneralSettingPage>();
                 services.AddTransient<GeneralSettingViewModel>();
+                services.AddTransient<ThemeSettingPage>();
                 services.AddTransient<ThemeSettingViewModel>();
+                services.AddTransient<AppUpdateSettingPage>();
                 services.AddTransient<AppUpdateSettingViewModel>();
+                services.AddTransient<AboutUsSettingPage>();
                 services.AddTransient<AboutUsSettingViewModel>();
                 services.AddTransient<SettingsViewModel>();
+                services.AddTransient<AutomaticPage>();
                 services.AddTransient<AutomaticViewModel>();
+                services.AddTransient<TaskOrchestrationPage>();
                 services.AddTransient<TaskOrchestrationViewModel>();
+                services.AddTransient<FiltersPage>();
                 services.AddTransient<FilterViewModel>();
                 services.AddTransient<ShellPage>();
                 services.AddTransient<ShellViewModel>();
 
                 // Register AppDbContext
-                services.AddDbContext<AppDbContext>(options => 
+                services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlite($"Data Source={Path.Combine(Constants.CnfPath, "EasyTidy.db")}"), ServiceLifetime.Scoped);
 
                 // Configuration
@@ -136,7 +136,7 @@ public partial class App : Application
         Logger.Error($"Global exception caught: {ex}");
     }
 
-    protected async override void OnLaunched(LaunchActivatedEventArgs args)
+    protected override async void OnLaunched(LaunchActivatedEventArgs args)
     {
         base.OnLaunched(args);
         InitializeLogging();
@@ -149,15 +149,16 @@ public partial class App : Application
         await App.GetService<IActivationService>().ActivateAsync(args);
         SetApplicationLanguage();
 
-        Logger.Fatal("EasyTidy Initialized Successfully!");
+        Logger.Info("EasyTidy Initialized Successfully!");
     }
 
     private void InitializeLogging()
     {
+        var loggingService = App.GetService<ILoggingService>();
 #if !DEBUG
-        LogService.Register("", LogLevel.Error, AppVersion);
+        LogService.Register(loggingService,"", LogLevel.Info, AppVersion);
 #else
-        LogService.Register("", LogLevel.Debug, AppVersion);
+        LogService.Register(loggingService, "", LogLevel.Debug, AppVersion);
 #endif
     }
 
@@ -179,18 +180,6 @@ public partial class App : Application
         }
         _mutex = new Mutex(false, AppName, out _createdNew);
         return true;
-    }
-
-    async void OnProcessExit(object sender, EventArgs e)
-    {
-        // 记录日志
-        if (Logger != null && !HandleClosedEvents)
-        {
-            Logger.Info($"{AppName}_{AppVersion} Closed...\n");
-            LogService.UnRegister();
-        }
-        await QuartzHelper.StopAllJob();
-        FileEventHandler.StopAllMonitoring();
     }
 
 }

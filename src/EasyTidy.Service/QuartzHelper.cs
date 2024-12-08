@@ -1,4 +1,5 @@
-﻿using Quartz;
+﻿using EasyTidy.Log;
+using Quartz;
 using Quartz.Impl.Matchers;
 using System;
 using System.Collections.Generic;
@@ -122,11 +123,13 @@ public class QuartzHelper
             // 触发作业
             await _scheduler.TriggerJob(jobKey);
         }
+        LogService.Logger.Info("所有任务触发成功");
     }
 
     public static async Task StartAllJob()
     {
         await _scheduler.Start();
+        LogService.Logger.Info("任务调度器启动成功");
     }
 
     public static async Task StopAllJob()
@@ -135,6 +138,7 @@ public class QuartzHelper
         {
             await _scheduler.Shutdown();
         }
+        LogService.Logger.Info("All tasks scheduler stopped successfully.");
 
     }
 

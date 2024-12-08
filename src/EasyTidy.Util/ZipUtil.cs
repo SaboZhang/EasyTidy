@@ -336,7 +336,7 @@ public class ZipUtil
                 }
 
                 // 解压文件到目标路径
-                entry.WriteToDirectory(finalExtractPath, new ExtractionOptions { ExtractFullPath = true, Overwrite = true});
+                entry.WriteToDirectory(finalExtractPath, new ExtractionOptions { ExtractFullPath = true, Overwrite = true });
             }
         }
     }

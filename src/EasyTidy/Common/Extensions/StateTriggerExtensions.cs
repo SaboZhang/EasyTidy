@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EasyTidy.Common.Extensions;
+﻿namespace EasyTidy.Common.Extensions;
 
 public class StateTriggerExtensions : StateTriggerBase
 {

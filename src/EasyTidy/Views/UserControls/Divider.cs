@@ -1,4 +1,3 @@
-using System;
 using Microsoft.UI.Xaml.Markup;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Shapes;
@@ -38,7 +37,7 @@ public partial class Divider : Control
     }
 
     public static readonly DependencyProperty ContentPaddingProperty =
-        DependencyProperty.Register("ContentPadding", typeof(Thickness), typeof(Divider), new PropertyMetadata(new Thickness(24,0,24,0)));
+        DependencyProperty.Register("ContentPadding", typeof(Thickness), typeof(Divider), new PropertyMetadata(new Thickness(24, 0, 24, 0)));
 
     public object Content
     {

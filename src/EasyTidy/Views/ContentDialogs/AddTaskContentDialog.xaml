@@ -29,10 +29,7 @@
                      Width="210"
                      Margin="6,0,0,0"
                      x:Uid="TaskGroupBox"
-                     ui:TextBoxExtensions.Regex="^(?!\s*$).+"
-                     ui:TextBoxExtensions.IsValid="{x:Bind IsValid, Mode=TwoWay}"
-                     TextChanged="TaskGroupNameBox_TextChanged"
-                     Style="{StaticResource ValidatingTextBoxStyle}"/>
+                     LosingFocus="TaskGroupNameBox_LosingFocus" />
             <ComboBox x:Name="TaskGroupNameComboBox"
                       x:Uid="DialogTaskGroup"
                       MaxWidth="100"

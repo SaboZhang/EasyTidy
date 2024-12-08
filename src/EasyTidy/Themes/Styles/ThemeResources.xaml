@@ -1,0 +1,93 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.ThemeDictionaries>
+        <ResourceDictionary x:Key="Default">
+            <StaticResource x:Key="SubtleButtonBackground"
+                                        ResourceKey="SubtleFillColorTransparent"/>
+            <StaticResource x:Key="SubtleButtonBackgroundPointerOver"
+                                        ResourceKey="SubtleFillColorSecondary"/>
+            <StaticResource x:Key="SubtleButtonBackgroundPressed"
+                                        ResourceKey="SubtleFillColorTertiary"/>
+            <StaticResource x:Key="SubtleButtonBackgroundDisabled"
+                                        ResourceKey="SubtleFillColorTransparent"/>
+
+            <StaticResource x:Key="SubtleButtonBorderBrush"
+                                        ResourceKey="SubtleFillColorTransparent"/>
+            <StaticResource x:Key="SubtleButtonBorderBrushPointerOver"
+                                        ResourceKey="SubtleFillColorSecondary"/>
+            <StaticResource x:Key="SubtleButtonBorderBrushPressed"
+                                        ResourceKey="SubtleFillColorTertiary"/>
+            <StaticResource x:Key="SubtleButtonBorderBrushDisabled"
+                                        ResourceKey="SubtleFillColorTransparent"/>
+
+            <StaticResource x:Key="SubtleButtonForeground"
+                                        ResourceKey="TextFillColorPrimary"/>
+            <StaticResource x:Key="SubtleButtonForegroundPointerOver"
+                                        ResourceKey="TextFillColorPrimary"/>
+            <StaticResource x:Key="SubtleButtonForegroundPressed"
+                                        ResourceKey="TextFillColorSecondary"/>
+            <StaticResource x:Key="SubtleButtonForegroundDisabled"
+                                        ResourceKey="TextFillColorDisabled"/>
+        </ResourceDictionary>
+
+        <ResourceDictionary x:Key="Light">
+            <StaticResource x:Key="SubtleButtonBackground"
+                                        ResourceKey="SubtleFillColorTransparent"/>
+            <StaticResource x:Key="SubtleButtonBackgroundPointerOver"
+                                        ResourceKey="SubtleFillColorSecondary"/>
+            <StaticResource x:Key="SubtleButtonBackgroundPressed"
+                                        ResourceKey="SubtleFillColorTertiary"/>
+            <StaticResource x:Key="SubtleButtonBackgroundDisabled"
+                                        ResourceKey="SubtleFillColorTransparent"/>
+
+            <StaticResource x:Key="SubtleButtonBorderBrush"
+                                        ResourceKey="SubtleFillColorTransparent"/>
+            <StaticResource x:Key="SubtleButtonBorderBrushPointerOver"
+                                        ResourceKey="SubtleFillColorSecondary"/>
+            <StaticResource x:Key="SubtleButtonBorderBrushPressed"
+                                        ResourceKey="SubtleFillColorTertiary"/>
+            <StaticResource x:Key="SubtleButtonBorderBrushDisabled"
+                                        ResourceKey="SubtleFillColorTransparent"/>
+
+            <StaticResource x:Key="SubtleButtonForeground"
+                                        ResourceKey="TextFillColorPrimary"/>
+            <StaticResource x:Key="SubtleButtonForegroundPointerOver"
+                                        ResourceKey="TextFillColorPrimary"/>
+            <StaticResource x:Key="SubtleButtonForegroundPressed"
+                                        ResourceKey="TextFillColorSecondary"/>
+            <StaticResource x:Key="SubtleButtonForegroundDisabled"
+                                        ResourceKey="TextFillColorDisabled"/>
+        </ResourceDictionary>
+
+        <ResourceDictionary x:Key="HighContrast">
+            <StaticResource x:Key="SubtleButtonBackground"
+                                        ResourceKey="SystemColorWindowColorBrush"/>
+            <StaticResource x:Key="SubtleButtonBackgroundPointerOver"
+                                        ResourceKey="SystemColorHighlightTextColorBrush"/>
+            <StaticResource x:Key="SubtleButtonBackgroundPressed"
+                                        ResourceKey="SystemColorWindowColorBrush"/>
+            <StaticResource x:Key="SubtleButtonBackgroundDisabled"
+                                        ResourceKey="SystemControlBackgroundBaseLowBrush"/>
+
+            <StaticResource x:Key="SubtleButtonBorderBrush"
+                                        ResourceKey="SystemColorWindowColorBrush"/>
+            <StaticResource x:Key="SubtleButtonBorderBrushPointerOver"
+                                        ResourceKey="SystemColorHighlightColorBrush"/>
+            <StaticResource x:Key="SubtleButtonBorderBrushPressed"
+                                        ResourceKey="SystemColorHighlightColorBrush"/>
+            <StaticResource x:Key="SubtleButtonBorderBrushDisabled"
+                                        ResourceKey="SystemColorGrayTextColor"/>
+
+            <StaticResource x:Key="SubtleButtonForeground"
+                                        ResourceKey="SystemColorButtonTextColorBrush"/>
+            <StaticResource x:Key="SubtleButtonForegroundPointerOver"
+                                        ResourceKey="SystemControlHighlightBaseHighBrush"/>
+            <StaticResource x:Key="SubtleButtonForegroundPressed"
+                                        ResourceKey="SystemControlHighlightBaseHighBrush"/>
+            <StaticResource x:Key="SubtleButtonForegroundDisabled"
+                                        ResourceKey="SystemControlDisabledBaseMediumLowBrush"/>
+        </ResourceDictionary>
+    </ResourceDictionary.ThemeDictionaries>
+    
+</ResourceDictionary>

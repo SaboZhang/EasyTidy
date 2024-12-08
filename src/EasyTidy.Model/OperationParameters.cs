@@ -49,8 +49,8 @@ public class OperationParameters
     {
         return new OperationParameters(
             parameter.OperationMode,
-            parameter.SourcePath = parameter.SourcePath.Equals("DesktopText".GetLocalized()) 
-            ? Environment.GetFolderPath(Environment.SpecialFolder.Desktop) 
+            parameter.SourcePath = parameter.SourcePath.Equals("DesktopText".GetLocalized())
+            ? Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
             : parameter.SourcePath,
             parameter.TargetPath,
             parameter.FileOperationType,

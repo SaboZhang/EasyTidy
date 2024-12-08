@@ -1,10 +1,5 @@
-﻿using CommunityToolkit.WinUI.Behaviors;
-using CommunityToolkit.WinUI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CommunityToolkit.WinUI;
+using CommunityToolkit.WinUI.Behaviors;
 using Microsoft.UI.Dispatching;
 using WinUIEx;
 
@@ -63,7 +58,7 @@ public static class StackedNotificationsBehaviorExtensions
         });
     }
 
-    public static void ShowWithWindowExtension( this StackedNotificationsBehavior behavior, string message, InfoBarSeverity severity)
+    public static void ShowWithWindowExtension(this StackedNotificationsBehavior behavior, string message, InfoBarSeverity severity)
     {
         var dispatcherQueue = App.GetService<DispatcherQueue>();
 

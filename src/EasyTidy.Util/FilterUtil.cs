@@ -305,7 +305,7 @@ public class FilterUtil
         {
             string fileExtension = Path.GetExtension(filePath).ToLower();
             // 使用小写扩展名进行匹配
-            return fileExtension == requiredExtension; 
+            return fileExtension == requiredExtension;
         };
     }
 

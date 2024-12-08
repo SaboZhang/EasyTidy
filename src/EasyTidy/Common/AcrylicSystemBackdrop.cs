@@ -1,4 +1,3 @@
-using System;
 using Microsoft.UI.Composition;
 using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Xaml.Media;
@@ -8,10 +7,10 @@ namespace EasyTidy.Common;
 
 public sealed partial class AcrylicSystemBackdrop : SystemBackdrop
 {
-    public readonly static Color Default_TintColor_Dark = Color.FromArgb(0xff, 0x54, 0x54, 0x54);
-    public readonly static Color Default_TintColor_Light = Color.FromArgb(0xff, 0xd3, 0xd3, 0xd3);
-    public readonly static Color Default_FallbackColor_Dark = Color.FromArgb(0xff, 0x54, 0x54, 0x54);
-    public readonly static Color Default_FallbackColor_Light = Color.FromArgb(0xff, 0xd3, 0xd3, 0xd3);
+    public static readonly Color Default_TintColor_Dark = Color.FromArgb(0xff, 0x54, 0x54, 0x54);
+    public static readonly Color Default_TintColor_Light = Color.FromArgb(0xff, 0xd3, 0xd3, 0xd3);
+    public static readonly Color Default_FallbackColor_Dark = Color.FromArgb(0xff, 0x54, 0x54, 0x54);
+    public static readonly Color Default_FallbackColor_Light = Color.FromArgb(0xff, 0xd3, 0xd3, 0xd3);
 
     public readonly DesktopAcrylicKind Kind;
     private DesktopAcrylicController acrylicController;
@@ -76,7 +75,7 @@ public sealed partial class AcrylicSystemBackdrop : SystemBackdrop
 
     public AcrylicSystemBackdrop() : this(DesktopAcrylicKind.Default)
     {
-        
+
     }
     public AcrylicSystemBackdrop(DesktopAcrylicKind desktopAcrylicKind)
     {

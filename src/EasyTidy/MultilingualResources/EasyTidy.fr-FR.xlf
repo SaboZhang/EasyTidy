@@ -200,14 +200,6 @@
           <source>Filter</source>
           <target state="translated">Filtre</target>
         </trans-unit>
-        <trans-unit id="GeneralPageControl.ModuleDescription" translate="yes" xml:space="preserve">
-          <source>EasyTidy is an open-source, professional file management tool designed to provide users with efficient and convenient file classification and organization solutions. Through custom settings, users can achieve various sorting methods such as automatic sorting, scheduled sorting, real-time sorting, and manual sorting to meet the file management needs in different scenarios. Used by the author ♥  make.</source>
-          <target state="translated">EasyTidy est un outil de gestion professionnelle des fichiers open-source conçu pour fournir aux utilisateurs des solutions de classification de fichiers et d'organisation efficaces et pratiques. Grâce à des paramètres personnalisés, les utilisateurs peuvent réaliser diverses méthodes de tri telles que le tri automatique, le tri planifié, le tri en temps réel et le tri manuel pour répondre aux besoins de gestion des fichiers dans différents scénarios. Utilisé par l'auteur ♥ faire.</target>
-        </trans-unit>
-        <trans-unit id="GeneralPageControl.ModuleTitle" translate="yes" xml:space="preserve">
-          <source>General</source>
-          <target state="translated">Général</target>
-        </trans-unit>
         <trans-unit id="AtLeastOneWord" translate="yes" xml:space="preserve">
           <source>At least one word</source>
           <target state="translated">Au moins un mot</target>
@@ -1563,6 +1555,98 @@
         <trans-unit id="ExecutionSuccessfulText" translate="yes" xml:space="preserve">
           <source>Execution Successful</source>
           <target state="translated">Exécution réussie</target>
+        </trans-unit>
+        <trans-unit id="FilterNameValidation_Text.Text" translate="yes" xml:space="preserve">
+          <source>Please enter a filter name</source>
+          <target state="translated">Veuillez saisir un nom de filtre</target>
+        </trans-unit>
+        <trans-unit id="Settings_General_Header" translate="yes" xml:space="preserve">
+          <source>General Settings</source>
+          <target state="translated">Paramètres généraux</target>
+        </trans-unit>
+        <trans-unit id="Settings_General_Description" translate="yes" xml:space="preserve">
+          <source>Setting up your app and adjusting its operation parameters.</source>
+          <target state="translated">Paramétrage de votre application et ajustement de ses paramètres de fonctionnement.</target>
+        </trans-unit>
+        <trans-unit id="NavLogsText.Content" translate="yes" xml:space="preserve">
+          <source>Operation log</source>
+          <target state="translated">Journal des opérations</target>
+        </trans-unit>
+        <trans-unit id="LogsSettingsControl.ModuleDescription" translate="yes" xml:space="preserve">
+          <source>EasyTidy is an open-source, professional file management tool designed to provide users with efficient and convenient file classification and organization solutions. Through custom settings, users can achieve various sorting methods such as automatic sorting, scheduled sorting, real-time sorting, and manual sorting to meet the file management needs in different scenarios. Used by the author ♥  make.</source>
+          <target state="translated">EasyTidy est un outil de gestion de fichiers open-source et professionnel conçu pour offrir aux utilisateurs des solutions de classification et d'organisation des fichiers efficaces et pratiques. Grâce à des paramètres personnalisés, les utilisateurs peuvent réaliser diverses méthodes de tri telles que le tri automatique, le tri programmé, le tri en temps réel et le tri manuel pour répondre aux besoins de gestion des fichiers dans différents scénarios. Utilisé par l'auteur ♥ faire.</target>
+        </trans-unit>
+        <trans-unit id="LogsSettingsControl.ModuleTitle" translate="yes" xml:space="preserve">
+          <source>Operation log</source>
+          <target state="translated">Journal des opérations</target>
+        </trans-unit>
+        <trans-unit id="LogsSettingsCard.Header" translate="yes" xml:space="preserve">
+          <source>Logs</source>
+          <target state="translated">Journaux</target>
+        </trans-unit>
+        <trans-unit id="LogsSettingsCard.Description" translate="yes" xml:space="preserve">
+          <source>Show the running log of the app.</source>
+          <target state="translated">Affichez le journal d'exécution de l'application.</target>
+        </trans-unit>
+        <trans-unit id="RefreshButton.Content" translate="yes" xml:space="preserve">
+          <source>Refresh</source>
+          <target state="translated">Rafraîchir</target>
+        </trans-unit>
+        <trans-unit id="LogsGroup.Header" translate="yes" xml:space="preserve">
+          <source>Run log</source>
+          <target state="translated">Journal en temps réel</target>
+        </trans-unit>
+        <trans-unit id="Verbose" translate="yes" xml:space="preserve">
+          <source>Verbose</source>
+          <target state="new">Verbose</target>
+        </trans-unit>
+        <trans-unit id="Debug" translate="yes" xml:space="preserve">
+          <source>Debug</source>
+          <target state="new">Debug</target>
+        </trans-unit>
+        <trans-unit id="Information" translate="yes" xml:space="preserve">
+          <source>Information</source>
+          <target state="new">Information</target>
+        </trans-unit>
+        <trans-unit id="Warning" translate="yes" xml:space="preserve">
+          <source>Warning</source>
+          <target state="new">Warning</target>
+        </trans-unit>
+        <trans-unit id="Error" translate="yes" xml:space="preserve">
+          <source>Error</source>
+          <target state="new">Error</target>
+        </trans-unit>
+        <trans-unit id="Fatal" translate="yes" xml:space="preserve">
+          <source>Fatal</source>
+          <target state="new">Fatal</target>
+        </trans-unit>
+        <trans-unit id="ClearButton.Content" translate="yes" xml:space="preserve">
+          <source>Clear logs</source>
+          <target state="translated">Effacer les journaux</target>
+        </trans-unit>
+        <trans-unit id="LogsFolder.Content" translate="yes" xml:space="preserve">
+          <source>Logs Folder</source>
+          <target state="translated">Dossier Logs</target>
+        </trans-unit>
+        <trans-unit id="AppNotificationPayloadInfo" translate="yes" xml:space="preserve">
+          <source><bpt id="1">&lt;toast launch='meetingId=9813'&gt;</bpt>
+    <bpt id="2">&lt;visual&gt;</bpt>
+        <bpt id="3">&lt;binding template='ToastGeneric'&gt;</bpt>
+            <bpt id="4">&lt;text&gt;</bpt><ept id="4">&lt;/text&gt;</ept>
+            <bpt id="5">&lt;text&gt;</bpt>{0}<ept id="5">&lt;/text&gt;</ept>
+            <bpt id="6">&lt;text&gt;</bpt><ept id="6">&lt;/text&gt;</ept>
+        <ept id="3">&lt;/binding&gt;</ept>
+    <ept id="2">&lt;/visual&gt;</ept>
+<ept id="1">&lt;/toast&gt;</ept></source>
+          <target state="new"><bpt id="1">&lt;toast launch='meetingId=9813'&gt;</bpt>
+    <bpt id="2">&lt;visual&gt;</bpt>
+        <bpt id="3">&lt;binding template='ToastGeneric'&gt;</bpt>
+            <bpt id="4">&lt;text&gt;</bpt><ept id="4">&lt;/text&gt;</ept>
+            <bpt id="5">&lt;text&gt;</bpt>{0}<ept id="5">&lt;/text&gt;</ept>
+            <bpt id="6">&lt;text&gt;</bpt><ept id="6">&lt;/text&gt;</ept>
+        <ept id="3">&lt;/binding&gt;</ept>
+    <ept id="2">&lt;/visual&gt;</ept>
+<ept id="1">&lt;/toast&gt;</ept></target>
         </trans-unit>
       </group>
     </body>

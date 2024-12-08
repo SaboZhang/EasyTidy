@@ -1,13 +1,9 @@
 ﻿using CommunityToolkit.WinUI;
-using CommunityToolkit.WinUI.Controls;
 using EasyTidy.Common.Model;
 using EasyTidy.Contracts.Service;
 using EasyTidy.Model;
-using EasyTidy.Service;
-using Microsoft.UI.Xaml.Media.Animation;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using WebDAVClient.Model;
 
 namespace EasyTidy.ViewModels;
 public partial class SettingsViewModel : ObservableObject
@@ -28,10 +24,10 @@ public partial class SettingsViewModel : ObservableObject
         InitializeLanguages();
         var settings = new[]
         {
+            new Setting("General", string.Empty, "Settings_General_Header".GetLocalized(), "Settings_General_Description".GetLocalized(), "ms-appx:///Assets/Fluent/general.png", false, false),
             new Setting("Theme", string.Empty, "ThemeSettingPage_Header".GetLocalized(), "ThemeSettingPage_Description".GetLocalized(), "ms-appx:///Assets/Fluent/theme.png", false, false),
-            // new Setting("General", string.Empty, "Settings_General_Header".GetLocalized(), "Settings_General_Header".GetLocalized(), "ms-appx:///Assets/Fluent/update.png", false, false),
-            new Setting("About", string.Empty, "AboutUsSettingPage_Header".GetLocalized(), "AboutUsSettingPage_Description".GetLocalized(), "ms-appx:///Assets/Fluent/info.png", false, false),
             new Setting("AppUpdate", string.Empty, "AppUpdateSetting_Header".GetLocalized(), "AppUpdateSetting_Description".GetLocalized(), "ms-appx:///Assets/Fluent/update.png", false, false),
+            new Setting("About", string.Empty, "AboutUsSettingPage_Header".GetLocalized(), "AboutUsSettingPage_Description".GetLocalized(), "ms-appx:///Assets/Fluent/info.png", false, false),
         };
 
         foreach (var setting in settings)

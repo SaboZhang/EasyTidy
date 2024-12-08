@@ -1,19 +1,7 @@
-using CommunityToolkit.WinUI;
 using EasyTidy.Contracts.Service;
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
+using Microsoft.UI;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.System;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -41,6 +29,11 @@ public sealed partial class ShellPage : Page
         App.MainWindow.SetTitleBar(AppTitleBar);
         App.MainWindow.Activated += MainWindow_Activated;
         AppTitleBarText.Text = "EasyTidy";
+
+#if DEBUG
+        DebugMessage.Visibility = Visibility.Visible;
+        DebugMessage.Foreground = new SolidColorBrush(Colors.Red);
+#endif
     }
 
     private void PaneToggleBtn_Click(object sender, RoutedEventArgs e)

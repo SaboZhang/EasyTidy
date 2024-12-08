@@ -99,14 +99,14 @@ public static class OperationHandler
         }
         catch (Exception ex)
         {
-            LogService.Logger.Info($"执行移动操作异常 {ex}");
+            LogService.Logger.Error($"执行移动操作异常 {ex}");
         }
         finally
         {
             lock (_executedOperations)
             {
                 _executedOperations.Remove(operationId);
-                LogService.Logger.Info("Removed operation from executed operations.");
+                LogService.Logger.Debug("Removed operation from executed operations.");
             }
         }
     }
@@ -117,7 +117,7 @@ public static class OperationHandler
         {
             await FileActuator.ExecuteFileOperationAsync(parameter);
         });
-        LogService.Logger.Info("执行复制操作");
+        LogService.Logger.Info("执行复制操作完成");
     }
 
     private static async Task DeleteAsync(OperationParameters parameter)
@@ -126,7 +126,7 @@ public static class OperationHandler
         {
             await FileActuator.ExecuteFileOperationAsync(parameter);
         });
-        LogService.Logger.Info("执行删除操作");
+        LogService.Logger.Info("执行删除操作完成");
     }
 
     private static async Task RenameAsync(OperationParameters parameter)
@@ -135,7 +135,7 @@ public static class OperationHandler
         {
             await FileActuator.ExecuteFileOperationAsync(parameter);
         });
-        LogService.Logger.Info("重命名逻辑");
+        LogService.Logger.Info("重命名任务执行完成");
     }
 
     private static async Task RecycleBinAsync(OperationParameters parameter)
@@ -147,7 +147,7 @@ public static class OperationHandler
         {
             if (_executedOperations.Contains(operationId))
             {
-                LogService.Logger.Info($"Move operation already in progress, skipping execution. {parameter.TargetPath}");
+                LogService.Logger.Warn($"Move operation already in progress, skipping execution. {parameter.TargetPath}");
                 return;
             }
             _executedOperations.Add(operationId);
@@ -158,14 +158,14 @@ public static class OperationHandler
             {
                 await FileActuator.ProcessFileAsync(parameter);
             });
-            LogService.Logger.Info("回收站逻辑");
+            LogService.Logger.Info("执行回收站任务完成");
         }
         finally
         {
             lock (_executedOperations)
             {
                 _executedOperations.Remove(operationId);
-                LogService.Logger.Info("Removed operation from executed operations.");
+                LogService.Logger.Debug("Removed operation from executed operations.");
             }
         }
 
@@ -189,6 +189,7 @@ public static class OperationHandler
         {
             await FileActuator.ExecuteFileOperationAsync(parameter);
         });
+        LogService.Logger.Info("执行解压任务完成");
     }
 
     private static async Task CompressedFileAsync(OperationParameters parameter)
@@ -197,6 +198,7 @@ public static class OperationHandler
         {
             await FileActuator.ExecuteFileOperationAsync(parameter);
         });
+        LogService.Logger.Info("执行压缩任务完成");
     }
 
     private static async Task UploadFileAsync(OperationParameters parameter)
@@ -205,5 +207,6 @@ public static class OperationHandler
         {
             await FileActuator.ExecuteFileOperationAsync(parameter);
         });
+        LogService.Logger.Info("执行上传任务完成");
     }
 }

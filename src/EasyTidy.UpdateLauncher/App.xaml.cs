@@ -1,7 +1,4 @@
-﻿using System.Configuration;
-using System.Data;
-using System.Threading;
-using System.Windows;
+﻿using System.Windows;
 
 namespace EasyTidy.UpdateLauncher;
 

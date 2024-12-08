@@ -158,12 +158,6 @@
   <data name="FilterSettingsControl.ModuleTitle" xml:space="preserve">
     <value>Filtre</value>
   </data>
-  <data name="GeneralPageControl.ModuleDescription" xml:space="preserve">
-    <value>EasyTidy est un outil de gestion professionnelle des fichiers open-source conçu pour fournir aux utilisateurs des solutions de classification de fichiers et d'organisation efficaces et pratiques. Grâce à des paramètres personnalisés, les utilisateurs peuvent réaliser diverses méthodes de tri telles que le tri automatique, le tri planifié, le tri en temps réel et le tri manuel pour répondre aux besoins de gestion des fichiers dans différents scénarios. Utilisé par l'auteur ♥ faire.</value>
-  </data>
-  <data name="GeneralPageControl.ModuleTitle" xml:space="preserve">
-    <value>Général</value>
-  </data>
   <data name="AtLeastOneWord" xml:space="preserve">
     <value>Au moins un mot</value>
   </data>
@@ -1173,5 +1167,41 @@
   </data>
   <data name="ExecutionSuccessfulText" xml:space="preserve">
     <value>Exécution réussie</value>
+  </data>
+  <data name="FilterNameValidation_Text.Text" xml:space="preserve">
+    <value>Veuillez saisir un nom de filtre</value>
+  </data>
+  <data name="Settings_General_Header" xml:space="preserve">
+    <value>Paramètres généraux</value>
+  </data>
+  <data name="Settings_General_Description" xml:space="preserve">
+    <value>Paramétrage de votre application et ajustement de ses paramètres de fonctionnement.</value>
+  </data>
+  <data name="NavLogsText.Content" xml:space="preserve">
+    <value>Journal des opérations</value>
+  </data>
+  <data name="LogsSettingsControl.ModuleDescription" xml:space="preserve">
+    <value>EasyTidy est un outil de gestion de fichiers open-source et professionnel conçu pour offrir aux utilisateurs des solutions de classification et d'organisation des fichiers efficaces et pratiques. Grâce à des paramètres personnalisés, les utilisateurs peuvent réaliser diverses méthodes de tri telles que le tri automatique, le tri programmé, le tri en temps réel et le tri manuel pour répondre aux besoins de gestion des fichiers dans différents scénarios. Utilisé par l'auteur ♥ faire.</value>
+  </data>
+  <data name="LogsSettingsControl.ModuleTitle" xml:space="preserve">
+    <value>Journal des opérations</value>
+  </data>
+  <data name="LogsSettingsCard.Header" xml:space="preserve">
+    <value>Journaux</value>
+  </data>
+  <data name="LogsSettingsCard.Description" xml:space="preserve">
+    <value>Affichez le journal d'exécution de l'application.</value>
+  </data>
+  <data name="RefreshButton.Content" xml:space="preserve">
+    <value>Rafraîchir</value>
+  </data>
+  <data name="LogsGroup.Header" xml:space="preserve">
+    <value>Journal en temps réel</value>
+  </data>
+  <data name="ClearButton.Content" xml:space="preserve">
+    <value>Effacer les journaux</value>
+  </data>
+  <data name="LogsFolder.Content" xml:space="preserve">
+    <value>Dossier Logs</value>
   </data>
 </root>

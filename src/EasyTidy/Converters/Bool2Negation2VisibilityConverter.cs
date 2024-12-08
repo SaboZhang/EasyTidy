@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml.Data;
+﻿using CommunityToolkit.WinUI.Converters;
+using Microsoft.UI.Xaml.Data;
 
 namespace EasyTidy.Converters;
 public class Bool2Negation2VisibilityConverter : IValueConverter

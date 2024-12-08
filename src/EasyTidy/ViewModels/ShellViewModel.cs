@@ -1,10 +1,4 @@
 ﻿using EasyTidy.Contracts.Service;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EasyTidy.ViewModels;
 

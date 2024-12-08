@@ -1,11 +1,9 @@
-﻿using CommunityToolkit.Common;
-using CommunityToolkit.WinUI;
+﻿using CommunityToolkit.WinUI;
 using EasyTidy.Common.Model;
 using EasyTidy.Contracts.Service;
 using EasyTidy.Model;
 using EasyTidy.Util;
 using System.Collections.ObjectModel;
-using Windows.System;
 
 namespace EasyTidy.ViewModels;
 public partial class AppUpdateSettingViewModel : ObservableObject
@@ -61,7 +59,7 @@ public partial class AppUpdateSettingViewModel : ObservableObject
         IsUpdateAvailable = false;
         IsCheckButtonEnabled = false;
         LoadingStatus = "CheckingForNewVersion".GetLocalized();
-        if (NetworkHelper.IsNetworkAvailable())
+        if (CommonUtil.IsNetworkAvailable())
         {
             try
             {
@@ -103,7 +101,7 @@ public partial class AppUpdateSettingViewModel : ObservableObject
     /// <returns></returns>
     public async Task CheckForNewVersionAsync()
     {
-        if (NetworkHelper.IsNetworkAvailable() && (bool)Settings.GeneralConfig.IsStartupCheck)
+        if (CommonUtil.IsNetworkAvailable() && (bool)Settings.GeneralConfig.IsStartupCheck)
         {
             try
             {
@@ -129,12 +127,12 @@ public partial class AppUpdateSettingViewModel : ObservableObject
             }
             catch (Exception ex)
             {
-                Logger.Error($"检查更新失败：{ex.Message}");
+                Logger.Error($"Checking for update failed：{ex.Message}");
             }
         }
         else
         {
-            Logger.Info($"检查更新失败：未启用开机自动更新或者网络异常");
+            Logger.Warn($"Checking for updates failed：Automatic startup update is not enabled or the network is abnormal.");
         }
     }
 
@@ -143,7 +141,7 @@ public partial class AppUpdateSettingViewModel : ObservableObject
         var mainWindow = App.MainWindow;
         if (mainWindow == null)
         {
-            Logger.Error("主窗口未初始化，无法显示更新对话框.");
+            Logger.Error("Main window is not initialized.");
             throw new InvalidOperationException("Main window is not initialized.");
         }
 
@@ -195,8 +193,8 @@ public partial class AppUpdateSettingViewModel : ObservableObject
                 // 创建进度报告器
                 var progressReporter = new Progress<double>(progress =>
                 {
-                   progressBar.Value = progress;
-                   progressText.Text = $"Downloading... {progress:F1}%".GetLocalized();
+                    progressBar.Value = progress;
+                    progressText.Text = $"Downloading... {progress:F1}%".GetLocalized();
                 });
                 await Download(downloadUrl, progressReporter);
                 progressText.Text = "Download complete!".GetLocalized();
@@ -317,6 +315,7 @@ public partial class AppUpdateSettingViewModel : ObservableObject
         {
             await Task.Run(async () =>
             {
+                Logger.Warn("正在下载安装更新...");
                 await Download(DownloadUrl);
                 InstallUpdate();
             });
@@ -349,6 +348,6 @@ public partial class AppUpdateSettingViewModel : ObservableObject
             RequestedTheme = _themeSelectorService.Theme
         };
 
-        await dialog.ShowAsyncQueue();
+        await dialog.ShowAsync();
     }
 }

@@ -6,20 +6,12 @@
     xmlns:local="using:EasyTidy.Views.ContentDialogs"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:wuc="using:WinUICommunity" 
     xmlns:i="using:Microsoft.Xaml.Interactivity" 
-    xmlns:ui="using:CommunityToolkit.WinUI"
+    xmlns:ui="using:CommunityToolkit.WinUI" 
+    xmlns:etc="using:EasyTidy.Views.UserControls"
     mc:Ignorable="d"
     CornerRadius="{ThemeResource OverlayCornerRadius}"
     DefaultButton="Primary">
-
-    <ContentDialog.Resources>
-        <DataTemplate x:Key="ValidationTemplate"
-              x:DataType="x:String">
-            <TextBlock Foreground="{ThemeResource SystemFillColorCriticalBrush}"
-               Text="{x:Bind}"/>
-        </DataTemplate>
-    </ContentDialog.Resources>
 
     <StackPanel>
         <StackPanel Orientation="Horizontal"
@@ -29,13 +21,15 @@
             <TextBox x:Name="NameTextBox"
                      Margin="38,0,0,0"
                      MinWidth="210"
-                     wuc:Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
-                     wuc:Validation.ValidationPropertyName="FilterName"
-                     wuc:Validation.ValidationProvider="{x:Bind}"
-                     Style="{StaticResource ValidatingTextBoxStyle}"
+                     LostFocus="NameTextBox_LostFocus"
                      Text="{x:Bind FilterName, Mode=TwoWay}"/>
         </StackPanel>
-        <wuc:Divider x:Uid="DividerAttribute"
+        <TextBlock x:Name="NameTextBoxError"
+                   Margin="130,0,0,0"
+                   VerticalAlignment="Center"
+                   Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+                   Visibility="Collapsed" />
+        <etc:Divider x:Uid="DividerAttribute"
                      HorizontalContentAlignment="Left"/>
         <StackPanel x:Name="SizePropertyStackPanel"
                     Orientation="Horizontal"
@@ -173,7 +167,7 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
         </StackPanel>
-        <wuc:Divider x:Uid="DialogDividerCharacteristics"
+        <etc:Divider x:Uid="DialogDividerCharacteristics"
                      HorizontalContentAlignment="Left"/>
         <StackPanel x:Name="ArchiveStackPanel"
                     Orientation="Horizontal"
@@ -255,7 +249,7 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
         </StackPanel>
-        <wuc:Divider x:Uid="DialogDividerOthers"
+        <etc:Divider x:Uid="DialogDividerOthers"
                      HorizontalContentAlignment="Left"/>
         <StackPanel x:Name="OtherStackPanel"
                     Orientation="Horizontal"
