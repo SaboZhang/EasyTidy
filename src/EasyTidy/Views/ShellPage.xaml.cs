@@ -29,11 +29,20 @@ public sealed partial class ShellPage : Page
         App.MainWindow.SetTitleBar(AppTitleBar);
         App.MainWindow.Activated += MainWindow_Activated;
         AppTitleBarText.Text = "EasyTidy";
+        ActualThemeChanged += OnActualThemeChanged;
 
 #if DEBUG
         DebugMessage.Visibility = Visibility.Visible;
         DebugMessage.Foreground = new SolidColorBrush(Colors.Red);
 #endif
+    }
+
+    private void OnActualThemeChanged(FrameworkElement sender, object args)
+    {
+        // Update the title bar if the system theme changes.
+        TitleBarHelper.UpdateTitleBar(App.MainWindow, ActualTheme);
+
+        ViewModel.NotifyActualThemeChanged();
     }
 
     private void PaneToggleBtn_Click(object sender, RoutedEventArgs e)

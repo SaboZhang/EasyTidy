@@ -4,7 +4,7 @@ namespace EasyTidy.Common.Extensions;
 
 public static class WindowExExtensions
 {
-    public static void SetRequestedTheme(this Window window, ElementTheme theme)
+    public static void SetRequestedTheme(this WindowEx window, ElementTheme theme)
     {
         if (window.Content is FrameworkElement rootElement)
         {

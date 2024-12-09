@@ -16,7 +16,7 @@
     behaviors:NavigationViewHeaderBehavior.HeaderTemplate="{StaticResource BreadcrumbBarDataTemplate}"
     behaviors:NavigationViewHeaderBehavior.HeaderContext="{Binding}"
     mc:Ignorable="d">
-    <ScrollView x:Name="ContentArea" Margin="160,0,160,0" VerticalAlignment="Top" VerticalScrollBarVisibility="Auto">
+    <ScrollView x:Name="ContentArea" VerticalAlignment="Top" VerticalScrollBarVisibility="Auto">
         <StackPanel
             Margin="10"
             Spacing="5">

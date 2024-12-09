@@ -9,6 +9,7 @@ using EasyTidy.Util.SettingsInterface;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Dispatching;
+using Microsoft.Windows.AppLifecycle;
 using Microsoft.Windows.Globalization;
 using WinUIEx;
 
@@ -51,11 +52,8 @@ public partial class App : Application
 
     public App()
     {
-        // 注册全局异常处理
-        AppDomain.CurrentDomain.UnhandledException += GlobalExceptionHandler;
-        // 注册应用程序的未处理异常事件
-        UnhandledException += App_UnhandledException;
-
+        this.InitializeComponent();
+       
         _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
         // 加载配置
         Host = Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder()
@@ -115,7 +113,11 @@ public partial class App : Application
             .Build();
 
         App.GetService<IAppNotificationService>().Initialize();
-        this.InitializeComponent();
+
+        // 注册全局异常处理
+        AppDomain.CurrentDomain.UnhandledException += GlobalExceptionHandler;
+        // 注册应用程序的未处理异常事件
+        UnhandledException += App_UnhandledException;
     }
 
     private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
@@ -133,7 +135,7 @@ public partial class App : Application
     private void LogException(Exception ex)
     {
         // 记录异常的逻辑
-        Logger.Error($"Global exception caught: {ex}");
+        Logger.Fatal($"Global exception caught: {ex.Message}", ex);
     }
 
     protected override async void OnLaunched(LaunchActivatedEventArgs args)

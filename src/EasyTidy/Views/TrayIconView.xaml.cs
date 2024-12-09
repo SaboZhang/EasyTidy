@@ -65,9 +65,7 @@ public sealed partial class TrayIconView : UserControl
         App._mutex?.ReleaseMutex();
         App.HandleClosedEvents = false;
         TrayIcon.Dispose();
-        // Close() 方法生命周期由 Windows 自动回收处理
         App.MainWindow?.Close();
-        //Environment.Exit(0);
     }
 
     /// <summary>
@@ -83,8 +81,7 @@ public sealed partial class TrayIconView : UserControl
         App.HandleClosedEvents = false;
         TrayIcon.Dispose();
         App.MainWindow?.Close();
-        // Application.Current.Exit();
-        Environment.Exit(0);
+        // Environment.Exit(0);
     }
 
     /// <summary>

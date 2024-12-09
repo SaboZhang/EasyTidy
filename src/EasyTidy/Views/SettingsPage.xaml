@@ -19,7 +19,6 @@
     behaviors:NavigationViewHeaderBehavior.HeaderContext="{Binding}">
 
     <ScrollViewer VerticalAlignment="Top"
-                  Margin="160,0,160,0"
                   VerticalScrollBarVisibility="Auto">
         <Grid MaxWidth="{ThemeResource MaxPageContentWidth}"
               Margin="{ThemeResource ContentPageMargin}"

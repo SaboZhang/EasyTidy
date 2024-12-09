@@ -38,9 +38,6 @@ public class ActivationService : IActivationService
             App.MainWindow.Content = _shell ?? new Frame();
         }
 
-        // Handle activation via ActivationHandlers.
-        await HandleActivationAsync(activationArgs);
-
         // Activate the MainWindow.
         SetWindowBehavior();
         // App.MainWindow.Activate();
@@ -49,6 +46,9 @@ public class ActivationService : IActivationService
         await _dbContext.InitializeDatabaseAsync();
         await StartupAsync();
         await PerformStartupChecksAsync();
+
+        // Handle activation via ActivationHandlers.
+        await HandleActivationAsync(activationArgs);
     }
 
     private async Task HandleActivationAsync(object activationArgs)
@@ -113,6 +113,7 @@ public class ActivationService : IActivationService
         }
         else
         {
+            _themeSelectorService.ApplyTheme();
             App.MainWindow.Activate();
         }
     }

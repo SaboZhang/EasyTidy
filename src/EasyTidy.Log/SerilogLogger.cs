@@ -13,11 +13,11 @@ public class SerilogLogger : BaseLogger
         var logConfiguration = new LoggerConfiguration()
             .WriteTo.File(
                 string.Format("{0}logs/{1}/log.log", AppDomain.CurrentDomain.BaseDirectory, version),    //使用绝对路径创建日志文件
-                                                                                                         //shared: true,
+                rollOnFileSizeLimit: true,                                                         //shared: true,
                 rollingInterval: RollingInterval.Day,
                 restrictedToMinimumLevel: LogEventLevel.Verbose,
                 outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} [{Level:u3}] {Message:lj}{NewLine}{Exception}",
-                retainedFileCountLimit: 7,
+                retainedFileCountLimit: 14,
                 fileSizeLimitBytes: 10 * 1024 * 1024)
             .WriteTo.Sink(new LogEntrySink(loggingService))
             .MinimumLevel.Is(ConvertToSerilogLevel(minLevel));
