@@ -8,6 +8,9 @@
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Assets\update.ico</ApplicationIcon>
     <AssemblyName>UpdateLauncher</AssemblyName>
+    <AssemblyVersion>1.0.1.1209</AssemblyVersion>
+    <FileVersion>1.0.1.1209</FileVersion>
+    <Version>1.0.1.1209</Version>
   </PropertyGroup>
 
   <ItemGroup>

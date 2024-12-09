@@ -17,7 +17,8 @@ public class SerilogLogger : BaseLogger
                 rollingInterval: RollingInterval.Day,
                 restrictedToMinimumLevel: LogEventLevel.Verbose,
                 outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} [{Level:u3}] {Message:lj}{NewLine}{Exception}",
-                retainedFileCountLimit: 7)
+                retainedFileCountLimit: 7,
+                fileSizeLimitBytes: 10 * 1024 * 1024)
             .WriteTo.Sink(new LogEntrySink(loggingService))
             .MinimumLevel.Is(ConvertToSerilogLevel(minLevel));
 

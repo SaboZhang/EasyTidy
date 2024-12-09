@@ -53,7 +53,6 @@ public sealed partial class MainWindow : WindowEx
     {
         await QuartzHelper.StopAllJob();
         FileEventHandler.StopAllMonitoring();
-        // ¼ÇÂ¼ÈÕÖ¾
         if (Logger != null && !App.HandleClosedEvents)
         {
             Logger.Info($"{Constants.AppName}_v{Constants.Version} Closed...\n");
