@@ -31,8 +31,10 @@ TODO:
 3.后续计划
 
 - [x] 增加解压操作
-- [ ] 增加文件WebDav备份
-- [ ] 前端界面显示Log
+- [x] 增加文件WebDav备份
+- [x] 前端界面显示Log
 - [ ] [#25](https://github.com/SaboZhang/EasyTidy/issues/25)相关问题
-- [ ] 移除WinUICommunity相关依赖，作者已停止维护（大部分已被替换）
+- [x] 移除WinUICommunity相关依赖，作者已停止维护
+- [ ] 文件加密
+- [ ] 完善文档内容
 - [ ] 想到再添加吧！！！
