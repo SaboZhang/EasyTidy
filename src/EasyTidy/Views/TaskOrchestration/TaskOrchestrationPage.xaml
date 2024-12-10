@@ -25,7 +25,7 @@
         </ic:EventTriggerBehavior>
     </i:Interaction.Behaviors>
 
-    <StackPanel x:Name="ContentArea" Margin="0,-42,0,0" >
+    <StackPanel x:Name="ContentArea" Margin="0,-58,0,0" >
         <InfoBar MaxWidth="480"
               Margin="10"
               HorizontalAlignment="Center"

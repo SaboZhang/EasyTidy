@@ -1,8 +1,10 @@
 ﻿using CommunityToolkit.WinUI;
 using EasyTidy.Common.Database;
+using EasyTidy.Common.Job;
 using EasyTidy.Common.Model;
 using EasyTidy.Contracts.Service;
 using EasyTidy.Model;
+using EasyTidy.Service;
 using EasyTidy.Util;
 using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
@@ -386,6 +388,12 @@ public partial class GeneralSettingViewModel : ObservableObject
     [RelayCommand]
     private async Task BackupConfigsClickAsync()
     {
+        if (AutoBackup)
+        {
+            var param = new Dictionary<string, object> { { "LocalPath", FloderPath },{ "WebDavPath", WebDavUrl } };
+            await QuartzHelper.AddSimpleJobOfHourAsync<BackupJob>("Backup", Settings.BackupType.ToString(), 24 * 3, param);
+        }
+
         switch (Settings.BackupType)
         {
             case BackupType.Local:

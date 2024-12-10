@@ -27,6 +27,11 @@ public class QuartzHelper
         await AddSimpleJobAsync<T>(jobName, groupName, (x) => { x.WithIntervalInMinutes(minute).RepeatForever(); }, param, priority);
     }
 
+    public static async Task AddSimpleJobOfHourAsync<T>(string jobName, string groupName, int hour, Dictionary<string, object> param = null, int priority = 5) where T : IJob
+    {
+        await AddSimpleJobAsync<T>(jobName, groupName, (x) => { x.WithIntervalInHours(hour).RepeatForever(); }, param, priority);
+    }
+
     public static async Task AddSimpleJobAsync<T>(string jobName, string groupName, Action<SimpleScheduleBuilder> action, Dictionary<string, object> param = null, int priority = 5) where T : IJob
     {
         var jobKey = new JobKey(jobName, groupName);

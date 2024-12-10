@@ -1,7 +1,7 @@
 
 # 更新
 
-## [1.0.4.1209-alpha.1] - 更新程序存在BUG，请手动下载更新
+## [1.0.4.1210] - 更新程序存在BUG，请手动下载更新
 
 [更新下载](https://github.com/SaboZhang/EasyTidy/releases)
 
@@ -35,4 +35,4 @@
 - 修复：若干BUG
 - 修复：升级易受攻击的第三方引用
 
-**Full Changelog**: https://github.com/SaboZhang/EasyTidy/compare/1.0.3.1120...1.0.4.1209-alpha.1
+**Full Changelog**: https://github.com/SaboZhang/EasyTidy/compare/1.0.3.1120...1.0.4.1210

@@ -1,4 +1,5 @@
 ﻿using EasyTidy.Contracts.Service;
+using EasyTidy.Service;
 
 namespace EasyTidy.ViewModels;
 
@@ -10,6 +11,8 @@ public partial class ShellViewModel : ObservableRecipient
     [ObservableProperty]
     private object? selected;
 
+    private readonly IThemeSelectorService _themeSelectorService;
+
     public INavigationService NavigationService
     {
         get;
@@ -20,11 +23,12 @@ public partial class ShellViewModel : ObservableRecipient
         get;
     }
 
-    public ShellViewModel(INavigationService navigationService, INavigationViewService navigationViewService)
+    public ShellViewModel(INavigationService navigationService, INavigationViewService navigationViewService, IThemeSelectorService themeSelectorService)
     {
         NavigationService = navigationService;
         NavigationService.Navigated += OnNavigated;
         NavigationViewService = navigationViewService;
+        _themeSelectorService = themeSelectorService;
     }
 
     private void OnNavigated(object sender, NavigationEventArgs e)
@@ -42,5 +46,10 @@ public partial class ShellViewModel : ObservableRecipient
         {
             Selected = selectedItem;
         }
+    }
+
+    internal void NotifyActualThemeChanged()
+    {
+        _themeSelectorService.SetRequestedTheme();
     }
 }

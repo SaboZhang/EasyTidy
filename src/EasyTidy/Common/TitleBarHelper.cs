@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices;
 using Windows.UI;
 using Windows.UI.ViewManagement;
+using WinUIEx;
 
 namespace EasyTidy.Common;
 
@@ -87,7 +88,7 @@ public class TitleBarHelper
         }
     }
 
-    public static void UpdateTitleBar(Window window, ElementTheme theme)
+    public static void UpdateTitleBar(WindowEx window, ElementTheme theme)
     {
         if (window.ExtendsContentIntoTitleBar)
         {

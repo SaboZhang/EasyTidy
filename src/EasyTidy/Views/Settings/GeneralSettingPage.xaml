@@ -17,7 +17,7 @@
     behaviors:NavigationViewHeaderBehavior.HeaderTemplate="{StaticResource BreadcrumbBarDataTemplate}"
     behaviors:NavigationViewHeaderBehavior.HeaderContext="{Binding}"
     mc:Ignorable="d">
-    <ScrollView x:Name="ContentArea" Margin="160,0,160,0" VerticalScrollBarVisibility="Auto">
+    <ScrollView x:Name="ContentArea" VerticalScrollBarVisibility="Auto">
         <StackPanel
             Margin="10"
             Spacing="5">
@@ -266,6 +266,7 @@
                     </ctk:SettingsExpander>
                 </etc:SettingsGroup>
                 <InfoBar
+                    MaxWidth="{ThemeResource MaxPageContentWidth}"
                     Title="{x:Bind ViewModel.SettingsBackupMessage, Mode=OneWay}"
                     IsClosable="False"
                     IsOpen="{x:Bind ViewModel.SettingsBackupRestoreMessageVisible, Mode=OneWay}"
