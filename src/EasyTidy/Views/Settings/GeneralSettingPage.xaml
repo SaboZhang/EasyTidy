@@ -266,6 +266,7 @@
                     </ctk:SettingsExpander>
                 </etc:SettingsGroup>
                 <InfoBar
+                    MaxWidth="{ThemeResource MaxPageContentWidth}"
                     Title="{x:Bind ViewModel.SettingsBackupMessage, Mode=OneWay}"
                     IsClosable="False"
                     IsOpen="{x:Bind ViewModel.SettingsBackupRestoreMessageVisible, Mode=OneWay}"

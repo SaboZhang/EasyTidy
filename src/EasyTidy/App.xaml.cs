@@ -9,7 +9,6 @@ using EasyTidy.Util.SettingsInterface;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Dispatching;
-using Microsoft.Windows.AppLifecycle;
 using Microsoft.Windows.Globalization;
 using WinUIEx;
 
