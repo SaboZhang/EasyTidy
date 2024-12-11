@@ -63,6 +63,7 @@ public static partial class AppHelper
         Settings.GeneralConfig.HiddenFiles = viewModel.HiddenFiles;
         Settings.BackupConfig.AutoBackup = viewModel.AutoBackup;
         Settings.GeneralConfig.EnableMultiInstance = viewModel.EnableMultiInstance;
+        Settings.UploadPrefix = viewModel.WebDavPrefix;
         StartupOperate(viewModel.IsStartup);
         Settings.GeneralConfig = Settings.GeneralConfig;
         Settings.BackupConfig = Settings.BackupConfig;

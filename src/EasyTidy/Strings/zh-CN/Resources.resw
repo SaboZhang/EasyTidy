@@ -1222,4 +1222,10 @@
   <data name="LogsFolder.Content" xml:space="preserve">
     <value>日志目录</value>
   </data>
+  <data name="GeneralPrefixCard.Header" xml:space="preserve">
+    <value>Webdav 上传前缀</value>
+  </data>
+  <data name="GeneralPrefixCard.Description" xml:space="preserve">
+    <value>设置WebDav上传文件的文件夹</value>
+  </data>
 </root>

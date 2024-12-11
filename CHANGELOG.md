@@ -1,7 +1,7 @@
 
 # 更新
 
-## [1.0.4.1210] - 更新程序存在BUG，请手动下载更新
+## [1.0.4.1210] 之前的版本更新程序存在BUG,烦请手动下载新版本
 
 [更新下载](https://github.com/SaboZhang/EasyTidy/releases)
 
@@ -18,6 +18,7 @@
 - New: Running log display
 - Fix: Several BUGs
 - Fix: Upgrading vulnerable third-party references
+- fix: for Windows 10 Enterprise Edition Folder Selection Bug
 
 ---
 
@@ -34,5 +35,6 @@
 - 新增：运行日志显示
 - 修复：若干BUG
 - 修复：升级易受攻击的第三方引用
+- 修复：Windows 10 企业版 文件夹选择BUG
 
-**Full Changelog**: https://github.com/SaboZhang/EasyTidy/compare/1.0.3.1120...1.0.4.1210
+**Full Changelog**: https://github.com/SaboZhang/EasyTidy/compare/1.0.3.1120...1.0.4.1211

@@ -7,13 +7,11 @@ using EasyTidy.Common.Job;
 using EasyTidy.Contracts.Service;
 using EasyTidy.Model;
 using EasyTidy.Service;
-using EasyTidy.Util;
 using EasyTidy.Views.ContentDialogs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.UI.Dispatching;
 using System.Collections.ObjectModel;
 using System.Data;
-using Windows.Storage.Pickers;
 
 namespace EasyTidy.ViewModels;
 
@@ -266,11 +264,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
     {
         try
         {
-            var openPicker = new FolderPicker();
-            var window = App.MainWindow;
-            var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
-            WinRT.Interop.InitializeWithWindow.Initialize(openPicker, hWnd);
-            var folder = await openPicker.PickSingleFolderAsync();
+            var folder = await FileAndFolderPickerHelper.PickSingleFolderAsync(App.MainWindow);
             TaskSource = folder?.Path ?? Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
         }
@@ -289,11 +283,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
     {
         try
         {
-            var openPicker = new FolderPicker();
-            var window = App.MainWindow;
-            var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
-            WinRT.Interop.InitializeWithWindow.Initialize(openPicker, hWnd);
-            var folder = await openPicker.PickSingleFolderAsync();
+            var folder = await FileAndFolderPickerHelper.PickSingleFolderAsync(App.MainWindow);
             TaskTarget = folder?.Path ?? "";
 
         }
