@@ -2,7 +2,6 @@
 using EasyTidy.Common.Model;
 using EasyTidy.Contracts.Service;
 using EasyTidy.Model;
-using EasyTidy.Util;
 using System.Collections.ObjectModel;
 
 namespace EasyTidy.ViewModels;

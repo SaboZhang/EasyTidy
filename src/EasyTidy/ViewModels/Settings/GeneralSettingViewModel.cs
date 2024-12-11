@@ -311,6 +311,25 @@ public partial class GeneralSettingViewModel : ObservableObject
         }
     }
 
+    private string _webDavPrefix;
+
+    public string WebDavPrefix
+    {
+        get 
+        {
+            return _webDavPrefix = Settings.UploadPrefix ?? string.Empty;
+        }
+        set
+        {
+            if (_webDavPrefix != value)
+            {
+                _webDavPrefix = value;
+                Settings.UploadPrefix = value;
+                NotifyPropertyChanged();
+            }
+        }
+    }
+
     public ObservableCollection<Breadcrumb> Breadcrumbs { get; }
 
     #endregion
@@ -420,7 +439,7 @@ public partial class GeneralSettingViewModel : ObservableObject
         // Notify UI of property change
         OnPropertyChanged(propertyName);
 
-        Logger.Info($"GeneralViewModel: NotifyPropertyChanged {propertyName}");
+        Logger.Debug($"GeneralViewModel: NotifyPropertyChanged {propertyName}");
 
         UpdateCurConfig(this);
 

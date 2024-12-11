@@ -1338,4 +1338,10 @@
     &lt;/visual&gt;
 &lt;/toast&gt;</value>
   </data>
+  <data name="GeneralPrefixCard.Header" xml:space="preserve">
+    <value>Webdav upload prefix</value>
+  </data>
+  <data name="GeneralPrefixCard.Description" xml:space="preserve">
+    <value>Set the folder to upload files to WebDav</value>
+  </data>
 </root>

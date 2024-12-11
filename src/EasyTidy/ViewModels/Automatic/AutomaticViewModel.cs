@@ -6,7 +6,6 @@ using EasyTidy.Common.Extensions;
 using EasyTidy.Common.Job;
 using EasyTidy.Contracts.Service;
 using EasyTidy.Model;
-using EasyTidy.Util;
 using EasyTidy.Views.ContentDialogs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.UI.Dispatching;

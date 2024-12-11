@@ -3,6 +3,7 @@ global using CommunityToolkit.Mvvm.Input;
 global using EasyTidy.Common;
 global using EasyTidy.ViewModels;
 global using EasyTidy.Views;
+global using EasyTidy.Util;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.UI.Xaml;
 global using Microsoft.UI.Xaml.Controls;

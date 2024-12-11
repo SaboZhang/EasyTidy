@@ -1204,4 +1204,10 @@
   <data name="LogsFolder.Content" xml:space="preserve">
     <value>ログフォルダー</value>
   </data>
+  <data name="GeneralPrefixCard.Header" xml:space="preserve">
+    <value>Webdavアップロードプリフィックス</value>
+  </data>
+  <data name="GeneralPrefixCard.Description" xml:space="preserve">
+    <value>WebDavにファイルをアップロードするためのフォルダーを設定する</value>
+  </data>
 </root>

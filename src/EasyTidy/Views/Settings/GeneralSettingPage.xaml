@@ -79,6 +79,15 @@
                         </ctk:SettingsCard.HeaderIcon>
                         <ToggleSwitch IsOn="{x:Bind ViewModel.HiddenFiles, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </ctk:SettingsCard>
+                    <ctk:SettingsCard x:Uid="GeneralPrefixCard">
+                        <ctk:SettingsCard.HeaderIcon>
+                            <FontIcon Glyph="&#xeb41;"/>
+                        </ctk:SettingsCard.HeaderIcon>
+                        <TextBox 
+                            MinWidth="240"
+                            MaxWidth="320"
+                            Text="{x:Bind ViewModel.WebDavPrefix, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </ctk:SettingsCard>
                 </etc:SettingsGroup>
 
                 <etc:SettingsGroup x:Uid="GeneralAppSettings"

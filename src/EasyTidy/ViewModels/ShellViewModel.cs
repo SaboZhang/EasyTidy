@@ -1,5 +1,4 @@
 ﻿using EasyTidy.Contracts.Service;
-using EasyTidy.Service;
 
 namespace EasyTidy.ViewModels;
 

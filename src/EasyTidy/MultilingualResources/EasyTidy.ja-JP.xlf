@@ -1648,6 +1648,14 @@
     <ept id="2">&lt;/visual&gt;</ept>
 <ept id="1">&lt;/toast&gt;</ept></target>
         </trans-unit>
+        <trans-unit id="GeneralPrefixCard.Header" translate="yes" xml:space="preserve">
+          <source>Webdav upload prefix</source>
+          <target state="translated">Webdavアップロードプリフィックス</target>
+        </trans-unit>
+        <trans-unit id="GeneralPrefixCard.Description" translate="yes" xml:space="preserve">
+          <source>Set the folder to upload files to WebDav</source>
+          <target state="translated">WebDavにファイルをアップロードするためのフォルダーを設定する</target>
+        </trans-unit>
       </group>
     </body>
   </file>

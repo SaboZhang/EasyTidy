@@ -1204,4 +1204,10 @@
   <data name="LogsFolder.Content" xml:space="preserve">
     <value>Dossier Logs</value>
   </data>
+  <data name="GeneralPrefixCard.Header" xml:space="preserve">
+    <value>Préfixe de chargement Webdav</value>
+  </data>
+  <data name="GeneralPrefixCard.Description" xml:space="preserve">
+    <value>Définir le dossier pour télécharger des fichiers sur WebDav</value>
+  </data>
 </root>
