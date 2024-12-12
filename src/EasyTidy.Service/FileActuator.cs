@@ -214,8 +214,9 @@ public static class FileActuator
             Renamer.ResetIncrement();
         }
 
+        var subFolder = ServiceConfig.CurConfig?.SubFolder ?? false;
         // 递归处理子文件夹
-        if (parameters.HandleSubfolders)
+        if (subFolder)
         {
             var subDirList = Directory.GetDirectories(parameters.SourcePath).ToList();
             foreach (var subDir in subDirList)

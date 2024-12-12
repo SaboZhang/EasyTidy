@@ -39,7 +39,7 @@ public static partial class AppHelper
             Minimize = Settings?.GeneralConfig.Minimize ?? false,
             IrrelevantFiles = Settings?.GeneralConfig.IrrelevantFiles ?? false,
             FileInUse = Settings?.GeneralConfig.FileInUse ?? false,
-            SubFolder = Settings?.GeneralConfig.SubFolder ?? true,
+            SubFolder = Settings?.GeneralConfig.SubFolder ?? false,
             IsStartup = Settings?.GeneralConfig.IsStartup ?? false,
             IsStartupCheck = Settings?.GeneralConfig.IsStartupCheck ?? false,
             EmptyFiles = Settings?.GeneralConfig.EmptyFiles ?? true,
