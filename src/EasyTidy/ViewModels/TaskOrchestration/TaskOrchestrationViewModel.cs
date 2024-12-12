@@ -93,6 +93,8 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
     [ObservableProperty]
     public ObservableCollection<PatternSnippetModel> _randomizerModel;
 
+    private static DateTime LastInvocationTime = DateTime.MinValue;
+
     public void Initialize(StackedNotificationsBehavior notificationQueue)
     {
         _notificationQueue = notificationQueue;
@@ -347,6 +349,13 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
     [RelayCommand]
     private async Task OnUpdateTask(object dataContext)
     {
+        var currentTime = DateTime.Now;
+        if ((currentTime - LastInvocationTime).TotalMilliseconds < 500) // 防抖时间间隔，单位为毫秒
+        {
+            Logger.Info($"触发防抖了，鼠标坏了吧，500毫秒两次点击🤣🤣🤣");
+            return;
+        }
+        LastInvocationTime = currentTime;
         try
         {
             if (dataContext != null)
@@ -362,7 +371,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 var task = dataContext as TaskOrchestrationTable;
                 dialog.TaskName = task.TaskName;
                 dialog.TaskRule = task.TaskRule;
-                dialog.TaskSource = task.TaskSource;
+                TaskSource = task.TaskSource;
                 TaskTarget = task.TaskTarget;
                 dialog.Shortcut = task.Shortcut;
                 SelectedOperationMode = task.OperationMode;
@@ -390,7 +399,9 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                     oldTask.IsEnabled = dialog.EnabledFlag;
                     oldTask.GroupName.GroupName = GroupTextName;
                     oldTask.IsRegex = dialog.IsRegex;
-                    oldTask.Filter = await _dbContext.Filters.Where(x => x.Id == SelectedFilter.Id).FirstOrDefaultAsync();
+                    oldTask.Filter = SelectedFilter != null 
+                    ? await _dbContext.Filters.Where(x => x.Id == SelectedFilter.Id).FirstOrDefaultAsync()
+                    : null;
                     await _dbContext.SaveChangesAsync();
                     await OnPageLoaded();
                     _notificationQueue.ShowWithWindowExtension("ModifySuccessfullyText".GetLocalized(), InfoBarSeverity.Success);

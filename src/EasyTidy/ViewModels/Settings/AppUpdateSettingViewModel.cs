@@ -290,7 +290,7 @@ public partial class AppUpdateSettingViewModel : ObservableObject
                 return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, updateFolder, fileName);
             }
 
-            string[] requiredFiles = ["UpdateLauncher.exe"];
+            string[] requiredFiles = ["UpdateLauncher.exe", "update.zip"];
 
             if (requiredFiles.All(file => File.Exists(GetPath(file))))
             {
