@@ -467,6 +467,13 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
     [RelayCommand]
     private async Task OnExecuteTask(object dataContext)
     {
+        var currentTime = DateTime.Now;
+        if ((currentTime - LastInvocationTime).TotalMilliseconds < 500) // 防抖时间间隔，单位为毫秒
+        {
+            Logger.Info($"触发防抖了，鼠标坏了吧，500毫秒两次点击🤣🤣🤣");
+            return;
+        }
+        LastInvocationTime = currentTime;
         IsActive = true;
         try
         {
@@ -511,6 +518,13 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
     [RelayCommand]
     private async Task OnIsEnableTask(object dataContext)
     {
+        var currentTime = DateTime.Now;
+        if ((currentTime - LastInvocationTime).TotalMilliseconds < 500) // 防抖时间间隔，单位为毫秒
+        {
+            Logger.Info($"触发防抖了，鼠标坏了吧，500毫秒两次点击🤣🤣🤣");
+            return;
+        }
+        LastInvocationTime = currentTime;
         IsActive = true;
         try
         {
@@ -644,7 +658,6 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         { "AllFoldersWithoutOtherMatches","##" },
         { "AllFoldersStartingWithrobot","robot**" },
         { "AllFoldersContainingrobot","**robot**" },
-        { "AllFoldersNamed_robot_LocatedUnder","C:\\**\\robot" },
         { "Use_Or_ToSeparate","image**|photo**" },
         { "UseToExcludeFoldersStartingWithmy","**/my**" },
     };
@@ -656,7 +669,6 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         { "AllFilesWithTheExtension","*.jpg" },
         { "AllFilesBeginningWith","penguin*" },
         { "AllFilesContains","*penguin*" },
-        { "All_FilesUnder","C:\\Folder\\*.jpg" },
         { "UseDelimiter","*.jpg;*.png" },
         { "UseDelimitersToExclude","*.jpg/sea*" },
         { "CompressedFile","*.7z;*.bz2;*.gz;*.iso;*.rar;*.xz;*.z;*.zip" },
