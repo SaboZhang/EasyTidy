@@ -161,8 +161,21 @@ public class FilterUtil
     private static DateTime ConvertToDateTime(string dateValue, DateUnit dateUnit)
     {
         // Parse and adjust date based on unit (days, months, etc.)
-        DateTime date = DateTime.Parse(dateValue);
-        return date;
+        if (int.TryParse(dateValue, out int numericValue))
+        {
+            return dateUnit switch
+            {
+                DateUnit.Day => DateTime.Now.AddDays(-numericValue),
+                DateUnit.Month => DateTime.Now.AddMonths(-numericValue),
+                DateUnit.Year => DateTime.Now.AddYears(-numericValue),
+                DateUnit.Second => DateTime.Now.AddSeconds(-numericValue),
+                DateUnit.Minute => DateTime.Now.AddMinutes(-numericValue),
+                DateUnit.Hour => DateTime.Now.AddHours(-numericValue),
+                _ => DateTime.Now,
+            };
+        }
+
+        return DateTime.Now;
     }
 
     private static bool CompareValues(long fileValue, long filterValue, ComparisonResult comparison)
@@ -180,8 +193,8 @@ public class FilterUtil
     {
         return comparison switch
         {
-            ComparisonResult.GreaterThan => fileDate > filterDate,
-            ComparisonResult.LessThan => fileDate < filterDate,
+            ComparisonResult.GreaterThan => filterDate > fileDate,
+            ComparisonResult.LessThan => filterDate < fileDate,
             ComparisonResult.Equal => fileDate == filterDate,
             _ => false,
         };

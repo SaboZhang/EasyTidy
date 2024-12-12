@@ -24,7 +24,6 @@ public partial class MainViewModel : ObservableObject
     public MainViewModel()
     {
         _dbContext = App.GetService<AppDbContext>();
-        // 启动时执行，不等待
     }
 
     public void OnAutoSuggestBoxTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)

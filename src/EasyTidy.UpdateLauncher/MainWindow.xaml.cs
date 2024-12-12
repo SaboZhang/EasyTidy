@@ -64,6 +64,9 @@ public partial class MainWindow : Window
                 SetStatus($"终止进程时发生错误：{ex.Message}", false);
             }
         }
+        SetStatus("请稍后...");
+
+        await Task.Delay(3000);
 
         SetStatus("正在解压，请勿关闭此窗口...");
 

@@ -6,6 +6,7 @@ using EasyTidy.Contracts.Service;
 using EasyTidy.Model;
 using EasyTidy.Service;
 using EasyTidy.Util;
+using EasyTidy.Util.SettingsInterface;
 using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
 using Windows.Storage.Pickers;
@@ -438,6 +439,13 @@ public partial class GeneralSettingViewModel : ObservableObject
 
         // Notify UI of property change
         OnPropertyChanged(propertyName);
+
+        if(propertyName == nameof(SubFolder)){
+            var app = App.GetService<ISettingsManager>();
+            app.GetConfigModel().SubFolder = SubFolder;
+            var config = new ServiceConfig(app);
+            config.SetConfigModel();
+        }
 
         Logger.Debug($"GeneralViewModel: NotifyPropertyChanged {propertyName}");
 

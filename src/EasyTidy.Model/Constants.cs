@@ -30,7 +30,7 @@ public static class Constants
     public static readonly string AppConfigPath;
     public static readonly string CommonAppConfigPath;
 
-    public static readonly string LogPathName = "v" + Version;
+    public static readonly string LogPathName = Version;
 
     public static readonly string LogPath = $"{ExecutePath}logs";
 
