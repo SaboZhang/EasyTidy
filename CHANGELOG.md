@@ -1,7 +1,7 @@
 
 # 更新
 
-## [1.0.4.1210] 之前的版本更新程序存在BUG,烦请手动下载新版本
+## 此版本之前的更新程序存在BUG,烦请手动下载新版本
 
 [更新下载](https://github.com/SaboZhang/EasyTidy/releases)
 
@@ -37,4 +37,4 @@
 - 修复：升级易受攻击的第三方引用
 - 修复：Windows 10 企业版 文件夹选择BUG
 
-**Full Changelog**: https://github.com/SaboZhang/EasyTidy/compare/1.0.3.1120...1.0.4.1211
+**Full Changelog**: https://github.com/SaboZhang/EasyTidy/compare/1.0.4.1120...1.0.5.1212

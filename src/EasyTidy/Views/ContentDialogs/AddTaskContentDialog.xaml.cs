@@ -128,7 +128,7 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
                 var menuItem = new MenuFlyoutItem { Text = category.Items[i] };
                 menuItem.Click += OnMenuItemClick;
                 subItem.Items.Add(menuItem);
-                if (i == 1 || i == 7)
+                if (i == 1 || i == 6)
                 {
                     subItem.Items.Add(new MenuFlyoutSeparator());
                 }
@@ -271,19 +271,30 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
                 {
                     case OperationMode.Delete:
                         RenameButton.Visibility = Visibility.Collapsed;
+                        TaskTargetPanel.Visibility = Visibility.Collapsed;
+                        TaskSourcePanel.Visibility = Visibility.Visible;
                         break;
                     case OperationMode.RecycleBin:
-                        TaskSourcePanel.Visibility = Visibility.Collapsed;
+                        TaskSourcePanel.Visibility = Visibility.Visible;
                         RenameButton.Visibility = Visibility.Collapsed;
+                        TaskTargetPanel.Visibility = Visibility.Collapsed;
                         break;
                     case OperationMode.Rename:
                         RenameButton.Visibility = Visibility.Visible;
                         TaskTargetTitle.Text = "NewNameAndPath".GetLocalized();
                         TaskSourcePanel.Visibility = Visibility.Collapsed;
+                        TaskTargetPanel.Visibility = Visibility.Visible;
+                        break;
+                    case OperationMode.UploadWebDAV:
+                        TaskTargetPanel.Visibility = Visibility.Collapsed;
+                        RenameButton.Visibility = Visibility.Collapsed;
+                        TaskSourcePanel.Visibility = Visibility.Visible;
+                        ViewModel.TaskTarget = ViewModel.TaskSource;
                         break;
                     default:
                         RenameButton.Visibility = Visibility.Collapsed;
                         TaskSourcePanel.Visibility = Visibility.Visible;
+                        TaskTargetPanel.Visibility = Visibility.Visible;
                         break;
                 }
             }
