@@ -797,9 +797,6 @@
   <data name="Turkish_Language" xml:space="preserve">
     <value>土耳其语</value>
   </data>
-  <data name="Ukrainian_Language" xml:space="preserve">
-    <value>乌克兰语</value>
-  </data>
   <data name="Chinese_Simplified_Language" xml:space="preserve">
     <value>简体中文</value>
   </data>
@@ -910,9 +907,6 @@
   </data>
   <data name="UseDelimitersToExclude" xml:space="preserve">
     <value>使用 "/" 排除以 "sea "开头的文件</value>
-  </data>
-  <data name="CompressedFile" xml:space="preserve">
-    <value>压缩文件</value>
   </data>
   <data name="Document" xml:space="preserve">
     <value>文档</value>
@@ -1073,9 +1067,6 @@
   <data name="RandomizerCheatSheet_Title.Text" xml:space="preserve">
     <value>使用随机值替换</value>
   </data>
-  <data name="PriorityRules.ToolTipService.ToolTip" xml:space="preserve">
-    <value>如果有多个规则，选择优先处理哪个规则</value>
-  </data>
   <data name="GeneralMultipleInstanceCard.Header" xml:space="preserve">
     <value>多实例配置</value>
   </data>
@@ -1132,9 +1123,6 @@
   </data>
   <data name="UpdateReady" xml:space="preserve">
     <value>准备更新</value>
-  </data>
-  <data name="Update_Ready_Content" xml:space="preserve">
-    <value>更新已下载完成，即将开始安装。</value>
   </data>
   <data name="PreparingToDownload" xml:space="preserve">
     <value>准备下载...</value>

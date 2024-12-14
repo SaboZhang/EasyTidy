@@ -32,6 +32,7 @@
 	<PackageReference Include="WebDAVClient" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EasyTidy.Log\EasyTidy.Log.csproj" />
     <ProjectReference Include="..\EasyTidy.Model\EasyTidy.Model.csproj" />
   </ItemGroup>
 </Project>

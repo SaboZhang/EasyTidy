@@ -27,40 +27,82 @@ public class FolderActuator
             if (string.IsNullOrEmpty(parameters.TargetPath)) return;
             if (IsFolder(parameters.RuleModel.Rule, parameters.RuleModel.RuleType))
             {
-                if (!Directory.Exists(parameters.TargetPath) && parameters.OperationMode != OperationMode.Rename)
+                await RetryAsync(maxRetries, async () =>
                 {
-                    Directory.CreateDirectory(parameters.TargetPath);
-                }
-                LogService.Logger.Info($"执行文件夹操作 {parameters.TargetPath}");
-                var folderList = Directory.GetDirectories(parameters.SourcePath).ToList();
-                foreach (var folder in folderList)
+                    await ProcessFoldersAsync(parameters);
+                });
+            }
+            else
+            {
+                await RetryAsync(maxRetries, async () =>
                 {
-                    // if (ShouldSkip(parameters.Funcs, folder, parameters.PathFilter))
-                    // {
-                    //     LogService.Logger.Debug($"执行文件夹操作 ShouldSkip {parameters.TargetPath}");
-                    //     continue;
-                    // }
-
-                    var newParameters = new OperationParameters(
-                        parameters.OperationMode,
-                        folder,
-                        Path.Combine(parameters.TargetPath, Path.GetFileName(folder)),
-                        parameters.FileOperationType,
-                        parameters.HandleSubfolders,
-                        parameters.Funcs,
-                        parameters.PathFilter)
-                    { OldTargetPath = parameters.TargetPath, RuleModel = parameters.RuleModel };
-                    await ExecuteFolderOperationAsync(newParameters);
-                }
-                if (parameters.OperationMode == OperationMode.Rename)
-                {
-                    Renamer.ResetIncrement();
-                }
+                    await FileActuator.ExecuteFileOperationAsync(parameters);
+                });
             }
         }
         catch (Exception ex)
         {
             LogService.Logger.Error($"Error executing folder operation: {ex.Message}");
+        }
+    }
+
+    private static async Task RetryAsync(int maxRetries, Func<Task> action)
+    {
+        int attempt = 0;
+        while (attempt < maxRetries)
+        {
+            try
+            {
+                await action();
+                return; // 成功后退出
+            }
+            catch (Exception ex)
+            {
+                attempt++;
+                LogService.Logger.Error($"Error during operation: {ex.Message}. Attempt {attempt}/{maxRetries}");
+                if (attempt >= maxRetries) throw; // 达到最大重试次数后抛出异常
+                await Task.Delay(1000); // 可选延迟
+            }
+        }
+    }
+
+    /// <summary>
+    /// 文件夹处理
+    /// </summary>
+    /// <param name="parameters"></param>
+    /// <returns></returns>
+    private static async Task ProcessFoldersAsync(OperationParameters parameters)
+    {
+        if (!Directory.Exists(parameters.TargetPath) && parameters.OperationMode != OperationMode.Rename)
+        {
+            Directory.CreateDirectory(parameters.TargetPath);
+        }
+
+        LogService.Logger.Info($"执行文件夹操作 {parameters.TargetPath}");
+        var folderList = Directory.GetDirectories(parameters.SourcePath).ToList();
+
+        foreach (var folder in folderList)
+        {
+            if (FilterUtil.ShouldSkip(parameters.Funcs, folder, parameters.PathFilter))
+            {
+                LogService.Logger.Debug($"执行文件夹操作 ShouldSkip {parameters.TargetPath}");
+                continue;
+            }
+
+            var newParameters = new OperationParameters(
+                parameters.OperationMode,
+                folder,
+                Path.Combine(parameters.TargetPath, Path.GetFileName(folder)),
+                parameters.FileOperationType,
+                parameters.HandleSubfolders,
+                parameters.Funcs,
+                parameters.PathFilter)
+            { OldTargetPath = parameters.TargetPath, RuleModel = parameters.RuleModel };
+            await ExecuteFolderActionAsync(newParameters);
+        }
+        if (parameters.OperationMode == OperationMode.Rename)
+        {
+            Renamer.ResetIncrement();
         }
     }
 
@@ -70,13 +112,13 @@ public class FolderActuator
     /// <param name="parameters"></param>
     /// <returns></returns>
     /// <exception cref="NotSupportedException"></exception>
-    private static async Task ExecuteFolderOperationAsync(OperationParameters parameters)
+    private static async Task ExecuteFolderActionAsync(OperationParameters parameters)
     {
-        // if (ShouldSkip(parameters.Funcs, parameters.SourcePath, parameters.PathFilter) && parameters.OperationMode != OperationMode.RecycleBin)
-        // {
-        //     LogService.Logger.Debug($"执行文件夹操作 {parameters.TargetPath}");
-        //     return;
-        // }
+        if (FilterUtil.ShouldSkip(parameters.Funcs, parameters.SourcePath, parameters.PathFilter) && parameters.OperationMode != OperationMode.RecycleBin)
+        {
+            LogService.Logger.Debug($"执行文件夹操作 {parameters.TargetPath}");
+            return;
+        }
 
         LogService.Logger.Info($"执行文件夹操作 {parameters.TargetPath}, 操作模式: {parameters.OperationMode}");
         switch (parameters.OperationMode)
@@ -85,7 +127,7 @@ public class FolderActuator
                 await MoveFolder(parameters.SourcePath, parameters.TargetPath, parameters.FileOperationType);
                 break;
             case OperationMode.Copy:
-                // await CopyFile(parameters.SourcePath, parameters.TargetPath, parameters.FileOperationType);
+                await CopyFolder(parameters.SourcePath, parameters.TargetPath, parameters.FileOperationType);
                 break;
             case OperationMode.Delete:
                 await DeleteFolder(parameters.TargetPath);
@@ -94,8 +136,11 @@ public class FolderActuator
                 await RenameFolder(parameters.SourcePath, parameters.OldTargetPath);
                 break;
             case OperationMode.RecycleBin:
-                // await MoveToRecycleBin(parameters.TargetPath, new List<Func<string, bool>>(parameters.Funcs),
-                //parameters.PathFilter, parameters.RuleModel.RuleType, true, parameters.HandleSubfolders);
+                await FileActuator.MoveToRecycleBin(parameters.TargetPath, new List<Func<string, bool>>(parameters.Funcs), 
+                    parameters.PathFilter, parameters.RuleModel.RuleType, true, parameters.HandleSubfolders);
+                break;
+            case OperationMode.UploadWebDAV:
+                await UploadFolderAsync(parameters.SourcePath);
                 break;
             default:
                 throw new NotSupportedException($"Operation mode '{parameters.OperationMode}' is not supported.");
@@ -233,6 +278,25 @@ public class FolderActuator
             return true;
         }
         return false;
+    }
+
+    private static async Task UploadFolderAsync(string localDirPath, string remoteDirPath = null)
+    {
+        var password = DESUtil.DesDecrypt(ServiceConfig.CurConfig.WebDavPassword);
+        WebDavClient webDavClient = new(ServiceConfig.CurConfig.WebDavUrl, ServiceConfig.CurConfig.WebDavUser, password);
+        remoteDirPath = Path.Combine(remoteDirPath ?? ServiceConfig.CurConfig.WebDavUrl + ServiceConfig.CurConfig.UploadPrefix, Path.GetFileName(localDirPath));
+        await webDavClient.CreateFolderAsync(ServiceConfig.CurConfig.WebDavUrl + ServiceConfig.CurConfig.UploadPrefix, Path.GetFileName(localDirPath));
+        foreach (var file in Directory.GetFiles(localDirPath))
+        {
+            string remoteFilePath = Path.Combine(remoteDirPath, Path.GetFileName(file));
+            await webDavClient.UploadFileAsync(remoteFilePath, file);
+        }
+        // 递归上传子目录
+        foreach (string subDir in Directory.GetDirectories(localDirPath))
+        {
+            string remoteSubDirPath = Path.Combine(remoteDirPath, Path.GetFileName(subDir));
+            await UploadFolderAsync(subDir, remoteSubDirPath);
+        }
     }
 
 }

@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.UI.Dispatching;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Threading.Tasks;
 
 namespace EasyTidy.ViewModels;
 
@@ -138,7 +139,6 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 args.Cancel = true;
                 return;
             }
-            int newPriority = dialog.Priority - 5;
             await _dbContext.TaskOrchestration.AddAsync(new TaskOrchestrationTable
             {
                 TaskName = dialog.TaskName,
@@ -151,7 +151,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 IsEnabled = dialog.EnabledFlag,
                 RuleType = dialog.RuleType,
                 CreateTime = DateTime.Now,
-                Priority = newPriority < 0 ? 5 : newPriority,
+                Priority = 1,
                 GroupName = !string.IsNullOrEmpty(SelectedTaskGroupName) && SelectedTaskGroupName != "AllText".GetLocalized()
                 ? await GetOrUpdateTaskGroupAsync(SelectedTaskGroupName)
                 : new TaskGroupTable
@@ -328,6 +328,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                     FilterListACV.SortDescriptions.Add(new SortDescription("Id", SortDirection.Ascending));
                     TaskList = new(list);
                     TaskListACV = new AdvancedCollectionView(TaskList, true);
+                    TaskListACV.SortDescriptions.Add(new SortDescription("Priority", SortDirection.Descending));
                     TaskListACV.SortDescriptions.Add(new SortDescription("ID", SortDirection.Ascending));
                 });
             });
@@ -390,14 +391,16 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                         return;
                     }
                     var oldTask = await _dbContext.TaskOrchestration.Include(x => x.GroupName).Where(x => x.ID == task.ID).FirstOrDefaultAsync();
+                    await UpdateQuartzGroup(oldTask.GroupName.GroupName, $"{oldTask.TaskName}#{oldTask.ID}", GroupTextName, $"{dialog.TaskName}#{oldTask.ID}");
                     oldTask.TaskName = dialog.TaskName;
+                    var group = await GroupUpdateOrCreate(GroupTextName);
                     oldTask.TaskRule = dialog.TaskRule;
                     oldTask.TaskSource = TaskSource;
                     oldTask.Shortcut = dialog.Shortcut;
                     oldTask.TaskTarget = TaskTarget;
                     oldTask.OperationMode = SelectedOperationMode;
                     oldTask.IsEnabled = dialog.EnabledFlag;
-                    oldTask.GroupName.GroupName = GroupTextName;
+                    oldTask.GroupName = group;
                     oldTask.IsRegex = dialog.IsRegex;
                     oldTask.Filter = SelectedFilter != null 
                     ? await _dbContext.Filters.Where(x => x.Id == SelectedFilter.Id).FirstOrDefaultAsync()
@@ -420,6 +423,27 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
             Logger.Error($"TaskOrchestrationViewModel: OnUpdateTask 异常信息 {ex}");
         }
 
+    }
+
+    private async Task<TaskGroupTable> GroupUpdateOrCreate(string groupTextName)
+    {
+        var group = await _dbContext.TaskGroup.FirstOrDefaultAsync(g => g.GroupName == groupTextName);
+        if (group == null)
+        {
+            group = new TaskGroupTable()
+            {
+                GroupName = GroupTextName
+            };
+            await _dbContext.TaskGroup.AddAsync(group);
+            await _dbContext.SaveChangesAsync();
+        }
+        return group;
+    }
+
+    private async Task UpdateQuartzGroup(string groupName, string taskName, string newGroupName, string newTaskName)
+    {
+        await QuartzHelper.UpdateJob(taskName, groupName, newTaskName, newGroupName);
+        await QuartzHelper.DeleteJob(taskName, groupName);
     }
 
     /// <summary>
@@ -584,6 +608,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
 
             TaskList = new(list);
             TaskListACV = new AdvancedCollectionView(TaskList, true);
+            TaskListACV.SortDescriptions.Add(new SortDescription("Priority", SortDirection.Descending));
             TaskListACV.SortDescriptions.Add(new SortDescription("ID", SortDirection.Ascending));
         }
         catch (Exception ex)
@@ -630,6 +655,36 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         {
             GroupTextName = SelectedTaskGroupName;
         }
+    }
+
+    public async Task OnTaskListCollectionChangedAsync(TaskOrchestrationTable task, int draggedIndex, int droppedIndex)
+    {
+        if ((DateTime.Now - LastInvocationTime).TotalMilliseconds < 800)
+        {
+            return; // 防止频繁触发
+        }
+        LastInvocationTime = DateTime.Now;
+
+        if (draggedIndex < 0 || droppedIndex < 0 || draggedIndex == droppedIndex || draggedIndex >= TaskList.Count || droppedIndex >= TaskList.Count)
+        {
+            return;
+        }
+        TaskList.Move(draggedIndex, droppedIndex);
+
+        for (int i = 0; i < TaskList.Count; i++)
+        {
+            TaskList[i].Priority = i + 1;
+            if (task.ID == TaskList[i].ID)
+            {
+                await QuartzHelper.UpdateTaskPriority($"{task.TaskName}#{task.ID}", task.GroupName.GroupName, TaskList[i].Priority);
+            }
+        }
+
+        _dbContext.TaskOrchestration.UpdateRange(TaskList);
+        await _dbContext.SaveChangesAsync();
+        TaskListACV = new AdvancedCollectionView(TaskList, true);
+        TaskListACV.SortDescriptions.Add(new SortDescription("Priority", SortDirection.Descending));
+        TaskListACV.SortDescriptions.Add(new SortDescription("ID", SortDirection.Ascending));
     }
 
     /// <summary>

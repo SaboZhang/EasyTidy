@@ -4,6 +4,7 @@ using Quartz.Impl.Matchers;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using static Quartz.Logging.OperationName;
 
 namespace EasyTidy.Service;
 
@@ -113,6 +114,61 @@ public class QuartzHelper
         }
 
         await _scheduler.ResumeJob(jobKey);
+    }
+
+    public static async Task UpdateJob(string jobName, string groupName, string newJobName, string newGroupName)
+    {
+        var jobKey = new JobKey(jobName, groupName);
+        if (!await _scheduler.CheckExists(jobKey))
+        {
+            return;
+        }
+        var jobDetail = await _scheduler.GetJobDetail(jobKey);
+
+        var triggers = await _scheduler.GetTriggersOfJob(jobKey);
+
+        if (jobDetail != null)
+        {
+            var newJobKey = new JobKey(newJobName, newGroupName);
+            var newJob = jobDetail.GetJobBuilder()
+                .WithIdentity(newJobKey)
+                .Build();
+            var jobDataMap = jobDetail.JobDataMap; // 获取原任务的参数
+            if (jobDataMap != null)
+            {
+                newJob.JobDataMap.PutAll(jobDataMap);
+            }
+
+            foreach (var trigger in triggers)
+            {
+                var newTriggerKey = new TriggerKey($"{newJobName}Trigger", newGroupName);
+                var newTrigger = trigger.GetTriggerBuilder()
+                    .WithIdentity(newTriggerKey)
+                    .ForJob(newJobKey)
+                    .Build();
+                await _scheduler.ScheduleJob(newJob, newTrigger);
+            }
+        }
+    }
+
+    public static async Task UpdateTaskPriority(string jobName, string groupName, int newPriority)
+    {
+        var jobKey = new JobKey(jobName, groupName);
+        var triggers = await _scheduler.GetTriggersOfJob(jobKey);
+
+        foreach (var trigger in triggers)
+        {
+            if (trigger is ITrigger existingTrigger)
+            {
+                // 构建新的触发器，设置新的优先级
+                var newTrigger = existingTrigger.GetTriggerBuilder()
+                    .WithPriority(newPriority) // 设置新优先级
+                    .Build();
+
+                // 替换旧触发器
+                await _scheduler.RescheduleJob(existingTrigger.Key, newTrigger);
+            }
+        }
     }
 
     public static async Task TriggerAllJobsOnceAsync()

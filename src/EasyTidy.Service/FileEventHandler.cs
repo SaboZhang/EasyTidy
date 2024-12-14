@@ -54,8 +54,8 @@ public static class FileEventHandler
         var operationParams = OperationParameters.CreateOperationParameters(parameter);
 
         _sourceToTargetsCache[parameter.SourcePath] = _sourceToTargetsCache.TryGetValue(parameter.SourcePath, out var targets)
-            ? targets.Concat(new List<OperationParameters> { operationParams }).OrderBy(op => op.Priority).ThenBy(op => op.CreateTime).ToList()
-            : new List<OperationParameters> { operationParams }.OrderBy(op => op.Priority).ThenBy(op => op.CreateTime).ToList();
+            ? targets.Concat(new List<OperationParameters> { operationParams }).OrderByDescending(op => op.Priority).ThenBy(op => op.CreateTime).ToList()
+            : new List<OperationParameters> { operationParams }.OrderByDescending(op => op.Priority).ThenBy(op => op.CreateTime).ToList();
     }
 
     /// <summary>
@@ -151,14 +151,21 @@ public static class FileEventHandler
                     // 异步执行文件操作，确保文件存在
                     Task.Run(async () =>
                     {
-                        if (File.Exists(path))
+                        if (parameter.RuleModel.RuleType == TaskRuleType.FileRule)
                         {
-                            await FileActuator.ExecuteFileOperationAsync(operationParams);
+                            if (File.Exists(path))
+                            {
+                                await FileActuator.ExecuteFileOperationAsync(operationParams);
+                            }
+                            else
+                            {
+                                LogService.Logger.Debug($"文件 {path} 已不存在，无法执行操作。");
+                            }
                         }
                         else
                         {
-                            LogService.Logger.Debug($"文件 {path} 已不存在，无法执行操作。");
-                        }
+                            await FolderActuator.ExecuteFolderOperationAsync(parameter);
+                        }          
 
                         // 操作完成后，从正在处理的集合中移除
                         _processingFiles.TryRemove(path, out _);
@@ -170,14 +177,24 @@ public static class FileEventHandler
                 var operationParams = OperationParameters.CreateOperationParameters(parameter);
                 Task.Run(async () =>
                 {
-                    if (File.Exists(path))
+                    if (parameter.RuleModel.RuleType == TaskRuleType.FileRule)
                     {
-                        await FileActuator.ExecuteFileOperationAsync(operationParams);
+                        if (File.Exists(path))
+                        {
+                            await FileActuator.ExecuteFileOperationAsync(operationParams);
+                        }
+                        else
+                        {
+                            LogService.Logger.Debug($"文件 {path} 已不存在，无法执行操作。");
+                        }
                     }
                     else
                     {
-                        LogService.Logger.Debug($"文件 {path} 已不存在，无法执行操作。");
+                        await FolderActuator.ExecuteFolderOperationAsync(parameter);
                     }
+
+                    // 操作完成后，从正在处理的集合中移除
+                    _processingFiles.TryRemove(path, out _);
 
                     _processingFiles.TryRemove(path, out _);
                 });

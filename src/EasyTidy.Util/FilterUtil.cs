@@ -1,4 +1,5 @@
-﻿using EasyTidy.Model;
+﻿using EasyTidy.Log;
+using EasyTidy.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -227,7 +228,7 @@ public class FilterUtil
                 }
                 break;
             case TaskRuleType.ExpressionRules:
-                filters.Add(filePath => Regex.IsMatch(filePath, rule));
+                filters.Add(filePath => Regex.IsMatch(Path.GetFileName(filePath), rule));
                 break;
         }
 
@@ -281,7 +282,23 @@ public class FilterUtil
                     yield return filter;
                 }
             }
-            else if (trimmedCondition.StartsWith("*"))
+            else if (trimmedCondition.StartsWith('*') && trimmedCondition.EndsWith('*'))
+            {
+                // 包含指定字符规则，例如 *penguin*
+                string keyword = trimmedCondition.Trim('*');
+                yield return filePath => Path.GetFileName(filePath).Contains(keyword, StringComparison.OrdinalIgnoreCase);
+            }
+            else if (trimmedCondition.EndsWith('*'))
+            {
+                // 以指定字符开头规则，例如 penguin*
+                string prefix = trimmedCondition.TrimEnd('*').ToLower();
+                yield return filePath =>
+                {
+                    string normalizedPath = Path.GetFileName(filePath).ToLower().Trim();
+                    return normalizedPath.StartsWith(prefix);
+                };
+            }
+            else if (trimmedCondition.StartsWith('*'))
             {
                 // 扩展名匹配规则
                 yield return GenerateExtensionFilter(trimmedCondition);
@@ -442,6 +459,39 @@ public class FilterUtil
 
         // 将非压缩文件后缀用分号连接成一个字符串返回
         return string.Join(";", nonCompressedExtensions);
+    }
+
+    /// <summary>
+    /// 检查是否应该跳过
+    /// </summary>
+    /// <param name="dynamicFilters"></param>
+    /// <param name="path"></param>
+    /// <param name="pathFilter"></param>
+    /// <returns></returns>
+    public static bool ShouldSkip(List<Func<string, bool>> dynamicFilters, string path, Func<string, bool>? pathFilter)
+    {
+        // 检查是否是快捷方式
+        if (Path.GetExtension(path).Equals(".lnk", StringComparison.OrdinalIgnoreCase))
+        {
+            return true; // 跳过快捷方式文件
+        }
+
+        // 规则1检查：dynamicFilters 列表中满足任意一个条件
+        bool satisfiesDynamicFilters = dynamicFilters != null && dynamicFilters.Any(filter => filter(path));
+
+        // 规则2检查：如果 pathFilter 不为 null，则它应返回 true
+        bool satisfiesPathFilter = pathFilter == null || pathFilter(path);
+
+        // 如果 pathFilter 为 null，仅根据 satisfiesDynamicFilters 的结果返回
+        if (pathFilter == null)
+        {
+            LogService.Logger.Debug($"satisfiesDynamicFilters (no pathFilter): {satisfiesDynamicFilters}");
+            return !satisfiesDynamicFilters;
+        }
+
+        // 如果 pathFilter 不为 null，要求 satisfiesDynamicFilters 和 satisfiesPathFilter 同时满足
+        LogService.Logger.Debug($"satisfiesDynamicFilters: {satisfiesDynamicFilters}, satisfiesPathFilter: {satisfiesPathFilter}");
+        return satisfiesDynamicFilters ^ satisfiesPathFilter;
     }
 
 }

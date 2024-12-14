@@ -1073,9 +1073,6 @@
   <data name="RandomizerCheatSheet_Title.Text" xml:space="preserve">
     <value>ランダムな値に置き換え</value>
   </data>
-  <data name="PriorityRules.ToolTipService.ToolTip" xml:space="preserve">
-    <value>複数のルールが一致した場合、どちらのルールを優先するか</value>
-  </data>
   <data name="GeneralMultipleInstanceCard.Header" xml:space="preserve">
     <value>複数インスタンス構成</value>
   </data>
