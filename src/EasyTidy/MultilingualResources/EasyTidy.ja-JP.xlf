@@ -1420,10 +1420,6 @@
           <source>Replace with random value</source>
           <target state="translated">ランダムな値に置き換え</target>
         </trans-unit>
-        <trans-unit id="PriorityRules.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
-          <source>If multiple rules match, which rule takes precedence</source>
-          <target state="translated">複数のルールが一致した場合、どちらのルールを優先するか</target>
-        </trans-unit>
         <trans-unit id="GeneralMultipleInstanceCard.Header" translate="yes" xml:space="preserve">
           <source>Multiple instances configuration</source>
           <target state="translated">複数インスタンス構成</target>

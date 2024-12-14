@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!--
-    Microsoft ResX Schema
-
+  <!-- 
+    Microsoft ResX Schema 
+    
     Version 2.0
-
-    The primary goals of this format is to allow a simple XML format
-    that is mostly human readable. The generation and parsing of the
-    various data types are done through the TypeConverter classes
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
     associated with the data types.
-
+    
     Example:
-
+    
     ... ado.net/XML headers & schema ...
     <resheader name="resmimetype">text/microsoft-resx</resheader>
     <resheader name="version">2.0</resheader>
@@ -26,36 +26,36 @@
         <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
         <comment>This is a comment</comment>
     </data>
-
-    There are any number of "resheader" rows that contain simple
+                
+    There are any number of "resheader" rows that contain simple 
     name/value pairs.
-
-    Each data row contains a name, and value. The row also contains a
-    type or mimetype. Type corresponds to a .NET class that support
-    text/value conversion through the TypeConverter architecture.
-    Classes that don't support this are serialized and stored with the
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
     mimetype set.
-
-    The mimetype is used for serialized objects, and tells the
-    ResXResourceReader how to depersist the object. This is currently not
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
     extensible. For a given mimetype the value must be set accordingly:
-
-    Note - application/x-microsoft.net.object.binary.base64 is the format
-    that the ResXResourceWriter will generate, however the reader can
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
     read any of the formats listed below.
-
+    
     mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with
+    value   : The object must be serialized with 
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
-
+    
     mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with
+    value   : The object must be serialized with 
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
             : and then encoded with base64 encoding.
 
     mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array
+    value   : The object must be serialized into a byte array 
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
@@ -119,171 +119,129 @@
   </resheader>
   <data name="NavAutomaticText.Content" xml:space="preserve">
     <value>Automatic</value>
-    <comment />
   </data>
   <data name="NavTaskOrchestrationText.Content" xml:space="preserve">
     <value>Task Orchestration</value>
-    <comment />
   </data>
   <data name="NavFiltersText.Content" xml:space="preserve">
     <value>Filters</value>
-    <comment />
   </data>
   <data name="Backup" xml:space="preserve">
     <value>Backup</value>
-    <comment />
   </data>
   <data name="Settings" xml:space="preserve">
     <value>Settings</value>
-    <comment />
   </data>
   <data name="SettingsPageControl.ModuleTitle" xml:space="preserve">
     <value>Automatic</value>
-    <comment />
   </data>
   <data name="SettingsPageControl.ModuleDescription" xml:space="preserve">
     <value>The automation module can monitor changes to files and folders. Based on custom settings and associated file processing tasks, this module can automatically perform the corresponding actions.</value>
-    <comment />
   </data>
   <data name="StartupExecutionCard.Header" xml:space="preserve">
     <value>On startup</value>
-    <comment />
   </data>
   <data name="StartupExecutionCard.Description" xml:space="preserve">
     <value>EasyTidy Execute once at startup</value>
-    <comment />
   </data>
   <data name="RegularTaskRunningCard.Header" xml:space="preserve">
     <value>Regular execution</value>
-    <comment />
   </data>
   <data name="ScheduledExecutionCard.Header" xml:space="preserve">
     <value>According to schedule</value>
-    <comment />
   </data>
   <data name="FileChangeDelay.Text" xml:space="preserve">
     <value>Delay：</value>
-    <comment />
   </data>
   <data name="FileChangeSecond.Text" xml:space="preserve">
     <value>Second</value>
-    <comment />
   </data>
   <data name="AutoAnalysisGlobal.Header" xml:space="preserve">
     <value>AutoAnalysis(Global)</value>
-    <comment />
   </data>
   <data name="FileChange.Description" xml:space="preserve">
     <value>Automatic file processing options</value>
-    <comment />
   </data>
   <data name="FileChangeCard.Header" xml:space="preserve">
     <value>When files change</value>
-    <comment />
   </data>
   <data name="RegularTaskRunningCard.Description" xml:space="preserve">
     <value>Regularly execute according to the set time</value>
-    <comment />
   </data>
   <data name="ScheduledExecutionCard.Description" xml:space="preserve">
     <value>Perform periodic execution according to the set plan</value>
-    <comment />
   </data>
   <data name="ConfigurationButton.Content" xml:space="preserve">
     <value>Configuration</value>
-    <comment />
   </data>
   <data name="TaskAssociation.Header" xml:space="preserve">
     <value>Task association</value>
-    <comment />
   </data>
   <data name="ConfigurationTask.Header" xml:space="preserve">
     <value>Configuration Task</value>
-    <comment />
   </data>
   <data name="ConfigurationTask.Description" xml:space="preserve">
     <value>Associate the configured tasks with the global plan or configure them separately</value>
-    <comment />
   </data>
   <data name="TaskSelection.Header" xml:space="preserve">
     <value>Task selection</value>
-    <comment />
   </data>
   <data name="TaskButton.Content" xml:space="preserve">
     <value>Task force</value>
-    <comment />
   </data>
   <data name="TaskGroup.Title" xml:space="preserve">
     <value>Select Task Group</value>
-    <comment />
   </data>
   <data name="SingleTask.Content" xml:space="preserve">
     <value>Single Task</value>
-    <comment />
   </data>
   <data name="SelectTask.Title" xml:space="preserve">
     <value>Select Task</value>
-    <comment />
   </data>
   <data name="Separate.Content" xml:space="preserve">
     <value>Is it configured separately</value>
-    <comment />
   </data>
   <data name="Customize.Content" xml:space="preserve">
     <value>Customize</value>
-    <comment />
   </data>
   <data name="ResetButton.Content" xml:space="preserve">
     <value>Revoke configuration</value>
-    <comment />
   </data>
   <data name="SaveButton.Content" xml:space="preserve">
     <value>Save Configuration</value>
-    <comment />
   </data>
   <data name="TaskList.Title" xml:space="preserve">
     <value>Task list</value>
-    <comment />
   </data>
   <data name="FileChangeBlock.Text" xml:space="preserve">
     <value>When files change</value>
-    <comment />
   </data>
   <data name="RegularTaskRunningText.Text" xml:space="preserve">
     <value>Regular execution</value>
-    <comment />
   </data>
   <data name="SelectTaskBlock.Text" xml:space="preserve">
     <value>Task selection：</value>
-    <comment />
   </data>
   <data name="ScheduleText" xml:space="preserve">
     <value>schedule</value>
-    <comment />
   </data>
   <data name="UpdateBlock.Text" xml:space="preserve">
     <value>Last Update Check</value>
-    <comment />
   </data>
   <data name="CheckButton.Content" xml:space="preserve">
     <value>Check for New Version</value>
-    <comment />
   </data>
   <data name="ReleaseNote.Content" xml:space="preserve">
     <value>Release Note</value>
-    <comment />
   </data>
   <data name="DownloadButton.Content" xml:space="preserve">
     <value>Download Update</value>
-    <comment />
   </data>
   <data name="CodeButton.Content" xml:space="preserve">
     <value>GitHub Repository</value>
-    <comment />
   </data>
   <data name="LinkBlock.Text" xml:space="preserve">
     <value>Related Links</value>
-    <comment> </comment>
   </data>
   <data name="AboutUsSetting.Description" xml:space="preserve">
     <value>EasyTidy can automatically process and organize files and folders. It can filter files by various conditions such as name and directory. Supports manual and automatic execution. You can set delay, time interval or customize the execution cycle with CRON expression for easy and efficient file management.</value>
@@ -291,19 +249,15 @@
   </data>
   <data name="ThemeSettingsCard.Description" xml:space="preserve">
     <value>Select the theme that suits your mood and preference. You can choose from dark, light, or system themes.</value>
-    <comment> </comment>
   </data>
   <data name="ThemeSettingsCard.Header" xml:space="preserve">
     <value>App theme</value>
-    <comment> </comment>
   </data>
   <data name="Light.Content" xml:space="preserve">
     <value>Light</value>
-    <comment> </comment>
   </data>
   <data name="Dark.Content" xml:space="preserve">
     <value>Dark</value>
-    <comment> </comment>
   </data>
   <data name="Default.Content" xml:space="preserve">
     <value>Windows Default</value>
@@ -311,9 +265,6 @@
   </data>
   <data name="ColorSettingsCard.Description" xml:space="preserve">
     <value>Sync your app’s color with your Windows accent color. You can open the Windows accent color setting by clicking this card.</value>
-  </data>
-  <data name="ColorSettingsCard.Header" xml:space="preserve">
-    <value>Accent color</value>
   </data>
   <data name="FilterSettingsControl.ModuleDescription" xml:space="preserve">
     <value>Easily add files that need to be filtered to achieve precise management of specific files. By adding file processing rules, you can customize the way files are processed to meet individual needs. At the same time, you can also use the powerful pattern matching function of regular expressions to further refine the filtering and processing logic of files, making file management more efficient and intelligent. Whether you want to exclude specific types of files or perform special processing on files that match specific patterns, you can easily do it here.</value>
@@ -986,9 +937,6 @@
   </data>
   <data name="Turkish_Language" xml:space="preserve">
     <value>Turkish</value>
-  </data>
-  <data name="Ukrainian_Language" xml:space="preserve">
-    <value>Ukrainian</value>
   </data>
   <data name="Chinese_Simplified_Language" xml:space="preserve">
     <value>Chinese (Simplified)</value>

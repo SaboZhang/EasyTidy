@@ -1,6 +1,9 @@
 ﻿// To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
+using EasyTidy.Model;
+using Windows.ApplicationModel.DataTransfer;
+
 namespace EasyTidy.Views;
 /// <summary>
 /// An empty page that can be used on its own or navigated to within a Frame.
@@ -8,6 +11,10 @@ namespace EasyTidy.Views;
 public sealed partial class TaskOrchestrationPage : Page
 {
     public TaskOrchestrationViewModel ViewModel { get; set; }
+
+    private const string DraggedTask = "DraggedTask";
+    private const string DraggedIndex = "DraggedIndex";
+
     public TaskOrchestrationPage()
     {
         ViewModel = App.GetService<TaskOrchestrationViewModel>();
@@ -43,5 +50,61 @@ public sealed partial class TaskOrchestrationPage : Page
     private void OnUnloaded(object sender, RoutedEventArgs e)
     {
         ViewModel.Uninitialize();
+    }
+
+    private void ListView_DragItemsStarting(object sender, DragItemsStartingEventArgs e)
+    {
+        var draggedObject = e.Items.FirstOrDefault();
+        var draggedViewModel = draggedObject as TaskOrchestrationTable;
+        e.Data.Properties.Add(DraggedTask, draggedViewModel);
+        e.Data.Properties.Add(DraggedIndex, ViewModel.TaskListACV.IndexOf(draggedViewModel));
+    }
+
+    private async void ListView_DropAsync(object sender, DragEventArgs e)
+    {
+        if (e.Data == null)
+        {
+            return;
+        }
+
+        var result = e.Data.Properties.TryGetValue(DraggedIndex, out var draggedIndexObject);
+
+        if (!result || draggedIndexObject == null)
+        {
+            return;
+        }
+
+        var draggedIndex = (int)draggedIndexObject;
+        var grid = sender as Grid;
+        var droppedIndex = TaskListView.Items.IndexOf(grid.DataContext);
+
+        if (draggedIndex == droppedIndex)
+        {
+            return;
+        }
+
+        result = e.Data.Properties.TryGetValue(DraggedTask, out var draggedObject);
+        if (!result || draggedObject == null)
+        {
+            return;
+        }
+
+        Logger.Debug($"Move task from {draggedIndex} to {droppedIndex}");
+        var draggedTask = draggedObject as TaskOrchestrationTable;
+        await ViewModel.OnTaskListCollectionChangedAsync(draggedTask, draggedIndex, droppedIndex);
+    }
+
+    private void ListView_DragOver(object sender, DragEventArgs e)
+    {
+        if (e.Data != null)
+        {
+            e.AcceptedOperation = DataPackageOperation.Move;
+        }
+        else
+        {
+            // 若拖拽的项目不含数据，则不允许其被放置。
+            e.AcceptedOperation = DataPackageOperation.None;
+        }
+
     }
 }

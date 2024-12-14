@@ -1073,9 +1073,6 @@
   <data name="RandomizerCheatSheet_Title.Text" xml:space="preserve">
     <value>Remplacer par une valeur aléatoire</value>
   </data>
-  <data name="PriorityRules.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Si plusieurs règles correspondent, quelle règle a priorité</value>
-  </data>
   <data name="GeneralMultipleInstanceCard.Header" xml:space="preserve">
     <value>Configuration de plusieurs instances</value>
   </data>

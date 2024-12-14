@@ -151,7 +151,13 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
             IsRegex = !IsRegex;
             // 调用方法以处理状态变化
             OnIsRegexChanged(IsRegex);
+            toggleItem.IsChecked = IsRegex;
         };
+        // 更新 UI
+        DispatcherQueue.TryEnqueue(() =>
+        {
+            toggleItem.IsChecked = IsRegex;
+        });
 
         // 添加可选的分隔符和 ToggleMenuFlyoutItem 到主 MenuFlyout
         RuleFlyout.Items.Add(new MenuFlyoutSeparator());  // 分隔符

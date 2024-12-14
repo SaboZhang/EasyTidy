@@ -73,8 +73,14 @@
                         <ProgressRing x:Name="Load"
                                       IsActive="{x:Bind ViewModel.IsActive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         <StackPanel>
-                            <ListView ItemsSource="{x:Bind ViewModel.TaskListACV, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            <ListView x:Name="TaskListView"
+                                      ItemsSource="{x:Bind ViewModel.TaskListACV, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       HorizontalContentAlignment="Stretch"
+                                      CanReorderItems="True"
+                                      CanDragItems="True"
+                                      CanDrag="True"
+                                      SelectionMode="Single"
+                                      DragItemsStarting="ListView_DragItemsStarting"
                                       Height="600">
                                 <ListView.Header>
                                     <Grid Padding="16,12"
@@ -116,7 +122,10 @@
                                 </ListView.Header>
                                 <ListView.ItemTemplate>
                                     <DataTemplate x:DataType="model:TaskOrchestrationTable">
-                                        <Grid ColumnSpacing="16">
+                                        <Grid ColumnSpacing="16" 
+                                              AllowDrop="True"
+                                              Drop="ListView_DropAsync"
+                                              DragOver="ListView_DragOver">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="40"/>
                                                 <ColumnDefinition Width="*"/>

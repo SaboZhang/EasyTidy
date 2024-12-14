@@ -1052,10 +1052,6 @@
           <source>Turkish</source>
           <target state="translated">土耳其语</target>
         </trans-unit>
-        <trans-unit id="Ukrainian_Language" translate="yes" xml:space="preserve">
-          <source>Ukrainian</source>
-          <target state="translated">乌克兰语</target>
-        </trans-unit>
         <trans-unit id="Chinese_Simplified_Language" translate="yes" xml:space="preserve">
           <source>Chinese (Simplified)</source>
           <target state="translated">简体中文</target>
@@ -1203,10 +1199,6 @@
         <trans-unit id="UseDelimitersToExclude" translate="yes" xml:space="preserve">
           <source>Use "/" to exclude files starting with "sea"</source>
           <target state="translated">使用 "/" 排除以 "sea "开头的文件</target>
-        </trans-unit>
-        <trans-unit id="CompressedFile" translate="yes" xml:space="preserve">
-          <source>Compressed file</source>
-          <target state="translated">压缩文件</target>
         </trans-unit>
         <trans-unit id="Document" translate="yes" xml:space="preserve">
           <source>Document</source>
@@ -1420,10 +1412,6 @@
           <source>Replace with random value</source>
           <target state="translated">使用随机值替换</target>
         </trans-unit>
-        <trans-unit id="PriorityRules.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
-          <source>If multiple rules match, which rule takes precedence</source>
-          <target state="translated">如果有多个规则，选择优先处理哪个规则</target>
-        </trans-unit>
         <trans-unit id="GeneralMultipleInstanceCard.Header" translate="yes" xml:space="preserve">
           <source>Multiple instances configuration</source>
           <target state="translated">多实例配置</target>
@@ -1499,10 +1487,6 @@
         <trans-unit id="UpdateReady" translate="yes" xml:space="preserve">
           <source>Update Ready</source>
           <target state="translated">准备更新</target>
-        </trans-unit>
-        <trans-unit id="Update_Ready_Content" translate="yes" xml:space="preserve">
-          <source>The update has been downloaded. The installation will begin shortly.</source>
-          <target state="translated">更新已下载完成，即将开始安装。</target>
         </trans-unit>
         <trans-unit id="PreparingToDownload" translate="yes" xml:space="preserve">
           <source>Preparing to download...</source>
@@ -1655,6 +1639,18 @@
         <trans-unit id="GeneralPrefixCard.Description" translate="yes" xml:space="preserve">
           <source>Set the folder to upload files to WebDav</source>
           <target state="translated">设置WebDav上传文件的文件夹</target>
+        </trans-unit>
+        <trans-unit id="Ukrainian_Language" translate="yes" xml:space="preserve">
+          <source>Ukrainian</source>
+          <target state="new">Ukrainian</target>
+        </trans-unit>
+        <trans-unit id="CompressedFile" translate="yes" xml:space="preserve">
+          <source>Compressed file</source>
+          <target state="new">Compressed file</target>
+        </trans-unit>
+        <trans-unit id="Update_Ready_Content" translate="yes" xml:space="preserve">
+          <source>The update has been downloaded. The installation will begin shortly.</source>
+          <target state="new">The update has been downloaded. The installation will begin shortly.</target>
         </trans-unit>
       </group>
     </body>

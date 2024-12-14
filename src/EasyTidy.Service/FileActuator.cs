@@ -38,11 +38,7 @@ public static class FileActuator
 
             await RetryAsync(maxRetries, async () =>
             {
-                if (IsFolder(parameters.RuleModel.Rule, parameters.RuleModel.RuleType))
-                {
-                    await ProcessFoldersAsync(parameters);
-                }
-                else if (Directory.Exists(parameters.SourcePath))
+                if (Directory.Exists(parameters.SourcePath))
                 {
                     await ProcessDirectoryAsync(parameters);
                 }
@@ -89,84 +85,6 @@ public static class FileActuator
         }
     }
 
-    /// <summary>
-    /// 文件夹处理
-    /// </summary>
-    /// <param name="parameters"></param>
-    /// <returns></returns>
-    private static async Task ProcessFoldersAsync(OperationParameters parameters)
-    {
-        if (!Directory.Exists(parameters.TargetPath) && parameters.OperationMode != OperationMode.Rename)
-        {
-            Directory.CreateDirectory(parameters.TargetPath);
-        }
-
-        LogService.Logger.Info($"执行文件夹操作 {parameters.TargetPath}");
-        var folderList = Directory.GetDirectories(parameters.SourcePath).ToList();
-
-        foreach (var folder in folderList)
-        {
-            if (ShouldSkip(parameters.Funcs, folder, parameters.PathFilter))
-            {
-                LogService.Logger.Debug($"执行文件夹操作 ShouldSkip {parameters.TargetPath}");
-                continue;
-            }
-
-            var newParameters = new OperationParameters(
-                parameters.OperationMode,
-                folder,
-                Path.Combine(parameters.TargetPath, Path.GetFileName(folder)),
-                parameters.FileOperationType,
-                parameters.HandleSubfolders,
-                parameters.Funcs,
-                parameters.PathFilter)
-            { OldTargetPath = parameters.TargetPath, RuleModel = parameters.RuleModel };
-            await ExecuteFolderOperationAsync(newParameters);
-        }
-        if (parameters.OperationMode == OperationMode.Rename)
-        {
-            Renamer.ResetIncrement();
-        }
-    }
-
-    /// <summary>
-    /// 整个文件夹处理
-    /// </summary>
-    /// <param name="parameters"></param>
-    /// <returns></returns>
-    /// <exception cref="NotSupportedException"></exception>
-    private static async Task ExecuteFolderOperationAsync(OperationParameters parameters)
-    {
-        if (ShouldSkip(parameters.Funcs, parameters.SourcePath, parameters.PathFilter) && parameters.OperationMode != OperationMode.RecycleBin)
-        {
-            LogService.Logger.Debug($"执行文件夹操作 {parameters.TargetPath}");
-            return;
-        }
-
-        LogService.Logger.Info($"执行文件夹操作 {parameters.TargetPath}, 操作模式: {parameters.OperationMode}");
-        switch (parameters.OperationMode)
-        {
-            case OperationMode.Move:
-                await MoveFolder(parameters.SourcePath, parameters.TargetPath, parameters.FileOperationType);
-                break;
-            case OperationMode.Copy:
-                await CopyFile(parameters.SourcePath, parameters.TargetPath, parameters.FileOperationType);
-                break;
-            case OperationMode.Delete:
-                await DeleteFolder(parameters.TargetPath);
-                break;
-            case OperationMode.Rename:
-                await RenameFolder(parameters.SourcePath, parameters.OldTargetPath);
-                break;
-            case OperationMode.RecycleBin:
-                await MoveToRecycleBin(parameters.TargetPath, new List<Func<string, bool>>(parameters.Funcs),
-                    parameters.PathFilter, parameters.RuleModel.RuleType, true, parameters.HandleSubfolders);
-                break;
-            default:
-                throw new NotSupportedException($"Operation mode '{parameters.OperationMode}' is not supported.");
-        }
-    }
-
     private static async Task ProcessDirectoryAsync(OperationParameters parameters)
     {
         // 创建目标目录
@@ -182,7 +100,7 @@ public static class FileActuator
         {
             fileCount++;
             var dynamicFilters = new List<Func<string, bool>>(parameters.Funcs);
-            if (ShouldSkip(new List<Func<string, bool>>(parameters.Funcs), filePath, parameters.PathFilter))
+            if (FilterUtil.ShouldSkip(new List<Func<string, bool>>(parameters.Funcs), filePath, parameters.PathFilter))
             {
                 LogService.Logger.Debug($"执行文件操作，获取所有文件跳过不符合条件的文件 filePath: {filePath}, RuleFilters: {parameters.RuleName},=== {fileCount}, sourcePath: {parameters.SourcePath}");
                 continue; // 跳过不符合条件的文件
@@ -198,8 +116,7 @@ public static class FileActuator
                 parameters.FileOperationType,
                 parameters.HandleSubfolders,
                 parameters.Funcs,
-                parameters.PathFilter
-                )
+                parameters.PathFilter )
             {
                 OldTargetPath = parameters.TargetPath,
                 OldSourcePath = oldPath,
@@ -262,7 +179,7 @@ public static class FileActuator
     /// <exception cref="NotSupportedException"></exception>
     internal static async Task ProcessFileAsync(OperationParameters parameters)
     {
-        if (ShouldSkip(parameters.Funcs, parameters.SourcePath, parameters.PathFilter) && parameters.OperationMode != OperationMode.RecycleBin)
+        if (FilterUtil.ShouldSkip(parameters.Funcs, parameters.SourcePath, parameters.PathFilter) && parameters.OperationMode != OperationMode.RecycleBin)
         {
             LogService.Logger.Debug($"执行文件操作 ShouldSkip {parameters.TargetPath}");
             return;
@@ -275,7 +192,7 @@ public static class FileActuator
                 await MoveFile(parameters.SourcePath, parameters.TargetPath, parameters.FileOperationType);
                 break;
             case OperationMode.Copy:
-                await CopyFolder(parameters.SourcePath, parameters.TargetPath, parameters.FileOperationType);
+                await CopyFile(parameters.SourcePath, parameters.TargetPath, parameters.FileOperationType);
                 break;
             case OperationMode.Delete:
                 await DeleteFile(parameters.TargetPath);
@@ -336,34 +253,6 @@ public static class FileActuator
     }
 
     /// <summary>
-    /// 移动文件夹
-    /// </summary>
-    /// <param name="sourcePath"></param>
-    /// <param name="targetPath"></param>
-    /// <param name="fileOperationType"></param>
-    /// <returns></returns>
-    private static async Task MoveFolder(string sourcePath, string targetPath, FileOperationType fileOperationType)
-    {
-        await _semaphore.WaitAsync(); // 请求对文件操作的独占访问
-        try
-        {
-            FileResolver.HandleFileConflict(sourcePath, targetPath, fileOperationType, () =>
-            {
-                Directory.Move(sourcePath, targetPath);
-            });
-        }
-        catch (Exception ex)
-        {
-            // 处理异常（记录日志等）
-            LogService.Logger.Error($"Error moving folder: {ex.Message}");
-        }
-        finally
-        {
-            _semaphore.Release(); // 确保释放互斥锁
-        }
-    }
-
-    /// <summary>
     /// 复制文件
     /// </summary>
     /// <param name="sourcePath"></param>
@@ -392,46 +281,6 @@ public static class FileActuator
         }
     }
 
-    private static async Task CopyFolder(string sourcePath, string targetPath, FileOperationType fileOperationType)
-    {
-        await _semaphore.WaitAsync(); // 请求对文件操作的独占访问
-        try
-        {
-            FileResolver.HandleFileConflict(sourcePath, targetPath, fileOperationType, () =>
-            {
-                CopyDirectory(sourcePath, targetPath);
-            });
-        }
-        catch (Exception ex)
-        {
-            // 处理异常（记录日志等）
-            LogService.Logger.Error($"Error copying folder: {ex.Message}");
-        }
-        finally
-        {
-            _semaphore.Release(); // 确保释放互斥锁
-        }
-    }
-
-    /// <summary>
-    /// 复制整个文件夹
-    /// </summary>
-    /// <param name="sourceDir"></param>
-    /// <param name="destDir"></param>
-    private static void CopyDirectory(string sourceDir, string destDir)
-    {
-        Directory.CreateDirectory(destDir);
-
-        foreach (string filePath in Directory.GetFiles(sourceDir, "*", System.IO.SearchOption.AllDirectories))
-        {
-            string relativePath = Path.GetRelativePath(sourceDir, filePath);
-            string destFilePath = Path.Combine(destDir, relativePath);
-
-            Directory.CreateDirectory(Path.GetDirectoryName(destFilePath));
-            File.Copy(filePath, destFilePath, true);
-        }
-    }
-
     /// <summary>
     /// 删除文件
     /// </summary>
@@ -451,32 +300,6 @@ public static class FileActuator
         {
             // 处理异常（记录日志等）
             LogService.Logger.Error($"Error deleting file: {ex.Message}");
-        }
-        finally
-        {
-            _semaphore.Release(); // 确保释放互斥锁
-        }
-    }
-
-    /// <summary>
-    /// 删除文件夹
-    /// </summary>
-    /// <param name="path"></param>
-    /// <returns></returns>
-    private static async Task DeleteFolder(string path)
-    {
-        await _semaphore.WaitAsync(); // 请求对文件操作的独占访问
-        try
-        {
-            if (Directory.Exists(path))
-            {
-                Directory.Delete(path, true);
-            }
-        }
-        catch (Exception ex)
-        {
-            // 处理异常（记录日志等）
-            LogService.Logger.Error($"Error deleting folder: {ex.Message}");
         }
         finally
         {
@@ -510,25 +333,6 @@ public static class FileActuator
         }
     }
 
-    private static async Task RenameFolder(string sourcePath, string targetPath)
-    {
-        await _semaphore.WaitAsync(); // 请求对文件操作的独占访问
-        try
-        {
-            var newPath = Renamer.ParseTemplate(sourcePath, targetPath);
-            Directory.Move(sourcePath, newPath);
-        }
-        catch (Exception ex)
-        {
-            // 处理异常（记录日志等）
-            LogService.Logger.Error($"Error renaming folder: {ex.Message}");
-        }
-        finally
-        {
-            _semaphore.Release(); // 确保释放互斥锁
-        }
-    }
-
     /// <summary>
     /// 移动文件到回收站
     /// </summary>
@@ -538,7 +342,7 @@ public static class FileActuator
     /// <param name="ruleType"></param>
     /// <param name="deleteSubfolders"></param>
     /// <returns></returns>
-    private static async Task MoveToRecycleBin(string path, List<Func<string, bool>> dynamicFilters,
+    internal static async Task MoveToRecycleBin(string path, List<Func<string, bool>> dynamicFilters,
         Func<string, bool>? pathFilter, TaskRuleType ruleType, bool isFolder = false, bool deleteSubfolders = false)
     {
         await _semaphore.WaitAsync(); // 请求对文件操作的独占访问
@@ -552,7 +356,7 @@ public static class FileActuator
             {
                 if (isFolder)
                 {
-                    if (!ShouldSkip(dynamicFilters, path, pathFilter))
+                    if (!FilterUtil.ShouldSkip(dynamicFilters, path, pathFilter))
                     {
                         FileSystem.DeleteDirectory(path, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
                         return;
@@ -562,7 +366,7 @@ public static class FileActuator
                 {
                     foreach (var subfolder in Directory.GetDirectories(path))
                     {
-                        if (ShouldSkip(dynamicFilters, path, pathFilter) && ruleType != TaskRuleType.FileRule)
+                        if (FilterUtil.ShouldSkip(dynamicFilters, path, pathFilter) && ruleType != TaskRuleType.FileRule)
                         {
                             continue;
                         }
@@ -580,7 +384,7 @@ public static class FileActuator
                 var files = Directory.GetFiles(path);
                 foreach (var file in files)
                 {
-                    if (ShouldSkip(dynamicFilters, path, pathFilter) && ruleType != TaskRuleType.FolderRule)
+                    if (FilterUtil.ShouldSkip(dynamicFilters, path, pathFilter) && ruleType != TaskRuleType.FolderRule)
                     {
                         continue;
                     }
@@ -698,39 +502,6 @@ public static class FileActuator
     }
 
     /// <summary>
-    /// 检查是否应该跳过
-    /// </summary>
-    /// <param name="dynamicFilters"></param>
-    /// <param name="path"></param>
-    /// <param name="pathFilter"></param>
-    /// <returns></returns>
-    private static bool ShouldSkip(List<Func<string, bool>> dynamicFilters, string path, Func<string, bool>? pathFilter)
-    {
-        // 检查是否是快捷方式
-        if (Path.GetExtension(path).Equals(".lnk", StringComparison.OrdinalIgnoreCase))
-        {
-            return true; // 跳过快捷方式文件
-        }
-
-        // 规则1检查：dynamicFilters 列表中满足任意一个条件
-        bool satisfiesDynamicFilters = dynamicFilters != null && dynamicFilters.Any(filter => filter(path));
-
-        // 规则2检查：如果 pathFilter 不为 null，则它应返回 true
-        bool satisfiesPathFilter = pathFilter == null || pathFilter(path);
-
-        // 如果 pathFilter 为 null，仅根据 satisfiesDynamicFilters 的结果返回
-        if (pathFilter == null)
-        {
-            LogService.Logger.Debug($"satisfiesDynamicFilters (no pathFilter): {satisfiesDynamicFilters}");
-            return !satisfiesDynamicFilters;
-        }
-
-        // 如果 pathFilter 不为 null，要求 satisfiesDynamicFilters 和 satisfiesPathFilter 同时满足
-        LogService.Logger.Debug($"satisfiesDynamicFilters: {satisfiesDynamicFilters}, satisfiesPathFilter: {satisfiesPathFilter}");
-        return satisfiesDynamicFilters ^ satisfiesPathFilter;
-    }
-
-    /// <summary>
     /// 强制处理文件
     /// </summary>
     /// <param name="filePath"></param>
@@ -805,32 +576,6 @@ public static class FileActuator
             LogService.Logger.Error("文件锁定检查失败：" + ex.Message);
             return true;
         }
-    }
-
-    /// <summary>
-    /// 检查是否是文件
-    /// </summary>
-    /// <param name="rule"></param>
-    /// <param name="ruleType"></param>
-    /// <returns></returns>
-    private static bool IsFolder(string rule, TaskRuleType ruleType)
-    {
-        bool isFolder = FilterUtil.ContainsTwoConsecutiveChars(rule, '#');
-        bool isAllFolders = FilterUtil.ContainsTwoConsecutiveChars(rule, '*');
-
-        if (ruleType == TaskRuleType.FileRule)
-        {
-            return false;
-        }
-        if (ruleType == TaskRuleType.FolderRule)
-        {
-            return true;
-        }
-        if (ruleType == TaskRuleType.CustomRule && (isAllFolders || isFolder))
-        {
-            return true;
-        }
-        return false;
     }
 
 }

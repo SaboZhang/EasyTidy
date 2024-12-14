@@ -91,8 +91,16 @@ public static class OperationHandler
         {
             await Task.Run(async () =>
             {
-                // 确保传递 OperationMode 参数
-                await FileActuator.ExecuteFileOperationAsync(parameter);
+                if (parameter.RuleModel.RuleType == TaskRuleType.FileRule)
+                {
+                    // 确保传递 OperationMode 参数
+                    await FileActuator.ExecuteFileOperationAsync(parameter);
+                }
+                else
+                {
+                    await FolderActuator.ExecuteFolderOperationAsync(parameter);
+                }
+               
             });
 
             LogService.Logger.Info("执行移动操作完成");
@@ -115,7 +123,14 @@ public static class OperationHandler
     {
         await Task.Run(async () =>
         {
-            await FileActuator.ExecuteFileOperationAsync(parameter);
+            if (parameter.RuleModel.RuleType == TaskRuleType.FileRule)
+            {
+                await FileActuator.ExecuteFileOperationAsync(parameter);
+            }
+            else
+            {
+                await FolderActuator.ExecuteFolderOperationAsync(parameter);
+            }
         });
         LogService.Logger.Info("执行复制操作完成");
     }
@@ -124,7 +139,14 @@ public static class OperationHandler
     {
         await Task.Run(async () =>
         {
-            await FileActuator.ExecuteFileOperationAsync(parameter);
+            if (parameter.RuleModel.RuleType == TaskRuleType.FileRule)
+            {
+                await FileActuator.ExecuteFileOperationAsync(parameter);
+            }
+            else
+            {
+                await FolderActuator.ExecuteFolderOperationAsync(parameter);
+            }
         });
         LogService.Logger.Info("执行删除操作完成");
     }
@@ -133,7 +155,14 @@ public static class OperationHandler
     {
         await Task.Run(async () =>
         {
-            await FileActuator.ExecuteFileOperationAsync(parameter);
+            if (parameter.RuleModel.RuleType == TaskRuleType.FileRule)
+            {
+                await FileActuator.ExecuteFileOperationAsync(parameter);
+            }
+            else
+            {
+                await FolderActuator.ExecuteFolderOperationAsync(parameter);
+            }
         });
         LogService.Logger.Info("重命名任务执行完成");
     }
@@ -156,7 +185,14 @@ public static class OperationHandler
         {
             await Task.Run(async () =>
             {
-                await FileActuator.ProcessFileAsync(parameter);
+                if (parameter.RuleModel.RuleType == TaskRuleType.FileRule)
+                {
+                    await FileActuator.ExecuteFileOperationAsync(parameter);
+                }
+                else
+                {
+                    await FolderActuator.ExecuteFolderOperationAsync(parameter);
+                }
             });
             LogService.Logger.Info("执行回收站任务完成");
         }
@@ -205,7 +241,14 @@ public static class OperationHandler
     {
         await Task.Run(async () =>
         {
-            await FileActuator.ExecuteFileOperationAsync(parameter);
+            if (parameter.RuleModel.RuleType == TaskRuleType.FileRule)
+            {
+                await FileActuator.ExecuteFileOperationAsync(parameter);
+            }
+            else
+            {
+                await FolderActuator.ExecuteFolderOperationAsync(parameter);
+            }
         });
         LogService.Logger.Info("执行上传任务完成");
     }
