@@ -13,6 +13,9 @@ dotnet_style_qualification_for_event = false:silent
 dotnet_style_require_accessibility_modifiers = for_non_interface_members:silent
 dotnet_code_quality_unused_parameters = all:suggestion
 dotnet_style_readonly_field = true:suggestion
+tab_width = 4
+indent_size = 4
+dotnet_style_operator_placement_when_wrapping = beginning_of_line
 
 [*.cs]
 csharp_space_around_binary_operators = before_and_after
@@ -90,6 +93,8 @@ csharp_prefer_system_threading_lock = true:suggestion
 
 # CA1416: 验证平台兼容性
 dotnet_diagnostic.CA1416.severity = suggestion
+dotnet_diagnostic.MVVMTK0045.severity = suggestion
+csharp_indent_labels = one_less_than_current
 
 [*.vb]
 #### 命名样式 ####
