@@ -91,7 +91,7 @@ public class AutomaticJob : IJob
     /// <returns></returns>
     public async Task<string> GetSpecialCasesRule(int groupId, string taskRule)
     {
-        if (taskRule.Trim().Equals("#") || taskRule.Trim().Equals("##"))
+        if (!string.IsNullOrEmpty(taskRule) && (taskRule.Trim().Equals("#") || taskRule.Trim().Equals("##")))
         {
             var list = await _dbContext.TaskOrchestration.Where(t => t.GroupName.Id == groupId && t.TaskRule != taskRule).ToListAsync();
             string delimiter = "&";

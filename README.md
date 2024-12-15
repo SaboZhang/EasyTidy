@@ -12,7 +12,7 @@ TODO:
 - [x] 自动化界面
 - [x] 设置页面 + 多语言切换
 - [x] 错误验证
-- [ ] 本地化 国际化(暂未完全实现)
+- [ ] 本地化 国际化(暂未完全实现) 目前支持 简体中文、繁体中文、英文、日语、法语
 
 2.功能实现
 
@@ -33,7 +33,7 @@ TODO:
 - [x] 增加解压操作
 - [x] 增加文件WebDav备份
 - [x] 前端界面显示Log
-- [ ] [#25](https://github.com/SaboZhang/EasyTidy/issues/25)相关问题
+- [ ] [#25](https://github.com/SaboZhang/EasyTidy/issues/25)相关问题 (已完成部分功能)
 - [x] 移除WinUICommunity相关依赖，作者已停止维护
 - [ ] 文件加密
 - [ ] 完善文档内容

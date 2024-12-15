@@ -657,7 +657,7 @@
     <value>Example: Minutes = 15 Hours = 03 Month = 3-10/3 Day of the week = 1,3,5 The tasks will run at 3:15 AM on Mondays, Wednesdays, and Fridays in March, June, and September.</value>
   </data>
   <data name="GeneralSubFloderCard.Description" xml:space="preserve">
-    <value>Process folders, but not scan inside folders</value>
+    <value>Process subfolders and scan the contents of the folder</value>
   </data>
   <data name="GeneralSubFloderCard.Header" xml:space="preserve">
     <value>Subfolder</value>
@@ -1218,7 +1218,7 @@
     <value>Replace with random value</value>
   </data>
   <data name="GeneralMultipleInstanceCard.Header" xml:space="preserve">
-    <value>Multiple instances configuration</value>
+    <value>Multiple instances configuration(Experimental)</value>
   </data>
   <data name="GeneralMultipleInstanceCard.Description" xml:space="preserve">
     <value>Can multiple instances be provisioned</value>
@@ -1340,5 +1340,11 @@
   </data>
   <data name="GeneralPrefixCard.Description" xml:space="preserve">
     <value>Set the folder to upload files to WebDav</value>
+  </data>
+  <data name="GroupExecution.Content" xml:space="preserve">
+    <value>Group Execution</value>
+  </data>
+  <data name="EncryptionText" xml:space="preserve">
+    <value>File encryption</value>
   </data>
 </root>

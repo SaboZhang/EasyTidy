@@ -57,6 +57,8 @@ public enum OperationMode
 
     [Display(Name = "UploadWebDavText")] UploadWebDAV,
 
+    [Display(Name = "EncryptionText")] Encryption,
+
 }
 
 public enum YesOrNo

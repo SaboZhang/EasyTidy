@@ -119,7 +119,8 @@ public class QuartzHelper
     public static async Task UpdateJob(string jobName, string groupName, string newJobName, string newGroupName)
     {
         var jobKey = new JobKey(jobName, groupName);
-        if (!await _scheduler.CheckExists(jobKey))
+        var newJobKey = new JobKey(newJobName, newGroupName);
+        if (jobKey.Equals(newJobKey) || !await _scheduler.CheckExists(jobKey))
         {
             return;
         }
@@ -128,8 +129,7 @@ public class QuartzHelper
         var triggers = await _scheduler.GetTriggersOfJob(jobKey);
 
         if (jobDetail != null)
-        {
-            var newJobKey = new JobKey(newJobName, newGroupName);
+        {   
             var newJob = jobDetail.GetJobBuilder()
                 .WithIdentity(newJobKey)
                 .Build();
@@ -149,6 +149,7 @@ public class QuartzHelper
                 await _scheduler.ScheduleJob(newJob, newTrigger);
             }
         }
+        await DeleteJob(jobName, groupName);
     }
 
     public static async Task UpdateTaskPriority(string jobName, string groupName, int newPriority)

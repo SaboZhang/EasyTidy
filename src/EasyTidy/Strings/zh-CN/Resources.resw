@@ -513,7 +513,7 @@
     <value>示列：分钟=15 小时=03 月份=3-10/3 每个星期的第几天=1,3,5任务将会在3，6，9月的每周1，3，5早上3点15分运行。</value>
   </data>
   <data name="GeneralSubFloderCard.Description" xml:space="preserve">
-    <value>处理文件夹，但不扫描文件夹内</value>
+    <value>处理子文件夹并扫描文件夹内部</value>
   </data>
   <data name="GeneralSubFloderCard.Header" xml:space="preserve">
     <value>子文件夹</value>
@@ -1068,7 +1068,7 @@
     <value>使用随机值替换</value>
   </data>
   <data name="GeneralMultipleInstanceCard.Header" xml:space="preserve">
-    <value>多实例配置</value>
+    <value>多实例配置(实验性)</value>
   </data>
   <data name="GeneralMultipleInstanceCard.Description" xml:space="preserve">
     <value>配置是否允许运行多个实例</value>
@@ -1215,5 +1215,20 @@
   </data>
   <data name="GeneralPrefixCard.Description" xml:space="preserve">
     <value>设置WebDav上传文件的文件夹</value>
+  </data>
+  <data name="Ukrainian_Language" xml:space="preserve">
+    <value>乌克兰语</value>
+  </data>
+  <data name="CompressedFile" xml:space="preserve">
+    <value>压缩文件</value>
+  </data>
+  <data name="Update_Ready_Content" xml:space="preserve">
+    <value>已下载更新。安装将很快开始。</value>
+  </data>
+  <data name="GroupExecution.Content" xml:space="preserve">
+    <value>执行分组</value>
+  </data>
+  <data name="EncryptionText" xml:space="preserve">
+    <value>文件加密</value>
   </data>
 </root>

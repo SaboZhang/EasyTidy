@@ -94,6 +94,9 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
     [ObservableProperty]
     public ObservableCollection<PatternSnippetModel> _randomizerModel;
 
+    [ObservableProperty]
+    private bool _isExecuting = false;
+
     private static DateTime LastInvocationTime = DateTime.MinValue;
 
     public void Initialize(StackedNotificationsBehavior notificationQueue)
@@ -418,7 +421,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         }
         catch (Exception ex)
         {
-            _notificationQueue.ShowWithWindowExtension("ModificationFailedText".GetLocalized(), InfoBarSeverity.Success);
+            _notificationQueue.ShowWithWindowExtension("ModificationFailedText".GetLocalized(), InfoBarSeverity.Error);
             _ = ClearNotificationAfterDelay(3000);
             Logger.Error($"TaskOrchestrationViewModel: OnUpdateTask 异常信息 {ex}");
         }
@@ -427,23 +430,38 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
 
     private async Task<TaskGroupTable> GroupUpdateOrCreate(string groupTextName)
     {
-        var group = await _dbContext.TaskGroup.FirstOrDefaultAsync(g => g.GroupName == groupTextName);
-        if (group == null)
+        try
         {
-            group = new TaskGroupTable()
+            var group = await _dbContext.TaskGroup.FirstOrDefaultAsync(g => g.GroupName == groupTextName);
+            if (group == null)
             {
-                GroupName = GroupTextName
-            };
-            await _dbContext.TaskGroup.AddAsync(group);
-            await _dbContext.SaveChangesAsync();
+                group = new TaskGroupTable()
+                {
+                    GroupName = GroupTextName
+                };
+                await _dbContext.TaskGroup.AddAsync(group);
+                await _dbContext.SaveChangesAsync();
+            }
+            return group;
         }
-        return group;
+        catch (Exception ex) 
+        { 
+            Logger.Error($"TaskOrchestrationViewModel: GroupUpdateOrCreate 异常信息 {ex}");
+            return null;
+        }
     }
 
     private async Task UpdateQuartzGroup(string groupName, string taskName, string newGroupName, string newTaskName)
     {
-        await QuartzHelper.UpdateJob(taskName, groupName, newTaskName, newGroupName);
-        await QuartzHelper.DeleteJob(taskName, groupName);
+        try
+        {
+            await QuartzHelper.UpdateJob(taskName, groupName, newTaskName, newGroupName);
+        }
+        catch (Exception ex) 
+        {
+            Logger.Error($"TaskOrchestrationViewModel: UpdateQuartzGroup 异常信息 {ex}");
+        }
+        
     }
 
     /// <summary>
@@ -475,7 +493,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         }
         catch (Exception ex)
         {
-            _notificationQueue.ShowWithWindowExtension("DeleteFailedText".GetLocalized(), InfoBarSeverity.Success);
+            _notificationQueue.ShowWithWindowExtension("DeleteFailedText".GetLocalized(), InfoBarSeverity.Error);
             _ = ClearNotificationAfterDelay(3000);
             Logger.Error($"TaskOrchestrationViewModel: OnDeleteTask 异常信息 {ex}");
             IsActive = false;
@@ -504,7 +522,11 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
             if (dataContext != null)
             {
                 var task = dataContext as TaskOrchestrationTable;
-                var list = await _dbContext.TaskOrchestration.Include(x => x.GroupName).ToListAsync();
+                // 保证手动执行时正确处理正则表达式
+                if (task.IsRegex)
+                {
+                    task.RuleType = TaskRuleType.ExpressionRules;
+                }
                 var automatic = new AutomaticJob();
                 var rule = await automatic.GetSpecialCasesRule(task.GroupName.Id, task.TaskRule);
                 var operationParameters = new OperationParameters(
@@ -532,6 +554,57 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
             IsActive = false;
         }
         IsActive = false;
+    }
+
+    /// <summary>
+    /// 执行指定的分组
+    /// </summary>
+    /// <param name="dataContext"></param>
+    /// <returns></returns>
+    [RelayCommand]
+    private async Task OnExecuteGroupTask()
+    {
+        IsActive = true;
+        try
+        {
+            if (IsExecuting)
+            {
+                var list = await _dbContext.TaskOrchestration.Include(x => x.GroupName)
+                    .Where(x => x.GroupName.GroupName == SelectedGroupName).ToListAsync();
+                if (list != null)
+                {
+                    var orderList = list.OrderByDescending(x => x.Priority);
+                    foreach (var item in orderList)
+                    {
+                        var automatic = new AutomaticJob();
+                        var rule = await automatic.GetSpecialCasesRule(item.GroupName.Id, item.TaskRule);
+                        var operationParameters = new OperationParameters(
+                            operationMode: item.OperationMode,
+                            sourcePath: item.TaskSource.Equals("DesktopText".GetLocalized())
+                            ? Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
+                            : item.TaskSource,
+                            targetPath: item.TaskTarget,
+                            fileOperationType: Settings.GeneralConfig.FileOperationType,
+                            handleSubfolders: Settings.GeneralConfig.SubFolder ?? false,
+                            funcs: FilterUtil.GeneratePathFilters(rule, item.RuleType),
+                            pathFilter: FilterUtil.GetPathFilters(item.Filter),
+                            ruleModel: new RuleModel { Filter = item.Filter, Rule = item.TaskRule, RuleType = item.RuleType })
+                        { RuleName = item.TaskRule };
+                        await OperationHandler.ExecuteOperationAsync(item.OperationMode, operationParameters);
+                        _notificationQueue.ShowWithWindowExtension("ExecutionSuccessfulText".GetLocalized(), InfoBarSeverity.Success);
+                        _ = ClearNotificationAfterDelay(3000);
+                    }
+                }
+            }
+            IsActive = false;
+        }
+        catch(Exception ex)
+        {
+            _notificationQueue.ShowWithWindowExtension("ExecutionFailedText".GetLocalized(), InfoBarSeverity.Error);
+            _ = ClearNotificationAfterDelay(3000);
+            Logger.Error($"TaskOrchestrationViewModel: OnExecuteGroupTask 异常信息 {ex}");
+            IsActive = false;
+        }
     }
 
     /// <summary>
@@ -585,6 +658,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
     private async Task OnGroupNameChanged()
     {
         IsActive = true;
+        IsExecuting = false;
         try
         {
             var list = await Task.Run(async () =>
@@ -605,6 +679,11 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
 
                 return resultList;
             });
+
+            if (!string.IsNullOrEmpty(SelectedGroupName) && !SelectedGroupName.Equals("AllText".GetLocalized()) && list.Count != 0)
+            {
+                IsExecuting = true;
+            }
 
             TaskList = new(list);
             TaskListACV = new AdvancedCollectionView(TaskList, true);
@@ -673,7 +752,8 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
 
         for (int i = 0; i < TaskList.Count; i++)
         {
-            TaskList[i].Priority = i + 1;
+            TaskList[i].Priority = TaskList.Count - 1 - i;
+
             if (task.ID == TaskList[i].ID)
             {
                 await QuartzHelper.UpdateTaskPriority($"{task.TaskName}#{task.ID}", task.GroupName.GroupName, TaskList[i].Priority);

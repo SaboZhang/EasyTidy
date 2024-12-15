@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
   <file datatype="xml" source-language="en-US" target-language="ja-JP" original="EASYTIDY/STRINGS/EN-US/RESOURCES.RESW" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
     <header>
       <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="1.0.0.0" tool-company="Microsoft" />
@@ -673,8 +673,8 @@
           <target state="translated">例えば 分 = 15 時 = 03 月 = 3-10/3 曜日 = 1、3、5 タスクは 3 月、6 月、9 月の月曜日、水曜日、金曜日の午前 3:15 に実行されます。</target>
         </trans-unit>
         <trans-unit id="GeneralSubFloderCard.Description" translate="yes" xml:space="preserve">
-          <source>Process folders, but not scan inside folders</source>
-          <target state="translated">フォルダの内部をスキャンせずにフォルダを処理する</target>
+          <source>Process subfolders and scan the contents of the folder</source>
+          <target state="translated">サブフォルダーを処理し、フォルダの内容をスキャンします</target>
         </trans-unit>
         <trans-unit id="GeneralSubFloderCard.Header" translate="yes" xml:space="preserve">
           <source>Subfolder</source>
@@ -1421,8 +1421,8 @@
           <target state="translated">ランダムな値に置き換え</target>
         </trans-unit>
         <trans-unit id="GeneralMultipleInstanceCard.Header" translate="yes" xml:space="preserve">
-          <source>Multiple instances configuration</source>
-          <target state="translated">複数インスタンス構成</target>
+          <source>Multiple instances configuration(Experimental)</source>
+          <target state="translated">複数インスタンス構成(実験的)</target>
         </trans-unit>
         <trans-unit id="GeneralMultipleInstanceCard.Description" translate="yes" xml:space="preserve">
           <source>Can multiple instances be provisioned</source>
@@ -1651,6 +1651,14 @@
         <trans-unit id="GeneralPrefixCard.Description" translate="yes" xml:space="preserve">
           <source>Set the folder to upload files to WebDav</source>
           <target state="translated">WebDavにファイルをアップロードするためのフォルダーを設定する</target>
+        </trans-unit>
+        <trans-unit id="GroupExecution.Content" translate="yes" xml:space="preserve">
+          <source>Group Execution</source>
+          <target state="translated">グループ実行</target>
+        </trans-unit>
+        <trans-unit id="EncryptionText" translate="yes" xml:space="preserve">
+          <source>File encryption</source>
+          <target state="translated">ファイルの暗号化</target>
         </trans-unit>
       </group>
     </body>

@@ -673,8 +673,8 @@
           <target state="new">Example: Minutes = 15 Hours = 03 Month = 3-10/3 Day of the week = 1,3,5 The tasks will run at 3:15 AM on Mondays, Wednesdays, and Fridays in March, June, and September.</target>
         </trans-unit>
         <trans-unit id="GeneralSubFloderCard.Description" translate="yes" xml:space="preserve">
-          <source>Process folders, but not scan inside folders</source>
-          <target state="new">Process folders, but not scan inside folders</target>
+          <source>Process subfolders and scan the contents of the folder</source>
+          <target state="new">Process subfolders and scan the contents of the folder</target>
         </trans-unit>
         <trans-unit id="GeneralSubFloderCard.Header" translate="yes" xml:space="preserve">
           <source>Subfolder</source>
@@ -1421,8 +1421,8 @@
           <target state="new">Replace with random value</target>
         </trans-unit>
         <trans-unit id="GeneralMultipleInstanceCard.Header" translate="yes" xml:space="preserve">
-          <source>Multiple instances configuration</source>
-          <target state="new">Multiple instances configuration</target>
+          <source>Multiple instances configuration(Experimental)</source>
+          <target state="new">Multiple instances configuration(Experimental)</target>
         </trans-unit>
         <trans-unit id="GeneralMultipleInstanceCard.Description" translate="yes" xml:space="preserve">
           <source>Can multiple instances be provisioned</source>
@@ -1651,6 +1651,14 @@
         <trans-unit id="GeneralPrefixCard.Description" translate="yes" xml:space="preserve">
           <source>Set the folder to upload files to WebDav</source>
           <target state="new">Set the folder to upload files to WebDav</target>
+        </trans-unit>
+        <trans-unit id="GroupExecution.Content" translate="yes" xml:space="preserve">
+          <source>Group Execution</source>
+          <target state="new">Group Execution</target>
+        </trans-unit>
+        <trans-unit id="EncryptionText" translate="yes" xml:space="preserve">
+          <source>File encryption</source>
+          <target state="new">File encryption</target>
         </trans-unit>
       </group>
     </body>

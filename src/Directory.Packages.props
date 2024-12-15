@@ -3,7 +3,7 @@
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
   </PropertyGroup>
   <ItemGroup>
-    <PackageVersion Include="CommunityToolkit.Mvvm" Version="8.3.2" />
+    <PackageVersion Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageVersion Include="CommunityToolkit.WinUI.Behaviors" Version="8.1.240916" />
     <PackageVersion Include="CommunityToolkit.WinUI.Collections" Version="8.1.240916" />
     <PackageVersion Include="CommunityToolkit.WinUI.Controls.Primitives" Version="8.1.240916" />

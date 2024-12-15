@@ -25,7 +25,7 @@ public class FolderActuator
         try
         {
             if (string.IsNullOrEmpty(parameters.TargetPath)) return;
-            if (IsFolder(parameters.RuleModel.Rule, parameters.RuleModel.RuleType))
+            if (IsFolder(parameters.RuleModel.Rule, parameters.RuleModel.RuleType) && parameters.OperationMode != OperationMode.Extract)
             {
                 await RetryAsync(maxRetries, async () =>
                 {
@@ -141,6 +141,12 @@ public class FolderActuator
                 break;
             case OperationMode.UploadWebDAV:
                 await UploadFolderAsync(parameters.SourcePath);
+                break;
+            case OperationMode.ZipFile:
+                // TODO: 压缩文件
+                break;
+            case OperationMode.Encryption:
+                // TODO: 加密文件
                 break;
             default:
                 throw new NotSupportedException($"Operation mode '{parameters.OperationMode}' is not supported.");

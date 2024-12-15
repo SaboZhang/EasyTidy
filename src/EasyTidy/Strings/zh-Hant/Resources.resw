@@ -513,7 +513,7 @@
     <value>範例：分鐘=15 小時=03 月份=3-10/3 星期的第幾天=1,3,5 任務將會在 3、6、9 月的每個星期一、三、五早上 3 點 15 分執行。</value>
   </data>
   <data name="GeneralSubFloderCard.Description" xml:space="preserve">
-    <value>處理文件夾，但不掃描文件夾內</value>
+    <value>處理子資料夾並掃描資料夾的內容</value>
   </data>
   <data name="GeneralSubFloderCard.Header" xml:space="preserve">
     <value>子文件夾</value>
@@ -1074,7 +1074,7 @@
     <value>使用隨機值替換</value>
   </data>
   <data name="GeneralMultipleInstanceCard.Header" xml:space="preserve">
-    <value>多實例配置</value>
+    <value>多實例配置(實驗性)</value>
   </data>
   <data name="GeneralMultipleInstanceCard.Description" xml:space="preserve">
     <value>設定是否允許運行多個實例</value>
@@ -1203,5 +1203,11 @@
   </data>
   <data name="GeneralPrefixCard.Description" xml:space="preserve">
     <value>設定 WebDav 上傳檔案的資料夾</value>
+  </data>
+  <data name="GroupExecution.Content" xml:space="preserve">
+    <value>執行分組</value>
+  </data>
+  <data name="EncryptionText" xml:space="preserve">
+    <value>文件加密</value>
   </data>
 </root>
