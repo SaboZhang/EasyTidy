@@ -212,6 +212,12 @@ public static class FileActuator
                 WebDavClient webDavClient = new(ServiceConfig.CurConfig.WebDavUrl, ServiceConfig.CurConfig.WebDavUser, password);
                 await webDavClient.UploadFileAsync(ServiceConfig.CurConfig.WebDavUrl + ServiceConfig.CurConfig.UploadPrefix, parameters.SourcePath);
                 break;
+            case OperationMode.ZipFile:
+                // TODO: 压缩文件
+                break;
+            case OperationMode.Encryption:
+                // TODO: 加密文件
+                break;
             default:
                 throw new NotSupportedException($"Operation mode '{parameters.OperationMode}' is not supported.");
         }

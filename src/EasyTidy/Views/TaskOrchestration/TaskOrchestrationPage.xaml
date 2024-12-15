@@ -63,6 +63,10 @@
                                     </ic:EventTriggerBehavior>
                                 </i:Interaction.Behaviors>
                             </ComboBox>
+                            <Button x:Uid="GroupExecution" 
+                                    Command="{x:Bind ViewModel.ExecuteGroupTaskCommand}"
+                                    Style="{StaticResource AccentButtonStyle}"
+                                    IsEnabled="{x:Bind ViewModel.IsExecuting, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         </StackPanel>
                     </ctk:SettingsCard>
                     <StackPanel>

@@ -3,7 +3,6 @@
 
 using CommunityToolkit.WinUI;
 using EasyTidy.Model;
-using Microsoft.UI.Xaml.Controls.Primitives;
 using System.Collections;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -313,19 +312,6 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
         {
             RenameFlyout.Hide();
             Target.Text += "\\" + s.Code;
-        }
-    }
-
-    private void ToggleButton_Click(object sender, RoutedEventArgs e)
-    {
-        var priority = sender as ToggleButton;
-        if (priority.IsChecked == true)
-        {
-            Priority += 5;
-        }
-        else
-        {
-            Priority = 0;
         }
     }
 
