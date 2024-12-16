@@ -367,4 +367,55 @@ public class ZipUtil
         return folderPath;
     }
 
+    /// <summary>
+    /// 对压缩包加密
+    /// </summary>
+    /// <param name="folderPath"></param>
+    /// <param name="outputZipPath"></param>
+    /// <param name="password"></param>
+    /// <exception cref="DirectoryNotFoundException"></exception>
+    public static void EncryptFolderToZip(string folderPath, string outputZipPath, string password)
+    {
+        if (!Directory.Exists(folderPath))
+            throw new DirectoryNotFoundException("指定的文件夹不存在");
+
+        // 创建临时无密码的 ZIP 文件
+        string tempZipPath = Path.GetTempFileName();
+
+        try
+        {
+            // 打包文件夹到无密码的 ZIP 文件
+            ZipFile.CreateFromDirectory(folderPath, tempZipPath);
+
+            // 为 ZIP 文件加密
+            EncryptZip(tempZipPath, outputZipPath, password);
+        }
+        finally
+        {
+            // 删除临时文件
+            if (File.Exists(tempZipPath))
+                File.Delete(tempZipPath);
+        }
+    }
+
+    private static void EncryptZip(string inputZipPath, string outputZipPath, string password)
+    {
+        using (var inputFileStream = new FileStream(inputZipPath, FileMode.Open, FileAccess.Read))
+        using (var outputFileStream = new FileStream(outputZipPath, FileMode.Create, FileAccess.Write))
+        using (var aes = System.Security.Cryptography.Aes.Create())
+        {
+            aes.Key = System.Security.Cryptography.SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(password));
+            aes.IV = new byte[16]; // 默认初始化向量为 0（与大多数工具兼容）
+
+            // 写入加密的文件内容
+            using (var cryptoStream = new System.Security.Cryptography.CryptoStream(
+                outputFileStream,
+                aes.CreateEncryptor(),
+                System.Security.Cryptography.CryptoStreamMode.Write))
+            {
+                inputFileStream.CopyTo(cryptoStream);
+            }
+        }
+    }
+
 }

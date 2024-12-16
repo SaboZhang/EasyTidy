@@ -518,10 +518,10 @@ public partial class GeneralSettingViewModel : ObservableObject
         {
             if (!string.IsNullOrEmpty(Settings.WebDavPassword))
             {
-                WebDavPassWord = DESUtil.DesDecrypt(Settings.WebDavPassword);
+                WebDavPassWord = CryptoUtil.DesDecrypt(Settings.WebDavPassword);
             }
             WebDavClient webDavClient = new(Settings.WebDavUrl ??= WebDavUrl, Settings.WebDavUser ??= WebDavUserName, WebDavPassWord);
-            Settings.WebDavPassword ??= DESUtil.DesEncrypt(WebDavPassWord);
+            Settings.WebDavPassword ??= CryptoUtil.DesEncrypt(WebDavPassWord);
             var zipFilePath = Path.Combine(Constants.CnfPath, $"EasyTidy_backup_{DateTime.Now:yyyyMMddHHmmss}.zip");
             ZipUtil.CompressFile(Constants.CnfPath, zipFilePath);
             var backup = await webDavClient.UploadFileAsync(WebDavUrl + "/EasyTidy", zipFilePath);

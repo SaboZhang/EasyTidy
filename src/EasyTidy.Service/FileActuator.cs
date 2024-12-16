@@ -208,7 +208,7 @@ public static class FileActuator
                 Extract(parameters.SourcePath, parameters.TargetPath, parameters.RuleModel.Rule);
                 break;
             case OperationMode.UploadWebDAV:
-                var password = DESUtil.DesDecrypt(ServiceConfig.CurConfig.WebDavPassword);
+                var password = CryptoUtil.DesDecrypt(ServiceConfig.CurConfig.WebDavPassword);
                 WebDavClient webDavClient = new(ServiceConfig.CurConfig.WebDavUrl, ServiceConfig.CurConfig.WebDavUser, password);
                 await webDavClient.UploadFileAsync(ServiceConfig.CurConfig.WebDavUrl + ServiceConfig.CurConfig.UploadPrefix, parameters.SourcePath);
                 break;
@@ -237,7 +237,7 @@ public static class FileActuator
         {
             FileResolver.HandleFileConflict(sourcePath, targetPath, fileOperationType, () =>
             {
-                File.Move(sourcePath, targetPath);
+                File.Move(sourcePath, targetPath, true);
             });
         }
         catch (Exception ex)
@@ -272,7 +272,7 @@ public static class FileActuator
         {
             FileResolver.HandleFileConflict(sourcePath, targetPath, fileOperationType, () =>
             {
-                File.Copy(sourcePath, targetPath);
+                File.Copy(sourcePath, targetPath, true);
             });
 
         }

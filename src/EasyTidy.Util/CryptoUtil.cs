@@ -5,7 +5,7 @@ using System.Text;
 
 namespace EasyTidy.Util;
 
-public class DESUtil
+public class CryptoUtil
 {
     // 默认密钥和初始化向量
     private const string DEFAULTKEY = "!H0O<[W}";
@@ -77,6 +77,65 @@ public class DESUtil
         {
             // 如果出现问题则返回传入值
             return data;
+        }
+    }
+
+    /// <summary>
+    /// 文件加密
+    /// </summary>
+    /// <param name="inputFile"></param>
+    /// <param name="outputFile"></param>
+    /// <param name="password"></param>
+    public static void EncryptFile(string inputFile, string outputFile, string password)
+    {
+        using (var inputFileStream = new FileStream(inputFile, FileMode.Open, FileAccess.Read))
+        using (var outputFileStream = new FileStream(outputFile, FileMode.Create, FileAccess.Write))
+        using (var aes = Aes.Create())
+        {
+            // 设置密钥和 IV
+            aes.Key = SHA256.HashData(Encoding.UTF8.GetBytes(password));
+            aes.IV = new byte[16]; // 初始化向量为 0
+
+            // 写入文件头信息（方便手动解密）
+            outputFileStream.Write(aes.IV, 0, aes.IV.Length);
+
+            using (var cryptoStream = new CryptoStream(
+                outputFileStream,
+                aes.CreateEncryptor(),
+                CryptoStreamMode.Write))
+            {
+                inputFileStream.CopyTo(cryptoStream);
+            }
+        }
+    }
+
+    /// <summary>
+    /// 文件解密
+    /// </summary>
+    /// <param name="inputFile"></param>
+    /// <param name="outputFile"></param>
+    /// <param name="password"></param>
+    public static void DecryptFile(string inputFile, string outputFile, string password)
+    {
+        using (var inputFileStream = new FileStream(inputFile, FileMode.Open, FileAccess.Read))
+        using (var outputFileStream = new FileStream(outputFile, FileMode.Create, FileAccess.Write))
+        using (var aes = Aes.Create())
+        {
+            // 读取文件头信息
+            byte[] iv = new byte[16];
+            inputFileStream.Read(iv, 0, iv.Length);
+
+            // 设置密钥和 IV
+            aes.Key = SHA256.HashData(Encoding.UTF8.GetBytes(password));
+            aes.IV = iv;
+
+            using (var cryptoStream = new CryptoStream(
+                inputFileStream,
+                aes.CreateDecryptor(),
+                CryptoStreamMode.Read))
+            {
+                cryptoStream.CopyTo(outputFileStream);
+            }
         }
     }
 }

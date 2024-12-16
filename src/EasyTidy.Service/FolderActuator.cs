@@ -288,7 +288,7 @@ public class FolderActuator
 
     private static async Task UploadFolderAsync(string localDirPath, string remoteDirPath = null)
     {
-        var password = DESUtil.DesDecrypt(ServiceConfig.CurConfig.WebDavPassword);
+        var password = CryptoUtil.DesDecrypt(ServiceConfig.CurConfig.WebDavPassword);
         WebDavClient webDavClient = new(ServiceConfig.CurConfig.WebDavUrl, ServiceConfig.CurConfig.WebDavUser, password);
         remoteDirPath = Path.Combine(remoteDirPath ?? ServiceConfig.CurConfig.WebDavUrl + ServiceConfig.CurConfig.UploadPrefix, Path.GetFileName(localDirPath));
         await webDavClient.CreateFolderAsync(ServiceConfig.CurConfig.WebDavUrl + ServiceConfig.CurConfig.UploadPrefix, Path.GetFileName(localDirPath));

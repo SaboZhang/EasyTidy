@@ -40,7 +40,7 @@ public class BackupJob : IJob
 
     private static async Task WebDavBackupAsync()
     {
-        var pass = DESUtil.DesDecrypt(Settings.WebDavPassword);
+        var pass = CryptoUtil.DesDecrypt(Settings.WebDavPassword);
         WebDavClient webDavClient = new(Settings.WebDavUrl, Settings.WebDavUser, pass);
         var zipFilePath = Path.Combine(Constants.CnfPath, $"EasyTidy_backup_{DateTime.Now:yyyyMMddHHmmss}.zip");
         ZipUtil.CompressFile(Constants.CnfPath, zipFilePath);
