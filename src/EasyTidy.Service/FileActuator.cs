@@ -2,6 +2,7 @@ using EasyTidy.Log;
 using EasyTidy.Model;
 using EasyTidy.Util;
 using Microsoft.VisualBasic.FileIO;
+using SharpCompress.Common;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -185,7 +186,8 @@ public static class FileActuator
     /// <exception cref="NotSupportedException"></exception>
     internal static async Task ProcessFileAsync(OperationParameters parameters)
     {
-        if (FilterUtil.ShouldSkip(parameters.Funcs, parameters.SourcePath, parameters.PathFilter) && parameters.OperationMode != OperationMode.RecycleBin)
+        if (FilterUtil.ShouldSkip(parameters.Funcs, parameters.SourcePath, parameters.PathFilter) 
+            && parameters.OperationMode != OperationMode.RecycleBin && parameters.OperationMode != OperationMode.ZipFile)
         {
             LogService.Logger.Debug($"执行文件操作 ShouldSkip {parameters.TargetPath}");
             return;
@@ -219,8 +221,7 @@ public static class FileActuator
                 await webDavClient.UploadFileAsync(ServiceConfig.CurConfig.WebDavUrl + ServiceConfig.CurConfig.UploadPrefix, parameters.SourcePath);
                 break;
             case OperationMode.ZipFile:
-                // TODO: 压缩文件
-                CompressFile(parameters.SourcePath, parameters.TargetPath, parameters.RuleModel.Rule);
+                await CompressFileAsync(parameters);
                 break;
             case OperationMode.Encryption:
                 // TODO: 加密文件
@@ -421,11 +422,71 @@ public static class FileActuator
         }
     }
 
-    private static void CompressFile(string sourcePath, string targetPath, string rule)
+    private static async Task CompressFileAsync(OperationParameters parameters)
     {
-        var newRule = rule.Split(new[] { ';', '|' }, StringSplitOptions.RemoveEmptyEntries);
-        bool subFolder = ServiceConfig.CurConfig?.SubFolder ?? false;
-        ZipUtil.CompressFile(sourcePath, targetPath, newRule, subFolder);
+        LogService.Logger.Info($"处理文件夹压缩操作: {parameters.SourcePath}");
+
+        var filesToCompress = new List<string>();
+
+        // 收集符合条件的文件
+        await CollectFilesForCompression(parameters, filesToCompress);
+
+        if (filesToCompress.Any())
+        {
+            var zipFilePath = Path.Combine(parameters.TargetPath, $"{Path.GetFileName(parameters.TargetPath)}.zip");
+            // 调用压缩文件方法
+            ZipUtil.CompressFile(parameters.SourcePath, zipFilePath, filesToCompress);
+            LogService.Logger.Info($"压缩完成，生成压缩包: {zipFilePath}");
+        }
+        else
+        {
+            LogService.Logger.Warn($"未找到符合条件的文件，跳过压缩操作: {parameters.SourcePath}");
+        }
+    }
+
+    private static async Task CollectFilesForCompression(OperationParameters parameters, List<string> filesToCompress)
+    {
+        var fileList = Directory.GetFiles(parameters.SourcePath).ToList();
+
+        foreach (var filePath in fileList)
+        {
+            if (FilterUtil.ShouldSkip(parameters.Funcs, filePath, parameters.PathFilter))
+            {
+                LogService.Logger.Debug($"跳过文件: {filePath}");
+                continue;
+            }
+
+            filesToCompress.Add(filePath);
+        }
+
+        if (ServiceConfig.CurConfig?.SubFolder ?? false)
+        {
+            var subDirList = Directory.GetDirectories(parameters.SourcePath).ToList();
+            foreach (var subDir in subDirList)
+            {
+                if (subDir.Equals(parameters.TargetPath, StringComparison.OrdinalIgnoreCase))
+                {
+                    LogService.Logger.Debug($"跳过递归目标目录 {subDir}");
+                    continue;
+                }
+
+                var subDirParameters = new OperationParameters(
+                    parameters.OperationMode,
+                    subDir,
+                    parameters.TargetPath,
+                    parameters.FileOperationType,
+                    parameters.HandleSubfolders,
+                    parameters.Funcs,
+                    parameters.PathFilter)
+                {
+                    OldTargetPath = parameters.TargetPath,
+                    OldSourcePath = subDir,
+                    RuleModel = parameters.RuleModel
+                };
+
+                await CollectFilesForCompression(subDirParameters, filesToCompress);
+            }
+        }
     }
 
     /// <summary>

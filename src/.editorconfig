@@ -95,6 +95,7 @@ csharp_prefer_system_threading_lock = true:suggestion
 dotnet_diagnostic.CA1416.severity = suggestion
 dotnet_diagnostic.MVVMTK0045.severity = suggestion
 csharp_indent_labels = one_less_than_current
+dotnet_diagnostic.MVVMTK0050.severity = suggestion
 
 [*.vb]
 #### 命名样式 ####

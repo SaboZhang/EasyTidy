@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -81,6 +82,12 @@ public class FolderActuator
         LogService.Logger.Info($"执行文件夹操作 {parameters.TargetPath}");
         var folderList = Directory.GetDirectories(parameters.SourcePath).ToList();
 
+        if (parameters.OperationMode == OperationMode.ZipFile)
+        {
+            await ExecuteFolderActionAsync(parameters);
+            return;
+        }
+
         foreach (var folder in folderList)
         {
             if (FilterUtil.ShouldSkip(parameters.Funcs, folder, parameters.PathFilter))
@@ -114,7 +121,8 @@ public class FolderActuator
     /// <exception cref="NotSupportedException"></exception>
     private static async Task ExecuteFolderActionAsync(OperationParameters parameters)
     {
-        if (FilterUtil.ShouldSkip(parameters.Funcs, parameters.SourcePath, parameters.PathFilter) && parameters.OperationMode != OperationMode.RecycleBin)
+        if (FilterUtil.ShouldSkip(parameters.Funcs, parameters.SourcePath, parameters.PathFilter) 
+            && parameters.OperationMode != OperationMode.RecycleBin && parameters.OperationMode != OperationMode.ZipFile)
         {
             LogService.Logger.Debug($"执行文件夹操作 {parameters.TargetPath}");
             return;
@@ -143,7 +151,7 @@ public class FolderActuator
                 await UploadFolderAsync(parameters.SourcePath);
                 break;
             case OperationMode.ZipFile:
-                // TODO: 压缩文件
+                await CompressFolderAsync(parameters);
                 break;
             case OperationMode.Encryption:
                 // TODO: 加密文件
@@ -302,6 +310,99 @@ public class FolderActuator
         {
             string remoteSubDirPath = Path.Combine(remoteDirPath, Path.GetFileName(subDir));
             await UploadFolderAsync(subDir, remoteSubDirPath);
+        }
+    }
+
+    private static async Task CompressFolderAsync(OperationParameters parameters)
+    {
+        LogService.Logger.Info($"处理文件夹压缩操作: {parameters.SourcePath}");
+
+        var directoriesToCompress = new List<string>();
+
+        // 收集符合条件的文件夹
+        await CollectDirectoriesForCompression(parameters, directoriesToCompress);
+
+        if (directoriesToCompress.Any())
+        {
+            var zipFilePath = Path.Combine(parameters.TargetPath, $"{Path.GetFileName(parameters.TargetPath)}.zip");
+            // 调用压缩文件夹的方法
+            CreateCompressedArchiveForFolders(parameters.SourcePath, zipFilePath, directoriesToCompress);
+            LogService.Logger.Info($"文件夹压缩完成，生成压缩包: {parameters.TargetPath}");
+        }
+        else
+        {
+            LogService.Logger.Warn($"未找到符合条件的文件夹，跳过压缩操作: {parameters.SourcePath}");
+        }
+    }
+
+    private static async Task CollectDirectoriesForCompression(OperationParameters parameters, List<string> directoriesToCompress)
+    {
+        // 获取当前目录下的所有文件夹
+        var dirList = Directory.GetDirectories(parameters.SourcePath).ToList();
+
+        foreach (var dirPath in dirList)
+        {
+            // 使用过滤条件判断是否跳过当前文件夹
+            if (FilterUtil.ShouldSkip(parameters.Funcs, dirPath, parameters.PathFilter))
+            {
+                LogService.Logger.Debug($"跳过文件夹: {dirPath}");
+                continue;
+            }
+
+            // 如果符合条件，添加到待处理文件夹列表
+            directoriesToCompress.Add(dirPath);
+
+            // 递归处理子文件夹
+            var subDirParameters = new OperationParameters(
+                parameters.OperationMode,
+                dirPath,
+                parameters.TargetPath,
+                parameters.FileOperationType,
+                parameters.HandleSubfolders,
+                parameters.Funcs,
+                parameters.PathFilter)
+            {
+                OldTargetPath = parameters.TargetPath,
+                OldSourcePath = dirPath,
+                RuleModel = parameters.RuleModel
+            };
+
+            await CollectDirectoriesForCompression(subDirParameters, directoriesToCompress);
+        }
+    }
+
+    private static void CreateCompressedArchiveForFolders(string sourcePath, string targetPath, List<string> directoriesToCompress)
+    {
+        var tempDirectory = Path.Combine(Path.GetTempPath(), Path.GetFileName(sourcePath));
+        Directory.CreateDirectory(tempDirectory);
+
+        try
+        {
+            // 遍历待压缩的文件夹
+            foreach (var directoryPath in directoriesToCompress)
+            {
+                // 计算相对路径以保持层级结构
+                string relativeDirPath = Path.GetRelativePath(sourcePath, directoryPath);
+                string destinationDirPath = Path.Combine(tempDirectory, relativeDirPath);
+
+                Directory.CreateDirectory(destinationDirPath);
+
+                // 复制文件夹内的文件
+                CopyDirectory(directoryPath, destinationDirPath);
+            }
+
+            // 创建压缩包
+            ZipFile.CreateFromDirectory(tempDirectory, targetPath, CompressionLevel.Fastest, true);
+        }
+        catch (Exception ex)
+        {
+            LogService.Logger.Error($"压缩文件夹时发生错误: {ex.Message}", ex);
+            throw;
+        }
+        finally
+        {
+            // 清理临时目录
+            Directory.Delete(tempDirectory, true);
         }
     }
 

@@ -1,4 +1,5 @@
-﻿using EasyTidy.Model;
+﻿using EasyTidy.Log;
+using EasyTidy.Model;
 using SharpCompress.Archives;
 using SharpCompress.Common;
 using System;
@@ -39,47 +40,39 @@ public class ZipUtil
     /// <param name="filePath"></param>
     /// <param name="zipFilePath"></param>
     /// <param name="fileExtensions"></param>
-    public static void CompressFile(string filePath, string zipFilePath, string[] fileExtensions, bool includeSubfolders)
+    public static void CompressFile(string sourcePath, string targetPath, List<string> filesToCompress)
     {
-        // 创建临时目录
-        string tempDirectory = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+        var tempDirectory = Path.Combine(Path.GetTempPath(), Path.GetFileName(sourcePath));
         Directory.CreateDirectory(tempDirectory);
 
-        // 获取所有符合条件的文件
-        foreach (var fileExtension in fileExtensions)
+        try
         {
-            IEnumerable<string> filesToCompress;
-
-            if (includeSubfolders)
+            foreach (var filePath in filesToCompress)
             {
-                // 如果需要处理子文件夹，则递归获取符合条件的文件
-                filesToCompress = Directory.EnumerateFiles(filePath, $"*{fileExtension}", SearchOption.AllDirectories);
-            }
-            else
-            {
-                // 仅在当前文件夹下获取符合条件的文件
-                filesToCompress = Directory.GetFiles(filePath, $"*{fileExtension}");
-            }
-
-            foreach (var path in filesToCompress)
-            {
-                // 计算相对路径以保留原有文件结构
-                string relativePath = Path.GetRelativePath(filePath, path);
+                // 计算相对路径
+                string relativePath = Path.GetRelativePath(sourcePath, filePath);
                 string destinationFilePath = Path.Combine(tempDirectory, relativePath);
 
-                // 确保目标文件夹存在
+                // 确保目标目录存在
                 Directory.CreateDirectory(Path.GetDirectoryName(destinationFilePath));
 
-                // 复制文件到目标目录
-                File.Copy(path, destinationFilePath);
+                // 复制文件到临时目录
+                File.Copy(filePath, destinationFilePath, overwrite: true);
             }
+
+            // 创建压缩包
+            ZipFile.CreateFromDirectory(tempDirectory, targetPath, CompressionLevel.Fastest, true);
         }
-
-        // 压缩目录
-        ZipFile.CreateFromDirectory(tempDirectory, zipFilePath, CompressionLevel.Fastest, true);
-
-        // 删除临时目录
-        Directory.Delete(tempDirectory, true);
+        catch (Exception ex)
+        {
+            LogService.Logger.Error($"压缩文件时发生错误: {ex.Message}", ex);
+            throw;
+        }
+        finally
+        {
+            // 清理临时目录
+            Directory.Delete(tempDirectory, true);
+        }
     }
 
     public static bool DecompressToDirectory(string zipFilePath, string extractPath, string filterExtension = null)

@@ -4,7 +4,6 @@ using Quartz.Impl.Matchers;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using static Quartz.Logging.OperationName;
 
 namespace EasyTidy.Service;
 

@@ -30,6 +30,7 @@ public static class OperationHandler
             { OperationMode.Extract, ExtractAsync },
             { OperationMode.ZipFile, CompressedFileAsync },
             { OperationMode.UploadWebDAV, UploadFileAsync },
+            { OperationMode.Encryption, EncryptionAsync },
         };
     }
 
@@ -232,7 +233,14 @@ public static class OperationHandler
     {
         await Task.Run(async () =>
         {
-            await FileActuator.ExecuteFileOperationAsync(parameter);
+            if (parameter.RuleModel.RuleType == TaskRuleType.FileRule)
+            {
+                await FileActuator.ExecuteFileOperationAsync(parameter);
+            }
+            else
+            {
+                await FolderActuator.ExecuteFolderOperationAsync(parameter);
+            }
         });
         LogService.Logger.Info("执行压缩任务完成");
     }
@@ -252,4 +260,13 @@ public static class OperationHandler
         });
         LogService.Logger.Info("执行上传任务完成");
     }
+
+    private static async Task EncryptionAsync(OperationParameters parameters)
+    {
+        await Task.Run(async () =>
+        {
+            await FileActuator.ExecuteFileOperationAsync(parameters);
+        });
+    }
+
 }
