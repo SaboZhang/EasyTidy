@@ -93,6 +93,12 @@ public static class FileActuator
             Directory.CreateDirectory(parameters.TargetPath);
         }
 
+        if (parameters.OperationMode == OperationMode.ZipFile) 
+        {
+            await ProcessFileAsync(parameters);
+            return;
+        }
+
         var fileList = Directory.GetFiles(parameters.SourcePath).ToList();
         // 获取所有文件并处理
         int fileCount = 0;
@@ -214,6 +220,7 @@ public static class FileActuator
                 break;
             case OperationMode.ZipFile:
                 // TODO: 压缩文件
+                CompressFile(parameters.SourcePath, parameters.TargetPath, parameters.RuleModel.Rule);
                 break;
             case OperationMode.Encryption:
                 // TODO: 加密文件
@@ -412,6 +419,13 @@ public static class FileActuator
         {
             _semaphore.Release(); // 确保释放互斥锁
         }
+    }
+
+    private static void CompressFile(string sourcePath, string targetPath, string rule)
+    {
+        var newRule = rule.Split(new[] { ';', '|' }, StringSplitOptions.RemoveEmptyEntries);
+        bool subFolder = ServiceConfig.CurConfig?.SubFolder ?? false;
+        ZipUtil.CompressFile(sourcePath, targetPath, newRule, subFolder);
     }
 
     /// <summary>
