@@ -222,6 +222,7 @@ public static class OperationHandler
             RuleType = parameter.RuleModel.RuleType
         };
         parameter.RuleModel = model;
+        parameter.Funcs = FilterUtil.GeneratePathFilters(rule,parameter.RuleModel.RuleType);
         await Task.Run(async () =>
         {
             await FileActuator.ExecuteFileOperationAsync(parameter);

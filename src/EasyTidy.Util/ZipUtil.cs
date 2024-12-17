@@ -2,6 +2,7 @@
 using EasyTidy.Model;
 using SharpCompress.Archives;
 using SharpCompress.Common;
+using SharpCompress.Readers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -61,7 +62,7 @@ public class ZipUtil
             }
 
             // 创建压缩包
-            ZipFile.CreateFromDirectory(tempDirectory, targetPath, CompressionLevel.Fastest, true);
+            ZipFile.CreateFromDirectory(tempDirectory, targetPath, CompressionLevel.Fastest, true);     
         }
         catch (Exception ex)
         {
@@ -219,31 +220,34 @@ public class ZipUtil
 
     private static void ExtractRar7z(string filePath, string targetDirectory, string rootFolderName, string filterExtension)
     {
+        var extensions = string.IsNullOrWhiteSpace(filterExtension) 
+            ? Array.Empty<string>() 
+            : filterExtension.Split([';','|']).Select(ext => ext.Trim()).ToArray();
         using var archive = ArchiveFactory.Open(filePath);
-        foreach (var entry in archive.Entries)
+        var reader = archive.ExtractAllEntries();
+        while (reader.MoveToNextEntry())
         {
-            if (!entry.IsDirectory)
+            if (!reader.Entry.IsDirectory)
             {
-                if (!string.IsNullOrWhiteSpace(filterExtension) && !entry.Key.EndsWith(filterExtension, StringComparison.OrdinalIgnoreCase))
+                if (extensions.Any() && !extensions.Any(ext => reader.Entry.Key.EndsWith(ext, StringComparison.OrdinalIgnoreCase)))
                 {
-                    continue;
+                    continue;  // 跳过不符合扩展名的文件
                 }
 
-                if (string.IsNullOrWhiteSpace(entry.Key) || entry.Key.EndsWith("/"))
+                if (string.IsNullOrWhiteSpace(reader.Entry.Key) || reader.Entry.Key.EndsWith('/'))
                     continue;
-
-                string relativePath = entry.Key.Substring(rootFolderName.Length).TrimStart('/');
+                // 获取文件相对路径，并构建目标路径
+                string relativePath = reader.Entry.Key;
                 string destinationPath = Path.Combine(targetDirectory, relativePath);
 
-                FileResolver.HandleFileConflict(entry.Key, destinationPath, FileOperationType.Override, () =>
-                {
-                    Directory.CreateDirectory(Path.GetDirectoryName(destinationPath));
-                    entry.WriteToDirectory(destinationPath);
-                });
+                // 创建文件的目录结构（如果不存在）
+                Directory.CreateDirectory(Path.GetDirectoryName(destinationPath));
+
+                // 将文件解压到目标路径，覆盖已存在文件
+                reader.WriteEntryToFile(destinationPath, new ExtractionOptions() { Overwrite = true });
             }
         }
     }
-
 
     /// <summary>
     /// 处理提取到指定名称文件夹的逻辑。
@@ -252,8 +256,6 @@ public class ZipUtil
     {
         // 获取文件扩展名
         string extension = Path.GetExtension(zipFilePath).ToLower();
-        // string finalExtractPath = Path.Combine(directoryPath, folderName);
-
         // 根据文件扩展名选择解压方式
         if (extension == ".zip")
         {
@@ -271,7 +273,6 @@ public class ZipUtil
         {
             throw new NotSupportedException($"The file format '{extension}' is not supported for extraction.");
         }
-        // DecompressToDirectory(zipFilePath, finalExtractPath, filterExtension);
     }
 
     private static void ExtractZipToFolder(string zipFilePath, string directoryPath, string folderName, string filterExtension)
@@ -283,7 +284,7 @@ public class ZipUtil
         {
             foreach (var entry in archive.Entries)
             {
-                if (!entry.FullName.EndsWith("/") && (string.IsNullOrWhiteSpace(filterExtension) || entry.FullName.EndsWith(filterExtension, StringComparison.OrdinalIgnoreCase)))
+                if (!entry.FullName.EndsWith('/') && (string.IsNullOrWhiteSpace(filterExtension) || entry.FullName.EndsWith(filterExtension, StringComparison.OrdinalIgnoreCase)))
                 {
                     string destinationPath = Path.Combine(finalExtractPath, entry.FullName);
                     Directory.CreateDirectory(Path.GetDirectoryName(destinationPath)); // Ensure the directory exists
@@ -318,42 +319,40 @@ public class ZipUtil
         string finalExtractPath = Path.Combine(directoryPath, folderName);
         Directory.CreateDirectory(finalExtractPath);
 
+        var extensions = string.IsNullOrWhiteSpace(filterExtension) 
+            ? Array.Empty<string>() 
+            : filterExtension.Split([';','|']).Select(ext => ext.Trim()).ToArray();
+
         using (var archive = ArchiveFactory.Open(filePath))
         {
+            var reader = archive.ExtractAllEntries();
             // 如果目标解压路径不存在，则创建
             if (!Directory.Exists(finalExtractPath))
             {
                 Directory.CreateDirectory(finalExtractPath);
             }
 
-            foreach (var entry in archive.Entries)
+            while (reader.MoveToNextEntry())
             {
-                // 过滤文件扩展名
-                if (!string.IsNullOrWhiteSpace(filterExtension) && !entry.Key.EndsWith(filterExtension, StringComparison.OrdinalIgnoreCase))
+                if (!reader.Entry.IsDirectory)
                 {
-                    continue;
+                    if (extensions.Any() && !extensions.Any(ext => reader.Entry.Key.EndsWith(ext.TrimStart('*'), StringComparison.OrdinalIgnoreCase)))
+                    {
+                        continue;  // 跳过不符合扩展名的文件
+                    }
+
+                    if (string.IsNullOrWhiteSpace(reader.Entry.Key) || reader.Entry.Key.EndsWith('/'))
+                        continue;
+                    // 获取文件相对路径，并构建目标路径
+                    string relativePath = reader.Entry.Key;
+                    string destinationPath = Path.Combine(finalExtractPath, relativePath);
+
+                    // 创建文件的目录结构（如果不存在）
+                    Directory.CreateDirectory(Path.GetDirectoryName(destinationPath));
+
+                    // 将文件解压到目标路径，覆盖已存在文件
+                    reader.WriteEntryToFile(destinationPath, new ExtractionOptions() { Overwrite = true });
                 }
-
-                // 如果是目录，则创建目录
-                if (entry.IsDirectory)
-                {
-                    string dirPath = Path.Combine(finalExtractPath, entry.Key);
-                    Directory.CreateDirectory(dirPath);
-                    continue;
-                }
-
-                // 解压文件
-                // string entryDestination = Path.Combine(finalExtractPath, entry.Key);
-
-                // 确保父目录存在
-                string directory = Path.GetDirectoryName(finalExtractPath);
-                if (!Directory.Exists(directory))
-                {
-                    Directory.CreateDirectory(directory);
-                }
-
-                // 解压文件到目标路径
-                entry.WriteToDirectory(finalExtractPath, new ExtractionOptions { ExtractFullPath = true, Overwrite = true });
             }
         }
     }

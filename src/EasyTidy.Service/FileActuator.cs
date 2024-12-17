@@ -502,6 +502,11 @@ public static class FileActuator
             return;
         }
 
+        if (filterExtension != null)
+        {
+            filterExtension = GetPartAfterAtSymbolWithoutQuotes(filterExtension);
+        }
+
         string extension = Path.GetExtension(filePath).ToLower();
 
         // 判断是否为压缩包
@@ -513,6 +518,13 @@ public static class FileActuator
         {
             LogService.Logger.Warn($"当前不支持处理 {extension} 文件，路径: {filePath}");
         }
+    }
+
+    private static string GetPartAfterAtSymbolWithoutQuotes(string input)
+    {
+        var parts = input.Split(new[] { "@" }, StringSplitOptions.None);
+
+        return parts.Length > 1 ? parts[1].Trim(';').Replace("\"", "") : string.Empty;
     }
 
     /// <summary>

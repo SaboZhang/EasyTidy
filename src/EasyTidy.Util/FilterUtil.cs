@@ -441,13 +441,13 @@ public class FilterUtil
         // 分割传入字符串，支持两种分隔符 ';' 和 '|'
         var extensionList = extensions
             .Split(new[] { ';', '|' }, StringSplitOptions.RemoveEmptyEntries)
-            .Select(ext => ext.TrimStart('*').Trim())
+            .Select(ext => ext.TrimStart('*').Trim())  // 去掉前面的星号并去除空格
             .ToList();
 
         // 用于存储非压缩文件后缀
         List<string> nonCompressedExtensions = new List<string>();
 
-        // 检查每个后缀
+        // 遍历每个扩展名
         foreach (var ext in extensionList)
         {
             if (!compressedExtensions.Contains(ext))
@@ -457,8 +457,18 @@ public class FilterUtil
             }
         }
 
-        // 将非压缩文件后缀用分号连接成一个字符串返回
-        return string.Join(";", nonCompressedExtensions);
+        var compressedWithWildcard = compressedExtensions.Select(ext => "*" + ext).ToList();
+
+        // 拼接非压缩文件的扩展名，并将其转换为 "*.ext" 格式
+        var nonCompressedWithWildcard = nonCompressedExtensions
+            .Select(ext => "*" + (ext.StartsWith('.') ? ext : "." + ext))  // 确保以 '.' 开头
+            .ToList();
+
+        // 将非压缩扩展名和压缩扩展名拼接
+        var combinedExtensions = compressedWithWildcard.Concat(new[] { "@" }).Concat(nonCompressedWithWildcard);
+
+        // 返回格式为 "*.zip;*.exe" 的字符串
+        return string.Join(";", combinedExtensions);
     }
 
     /// <summary>
