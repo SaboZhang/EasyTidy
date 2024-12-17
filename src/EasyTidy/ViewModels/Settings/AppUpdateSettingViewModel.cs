@@ -167,7 +167,7 @@ public partial class AppUpdateSettingViewModel : ObservableObject
         {
             Content = new TextBlock
             {
-                Text = changelog,
+                Text = changelog.Replace("-", "•"),
                 TextWrapping = TextWrapping.Wrap,
                 Margin = new Thickness(10)
             },
