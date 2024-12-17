@@ -502,7 +502,7 @@ public static class FileActuator
             return;
         }
 
-        if (filterExtension != null)
+        if (string.IsNullOrEmpty(filterExtension))
         {
             filterExtension = GetPartAfterAtSymbolWithoutQuotes(filterExtension);
         }
