@@ -1,6 +1,6 @@
 ﻿using EasyTidy.Model;
 
-namespace EasyTidy.Util.SettingsInterface;
+namespace EasyTidy.Util.UtilInterface;
 
 public interface IFileService
 {

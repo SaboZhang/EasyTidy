@@ -1,5 +1,5 @@
 ﻿using EasyTidy.Model;
-using EasyTidy.Util.SettingsInterface;
+using EasyTidy.Util.UtilInterface;
 using System.Text;
 using System.Text.Json;
 

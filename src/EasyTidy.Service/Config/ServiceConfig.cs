@@ -1,5 +1,5 @@
 using EasyTidy.Model;
-using EasyTidy.Util.SettingsInterface;
+using EasyTidy.Util.UtilInterface;
 
 namespace EasyTidy.Service;
 

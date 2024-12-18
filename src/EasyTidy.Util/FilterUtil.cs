@@ -1,5 +1,6 @@
 ﻿using EasyTidy.Log;
 using EasyTidy.Model;
+using EasyTidy.Util.Strategy;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -201,9 +202,36 @@ public class FilterUtil
         };
     }
 
+    /// <summary>
+    /// 根据规则类型获取对应过滤器
+    /// </summary>
+    /// <param name="rule"></param>
+    /// <param name="ruleType"></param>
+    /// <returns></returns>
     public static List<Func<string, bool>> GeneratePathFilters(string rule, TaskRuleType ruleType)
     {
         var filters = new List<Func<string, bool>>();
+        // 策略模式
+        var filterFunctions = new Dictionary<TaskRuleType, Func<string, IEnumerable<Func<string, bool>>>>()
+        {
+            { TaskRuleType.FileRule, rule => new FileFilterStrategy().GenerateFilters(rule) },
+            { TaskRuleType.FolderRule, rule => new FolderFilterStrategy().GenerateFilters(rule) },
+            { TaskRuleType.CustomRule, rule => new CustomFilterStrategy().GenerateFilters(rule) },
+            { TaskRuleType.ExpressionRules, rule => new ExpressionFilterStrategy().GenerateFilters(rule) }
+        };
+
+        if (filterFunctions.TryGetValue(ruleType, out var generateFilters))
+        {
+            foreach (var filter in generateFilters(rule))
+            {
+                filters.Add(filter);
+            }
+        }
+        else
+        {
+            LogService.Logger.Error($"{ruleType} is not supported.");
+            return filters;
+        }
 
         switch (ruleType)
         {
@@ -235,6 +263,11 @@ public class FilterUtil
         return filters;
     }
 
+    /// <summary>
+    /// 获取文件自定义过滤器
+    /// </summary>
+    /// <param name="rule"></param>
+    /// <returns></returns>
     public static IEnumerable<Func<string, bool>> GenerateFileFilters(string rule)
     {
         // 如果规则是 "*"，则返回一个文件存在检查器
@@ -266,6 +299,11 @@ public class FilterUtil
         }
     }
 
+    /// <summary>
+    /// 生成自定义过滤器
+    /// </summary>
+    /// <param name="rule"></param>
+    /// <returns></returns>
     private static IEnumerable<Func<string, bool>> GenerateFiltersForRule(string rule)
     {
         var conditions = rule.Split(new[] { ';', '|' }, StringSplitOptions.RemoveEmptyEntries);
@@ -311,6 +349,28 @@ public class FilterUtil
         }
     }
 
+    /// <summary>
+    /// 匹配以指定字符开头和以指定字符结尾的文件
+    /// </summary>
+    /// <param name="condition"></param>
+    /// <returns></returns>
+    private static Func<string, bool> MatchesStartsWithAndEndsWith(string condition)
+    {
+        string prefix = condition.Split('*')[0].ToLower();
+        string suffix = condition.TrimStart('*').ToLower();  // 后缀部分
+
+        return filePath =>
+        {
+            string fileName = Path.GetFileName(filePath).ToLower();
+            return fileName.StartsWith(prefix) && fileName.EndsWith(suffix);
+        };
+    }
+
+    /// <summary>
+    /// 排除规则
+    /// </summary>
+    /// <param name="condition"></param>
+    /// <returns></returns>
     private static IEnumerable<Func<string, bool>> GenerateIncludeExcludeFilter(string condition)
     {
         var parts = condition.Split('/');
@@ -327,6 +387,11 @@ public class FilterUtil
         };
     }
 
+    /// <summary>
+    /// 文件夹匹配规则
+    /// </summary>
+    /// <param name="condition"></param>
+    /// <returns></returns>
     private static Func<string, bool> GenerateExtensionFilter(string condition)
     {
         string requiredExtension = condition.StartsWith("*.") ? condition.Substring(1) : condition;
@@ -339,6 +404,11 @@ public class FilterUtil
         };
     }
 
+    /// <summary>
+    /// 文件夹过滤规则
+    /// </summary>
+    /// <param name="rule"></param>
+    /// <returns></returns>
     private static IEnumerable<Func<string, bool>> GenerateFolderFilters(string rule)
     {
         // 处理 ** 的情况，匹配全部文件夹
@@ -395,6 +465,12 @@ public class FilterUtil
         }
     }
 
+    /// <summary>
+    /// 自定义规则
+    /// </summary>
+    /// </summary>
+    /// <param name="rule"></param>
+    /// <returns></returns>
     private static IEnumerable<Func<string, bool>> GenerateCustomFilters(string rule)
     {
         var filters = new List<Func<string, bool>>();
@@ -430,6 +506,11 @@ public class FilterUtil
         return input.Contains(pattern); // 检查字符串是否包含这个模式
     }
 
+    /// <summary>
+    /// 判断传入的是否压缩文件规则
+    /// </summary>
+    /// <param name="extensions"></param>
+    /// <returns></returns>
     public static string CheckAndCollectNonCompressedExtensions(string extensions)
     {
         // 定义压缩文件的后缀列表

@@ -6,7 +6,7 @@ using EasyTidy.Contracts.Service;
 using EasyTidy.Model;
 using EasyTidy.Service;
 using EasyTidy.Util;
-using EasyTidy.Util.SettingsInterface;
+using EasyTidy.Util.UtilInterface;
 using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
 using Windows.Storage.Pickers;

@@ -5,7 +5,7 @@ using EasyTidy.Contracts.Service;
 using EasyTidy.Log;
 using EasyTidy.Model;
 using EasyTidy.Service;
-using EasyTidy.Util.SettingsInterface;
+using EasyTidy.Util.UtilInterface;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Dispatching;
