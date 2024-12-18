@@ -12,7 +12,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.UI.Dispatching;
 using System.Collections.ObjectModel;
 using System.Data;
-using System.Threading.Tasks;
 
 namespace EasyTidy.ViewModels;
 
@@ -405,6 +404,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                     oldTask.IsEnabled = dialog.EnabledFlag;
                     oldTask.GroupName = group;
                     oldTask.IsRegex = dialog.IsRegex;
+                    oldTask.RuleType = dialog.RuleType;
                     oldTask.Filter = SelectedFilter != null 
                     ? await _dbContext.Filters.Where(x => x.Id == SelectedFilter.Id).FirstOrDefaultAsync()
                     : null;
@@ -522,11 +522,6 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
             if (dataContext != null)
             {
                 var task = dataContext as TaskOrchestrationTable;
-                // 保证手动执行时正确处理正则表达式
-                if (task.IsRegex)
-                {
-                    task.RuleType = TaskRuleType.ExpressionRules;
-                }
                 var automatic = new AutomaticJob();
                 var rule = await automatic.GetSpecialCasesRule(task.GroupName.Id, task.TaskRule);
                 var operationParameters = new OperationParameters(

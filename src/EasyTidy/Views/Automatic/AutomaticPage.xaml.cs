@@ -1,18 +1,51 @@
 ﻿// To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
+using Microsoft.UI.Xaml.Hosting;
+
 namespace EasyTidy.Views;
 /// <summary>
 /// An empty page that can be used on its own or navigated to within a Frame.
 /// </summary>
 public sealed partial class AutomaticPage : Page
 {
+    private double AnimatedBtnHeight;
+    private Thickness AnimatedBtnMargin;
+
     public AutomaticViewModel ViewModel { get; set; }
     public AutomaticPage()
     {
         ViewModel = App.GetService<AutomaticViewModel>();
         this.InitializeComponent();
         XamlRoot = App.MainWindow.Content.XamlRoot;
+
+        IList<string> colors = new List<String>()
+        {
+            "Blue",
+            "BlueViolet",
+            "Crimson",
+            "DarkCyan",
+            "DarkGoldenrod",
+            "DarkMagenta",
+            "DarkOliveGreen",
+            "DarkRed",
+            "DarkSlateBlue",
+            "DeepPink",
+            "IndianRed",
+            "MediumSlateBlue",
+            "Maroon",
+            "MidnightBlue",
+            "Peru",
+            "SaddleBrown",
+            "SteelBlue",
+            "OrangeRed",
+            "Firebrick",
+            "DarkKhaki"
+        };
+
+        animatedScrollRepeater.ItemsSource = colors;
+        animatedScrollRepeater.ElementPrepared += OnElementPrepared;
+
     }
 
     private void GroupTaskSelect_CloseButtonClick(TeachingTip sender, object args)
@@ -28,5 +61,83 @@ public sealed partial class AutomaticPage : Page
     private void OnUnloaded(object sender, RoutedEventArgs e)
     {
         ViewModel.Uninitialize();
+    }
+
+    // Animation code
+
+    private void Animated_GotItem(object sender, RoutedEventArgs e)
+    {
+        var item = sender as FrameworkElement;
+        // When the clicked item has been recieved, bring it to the middle of the viewport.
+        item.StartBringIntoView(new BringIntoViewOptions()
+        {
+            VerticalAlignmentRatio = 0.5,
+            AnimationDesired = true,
+        });
+
+        // Update corresponding rectangle with selected color
+        Button senderBtn = sender as Button;
+        colorRectangle.Fill = senderBtn.Background;
+    }
+
+    /* This function occurs each time an element is made ready for use.
+    * This is necessary for virtualization. */
+    private void OnElementPrepared(Microsoft.UI.Xaml.Controls.ItemsRepeater sender,
+                                   Microsoft.UI.Xaml.Controls.ItemsRepeaterElementPreparedEventArgs args)
+    {
+        var item = ElementCompositionPreview.GetElementVisual(args.Element);
+        var svVisual = ElementCompositionPreview.GetElementVisual(Animated_ScrollViewer);
+        var scrollProperties = ElementCompositionPreview.GetScrollViewerManipulationPropertySet(Animated_ScrollViewer);
+
+        var scaleExpresion = scrollProperties.Compositor.CreateExpressionAnimation();
+        scaleExpresion.SetReferenceParameter("svVisual", svVisual);
+        scaleExpresion.SetReferenceParameter("scrollProperties", scrollProperties);
+        scaleExpresion.SetReferenceParameter("item", item);
+
+        // Scale the item based on the distance of the item relative to the center of the viewport.
+        scaleExpresion.Expression = "1 - abs((svVisual.Size.Y/2 - scrollProperties.Translation.Y) " +
+            "- (item.Offset.Y + item.Size.Y / 2))*(.25 / (svVisual.Size.Y / 2))";
+    
+    // Animate the item based on its distance to the center of the viewport.
+    item.StartAnimation("Scale.X", scaleExpresion);
+        item.StartAnimation("Scale.Y", scaleExpresion);
+        var centerPointExpression = scrollProperties.Compositor.CreateExpressionAnimation();
+        centerPointExpression.SetReferenceParameter("item", item);
+        centerPointExpression.Expression = "Vector3(item.Size.X/2, item.Size.Y/2, 0)";
+        item.StartAnimation("CenterPoint", centerPointExpression);
+    }
+
+    /* This function identifies the item that's currently in the middle of the viewport,
+    and sets the rectangle to match its color. */
+    private void Animated_ScrollViewer_ViewChanging(object sender, ScrollViewerViewChangingEventArgs e)
+    {
+        Button SelectedItem = GetSelectedItemFromViewport() as Button;
+        // Update corresponding rectangle with selected color
+        colorRectangle.Fill = SelectedItem.Background;
+    }
+
+    // The remainder of these functions are helper functions for the ViewChanging function:
+
+    // Find centerpoint of ScrollViewer
+    private double CenterPointOfViewportInExtent()
+    {
+        return Animated_ScrollViewer.VerticalOffset + Animated_ScrollViewer.ViewportHeight / 2;
+    }
+
+    // Find index of the item that's at the center of the viewport
+    private int GetSelectedIndexFromViewport()
+    {
+        int selectedItemIndex = (int)Math.Floor(CenterPointOfViewportInExtent()
+                                  / ((double)AnimatedBtnMargin.Top + AnimatedBtnHeight));
+        selectedItemIndex %= animatedScrollRepeater.ItemsSourceView.Count;
+        return selectedItemIndex;
+    }
+
+    // Return item that's at the center of the viewport.
+    private object GetSelectedItemFromViewport()
+    {
+        var selectedIndex = GetSelectedIndexFromViewport();
+        var selectedElement = animatedScrollRepeater.TryGetElement(selectedIndex) as Button;
+        return selectedElement;
     }
 }

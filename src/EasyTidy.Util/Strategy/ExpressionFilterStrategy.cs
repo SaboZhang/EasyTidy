@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
-using EasyTidy.Model;
 using EasyTidy.Util.UtilInterface;
 
 namespace EasyTidy.Util.Strategy;

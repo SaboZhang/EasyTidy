@@ -48,11 +48,21 @@ public class FileFilterStrategy : IFilterStrategy
         }
     }
 
+    /// <summary>
+    /// 判断是否为通配符规则
+    /// </summary>
+    /// <param name="rule"></param>
+    /// <returns></returns>
     private bool IsWildcardRule(string rule)
     {
         return rule == "*";
     }
 
+    /// <summary>
+    /// 判断是否为否定规则
+    /// </summary>
+    /// <param name="rule"></param>
+    /// <returns></returns>
     private bool IsNegatedRule(string rule)
     {
         return rule.StartsWith('#');
@@ -71,6 +81,11 @@ public class FileFilterStrategy : IFilterStrategy
         }
     }
 
+    /// <summary>
+    /// 根据规则生成过滤器 例如："*.jpg;*.png|*.jpg/sea"
+    /// </summary>
+    /// <param name="rule"></param>
+    /// <returns></returns>
     private IEnumerable<Func<string, bool>> GenerateFiltersForRule(string rule)
     {
         var conditions = rule.Split(new[] { ';', '|' }, StringSplitOptions.RemoveEmptyEntries);
@@ -93,6 +108,11 @@ public class FileFilterStrategy : IFilterStrategy
         }
     }
 
+    /// <summary>
+    /// 生成包含/排除规则的过滤器 例如："*.jpg/sea"
+    /// </summary>
+    /// <param name="rule"></param>
+    /// <returns></returns>
     private IEnumerable<Func<string, bool>> GenerateIncludeExcludeFilter(string rule)
     {
         var parts = rule.Split('/');
@@ -109,12 +129,22 @@ public class FileFilterStrategy : IFilterStrategy
         };
     }
 
+    /// <summary>
+    /// 生成包含关键字的过滤器 例如："*test*"
+    /// </summary>
+    /// <param name="rule"></param>
+    /// <returns></returns>
     private IEnumerable<Func<string, bool>> GenerateContainsKeywordFilter(string rule)
     {
         string keyword = rule.Trim('*');
         yield return filePath => Path.GetFileName(filePath).Contains(keyword, StringComparison.OrdinalIgnoreCase);
     }
 
+    /// <summary>
+    /// 生成以特定字符开头的过滤器 例如："*test"
+    /// </summary>
+    /// <param name="rule"></param>
+    /// <returns></returns>
     private IEnumerable<Func<string, bool>> GenerateStartsWithPrefixFilter(string rule)
     {
         string prefix = rule.TrimEnd('*').ToLower();
@@ -125,12 +155,22 @@ public class FileFilterStrategy : IFilterStrategy
         };
     }
 
+    /// <summary>
+    /// 生成以特定字符结尾的过滤器 例如："test*"
+    /// </summary>
+    /// <param name="rule"></param>
+    /// <returns></returns>
     private IEnumerable<Func<string, bool>> GenerateExtensionFilter(string rule)
     {
         string extension = rule.TrimStart('*').ToLower();
         yield return filePath => Path.GetExtension(filePath).ToLower() == extension;
     }
 
+    /// <summary>
+    /// 生成匹配特定模式的过滤器 例如："test*.jpg"
+    /// </summary>
+    /// <param name="condition"></param>
+    /// <returns></returns>
     private IEnumerable<Func<string, bool>> MatchesStartsWithAndEndsWith(string condition)
     {
         string prefix = condition.Split('*')[0].ToLower();

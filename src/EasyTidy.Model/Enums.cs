@@ -146,3 +146,10 @@ public enum BackdropType
     AcrylicBase,
     Transparent
 }
+
+public enum DateType
+{
+    Create,
+    Edit,
+    Visit
+}

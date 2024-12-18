@@ -5,8 +5,8 @@ namespace EasyTidy.Util.Strategy;
 
 public class CustomFilterStrategy
 {
-    private readonly FileFilterStrategy _fileFilterStrategy;
-    private readonly FolderFilterStrategy _folderFilterStrategy;
+    private readonly FileFilterStrategy _fileFilterStrategy = new();
+    private readonly FolderFilterStrategy _folderFilterStrategy = new();
 
     public FilterCollection GenerateFilters(string rule)
     {
@@ -29,15 +29,9 @@ public class CustomFilterStrategy
         return filters;
     }
 
-    private static bool IsFolderRule(string rule)
-    {
-        // 判断规则是否为文件夹规则，规则包含 "**" 或 "##" 时视为文件夹规则
-        return FilterUtil.ContainsTwoConsecutiveChars(rule, '*') || FilterUtil.ContainsTwoConsecutiveChars(rule, '#');
-    }
-
     private void AddFilters(FilterCollection filters, string part)
     {
-        if (IsFolderRule(part))
+        if (FilterUtil.IsFolderRule(part))
         {
             foreach (var filter in _folderFilterStrategy.GenerateFilters(part))
             {
