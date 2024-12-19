@@ -4,6 +4,7 @@ using CommunityToolkit.WinUI.Collections;
 using EasyTidy.Common.Database;
 using EasyTidy.Common.Extensions;
 using EasyTidy.Common.Job;
+using EasyTidy.Common.Model;
 using EasyTidy.Contracts.Service;
 using EasyTidy.Model;
 using EasyTidy.Views.ContentDialogs;
@@ -26,6 +27,8 @@ public partial class AutomaticViewModel : ObservableRecipient
     {
         _themeSelectorService = themeSelectorService;
         _dbContext = App.GetService<AppDbContext>();
+        _taskItems = new ObservableCollection<TaskItem>();
+        _automaticModel = new ObservableCollection<AutomaticModel>();
     }
 
     /// <summary>
@@ -166,6 +169,12 @@ public partial class AutomaticViewModel : ObservableRecipient
 
     [ObservableProperty]
     public AdvancedCollectionView _taskGroupListACV;
+
+    [ObservableProperty]
+    private ObservableCollection<TaskItem> _taskItems;
+
+    [ObservableProperty]
+    private ObservableCollection<AutomaticModel> _automaticModel;
 
     private readonly DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
 
@@ -383,14 +392,75 @@ public partial class AutomaticViewModel : ObservableRecipient
             {
                 dispatcherQueue.TryEnqueue(async () =>
                 {
-                    var list = await _dbContext.TaskOrchestration.Include(x => x.GroupName).Where(f => f.IsRelated == false).ToListAsync();
+                    var list = await _dbContext.TaskOrchestration.Include(x => x.GroupName).ToListAsync();
+                    var auto = await _dbContext.Automatic.Include(x => x.TaskOrchestrationList).Include(x => x.Schedule).FirstOrDefaultAsync();
                     TaskList = new(list);
                     TaskListACV = new AdvancedCollectionView(TaskList, true);
                     TaskListACV.SortDescriptions.Add(new SortDescription("ID", SortDirection.Ascending));
-                    var groupList = await _dbContext.TaskGroup.Include(g => g.TaskOrchestrationList).Where(g => g.IsUsed == false && g.TaskOrchestrationList.Any(t => t.IsRelated == false)).ToListAsync();
+                    var groupList = await _dbContext.TaskGroup.Include(g => g.TaskOrchestrationList).ToListAsync();
                     TaskGroupList = new(groupList);
                     TaskGroupListACV = new AdvancedCollectionView(TaskGroupList, true);
                     TaskGroupListACV.SortDescriptions.Add(new SortDescription("Id", SortDirection.Ascending));
+                    var isExpanded = true;
+                    if (list.Count > 5)
+                    {
+                        isExpanded = false;
+                    }
+                    var groupTask = list.GroupBy(x => x.GroupName.GroupName).Select(g =>
+                    {
+                        // 获取根节点的 isUsed 字段
+                        var isUsed = g.FirstOrDefault()?.GroupName.IsUsed ?? false;
+
+                        // 创建父节点，并设置其默认值
+                        var parentItem = new TaskItem(null)
+                        {
+                            Name = g.Key,
+                            IsExpanded = isExpanded
+                        };
+
+                        // 创建子项
+                        var childItems = g.Select(x => new TaskItem(parentItem)
+                        {
+                            Name = x.TaskName,
+                            IsSelected = x.IsRelated // 子项的 IsSelected 根据 IsRelated 设置
+                        }).ToList();
+
+                        // 将子项加入父节点的 Children 集合
+                        foreach (var childItem in childItems)
+                        {
+                            parentItem.Children.Add(childItem);
+                        }
+
+                        // 更新父节点的 IsSelected
+                        parentItem.UpdateIsSelected();
+
+                        // 根节点的 IsSelected 仅在其为 null 时使用子项的状态或 isUsed 进行更新
+                        if (parentItem.IsSelected == null)
+                        {
+                            // 如果所有子项都被选中，则父项为 true
+                            parentItem.IsSelected = childItems.All(c => c.IsSelected == true) ? true :
+                                                   // 如果所有子项都未选中，则父项为 false
+                                                   childItems.All(c => c.IsSelected == false) ? false :
+                                                   // 如果部分选中，则父项为 null
+                                                   (bool?)null;
+                        }
+                        return parentItem;
+                    }).ToList();
+
+                    TaskItems = new ObservableCollection<TaskItem>(groupTask);
+
+                    var autoList = list.Where(x => x.IsRelated == true).Select(x => new AutomaticModel
+                    {
+                        ActionType = EnumHelper.GetDisplayName(x.OperationMode),
+                        Rule = x.TaskRule,
+                        FileFlow = $"{x.TaskSource} -> {x.TaskTarget}",
+                        ExecutionMode = GetExecutionMode(list.FirstOrDefault()),
+                    }).ToList();
+
+                    AutomaticModel = new(autoList);
+
+
+
                 });
             });
 
@@ -402,6 +472,34 @@ public partial class AutomaticViewModel : ObservableRecipient
         }
 
         IsActive = false;
+    }
+
+    private string GetExecutionMode(TaskOrchestrationTable task)
+    {
+        if (task != null)
+        {
+            if (task.Automatic.IsFileChange && task.Automatic.RegularTaskRunning) 
+            {
+                return "FileChangeText, RegularTaskRunningText";
+            }
+            if (task.Automatic.IsStartupExecution)
+            {
+                return "StartupExecutionText";
+            }
+            if (task.Automatic.OnScheduleExecution)
+            {
+                return "ScheduleExecutionText";
+            }
+            if (task.Automatic.IsFileChange)
+            {
+                return "FileChangeText";
+            }
+            if (task.Automatic.RegularTaskRunning)
+            {
+                return "RegularTaskRunningText";
+            }
+        }
+        return string.Empty;
     }
 
     [RelayCommand]

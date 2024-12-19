@@ -43,4 +43,6 @@ public class TaskOrchestrationTable
 
     public DateTime CreateTime { get; set; } = DateTime.Now;
 
+    public AutomaticTable Automatic { get; set; }
+
 }

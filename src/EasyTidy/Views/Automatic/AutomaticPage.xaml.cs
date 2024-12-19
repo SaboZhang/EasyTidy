@@ -1,7 +1,6 @@
 ﻿// To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
-using Microsoft.UI.Xaml.Hosting;
 
 namespace EasyTidy.Views;
 /// <summary>
@@ -31,5 +30,15 @@ public sealed partial class AutomaticPage : Page
     private void OnUnloaded(object sender, RoutedEventArgs e)
     {
         ViewModel.Uninitialize();
+    }
+
+    private void EditeButton_Click(object sender, RoutedEventArgs e)
+    {
+
+    }
+
+    private void ViewButton_Click(object sender, RoutedEventArgs e)
+    {
+
     }
 }
