@@ -172,7 +172,7 @@
                                     </ComboBox>
                                 </StackPanel>
                             </ctk:SettingsCard>
-                            <ctk:SettingsCard HorizontalContentAlignment="Left"
+                            <ctk:SettingsCard HorizontalContentAlignment="Stretch"
                                               ContentAlignment="Vertical"
                                               Visibility="{x:Bind ViewModel.WebDavIsShow, Mode=TwoWay, Converter={StaticResource BoolToVisibilityConverter}}">
                                 <ctk:SettingsCard.Resources>
@@ -185,7 +185,7 @@
                                 <Grid Margin="0,12,0,6"
                                       ColumnSpacing="8">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="200"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
@@ -198,7 +198,8 @@
                                                x:Uid="GeneralAddress"/>
                                     <TextBox Grid.Row="0"
                                              Grid.Column="1"
-                                             Width="480"
+                                             MinWidth="280"
+                                             HorizontalAlignment="Right"
                                              Margin="0,-8,0,15"
                                              Text="{x:Bind ViewModel.WebDavUrl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
@@ -206,14 +207,16 @@
                                                x:Uid="GeneralUsername"/>
                                     <TextBox Grid.Row="1"
                                              Grid.Column="1"
-                                             Width="480"
+                                             MinWidth="280"
+                                             HorizontalAlignment="Right"
                                              Margin="0,-8,0,15"
                                              Text="{x:Bind ViewModel.WebDavUserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                     <TextBlock Grid.Row="2"
                                                x:Uid="GeneralPassword"/>
                                     <PasswordBox Grid.Row="2"
                                                  Grid.Column="1"
-                                                 Width="480"
+                                                 MinWidth="280"
+                                                 HorizontalAlignment="Right"
                                                  Margin="0,-8,0,15"
                                                  Password="{x:Bind ViewModel.WebDavPassWord, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 </Grid>

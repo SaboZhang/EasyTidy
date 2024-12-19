@@ -26,8 +26,7 @@
     </i:Interaction.Behaviors>
 
     <ScrollView Margin="0,-58,0,0"
-            VerticalScrollBarVisibility="Hidden"
-            ScrollViewer.VerticalScrollMode="Disabled">
+                VerticalScrollBarVisibility="Hidden">
         <StackPanel x:Name="ContentArea">
             <InfoBar MaxWidth="480"
                      Margin="10"
@@ -142,43 +141,106 @@
                                                     IsEnabled="{x:Bind ViewModel.FeatureIndependentConfigFlag, Mode=OneWay}"/>
                                         </StackPanel>
                                     </ctk:SettingsCard>
+                                    <ctk:SettingsCard HorizontalContentAlignment="Stretch"
+                                            ContentAlignment="Vertical">
+
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="240"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Text="任务列表"
+                                                       Grid.Column="0"
+                                                       Margin="0,10,0,0"/>
+                                            <TreeView SelectionMode="Multiple"
+                                                      Grid.Column="0"
+                                                      Margin="0,30,0,0">
+                                                <TreeView.RootNodes>
+                                                    <TreeViewNode Content="Flavors"
+                                                                  IsExpanded="False">
+                                                        <TreeViewNode.Children>
+                                                            <TreeViewNode Content="Vanilla"/>
+                                                            <TreeViewNode Content="Strawberry"/>
+                                                            <TreeViewNode Content="Chocolate"/>
+                                                        </TreeViewNode.Children>
+                                                    </TreeViewNode>
+                                                </TreeView.RootNodes>
+                                            </TreeView>
+                                            <ListView Grid.Column="1">
+                                                <ListView.Header>
+                                                    <Grid Padding="16,12"
+                                                          ColumnSpacing="16">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="40"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="80"/>
+                                                            <ColumnDefinition Width="100"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="动作"
+                                                                   HorizontalAlignment="Center"
+                                                                   VerticalAlignment="Center"/>
+                                                        <TextBlock Grid.Column="1"
+                                                                   Text="规则"
+                                                                   VerticalAlignment="Center"
+                                                                   HorizontalAlignment="Center"/>
+                                                        <TextBlock Grid.Column="2"
+                                                                   Text="文件流向"
+                                                                   VerticalAlignment="Center"
+                                                                   HorizontalAlignment="Center"/>
+                                                        <TextBlock Grid.Column="3"
+                                                                   Text="自动方式"
+                                                                   VerticalAlignment="Center"
+                                                                   HorizontalAlignment="Center"/>
+                                                        <TextBlock Grid.Column="4"
+                                                                   Text="操作"
+                                                                   VerticalAlignment="Center"
+                                                                   HorizontalAlignment="Center"/>
+                                                    </Grid>
+                                                </ListView.Header>
+                                                <ListView.ItemTemplate>
+                                                    <DataTemplate x:DataType="model:AutomaticModel">
+                                                        <Grid Padding="16,12"
+                                                              ColumnSpacing="16">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="40"/>
+                                                                <ColumnDefinition Width="100"/>
+                                                                <ColumnDefinition Width="*"/>
+                                                                <ColumnDefinition Width="*"/>
+                                                                <ColumnDefinition Width="100"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <TextBlock Text="{x:Bind ActionType}"
+                                                                       HorizontalAlignment="Center"
+                                                                       VerticalAlignment="Center"/>
+                                                            <TextBlock Grid.Column="1"
+                                                                       Text="{x:Bind Rule, Mode=TwoWay}"
+                                                                       VerticalAlignment="Center"
+                                                                       HorizontalAlignment="Center"/>
+                                                            <TextBlock Grid.Column="2"
+                                                                       Text="{x:Bind FileFlow, Mode=TwoWay}"
+                                                                       VerticalAlignment="Center"
+                                                                       HorizontalAlignment="Center"/>
+                                                            <TextBlock Grid.Column="3"
+                                                                       Text="{x:Bind ExecutionMode, Mode=TwoWay}"
+                                                                       VerticalAlignment="Center"
+                                                                       HorizontalAlignment="Center"/>
+                                                            <StackPanel Grid.Column="4"
+                                                                        HorizontalAlignment="Center"
+                                                                        Orientation="Horizontal"
+                                                                        Spacing="8">
+                                                                <Button x:Uid="EditButton"
+                                                                        DataContext="{x:Bind}"/>
+                                                                <Button x:Uid="DeleteButton"
+                                                                        DataContext="{x:Bind}"/>
+                                                            </StackPanel>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </ListView.ItemTemplate>
+                                            </ListView>
+                                        </Grid>
+                                    </ctk:SettingsCard>
                                 </ctk:SettingsExpander.Items>
-
                             </ctk:SettingsExpander>
-                            <StackPanel>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="240"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <ScrollViewer x:Name="Animated_ScrollViewer"
-                                                  Grid.Column="0"
-                                                  Height="180"
-                                                  Width="240"
-                                                  ViewChanging="Animated_ScrollViewer_ViewChanging">
-                                        <ItemsRepeater x:Name="animatedScrollRepeater">
-                                            <ItemsRepeater.ItemTemplate>
-                                                <DataTemplate x:DataType="x:String">
-                                                    <Button Content="{x:Bind}"
-                                                            Background="{x:Bind}"
-                                                            Click="Animated_GotItem"
-                                                            GotFocus="Animated_GotItem"
-                                                            HorizontalAlignment="Stretch"
-                                                            Foreground="{ThemeResource ButtonForeground}"/>
-                                                </DataTemplate>
-                                            </ItemsRepeater.ItemTemplate>
-                                        </ItemsRepeater>
-
-                                    </ScrollViewer>
-                                    <Rectangle x:Name="colorRectangle"
-                                               Grid.Column="1"
-                                               Stroke="Black"
-                                               Height="180"
-                                               Margin="10,0,0,0"/>
-
-                                </Grid>
-                            </StackPanel>
-
                         </etc:SettingsGroup>
                         <StackPanel Orientation="Horizontal"
                                     Spacing="8"

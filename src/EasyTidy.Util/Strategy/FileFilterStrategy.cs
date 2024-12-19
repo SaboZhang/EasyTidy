@@ -53,7 +53,7 @@ public class FileFilterStrategy : IFilterStrategy
     /// </summary>
     /// <param name="rule"></param>
     /// <returns></returns>
-    private bool IsWildcardRule(string rule)
+    private static bool IsWildcardRule(string rule)
     {
         return rule == "*";
     }
@@ -63,7 +63,7 @@ public class FileFilterStrategy : IFilterStrategy
     /// </summary>
     /// <param name="rule"></param>
     /// <returns></returns>
-    private bool IsNegatedRule(string rule)
+    private static bool IsNegatedRule(string rule)
     {
         return rule.StartsWith('#');
     }
