@@ -15,6 +15,9 @@ public partial class TaskItem : ObservableRecipient
     [ObservableProperty]
     private bool? _isSelected;
 
+    [ObservableProperty]
+    private int _id;
+
     public TaskItem(TaskItem? parentItem)
     {
         _parentItem = parentItem;

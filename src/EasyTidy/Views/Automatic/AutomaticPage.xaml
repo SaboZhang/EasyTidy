@@ -161,7 +161,8 @@
                                                         <TreeViewItem ItemsSource="{x:Bind Children, Mode=TwoWay}">
                                                             <CheckBox 
                                                                 Content="{x:Bind Name, Mode=TwoWay}"
-                                                                IsChecked="{x:Bind IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                                                IsChecked="{x:Bind IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                                Click="Checkbox_Click"/>
                                                         </TreeViewItem>
                                                     </DataTemplate>
                                                 </TreeView.ItemTemplate>
@@ -171,68 +172,70 @@
                                                     <Grid Padding="16,12"
                                                           ColumnSpacing="16">
                                                         <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="80"/>
+                                                            <ColumnDefinition Width="60"/>
                                                             <ColumnDefinition Width="*"/>
                                                             <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="*"/>
                                                             <ColumnDefinition Width="80"/>
-                                                            <ColumnDefinition Width="100"/>
                                                         </Grid.ColumnDefinitions>
                                                         <TextBlock Text="动作"
-                                                                   HorizontalAlignment="Center"
                                                                    VerticalAlignment="Center"/>
                                                         <TextBlock Grid.Column="1"
                                                                    Text="规则"
-                                                                   VerticalAlignment="Center"
-                                                                   HorizontalAlignment="Center"/>
+                                                                   VerticalAlignment="Center"/>
                                                         <TextBlock Grid.Column="2"
                                                                    Text="文件流向"
-                                                                   VerticalAlignment="Center"
-                                                                   HorizontalAlignment="Center"/>
+                                                                   VerticalAlignment="Center"/>
                                                         <TextBlock Grid.Column="3"
                                                                    Text="自动方式"
-                                                                   VerticalAlignment="Center"
-                                                                   HorizontalAlignment="Center"/>
+                                                                   VerticalAlignment="Center"/>
                                                         <TextBlock Grid.Column="4"
                                                                    Text="操作"
-                                                                   VerticalAlignment="Center"
-                                                                   HorizontalAlignment="Center"/>
+                                                                   HorizontalAlignment="Center"
+                                                                   VerticalAlignment="Center"/>
                                                     </Grid>
                                                 </ListView.Header>
                                                 <ListView.ItemTemplate>
                                                     <DataTemplate x:DataType="model:AutomaticModel">
-                                                        <Grid Padding="16,12"
+                                                        <Grid 
                                                               ColumnSpacing="16">
                                                             <Grid.ColumnDefinitions>
-                                                                <ColumnDefinition Width="80"/>
+                                                                <ColumnDefinition Width="60"/>
                                                                 <ColumnDefinition Width="*"/>
                                                                 <ColumnDefinition Width="*"/>
+                                                                <ColumnDefinition Width="*"/>
                                                                 <ColumnDefinition Width="80"/>
-                                                                <ColumnDefinition Width="100"/>
                                                             </Grid.ColumnDefinitions>
                                                             <TextBlock Text="{x:Bind ActionType}"
-                                                                       HorizontalAlignment="Left"
+                                                                ToolTipService.ToolTip="{x:Bind ActionType}"
                                                                        VerticalAlignment="Center"/>
                                                             <TextBlock Grid.Column="1"
                                                                        Text="{x:Bind Rule, Mode=TwoWay}"
                                                                        VerticalAlignment="Center"
-                                                                       HorizontalAlignment="Center"/>
+                                                                       ToolTipService.ToolTip="{x:Bind Rule}"/>
                                                             <TextBlock Grid.Column="2"
                                                                        Text="{x:Bind FileFlow, Mode=TwoWay}"
                                                                        VerticalAlignment="Center"
-                                                                       HorizontalAlignment="Center"/>
+                                                                       ToolTipService.ToolTip="{x:Bind FileFlow}"/>
                                                             <TextBlock Grid.Column="3"
                                                                        Text="{x:Bind ExecutionMode, Mode=TwoWay}"
                                                                        VerticalAlignment="Center"
-                                                                       HorizontalAlignment="Center"/>
+                                                                       ToolTipService.ToolTip="{x:Bind ExecutionMode}"/>
                                                             <StackPanel Grid.Column="4"
                                                                         HorizontalAlignment="Center"
+                                                                        VerticalAlignment="Center"
                                                                         Orientation="Horizontal"
                                                                         Spacing="8">
-                                                                <Button Content="编辑"
+                                                                <Button Style="{StaticResource SubtleButtonStyle}"
+                                                                    x:Uid="EditButton"
+                                                                    Content="&#xE70F;"
+                                                                    FontFamily="{ThemeResource SymbolThemeFontFamily}"
                                                                         DataContext="{x:Bind}"
-                                                                        Click="EditeButton_Click"/>
-                                                                <Button Content="查看"
+                                                                        Click="EditButton_Click"/>
+                                                                <Button Style="{StaticResource SubtleButtonStyle}"
                                                                         DataContext="{x:Bind}"
+                                                                        Content="&#xE890;"
+                                                                        FontFamily="{ThemeResource SymbolThemeFontFamily}"
                                                                         Click="ViewButton_Click"/>
                                                             </StackPanel>
                                                         </Grid>

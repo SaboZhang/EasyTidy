@@ -375,7 +375,8 @@ public partial class AutomaticViewModel : ObservableRecipient
         // Notify UI of property change
         OnPropertyChanged(propertyName);
 
-        Logger.Info($"AutomaticViewModel: NotifyPropertyChanged {propertyName}");
+        Logger.Debug($"AutomaticViewModel: NotifyPropertyChanged {propertyName}");
+        GetExecutionMode(null);
 
         UpdateCurConfig(this);
 
@@ -392,7 +393,7 @@ public partial class AutomaticViewModel : ObservableRecipient
             {
                 dispatcherQueue.TryEnqueue(async () =>
                 {
-                    var list = await _dbContext.TaskOrchestration.Include(x => x.GroupName).ToListAsync();
+                    var list = await _dbContext.TaskOrchestration.Include(x => x.GroupName).Include(x => x.Automatic).ToListAsync();
                     var auto = await _dbContext.Automatic.Include(x => x.TaskOrchestrationList).Include(x => x.Schedule).FirstOrDefaultAsync();
                     TaskList = new(list);
                     TaskListACV = new AdvancedCollectionView(TaskList, true);
@@ -410,19 +411,22 @@ public partial class AutomaticViewModel : ObservableRecipient
                     {
                         // 获取根节点的 isUsed 字段
                         var isUsed = g.FirstOrDefault()?.GroupName.IsUsed ?? false;
+                        var id = g.FirstOrDefault()?.GroupName.Id ?? 0;
 
                         // 创建父节点，并设置其默认值
                         var parentItem = new TaskItem(null)
                         {
                             Name = g.Key,
-                            IsExpanded = isExpanded
+                            IsExpanded = isExpanded,
+                            Id = id,
                         };
 
                         // 创建子项
                         var childItems = g.Select(x => new TaskItem(parentItem)
                         {
                             Name = x.TaskName,
-                            IsSelected = x.IsRelated // 子项的 IsSelected 根据 IsRelated 设置
+                            IsSelected = x.IsRelated, // 子项的 IsSelected 根据 IsRelated 设置
+                            Id = x.ID,
                         }).ToList();
 
                         // 将子项加入父节点的 Children 集合
@@ -451,15 +455,14 @@ public partial class AutomaticViewModel : ObservableRecipient
 
                     var autoList = list.Where(x => x.IsRelated == true).Select(x => new AutomaticModel
                     {
+                        Id = x.ID,
                         ActionType = EnumHelper.GetDisplayName(x.OperationMode),
                         Rule = x.TaskRule,
                         FileFlow = $"{x.TaskSource} -> {x.TaskTarget}",
-                        ExecutionMode = GetExecutionMode(list.FirstOrDefault()),
+                        ExecutionMode = GetExecutionMode(x),
                     }).ToList();
 
                     AutomaticModel = new(autoList);
-
-
 
                 });
             });
@@ -476,30 +479,60 @@ public partial class AutomaticViewModel : ObservableRecipient
 
     private string GetExecutionMode(TaskOrchestrationTable task)
     {
-        if (task != null)
+        // 获取 task.Automatic 对象
+        var automatic = task?.Automatic;
+
+        // 判断条件的顺序非常重要，确保优先匹配更严格的条件
+        if (GetCondition((automatic?.IsFileChange) && (automatic?.RegularTaskRunning), IsFileChange && RegularTaskRunning))
         {
-            if (task.Automatic.IsFileChange && task.Automatic.RegularTaskRunning) 
+            return "FileChangeText, RegularTaskRunningText";
+        }
+        if (GetCondition(automatic?.IsFileChange, IsFileChange))
+        {
+            return "FileChangeText";
+        }
+        if (GetCondition(automatic?.RegularTaskRunning, RegularTaskRunning))
+        {
+            return "RegularTaskRunningText";
+        }
+        if (GetCondition(automatic?.IsStartupExecution, IsStartupExecution))
+        {
+            return "StartupExecutionText";
+        }
+        if (GetCondition(automatic?.OnScheduleExecution, OnScheduleExecution))
+        {
+            return "ScheduleExecutionText";
+        }
+
+        // 默认返回空字符串
+        return string.Empty;
+    }
+
+    /// <summary>
+    /// 判断条件是否成立
+    /// </summary>
+    /// <param name="automaticValue">Automatic 中的值</param>
+    /// <param name="additionalValues">其他条件值</param>
+    /// <returns>如果任意一个条件为 true 则返回 true</returns>
+    private bool GetCondition(bool? automaticValue, params bool[] additionalValues)
+    {
+        // 如果 automaticValue 为 true，直接返回 true
+        if (automaticValue == true)
+        {
+            return true;
+        }
+
+        // 遍历 additionalValues，如果有 true，则返回 true
+        foreach (var value in additionalValues)
+        {
+            if (value)
             {
-                return "FileChangeText, RegularTaskRunningText";
-            }
-            if (task.Automatic.IsStartupExecution)
-            {
-                return "StartupExecutionText";
-            }
-            if (task.Automatic.OnScheduleExecution)
-            {
-                return "ScheduleExecutionText";
-            }
-            if (task.Automatic.IsFileChange)
-            {
-                return "FileChangeText";
-            }
-            if (task.Automatic.RegularTaskRunning)
-            {
-                return "RegularTaskRunningText";
+                return true;
             }
         }
-        return string.Empty;
+
+        // 如果所有条件都不成立，则返回 false
+        return false;
     }
 
     [RelayCommand]
@@ -618,6 +651,137 @@ public partial class AutomaticViewModel : ObservableRecipient
 
         IsActive = false;
 
+    }
+
+    [RelayCommand]
+    private async Task OnUpdateChecked(object dataContext)
+    {
+        try
+        {
+            if (dataContext != null)
+            {
+                if (dataContext is TaskItem item)
+                {
+                    // 处理子节点和父节点更新逻辑
+                    if (item.Children.Count > 0)
+                    {
+                        await UpdateChildNodes(item.Children);
+                        await UpdateParentNode(item);
+                    }
+                    else
+                    {
+                        await UpdateSingleTask(item);
+                        await RemoveModelByIdAsync(item);
+                    }
+
+                    // 提交所有变更
+                    await _dbContext.SaveChangesAsync();
+                    var list = TaskItems.ToList();
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.Error($"AutomaticViewModel: OnUpdateChecked 异常信息 {ex}");
+        }
+    }
+
+    private async Task RemoveModelByIdAsync(TaskItem item)
+    {
+        // 查找对应的对象
+        var modelToRemove = AutomaticModel.FirstOrDefault(model => model.Id == item.Id);
+
+        // 如果找到对象，则从集合中移除
+        if (modelToRemove != null && !item.IsSelected.Value)
+        {
+            AutomaticModel.Remove(modelToRemove);
+        }
+        if (item.IsSelected.Value)
+        {
+            var auto = await _dbContext.TaskOrchestration
+            .Include(x => x.GroupName)
+            .Include(x => x.Automatic)
+            .Where(x => x.ID == item.Id)
+            .FirstOrDefaultAsync();
+            var model = new AutomaticModel
+            {
+                Id = auto.ID,
+                ActionType = EnumHelper.GetDisplayName(auto.OperationMode),
+                Rule = auto.TaskRule,
+                FileFlow = $"{auto.TaskSource} -> {auto.TaskTarget}",
+                ExecutionMode = GetExecutionMode(auto),
+            };
+            AutomaticModel.Add(model);
+        }
+        
+    }
+
+    /// <summary>
+    /// 更新子节点的 IsRelated 状态
+    /// </summary>
+    private async Task UpdateChildNodes(IEnumerable<TaskItem> children)
+    {
+        foreach (var child in children)
+        {
+            var childEntity = await _dbContext.TaskOrchestration
+                .Where(x => x.ID == child.Id)
+                .FirstOrDefaultAsync();
+
+            if (childEntity != null)
+            {
+                childEntity.IsRelated = child.IsSelected.Value;
+                _dbContext.Entry(childEntity).State = EntityState.Modified;
+            }
+            await RemoveModelByIdAsync(child);
+        }
+    }
+
+    /// <summary>
+    /// 更新单个任务项的 IsRelated 状态
+    /// </summary>
+    private async Task UpdateSingleTask(TaskItem item)
+    {
+        var update = await _dbContext.TaskOrchestration
+            .Where(x => x.ID == item.Id)
+            .FirstOrDefaultAsync();
+
+        if (update != null)
+        {
+            update.IsRelated = item.IsSelected.Value;
+            _dbContext.Entry(update).State = EntityState.Modified;
+        }
+
+        // 更新父节点的 IsUsed 状态
+        await UpdateParentNode(item);
+    }
+
+    /// <summary>
+    /// 更新父节点的 IsUsed 状态
+    /// </summary>
+    private async Task UpdateParentNode(TaskItem item)
+    {
+        var group = await _dbContext.TaskGroup
+            .Where(x => x.Id == item.Id)
+            .FirstOrDefaultAsync();
+
+        if (group != null)
+        {
+            var parents = await _dbContext.TaskOrchestration
+                .Where(t => t.GroupName.Id == item.Id)
+                .ToListAsync();
+
+            // 根据子节点的状态更新父节点的 IsUsed
+            if (parents.All(x => x.IsRelated == true))
+            {
+                group.IsUsed = true;
+            }
+            else
+            {
+                group.IsUsed = false;
+            }
+
+            _dbContext.Entry(group).State = EntityState.Modified;
+        }
     }
 
     public (bool IsValid, string Times) VerifyCronExpression(string cronExpression)

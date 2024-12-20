@@ -12,4 +12,6 @@ public class AutomaticModel
 
     public string ExecutionMode { get; set; }
 
+    public int Id { get; set; }
+
 }
