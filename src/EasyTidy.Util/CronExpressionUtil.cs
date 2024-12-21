@@ -9,7 +9,7 @@ namespace EasyTidy.Util;
 
 public class CronExpressionUtil
 {
-    public static string GenerateCronExpression(AutomaticTable automaticTable)
+    public static string GenerateCronExpression(AutomaticTable automaticTable, bool repair = false)
     {
         // 确保 Schedule 不为空
         if (automaticTable?.Schedule == null)
@@ -49,12 +49,32 @@ public class CronExpressionUtil
             dayOfMonth = "?"; // 如果有特定周几，则忽略具体日
         }
 
+        // 检查条件并设置 Cron 表达式
+        if (repair)
+        {
+            if (!string.IsNullOrWhiteSpace(dayOfMonth)
+                && !string.IsNullOrWhiteSpace(month)
+                && !string.IsNullOrWhiteSpace(dayOfWeek))
+            {
+                // 当有具体的日、月和周时，使用 "?" 来忽略周几或具体日
+                dayOfWeek = "?"; // 忽略周几
+            }
+            else if (!string.IsNullOrWhiteSpace(dayOfMonth) && !string.IsNullOrWhiteSpace(month))
+            {
+                dayOfWeek = "?"; // 如果有特定日和特定月，忽略周几
+            }
+            else if (!string.IsNullOrWhiteSpace(dayOfWeek))
+            {
+                dayOfMonth = "?"; // 如果有特定周几，忽略具体日
+            }
+        }
+
         // 拼接 Cron 表达式
         string cronExpression = $"{seconds} {minutes} {hours} {dayOfMonth} {month} {dayOfWeek}";
         return cronExpression;
     }
 
-    public static string GenerateCronExpression(string dialogMinutes, string dialogHours, string dialogDayOfMonth, string dialogMonth, string dialogDayOfWeek)
+    public static string GenerateCronExpression(string dialogMinutes, string dialogHours, string dialogDayOfMonth, string dialogMonth, string dialogDayOfWeek, bool repair = false)
     {
         string ProcessCronField(string field, string defaultValue = "*")
         {
@@ -88,23 +108,25 @@ public class CronExpressionUtil
             dayOfMonth = "?"; // 如果有特定周几，则忽略具体日
         }
 
-        // 检查条件并设置 Cron 表达式 先不自动处理
-        //if (!string.IsNullOrWhiteSpace(dayOfMonth) &&
-        //    !string.IsNullOrWhiteSpace(month) &&
-        //    !string.IsNullOrWhiteSpace(dayOfWeek))
-        //{
-        //    // 当有具体的日、月和周时，使用 "?" 来忽略周几或具体日
-        //    dayOfWeek = "?"; // 忽略周几
-        //}
-        //else if (!string.IsNullOrWhiteSpace(dayOfMonth) && !string.IsNullOrWhiteSpace(month))
-        //{
-        //    dayOfWeek = "?"; // 如果有特定日和特定月，忽略周几
-        //}
-        //else if (!string.IsNullOrWhiteSpace(dayOfWeek))
-        //{
-        //    dayOfMonth = "?"; // 如果有特定周几，忽略具体日
-        //}
-
+        // 检查条件并设置 Cron 表达式
+        if (repair)
+        {
+            if (!string.IsNullOrWhiteSpace(dayOfMonth) 
+                && !string.IsNullOrWhiteSpace(month) 
+                && !string.IsNullOrWhiteSpace(dayOfWeek))
+            {
+                // 当有具体的日、月和周时，使用 "?" 来忽略周几或具体日
+                dayOfWeek = "?"; // 忽略周几
+            }
+            else if (!string.IsNullOrWhiteSpace(dayOfMonth) && !string.IsNullOrWhiteSpace(month))
+            {
+                dayOfWeek = "?"; // 如果有特定日和特定月，忽略周几
+            }
+            else if (!string.IsNullOrWhiteSpace(dayOfWeek))
+            {
+                dayOfMonth = "?"; // 如果有特定周几，忽略具体日
+            }
+        }
         // 拼接 Cron 表达式
         string cronExpression = $"{seconds} {minutes} {hours} {dayOfMonth} {month} {dayOfWeek}";
         return cronExpression;

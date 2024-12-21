@@ -12,7 +12,7 @@
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:model="using:EasyTidy.Model"
     xmlns:etc="using:EasyTidy.Views.UserControls"
-    xmlns:behaviors="using:CommunityToolkit.WinUI.Behaviors" 
+    xmlns:behaviors="using:CommunityToolkit.WinUI.Behaviors"
     xmlns:cm="using:EasyTidy.Common.Model"
     Loaded="OnLoaded"
     Unloaded="OnUnloaded"
@@ -104,7 +104,7 @@
                                                   HeaderIcon="{ui:FontIcon FontFamily={StaticResource SymbolThemeFontFamily}, Glyph=&#xEA65;}"
                                                   IsExpanded="True">
                                 <ctk:SettingsExpander.Items>
-                                    <ctk:SettingsCard x:Uid="TaskSelection">
+                                    <!-- <ctk:SettingsCard x:Uid="TaskSelection">
                                         <StackPanel Orientation="Horizontal"
                                                     Spacing="8">
                                             <Button x:Name="GroupButton"
@@ -141,7 +141,7 @@
                                                     Command="{x:Bind ViewModel.CustomConfigCommand}"
                                                     IsEnabled="{x:Bind ViewModel.FeatureIndependentConfigFlag, Mode=OneWay}"/>
                                         </StackPanel>
-                                    </ctk:SettingsCard>
+                                    </ctk:SettingsCard> -->
                                     <ctk:SettingsCard HorizontalContentAlignment="Stretch"
                                             ContentAlignment="Vertical">
                                         <Grid>
@@ -159,7 +159,7 @@
                                                 <TreeView.ItemTemplate>
                                                     <DataTemplate x:DataType="cm:TaskItem">
                                                         <TreeViewItem ItemsSource="{x:Bind Children, Mode=TwoWay}">
-                                                            <CheckBox 
+                                                            <CheckBox
                                                                 Content="{x:Bind Name, Mode=TwoWay}"
                                                                 IsChecked="{x:Bind IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                                 Click="Checkbox_Click"/>
@@ -197,7 +197,7 @@
                                                 </ListView.Header>
                                                 <ListView.ItemTemplate>
                                                     <DataTemplate x:DataType="model:AutomaticModel">
-                                                        <Grid 
+                                                        <Grid
                                                               ColumnSpacing="16">
                                                             <Grid.ColumnDefinitions>
                                                                 <ColumnDefinition Width="60"/>

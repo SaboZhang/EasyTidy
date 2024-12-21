@@ -64,7 +64,7 @@
     <value>配置任务</value>
   </data>
   <data name="ConfigurationTask.Description" xml:space="preserve">
-    <value>将配置的任务与全局计划关联，或者单独配置</value>
+    <value>将任务与自动执行方法关联。所选任务将显示在右侧，并将在保存后进行关联</value>
   </data>
   <data name="TaskSelection.Header" xml:space="preserve">
     <value>任务选择</value>

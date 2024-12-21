@@ -181,7 +181,7 @@
     <value>Configuration Task</value>
   </data>
   <data name="ConfigurationTask.Description" xml:space="preserve">
-    <value>Associate the configured tasks with the global plan or configure them separately</value>
+    <value>Associate tasks with automatic execution methods. The selected tasks will appear on the right side and will be associated after saving</value>
   </data>
   <data name="TaskSelection.Header" xml:space="preserve">
     <value>Task selection</value>
@@ -1346,5 +1346,11 @@
   </data>
   <data name="EncryptionText" xml:space="preserve">
     <value>File encryption</value>
+  </data>
+  <data name="GeneralAutomaticRepairCard.Header" xml:space="preserve">
+    <value>Automatic repair</value>
+  </data>
+  <data name="GeneralAutomaticRepairCard.Description" xml:space="preserve">
+    <value>Automatically fix errors in the schedule configuration.</value>
   </data>
 </root>

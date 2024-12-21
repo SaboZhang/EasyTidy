@@ -36,7 +36,7 @@ public sealed partial class AutomaticPage : Page
 
     private void EditButton_Click(object sender, RoutedEventArgs e)
     {
-
+        ViewModel.CustomConfigCommand.Execute(DataContext);
     }
 
     private void ViewButton_Click(object sender, RoutedEventArgs e)

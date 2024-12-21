@@ -393,7 +393,7 @@ public partial class AutomaticViewModel : ObservableRecipient
             {
                 dispatcherQueue.TryEnqueue(async () =>
                 {
-                    var list = await _dbContext.TaskOrchestration.Include(x => x.GroupName).Include(x => x.Automatic).ToListAsync();
+                    var list = await _dbContext.TaskOrchestration.Include(x => x.GroupName).Include(x => x.AutomaticTable).ToListAsync();
                     var auto = await _dbContext.Automatic.Include(x => x.TaskOrchestrationList).Include(x => x.Schedule).FirstOrDefaultAsync();
                     TaskList = new(list);
                     TaskListACV = new AdvancedCollectionView(TaskList, true);
@@ -479,60 +479,43 @@ public partial class AutomaticViewModel : ObservableRecipient
 
     private string GetExecutionMode(TaskOrchestrationTable task)
     {
-        // 获取 task.Automatic 对象
-        var automatic = task?.Automatic;
+        // 获取 task.Automatic 对象，并处理可能为 null 的情况
+        var automatic = task?.AutomaticTable;
 
-        // 判断条件的顺序非常重要，确保优先匹配更严格的条件
-        if (GetCondition((automatic?.IsFileChange) && (automatic?.RegularTaskRunning), IsFileChange && RegularTaskRunning))
+        // 使用 ?? 运算符来为可能为 null 的布尔属性提供默认值 false
+        bool isFileChange = (automatic?.IsFileChange ?? false) || IsFileChange;
+        bool regularTaskRunning = (automatic?.RegularTaskRunning ?? false) || RegularTaskRunning;
+        bool startupExecution = (automatic?.IsStartupExecution ?? false) || IsStartupExecution;
+        bool onScheduleExecution = (automatic?.OnScheduleExecution ?? false) || OnScheduleExecution;
+
+        // 优先匹配更严格的条件
+        if (isFileChange && regularTaskRunning)
         {
             return "FileChangeText, RegularTaskRunningText";
         }
-        if (GetCondition(automatic?.IsFileChange, IsFileChange))
+
+        if (isFileChange)
         {
             return "FileChangeText";
         }
-        if (GetCondition(automatic?.RegularTaskRunning, RegularTaskRunning))
+
+        if (regularTaskRunning)
         {
             return "RegularTaskRunningText";
         }
-        if (GetCondition(automatic?.IsStartupExecution, IsStartupExecution))
+
+        if (startupExecution)
         {
             return "StartupExecutionText";
         }
-        if (GetCondition(automatic?.OnScheduleExecution, OnScheduleExecution))
+
+        if (onScheduleExecution)
         {
             return "ScheduleExecutionText";
         }
 
         // 默认返回空字符串
         return string.Empty;
-    }
-
-    /// <summary>
-    /// 判断条件是否成立
-    /// </summary>
-    /// <param name="automaticValue">Automatic 中的值</param>
-    /// <param name="additionalValues">其他条件值</param>
-    /// <returns>如果任意一个条件为 true 则返回 true</returns>
-    private bool GetCondition(bool? automaticValue, params bool[] additionalValues)
-    {
-        // 如果 automaticValue 为 true，直接返回 true
-        if (automaticValue == true)
-        {
-            return true;
-        }
-
-        // 遍历 additionalValues，如果有 true，则返回 true
-        foreach (var value in additionalValues)
-        {
-            if (value)
-            {
-                return true;
-            }
-        }
-
-        // 如果所有条件都不成立，则返回 false
-        return false;
     }
 
     [RelayCommand]
@@ -671,7 +654,7 @@ public partial class AutomaticViewModel : ObservableRecipient
                     else
                     {
                         await UpdateSingleTask(item);
-                        await RemoveModelByIdAsync(item);
+                        await UpdateModelByIdAsync(item);
                     }
 
                     // 提交所有变更
@@ -686,7 +669,7 @@ public partial class AutomaticViewModel : ObservableRecipient
         }
     }
 
-    private async Task RemoveModelByIdAsync(TaskItem item)
+    private async Task UpdateModelByIdAsync(TaskItem item)
     {
         // 查找对应的对象
         var modelToRemove = AutomaticModel.FirstOrDefault(model => model.Id == item.Id);
@@ -699,10 +682,10 @@ public partial class AutomaticViewModel : ObservableRecipient
         if (item.IsSelected.Value)
         {
             var auto = await _dbContext.TaskOrchestration
-            .Include(x => x.GroupName)
-            .Include(x => x.Automatic)
-            .Where(x => x.ID == item.Id)
-            .FirstOrDefaultAsync();
+                .Include(x => x.GroupName)
+                .Include(x => x.AutomaticTable)
+                .Where(x => x.ID == item.Id)
+                .FirstOrDefaultAsync();
             var model = new AutomaticModel
             {
                 Id = auto.ID,
@@ -732,7 +715,7 @@ public partial class AutomaticViewModel : ObservableRecipient
                 childEntity.IsRelated = child.IsSelected.Value;
                 _dbContext.Entry(childEntity).State = EntityState.Modified;
             }
-            await RemoveModelByIdAsync(child);
+            await UpdateModelByIdAsync(child);
         }
     }
 

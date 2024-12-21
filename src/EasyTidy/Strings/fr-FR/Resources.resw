@@ -64,7 +64,7 @@
     <value>Tâche de configuration</value>
   </data>
   <data name="ConfigurationTask.Description" xml:space="preserve">
-    <value>Associez les tâches configurées au plan global ou configurez-les séparément</value>
+    <value>Associez les tâches avec des méthodes d'exécution automatiques. Les tâches sélectionnées apparaîtront sur le côté droit et seront associées après enregistrement</value>
   </data>
   <data name="TaskSelection.Header" xml:space="preserve">
     <value>Sélection des tâches</value>

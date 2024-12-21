@@ -64,7 +64,7 @@
     <value>タスクの構成</value>
   </data>
   <data name="ConfigurationTask.Description" xml:space="preserve">
-    <value>構成されたタスクをグローバル計画に関連付けるか、個別に構成する</value>
+    <value>タスクを自動実行方法に関連付けます。選択したタスクは右側に表示され、保存後に関連付けられます</value>
   </data>
   <data name="TaskSelection.Header" xml:space="preserve">
     <value>タスク選択</value>

@@ -118,7 +118,7 @@ public class AutomaticJob : IJob
         {
             var cronExpression = !string.IsNullOrEmpty(automaticTable.Schedule.CronExpression) && !automaticTable.IsFileChange
                 ? automaticTable.Schedule.CronExpression
-                : CronExpressionUtil.GenerateCronExpression(automaticTable);
+                : CronExpressionUtil.GenerateCronExpression(automaticTable, Settings.GeneralConfig.AutomaticRepair);
 
             foreach (var item in taskOrchestrationList)
             {

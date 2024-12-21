@@ -75,8 +75,8 @@
           <target state="translated">Tâche de configuration</target>
         </trans-unit>
         <trans-unit id="ConfigurationTask.Description" translate="yes" xml:space="preserve">
-          <source>Associate the configured tasks with the global plan or configure them separately</source>
-          <target state="translated">Associez les tâches configurées au plan global ou configurez-les séparément</target>
+          <source>Associate tasks with automatic execution methods. The selected tasks will appear on the right side and will be associated after saving</source>
+          <target state="translated">Associez les tâches avec des méthodes d'exécution automatiques. Les tâches sélectionnées apparaîtront sur le côté droit et seront associées après enregistrement</target>
         </trans-unit>
         <trans-unit id="TaskSelection.Header" translate="yes" xml:space="preserve">
           <source>Task selection</source>
@@ -1659,6 +1659,14 @@
         <trans-unit id="EncryptionText" translate="yes" xml:space="preserve">
           <source>File encryption</source>
           <target state="translated">Cryptage de fichiers</target>
+        </trans-unit>
+        <trans-unit id="GeneralAutomaticRepairCard.Header" translate="yes" xml:space="preserve">
+          <source>Automatic repair</source>
+          <target state="new">Automatic repair</target>
+        </trans-unit>
+        <trans-unit id="GeneralAutomaticRepairCard.Description" translate="yes" xml:space="preserve">
+          <source>Automatically fix errors in the schedule configuration.</source>
+          <target state="new">Automatically fix errors in the schedule configuration.</target>
         </trans-unit>
       </group>
     </body>

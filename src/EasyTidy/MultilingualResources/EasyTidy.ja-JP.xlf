@@ -75,8 +75,8 @@
           <target state="translated">タスクの構成</target>
         </trans-unit>
         <trans-unit id="ConfigurationTask.Description" translate="yes" xml:space="preserve">
-          <source>Associate the configured tasks with the global plan or configure them separately</source>
-          <target state="translated">構成されたタスクをグローバル計画に関連付けるか、個別に構成する</target>
+          <source>Associate tasks with automatic execution methods. The selected tasks will appear on the right side and will be associated after saving</source>
+          <target state="translated">タスクを自動実行方法に関連付けます。選択したタスクは右側に表示され、保存後に関連付けられます</target>
         </trans-unit>
         <trans-unit id="TaskSelection.Header" translate="yes" xml:space="preserve">
           <source>Task selection</source>
@@ -1659,6 +1659,14 @@
         <trans-unit id="EncryptionText" translate="yes" xml:space="preserve">
           <source>File encryption</source>
           <target state="translated">ファイルの暗号化</target>
+        </trans-unit>
+        <trans-unit id="GeneralAutomaticRepairCard.Header" translate="yes" xml:space="preserve">
+          <source>Automatic repair</source>
+          <target state="new">Automatic repair</target>
+        </trans-unit>
+        <trans-unit id="GeneralAutomaticRepairCard.Description" translate="yes" xml:space="preserve">
+          <source>Automatically fix errors in the schedule configuration.</source>
+          <target state="new">Automatically fix errors in the schedule configuration.</target>
         </trans-unit>
       </group>
     </body>

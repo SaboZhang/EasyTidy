@@ -61,12 +61,12 @@
                         </ctk:SettingsCard.HeaderIcon>
                         <ToggleSwitch IsOn="{x:Bind ViewModel.FileInUse, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </ctk:SettingsCard>
-                    <ctk:SettingsCard x:Uid="GeneralIrrelevantFilesCard">
+                    <!-- <ctk:SettingsCard x:Uid="GeneralIrrelevantFilesCard">
                         <ctk:SettingsCard.HeaderIcon>
                             <FontIcon Glyph="&#xE8F6;"/>
                         </ctk:SettingsCard.HeaderIcon>
                         <ToggleSwitch IsOn="{x:Bind ViewModel.IrrelevantFiles, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ctk:SettingsCard>
+                    </ctk:SettingsCard> -->
                     <ctk:SettingsCard x:Uid="GeneralEmptyFileCard">
                         <ctk:SettingsCard.HeaderIcon>
                             <FontIcon Glyph="&#xE838;"/>
@@ -83,10 +83,16 @@
                         <ctk:SettingsCard.HeaderIcon>
                             <FontIcon Glyph="&#xeb41;"/>
                         </ctk:SettingsCard.HeaderIcon>
-                        <TextBox 
+                        <TextBox
                             MinWidth="240"
                             MaxWidth="320"
                             Text="{x:Bind ViewModel.WebDavPrefix, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </ctk:SettingsCard>
+                    <ctk:SettingsCard x:Uid="GeneralAutomaticRepairCard">
+                        <ctk:SettingsCard.HeaderIcon>
+                            <FontIcon Glyph="&#xE90F;"/>
+                        </ctk:SettingsCard.HeaderIcon>
+                        <ToggleSwitch IsOn="{x:Bind ViewModel.AutomaticRepair, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </ctk:SettingsCard>
                 </etc:SettingsGroup>
 
@@ -285,7 +291,7 @@
                     IsTabStop="{x:Bind ViewModel.SettingsBackupRestoreMessageVisible, Mode=OneWay}"
                     Severity="{x:Bind ViewModel.BackupRestoreMessageSeverity, Mode=TwoWay}"/>
             </StackPanel>
-            
+
             <StackPanel Height="100"/>
         </StackPanel>
     </ScrollView>

@@ -167,21 +167,40 @@ public partial class GeneralSettingViewModel : ObservableObject
     /// <summary>
     ///     是否处理无关文件
     /// </summary>
-    private bool? _irrelevantFiles;
+    //private bool? _irrelevantFiles;
 
-    public bool IrrelevantFiles
+    //public bool IrrelevantFiles
+    //{
+    //    get
+    //    {
+    //        return (bool)(_irrelevantFiles ?? CurConfig.IrrelevantFiles);
+    //    }
+
+    //    set
+    //    {
+    //        if (_irrelevantFiles != value)
+    //        {
+    //            _irrelevantFiles = value;
+    //            CurConfig.IrrelevantFiles = value;
+    //            NotifyPropertyChanged();
+    //        }
+    //    }
+    //}
+
+    private bool _automaticRepair;
+
+    public bool AutomaticRepair
     {
         get
         {
-            return (bool)(_irrelevantFiles ?? CurConfig.IrrelevantFiles);
+            return _automaticRepair = CurConfig.AutomaticRepair;
         }
-
         set
         {
-            if (_irrelevantFiles != value)
+            if (_automaticRepair != value)
             {
-                _irrelevantFiles = value;
-                CurConfig.IrrelevantFiles = value;
+                _automaticRepair = value;
+                CurConfig.AutomaticRepair = value;
                 NotifyPropertyChanged();
             }
         }
