@@ -90,13 +90,10 @@ public static class FileActuator
     private static async Task ProcessDirectoryAsync(OperationParameters parameters)
     {
         // 创建目标目录
-        if (!parameters.TargetPath.Equals(parameters.SourcePath, StringComparison.OrdinalIgnoreCase) 
-            && !Directory.Exists(parameters.TargetPath) 
-            && parameters.OperationMode != OperationMode.Rename)
+        if (!Directory.Exists(parameters.TargetPath) && parameters.OperationMode != OperationMode.Rename)
         {
             Directory.CreateDirectory(parameters.TargetPath);
         }
-
 
         if (parameters.OperationMode == OperationMode.ZipFile) 
         {
@@ -149,7 +146,7 @@ public static class FileActuator
             var subDirList = Directory.GetDirectories(parameters.SourcePath).ToList();
             foreach (var subDir in subDirList)
             {
-                if (parameters.TargetPath.StartsWith(subDir, StringComparison.OrdinalIgnoreCase))
+                if (subDir.Equals(parameters.TargetPath, StringComparison.OrdinalIgnoreCase))
                 {
                     LogService.Logger.Debug($"跳过递归目标目录 {subDir}");
                     continue;
@@ -158,13 +155,6 @@ public static class FileActuator
                 var newTargetPath = Path.Combine(parameters.TargetPath, Path.GetFileName(subDir));
                 var oldPath = Path.Combine(parameters.SourcePath, Path.GetFileName(subDir));
                 LogService.Logger.Info($"执行文件操作，递归处理子文件夹: {newTargetPath}");
-
-                // 避免重复创建文件夹
-                if (!Directory.Exists(newTargetPath))
-                {
-                    LogService.Logger.Info($"递归创建目标文件夹：{newTargetPath}");
-                    Directory.CreateDirectory(newTargetPath);
-                }
 
                 // 递归调用，传递新的目标路径
                 await ProcessDirectoryAsync(new OperationParameters(
