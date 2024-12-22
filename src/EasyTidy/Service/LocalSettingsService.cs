@@ -1,7 +1,7 @@
 ﻿using EasyTidy.Contracts.Service;
 using EasyTidy.Model;
 using EasyTidy.Util;
-using EasyTidy.Util.SettingsInterface;
+using EasyTidy.Util.UtilInterface;
 using Microsoft.Extensions.Options;
 using Windows.Storage;
 

@@ -6,6 +6,8 @@ obj/
 .vscode/
 .vsconfig
 
+target/
+
 packages/
 
 .DS_Store

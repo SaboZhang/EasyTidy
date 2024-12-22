@@ -6,7 +6,7 @@ using EasyTidy.Contracts.Service;
 using EasyTidy.Model;
 using EasyTidy.Service;
 using EasyTidy.Util;
-using EasyTidy.Util.SettingsInterface;
+using EasyTidy.Util.UtilInterface;
 using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
 using Windows.Storage.Pickers;
@@ -167,21 +167,40 @@ public partial class GeneralSettingViewModel : ObservableObject
     /// <summary>
     ///     是否处理无关文件
     /// </summary>
-    private bool? _irrelevantFiles;
+    //private bool? _irrelevantFiles;
 
-    public bool IrrelevantFiles
+    //public bool IrrelevantFiles
+    //{
+    //    get
+    //    {
+    //        return (bool)(_irrelevantFiles ?? CurConfig.IrrelevantFiles);
+    //    }
+
+    //    set
+    //    {
+    //        if (_irrelevantFiles != value)
+    //        {
+    //            _irrelevantFiles = value;
+    //            CurConfig.IrrelevantFiles = value;
+    //            NotifyPropertyChanged();
+    //        }
+    //    }
+    //}
+
+    private bool _automaticRepair;
+
+    public bool AutomaticRepair
     {
         get
         {
-            return (bool)(_irrelevantFiles ?? CurConfig.IrrelevantFiles);
+            return _automaticRepair = CurConfig.AutomaticRepair;
         }
-
         set
         {
-            if (_irrelevantFiles != value)
+            if (_automaticRepair != value)
             {
-                _irrelevantFiles = value;
-                CurConfig.IrrelevantFiles = value;
+                _automaticRepair = value;
+                CurConfig.AutomaticRepair = value;
                 NotifyPropertyChanged();
             }
         }
@@ -440,13 +459,6 @@ public partial class GeneralSettingViewModel : ObservableObject
         // Notify UI of property change
         OnPropertyChanged(propertyName);
 
-        if(propertyName == nameof(SubFolder)){
-            var app = App.GetService<ISettingsManager>();
-            app.GetConfigModel().SubFolder = SubFolder;
-            var config = new ServiceConfig(app);
-            config.SetConfigModel();
-        }
-
         Logger.Debug($"GeneralViewModel: NotifyPropertyChanged {propertyName}");
 
         UpdateCurConfig(this);
@@ -518,10 +530,10 @@ public partial class GeneralSettingViewModel : ObservableObject
         {
             if (!string.IsNullOrEmpty(Settings.WebDavPassword))
             {
-                WebDavPassWord = DESUtil.DesDecrypt(Settings.WebDavPassword);
+                WebDavPassWord = CryptoUtil.DesDecrypt(Settings.WebDavPassword);
             }
             WebDavClient webDavClient = new(Settings.WebDavUrl ??= WebDavUrl, Settings.WebDavUser ??= WebDavUserName, WebDavPassWord);
-            Settings.WebDavPassword ??= DESUtil.DesEncrypt(WebDavPassWord);
+            Settings.WebDavPassword ??= CryptoUtil.DesEncrypt(WebDavPassWord);
             var zipFilePath = Path.Combine(Constants.CnfPath, $"EasyTidy_backup_{DateTime.Now:yyyyMMddHHmmss}.zip");
             ZipUtil.CompressFile(Constants.CnfPath, zipFilePath);
             var backup = await webDavClient.UploadFileAsync(WebDavUrl + "/EasyTidy", zipFilePath);

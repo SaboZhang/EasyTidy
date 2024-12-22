@@ -31,30 +31,18 @@ public class FileResolver
                     // Do nothing
                     break;
                 case FileOperationType.Override:
-                    if (File.Exists(targetPath))
-                    {
-                        File.Delete(targetPath);
-                    }
                     action(); // 执行操作
                     break;
                 case FileOperationType.OverwriteIfNewer:
                     if (File.GetLastWriteTime(sourcePath) > File.GetLastWriteTime(targetPath)
                         || Directory.GetLastWriteTime(sourcePath) > Directory.GetLastWriteTime(targetPath))
                     {
-                        if (File.Exists(targetPath))
-                        {
-                            File.Delete(targetPath);
-                        }
                         action(); // 执行操作
                     }
                     break;
                 case FileOperationType.OverrideIfSizesDiffer:
                     if (AreFileSizesEqual(sourcePath, targetPath))
                     {
-                        if (File.Exists(targetPath))
-                        {
-                            File.Delete(targetPath);
-                        }
                         action(); // 执行操作
                     }
                     break;

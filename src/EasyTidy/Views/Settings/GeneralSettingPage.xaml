@@ -61,12 +61,12 @@
                         </ctk:SettingsCard.HeaderIcon>
                         <ToggleSwitch IsOn="{x:Bind ViewModel.FileInUse, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </ctk:SettingsCard>
-                    <ctk:SettingsCard x:Uid="GeneralIrrelevantFilesCard">
+                    <!-- <ctk:SettingsCard x:Uid="GeneralIrrelevantFilesCard">
                         <ctk:SettingsCard.HeaderIcon>
                             <FontIcon Glyph="&#xE8F6;"/>
                         </ctk:SettingsCard.HeaderIcon>
                         <ToggleSwitch IsOn="{x:Bind ViewModel.IrrelevantFiles, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ctk:SettingsCard>
+                    </ctk:SettingsCard> -->
                     <ctk:SettingsCard x:Uid="GeneralEmptyFileCard">
                         <ctk:SettingsCard.HeaderIcon>
                             <FontIcon Glyph="&#xE838;"/>
@@ -83,10 +83,16 @@
                         <ctk:SettingsCard.HeaderIcon>
                             <FontIcon Glyph="&#xeb41;"/>
                         </ctk:SettingsCard.HeaderIcon>
-                        <TextBox 
+                        <TextBox
                             MinWidth="240"
                             MaxWidth="320"
                             Text="{x:Bind ViewModel.WebDavPrefix, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </ctk:SettingsCard>
+                    <ctk:SettingsCard x:Uid="GeneralAutomaticRepairCard">
+                        <ctk:SettingsCard.HeaderIcon>
+                            <FontIcon Glyph="&#xE90F;"/>
+                        </ctk:SettingsCard.HeaderIcon>
+                        <ToggleSwitch IsOn="{x:Bind ViewModel.AutomaticRepair, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </ctk:SettingsCard>
                 </etc:SettingsGroup>
 
@@ -172,7 +178,7 @@
                                     </ComboBox>
                                 </StackPanel>
                             </ctk:SettingsCard>
-                            <ctk:SettingsCard HorizontalContentAlignment="Left"
+                            <ctk:SettingsCard HorizontalContentAlignment="Stretch"
                                               ContentAlignment="Vertical"
                                               Visibility="{x:Bind ViewModel.WebDavIsShow, Mode=TwoWay, Converter={StaticResource BoolToVisibilityConverter}}">
                                 <ctk:SettingsCard.Resources>
@@ -185,7 +191,7 @@
                                 <Grid Margin="0,12,0,6"
                                       ColumnSpacing="8">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="200"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
@@ -198,7 +204,8 @@
                                                x:Uid="GeneralAddress"/>
                                     <TextBox Grid.Row="0"
                                              Grid.Column="1"
-                                             Width="480"
+                                             MinWidth="280"
+                                             HorizontalAlignment="Right"
                                              Margin="0,-8,0,15"
                                              Text="{x:Bind ViewModel.WebDavUrl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
@@ -206,14 +213,16 @@
                                                x:Uid="GeneralUsername"/>
                                     <TextBox Grid.Row="1"
                                              Grid.Column="1"
-                                             Width="480"
+                                             MinWidth="280"
+                                             HorizontalAlignment="Right"
                                              Margin="0,-8,0,15"
                                              Text="{x:Bind ViewModel.WebDavUserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                     <TextBlock Grid.Row="2"
                                                x:Uid="GeneralPassword"/>
                                     <PasswordBox Grid.Row="2"
                                                  Grid.Column="1"
-                                                 Width="480"
+                                                 MinWidth="280"
+                                                 HorizontalAlignment="Right"
                                                  Margin="0,-8,0,15"
                                                  Password="{x:Bind ViewModel.WebDavPassWord, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 </Grid>
@@ -282,7 +291,7 @@
                     IsTabStop="{x:Bind ViewModel.SettingsBackupRestoreMessageVisible, Mode=OneWay}"
                     Severity="{x:Bind ViewModel.BackupRestoreMessageSeverity, Mode=TwoWay}"/>
             </StackPanel>
-            
+
             <StackPanel Height="100"/>
         </StackPanel>
     </ScrollView>

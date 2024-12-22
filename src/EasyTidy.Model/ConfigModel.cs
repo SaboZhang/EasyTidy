@@ -29,4 +29,6 @@ public class ConfigModel
     public FileOperationType FileOperationType { get; set; } = FileOperationType.Skip;
 
     public bool EnableMultiInstance { get; set; } = false;
+
+    public virtual bool AutomaticRepair { get; set; } = false;
 }

@@ -158,15 +158,21 @@ public partial class AppUpdateSettingViewModel : ObservableObject
 
         var progressText = new TextBlock
         {
-            Text = "Preparing to download...".GetLocalized(),
+            Text = "PreparingToDownload".GetLocalized(),
             Margin = new Thickness(0, 5, 0, 0)
         };
 
         var stackPanel = new StackPanel();
-        stackPanel.Children.Add(new TextBlock
+        stackPanel.Children.Add(new ScrollView
         {
-            Text = $"{changelog}",
-            TextWrapping = TextWrapping.Wrap
+            Content = new TextBlock
+            {
+                Text = changelog.Replace("-", "•"),
+                TextWrapping = TextWrapping.Wrap,
+                Margin = new Thickness(10)
+            },
+            Margin = new Thickness(10),
+            MaxHeight = 480
         });
         stackPanel.Children.Add(progressText);
         stackPanel.Children.Add(progressBar);
@@ -179,6 +185,7 @@ public partial class AppUpdateSettingViewModel : ObservableObject
             CloseButtonText = "Close".GetLocalized(),
             PrimaryButtonText = "Download".GetLocalized(),
             XamlRoot = mainWindow.Content.XamlRoot,
+            DefaultButton = ContentDialogButton.Primary,
             RequestedTheme = _themeSelectorService.Theme
         };
 
@@ -193,10 +200,10 @@ public partial class AppUpdateSettingViewModel : ObservableObject
                 var progressReporter = new Progress<double>(progress =>
                 {
                     progressBar.Value = progress;
-                    progressText.Text = $"Downloading... {progress:F1}%".GetLocalized();
+                    progressText.Text = "Downloading".GetLocalized() + $"... {progress:F1}%";
                 });
                 await Download(downloadUrl, progressReporter);
-                progressText.Text = "Download complete!".GetLocalized();
+                progressText.Text = "DownloadComplete".GetLocalized();
                 isShow = true;
                 await Task.Delay(2000);
             }
@@ -218,8 +225,8 @@ public partial class AppUpdateSettingViewModel : ObservableObject
                 {
                     await new ContentDialog
                     {
-                        Title = "Update Ready".GetLocalized(),
-                        Content = "The update has been downloaded. The installation will begin shortly.".GetLocalized(),
+                        Title = "UpdateReady".GetLocalized(),
+                        Content = "Update_Ready_Content".GetLocalized(),
                         CloseButtonText = "OK".GetLocalized(),
                         XamlRoot = App.MainWindow.Content.XamlRoot,
                         RequestedTheme = _themeSelectorService.Theme

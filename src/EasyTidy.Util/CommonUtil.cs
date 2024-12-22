@@ -1,8 +1,13 @@
-﻿using System;
+﻿using Nucs.JsonSettings.Modulation.Recovery;
+using Nucs.JsonSettings.Modulation;
+using Nucs.JsonSettings;
+using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Security.Principal;
 using Windows.Networking.Connectivity;
+using EasyTidy.Model;
+using Nucs.JsonSettings.Fluent;
 
 namespace EasyTidy.Util;
 
@@ -52,4 +57,9 @@ public class CommonUtil
     {
         return NetworkInformation.GetInternetConnectionProfile()?.NetworkAdapter != null;
     }
+
+    public static AppConfig Configs = JsonSettings.Configure<AppConfig>()
+                               .WithRecovery(RecoveryAction.RenameAndLoadDefault)
+                               .WithVersioning(VersioningResultAction.RenameAndLoadDefault)
+                               .LoadNow();
 }

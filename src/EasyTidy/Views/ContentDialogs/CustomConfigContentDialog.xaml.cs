@@ -2,7 +2,6 @@
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
 using CommunityToolkit.WinUI;
-using EasyTidy.Util;
 using Quartz;
 using System.Collections;
 using System.ComponentModel;
@@ -338,11 +337,6 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
             _ = _validationErrors.Remove(key);
 
         OnErrorsChanged(key);
-    }
-
-    private void CustomTaskSelect_CloseButtonClick(TeachingTip sender, object args)
-    {
-        ViewModel.SelectedItemChangedCommand.Execute(sender);
     }
 
     private ContentDialogButtonClickEventArgs _secondaryButtonArgs;

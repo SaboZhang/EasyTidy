@@ -2,11 +2,13 @@ using EasyTidy.Log;
 using EasyTidy.Model;
 using EasyTidy.Util;
 using Microsoft.VisualBasic.FileIO;
+using SharpCompress.Common;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -88,9 +90,18 @@ public static class FileActuator
     private static async Task ProcessDirectoryAsync(OperationParameters parameters)
     {
         // 创建目标目录
-        if (!Directory.Exists(parameters.TargetPath) && parameters.OperationMode != OperationMode.Rename)
+        if (!parameters.TargetPath.Equals(parameters.SourcePath, StringComparison.OrdinalIgnoreCase) 
+            && !Directory.Exists(parameters.TargetPath) 
+            && parameters.OperationMode != OperationMode.Rename)
         {
             Directory.CreateDirectory(parameters.TargetPath);
+        }
+
+
+        if (parameters.OperationMode == OperationMode.ZipFile) 
+        {
+            await ProcessFileAsync(parameters);
+            return;
         }
 
         var fileList = Directory.GetFiles(parameters.SourcePath).ToList();
@@ -131,14 +142,14 @@ public static class FileActuator
             Renamer.ResetIncrement();
         }
 
-        var subFolder = ServiceConfig.CurConfig?.SubFolder ?? false;
+        var subFolder = CommonUtil.Configs?.GeneralConfig?.SubFolder ?? false;
         // 递归处理子文件夹
         if (subFolder)
         {
             var subDirList = Directory.GetDirectories(parameters.SourcePath).ToList();
             foreach (var subDir in subDirList)
             {
-                if (subDir.Equals(parameters.TargetPath, StringComparison.OrdinalIgnoreCase))
+                if (parameters.TargetPath.StartsWith(subDir, StringComparison.OrdinalIgnoreCase))
                 {
                     LogService.Logger.Debug($"跳过递归目标目录 {subDir}");
                     continue;
@@ -147,6 +158,13 @@ public static class FileActuator
                 var newTargetPath = Path.Combine(parameters.TargetPath, Path.GetFileName(subDir));
                 var oldPath = Path.Combine(parameters.SourcePath, Path.GetFileName(subDir));
                 LogService.Logger.Info($"执行文件操作，递归处理子文件夹: {newTargetPath}");
+
+                // 避免重复创建文件夹
+                if (!Directory.Exists(newTargetPath))
+                {
+                    LogService.Logger.Info($"递归创建目标文件夹：{newTargetPath}");
+                    Directory.CreateDirectory(newTargetPath);
+                }
 
                 // 递归调用，传递新的目标路径
                 await ProcessDirectoryAsync(new OperationParameters(
@@ -179,7 +197,8 @@ public static class FileActuator
     /// <exception cref="NotSupportedException"></exception>
     internal static async Task ProcessFileAsync(OperationParameters parameters)
     {
-        if (FilterUtil.ShouldSkip(parameters.Funcs, parameters.SourcePath, parameters.PathFilter) && parameters.OperationMode != OperationMode.RecycleBin)
+        if (FilterUtil.ShouldSkip(parameters.Funcs, parameters.SourcePath, parameters.PathFilter) 
+            && parameters.OperationMode != OperationMode.RecycleBin && parameters.OperationMode != OperationMode.ZipFile)
         {
             LogService.Logger.Debug($"执行文件操作 ShouldSkip {parameters.TargetPath}");
             return;
@@ -208,15 +227,21 @@ public static class FileActuator
                 Extract(parameters.SourcePath, parameters.TargetPath, parameters.RuleModel.Rule);
                 break;
             case OperationMode.UploadWebDAV:
-                var password = DESUtil.DesDecrypt(ServiceConfig.CurConfig.WebDavPassword);
-                WebDavClient webDavClient = new(ServiceConfig.CurConfig.WebDavUrl, ServiceConfig.CurConfig.WebDavUser, password);
-                await webDavClient.UploadFileAsync(ServiceConfig.CurConfig.WebDavUrl + ServiceConfig.CurConfig.UploadPrefix, parameters.SourcePath);
+                var password = CryptoUtil.DesDecrypt(CommonUtil.Configs.WebDavPassword);
+                WebDavClient webDavClient = new(CommonUtil.Configs.WebDavUrl, CommonUtil.Configs.WebDavUser, password);
+                await webDavClient.UploadFileAsync(CommonUtil.Configs.WebDavUrl + CommonUtil.Configs.UploadPrefix, parameters.SourcePath);
                 break;
             case OperationMode.ZipFile:
-                // TODO: 压缩文件
+                await CompressFileAsync(parameters);
                 break;
             case OperationMode.Encryption:
                 // TODO: 加密文件
+                break;
+            case OperationMode.HardLink:
+                CreateFileHardLink(parameters.SourcePath, parameters.TargetPath);
+                break;
+            case OperationMode.SoftLink:
+                CreateFileSymbolicLink(parameters.SourcePath, parameters.TargetPath);
                 break;
             default:
                 throw new NotSupportedException($"Operation mode '{parameters.OperationMode}' is not supported.");
@@ -237,7 +262,7 @@ public static class FileActuator
         {
             FileResolver.HandleFileConflict(sourcePath, targetPath, fileOperationType, () =>
             {
-                File.Move(sourcePath, targetPath);
+                File.Move(sourcePath, targetPath, true);
             });
         }
         catch (Exception ex)
@@ -272,7 +297,7 @@ public static class FileActuator
         {
             FileResolver.HandleFileConflict(sourcePath, targetPath, fileOperationType, () =>
             {
-                File.Copy(sourcePath, targetPath);
+                File.Copy(sourcePath, targetPath, true);
             });
 
         }
@@ -414,6 +439,73 @@ public static class FileActuator
         }
     }
 
+    private static async Task CompressFileAsync(OperationParameters parameters)
+    {
+        LogService.Logger.Info($"处理文件夹压缩操作: {parameters.SourcePath}");
+
+        var filesToCompress = new List<string>();
+
+        // 收集符合条件的文件
+        await CollectFilesForCompression(parameters, filesToCompress);
+
+        if (filesToCompress.Any())
+        {
+            var zipFilePath = Path.Combine(parameters.TargetPath, $"{Path.GetFileName(parameters.TargetPath)}.zip");
+            // 调用压缩文件方法
+            ZipUtil.CompressFile(parameters.SourcePath, zipFilePath, filesToCompress);
+            LogService.Logger.Info($"压缩完成，生成压缩包: {zipFilePath}");
+        }
+        else
+        {
+            LogService.Logger.Warn($"未找到符合条件的文件，跳过压缩操作: {parameters.SourcePath}");
+        }
+    }
+
+    private static async Task CollectFilesForCompression(OperationParameters parameters, List<string> filesToCompress)
+    {
+        var fileList = Directory.GetFiles(parameters.SourcePath).ToList();
+
+        foreach (var filePath in fileList)
+        {
+            if (FilterUtil.ShouldSkip(parameters.Funcs, filePath, parameters.PathFilter))
+            {
+                LogService.Logger.Debug($"跳过文件: {filePath}");
+                continue;
+            }
+
+            filesToCompress.Add(filePath);
+        }
+
+        if (CommonUtil.Configs.GeneralConfig?.SubFolder ?? false)
+        {
+            var subDirList = Directory.GetDirectories(parameters.SourcePath).ToList();
+            foreach (var subDir in subDirList)
+            {
+                if (subDir.Equals(parameters.TargetPath, StringComparison.OrdinalIgnoreCase))
+                {
+                    LogService.Logger.Debug($"跳过递归目标目录 {subDir}");
+                    continue;
+                }
+
+                var subDirParameters = new OperationParameters(
+                    parameters.OperationMode,
+                    subDir,
+                    parameters.TargetPath,
+                    parameters.FileOperationType,
+                    parameters.HandleSubfolders,
+                    parameters.Funcs,
+                    parameters.PathFilter)
+                {
+                    OldTargetPath = parameters.TargetPath,
+                    OldSourcePath = subDir,
+                    RuleModel = parameters.RuleModel
+                };
+
+                await CollectFilesForCompression(subDirParameters, filesToCompress);
+            }
+        }
+    }
+
     /// <summary>
     /// 根据文件类型执行解压或提取。
     /// </summary>
@@ -427,6 +519,11 @@ public static class FileActuator
             return;
         }
 
+        if (string.IsNullOrEmpty(filterExtension))
+        {
+            filterExtension = GetPartAfterAtSymbolWithoutQuotes(filterExtension);
+        }
+
         string extension = Path.GetExtension(filePath).ToLower();
 
         // 判断是否为压缩包
@@ -438,6 +535,13 @@ public static class FileActuator
         {
             LogService.Logger.Warn($"当前不支持处理 {extension} 文件，路径: {filePath}");
         }
+    }
+
+    private static string GetPartAfterAtSymbolWithoutQuotes(string input)
+    {
+        var parts = input.Split(new[] { "@" }, StringSplitOptions.None);
+
+        return parts.Length > 1 ? parts[1].Trim(';').Replace("\"", "") : string.Empty;
     }
 
     /// <summary>
@@ -483,6 +587,161 @@ public static class FileActuator
         {
             LogService.Logger.Error($"Error during extract process: {ex.Message}");
         }
+    }
+
+    private static void CreateFileSymbolicLink(string filePath, string tragetPath)
+    {
+        if (string.IsNullOrWhiteSpace(filePath) || !File.Exists(filePath))
+        {
+            LogService.Logger.Warn($"无效路径: {filePath}");
+            return;
+        }
+        try
+        {
+            // 如果符号链接已存在且指向相同目标，跳过创建
+            if (IsSameSymbolicLink(filePath, tragetPath))
+            {
+                LogService.Logger.Warn($"Symbolic link already exists: {filePath} -> {tragetPath}");
+                return;
+            }
+            // 如果路径已存在但不是符号链接，则抛出异常
+            if (File.Exists(filePath) || Directory.Exists(filePath))
+            {
+                throw new IOException($"A file or directory already exists at the path: {filePath}");
+            }
+            var result = File.CreateSymbolicLink(filePath, tragetPath) as FileInfo;
+            LogService.Logger.Info($"创建符号连接成功: {filePath} -> {tragetPath}");
+        }
+        catch (Exception ex)
+        {
+            LogService.Logger.Error($"Error creating symbolic link: {ex.Message}");
+        }
+    }
+
+    private static bool IsSymbolicLink(string path)
+    {
+        FileSystemInfo fileInfo = new FileInfo(path);
+
+        // 如果路径是目录，则使用 DirectoryInfo
+        if (Directory.Exists(path))
+        {
+            fileInfo = new DirectoryInfo(path);
+        }
+
+        return fileInfo.LinkTarget != null;
+    }
+
+    private static bool IsSameSymbolicLink(string linkPath, string targetPath)
+    {
+        if (!IsSymbolicLink(linkPath))
+        {
+            return false;
+        }
+
+        FileSystemInfo fileInfo = new FileInfo(linkPath);
+
+        // 如果路径是目录，则使用 DirectoryInfo
+        if (Directory.Exists(linkPath))
+        {
+            fileInfo = new DirectoryInfo(linkPath);
+        }
+
+        // 比较目标路径
+        return string.Equals(fileInfo.LinkTarget, targetPath, StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static void CreateFileHardLink(string source, string target)
+    {
+        try
+        {
+            if (string.IsNullOrEmpty(source) || string.IsNullOrEmpty(target))
+            {
+                LogService.Logger.Warn($"无效路径: Source: {source}, Target: {target}");
+                return;
+            }
+
+            source = Path.GetFullPath(source);
+            target = Path.GetFullPath(target);
+
+            // 检查源文件是否存在
+            if (!File.Exists(source))
+            {
+                LogService.Logger.Warn($"源文件不存在: {source}");
+                return;
+            }
+
+            // 检查目标路径是否存在
+            if (File.Exists(target))
+            {
+                // 检查目标是否为指向源的硬链接
+                if (IsHardLink(source, target))
+                {
+                    LogService.Logger.Info($"硬链接已存在: {source} -> {target}");
+                    return;
+                }
+
+                LogService.Logger.Warn($"目标路径已存在，但不是硬链接: {target}");
+                return;
+            }
+
+            // 尝试创建硬链接
+            bool result = CreateHardLink(target, source);
+            if (result)
+            {
+                LogService.Logger.Info($"创建硬链接成功: {source} -> {target}");
+            }
+            else
+            {
+                LogService.Logger.Warn($"创建硬链接失败: {source} -> {target}");
+            }
+        }
+        catch (Exception ex)
+        {
+            LogService.Logger.Error($"创建硬链接失败: {ex}");
+        }
+    }
+
+
+    private static bool IsHardLink(string source, string target)
+    {
+        try
+        {
+            var sourceInfo = new FileInfo(source);
+            var targetInfo = new FileInfo(target);
+
+            // 比较源文件和目标文件的文件标识符（如 NTFS 下的文件索引号）
+            return sourceInfo.Exists && targetInfo.Exists &&
+                   sourceInfo.Length == targetInfo.Length &&
+                   sourceInfo.LastWriteTimeUtc == targetInfo.LastWriteTimeUtc;
+        }
+        catch (Exception ex)
+        {
+            LogService.Logger.Error($"检测硬链接失败: {ex}");
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// 创建硬链接
+    /// </summary>
+    /// <param name="hardLinkPath">新硬链接的路径</param>
+    /// <param name="existingFilePath">现有文件的路径</param>
+    /// <returns>是否成功</returns>
+    private static bool CreateHardLink(string hardLinkPath, string existingFilePath)
+    {
+        if (string.IsNullOrWhiteSpace(hardLinkPath))
+            LogService.Logger.Error($"Hard link path cannot be null or empty.{nameof(hardLinkPath)}");
+
+        if (string.IsNullOrWhiteSpace(existingFilePath))
+            LogService.Logger.Error($"Existing file path cannot be null or empty.{nameof(existingFilePath)}");
+
+        bool result = CreateHardLink(hardLinkPath, existingFilePath, IntPtr.Zero);
+        if (!result)
+        {
+            int errorCode = Marshal.GetLastWin32Error();
+            throw new System.ComponentModel.Win32Exception(errorCode, "Failed to create hard link.");
+        }
+        return result;
     }
 
     /// <summary>
@@ -583,5 +842,12 @@ public static class FileActuator
             return true;
         }
     }
+
+    // P/Invoke 声明 CreateHardLink
+    [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+    private static extern bool CreateHardLink(
+        string lpFileName,  // 新硬链接的路径
+        string lpExistingFileName,  // 现有文件的路径
+        IntPtr lpSecurityAttributes);  // 保留，必须为 NULL
 
 }

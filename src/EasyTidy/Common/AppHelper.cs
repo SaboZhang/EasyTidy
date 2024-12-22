@@ -1,5 +1,4 @@
 ﻿using EasyTidy.Model;
-using EasyTidy.Util;
 using Nucs.JsonSettings;
 using Nucs.JsonSettings.Autosave;
 using Nucs.JsonSettings.Fluent;
@@ -53,7 +52,7 @@ public static partial class AppHelper
     {
 
         Settings.GeneralConfig.Minimize = viewModel.Minimize;
-        Settings.GeneralConfig.IrrelevantFiles = viewModel.IrrelevantFiles;
+        Settings.GeneralConfig.AutomaticRepair = viewModel.AutomaticRepair;
         Settings.GeneralConfig.FileInUse = viewModel.FileInUse;
         Settings.GeneralConfig.SubFolder = viewModel.SubFolder;
         Settings.GeneralConfig.IsStartup = viewModel.IsStartup;

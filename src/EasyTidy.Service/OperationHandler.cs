@@ -30,6 +30,9 @@ public static class OperationHandler
             { OperationMode.Extract, ExtractAsync },
             { OperationMode.ZipFile, CompressedFileAsync },
             { OperationMode.UploadWebDAV, UploadFileAsync },
+            { OperationMode.Encryption, EncryptionAsync },
+            { OperationMode.HardLink, CreateHandLink },
+            { OperationMode.SoftLink, CreateSoftLink },
         };
     }
 
@@ -71,7 +74,6 @@ public static class OperationHandler
         }
     }
 
-    // 操作方法示例
     private static async Task MoveAsync(OperationParameters parameter)
     {
         string operationId = $"{parameter.SourcePath}-{parameter.TargetPath}-{parameter.FileOperationType}";
@@ -221,6 +223,7 @@ public static class OperationHandler
             RuleType = parameter.RuleModel.RuleType
         };
         parameter.RuleModel = model;
+        parameter.Funcs = FilterUtil.GeneratePathFilters(rule,parameter.RuleModel.RuleType);
         await Task.Run(async () =>
         {
             await FileActuator.ExecuteFileOperationAsync(parameter);
@@ -232,7 +235,14 @@ public static class OperationHandler
     {
         await Task.Run(async () =>
         {
-            await FileActuator.ExecuteFileOperationAsync(parameter);
+            if (parameter.RuleModel.RuleType == TaskRuleType.FileRule)
+            {
+                await FileActuator.ExecuteFileOperationAsync(parameter);
+            }
+            else
+            {
+                await FolderActuator.ExecuteFolderOperationAsync(parameter);
+            }
         });
         LogService.Logger.Info("执行压缩任务完成");
     }
@@ -252,4 +262,29 @@ public static class OperationHandler
         });
         LogService.Logger.Info("执行上传任务完成");
     }
+
+    private static async Task EncryptionAsync(OperationParameters parameters)
+    {
+        await Task.Run(async () =>
+        {
+            await FileActuator.ExecuteFileOperationAsync(parameters);
+        });
+    }
+
+    private static async Task CreateSoftLink(OperationParameters parameters)
+    {
+        await Task.Run(async () =>
+        {
+            await FileActuator.ExecuteFileOperationAsync(parameters);
+        });
+    }
+
+    private static async Task CreateHandLink(OperationParameters parameters)
+    {
+        await Task.Run(async () =>
+        {
+            await FileActuator.ExecuteFileOperationAsync(parameters);
+        });
+    }
+
 }

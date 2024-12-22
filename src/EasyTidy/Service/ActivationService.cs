@@ -3,9 +3,8 @@ using EasyTidy.Activation;
 using EasyTidy.Common.Database;
 using EasyTidy.Contracts.Service;
 using EasyTidy.Model;
-using EasyTidy.Util;
-using EasyTidy.Util.SettingsInterface;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 using WinUIEx;
 
 namespace EasyTidy.Service;
@@ -88,8 +87,6 @@ public class ActivationService : IActivationService
             var app = App.GetService<AppUpdateSettingViewModel>();
             await app.CheckForNewVersionAsync();
         }
-        var serviceConfig = new ServiceConfig(App.GetService<ISettingsManager>());
-        serviceConfig.SetConfigModel();
 
         await QuartzConfig.InitQuartzConfigAsync();
         await QuartzHelper.StartAllJob();
@@ -145,7 +142,13 @@ public class ActivationService : IActivationService
                             Settings.GeneralConfig.FileOperationType,
                             (bool)Settings.GeneralConfig.SubFolder,
                             new List<Func<string, bool>>(FilterUtil.GeneratePathFilters(task.TaskRule, task.RuleType)),
-                            FilterUtil.GetPathFilters(task.Filter))
+                            FilterUtil.GetPathFilters(task.Filter),
+                            new RuleModel()
+                            {
+                                Rule = task.TaskRule,
+                                RuleType = task.RuleType,
+                                Filter = task.Filter
+                            })
                         {
                             CreateTime = task.CreateTime,
                             Priority = task.Priority

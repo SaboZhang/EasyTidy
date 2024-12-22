@@ -171,6 +171,10 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
         {
             RuleType = TaskRuleType.ExpressionRules;
         }
+        else
+        {
+            RuleType = RuleType == TaskRuleType.ExpressionRules ? TaskRuleType.CustomRule : RuleType;
+        }
     }
 
     private void OnMenuItemClick(object sender, RoutedEventArgs e)

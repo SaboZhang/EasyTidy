@@ -75,8 +75,8 @@
           <target state="translated">タスクの構成</target>
         </trans-unit>
         <trans-unit id="ConfigurationTask.Description" translate="yes" xml:space="preserve">
-          <source>Associate the configured tasks with the global plan or configure them separately</source>
-          <target state="translated">構成されたタスクをグローバル計画に関連付けるか、個別に構成する</target>
+          <source>Associate tasks with automatic execution methods. The selected tasks will appear on the right side and will be associated after saving</source>
+          <target state="translated">タスクを自動実行方法に関連付けます。選択したタスクは右側に表示され、保存後に関連付けられます</target>
         </trans-unit>
         <trans-unit id="TaskSelection.Header" translate="yes" xml:space="preserve">
           <source>Task selection</source>
@@ -1659,6 +1659,94 @@
         <trans-unit id="EncryptionText" translate="yes" xml:space="preserve">
           <source>File encryption</source>
           <target state="translated">ファイルの暗号化</target>
+        </trans-unit>
+        <trans-unit id="GeneralAutomaticRepairCard.Header" translate="yes" xml:space="preserve">
+          <source>Automatic repair</source>
+          <target state="translated">自動修復</target>
+        </trans-unit>
+        <trans-unit id="GeneralAutomaticRepairCard.Description" translate="yes" xml:space="preserve">
+          <source>Automatically fix errors in the schedule configuration.</source>
+          <target state="translated">スケジュール構成のエラーを自動的に修正します。</target>
+        </trans-unit>
+        <trans-unit id="FileChange_Text" translate="yes" xml:space="preserve">
+          <source>Whenever the file changes</source>
+          <target state="translated">ファイルが変更された時</target>
+        </trans-unit>
+        <trans-unit id="RegularTaskRunning_Text" translate="yes" xml:space="preserve">
+          <source>Regular execution</source>
+          <target state="translated">定期的な実行</target>
+        </trans-unit>
+        <trans-unit id="StartupExecution_Text" translate="yes" xml:space="preserve">
+          <source>On startup</source>
+          <target state="translated">起動時に</target>
+        </trans-unit>
+        <trans-unit id="ScheduleExecution_Text" translate="yes" xml:space="preserve">
+          <source>According to schedule</source>
+          <target state="translated">予定どおり</target>
+        </trans-unit>
+        <trans-unit id="PreviewText" translate="yes" xml:space="preserve">
+          <source>View</source>
+          <target state="translated">ビュー</target>
+        </trans-unit>
+        <trans-unit id="FilterId.Text" translate="yes" xml:space="preserve">
+          <source>Filter number:</source>
+          <target state="translated">フィルター番号：</target>
+        </trans-unit>
+        <trans-unit id="DocumentFlow.Text" translate="yes" xml:space="preserve">
+          <source>File flow:</source>
+          <target state="translated">ファイルの流れ:</target>
+        </trans-unit>
+        <trans-unit id="AutomatedRules.Text" translate="yes" xml:space="preserve">
+          <source>Automated rules:</source>
+          <target state="translated">自動化ルール:</target>
+        </trans-unit>
+        <trans-unit id="ListOfFilesToBeMatched.Text" translate="yes" xml:space="preserve">
+          <source>List of files to be matched:</source>
+          <target state="translated">一致させるファイルのリスト:</target>
+        </trans-unit>
+        <trans-unit id="IsFolder.Text" translate="yes" xml:space="preserve">
+          <source>Is folder</source>
+          <target state="translated">イズ フォルダ</target>
+        </trans-unit>
+        <trans-unit id="File.Text" translate="yes" xml:space="preserve">
+          <source>File</source>
+          <target state="translated">ファイル</target>
+        </trans-unit>
+        <trans-unit id="Latency_Text" translate="yes" xml:space="preserve">
+          <source>Delay {0} second</source>
+          <target state="translated">{0} 秒後に実行</target>
+        </trans-unit>
+        <trans-unit id="RegularTask_Text" translate="yes" xml:space="preserve">
+          <source>Every: Perform every {0} hours and {1} minutes</source>
+          <target state="translated">すべて: {0}時間と{1}分ごとに実行</target>
+        </trans-unit>
+        <trans-unit id="MissionSelection.Text" translate="yes" xml:space="preserve">
+          <source>Task selection</source>
+          <target state="translated">タスク選択</target>
+        </trans-unit>
+        <trans-unit id="Action.Text" translate="yes" xml:space="preserve">
+          <source>Action</source>
+          <target state="translated">アクション</target>
+        </trans-unit>
+        <trans-unit id="Rules.Text" translate="yes" xml:space="preserve">
+          <source>Rules</source>
+          <target state="translated">ルール</target>
+        </trans-unit>
+        <trans-unit id="FileFlowDirection.Text" translate="yes" xml:space="preserve">
+          <source>file flow</source>
+          <target state="translated">ファイルフロー</target>
+        </trans-unit>
+        <trans-unit id="AutomaticMode.Text" translate="yes" xml:space="preserve">
+          <source>Auto Mode</source>
+          <target state="translated">オートモード</target>
+        </trans-unit>
+        <trans-unit id="HardLinkText" translate="yes" xml:space="preserve">
+          <source>Hard link</source>
+          <target state="translated">ハードリンク</target>
+        </trans-unit>
+        <trans-unit id="SoftLinkText" translate="yes" xml:space="preserve">
+          <source>Soft link</source>
+          <target state="translated">ソフトリンク</target>
         </trans-unit>
       </group>
     </body>

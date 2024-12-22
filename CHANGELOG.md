@@ -3,6 +3,8 @@
 
 ## [1.0.5.1212]之前的更新程序存在BUG,烦请手动下载新版本 1.0.5.1212版本可自动更新
 
+## 测试版本发布，请勿使用此版本
+
 [更新下载](https://github.com/SaboZhang/EasyTidy/releases)
 
 - Refactoring: Split file execution logic into different classes

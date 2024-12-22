@@ -25,6 +25,7 @@
 	<PackageReference Include="Microsoft.Windows.SDK.BuildTools" />
 	<PackageReference Include="CommunityToolkit.WinUI.Extensions" />
 	<PackageReference Include="Newtonsoft.Json" />
+	<PackageReference Include="Nucs.JsonSettings2" />
 	<PackageReference Include="Quartz" />
 	<PackageReference Include="SharpCompress" />
 	<PackageReference Include="System.Text.Json" />

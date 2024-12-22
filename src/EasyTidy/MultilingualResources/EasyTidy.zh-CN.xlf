@@ -75,8 +75,8 @@
           <target state="translated">配置任务</target>
         </trans-unit>
         <trans-unit id="ConfigurationTask.Description" translate="yes" xml:space="preserve">
-          <source>Associate the configured tasks with the global plan or configure them separately</source>
-          <target state="translated">将配置的任务与全局计划关联，或者单独配置</target>
+          <source>Associate tasks with automatic execution methods. The selected tasks will appear on the right side and will be associated after saving</source>
+          <target state="translated">将任务与自动执行方法关联。所选任务将显示在右侧，并将在保存后进行关联</target>
         </trans-unit>
         <trans-unit id="TaskSelection.Header" translate="yes" xml:space="preserve">
           <source>Task selection</source>
@@ -1659,6 +1659,94 @@
         <trans-unit id="EncryptionText" translate="yes" xml:space="preserve">
           <source>File encryption</source>
           <target state="translated">文件加密</target>
+        </trans-unit>
+        <trans-unit id="GeneralAutomaticRepairCard.Header" translate="yes" xml:space="preserve">
+          <source>Automatic repair</source>
+          <target state="translated">自动修复</target>
+        </trans-unit>
+        <trans-unit id="GeneralAutomaticRepairCard.Description" translate="yes" xml:space="preserve">
+          <source>Automatically fix errors in the schedule configuration.</source>
+          <target state="translated">自动修复时间表计划配置中的错误。</target>
+        </trans-unit>
+        <trans-unit id="FileChange_Text" translate="yes" xml:space="preserve">
+          <source>Whenever the file changes</source>
+          <target state="translated">文件更改时</target>
+        </trans-unit>
+        <trans-unit id="RegularTaskRunning_Text" translate="yes" xml:space="preserve">
+          <source>Regular execution</source>
+          <target state="translated">定期执行</target>
+        </trans-unit>
+        <trans-unit id="StartupExecution_Text" translate="yes" xml:space="preserve">
+          <source>On startup</source>
+          <target state="translated">启动时</target>
+        </trans-unit>
+        <trans-unit id="ScheduleExecution_Text" translate="yes" xml:space="preserve">
+          <source>According to schedule</source>
+          <target state="translated">按照计划</target>
+        </trans-unit>
+        <trans-unit id="PreviewText" translate="yes" xml:space="preserve">
+          <source>View</source>
+          <target state="translated">查看</target>
+        </trans-unit>
+        <trans-unit id="FilterId.Text" translate="yes" xml:space="preserve">
+          <source>Filter number:</source>
+          <target state="translated">过滤器编号:</target>
+        </trans-unit>
+        <trans-unit id="DocumentFlow.Text" translate="yes" xml:space="preserve">
+          <source>File flow:</source>
+          <target state="translated">文件流向:</target>
+        </trans-unit>
+        <trans-unit id="AutomatedRules.Text" translate="yes" xml:space="preserve">
+          <source>Automated rules:</source>
+          <target state="translated">自动规则:</target>
+        </trans-unit>
+        <trans-unit id="ListOfFilesToBeMatched.Text" translate="yes" xml:space="preserve">
+          <source>List of files to be matched:</source>
+          <target state="translated">待匹配文件列表:</target>
+        </trans-unit>
+        <trans-unit id="IsFolder.Text" translate="yes" xml:space="preserve">
+          <source>Is folder</source>
+          <target state="translated">是否文件夹</target>
+        </trans-unit>
+        <trans-unit id="File.Text" translate="yes" xml:space="preserve">
+          <source>File</source>
+          <target state="translated">文件</target>
+        </trans-unit>
+        <trans-unit id="Latency_Text" translate="yes" xml:space="preserve">
+          <source>Delay {0} second</source>
+          <target state="translated">延迟 {0} 秒</target>
+        </trans-unit>
+        <trans-unit id="RegularTask_Text" translate="yes" xml:space="preserve">
+          <source>Every: Perform every {0} hours and {1} minutes</source>
+          <target state="translated">每: {0} 小时和 {1} 分钟执行一次</target>
+        </trans-unit>
+        <trans-unit id="MissionSelection.Text" translate="yes" xml:space="preserve">
+          <source>Task selection</source>
+          <target state="translated">任务选择</target>
+        </trans-unit>
+        <trans-unit id="Action.Text" translate="yes" xml:space="preserve">
+          <source>Action</source>
+          <target state="translated">动作</target>
+        </trans-unit>
+        <trans-unit id="Rules.Text" translate="yes" xml:space="preserve">
+          <source>Rules</source>
+          <target state="translated">规则</target>
+        </trans-unit>
+        <trans-unit id="FileFlowDirection.Text" translate="yes" xml:space="preserve">
+          <source>file flow</source>
+          <target state="translated">文件流向</target>
+        </trans-unit>
+        <trans-unit id="AutomaticMode.Text" translate="yes" xml:space="preserve">
+          <source>Auto Mode</source>
+          <target state="translated">自动模式</target>
+        </trans-unit>
+        <trans-unit id="HardLinkText" translate="yes" xml:space="preserve">
+          <source>Hard link</source>
+          <target state="translated">硬连接</target>
+        </trans-unit>
+        <trans-unit id="SoftLinkText" translate="yes" xml:space="preserve">
+          <source>Soft link</source>
+          <target state="translated">软连接</target>
         </trans-unit>
       </group>
     </body>

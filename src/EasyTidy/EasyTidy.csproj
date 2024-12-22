@@ -169,6 +169,7 @@
     <None Remove="Views\ContentDialogs\AddTaskContentDialog.xaml" />
     <None Remove="Views\ContentDialogs\CustomConfigContentDialog.xaml" />
     <None Remove="Views\ContentDialogs\PlanExecutionContentDialog.xaml" />
+    <None Remove="Views\ContentDialogs\PreviewContentDialog.xaml" />
     <None Remove="Views\Filters\FiltersPage.xaml" />
     <None Remove="Views\Logs\LogsPage.xaml" />
     <None Remove="Views\NotificationView.xaml" />
@@ -271,6 +272,9 @@
     <None Update="Themes\Styles\TextBlock.xaml">
       <Generator>MSBuild:Compile</Generator>
     </None>
+    <Page Update="Views\ContentDialogs\PreviewContentDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Views\Logs\LogsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

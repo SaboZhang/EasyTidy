@@ -68,7 +68,7 @@ jobs:
         .\7z.ps1 ${{ github.ref_name }}
 
     - name: Release
-      uses: softprops/action-gh-release@v2.2.0
+      uses: softprops/action-gh-release@v2
       if: startsWith(github.ref, 'refs/tags/')
       with:
         tag_name: ${{ github.ref_name }}

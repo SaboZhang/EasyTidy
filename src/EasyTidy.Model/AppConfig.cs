@@ -1,8 +1,8 @@
-﻿using EasyTidy.Model;
-using Nucs.JsonSettings;
+﻿using Nucs.JsonSettings;
 using Nucs.JsonSettings.Modulation;
+using System;
 
-namespace EasyTidy.Common;
+namespace EasyTidy.Model;
 public partial class AppConfig : JsonSettings, IVersionable
 {
     [EnforcedVersion("1.0.7.1215")]
@@ -12,11 +12,9 @@ public partial class AppConfig : JsonSettings, IVersionable
 
     public virtual string LastUpdateCheck { get; set; }
 
-    public virtual NavigationViewPaneDisplayMode NavigationViewPaneDisplayMode { get; set; } = NavigationViewPaneDisplayMode.Auto;
-
     // Docs: https://github.com/Nucs/JsonSettings
 
-    public virtual ConfigModel? GeneralConfig { get; set; } = InitialConfig();
+    public virtual ConfigModel? GeneralConfig { get; set; } = new();
 
     public virtual AutomaticConfigModel? AutomaticConfig { get; set; } = new();
 

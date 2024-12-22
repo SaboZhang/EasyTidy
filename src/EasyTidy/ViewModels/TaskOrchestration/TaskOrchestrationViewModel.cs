@@ -12,7 +12,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.UI.Dispatching;
 using System.Collections.ObjectModel;
 using System.Data;
-using System.Threading.Tasks;
 
 namespace EasyTidy.ViewModels;
 
@@ -405,6 +404,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                     oldTask.IsEnabled = dialog.EnabledFlag;
                     oldTask.GroupName = group;
                     oldTask.IsRegex = dialog.IsRegex;
+                    oldTask.RuleType = dialog.RuleType;
                     oldTask.Filter = SelectedFilter != null 
                     ? await _dbContext.Filters.Where(x => x.Id == SelectedFilter.Id).FirstOrDefaultAsync()
                     : null;
@@ -478,12 +478,45 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
             if (dataContext != null)
             {
                 var task = dataContext as TaskOrchestrationTable;
-                var delete = await _dbContext.TaskOrchestration.Where(x => x.ID == task.ID).FirstOrDefaultAsync();
+                var delete = await _dbContext.TaskOrchestration
+                    .Include(x => x.GroupName)
+                    .Include(x => x.AutomaticTable)
+                    .Where(x => x.ID == task.ID).FirstOrDefaultAsync();
                 if (delete != null)
                 {
+                    if (delete.AutomaticTable != null)
+                    {
+                        var automaticTable = delete.AutomaticTable;
+                        var scheduleId = automaticTable.Schedule != null ? automaticTable.Schedule.ID : 0;
+                        var schedule = await _dbContext.Schedule.Where(x => x.ID == scheduleId).FirstOrDefaultAsync();
+                        if (schedule != null)
+                        {
+                            _dbContext.Schedule.Remove(schedule);
+                        }
+                        // 检查是否还有其他任务关联同一个 AutomaticTable
+                        var isAutomaticTableInUse = await _dbContext.TaskOrchestration
+                            .AnyAsync(x => x.AutomaticTable.ID == automaticTable.ID && x.ID != delete.ID);
+
+                        if (!isAutomaticTableInUse)
+                        {
+                            _dbContext.Automatic.Remove(automaticTable);
+                        }
+                    }
                     _dbContext.TaskOrchestration.Remove(delete);
+                    await _dbContext.SaveChangesAsync();
+                    var group = delete.GroupName;
+                    if (group != null)
+                    {
+                        var hasOtherTasks = await _dbContext.TaskOrchestration
+                            .AnyAsync(x => x.GroupName.Id == group.Id);
+                        // 如果没有其他任务，则删除组
+                        if (!hasOtherTasks)
+                        {
+                            _dbContext.TaskGroup.Remove(group);
+                            await _dbContext.SaveChangesAsync();
+                        }
+                    }
                 }
-                await _dbContext.SaveChangesAsync();
                 await QuartzHelper.DeleteJob(task.TaskName + "#" + task.ID.ToString(), task.GroupName.GroupName);
                 FileEventHandler.StopMonitor(task.TaskSource, task.TaskTarget);
                 await OnPageLoaded();
@@ -522,11 +555,6 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
             if (dataContext != null)
             {
                 var task = dataContext as TaskOrchestrationTable;
-                // 保证手动执行时正确处理正则表达式
-                if (task.IsRegex)
-                {
-                    task.RuleType = TaskRuleType.ExpressionRules;
-                }
                 var automatic = new AutomaticJob();
                 var rule = await automatic.GetSpecialCasesRule(task.GroupName.Id, task.TaskRule);
                 var operationParameters = new OperationParameters(

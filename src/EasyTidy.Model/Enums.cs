@@ -57,7 +57,14 @@ public enum OperationMode
 
     [Display(Name = "UploadWebDavText")] UploadWebDAV,
 
+    /// <summary>
+    /// TODO: Implement this feature
+    /// </summary>
     [Display(Name = "EncryptionText")] Encryption,
+
+    [Display(Name = "HardLinkText")] HardLink,
+
+    [Display(Name = "SoftLinkText")] SoftLink,
 
 }
 
@@ -145,4 +152,11 @@ public enum BackdropType
     AcrylicThin,
     AcrylicBase,
     Transparent
+}
+
+public enum DateType
+{
+    Create,
+    Edit,
+    Visit
 }
