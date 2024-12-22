@@ -1662,11 +1662,91 @@
         </trans-unit>
         <trans-unit id="GeneralAutomaticRepairCard.Header" translate="yes" xml:space="preserve">
           <source>Automatic repair</source>
-          <target state="new">Automatic repair</target>
+          <target state="translated">Réparation automatique</target>
         </trans-unit>
         <trans-unit id="GeneralAutomaticRepairCard.Description" translate="yes" xml:space="preserve">
           <source>Automatically fix errors in the schedule configuration.</source>
-          <target state="new">Automatically fix errors in the schedule configuration.</target>
+          <target state="translated">Corriger automatiquement les erreurs dans la configuration du programme.</target>
+        </trans-unit>
+        <trans-unit id="FileChange_Text" translate="yes" xml:space="preserve">
+          <source>Whenever the file changes</source>
+          <target state="translated">Dès que le fichier change</target>
+        </trans-unit>
+        <trans-unit id="RegularTaskRunning_Text" translate="yes" xml:space="preserve">
+          <source>Regular execution</source>
+          <target state="translated">Exécution régulière</target>
+        </trans-unit>
+        <trans-unit id="StartupExecution_Text" translate="yes" xml:space="preserve">
+          <source>On startup</source>
+          <target state="translated">Au démarrage</target>
+        </trans-unit>
+        <trans-unit id="ScheduleExecution_Text" translate="yes" xml:space="preserve">
+          <source>According to schedule</source>
+          <target state="translated">Selon le calendrier</target>
+        </trans-unit>
+        <trans-unit id="PreviewText" translate="yes" xml:space="preserve">
+          <source>View</source>
+          <target state="translated">Voir</target>
+        </trans-unit>
+        <trans-unit id="FilterId.Text" translate="yes" xml:space="preserve">
+          <source>Filter number:</source>
+          <target state="translated">Numéro de filtre :</target>
+        </trans-unit>
+        <trans-unit id="DocumentFlow.Text" translate="yes" xml:space="preserve">
+          <source>File flow:</source>
+          <target state="translated">Flux de fichiers :</target>
+        </trans-unit>
+        <trans-unit id="AutomatedRules.Text" translate="yes" xml:space="preserve">
+          <source>Automated rules:</source>
+          <target state="translated">Règles automatisées :</target>
+        </trans-unit>
+        <trans-unit id="ListOfFilesToBeMatched.Text" translate="yes" xml:space="preserve">
+          <source>List of files to be matched:</source>
+          <target state="translated">Liste des fichiers à faire correspondre :</target>
+        </trans-unit>
+        <trans-unit id="IsFolder.Text" translate="yes" xml:space="preserve">
+          <source>Is folder</source>
+          <target state="translated">Est dossier</target>
+        </trans-unit>
+        <trans-unit id="File.Text" translate="yes" xml:space="preserve">
+          <source>File</source>
+          <target state="translated">Fichier</target>
+        </trans-unit>
+        <trans-unit id="Latency_Text" translate="yes" xml:space="preserve">
+          <source>Delay {0} second</source>
+          <target state="translated">Délai de {0} seconde</target>
+        </trans-unit>
+        <trans-unit id="RegularTask_Text" translate="yes" xml:space="preserve">
+          <source>Every: Perform every {0} hours and {1} minutes</source>
+          <target state="translated">Tous : Effectuer toutes les {0} heures et {1} minutes</target>
+        </trans-unit>
+        <trans-unit id="MissionSelection.Text" translate="yes" xml:space="preserve">
+          <source>Task selection</source>
+          <target state="translated">Sélection de tâches</target>
+        </trans-unit>
+        <trans-unit id="Action.Text" translate="yes" xml:space="preserve">
+          <source>Action</source>
+          <target state="translated">Action</target>
+        </trans-unit>
+        <trans-unit id="Rules.Text" translate="yes" xml:space="preserve">
+          <source>Rules</source>
+          <target state="translated">Règles</target>
+        </trans-unit>
+        <trans-unit id="FileFlowDirection.Text" translate="yes" xml:space="preserve">
+          <source>file flow</source>
+          <target state="translated">Flux de fichiers</target>
+        </trans-unit>
+        <trans-unit id="AutomaticMode.Text" translate="yes" xml:space="preserve">
+          <source>Auto Mode</source>
+          <target state="translated">Mode Auto</target>
+        </trans-unit>
+        <trans-unit id="HardLinkText" translate="yes" xml:space="preserve">
+          <source>Hard link</source>
+          <target state="translated">Lien dur</target>
+        </trans-unit>
+        <trans-unit id="SoftLinkText" translate="yes" xml:space="preserve">
+          <source>Soft link</source>
+          <target state="translated">Lien symbolique</target>
         </trans-unit>
       </group>
     </body>

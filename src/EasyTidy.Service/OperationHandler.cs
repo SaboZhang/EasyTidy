@@ -31,6 +31,8 @@ public static class OperationHandler
             { OperationMode.ZipFile, CompressedFileAsync },
             { OperationMode.UploadWebDAV, UploadFileAsync },
             { OperationMode.Encryption, EncryptionAsync },
+            { OperationMode.HardLink, CreateHandLink },
+            { OperationMode.SoftLink, CreateSoftLink },
         };
     }
 
@@ -72,7 +74,6 @@ public static class OperationHandler
         }
     }
 
-    // 操作方法示例
     private static async Task MoveAsync(OperationParameters parameter)
     {
         string operationId = $"{parameter.SourcePath}-{parameter.TargetPath}-{parameter.FileOperationType}";
@@ -263,6 +264,22 @@ public static class OperationHandler
     }
 
     private static async Task EncryptionAsync(OperationParameters parameters)
+    {
+        await Task.Run(async () =>
+        {
+            await FileActuator.ExecuteFileOperationAsync(parameters);
+        });
+    }
+
+    private static async Task CreateSoftLink(OperationParameters parameters)
+    {
+        await Task.Run(async () =>
+        {
+            await FileActuator.ExecuteFileOperationAsync(parameters);
+        });
+    }
+
+    private static async Task CreateHandLink(OperationParameters parameters)
     {
         await Task.Run(async () =>
         {

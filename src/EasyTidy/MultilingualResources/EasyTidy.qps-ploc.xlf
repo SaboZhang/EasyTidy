@@ -1668,6 +1668,86 @@
           <source>Automatically fix errors in the schedule configuration.</source>
           <target state="new">Automatically fix errors in the schedule configuration.</target>
         </trans-unit>
+        <trans-unit id="FileChange_Text" translate="yes" xml:space="preserve">
+          <source>Whenever the file changes</source>
+          <target state="new">Whenever the file changes</target>
+        </trans-unit>
+        <trans-unit id="RegularTaskRunning_Text" translate="yes" xml:space="preserve">
+          <source>Regular execution</source>
+          <target state="new">Regular execution</target>
+        </trans-unit>
+        <trans-unit id="StartupExecution_Text" translate="yes" xml:space="preserve">
+          <source>On startup</source>
+          <target state="new">On startup</target>
+        </trans-unit>
+        <trans-unit id="ScheduleExecution_Text" translate="yes" xml:space="preserve">
+          <source>According to schedule</source>
+          <target state="new">According to schedule</target>
+        </trans-unit>
+        <trans-unit id="PreviewText" translate="yes" xml:space="preserve">
+          <source>View</source>
+          <target state="new">View</target>
+        </trans-unit>
+        <trans-unit id="FilterId.Text" translate="yes" xml:space="preserve">
+          <source>Filter number:</source>
+          <target state="new">Filter number:</target>
+        </trans-unit>
+        <trans-unit id="DocumentFlow.Text" translate="yes" xml:space="preserve">
+          <source>File flow:</source>
+          <target state="new">File flow:</target>
+        </trans-unit>
+        <trans-unit id="AutomatedRules.Text" translate="yes" xml:space="preserve">
+          <source>Automated rules:</source>
+          <target state="new">Automated rules:</target>
+        </trans-unit>
+        <trans-unit id="ListOfFilesToBeMatched.Text" translate="yes" xml:space="preserve">
+          <source>List of files to be matched:</source>
+          <target state="new">List of files to be matched:</target>
+        </trans-unit>
+        <trans-unit id="IsFolder.Text" translate="yes" xml:space="preserve">
+          <source>Is folder</source>
+          <target state="new">Is folder</target>
+        </trans-unit>
+        <trans-unit id="File.Text" translate="yes" xml:space="preserve">
+          <source>File</source>
+          <target state="new">File</target>
+        </trans-unit>
+        <trans-unit id="Latency_Text" translate="yes" xml:space="preserve">
+          <source>Delay {0} second</source>
+          <target state="new">Delay {0} second</target>
+        </trans-unit>
+        <trans-unit id="RegularTask_Text" translate="yes" xml:space="preserve">
+          <source>Every: Perform every {0} hours and {1} minutes</source>
+          <target state="new">Every: Perform every {0} hours and {1} minutes</target>
+        </trans-unit>
+        <trans-unit id="MissionSelection.Text" translate="yes" xml:space="preserve">
+          <source>Task selection</source>
+          <target state="new">Task selection</target>
+        </trans-unit>
+        <trans-unit id="Action.Text" translate="yes" xml:space="preserve">
+          <source>Action</source>
+          <target state="new">Action</target>
+        </trans-unit>
+        <trans-unit id="Rules.Text" translate="yes" xml:space="preserve">
+          <source>Rules</source>
+          <target state="new">Rules</target>
+        </trans-unit>
+        <trans-unit id="FileFlowDirection.Text" translate="yes" xml:space="preserve">
+          <source>file flow</source>
+          <target state="new">file flow</target>
+        </trans-unit>
+        <trans-unit id="AutomaticMode.Text" translate="yes" xml:space="preserve">
+          <source>Auto Mode</source>
+          <target state="new">Auto Mode</target>
+        </trans-unit>
+        <trans-unit id="HardLinkText" translate="yes" xml:space="preserve">
+          <source>Hard link</source>
+          <target state="new">Hard link</target>
+        </trans-unit>
+        <trans-unit id="SoftLinkText" translate="yes" xml:space="preserve">
+          <source>Soft link</source>
+          <target state="new">Soft link</target>
+        </trans-unit>
       </group>
     </body>
   </file>

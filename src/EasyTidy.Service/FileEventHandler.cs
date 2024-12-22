@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.WinUI;
 using EasyTidy.Log;
 using EasyTidy.Model;
+using EasyTidy.Util;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -37,7 +38,7 @@ public static class FileEventHandler
         // 创建并配置文件监控器
         var watcher = CreateFileSystemWatcher(parameter.SourcePath);
 
-        watcher.IncludeSubdirectories = (bool)ServiceConfig.CurConfig.SubFolder;
+        watcher.IncludeSubdirectories = (bool)CommonUtil.Configs.GeneralConfig.SubFolder;
         // 绑定文件变化事件
         BindFileSystemEvents(watcher, delaySeconds, parameter);
 

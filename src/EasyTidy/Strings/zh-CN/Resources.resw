@@ -1231,4 +1231,70 @@
   <data name="EncryptionText" xml:space="preserve">
     <value>文件加密</value>
   </data>
+  <data name="GeneralAutomaticRepairCard.Header" xml:space="preserve">
+    <value>自动修复</value>
+  </data>
+  <data name="GeneralAutomaticRepairCard.Description" xml:space="preserve">
+    <value>自动修复时间表计划配置中的错误。</value>
+  </data>
+  <data name="FileChange_Text" xml:space="preserve">
+    <value>文件更改时</value>
+  </data>
+  <data name="RegularTaskRunning_Text" xml:space="preserve">
+    <value>定期执行</value>
+  </data>
+  <data name="StartupExecution_Text" xml:space="preserve">
+    <value>启动时</value>
+  </data>
+  <data name="ScheduleExecution_Text" xml:space="preserve">
+    <value>按照计划</value>
+  </data>
+  <data name="PreviewText" xml:space="preserve">
+    <value>查看</value>
+  </data>
+  <data name="FilterId.Text" xml:space="preserve">
+    <value>过滤器编号:</value>
+  </data>
+  <data name="DocumentFlow.Text" xml:space="preserve">
+    <value>文件流向:</value>
+  </data>
+  <data name="AutomatedRules.Text" xml:space="preserve">
+    <value>自动规则:</value>
+  </data>
+  <data name="ListOfFilesToBeMatched.Text" xml:space="preserve">
+    <value>待匹配文件列表:</value>
+  </data>
+  <data name="IsFolder.Text" xml:space="preserve">
+    <value>是否文件夹</value>
+  </data>
+  <data name="File.Text" xml:space="preserve">
+    <value>文件</value>
+  </data>
+  <data name="Latency_Text" xml:space="preserve">
+    <value>延迟 {0} 秒</value>
+  </data>
+  <data name="RegularTask_Text" xml:space="preserve">
+    <value>每: {0} 小时和 {1} 分钟执行一次</value>
+  </data>
+  <data name="MissionSelection.Text" xml:space="preserve">
+    <value>任务选择</value>
+  </data>
+  <data name="Action.Text" xml:space="preserve">
+    <value>动作</value>
+  </data>
+  <data name="Rules.Text" xml:space="preserve">
+    <value>规则</value>
+  </data>
+  <data name="FileFlowDirection.Text" xml:space="preserve">
+    <value>文件流向</value>
+  </data>
+  <data name="AutomaticMode.Text" xml:space="preserve">
+    <value>自动模式</value>
+  </data>
+  <data name="HardLinkText" xml:space="preserve">
+    <value>硬连接</value>
+  </data>
+  <data name="SoftLinkText" xml:space="preserve">
+    <value>软连接</value>
+  </data>
 </root>

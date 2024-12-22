@@ -62,7 +62,6 @@ public partial class App : Application
                 services.AddTransient<ActivationHandler<LaunchActivatedEventArgs>, DefaultActivationHandler>();
                 services.AddTransient<IActivationHandler, AppNotificationActivationHandler>();
                 // Register Core Services
-                services.AddSingleton<ISettingsManager, SettingsHelper>();
                 services.AddSingleton<ILocalSettingsService, LocalSettingsService>();
                 services.AddSingleton<IThemeSelectorService, ThemeSelectorService>();
                 services.AddTransient<INavigationViewService, NavigationViewService>();

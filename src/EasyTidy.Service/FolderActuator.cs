@@ -26,7 +26,9 @@ public class FolderActuator
         try
         {
             if (string.IsNullOrEmpty(parameters.TargetPath)) return;
-            if (IsFolder(parameters.RuleModel.Rule, parameters.RuleModel.RuleType) && parameters.OperationMode != OperationMode.Extract)
+            if (IsFolder(parameters.RuleModel.Rule, parameters.RuleModel.RuleType) 
+                && parameters.OperationMode != OperationMode.Extract
+                && parameters.OperationMode != OperationMode.HardLink)
             {
                 await RetryAsync(maxRetries, async () =>
                 {
@@ -155,6 +157,12 @@ public class FolderActuator
                 break;
             case OperationMode.Encryption:
                 // TODO: 加密文件
+                break;
+            case OperationMode.HardLink:
+                // CreateFolderSymbolicLink(parameters.TargetPath, parameters.SourcePath);
+                break;
+            case OperationMode.SoftLink:
+                CreateFolderSymbolicLink(parameters.TargetPath, parameters.SourcePath);
                 break;
             default:
                 throw new NotSupportedException($"Operation mode '{parameters.OperationMode}' is not supported.");
@@ -296,10 +304,10 @@ public class FolderActuator
 
     private static async Task UploadFolderAsync(string localDirPath, string remoteDirPath = null)
     {
-        var password = CryptoUtil.DesDecrypt(ServiceConfig.CurConfig.WebDavPassword);
-        WebDavClient webDavClient = new(ServiceConfig.CurConfig.WebDavUrl, ServiceConfig.CurConfig.WebDavUser, password);
-        remoteDirPath = Path.Combine(remoteDirPath ?? ServiceConfig.CurConfig.WebDavUrl + ServiceConfig.CurConfig.UploadPrefix, Path.GetFileName(localDirPath));
-        await webDavClient.CreateFolderAsync(ServiceConfig.CurConfig.WebDavUrl + ServiceConfig.CurConfig.UploadPrefix, Path.GetFileName(localDirPath));
+        var password = CryptoUtil.DesDecrypt(CommonUtil.Configs.WebDavPassword);
+        WebDavClient webDavClient = new(CommonUtil.Configs.WebDavUrl, CommonUtil.Configs.WebDavUser, password);
+        remoteDirPath = Path.Combine(remoteDirPath ?? CommonUtil.Configs.WebDavUrl + CommonUtil.Configs.UploadPrefix, Path.GetFileName(localDirPath));
+        await webDavClient.CreateFolderAsync(CommonUtil.Configs.WebDavUrl + CommonUtil.Configs.UploadPrefix, Path.GetFileName(localDirPath));
         foreach (var file in Directory.GetFiles(localDirPath))
         {
             string remoteFilePath = Path.Combine(remoteDirPath, Path.GetFileName(file));
@@ -404,6 +412,67 @@ public class FolderActuator
             // 清理临时目录
             Directory.Delete(tempDirectory, true);
         }
+    }
+
+    private static void CreateFolderSymbolicLink(string filePath, string tragetPath)
+    {
+        if (string.IsNullOrWhiteSpace(filePath) || !File.Exists(filePath))
+        {
+            LogService.Logger.Warn($"无效路径: {filePath}");
+            return;
+        }
+        try
+        {
+            // 如果符号链接已存在且指向相同目标，跳过创建
+            if (IsSameSymbolicLink(filePath, tragetPath))
+            {
+                LogService.Logger.Warn($"Symbolic link already exists: {filePath} -> {tragetPath}");
+                return;
+            }
+            // 如果路径已存在但不是符号链接，则抛出异常
+            if (File.Exists(filePath) || Directory.Exists(filePath))
+            {
+                throw new IOException($"A file or directory already exists at the path: {filePath}");
+            }
+            var result = Directory.CreateSymbolicLink(filePath, tragetPath) as DirectoryInfo;
+            LogService.Logger.Info($"创建符号连接成功: {filePath} -> {tragetPath}");
+        }
+        catch (Exception ex)
+        {
+            LogService.Logger.Error($"Error creating symbolic link: {ex.Message}");
+        }
+    }
+
+    private static bool IsSymbolicLink(string path)
+    {
+        FileSystemInfo fileInfo = new FileInfo(path);
+
+        // 如果路径是目录，则使用 DirectoryInfo
+        if (Directory.Exists(path))
+        {
+            fileInfo = new DirectoryInfo(path);
+        }
+
+        return fileInfo.LinkTarget != null;
+    }
+
+    private static bool IsSameSymbolicLink(string linkPath, string targetPath)
+    {
+        if (!IsSymbolicLink(linkPath))
+        {
+            return false;
+        }
+
+        FileSystemInfo fileInfo = new FileInfo(linkPath);
+
+        // 如果路径是目录，则使用 DirectoryInfo
+        if (Directory.Exists(linkPath))
+        {
+            fileInfo = new DirectoryInfo(linkPath);
+        }
+
+        // 比较目标路径
+        return string.Equals(fileInfo.LinkTarget, targetPath, StringComparison.OrdinalIgnoreCase);
     }
 
 }

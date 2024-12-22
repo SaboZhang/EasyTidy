@@ -19,11 +19,6 @@ public sealed partial class AutomaticPage : Page
 
     }
 
-    private void GroupTaskSelect_CloseButtonClick(TeachingTip sender, object args)
-    {
-        ViewModel.SelectGroupItemChangedCommand.Execute(sender);
-    }
-
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
         ViewModel.Initialize(NotificationQueue);
@@ -36,12 +31,12 @@ public sealed partial class AutomaticPage : Page
 
     private void EditButton_Click(object sender, RoutedEventArgs e)
     {
-        ViewModel.CustomConfigCommand.Execute(DataContext);
+        ViewModel.CustomConfigCommand.Execute((sender as Button).DataContext);
     }
 
     private void ViewButton_Click(object sender, RoutedEventArgs e)
     {
-
+        ViewModel.PreviewTaskCommand.Execute((sender as Button).DataContext);
     }
 
     private void Checkbox_Click(object sender, RoutedEventArgs e) 

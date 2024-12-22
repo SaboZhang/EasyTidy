@@ -1,5 +1,4 @@
 ﻿using EasyTidy.Model;
-using EasyTidy.Util;
 using Nucs.JsonSettings;
 using Nucs.JsonSettings.Autosave;
 using Nucs.JsonSettings.Fluent;

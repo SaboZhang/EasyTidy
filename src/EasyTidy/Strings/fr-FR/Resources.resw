@@ -1213,4 +1213,70 @@
   <data name="EncryptionText" xml:space="preserve">
     <value>Cryptage de fichiers</value>
   </data>
+  <data name="GeneralAutomaticRepairCard.Header" xml:space="preserve">
+    <value>Réparation automatique</value>
+  </data>
+  <data name="GeneralAutomaticRepairCard.Description" xml:space="preserve">
+    <value>Corriger automatiquement les erreurs dans la configuration du programme.</value>
+  </data>
+  <data name="FileChange_Text" xml:space="preserve">
+    <value>Dès que le fichier change</value>
+  </data>
+  <data name="RegularTaskRunning_Text" xml:space="preserve">
+    <value>Exécution régulière</value>
+  </data>
+  <data name="StartupExecution_Text" xml:space="preserve">
+    <value>Au démarrage</value>
+  </data>
+  <data name="ScheduleExecution_Text" xml:space="preserve">
+    <value>Selon le calendrier</value>
+  </data>
+  <data name="PreviewText" xml:space="preserve">
+    <value>Voir</value>
+  </data>
+  <data name="FilterId.Text" xml:space="preserve">
+    <value>Numéro de filtre :</value>
+  </data>
+  <data name="DocumentFlow.Text" xml:space="preserve">
+    <value>Flux de fichiers :</value>
+  </data>
+  <data name="AutomatedRules.Text" xml:space="preserve">
+    <value>Règles automatisées :</value>
+  </data>
+  <data name="ListOfFilesToBeMatched.Text" xml:space="preserve">
+    <value>Liste des fichiers à faire correspondre :</value>
+  </data>
+  <data name="IsFolder.Text" xml:space="preserve">
+    <value>Est dossier</value>
+  </data>
+  <data name="File.Text" xml:space="preserve">
+    <value>Fichier</value>
+  </data>
+  <data name="Latency_Text" xml:space="preserve">
+    <value>Délai de {0} seconde</value>
+  </data>
+  <data name="RegularTask_Text" xml:space="preserve">
+    <value>Tous : Effectuer toutes les {0} heures et {1} minutes</value>
+  </data>
+  <data name="MissionSelection.Text" xml:space="preserve">
+    <value>Sélection de tâches</value>
+  </data>
+  <data name="Action.Text" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="Rules.Text" xml:space="preserve">
+    <value>Règles</value>
+  </data>
+  <data name="FileFlowDirection.Text" xml:space="preserve">
+    <value>Flux de fichiers</value>
+  </data>
+  <data name="AutomaticMode.Text" xml:space="preserve">
+    <value>Mode Auto</value>
+  </data>
+  <data name="HardLinkText" xml:space="preserve">
+    <value>Lien dur</value>
+  </data>
+  <data name="SoftLinkText" xml:space="preserve">
+    <value>Lien symbolique</value>
+  </data>
 </root>

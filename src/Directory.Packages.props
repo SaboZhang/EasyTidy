@@ -21,6 +21,7 @@
     <PackageVersion Include="Microsoft.WindowsAppSDK" Version="1.6.241114003" />
     <PackageVersion Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.9" />
     <PackageVersion Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageVersion Include="Nucs.JsonSettings2" Version="2.0.4" />
     <PackageVersion Include="Nucs.JsonSettings2.Autosave" Version="2.0.3" />
     <PackageVersion Include="Quartz" Version="3.13.1" />
     <PackageVersion Include="Quartz.Serialization.Json" Version="3.13.1" />
