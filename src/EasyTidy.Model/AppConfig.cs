@@ -5,8 +5,8 @@ using System;
 namespace EasyTidy.Model;
 public partial class AppConfig : JsonSettings, IVersionable
 {
-    [EnforcedVersion("1.0.7.1215")]
-    public virtual Version Version { get; set; } = new Version(1, 0, 7, 1215);
+    [EnforcedVersion("1.0.7.1223")]
+    public virtual Version Version { get; set; } = new Version(1, 0, 7, 1223);
 
     public override string FileName { get; set; } = Constants.AppConfigPath;
 
@@ -29,6 +29,8 @@ public partial class AppConfig : JsonSettings, IVersionable
     public virtual string WebDavPassword { get; set; }
 
     public virtual string UploadPrefix { get; set; } = "/EasyTidy_UploadFiles";
+
+    public virtual bool PreserveDirectoryStructure { get; set; } = true;
 
     public virtual BackupModel? BackupConfig { get; set; } = new();
 }

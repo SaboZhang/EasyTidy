@@ -89,103 +89,164 @@ public static class FileActuator
 
     private static async Task ProcessDirectoryAsync(OperationParameters parameters)
     {
-        // 创建目标目录
-        if (!parameters.TargetPath.Equals(parameters.SourcePath, StringComparison.OrdinalIgnoreCase) 
-            && !Directory.Exists(parameters.TargetPath) 
-            && parameters.OperationMode != OperationMode.Rename)
+        // 创建目标目录（如果需要）
+        EnsureTargetDirectory(parameters);
+
+        // 根据操作模式执行相应的处理
+        switch (parameters.OperationMode)
+        {
+            case OperationMode.ZipFile:
+                await ProcessFileAsync(parameters);
+                break;
+            case OperationMode.Rename:
+                await HandleRenameOperation(parameters);
+                break;
+            default:
+                await HandleDefaultOperation(parameters);
+                break;
+        }
+    }
+
+    private static void EnsureTargetDirectory(OperationParameters parameters, string? directoryPath = null)
+    {
+        if (!Directory.Exists(parameters.TargetPath) 
+        && parameters.OperationMode != OperationMode.Rename && string.IsNullOrEmpty(directoryPath))
         {
             Directory.CreateDirectory(parameters.TargetPath);
         }
-
-
-        if (parameters.OperationMode == OperationMode.ZipFile) 
+        if (!string.IsNullOrEmpty(directoryPath) && !Directory.Exists(directoryPath))
         {
-            await ProcessFileAsync(parameters);
-            return;
+            Directory.CreateDirectory(directoryPath);
+        }
+    }
+
+    private static async Task HandleDefaultOperation(OperationParameters parameters)
+    {
+        // 递归处理子文件夹（如果启用）
+        if (CommonUtil.Configs?.GeneralConfig?.SubFolder ?? false)
+        {
+            await ProcessSubDirectoriesAsync(parameters);
         }
 
         var fileList = Directory.GetFiles(parameters.SourcePath).ToList();
-        // 获取所有文件并处理
-        int fileCount = 0;
         foreach (var filePath in fileList)
         {
-            fileCount++;
-            var dynamicFilters = new List<Func<string, bool>>(parameters.Funcs);
-            if (FilterUtil.ShouldSkip(new List<Func<string, bool>>(parameters.Funcs), filePath, parameters.PathFilter))
+            if (ShouldSkipFile(filePath, parameters))
             {
-                LogService.Logger.Debug($"执行文件操作，获取所有文件跳过不符合条件的文件 filePath: {filePath}, RuleFilters: {parameters.RuleName},=== {fileCount}, sourcePath: {parameters.SourcePath}");
-                continue; // 跳过不符合条件的文件
+                LogService.Logger.Debug($"执行文件操作，获取所有文件跳过不符合条件的文件 filePath: {filePath}, RuleFilters: {parameters.RuleName}");
+                continue;
             }
 
-            // 更新目标路径
             var targetFilePath = Path.Combine(parameters.TargetPath, Path.GetFileName(filePath));
-            var oldPath = Path.Combine(parameters.SourcePath, Path.GetFileName(filePath));
-            var fileParameters = new OperationParameters(
-                parameters.OperationMode,
-                filePath,
-                targetFilePath,
-                parameters.FileOperationType,
-                parameters.HandleSubfolders,
-                parameters.Funcs,
-                parameters.PathFilter )
-            {
-                OldTargetPath = parameters.TargetPath,
-                OldSourcePath = oldPath,
-                RuleModel = parameters.RuleModel
-            };
-
+            var fileParameters = CreateOperationParametersForFile(parameters, targetFilePath, filePath);
             await ProcessFileAsync(fileParameters);
         }
+    }
 
-        if (parameters.OperationMode == OperationMode.Rename)
+    private static bool ShouldSkipFile(string filePath, OperationParameters parameters)
+    {
+        return FilterUtil.ShouldSkip(new List<Func<string, bool>>(parameters.Funcs), filePath, parameters.PathFilter);
+    }
+
+    private static OperationParameters CreateOperationParametersForFile(
+        OperationParameters baseParameters,
+        string targetFilePath,
+        string sourceFilePath)
+    {
+        return new OperationParameters(
+            baseParameters.OperationMode,
+            sourceFilePath,
+            targetFilePath,
+            baseParameters.FileOperationType,
+            baseParameters.HandleSubfolders,
+            baseParameters.Funcs,
+            baseParameters.PathFilter)
         {
-            Renamer.ResetIncrement();
+            OldTargetPath = baseParameters.TargetPath,
+            OldSourcePath = sourceFilePath,
+            RuleModel = baseParameters.RuleModel
+        };
+    }
+
+    private static async Task HandleRenameOperation(OperationParameters parameters)
+    {
+        // 处理重命名操作
+        await HandleDefaultOperation(parameters);
+        Renamer.ResetIncrement();
+    }
+
+    private static async Task ProcessSubDirectoriesAsync(OperationParameters parameters)
+    {
+        var subDirList = Directory.GetDirectories(parameters.SourcePath).ToList();
+        var files = GetAllFiles(subDirList);
+        foreach (var file in files)
+        {
+            if (IsHardLinkedFile(file))
+            {
+                continue;
+            }
+            string destinationPath;
+            if (CommonUtil.Configs?.PreserveDirectoryStructure ?? true)
+            {
+                // 保留目录结构时，获取相对路径
+                string relativePath = Path.GetRelativePath(parameters.SourcePath, file);
+                destinationPath = Path.Combine(parameters.TargetPath, relativePath);
+            }
+            else
+            {
+                // 如果不保留目录结构，直接处理到 target 目录
+                destinationPath = Path.Combine(parameters.TargetPath, Path.GetFileName(file));
+            }
+            string destinationDir = Path.GetDirectoryName(destinationPath);
+
+            EnsureTargetDirectory(parameters, destinationDir); // 确保每个子目录的目标路径存在
+
+            var fileParameters = CreateOperationParametersForFile(parameters, destinationPath, file);
+            await ProcessFileAsync(fileParameters);
+        }
+    }
+
+    private static List<string> GetAllFiles(List<string> listPaths)
+    {
+        List<string> files = new();
+        try
+        {
+            foreach (var path in listPaths)
+            {
+                files.AddRange(Directory.EnumerateFiles(path, "*.*", System.IO.SearchOption.AllDirectories));
+            }
+        }
+        catch (Exception ex)
+        {
+            LogService.Logger.Error($"Error getting all files error: {ex.Message}");
         }
 
-        var subFolder = CommonUtil.Configs?.GeneralConfig?.SubFolder ?? false;
-        // 递归处理子文件夹
-        if (subFolder)
+        return files;
+    }
+
+    /// <summary>
+    /// 递归获取所有文件 预留方法，若效率太低则使用此方法进行递归
+    /// </summary>
+    /// <param name="path"></param>
+    /// <param name="folderName"></param>
+    /// <param name="fileName"></param>
+    /// <param name="projectPaths"></param>
+    private static void SearchFileInPath(string path, string folderName, string fileName, ref List<string> projectPaths)
+    {
+        var dirs = Directory.GetDirectories(path, "*.*", System.IO.SearchOption.TopDirectoryOnly).ToList();  //获取当前路径下所有文件与文件夹
+        var desFolders = dirs.FindAll(x => x.Contains(folderName)); //在当前目录中查找目标文件夹
+        if (desFolders == null || desFolders.Count <= 0)
         {
-            var subDirList = Directory.GetDirectories(parameters.SourcePath).ToList();
-            foreach (var subDir in subDirList)
+            //当前目录未找到目标则递归
+            foreach (var dir in dirs)
             {
-                if (parameters.TargetPath.StartsWith(subDir, StringComparison.OrdinalIgnoreCase))
-                {
-                    LogService.Logger.Debug($"跳过递归目标目录 {subDir}");
-                    continue;
-                }
-                // 为子文件夹生成新的目标路径
-                var newTargetPath = Path.Combine(parameters.TargetPath, Path.GetFileName(subDir));
-                var oldPath = Path.Combine(parameters.SourcePath, Path.GetFileName(subDir));
-                LogService.Logger.Info($"执行文件操作，递归处理子文件夹: {newTargetPath}");
-
-                // 避免重复创建文件夹
-                if (!Directory.Exists(newTargetPath))
-                {
-                    LogService.Logger.Info($"递归创建目标文件夹：{newTargetPath}");
-                    Directory.CreateDirectory(newTargetPath);
-                }
-
-                // 递归调用，传递新的目标路径
-                await ProcessDirectoryAsync(new OperationParameters(
-                    parameters.OperationMode,
-                    subDir,
-                    newTargetPath,
-                    parameters.FileOperationType,
-                    parameters.HandleSubfolders,
-                    parameters.Funcs,
-                    parameters.PathFilter)
-                {
-                    OldTargetPath = parameters.TargetPath,
-                    OldSourcePath = oldPath,
-                    RuleModel = parameters.RuleModel
-                });
+                SearchFileInPath(dir, folderName, fileName, ref projectPaths);
             }
-
-            if (parameters.OperationMode == OperationMode.Rename)
-            {
-                Renamer.ResetIncrement();
-            }
+        }
+        else
+        {
+            //找到则添加至结果集
+            projectPaths.Add(path + "\\" + folderName + "\\" + fileName);
         }
     }
 
@@ -849,5 +910,38 @@ public static class FileActuator
         string lpFileName,  // 新硬链接的路径
         string lpExistingFileName,  // 现有文件的路径
         IntPtr lpSecurityAttributes);  // 保留，必须为 NULL
+
+    [DllImport("kernel32.dll", SetLastError = true)]
+    private static extern bool GetFileInformationByHandle(IntPtr hFile, out BY_HANDLE_FILE_INFORMATION lpFileInformation);
+
+    [StructLayout(LayoutKind.Sequential)]
+    private struct BY_HANDLE_FILE_INFORMATION
+    {
+        public uint FileAttributes;
+        public System.Runtime.InteropServices.ComTypes.FILETIME CreationTime;
+        public System.Runtime.InteropServices.ComTypes.FILETIME LastAccessTime;
+        public System.Runtime.InteropServices.ComTypes.FILETIME LastWriteTime;
+        public uint VolumeSerialNumber;
+        public uint FileSizeHigh;
+        public uint FileSizeLow;
+        public uint NumberOfLinks; // 硬链接计数
+        public uint FileIndexHigh;
+        public uint FileIndexLow;
+    }
+
+    public static bool IsHardLinkedFile(string filePath)
+    {
+        using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+        {
+            if (GetFileInformationByHandle(fs.SafeFileHandle.DangerousGetHandle(), out BY_HANDLE_FILE_INFORMATION fileInfo))
+            {
+                return fileInfo.NumberOfLinks > 1;
+            }
+            else
+            {
+                throw new System.ComponentModel.Win32Exception(Marshal.GetLastWin32Error());
+            }
+        }
+    }
 
 }
