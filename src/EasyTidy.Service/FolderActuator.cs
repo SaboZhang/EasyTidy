@@ -158,9 +158,6 @@ public class FolderActuator
             case OperationMode.Encryption:
                 // TODO: 加密文件
                 break;
-            case OperationMode.HardLink:
-                // CreateFolderSymbolicLink(parameters.TargetPath, parameters.SourcePath);
-                break;
             case OperationMode.SoftLink:
                 CreateFolderSymbolicLink(parameters.TargetPath, parameters.SourcePath);
                 break;
