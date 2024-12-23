@@ -94,6 +94,12 @@
                         </ctk:SettingsCard.HeaderIcon>
                         <ToggleSwitch IsOn="{x:Bind ViewModel.AutomaticRepair, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </ctk:SettingsCard>
+                    <ctk:SettingsCard x:Uid="GeneralDirectoryStructureCard">
+                        <ctk:SettingsCard.HeaderIcon>
+                            <FontIcon Glyph="&#xE96A;"/>
+                        </ctk:SettingsCard.HeaderIcon>
+                        <ToggleSwitch IsOn="{x:Bind ViewModel.PreserveDirectoryStructure, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </ctk:SettingsCard>
                 </etc:SettingsGroup>
 
                 <etc:SettingsGroup x:Uid="GeneralAppSettings"

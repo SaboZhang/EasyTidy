@@ -31,23 +31,6 @@ public static partial class AppHelper
         }
     }
 
-    public static ConfigModel InitialConfig()
-    {
-        return new ConfigModel
-        {
-            Minimize = Settings?.GeneralConfig.Minimize ?? false,
-            IrrelevantFiles = Settings?.GeneralConfig.IrrelevantFiles ?? false,
-            FileInUse = Settings?.GeneralConfig.FileInUse ?? false,
-            SubFolder = Settings?.GeneralConfig.SubFolder ?? false,
-            IsStartup = Settings?.GeneralConfig.IsStartup ?? false,
-            IsStartupCheck = Settings?.GeneralConfig.IsStartupCheck ?? false,
-            EmptyFiles = Settings?.GeneralConfig.EmptyFiles ?? true,
-            HiddenFiles = Settings?.GeneralConfig.HiddenFiles ?? false,
-            FileOperationType = Settings?.GeneralConfig.FileOperationType ?? FileOperationType.Skip,
-            EnableMultiInstance = Settings?.GeneralConfig.EnableMultiInstance ?? false
-        };
-    }
-
     public static void UpdateCurConfig(GeneralSettingViewModel viewModel)
     {
 
@@ -63,6 +46,7 @@ public static partial class AppHelper
         Settings.BackupConfig.AutoBackup = viewModel.AutoBackup;
         Settings.GeneralConfig.EnableMultiInstance = viewModel.EnableMultiInstance;
         Settings.UploadPrefix = viewModel.WebDavPrefix;
+        Settings.PreserveDirectoryStructure = viewModel.PreserveDirectoryStructure;
         StartupOperate(viewModel.IsStartup);
         Settings.GeneralConfig = Settings.GeneralConfig;
         Settings.BackupConfig = Settings.BackupConfig;

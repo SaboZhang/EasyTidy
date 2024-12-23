@@ -1276,4 +1276,10 @@
   <data name="SoftLinkText" xml:space="preserve">
     <value>軟連結</value>
   </data>
+  <data name="GeneralDirectoryStructureCard.Header" xml:space="preserve">
+    <value>保留結構</value>
+  </data>
+  <data name="GeneralDirectoryStructureCard.Description" xml:space="preserve">
+    <value>處理檔案時是否保留資料夾層級結構</value>
+  </data>
 </root>

@@ -1279,4 +1279,10 @@
   <data name="SoftLinkText" xml:space="preserve">
     <value>Lien symbolique</value>
   </data>
+  <data name="GeneralDirectoryStructureCard.Header" xml:space="preserve">
+    <value>Structures de préservation</value>
+  </data>
+  <data name="GeneralDirectoryStructureCard.Description" xml:space="preserve">
+    <value>Préserver la hiérarchie des dossiers lors du traitement des fichiers</value>
+  </data>
 </root>

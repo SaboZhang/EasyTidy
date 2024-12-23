@@ -48,7 +48,19 @@ public class ZipUtil
 
         try
         {
-            foreach (var filePath in filesToCompress)
+            // 获取目标压缩包中的文件列表
+            var filesInZip = GetFilesInMatchingZips(targetPath, sourcePath);
+
+            // 过滤待压缩的文件
+            var filteredFiles = FilterFilesToCompress(filesToCompress, filesInZip, sourcePath);
+
+            if (filteredFiles.Count == 0)
+            {
+                LogService.Logger.Warn("所有文件已在压缩包中，无需重复压缩。");
+                return;
+            }
+
+            foreach (var filePath in filteredFiles)
             {
                 // 计算相对路径
                 string relativePath = Path.GetRelativePath(sourcePath, filePath);
@@ -61,8 +73,27 @@ public class ZipUtil
                 File.Copy(filePath, destinationFilePath, overwrite: true);
             }
 
-            // 创建压缩包
-            ZipFile.CreateFromDirectory(tempDirectory, targetPath, CompressionLevel.Fastest, true);     
+            // 创建压缩包或更新现有压缩包
+            //if (File.Exists(targetPath))
+            //{
+            //    using (var archive = ZipFile.Open(targetPath, ZipArchiveMode.Update))
+            //    {
+            //        foreach (var filePath in filteredFiles)
+            //        {
+            //            string relativePath = Path.GetRelativePath(sourcePath, filePath);
+            //            archive.CreateEntryFromFile(filePath, relativePath, CompressionLevel.Fastest);
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    ZipFile.CreateFromDirectory(tempDirectory, targetPath, CompressionLevel.Fastest, true);
+            //}
+            if (File.Exists(targetPath))
+            {
+                targetPath = FileResolver.GetUniquePath(targetPath);
+            }
+            ZipFile.CreateFromDirectory(tempDirectory, targetPath, CompressionLevel.Fastest, true);
         }
         catch (Exception ex)
         {
@@ -74,6 +105,21 @@ public class ZipUtil
             // 清理临时目录
             Directory.Delete(tempDirectory, true);
         }
+    }
+
+    private static HashSet<string> GetFilesInMatchingZips(string zipFilePath, string sourcePath)
+    {
+        var matchingZipFiles = GetMatchingZipFiles(zipFilePath);
+        var allFilesInZip = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+        // 遍历所有匹配的压缩包，提取每个压缩包中的文件列表
+        foreach (var zipFile in matchingZipFiles)
+        {
+            var filesInZip = GetFilesInZip(zipFile, sourcePath);
+            allFilesInZip.UnionWith(filesInZip); // 合并文件路径集合
+        }
+
+        return allFilesInZip;
     }
 
     public static bool DecompressToDirectory(string zipFilePath, string extractPath, string filterExtension = null)
@@ -177,7 +223,7 @@ public class ZipUtil
                 continue;
             }
 
-            if (string.IsNullOrWhiteSpace(entry.FullName) || entry.FullName.EndsWith("/"))
+            if (string.IsNullOrWhiteSpace(entry.FullName) || entry.FullName.EndsWith('/'))
                 continue;
 
             string relativePath = entry.FullName.Substring(rootFolderName.Length).TrimStart('/');
@@ -433,5 +479,86 @@ public class ZipUtil
             }
         }
     }
+
+    private static HashSet<string> GetFilesInZip(string zipFilePath, string sourcePath)
+    {
+        var filesInZip = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+        if (File.Exists(zipFilePath))
+        {
+            using (var archive = ZipFile.OpenRead(zipFilePath))
+            {
+                foreach (var entry in archive.Entries)
+                {
+                    // 计算相对路径，确保使用统一的路径分隔符（'/'）
+                    string relativePath = entry.FullName.Replace('\\', '/');
+
+                    // 获取 source 目录名并移除前缀
+                    string sourceDirectoryName = Path.GetFileName(sourcePath).Replace('\\', '/');
+
+                    // 如果压缩包中的路径以 source 目录名开头，则去掉前缀
+                    if (relativePath.StartsWith(sourceDirectoryName, StringComparison.OrdinalIgnoreCase))
+                    {
+                        relativePath = relativePath.Substring(sourceDirectoryName.Length).TrimStart('/');
+                    }
+
+                    // 添加到 HashSet 中
+                    filesInZip.Add(relativePath);
+                }
+            }
+        }
+
+        return filesInZip;
+    }
+
+    private static List<string> GetMatchingZipFiles(string zipFilePath)
+    {
+        // 提取文件名和目录路径
+        string directoryPath = Path.GetDirectoryName(zipFilePath);
+        string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(zipFilePath);
+        string fileExtension = Path.GetExtension(zipFilePath);
+
+        var matchingZipFiles = new List<string>();
+
+        if (Directory.Exists(directoryPath))
+        {
+            // 获取目录中所有的 zip 文件
+            var zipFiles = Directory.GetFiles(directoryPath, $"{fileNameWithoutExtension}*{fileExtension}");
+
+            // 将匹配的文件路径添加到列表中
+            matchingZipFiles.AddRange(zipFiles);
+        }
+
+        return matchingZipFiles;
+    }
+
+    private static List<string> FilterFilesToCompress(List<string> filesToCompress, HashSet<string> filesInZip, string sourcePath)
+    {
+        var filteredFiles = new List<string>();
+
+        // 获取 source 目录名并移除前缀
+        string sourceDirectoryName = Path.GetFileName(sourcePath).Replace('\\', '/');
+
+        foreach (var filePath in filesToCompress)
+        {
+            // 计算相对路径
+            string relativePath = Path.GetRelativePath(sourcePath, filePath).Replace('\\', '/');
+
+            // 如果相对路径以 source 目录名开头，则移除该部分
+            if (relativePath.StartsWith(sourceDirectoryName, StringComparison.OrdinalIgnoreCase))
+            {
+                relativePath = relativePath.Substring(sourceDirectoryName.Length).TrimStart('/');
+            }
+
+            // 如果文件不在压缩包中，则加入待压缩列表
+            if (!filesInZip.Contains(relativePath))
+            {
+                filteredFiles.Add(filePath);
+            }
+        }
+
+        return filteredFiles;
+    }
+
 
 }

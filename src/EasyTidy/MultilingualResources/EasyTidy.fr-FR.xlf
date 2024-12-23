@@ -1748,6 +1748,14 @@
           <source>Soft link</source>
           <target state="translated">Lien symbolique</target>
         </trans-unit>
+        <trans-unit id="GeneralDirectoryStructureCard.Header" translate="yes" xml:space="preserve">
+          <source>Keep Structures</source>
+          <target state="translated">Structures de préservation</target>
+        </trans-unit>
+        <trans-unit id="GeneralDirectoryStructureCard.Description" translate="yes" xml:space="preserve">
+          <source>Preserve folder hierarchy when processing files</source>
+          <target state="translated">Préserver la hiérarchie des dossiers lors du traitement des fichiers</target>
+        </trans-unit>
       </group>
     </body>
   </file>

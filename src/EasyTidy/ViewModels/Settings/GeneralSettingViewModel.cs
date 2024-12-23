@@ -350,6 +350,25 @@ public partial class GeneralSettingViewModel : ObservableObject
         }
     }
 
+    private bool _preserveDirectoryStructure;
+
+    public bool PreserveDirectoryStructure
+    {
+        get
+        {
+            return _preserveDirectoryStructure = Settings.PreserveDirectoryStructure;
+        }
+        set
+        {
+            if (_preserveDirectoryStructure != value)
+            {
+                _preserveDirectoryStructure = value;
+                Settings.PreserveDirectoryStructure = value;
+                NotifyPropertyChanged();
+            }
+        }
+    }
+
     public ObservableCollection<Breadcrumb> Breadcrumbs { get; }
 
     #endregion
