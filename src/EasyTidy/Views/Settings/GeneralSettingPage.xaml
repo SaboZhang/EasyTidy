@@ -17,6 +17,15 @@
     behaviors:NavigationViewHeaderBehavior.HeaderTemplate="{StaticResource BreadcrumbBarDataTemplate}"
     behaviors:NavigationViewHeaderBehavior.HeaderContext="{Binding}"
     mc:Ignorable="d">
+
+    <i:Interaction.Behaviors>
+        <ic:EventTriggerBehavior EventName="Loaded">
+            <ic:EventTriggerBehavior.Actions>
+                <ic:InvokeCommandAction Command="{x:Bind ViewModel.PageLoadedCommand}"/>
+            </ic:EventTriggerBehavior.Actions>
+        </ic:EventTriggerBehavior>
+    </i:Interaction.Behaviors>
+
     <ScrollView x:Name="ContentArea" VerticalScrollBarVisibility="Auto">
         <StackPanel
             Margin="10"
@@ -141,7 +150,8 @@
                                     Spacing="8">
                             <Button x:Uid="GeneralBackButton"
                                     Command="{x:Bind ViewModel.BackupConfigsClickCommand}"/>
-                            <Button x:Uid="GeneralRestoreButton"/>
+                            <Button x:Uid="GeneralRestoreButton"
+                                    Command="{x:Bind ViewModel.RestoreBackupClickCommand}"/>
                             <CheckBox x:Uid="GeneralAutoBackup"
                                     IsChecked="{x:Bind ViewModel.AutoBackup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         </StackPanel>

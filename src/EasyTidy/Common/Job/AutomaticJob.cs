@@ -159,7 +159,8 @@ public class AutomaticJob : IJob
                     fileOperationType: Settings.GeneralConfig.FileOperationType,
                     handleSubfolders: Settings.GeneralConfig.SubFolder ?? false,
                     funcs: new List<Func<string, bool>>(FilterUtil.GeneratePathFilters(item.TaskRule, item.RuleType)),
-                    pathFilter: FilterUtil.GetPathFilters(item.Filter))
+                    pathFilter: FilterUtil.GetPathFilters(item.Filter),
+                    new RuleModel() { Filter = item.Filter, Rule = item.TaskRule, RuleType = item.RuleType})
                 {
                     Priority = item.Priority,
                     CreateTime = item.CreateTime

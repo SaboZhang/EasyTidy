@@ -1,15 +1,16 @@
 ﻿using CommunityToolkit.WinUI;
+using CommunityToolkit.WinUI.Collections;
 using EasyTidy.Common.Database;
 using EasyTidy.Common.Job;
 using EasyTidy.Common.Model;
 using EasyTidy.Contracts.Service;
 using EasyTidy.Model;
 using EasyTidy.Service;
-using EasyTidy.Util;
-using EasyTidy.Util.UtilInterface;
+using EasyTidy.Views.ContentDialogs;
 using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
 using Windows.Storage.Pickers;
+using static System.Net.WebRequestMethods;
 
 namespace EasyTidy.ViewModels;
 public partial class GeneralSettingViewModel : ObservableObject
@@ -81,6 +82,16 @@ public partial class GeneralSettingViewModel : ObservableObject
 
     [ObservableProperty]
     private int _backupTypeIndex = -1;
+
+    [ObservableProperty]
+    private ObservableCollection<string> _backList;
+
+    [ObservableProperty]
+    public AdvancedCollectionView _backListACV;
+
+    public string WebListSelectedItem { get; set; }
+
+    public object DavItem { get; set; }
 
     public GeneralSettingViewModel(IThemeSelectorService themeSelectorService)
     {
@@ -472,6 +483,103 @@ public partial class GeneralSettingViewModel : ObservableObject
 
     }
 
+    [RelayCommand]
+    private async Task RestoreBackupClickAsync()
+    {
+        switch (Settings.BackupType)
+        {
+            case BackupType.Local:
+                // 本地备份还原 
+                await LocalBackupAsync();
+                break;
+            case BackupType.WebDav:
+                // WebDav备份还原
+                await GetWebDavList();
+                break;
+            default:
+                SettingsBackupRestoreMessageVisible = true;
+                BackupRestoreMessageSeverity = InfoBarSeverity.Warning;
+                SettingsBackupMessage = "BackupSelectionTips".GetLocalized();
+                await DelayCloseMessageVisible();
+                break;
+        }
+    }
+
+    private async Task GetWebDavList()
+    {
+        var dialog = new WebDavListContentDialog
+        {
+            ViewModel = this,
+            Title = "备份列表",
+            PrimaryButtonText = "OK".GetLocalized(),
+            CloseButtonText = "CancelText".GetLocalized()
+        };
+
+        dialog.PrimaryButtonClick += RestoreBackupButtonAsync;
+
+        try
+        {
+            if (!string.IsNullOrEmpty(Settings.WebDavPassword))
+            {
+                WebDavPassWord = CryptoUtil.DesDecrypt(Settings.WebDavPassword);
+            }
+            WebDavClient webDavClient = new(Settings.WebDavUrl ??= WebDavUrl, Settings.WebDavUser ??= WebDavUserName, WebDavPassWord);
+            Settings.WebDavPassword ??= CryptoUtil.DesEncrypt(WebDavPassWord);
+            Settings.BackupType = BackupType.WebDav;
+            var list = await webDavClient.ListItemsAsync(WebDavUrl + "/EasyTidy");
+            DavItem = list;
+            BackList = new ObservableCollection<string>(list.Where(x => !x.IsCollection).Select(x => x.DisplayName));
+            BackListACV = new AdvancedCollectionView(BackList);
+            await dialog.ShowAsync();
+        }
+        catch (Exception ex)
+        {
+            Logger.Error($"WebDav连接异常：{ex.Message}");
+            SettingsBackupRestoreMessageVisible = true;
+            BackupRestoreMessageSeverity = InfoBarSeverity.Error;
+            SettingsBackupMessage = "WebDavConnectFailed".GetLocalized();
+            await DelayCloseMessageVisible();
+            return;
+        }
+    }
+
+    private async void RestoreBackupButtonAsync(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+    {
+        try
+        {
+
+        }
+        catch (Exception ex)
+        {
+            Logger.Error($"还原异常：{ex.Message}");
+            SettingsBackupRestoreMessageVisible = true;
+            BackupRestoreMessageSeverity = InfoBarSeverity.Error;
+            SettingsBackupMessage = "RestoreFailedTips".GetLocalized();
+        }
+        finally
+        {
+            await DelayCloseMessageVisible();
+        }
+    }
+
+    [RelayCommand]
+    private async Task OnWebDavUrlChanged(object data)
+    {
+        var url = data as ListView;
+        WebListSelectedItem = url.SelectedItem.ToString();
+        if (!string.IsNullOrEmpty(Settings.WebDavPassword))
+        {
+            WebDavPassWord = CryptoUtil.DesDecrypt(Settings.WebDavPassword);
+        }
+        WebDavClient webDavClient = new(Settings.WebDavUrl ??= WebDavUrl, Settings.WebDavUser ??= WebDavUserName, WebDavPassWord);
+        var list  = DavItem as IEnumerable<WebDavItem>;
+        var item = list.FirstOrDefault(x => x.DisplayName == WebListSelectedItem);
+        if (item != null)
+        {
+            var result = await webDavClient.DownloadItemAsync(item, Constants.ExecutePath);
+        }
+    }
+
     private void NotifyPropertyChanged([CallerMemberName] string propertyName = null, bool reDoBackupDryRun = true)
     {
 
@@ -553,6 +661,7 @@ public partial class GeneralSettingViewModel : ObservableObject
             }
             WebDavClient webDavClient = new(Settings.WebDavUrl ??= WebDavUrl, Settings.WebDavUser ??= WebDavUserName, WebDavPassWord);
             Settings.WebDavPassword ??= CryptoUtil.DesEncrypt(WebDavPassWord);
+            Settings.BackupType = BackupType.WebDav;
             var zipFilePath = Path.Combine(Constants.CnfPath, $"EasyTidy_backup_{DateTime.Now:yyyyMMddHHmmss}.zip");
             ZipUtil.CompressFile(Constants.CnfPath, zipFilePath);
             var backup = await webDavClient.UploadFileAsync(WebDavUrl + "/EasyTidy", zipFilePath);
