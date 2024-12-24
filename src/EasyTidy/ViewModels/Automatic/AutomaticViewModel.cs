@@ -7,6 +7,7 @@ using EasyTidy.Common.Job;
 using EasyTidy.Common.Model;
 using EasyTidy.Contracts.Service;
 using EasyTidy.Model;
+using EasyTidy.Service;
 using EasyTidy.Views.ContentDialogs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.UI.Dispatching;
@@ -711,6 +712,7 @@ public partial class AutomaticViewModel : ObservableRecipient
             var update = await _dbContext.TaskOrchestration.Where(t => t.ID == item.Id).FirstOrDefaultAsync();
             if (update != null)
             {
+                await RemoveAutoTask(update);
                 _dbContext.Entry(update).State = EntityState.Modified;
                 if (update.AutomaticTable != null)
                 {
@@ -748,6 +750,21 @@ public partial class AutomaticViewModel : ObservableRecipient
             AutomaticModel.Add(model);
         }
 
+    }
+
+    private async Task RemoveAutoTask(TaskOrchestrationTable task)
+    {
+        if (task.AutomaticTable != null)
+        {
+            if (task.AutomaticTable.IsFileChange) 
+            {
+                FileEventHandler.StopMonitor(task.TaskSource, task.TaskTarget);
+            }
+            if (task.AutomaticTable.OnScheduleExecution)
+            {
+                await QuartzHelper.DeleteJob($"{task.TaskName}#{task.ID}", task.GroupName.GroupName);
+            }
+        }
     }
 
     /// <summary>
