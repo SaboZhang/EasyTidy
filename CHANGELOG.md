@@ -3,8 +3,6 @@
 
 ## [1.0.5.1212]之前的更新程序存在BUG,烦请手动下载新版本 1.0.5.1212版本可自动更新
 
-## 测试版本发布，请勿使用此版本
-
 [更新下载](https://github.com/SaboZhang/EasyTidy/releases)
 
 - Refactor: Automate operation logic
@@ -24,4 +22,4 @@
 - 修复：目标文件夹为源文件夹的子目录时出现循环嵌套的BUG
 - 相关issues: #25 #47
 
-**Full Changelog**: https://github.com/SaboZhang/EasyTidy/compare/1.0.5.1212...v1.0.8.1223-alpha.3
+**Full Changelog**: https://github.com/SaboZhang/EasyTidy/compare/1.0.5.1212...v1.1.0.1226
