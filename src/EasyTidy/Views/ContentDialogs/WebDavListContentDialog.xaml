@@ -11,7 +11,7 @@
     mc:Ignorable="d">
 
     <StackPanel>
-        <ListView ItemsSource="{x:Bind ViewModel.BackListACV, Mode=TwoWay}"
+        <ListView ItemsSource="{x:Bind ViewModel.BackListACV, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                   HorizontalContentAlignment="Stretch"
                   SelectionChanged="ListView_SelectionChanged"
                   Height="220">

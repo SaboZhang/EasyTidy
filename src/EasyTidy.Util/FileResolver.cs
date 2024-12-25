@@ -331,4 +331,39 @@ public class FileResolver
         return (false, false, null);
     }
 
+    public static void CopyAllFiles(string sourceFolder, string destinationFolder, bool overwrite = true)
+    {
+        if (string.IsNullOrEmpty(sourceFolder) || string.IsNullOrEmpty(destinationFolder))
+        {
+            throw new ArgumentException("Source and destination folders cannot be null or empty.");
+        }
+
+        // 确保源文件夹存在
+        if (!Directory.Exists(sourceFolder))
+        {
+            throw new DirectoryNotFoundException($"Source folder does not exist: {sourceFolder}");
+        }
+
+        // 确保目标文件夹存在
+        if (!Directory.Exists(destinationFolder))
+        {
+            Directory.CreateDirectory(destinationFolder);
+        }
+
+        // 获取源文件夹中的所有文件
+        var files = Directory.GetFiles(sourceFolder);
+
+        foreach (var file in files)
+        {
+            // 获取文件名
+            var fileName = Path.GetFileName(file);
+
+            // 构建目标文件路径
+            var destFile = Path.Combine(destinationFolder, fileName);
+
+            // 复制文件
+            File.Copy(file, destFile, overwrite);
+        }
+    }
+
 }

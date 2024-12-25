@@ -541,30 +541,36 @@ public partial class GeneralSettingViewModel : ObservableObject
     {
         try
         {
-            var webDavClient = InitializeWebDavClient();
-            var item = DavItem as WebDavItem;
-            var restorePath = Path.Combine(Constants.CnfPath, "Restore");
-            var path = Path.Combine(restorePath, item.DisplayName);
-            var result = await webDavClient.DownloadItemAsync(item, path);
-            if (result != null) 
+            var list = DavItem as IEnumerable<WebDavItem>;
+            var item = list.FirstOrDefault(x => x.DisplayName == WebListSelectedItem);
+            if (item != null)
             {
-                // await _dbContext.Database.CloseConnectionAsync();
-                var res = ZipUtil.DecompressToDirectory(path, restorePath);
-                if (res)
+                var webDavClient = InitializeWebDavClient();
+                var restorePath = Path.Combine(Constants.CnfPath, "Restore");
+                var path = Path.Combine(restorePath, item.DisplayName);
+                var result = await webDavClient.DownloadItemAsync(item, path);
+                if (result != null)
                 {
-                    // var configFile = Path.Combine(restorePath, "AppConfig.json");
-                    // var commonFile = Path.Combine(restorePath, "CommonApplicationData.json");
-                    // File.Copy(configFile, Constants.CnfPath, overwrite: true);
-                    // File.Copy(commonFile, Constants.CnfPath, overwrite: true);
-                    var dbFile = Path.Combine(restorePath, "EasyTidy.db");
-                    if (File.Exists(dbFile)) 
+                    // await _dbContext.Database.CloseConnectionAsync();
+                    var res = ZipUtil.DecompressToDirectory(path, restorePath);
+                    if (res)
                     {
-                        await RestoreDatabaseAsync(dbFile);
+                        // await _dbContext.Database.CloseConnectionAsync();
+                        FileResolver.CopyAllFiles(restorePath, Constants.CnfPath);
+                        // var configFile = Path.Combine(restorePath, "AppConfig.json");
+                        // var commonFile = Path.Combine(restorePath, "CommonApplicationData.json");
+                        // File.Copy(configFile, Constants.CnfPath, overwrite: true);
+                        // File.Copy(commonFile, Constants.CnfPath, overwrite: true);
+                        //var dbFile = Path.Combine(restorePath, "EasyTidy.db");
+                        //if (File.Exists(dbFile))
+                        //{
+                        //    await RestoreDatabaseAsync(dbFile);
+                        //}
                     }
+                    SettingsBackupRestoreMessageVisible = true;
+                    BackupRestoreMessageSeverity = InfoBarSeverity.Success;
+                    SettingsBackupMessage = "RestoreSuccessTips".GetLocalized();
                 }
-                SettingsBackupRestoreMessageVisible = true;
-                BackupRestoreMessageSeverity = InfoBarSeverity.Success;
-                SettingsBackupMessage = "RestoreSuccessTips".GetLocalized();
             }
         }
         catch (Exception ex)
@@ -576,8 +582,8 @@ public partial class GeneralSettingViewModel : ObservableObject
         }
         finally
         {
-            _dbContext = App.GetService<AppDbContext>();
-            await _dbContext.Database.OpenConnectionAsync();
+            //_dbContext = App.GetService<AppDbContext>();
+            // await _dbContext.Database.OpenConnectionAsync();
             var restorePath = Path.Combine(Constants.CnfPath, "Restore");
             Directory.Delete(restorePath, recursive: true);
             await DelayCloseMessageVisible();
@@ -610,12 +616,6 @@ public partial class GeneralSettingViewModel : ObservableObject
     {
         var url = data as ListView;
         WebListSelectedItem = url.SelectedItem.ToString();
-        var list  = DavItem as IEnumerable<WebDavItem>;
-        var item = list.FirstOrDefault(x => x.DisplayName == WebListSelectedItem);
-        if (item != null)
-        {
-            DavItem = item;
-        }
     }
 
     private void NotifyPropertyChanged([CallerMemberName] string propertyName = null, bool reDoBackupDryRun = true)
