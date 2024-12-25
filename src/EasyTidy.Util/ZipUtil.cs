@@ -122,23 +122,13 @@ public class ZipUtil
         return allFilesInZip;
     }
 
-    public static bool DecompressToDirectory(string zipFilePath, string extractPath, string filterExtension = null)
+    public static bool DecompressToDirectory(string zipFilePath, string extractPath)
     {
         try
         {
             using var archive = ZipFile.OpenRead(zipFilePath);
             foreach (var entry in archive.Entries)
             {
-                // 过滤文件扩展名
-                if (!string.IsNullOrWhiteSpace(filterExtension) && !entry.FullName.EndsWith(filterExtension, StringComparison.OrdinalIgnoreCase))
-                {
-                    continue;
-                }
-                // 过滤文件扩展名
-                if (!string.IsNullOrWhiteSpace(filterExtension) && !entry.FullName.EndsWith(filterExtension, StringComparison.OrdinalIgnoreCase))
-                {
-                    continue;
-                }
                 //如果目录不存在则创建
                 if (!Directory.Exists(extractPath)) Directory.CreateDirectory(extractPath);
                 if (entry.FullName[^1..] == "/")

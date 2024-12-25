@@ -7,17 +7,17 @@ using EasyTidy.Contracts.Service;
 using EasyTidy.Model;
 using EasyTidy.Service;
 using EasyTidy.Views.ContentDialogs;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
 using Windows.Storage.Pickers;
-using static System.Net.WebRequestMethods;
 
 namespace EasyTidy.ViewModels;
 public partial class GeneralSettingViewModel : ObservableObject
 {
     #region 字段 & 属性
 
-    private readonly AppDbContext _dbContext;
+    private AppDbContext _dbContext;
 
     [ObservableProperty]
     private IThemeSelectorService _themeSelectorService;
@@ -519,13 +519,7 @@ public partial class GeneralSettingViewModel : ObservableObject
 
         try
         {
-            if (!string.IsNullOrEmpty(Settings.WebDavPassword))
-            {
-                WebDavPassWord = CryptoUtil.DesDecrypt(Settings.WebDavPassword);
-            }
-            WebDavClient webDavClient = new(Settings.WebDavUrl ??= WebDavUrl, Settings.WebDavUser ??= WebDavUserName, WebDavPassWord);
-            Settings.WebDavPassword ??= CryptoUtil.DesEncrypt(WebDavPassWord);
-            Settings.BackupType = BackupType.WebDav;
+            var webDavClient = InitializeWebDavClient();
             var list = await webDavClient.ListItemsAsync(WebDavUrl + "/EasyTidy");
             DavItem = list;
             BackList = new ObservableCollection<string>(list.Where(x => !x.IsCollection).Select(x => x.DisplayName));
@@ -547,7 +541,31 @@ public partial class GeneralSettingViewModel : ObservableObject
     {
         try
         {
-
+            var webDavClient = InitializeWebDavClient();
+            var item = DavItem as WebDavItem;
+            var restorePath = Path.Combine(Constants.CnfPath, "Restore");
+            var path = Path.Combine(restorePath, item.DisplayName);
+            var result = await webDavClient.DownloadItemAsync(item, path);
+            if (result != null) 
+            {
+                // await _dbContext.Database.CloseConnectionAsync();
+                var res = ZipUtil.DecompressToDirectory(path, restorePath);
+                if (res)
+                {
+                    // var configFile = Path.Combine(restorePath, "AppConfig.json");
+                    // var commonFile = Path.Combine(restorePath, "CommonApplicationData.json");
+                    // File.Copy(configFile, Constants.CnfPath, overwrite: true);
+                    // File.Copy(commonFile, Constants.CnfPath, overwrite: true);
+                    var dbFile = Path.Combine(restorePath, "EasyTidy.db");
+                    if (File.Exists(dbFile)) 
+                    {
+                        await RestoreDatabaseAsync(dbFile);
+                    }
+                }
+                SettingsBackupRestoreMessageVisible = true;
+                BackupRestoreMessageSeverity = InfoBarSeverity.Success;
+                SettingsBackupMessage = "RestoreSuccessTips".GetLocalized();
+            }
         }
         catch (Exception ex)
         {
@@ -558,25 +576,45 @@ public partial class GeneralSettingViewModel : ObservableObject
         }
         finally
         {
+            _dbContext = App.GetService<AppDbContext>();
+            await _dbContext.Database.OpenConnectionAsync();
+            var restorePath = Path.Combine(Constants.CnfPath, "Restore");
+            Directory.Delete(restorePath, recursive: true);
+            await DelayCloseMessageVisible();
+        }
+    }
+
+    private async Task RestoreDatabaseAsync(string backupFilePath)
+    {
+        try
+        {
+            var currentDbPath = _dbContext.Database.GetDbConnection().DataSource;
+
+            await _dbContext.Database.CloseConnectionAsync();
+            
+            File.Copy(backupFilePath, currentDbPath, overwrite: true);
+            await _dbContext.Database.OpenConnectionAsync();
+        }
+        catch(Exception ex)
+        {
+            Logger.Error($"还原数据库异常：{ex.Message}");
+        }
+        finally
+        {
             await DelayCloseMessageVisible();
         }
     }
 
     [RelayCommand]
-    private async Task OnWebDavUrlChanged(object data)
+    private void OnWebDavUrlChanged(object data)
     {
         var url = data as ListView;
         WebListSelectedItem = url.SelectedItem.ToString();
-        if (!string.IsNullOrEmpty(Settings.WebDavPassword))
-        {
-            WebDavPassWord = CryptoUtil.DesDecrypt(Settings.WebDavPassword);
-        }
-        WebDavClient webDavClient = new(Settings.WebDavUrl ??= WebDavUrl, Settings.WebDavUser ??= WebDavUserName, WebDavPassWord);
         var list  = DavItem as IEnumerable<WebDavItem>;
         var item = list.FirstOrDefault(x => x.DisplayName == WebListSelectedItem);
         if (item != null)
         {
-            var result = await webDavClient.DownloadItemAsync(item, Constants.ExecutePath);
+            DavItem = item;
         }
     }
 
@@ -655,13 +693,7 @@ public partial class GeneralSettingViewModel : ObservableObject
     {
         try
         {
-            if (!string.IsNullOrEmpty(Settings.WebDavPassword))
-            {
-                WebDavPassWord = CryptoUtil.DesDecrypt(Settings.WebDavPassword);
-            }
-            WebDavClient webDavClient = new(Settings.WebDavUrl ??= WebDavUrl, Settings.WebDavUser ??= WebDavUserName, WebDavPassWord);
-            Settings.WebDavPassword ??= CryptoUtil.DesEncrypt(WebDavPassWord);
-            Settings.BackupType = BackupType.WebDav;
+            var webDavClient = InitializeWebDavClient();
             var zipFilePath = Path.Combine(Constants.CnfPath, $"EasyTidy_backup_{DateTime.Now:yyyyMMddHHmmss}.zip");
             ZipUtil.CompressFile(Constants.CnfPath, zipFilePath);
             var backup = await webDavClient.UploadFileAsync(WebDavUrl + "/EasyTidy", zipFilePath);
@@ -680,6 +712,30 @@ public partial class GeneralSettingViewModel : ObservableObject
         {
             await DelayCloseMessageVisible();
         }
+    }
+
+    private WebDavClient InitializeWebDavClient()
+    {
+        // 解密密码
+        if (!string.IsNullOrEmpty(Settings.WebDavPassword))
+        {
+            WebDavPassWord = CryptoUtil.DesDecrypt(Settings.WebDavPassword);
+        }
+
+        // 创建 WebDavClient
+        var webDavClient = new WebDavClient(
+            Settings.WebDavUrl ??= WebDavUrl,
+            Settings.WebDavUser ??= WebDavUserName,
+            WebDavPassWord
+        );
+
+        // 加密并存储密码
+        Settings.WebDavPassword ??= CryptoUtil.DesEncrypt(WebDavPassWord);
+
+        // 设置备份类型
+        Settings.BackupType = BackupType.WebDav;
+
+        return webDavClient;
     }
 
     /// <summary>
