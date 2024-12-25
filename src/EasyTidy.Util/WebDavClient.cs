@@ -118,6 +118,12 @@ public class WebDavClient
 
     public async Task<WebDavItem> DownloadItemAsync(WebDavItem item, string localFilePath)
     {
+        var directory = Path.GetDirectoryName(localFilePath);
+        if (!Directory.Exists(directory))
+        {
+            Directory.CreateDirectory(directory);
+        }
+
         var tempFileName = Path.GetTempFileName();
         using (var tempFile = File.OpenWrite(tempFileName))
         using (var stream = await _client.Download(item.Href))
@@ -125,7 +131,7 @@ public class WebDavClient
             await stream.CopyToAsync(tempFile);
         }
 
-        File.Move(tempFileName, localFilePath);
+        File.Move(tempFileName, localFilePath, true);
         return item;
     }
 

@@ -46,6 +46,7 @@ public partial class LogsViewModel : ObservableObject
             {
                 Logs = _loggingService.GetLogMessages();
                 LogsListACV = new AdvancedCollectionView(Logs, true);
+                LogsListACV.SortDescriptions.Add(new SortDescription("", SortDirection.Descending));
             });
         }
         catch (Exception ex)

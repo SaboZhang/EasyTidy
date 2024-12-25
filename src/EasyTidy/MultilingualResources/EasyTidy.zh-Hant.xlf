@@ -1748,6 +1748,14 @@
           <source>Soft link</source>
           <target state="translated">軟連結</target>
         </trans-unit>
+        <trans-unit id="GeneralDirectoryStructureCard.Header" translate="yes" xml:space="preserve">
+          <source>Keep Structures</source>
+          <target state="translated">保留結構</target>
+        </trans-unit>
+        <trans-unit id="GeneralDirectoryStructureCard.Description" translate="yes" xml:space="preserve">
+          <source>Preserve folder hierarchy when processing files</source>
+          <target state="translated">處理檔案時是否保留資料夾層級結構</target>
+        </trans-unit>
       </group>
     </body>
   </file>

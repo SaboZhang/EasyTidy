@@ -60,7 +60,7 @@ public class AutomaticJob : IJob
             return await _dbContext.TaskOrchestration
                 .Include(t => t.GroupName)
                 .Include(t => t.Filter)
-                .FirstOrDefaultAsync(t => t.ID == parsedTaskId && t.IsEnabled == true);
+                .FirstOrDefaultAsync(t => t.ID == parsedTaskId && t.IsEnabled == true && t.IsRelated == true);
         }
 
         string jobName = context.JobDetail.Key.Name;
@@ -159,7 +159,8 @@ public class AutomaticJob : IJob
                     fileOperationType: Settings.GeneralConfig.FileOperationType,
                     handleSubfolders: Settings.GeneralConfig.SubFolder ?? false,
                     funcs: new List<Func<string, bool>>(FilterUtil.GeneratePathFilters(item.TaskRule, item.RuleType)),
-                    pathFilter: FilterUtil.GetPathFilters(item.Filter))
+                    pathFilter: FilterUtil.GetPathFilters(item.Filter),
+                    new RuleModel() { Filter = item.Filter, Rule = item.TaskRule, RuleType = item.RuleType})
                 {
                     Priority = item.Priority,
                     CreateTime = item.CreateTime

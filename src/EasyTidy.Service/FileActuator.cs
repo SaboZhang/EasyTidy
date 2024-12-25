@@ -264,6 +264,15 @@ public static class FileActuator
             LogService.Logger.Debug($"执行文件操作 ShouldSkip {parameters.TargetPath}");
             return;
         }
+        if (!CommonUtil.Configs?.GeneralConfig.EmptyFiles ?? true) 
+        {
+             FileInfo info = new(parameters.SourcePath);
+             if (info.Length == 0)
+             {
+                 LogService.Logger.Debug($"执行文件操作 跳过空文件 {parameters.TargetPath}");
+                 return;
+             }
+        }
 
         LogService.Logger.Info($"开始执行文件操作{parameters.TargetPath}, 操作模式: {parameters.OperationMode}");
         switch (parameters.OperationMode)

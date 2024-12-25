@@ -12,7 +12,7 @@
     <PublishProfile>win-$(Platform).pubxml</PublishProfile>
     <UseWinUI>true</UseWinUI>
     <EnableMsixTooling>true</EnableMsixTooling>
-    <Version>1.0.7.1223</Version>
+    <Version>1.1.0.1226</Version>
     <ImplicitUsings>true</ImplicitUsings>
     <SuportedOSPlatformsVersion>10.0.22621.0</SuportedOSPlatformsVersion>
     <WindowsSdkPackageVersion>10.0.22621.45</WindowsSdkPackageVersion>
@@ -170,6 +170,7 @@
     <None Remove="Views\ContentDialogs\CustomConfigContentDialog.xaml" />
     <None Remove="Views\ContentDialogs\PlanExecutionContentDialog.xaml" />
     <None Remove="Views\ContentDialogs\PreviewContentDialog.xaml" />
+    <None Remove="Views\ContentDialogs\WebDavListContentDialog.xaml" />
     <None Remove="Views\Filters\FiltersPage.xaml" />
     <None Remove="Views\Logs\LogsPage.xaml" />
     <None Remove="Views\NotificationView.xaml" />
@@ -272,6 +273,9 @@
     <None Update="Themes\Styles\TextBlock.xaml">
       <Generator>MSBuild:Compile</Generator>
     </None>
+    <Page Update="Views\ContentDialogs\WebDavListContentDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Views\ContentDialogs\PreviewContentDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
