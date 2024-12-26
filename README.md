@@ -1,6 +1,6 @@
 <p align="center">
 <a href="https://github.com/SaboZhang/EasyTidy" target="_blank">
-<img align="center" alt="EasyTidy" width="200" src="src/EasyTidy/Assets/icon.png" />
+<img align="center" alt="EasyTidy" width="140" src="src/EasyTidy/Assets/icon.png" />
 </a>
 </p>
 <p align="center">
