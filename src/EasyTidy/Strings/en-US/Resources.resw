@@ -1419,4 +1419,10 @@
   <data name="GeneralDirectoryStructureCard.Description" xml:space="preserve">
     <value>Preserve folder hierarchy when processing files</value>
   </data>
+  <data name="BetweenText" xml:space="preserve">
+    <value>Between</value>
+  </data>
+  <data name="NotBetweenText" xml:space="preserve">
+    <value>Not between</value>
+  </data>
 </root>

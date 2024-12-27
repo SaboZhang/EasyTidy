@@ -21,19 +21,31 @@ public partial class FilterUtil
     /// <param name="sizeValue"></param>
     /// <param name="sizeUnit"></param>
     /// <returns></returns>
-    internal static long ConvertSizeToBytes(string sizeValue, SizeUnit sizeUnit)
+    internal static (long? FirstSize, long? SecondSize) ConvertSizeToBytes(string sizeValue, SizeUnit sizeUnit)
     {
         // 转换逻辑，基于大小单位（字节、KB、MB、GB等）
-        long size = long.Parse(sizeValue);
+        // 分割 sizeValue，以逗号为分隔符
+        var sizes = sizeValue.Split(',', StringSplitOptions.RemoveEmptyEntries)
+                             .Select(s => s.Trim())
+                             .ToArray();
 
-        return size * (sizeUnit switch
+        // 校验并解析每个值
+        long ConvertToBytes(string size) => long.Parse(size) * sizeUnit switch
         {
             SizeUnit.Kilobyte => 1024,
             SizeUnit.Megabyte => 1024 * 1024,
             SizeUnit.Gigabyte => 1024 * 1024 * 1024,
             SizeUnit.Byte => 1,
-            _ => 1 // 默认情况下返回字节
-        });
+            _ => throw new ArgumentOutOfRangeException(nameof(sizeUnit), "Invalid size unit.")
+        };
+
+        // 处理单个值或两个值的情况
+        return sizes.Length switch
+        {
+            1 => (ConvertToBytes(sizes[0]), null), // 单个值，返回第一个值，第二个值为 null
+            2 => (ConvertToBytes(sizes[0]), ConvertToBytes(sizes[1])), // 两个值，返回元组
+            _ => throw new ArgumentException("sizeValue must contain at most two comma-separated values.", nameof(sizeValue))
+        };
     }
 
     /// <summary>
@@ -69,13 +81,15 @@ public partial class FilterUtil
     /// <param name="filterValue"></param>
     /// <param name="comparison"></param>
     /// <returns></returns>
-    internal static bool CompareValues(long fileValue, long filterValue, ComparisonResult comparison)
+    internal static bool CompareValues(long fileValue, long? filterValue, long? filterValueTwo, ComparisonResult comparison)
     {
         return comparison switch
         {
             ComparisonResult.GreaterThan => fileValue > filterValue,
             ComparisonResult.LessThan => fileValue < filterValue,
             ComparisonResult.Equal => fileValue == filterValue,
+            ComparisonResult.Between => fileValue > filterValue && fileValue < filterValueTwo,
+            ComparisonResult.NotBetween => fileValue < filterValue || fileValue > filterValueTwo,
             _ => false,
         };
     }

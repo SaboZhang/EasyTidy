@@ -27,8 +27,8 @@ public class SizeFilter : IFileFilter
         return filePath =>
         {
             long fileSize = new FileInfo(filePath).Length;
-            long filterSize = FilterUtil.ConvertSizeToBytes(_sizeValue, _sizeUnit);
-            return FilterUtil.CompareValues(fileSize, filterSize, _sizeOperator);
+            var (firstSize, secondSize) = FilterUtil.ConvertSizeToBytes(_sizeValue, _sizeUnit);
+            return FilterUtil.CompareValues(fileSize, firstSize, secondSize, _sizeOperator);
         };
     }
 }
