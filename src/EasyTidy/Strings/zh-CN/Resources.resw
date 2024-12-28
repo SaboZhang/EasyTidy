@@ -1303,4 +1303,10 @@
   <data name="GeneralDirectoryStructureCard.Description" xml:space="preserve">
     <value>处理文件时是否保留文件夹层次结构</value>
   </data>
+  <data name="BetweenText" xml:space="preserve">
+    <value>介于</value>
+  </data>
+  <data name="NotBetweenText" xml:space="preserve">
+    <value>不介于</value>
+  </data>
 </root>

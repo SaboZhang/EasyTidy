@@ -1756,6 +1756,14 @@
           <source>Preserve folder hierarchy when processing files</source>
           <target state="translated">處理檔案時是否保留資料夾層級結構</target>
         </trans-unit>
+        <trans-unit id="BetweenText" translate="yes" xml:space="preserve">
+          <source>Between</source>
+          <target state="translated">介於</target>
+        </trans-unit>
+        <trans-unit id="NotBetweenText" translate="yes" xml:space="preserve">
+          <source>Not between</source>
+          <target state="translated">不介於</target>
+        </trans-unit>
       </group>
     </body>
   </file>

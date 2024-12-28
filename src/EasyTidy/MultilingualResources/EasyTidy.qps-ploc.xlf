@@ -1756,6 +1756,14 @@
           <source>Preserve folder hierarchy when processing files</source>
           <target state="new">Preserve folder hierarchy when processing files</target>
         </trans-unit>
+        <trans-unit id="BetweenText" translate="yes" xml:space="preserve">
+          <source>Between</source>
+          <target state="new">Between</target>
+        </trans-unit>
+        <trans-unit id="NotBetweenText" translate="yes" xml:space="preserve">
+          <source>Not between</source>
+          <target state="new">Not between</target>
+        </trans-unit>
       </group>
     </body>
   </file>

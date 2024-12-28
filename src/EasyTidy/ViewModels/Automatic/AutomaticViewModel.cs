@@ -744,7 +744,7 @@ public partial class AutomaticViewModel : ObservableRecipient
                 Id = auto.ID,
                 ActionType = EnumHelper.GetDisplayName(auto.OperationMode),
                 Rule = auto.TaskRule,
-                FileFlow = $"{auto.TaskSource} -> {auto.TaskTarget}",
+                FileFlow = $"{auto.TaskSource} ➡️ {auto.TaskTarget}",
                 ExecutionMode = GetExecutionMode(auto),
             };
             AutomaticModel.Add(model);

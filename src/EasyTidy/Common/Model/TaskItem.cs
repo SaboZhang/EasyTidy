@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using EasyTidy.Model;
+using System.Collections.ObjectModel;
 
 namespace EasyTidy.Common.Model;
 
@@ -18,6 +19,9 @@ public partial class TaskItem : ObservableRecipient
     [ObservableProperty]
     private int _id;
 
+    [ObservableProperty]
+    private AutomaticModel _model;
+
     public TaskItem(TaskItem? parentItem)
     {
         _parentItem = parentItem;
@@ -31,6 +35,7 @@ public partial class TaskItem : ObservableRecipient
 
         if (Children.Count > 0)
         {
+            IsRoot = false;
             // 计算当前节点的 IsSelected 状态
             IsSelected = Children.All(x => x.IsSelected == true)
                 ? true
@@ -48,6 +53,10 @@ public partial class TaskItem : ObservableRecipient
 
     [ObservableProperty]
     private bool _isExpanded;
+
+    [ObservableProperty]
+    private bool _isRoot = true;
+
     public override string ToString() => Name;
 
     partial void OnIsSelectedChanged(bool? value)

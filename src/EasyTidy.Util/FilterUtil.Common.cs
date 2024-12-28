@@ -21,19 +21,31 @@ public partial class FilterUtil
     /// <param name="sizeValue"></param>
     /// <param name="sizeUnit"></param>
     /// <returns></returns>
-    internal static long ConvertSizeToBytes(string sizeValue, SizeUnit sizeUnit)
+    internal static (long? FirstSize, long? SecondSize) ConvertSizeToBytes(string sizeValue, SizeUnit sizeUnit)
     {
         // 转换逻辑，基于大小单位（字节、KB、MB、GB等）
-        long size = long.Parse(sizeValue);
+        // 分割 sizeValue，以逗号为分隔符
+        var sizes = sizeValue.Split(',', StringSplitOptions.RemoveEmptyEntries)
+                             .Select(s => s.Trim())
+                             .ToArray();
 
-        return size * (sizeUnit switch
+        // 校验并解析每个值
+        long ConvertToBytes(string size) => long.Parse(size) * sizeUnit switch
         {
             SizeUnit.Kilobyte => 1024,
             SizeUnit.Megabyte => 1024 * 1024,
             SizeUnit.Gigabyte => 1024 * 1024 * 1024,
             SizeUnit.Byte => 1,
-            _ => 1 // 默认情况下返回字节
-        });
+            _ => throw new ArgumentOutOfRangeException(nameof(sizeUnit), "Invalid size unit.")
+        };
+
+        // 处理单个值或两个值的情况
+        return sizes.Length switch
+        {
+            1 => (ConvertToBytes(sizes[0]), null), // 单个值，返回第一个值，第二个值为 null
+            2 => (ConvertToBytes(sizes[0]), ConvertToBytes(sizes[1])), // 两个值，返回元组
+            _ => throw new ArgumentException("sizeValue must contain at most two comma-separated values.", nameof(sizeValue))
+        };
     }
 
     /// <summary>
@@ -42,9 +54,33 @@ public partial class FilterUtil
     /// <param name="dateValue"></param>
     /// <param name="dateUnit"></param>
     /// <returns></returns>
-    internal static DateTime ConvertToDateTime(string dateValue, DateUnit dateUnit)
+    internal static object ConvertToDateTime(string dateValue, DateUnit dateUnit)
     {
         // Parse and adjust date based on unit (days, months, etc.)
+        // 解析传入的字符串
+        var dateParts = dateValue.Split(',');
+
+        if (dateParts.Length == 2)
+        {
+            // 对两个日期分别进行处理
+            DateTime date1 = ConvertDate(dateParts[0], dateUnit);
+            DateTime date2 = ConvertDate(dateParts[1], dateUnit);
+
+            return (date1, date2); // 返回元组
+        }
+        else if (dateParts.Length == 1)
+        {
+            // 仅处理一个日期
+            DateTime date = ConvertDate(dateParts[0], dateUnit);
+            return date; // 返回单个日期
+        }
+
+        // 如果传入的字符串不符合预期，返回当前时间
+        return DateTime.Now;
+    }
+
+    private static DateTime ConvertDate(string dateValue, DateUnit dateUnit)
+    {
         if (int.TryParse(dateValue, out int numericValue))
         {
             return dateUnit switch
@@ -58,7 +94,6 @@ public partial class FilterUtil
                 _ => DateTime.Now,
             };
         }
-
         return DateTime.Now;
     }
 
@@ -69,13 +104,15 @@ public partial class FilterUtil
     /// <param name="filterValue"></param>
     /// <param name="comparison"></param>
     /// <returns></returns>
-    internal static bool CompareValues(long fileValue, long filterValue, ComparisonResult comparison)
+    internal static bool CompareValues(long fileValue, long? filterValue, long? filterValueTwo, ComparisonResult comparison)
     {
         return comparison switch
         {
             ComparisonResult.GreaterThan => fileValue > filterValue,
             ComparisonResult.LessThan => fileValue < filterValue,
             ComparisonResult.Equal => fileValue == filterValue,
+            ComparisonResult.Between => fileValue > filterValue && fileValue < filterValueTwo,
+            ComparisonResult.NotBetween => fileValue < filterValue || fileValue > filterValueTwo,
             _ => false,
         };
     }
@@ -87,13 +124,19 @@ public partial class FilterUtil
     /// <param name="filterDate"></param>
     /// <param name="comparison"></param>
     /// <returns></returns>
-    internal static bool CompareDates(DateTime fileDate, DateTime filterDate, ComparisonResult comparison)
+    internal static bool CompareDates(DateTime fileDate, ComparisonResult comparison, params DateTime[] filterDates)
     {
+        if (filterDates.Length == 0)
+        {
+            return false;
+        }
         return comparison switch
         {
-            ComparisonResult.GreaterThan => filterDate > fileDate,
-            ComparisonResult.LessThan => filterDate < fileDate,
-            ComparisonResult.Equal => fileDate == filterDate,
+            ComparisonResult.GreaterThan => filterDates.All(filterDate => fileDate > filterDate),
+            ComparisonResult.LessThan => filterDates.All(filterDate => fileDate < filterDate),
+            ComparisonResult.Equal => filterDates.All(filterDate => fileDate == filterDate),
+            ComparisonResult.Between when filterDates.Length == 2 => fileDate >= filterDates[0] && fileDate <= filterDates[1],
+            ComparisonResult.NotBetween when filterDates.Length == 2 => fileDate < filterDates[0] || fileDate > filterDates[1], // 不在两个日期之间
             _ => false,
         };
     }

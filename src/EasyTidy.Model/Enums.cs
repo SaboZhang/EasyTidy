@@ -100,6 +100,12 @@ public enum ComparisonResult
 
     [Display(Name = "LessThanText")]
     LessThan,
+
+    [Display(Name = "BetweenText")]
+    Between,
+
+    [Display(Name = "NotBetweenText")]
+    NotBetween
 }
 
 public enum SizeUnit
