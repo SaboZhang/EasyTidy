@@ -1282,4 +1282,10 @@
   <data name="GeneralDirectoryStructureCard.Description" xml:space="preserve">
     <value>處理檔案時是否保留資料夾層級結構</value>
   </data>
+  <data name="BetweenText" xml:space="preserve">
+    <value>介於</value>
+  </data>
+  <data name="NotBetweenText" xml:space="preserve">
+    <value>不介於</value>
+  </data>
 </root>

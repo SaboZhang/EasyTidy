@@ -1285,4 +1285,10 @@
   <data name="GeneralDirectoryStructureCard.Description" xml:space="preserve">
     <value>Préserver la hiérarchie des dossiers lors du traitement des fichiers</value>
   </data>
+  <data name="BetweenText" xml:space="preserve">
+    <value>Entre</value>
+  </data>
+  <data name="NotBetweenText" xml:space="preserve">
+    <value>Pas entre</value>
+  </data>
 </root>

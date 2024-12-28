@@ -54,9 +54,33 @@ public partial class FilterUtil
     /// <param name="dateValue"></param>
     /// <param name="dateUnit"></param>
     /// <returns></returns>
-    internal static DateTime ConvertToDateTime(string dateValue, DateUnit dateUnit)
+    internal static object ConvertToDateTime(string dateValue, DateUnit dateUnit)
     {
         // Parse and adjust date based on unit (days, months, etc.)
+        // 解析传入的字符串
+        var dateParts = dateValue.Split(',');
+
+        if (dateParts.Length == 2)
+        {
+            // 对两个日期分别进行处理
+            DateTime date1 = ConvertDate(dateParts[0], dateUnit);
+            DateTime date2 = ConvertDate(dateParts[1], dateUnit);
+
+            return (date1, date2); // 返回元组
+        }
+        else if (dateParts.Length == 1)
+        {
+            // 仅处理一个日期
+            DateTime date = ConvertDate(dateParts[0], dateUnit);
+            return date; // 返回单个日期
+        }
+
+        // 如果传入的字符串不符合预期，返回当前时间
+        return DateTime.Now;
+    }
+
+    private static DateTime ConvertDate(string dateValue, DateUnit dateUnit)
+    {
         if (int.TryParse(dateValue, out int numericValue))
         {
             return dateUnit switch
@@ -70,7 +94,6 @@ public partial class FilterUtil
                 _ => DateTime.Now,
             };
         }
-
         return DateTime.Now;
     }
 
@@ -101,13 +124,19 @@ public partial class FilterUtil
     /// <param name="filterDate"></param>
     /// <param name="comparison"></param>
     /// <returns></returns>
-    internal static bool CompareDates(DateTime fileDate, DateTime filterDate, ComparisonResult comparison)
+    internal static bool CompareDates(DateTime fileDate, ComparisonResult comparison, params DateTime[] filterDates)
     {
+        if (filterDates.Length == 0)
+        {
+            return false;
+        }
         return comparison switch
         {
-            ComparisonResult.GreaterThan => filterDate > fileDate,
-            ComparisonResult.LessThan => filterDate < fileDate,
-            ComparisonResult.Equal => fileDate == filterDate,
+            ComparisonResult.GreaterThan => filterDates.All(filterDate => fileDate > filterDate),
+            ComparisonResult.LessThan => filterDates.All(filterDate => fileDate < filterDate),
+            ComparisonResult.Equal => filterDates.All(filterDate => fileDate == filterDate),
+            ComparisonResult.Between when filterDates.Length == 2 => fileDate >= filterDates[0] && fileDate <= filterDates[1],
+            ComparisonResult.NotBetween when filterDates.Length == 2 => fileDate < filterDates[0] || fileDate > filterDates[1], // 不在两个日期之间
             _ => false,
         };
     }

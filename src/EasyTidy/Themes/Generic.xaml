@@ -25,6 +25,14 @@ Themes\Styles\ThemeResources.xaml
       <StaticResource x:Key="SubtleButtonForegroundPointerOver" ResourceKey="TextFillColorPrimary" />
       <StaticResource x:Key="SubtleButtonForegroundPressed" ResourceKey="TextFillColorSecondary" />
       <StaticResource x:Key="SubtleButtonForegroundDisabled" ResourceKey="TextFillColorDisabled" />
+      <StaticResource x:Key="WidgetCardBorderBrush" ResourceKey="CardStrokeColorDefaultBrush" />
+      <StaticResource x:Key="WidgetCardBorderBrushPointerOver" ResourceKey="ControlElevationBorderBrush" />
+      <StaticResource x:Key="WidgetCardBorderBrushPressed" ResourceKey="ControlStrokeColorDefaultBrush" />
+      <StaticResource x:Key="WidgetCardBorderBrushDisabled" ResourceKey="ControlStrokeColorDefaultBrush" />
+      <StaticResource x:Key="WidgetCardBackground" ResourceKey="CardBackgroundFillColorDefaultBrush" />
+      <StaticResource x:Key="WidgetCardBackgroundPointerOver" ResourceKey="ControlFillColorSecondaryBrush" />
+      <StaticResource x:Key="WidgetCardBackgroundPressed" ResourceKey="ControlFillColorTertiaryBrush" />
+      <StaticResource x:Key="WidgetCardBackgroundDisabled" ResourceKey="ControlFillColorDisabledBrush" />
     </ResourceDictionary>
     <ResourceDictionary x:Key="Light">
       <StaticResource x:Key="SubtleButtonBackground" ResourceKey="SubtleFillColorTransparent" />
@@ -39,6 +47,14 @@ Themes\Styles\ThemeResources.xaml
       <StaticResource x:Key="SubtleButtonForegroundPointerOver" ResourceKey="TextFillColorPrimary" />
       <StaticResource x:Key="SubtleButtonForegroundPressed" ResourceKey="TextFillColorSecondary" />
       <StaticResource x:Key="SubtleButtonForegroundDisabled" ResourceKey="TextFillColorDisabled" />
+      <StaticResource x:Key="WidgetCardBorderBrush" ResourceKey="CardStrokeColorDefaultBrush" />
+      <StaticResource x:Key="WidgetCardBorderBrushPointerOver" ResourceKey="ControlElevationBorderBrush" />
+      <StaticResource x:Key="WidgetCardBorderBrushPressed" ResourceKey="ControlStrokeColorDefaultBrush" />
+      <StaticResource x:Key="WidgetCardBorderBrushDisabled" ResourceKey="ControlStrokeColorDefaultBrush" />
+      <StaticResource x:Key="WidgetCardBackground" ResourceKey="CardBackgroundFillColorDefaultBrush" />
+      <StaticResource x:Key="WidgetCardBackgroundPointerOver" ResourceKey="ControlFillColorSecondaryBrush" />
+      <StaticResource x:Key="WidgetCardBackgroundPressed" ResourceKey="ControlFillColorTertiaryBrush" />
+      <StaticResource x:Key="WidgetCardBackgroundDisabled" ResourceKey="ControlFillColorDisabledBrush" />
     </ResourceDictionary>
     <ResourceDictionary x:Key="HighContrast">
       <StaticResource x:Key="SubtleButtonBackground" ResourceKey="SystemColorWindowColorBrush" />
@@ -53,6 +69,14 @@ Themes\Styles\ThemeResources.xaml
       <StaticResource x:Key="SubtleButtonForegroundPointerOver" ResourceKey="SystemControlHighlightBaseHighBrush" />
       <StaticResource x:Key="SubtleButtonForegroundPressed" ResourceKey="SystemControlHighlightBaseHighBrush" />
       <StaticResource x:Key="SubtleButtonForegroundDisabled" ResourceKey="SystemControlDisabledBaseMediumLowBrush" />
+      <StaticResource x:Key="WidgetCardBorderBrush" ResourceKey="SystemColorButtonTextColorBrush" />
+      <StaticResource x:Key="WidgetCardBorderBrushPointerOver" ResourceKey="SystemColorHighlightColorBrush" />
+      <StaticResource x:Key="WidgetCardBorderBrushPressed" ResourceKey="SystemColorHighlightTextColorBrush" />
+      <StaticResource x:Key="WidgetCardBorderBrushDisabled" ResourceKey="SystemControlDisabledTransparentBrush" />
+      <StaticResource x:Key="WidgetCardBackground" ResourceKey="SystemColorButtonFaceColorBrush" />
+      <StaticResource x:Key="WidgetCardBackgroundPointerOver" ResourceKey="SystemColorHighlightTextColorBrush" />
+      <StaticResource x:Key="WidgetCardBackgroundPressed" ResourceKey="SystemColorHighlightTextColorBrush" />
+      <StaticResource x:Key="WidgetCardBackgroundDisabled" ResourceKey="SystemControlBackgroundBaseLowBrush" />
     </ResourceDictionary>
   </ResourceDictionary.ThemeDictionaries>
   <x:Double x:Key="BreadcrumbBarChevronFontSize">12</x:Double>

@@ -1285,4 +1285,10 @@
   <data name="GeneralDirectoryStructureCard.Description" xml:space="preserve">
     <value>ファイルを処理するときにフォルダ階層を保持する</value>
   </data>
+  <data name="BetweenText" xml:space="preserve">
+    <value>間</value>
+  </data>
+  <data name="NotBetweenText" xml:space="preserve">
+    <value>間ではない</value>
+  </data>
 </root>

@@ -108,12 +108,13 @@
                                             ContentAlignment="Vertical">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="240"/>
+                                                <ColumnDefinition Width="200"/>
                                                 <ColumnDefinition Width="*"/>
                                             </Grid.ColumnDefinitions>
                                             <TextBlock x:Uid="MissionSelection"
                                                        Grid.Column="0"
-                                                       Margin="0,12,0,0"/>
+                                                       FontWeight="Bold"
+                                                       Margin="0,6,0,0"/>
                                             <TreeView Grid.Column="0"
                                                       SelectionMode="None"
                                                       Margin="-12,34,0,0"
@@ -129,7 +130,86 @@
                                                     </DataTemplate>
                                                 </TreeView.ItemTemplate>
                                             </TreeView>
-                                            <ListView Grid.Column="1" ItemsSource="{x:Bind ViewModel.AutomaticModelACV, Mode=TwoWay}">
+                                            <ItemsView Grid.Column="1"
+                                                       ItemsSource="{x:Bind ViewModel.AutomaticModelACV, Mode=TwoWay}"
+                                                       HorizontalAlignment="Left"
+                                                       SelectionMode="None">
+                                                <ItemsView.Layout>
+                                                    <UniformGridLayout MinRowSpacing="5" MinColumnSpacing="5" MaximumRowsOrColumns="4"/>
+                                                </ItemsView.Layout>
+                                                <ItemsView.ItemTemplate>
+                                                    <DataTemplate x:DataType="model:AutomaticModel">
+                                                        <ItemContainer Width="160" BorderThickness="1" BorderBrush="{ThemeResource WidgetCardBorderBrush}"
+Background="{ThemeResource WidgetCardBackground}">
+                                                            <StackPanel Orientation="Vertical"  Margin="8">
+                                                                <StackPanel Orientation="Vertical"
+                                                                        Spacing="4">
+                                                                    <TextBlock x:Uid="Action"
+                                                                               FontWeight="Bold"
+                                                                               VerticalAlignment="Center"/>
+                                                                    <TextBlock Text="{x:Bind ActionType}"
+                                                                               ToolTipService.ToolTip="{x:Bind ActionType}"/>
+                                                                </StackPanel>
+                                                                <StackPanel Orientation="Vertical"
+                                                                        Spacing="4">
+                                                                    <TextBlock x:Uid="Rules"
+                                                                               FontWeight="Bold"
+                                                                               VerticalAlignment="Center"/>
+                                                                    <TextBlock Grid.Column="1"
+                                                                               Text="{x:Bind Rule, Mode=TwoWay}"
+                                                                               VerticalAlignment="Center"
+                                                                               ToolTipService.ToolTip="{x:Bind Rule}"/>
+                                                                </StackPanel>
+                                                                <StackPanel Orientation="Vertical"
+                                                                        Spacing="4">
+                                                                    <TextBlock
+                                                                        x:Uid="FileFlowDirection"
+                                                                        FontWeight="Bold"
+                                                                        VerticalAlignment="Center"/>
+                                                                    <TextBlock
+                                                                        Text="{x:Bind FileFlow, Mode=TwoWay}"
+                                                                        VerticalAlignment="Center"
+                                                                        TextWrapping="NoWrap"
+                                                                        ToolTipService.ToolTip="{x:Bind FileFlow}"/>
+                                                                </StackPanel>
+                                                                <StackPanel Orientation="Vertical"
+                                                                        Spacing="4">
+                                                                    <TextBlock
+                                                                        x:Uid="AutomaticMode"
+                                                                        FontWeight="Bold"
+                                                                        VerticalAlignment="Center"/>
+                                                                    <TextBlock
+                                                                        Text="{x:Bind ExecutionMode, Mode=TwoWay}"
+                                                                        VerticalAlignment="Center"
+                                                                        ToolTipService.ToolTip="{x:Bind ExecutionMode}"/>
+                                                                </StackPanel>
+                                                                <StackPanel Orientation="Vertical"
+                                                                        Spacing="4">
+                                                                    <StackPanel
+                                                                        HorizontalAlignment="Center"
+                                                                        VerticalAlignment="Center"
+                                                                        Orientation="Horizontal"
+                                                                        Height="40" Opacity=".75"
+                                                                        Spacing="8">
+                                                                        <Button Style="{StaticResource SubtleButtonStyle}"
+                                                                                x:Uid="EditButton"
+                                                                                Content="&#xE70F;"
+                                                                                FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                                                                DataContext="{x:Bind}"
+                                                                                Click="EditButton_Click"/>
+                                                                        <Button Style="{StaticResource SubtleButtonStyle}"
+                                                                                DataContext="{x:Bind}"
+                                                                                Content="&#xE890;"
+                                                                                FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                                                                Click="ViewButton_Click"/>
+                                                                    </StackPanel>
+                                                                </StackPanel>
+                                                            </StackPanel>
+                                                        </ItemContainer>
+                                                    </DataTemplate>
+                                                </ItemsView.ItemTemplate>
+                                            </ItemsView>
+                                            <!-- <ListView Grid.Column="1" ItemsSource="{x:Bind ViewModel.AutomaticModelACV, Mode=TwoWay}">
                                                 <ListView.Header>
                                                     <Grid Padding="16,12"
                                                           ColumnSpacing="16">
@@ -203,7 +283,7 @@
                                                         </Grid>
                                                     </DataTemplate>
                                                 </ListView.ItemTemplate>
-                                            </ListView>
+                                            </ListView> -->
                                         </Grid>
                                     </ctk:SettingsCard>
                                 </ctk:SettingsExpander.Items>
