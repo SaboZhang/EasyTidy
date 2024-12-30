@@ -919,7 +919,7 @@ public partial class AutomaticViewModel : ObservableRecipient
         DateTime dateValue = DateTime.Parse(SelectTaskTime);
         if (!RegularTaskRunning)
         {
-            dateValue = dateValue = ResetToZeroTime(dateValue);
+            dateValue = ResetToZeroTime(dateValue);
         }
         var existingAutoTable = old.AutomaticTable;
         if (existingAutoTable != null)
