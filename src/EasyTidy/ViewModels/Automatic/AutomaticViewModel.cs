@@ -594,6 +594,7 @@ public partial class AutomaticViewModel : ObservableRecipient
 
             if (ReceivedParameter is TaskOrchestrationTable old)
             {
+                await RemoveAutoTask(old);
                 List<TaskOrchestrationTable> list = [];
                 list.Add(old);
                 // 如果 AutomaticTable 不为空且没有其他任务使用该表，则更新
@@ -756,11 +757,11 @@ public partial class AutomaticViewModel : ObservableRecipient
     {
         if (task.AutomaticTable != null)
         {
-            if (task.AutomaticTable.IsFileChange) 
+            if (task.AutomaticTable.IsFileChange)
             {
                 FileEventHandler.StopMonitor(task.TaskSource, task.TaskTarget);
             }
-            if (task.AutomaticTable.OnScheduleExecution)
+            if (task.AutomaticTable.OnScheduleExecution || task.AutomaticTable.RegularTaskRunning)
             {
                 await QuartzHelper.DeleteJob($"{task.TaskName}#{task.ID}", task.GroupName.GroupName);
             }

@@ -111,13 +111,22 @@
                                                 <ColumnDefinition Width="200"/>
                                                 <ColumnDefinition Width="*"/>
                                             </Grid.ColumnDefinitions>
-                                            <TextBlock x:Uid="MissionSelection"
-                                                       Grid.Column="0"
-                                                       FontWeight="Bold"
-                                                       Margin="0,6,0,0"/>
+                                            <StackPanel Grid.Column="0"
+                                                        Margin="0,0,0,0"
+                                                        Orientation="Vertical">
+                                                <Button Content="&#xE74C;" 
+                                                        FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                                        Style="{StaticResource SubtleButtonStyle}"
+                                                        ToolTipService.ToolTip="切换展示方式"
+                                                        Click="ToggleView_Click"
+                                                        Margin="-38,6,0,0"/>
+                                                <TextBlock x:Uid="MissionSelection"
+                                                           Margin="0,-24,0,0"
+                                                           FontWeight="Bold"/>
+                                            </StackPanel>
                                             <TreeView Grid.Column="0"
                                                       SelectionMode="None"
-                                                      Margin="-12,34,0,0"
+                                                      Margin="-12,32,0,0"
                                                       ItemsSource="{x:Bind ViewModel.TaskItemsACV, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                                 <TreeView.ItemTemplate>
                                                     <DataTemplate x:DataType="cm:TaskItem">
@@ -131,16 +140,18 @@
                                                 </TreeView.ItemTemplate>
                                             </TreeView>
                                             <ItemsView Grid.Column="1"
+                                                       x:Name="TaskItemsView"
                                                        ItemsSource="{x:Bind ViewModel.AutomaticModelACV, Mode=TwoWay}"
                                                        HorizontalAlignment="Left"
-                                                       SelectionMode="None">
+                                                       SelectionMode="None"
+                                                       Visibility="Visible">
                                                 <ItemsView.Layout>
                                                     <UniformGridLayout MinRowSpacing="5" MinColumnSpacing="5" MaximumRowsOrColumns="4"/>
                                                 </ItemsView.Layout>
                                                 <ItemsView.ItemTemplate>
                                                     <DataTemplate x:DataType="model:AutomaticModel">
                                                         <ItemContainer Width="160" BorderThickness="1" BorderBrush="{ThemeResource WidgetCardBorderBrush}"
-Background="{ThemeResource WidgetCardBackground}">
+                                                                       Background="{ThemeResource WidgetCardBackground}">
                                                             <StackPanel Orientation="Vertical"  Margin="8">
                                                                 <StackPanel Orientation="Vertical"
                                                                         Spacing="4">
@@ -209,7 +220,10 @@ Background="{ThemeResource WidgetCardBackground}">
                                                     </DataTemplate>
                                                 </ItemsView.ItemTemplate>
                                             </ItemsView>
-                                            <!-- <ListView Grid.Column="1" ItemsSource="{x:Bind ViewModel.AutomaticModelACV, Mode=TwoWay}">
+                                            <ListView Grid.Column="1" 
+                                                      x:Name="TaskListViews"
+                                                      Visibility="Collapsed"
+                                                      ItemsSource="{x:Bind ViewModel.AutomaticModelACV, Mode=TwoWay}">
                                                 <ListView.Header>
                                                     <Grid Padding="16,12"
                                                           ColumnSpacing="16">
@@ -221,20 +235,25 @@ Background="{ThemeResource WidgetCardBackground}">
                                                             <ColumnDefinition Width="80"/>
                                                         </Grid.ColumnDefinitions>
                                                         <TextBlock x:Uid="Action"
-                                                                   VerticalAlignment="Center"/>
+                                                                   VerticalAlignment="Center"
+                                                                   FontWeight="Bold"/>
                                                         <TextBlock Grid.Column="1"
                                                                    x:Uid="Rules"
-                                                                   VerticalAlignment="Center"/>
+                                                                   VerticalAlignment="Center"
+                                                                   FontWeight="Bold"/>
                                                         <TextBlock Grid.Column="2"
                                                                    x:Uid="FileFlowDirection"
-                                                                   VerticalAlignment="Center"/>
+                                                                   VerticalAlignment="Center"
+                                                                   FontWeight="Bold"/>
                                                         <TextBlock Grid.Column="3"
                                                                    x:Uid="AutomaticMode"
-                                                                   VerticalAlignment="Center"/>
+                                                                   VerticalAlignment="Center"
+                                                                   FontWeight="Bold"/>
                                                         <TextBlock Grid.Column="4"
                                                                    x:Uid="OperationBlock"
                                                                    HorizontalAlignment="Center"
-                                                                   VerticalAlignment="Center"/>
+                                                                   VerticalAlignment="Center"
+                                                                   FontWeight="Bold"/>
                                                     </Grid>
                                                 </ListView.Header>
                                                 <ListView.ItemTemplate>
@@ -283,7 +302,7 @@ Background="{ThemeResource WidgetCardBackground}">
                                                         </Grid>
                                                     </DataTemplate>
                                                 </ListView.ItemTemplate>
-                                            </ListView> -->
+                                            </ListView>
                                         </Grid>
                                     </ctk:SettingsCard>
                                 </ctk:SettingsExpander.Items>

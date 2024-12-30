@@ -68,7 +68,7 @@
                                         ResourceKey="TextFillColorSecondary"/>
             <StaticResource x:Key="SubtleButtonForegroundDisabled"
                                         ResourceKey="TextFillColorDisabled"/>
-
+ 
             <StaticResource x:Key="WidgetCardBorderBrush" ResourceKey="CardStrokeColorDefaultBrush" />
             <StaticResource x:Key="WidgetCardBorderBrushPointerOver" ResourceKey="ControlElevationBorderBrush" />
             <StaticResource x:Key="WidgetCardBorderBrushPressed" ResourceKey="ControlStrokeColorDefaultBrush" />
