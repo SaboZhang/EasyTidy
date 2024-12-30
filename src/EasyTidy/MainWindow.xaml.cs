@@ -51,10 +51,10 @@ public sealed partial class MainWindow : WindowEx
 
     async void OnProcessExit(object sender, WindowEventArgs e)
     {
-        await QuartzHelper.StopAllJob();
-        FileEventHandler.StopAllMonitoring();
         if (Logger != null && !App.HandleClosedEvents)
         {
+            await QuartzHelper.StopAllJob();
+            FileEventHandler.StopAllMonitoring();
             Logger.Info($"{Constants.AppName}_v{Constants.Version} Closed...\n");
             LogService.UnRegister();
         }

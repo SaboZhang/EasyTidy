@@ -88,11 +88,12 @@ public sealed partial class TrayIconView : UserControl
     /// Stops the file watcher
     /// </summary>
     [RelayCommand]
-    private void StopWatcher()
+    private async Task StopWatcher()
     {
         Settings.AutomaticConfig.RegularTaskRunning = false;
         Settings.Save();
         FileEventHandler.StopAllMonitoring();
+        await QuartzHelper.StopAllJob();
     }
 
     [RelayCommand]

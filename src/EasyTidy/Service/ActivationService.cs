@@ -129,7 +129,7 @@ public class ActivationService : IActivationService
             // 并行执行任务，但不等待
             var tasks = list.SelectMany(item =>
                 item.TaskOrchestrationList
-                    .Where(t => t.IsRelated)
+                    .Where(t => t.IsRelated == true)
                     .Select(async task =>
                     {
 
@@ -177,7 +177,7 @@ public class ActivationService : IActivationService
             if (list.Count == 0) return;
             foreach (var item in list)
             {
-                foreach (var task in item.TaskOrchestrationList.Where(t => t.IsRelated))
+                foreach (var task in item.TaskOrchestrationList.Where(t => t.IsRelated == true))
                 {
                     RuleModel rule = new()
                     {

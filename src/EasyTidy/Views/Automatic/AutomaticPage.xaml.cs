@@ -3,6 +3,7 @@
 
 
 using EasyTidy.Common.Model;
+using Microsoft.UI.Xaml.Controls;
 
 namespace EasyTidy.Views;
 /// <summary>
@@ -44,5 +45,19 @@ public sealed partial class AutomaticPage : Page
         var checkBox = sender as CheckBox;
         var item = checkBox.DataContext as TaskItem;
         ViewModel.UpdateCheckedCommand.Execute(item);
+    }
+
+    private void ToggleView_Click(object sender, RoutedEventArgs e)
+    {
+        if (TaskItemsView.Visibility == Visibility.Visible)
+        {
+            TaskItemsView.Visibility = Visibility.Collapsed;
+            TaskListViews.Visibility = Visibility.Visible;
+        }
+        else
+        {
+            TaskItemsView.Visibility = Visibility.Visible;
+            TaskListViews.Visibility = Visibility.Collapsed;
+        }
     }
 }

@@ -84,13 +84,31 @@ public static class FileEventHandler
     /// <param name="parameter"></param>
     private static void BindFileSystemEvents(FileSystemWatcher watcher, int delaySeconds, OperationParameters parameter)
     {
-        void onChange(FileSystemEventArgs e) => OnFileChange(e, delaySeconds, () => HandleFileChange(e.FullPath, parameter));
-
-        watcher.Created += (sender, e) => onChange(e);
-        watcher.Deleted += (sender, e) => onChange(e);
-        watcher.Changed += (sender, e) => onChange(e);
-        watcher.Renamed += (sender, e) => onChange(e);
+        watcher.Created += (sender, e) => WatcherCreatedHandler(sender, e, delaySeconds, parameter);
+        watcher.Deleted += (sender, e) => WatcherDeletedHandler(sender, e, delaySeconds, parameter);
+        watcher.Changed += (sender, e) => WatcherChangedHandler(sender, e, delaySeconds, parameter);
+        watcher.Renamed += (sender, e) => WatcherRenamedHandler(sender, e, delaySeconds, parameter);
         watcher.EnableRaisingEvents = true;
+    }
+
+    private static void WatcherCreatedHandler(object sender, FileSystemEventArgs e, int delaySeconds, OperationParameters parameter)
+    {
+        OnFileChange(e, delaySeconds, () => HandleFileChange(e.FullPath, parameter));
+    }
+
+    private static void WatcherDeletedHandler(object sender, FileSystemEventArgs e, int delaySeconds, OperationParameters parameter)
+    {
+        OnFileChange(e, delaySeconds, () => HandleFileChange(e.FullPath, parameter));
+    }
+
+    private static void WatcherChangedHandler(object sender, FileSystemEventArgs e, int delaySeconds, OperationParameters parameter)
+    {
+        OnFileChange(e, delaySeconds, () => HandleFileChange(e.FullPath, parameter));
+    }
+
+    private static void WatcherRenamedHandler(object sender, RenamedEventArgs e, int delaySeconds, OperationParameters parameter)
+    {
+        OnFileChange(e, delaySeconds, () => HandleFileChange(e.FullPath, parameter));
     }
 
     /// <summary>
@@ -125,6 +143,7 @@ public static class FileEventHandler
     {
         try
         {
+            if (!IsPathUnderWatch(parameter.SourcePath, parameter.TargetPath)) return;
             LogService.Logger.Info($"文件变化，开始执行操作：{parameter.SourcePath}");
 
             // 防止重复处理同一个文件
@@ -196,8 +215,6 @@ public static class FileEventHandler
 
                     // 操作完成后，从正在处理的集合中移除
                     _processingFiles.TryRemove(path, out _);
-
-                    _processingFiles.TryRemove(path, out _);
                 });
             }
         }
@@ -209,6 +226,18 @@ public static class FileEventHandler
 
     }
 
+    private static bool IsPathUnderWatch(string sourcePath, string targetPath)
+    {
+        if (_sourceToTargetsCache.TryGetValue(sourcePath, out var targetList)) 
+        {
+            return targetList.Any(o => o.TargetPath == targetPath);
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     /// <summary>
     /// 停止监控
     /// </summary>
@@ -217,6 +246,10 @@ public static class FileEventHandler
         foreach (var watcher in _watchers.Values)
         {
             watcher.EnableRaisingEvents = false;
+            watcher.Created -= (sender, e) => WatcherCreatedHandler(sender, e, 0, null);
+            watcher.Deleted -= (sender, e) => WatcherDeletedHandler(sender, e, 0, null);
+            watcher.Changed -= (sender, e) => WatcherChangedHandler(sender, e, 0, null);
+            watcher.Renamed -= (sender, e) => WatcherRenamedHandler(sender, e, 0, null);
             watcher.Dispose();
         }
         _watchers.Clear();
@@ -230,26 +263,49 @@ public static class FileEventHandler
     /// <param name="targetPath"></param>
     public static void StopMonitor(string sourcePath, string targetPath)
     {
-        if (_sourceToTargetsCache.TryGetValue(sourcePath, out var list))
+        // 检查源路径是否在缓存中
+        if (_sourceToTargetsCache.TryGetValue(sourcePath, out var targetList))
         {
-            // 尝试从列表中移除指定的 value
-            var itemToRemove = list.FirstOrDefault(o => o.TargetPath == targetPath);
+            // 查找匹配的目标路径项
+            var targetToRemove = targetList.FirstOrDefault(o => o.TargetPath == targetPath);
 
-            if (itemToRemove != null)
+            if (targetToRemove != null)
             {
-                list.Remove(itemToRemove);
-                // 如果移除成功，检查该 key 是否还有其他的值
-                if (list.Count == 0)
+                // 从目标列表中移除
+                targetList.Remove(targetToRemove);
+
+                // 如果目标列表为空，停止监控并清理资源
+                if (targetList.Count == 0)
                 {
-                    // 如果列表为空，则移除该 key
+                    // 移除缓存中对应的源路径
                     _sourceToTargetsCache.TryRemove(sourcePath, out _);
-                    _watchers.TryGetValue(sourcePath, out var watcher);
-                    watcher.EnableRaisingEvents = false;
-                    watcher.Dispose();
-                    _watchers.TryRemove(sourcePath, out _);
-                    LogService.Logger.Info($"停止监控：{sourcePath}");
+
+                    // 停止并释放监控器
+                    if (_watchers.TryRemove(sourcePath, out var watcher))
+                    {
+                        watcher.EnableRaisingEvents = false;
+                        watcher.Created -= (sender, e) => WatcherCreatedHandler(sender, e, 0, null);
+                        watcher.Deleted -= (sender, e) => WatcherDeletedHandler(sender, e, 0, null);
+                        watcher.Changed -= (sender, e) => WatcherChangedHandler(sender, e, 0, null);
+                        watcher.Renamed -= (sender, e) => WatcherRenamedHandler(sender, e, 0, null);
+                        watcher.Dispose();
+                    }
+
+                    LogService.Logger.Info($"已停止监控源目录：{sourcePath}");
+                }
+                else
+                {
+                    LogService.Logger.Info($"已移除目标目录：{targetPath}，源目录仍在监控中：{sourcePath}");
                 }
             }
+            else
+            {
+                LogService.Logger.Warn($"目标目录：{targetPath} 不存在于源目录：{sourcePath} 的监控列表中");
+            }
+        }
+        else
+        {
+            LogService.Logger.Warn($"源目录：{sourcePath} 未在监控缓存中");
         }
     }
 
