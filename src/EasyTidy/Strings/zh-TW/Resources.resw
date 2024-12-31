@@ -1288,4 +1288,19 @@
   <data name="NotBetweenText" xml:space="preserve">
     <value>不介於</value>
   </data>
+  <data name="RestoreSelectionTips" xml:space="preserve">
+    <value>請選擇要還原的類型</value>
+  </data>
+  <data name="RestoreFailedTips" xml:space="preserve">
+    <value>復原失敗</value>
+  </data>
+  <data name="WebDavConnectFailed" xml:space="preserve">
+    <value>WebDAV 連線失敗</value>
+  </data>
+  <data name="RestoreSuccessTips" xml:space="preserve">
+    <value>還原成功</value>
+  </data>
+  <data name="BackupList" xml:space="preserve">
+    <value>備份清單</value>
+  </data>
 </root>

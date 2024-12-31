@@ -1764,6 +1764,26 @@
           <source>Not between</source>
           <target state="translated">不介於</target>
         </trans-unit>
+        <trans-unit id="RestoreSelectionTips" translate="yes" xml:space="preserve">
+          <source>Please select the type to restore</source>
+          <target state="translated">請選擇要還原的類型</target>
+        </trans-unit>
+        <trans-unit id="RestoreFailedTips" translate="yes" xml:space="preserve">
+          <source>Recovery failed</source>
+          <target state="translated">復原失敗</target>
+        </trans-unit>
+        <trans-unit id="WebDavConnectFailed" translate="yes" xml:space="preserve">
+          <source>WebDAV connection failed</source>
+          <target state="translated">WebDAV 連線失敗</target>
+        </trans-unit>
+        <trans-unit id="RestoreSuccessTips" translate="yes" xml:space="preserve">
+          <source>Recovery successful</source>
+          <target state="translated">還原成功</target>
+        </trans-unit>
+        <trans-unit id="BackupList" translate="yes" xml:space="preserve">
+          <source>Backup list</source>
+          <target state="translated">備份清單</target>
+        </trans-unit>
       </group>
     </body>
   </file>

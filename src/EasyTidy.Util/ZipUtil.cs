@@ -16,7 +16,7 @@ public class ZipUtil
 {
     public static void CompressFile(string filePath, string zipFilePath)
     {
-        string[] fileExtensions = { "AppConfig.json", "EasyTidyBackup.db", "CommonApplicationData.json" };
+        string[] fileExtensions = { "AppConfig.json", "EasyTidy_back.db", "CommonApplicationData.json" };
         string tempDirectory = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
         Directory.CreateDirectory(tempDirectory);
         foreach (var fileExtension in fileExtensions)
