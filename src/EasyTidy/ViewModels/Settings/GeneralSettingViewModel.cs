@@ -435,11 +435,7 @@ public partial class GeneralSettingViewModel : ObservableObject
     {
         try
         {
-            var openPicker = new FolderPicker();
-            var window = App.MainWindow;
-            var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
-            WinRT.Interop.InitializeWithWindow.Initialize(openPicker, hWnd);
-            var folder = await openPicker.PickSingleFolderAsync();
+            var folder = await FileAndFolderPickerHelper.PickSingleFolderAsync(App.MainWindow);
             FloderPath = folder?.Path ?? (WebDavIsShow ? "WebDAV" : "");
 
         }
@@ -490,7 +486,7 @@ public partial class GeneralSettingViewModel : ObservableObject
         {
             case BackupType.Local:
                 // 本地备份还原 
-                await LocalBackupAsync();
+                await LocalRestoreAsync();
                 break;
             case BackupType.WebDav:
                 // WebDav备份还原
@@ -551,21 +547,13 @@ public partial class GeneralSettingViewModel : ObservableObject
                 var result = await webDavClient.DownloadItemAsync(item, path);
                 if (result != null)
                 {
-                    // await _dbContext.Database.CloseConnectionAsync();
                     var res = ZipUtil.DecompressToDirectory(path, restorePath);
                     if (res)
                     {
-                        // await _dbContext.Database.CloseConnectionAsync();
+                        var source = Path.Combine(Constants.CnfPath, "EasyTidy.db");
+                        var backup = Path.Combine(Constants.CnfPath, "EasyTidy_back.db");
                         FileResolver.CopyAllFiles(restorePath, Constants.CnfPath);
-                        // var configFile = Path.Combine(restorePath, "AppConfig.json");
-                        // var commonFile = Path.Combine(restorePath, "CommonApplicationData.json");
-                        // File.Copy(configFile, Constants.CnfPath, overwrite: true);
-                        // File.Copy(commonFile, Constants.CnfPath, overwrite: true);
-                        //var dbFile = Path.Combine(restorePath, "EasyTidy.db");
-                        //if (File.Exists(dbFile))
-                        //{
-                        //    await RestoreDatabaseAsync(dbFile);
-                        //}
+                        BackupAndRestore.RestoreDatabase(backup, source);
                     }
                     SettingsBackupRestoreMessageVisible = true;
                     BackupRestoreMessageSeverity = InfoBarSeverity.Success;
@@ -582,33 +570,36 @@ public partial class GeneralSettingViewModel : ObservableObject
         }
         finally
         {
-            //_dbContext = App.GetService<AppDbContext>();
-            // await _dbContext.Database.OpenConnectionAsync();
             var restorePath = Path.Combine(Constants.CnfPath, "Restore");
             Directory.Delete(restorePath, recursive: true);
             await DelayCloseMessageVisible();
         }
     }
 
-    private async Task RestoreDatabaseAsync(string backupFilePath)
+    private async Task LocalRestoreAsync()
     {
-        try
+        var backFile = await FileAndFolderPickerHelper.PickSingleFileAsync(App.MainWindow, [".zip"]);
+        if (backFile == null)
         {
-            var currentDbPath = _dbContext.Database.GetDbConnection().DataSource;
-
-            await _dbContext.Database.CloseConnectionAsync();
-            
-            File.Copy(backupFilePath, currentDbPath, overwrite: true);
-            await _dbContext.Database.OpenConnectionAsync();
-        }
-        catch(Exception ex)
-        {
-            Logger.Error($"还原数据库异常：{ex.Message}");
-        }
-        finally
-        {
+            SettingsBackupRestoreMessageVisible = true;
+            BackupRestoreMessageSeverity = InfoBarSeverity.Warning;
+            SettingsBackupMessage = "BackupPathText".GetLocalized();
             await DelayCloseMessageVisible();
+            return;
         }
+        var restorePath = Path.Combine(Constants.CnfPath, "Restore");
+        var file = backFile.Path;
+        var res = ZipUtil.DecompressToDirectory(file, restorePath);
+        if (res)
+        {
+            var source = Path.Combine(Constants.CnfPath, "EasyTidy.db");
+            var backup = Path.Combine(Constants.CnfPath, "EasyTidy_back.db");
+            FileResolver.CopyAllFiles(restorePath, Constants.CnfPath);
+            BackupAndRestore.RestoreDatabase(backup, source);
+        }
+        SettingsBackupRestoreMessageVisible = true;
+        BackupRestoreMessageSeverity = InfoBarSeverity.Success;
+        SettingsBackupMessage = "RestoreSuccessTips".GetLocalized();
     }
 
     [RelayCommand]
@@ -646,8 +637,12 @@ public partial class GeneralSettingViewModel : ObservableObject
                 await DelayCloseMessageVisible();
                 return;
             }
+            var source = Path.Combine(Constants.CnfPath, "EasyTidy.db");
+            var backup = Path.Combine(Constants.CnfPath, "EasyTidy_back.db");
+            BackupAndRestore.BackupDatabase(source,backup);
             var zipFilePath = Path.Combine(FloderPath, $"EasyTidy_backup_{DateTime.Now:yyyyMMddHHmmss}.zip");
             ZipUtil.CompressFile(Constants.CnfPath, zipFilePath);
+            Settings.BackupType = BackupType.Local;
             SettingsBackupRestoreMessageVisible = true;
             ShowBackInfo(zipFilePath);
             BackupRestoreMessageSeverity = InfoBarSeverity.Success;
@@ -693,6 +688,9 @@ public partial class GeneralSettingViewModel : ObservableObject
     {
         try
         {
+            var source = Path.Combine(Constants.CnfPath, "EasyTidy.db");
+            var dbBack = Path.Combine(Constants.CnfPath, "EasyTidy_back.db");
+            BackupAndRestore.BackupDatabase(source,dbBack);
             var webDavClient = InitializeWebDavClient();
             var zipFilePath = Path.Combine(Constants.CnfPath, $"EasyTidy_backup_{DateTime.Now:yyyyMMddHHmmss}.zip");
             ZipUtil.CompressFile(Constants.CnfPath, zipFilePath);
