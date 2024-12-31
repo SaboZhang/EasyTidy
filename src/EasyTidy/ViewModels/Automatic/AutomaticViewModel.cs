@@ -688,7 +688,7 @@ public partial class AutomaticViewModel : ObservableRecipient
                 var path = task.TaskSource.Equals("DesktopText".GetLocalized())
                     ? Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
                     : task.TaskSource;
-                var fileLists = FileList(path);
+                var fileLists = FileList(task);
                 FileLists = new(fileLists);
             }
         }
@@ -972,33 +972,95 @@ public partial class AutomaticViewModel : ObservableRecipient
 
     }
 
-    private static List<FileListModel> FileList(string path) 
+    private static List<FileListModel> FileList(TaskOrchestrationTable task)
     {
         var files = new List<FileListModel>();
-        var dir = new DirectoryInfo(path);
-        var fileInfos = dir.GetFiles();
-        foreach (var fileInfo in fileInfos)
+
+        // 生成过滤规则
+        var rule = FilterUtil.GeneratePathFilters(task.TaskRule, task.RuleType);
+        var filter = FilterUtil.GetPathFilters(task.Filter);
+
+        // 检查源路径是否为文件
+        if (File.Exists(task.TaskSource))
         {
-            var ext = fileInfo.Extension;
-            if (!ext.Equals(".lnk", StringComparison.OrdinalIgnoreCase))
+            ProcessFile(task.TaskSource, rule, filter, files);
+            return files;
+        }
+
+        // 检查源路径是否为文件夹
+        if (Directory.Exists(task.TaskSource))
+        {
+            var dir = new DirectoryInfo(task.TaskSource);
+
+            // 处理文件
+            foreach (var fileInfo in dir.GetFiles())
             {
-                files.Add(new FileListModel
-                {
-                    IsFolder = false,
-                    Path = fileInfo.Name,
-                });
+                ProcessFile(fileInfo.FullName, rule, filter, files);
+            }
+
+            // 处理文件夹
+            foreach (var directory in dir.GetDirectories())
+            {
+                ProcessFolder(directory, task.RuleType, rule, filter, files);
             }
         }
-        foreach (var directory in dir.GetDirectories())
-        {
-            files.Add(new FileListModel
-            {
-                IsFolder = true,
-                Path = directory.FullName,
-            });
-        }
+
         return files;
     }
+
+    /// <summary>
+    /// 处理单个文件
+    /// </summary>
+    /// <param name="filePath">文件路径</param>
+    /// <param name="rule">路径规则</param>
+    /// <param name="filter">过滤条件</param>
+    /// <param name="files">文件列表</param>
+    private static void ProcessFile(string filePath, List<Func<string, bool>> rule, Func<string, bool> filter, List<FileListModel> files)
+    {
+        // 如果文件应被跳过，直接返回
+        if (FilterUtil.ShouldSkip(rule, filePath, filter))
+        {
+            return;
+        }
+
+        // 跳过 .lnk 文件
+        if (Path.GetExtension(filePath).Equals(".lnk", StringComparison.OrdinalIgnoreCase))
+        {
+            return;
+        }
+
+        // 添加文件到列表
+        files.Add(new FileListModel
+        {
+            IsFolder = false,
+            Path = Path.GetFileName(filePath),
+        });
+    }
+
+    /// <summary>
+    /// 处理单个文件夹
+    /// </summary>
+    /// <param name="directory">文件夹信息</param>
+    /// <param name="ruleType">规则类型</param>
+    /// <param name="rule">路径规则</param>
+    /// <param name="filter">过滤条件</param>
+    /// <param name="files">文件列表</param>
+    private static void ProcessFolder(DirectoryInfo directory, TaskRuleType ruleType, List<Func<string, bool>> rule, Func<string, bool> filter, List<FileListModel> files)
+    {
+        // 如果文件夹应被跳过且规则类型为文件夹规则，直接返回
+        if (FilterUtil.ShouldSkip(rule, directory.FullName, filter) && ruleType == TaskRuleType.FolderRule)
+        {
+            return;
+        }
+
+        // 添加文件夹到列表
+        files.Add(new FileListModel
+        {
+            IsFolder = true,
+            Path = directory.FullName,
+        });
+    }
+
 
     /// <summary>
     /// 通知属性更改
