@@ -31,7 +31,7 @@
     <SuppressPseudoWarning Condition="'$(Configuration)' == 'Debug'">true</SuppressPseudoWarning>
     <PlatformTarget>x64</PlatformTarget>
     <Description>一个简单的文件自动分类整理工具，轻松组建文件工作流</Description>
-    <Copyright>©2024 EasyTidy All rights reserved. </Copyright>
+    <Copyright>©2024-2025 EasyTidy All rights reserved. </Copyright>
   </PropertyGroup>
   <ItemGroup>
     <None Include="Assets\**\*">
