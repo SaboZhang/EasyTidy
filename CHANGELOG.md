@@ -5,9 +5,6 @@
 
 [更新下载](https://github.com/SaboZhang/EasyTidy/releases)
 
-- 优化：修改自动化页面展示方式（用户可自行切换为卡片展示或者列表形式）
-- 优化：屏幕较小的情况下dialog窗口内容无法显示全，并且无法进行上下滚动
-- 修复：关闭窗口时，所有任务都会被停止的BUG
-- 修复：取消自动处理的关联时，仍然会自动执行的BUG
+- 优化：导航菜单显示 感谢@kat
 
 **Full Changelog**: https://github.com/SaboZhang/EasyTidy/compare/1.1.0.1226...v1.1.1.1231-alpha.3
