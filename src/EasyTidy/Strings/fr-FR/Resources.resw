@@ -1291,4 +1291,19 @@
   <data name="NotBetweenText" xml:space="preserve">
     <value>Pas entre</value>
   </data>
+  <data name="RestoreSelectionTips" xml:space="preserve">
+    <value>Veuillez sélectionner le type à restaurer</value>
+  </data>
+  <data name="RestoreFailedTips" xml:space="preserve">
+    <value>La récupération a échoué</value>
+  </data>
+  <data name="WebDavConnectFailed" xml:space="preserve">
+    <value>Échec de la connexion WebDAV</value>
+  </data>
+  <data name="RestoreSuccessTips" xml:space="preserve">
+    <value>Récupération réussie</value>
+  </data>
+  <data name="BackupList" xml:space="preserve">
+    <value>Liste de sauvegarde</value>
+  </data>
 </root>

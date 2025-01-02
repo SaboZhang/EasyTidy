@@ -459,22 +459,27 @@ public partial class GeneralSettingViewModel : ObservableObject
             await QuartzHelper.AddSimpleJobOfHourAsync<BackupJob>("Backup", Settings.BackupType.ToString(), 24 * 3, param);
         }
 
-        switch (Settings.BackupType)
+        try
         {
-            case BackupType.Local:
-                // 本地备份 
-                await LocalBackupAsync();
-                break;
-            case BackupType.WebDav:
-                // WebDav备份
-                await WebDavBackupAsync();
-                break;
-            default:
-                SettingsBackupRestoreMessageVisible = true;
-                BackupRestoreMessageSeverity = InfoBarSeverity.Warning;
-                SettingsBackupMessage = "BackupSelectionTips".GetLocalized();
-                await DelayCloseMessageVisible();
-                break;
+            switch (Settings.BackupType)
+            {
+                case BackupType.Local:
+                    // 本地备份 
+                    await ExecuteBackupAsync(LocalBackupAsync);
+                    break;
+                case BackupType.WebDav:
+                    // WebDav备份
+                    await ExecuteBackupAsync(WebDavBackupAsync);
+                    break;
+                default:
+                    ShowWarningMessage("BackupSelectionTips");
+                    break;
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.Error($"备份失败：{ex.Message}");
+            ShowErrorMessage("BackupFailedTips");
         }
 
     }
@@ -482,31 +487,40 @@ public partial class GeneralSettingViewModel : ObservableObject
     [RelayCommand]
     private async Task RestoreBackupClickAsync()
     {
-        switch (Settings.BackupType)
+        try
         {
-            case BackupType.Local:
-                // 本地备份还原 
-                await LocalRestoreAsync();
-                break;
-            case BackupType.WebDav:
-                // WebDav备份还原
-                await GetWebDavList();
-                break;
-            default:
-                SettingsBackupRestoreMessageVisible = true;
-                BackupRestoreMessageSeverity = InfoBarSeverity.Warning;
-                SettingsBackupMessage = "BackupSelectionTips".GetLocalized();
-                await DelayCloseMessageVisible();
-                break;
+            switch (Settings.BackupType)
+            {
+                case BackupType.Local:
+                    // 本地备份还原 
+                    await ExecuteRestoreAsync(LocalRestoreAsync);
+                    break;
+                case BackupType.WebDav:
+                    // WebDav备份还原
+                    await GetWebDavList();
+                    break;
+                default:
+                    ShowWarningMessage("RestoreSelectionTips");
+                    break;
+            }
+        }
+        catch (Exception ex) 
+        {
+            Logger.Error($"还原失败：{ex.Message}");
+            ShowErrorMessage("RestoreFailedTips");
         }
     }
 
+    /// <summary>
+    /// 获取备份列表
+    /// </summary>
+    /// <returns></returns>
     private async Task GetWebDavList()
     {
         var dialog = new WebDavListContentDialog
         {
             ViewModel = this,
-            Title = "备份列表",
+            Title = "BackupList".GetLocalized(),
             PrimaryButtonText = "OK".GetLocalized(),
             CloseButtonText = "CancelText".GetLocalized()
         };
@@ -525,9 +539,7 @@ public partial class GeneralSettingViewModel : ObservableObject
         catch (Exception ex)
         {
             Logger.Error($"WebDav连接异常：{ex.Message}");
-            SettingsBackupRestoreMessageVisible = true;
-            BackupRestoreMessageSeverity = InfoBarSeverity.Error;
-            SettingsBackupMessage = "WebDavConnectFailed".GetLocalized();
+            ShowErrorMessage("WebDavConnectFailed");
             await DelayCloseMessageVisible();
             return;
         }
@@ -544,62 +556,33 @@ public partial class GeneralSettingViewModel : ObservableObject
                 var webDavClient = InitializeWebDavClient();
                 var restorePath = Path.Combine(Constants.CnfPath, "Restore");
                 var path = Path.Combine(restorePath, item.DisplayName);
-                var result = await webDavClient.DownloadItemAsync(item, path);
-                if (result != null)
-                {
-                    var res = ZipUtil.DecompressToDirectory(path, restorePath);
-                    if (res)
-                    {
-                        var source = Path.Combine(Constants.CnfPath, "EasyTidy.db");
-                        var backup = Path.Combine(Constants.CnfPath, "EasyTidy_back.db");
-                        FileResolver.CopyAllFiles(restorePath, Constants.CnfPath);
-                        BackupAndRestore.RestoreDatabase(backup, source);
-                    }
-                    SettingsBackupRestoreMessageVisible = true;
-                    BackupRestoreMessageSeverity = InfoBarSeverity.Success;
-                    SettingsBackupMessage = "RestoreSuccessTips".GetLocalized();
-                }
+                await webDavClient.DownloadItemAsync(item, path);
+                await RestoreFromZipAsync(path);
+                ShowSuccessMessage("RestoreSuccessTips");
             }
         }
         catch (Exception ex)
         {
-            Logger.Error($"还原异常：{ex.Message}");
-            SettingsBackupRestoreMessageVisible = true;
-            BackupRestoreMessageSeverity = InfoBarSeverity.Error;
-            SettingsBackupMessage = "RestoreFailedTips".GetLocalized();
+            Logger.Error($"还原失败：{ex.Message}");
+            ShowErrorMessage("RestoreFailedTips");
         }
         finally
         {
-            var restorePath = Path.Combine(Constants.CnfPath, "Restore");
-            Directory.Delete(restorePath, recursive: true);
+            await CleanRestoreTempFiles();
             await DelayCloseMessageVisible();
         }
     }
 
+    /// <summary>
+    /// 本地恢复
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="InvalidOperationException"></exception>
     private async Task LocalRestoreAsync()
     {
-        var backFile = await FileAndFolderPickerHelper.PickSingleFileAsync(App.MainWindow, [".zip"]);
-        if (backFile == null)
-        {
-            SettingsBackupRestoreMessageVisible = true;
-            BackupRestoreMessageSeverity = InfoBarSeverity.Warning;
-            SettingsBackupMessage = "BackupPathText".GetLocalized();
-            await DelayCloseMessageVisible();
-            return;
-        }
-        var restorePath = Path.Combine(Constants.CnfPath, "Restore");
-        var file = backFile.Path;
-        var res = ZipUtil.DecompressToDirectory(file, restorePath);
-        if (res)
-        {
-            var source = Path.Combine(Constants.CnfPath, "EasyTidy.db");
-            var backup = Path.Combine(Constants.CnfPath, "EasyTidy_back.db");
-            FileResolver.CopyAllFiles(restorePath, Constants.CnfPath);
-            BackupAndRestore.RestoreDatabase(backup, source);
-        }
-        SettingsBackupRestoreMessageVisible = true;
-        BackupRestoreMessageSeverity = InfoBarSeverity.Success;
-        SettingsBackupMessage = "RestoreSuccessTips".GetLocalized();
+        var backFile = await FileAndFolderPickerHelper.PickSingleFileAsync(App.MainWindow, [".zip"]) 
+            ?? throw new InvalidOperationException("BackupPathText".GetLocalized());
+        await RestoreFromZipAsync(backFile.Path);
     }
 
     [RelayCommand]
@@ -627,38 +610,13 @@ public partial class GeneralSettingViewModel : ObservableObject
     /// <returns></returns>
     private async Task LocalBackupAsync()
     {
-        try
-        {
-            if (string.IsNullOrEmpty(FloderPath))
-            {
-                SettingsBackupRestoreMessageVisible = true;
-                BackupRestoreMessageSeverity = InfoBarSeverity.Warning;
-                SettingsBackupMessage = "BackupPathText".GetLocalized();
-                await DelayCloseMessageVisible();
-                return;
-            }
-            var source = Path.Combine(Constants.CnfPath, "EasyTidy.db");
-            var backup = Path.Combine(Constants.CnfPath, "EasyTidy_back.db");
-            BackupAndRestore.BackupDatabase(source,backup);
-            var zipFilePath = Path.Combine(FloderPath, $"EasyTidy_backup_{DateTime.Now:yyyyMMddHHmmss}.zip");
-            ZipUtil.CompressFile(Constants.CnfPath, zipFilePath);
-            Settings.BackupType = BackupType.Local;
-            SettingsBackupRestoreMessageVisible = true;
-            ShowBackInfo(zipFilePath);
-            BackupRestoreMessageSeverity = InfoBarSeverity.Success;
-            SettingsBackupMessage = "BackupSuccessTips".GetLocalized();
-        }
-        catch (Exception ex)
-        {
-            Logger.Error($"备份异常：{ex.Message}");
-            SettingsBackupRestoreMessageVisible = true;
-            BackupRestoreMessageSeverity = InfoBarSeverity.Error;
-            SettingsBackupMessage = "BackupFailedTips".GetLocalized();
-        }
-        finally
-        {
-            await DelayCloseMessageVisible();
-        }
+        if (string.IsNullOrEmpty(FloderPath))
+            throw new InvalidOperationException("BackupPathText".GetLocalized());
+        string zipFilePath = PrepareBackupFile();
+        ZipUtil.CompressFile(Constants.CnfPath, zipFilePath);
+        Settings.BackupType = BackupType.Local;
+        ShowBackInfo(zipFilePath);
+        await Task.CompletedTask;
     }
 
     /// <summary>
@@ -686,28 +644,48 @@ public partial class GeneralSettingViewModel : ObservableObject
     /// <returns></returns>
     private async Task WebDavBackupAsync()
     {
+        FloderPath = Constants.ExecutePath;
+        string zipFilePath = PrepareBackupFile();
+        var webDavClient = InitializeWebDavClient();
+        ZipUtil.CompressFile(Constants.CnfPath, zipFilePath);
+        await webDavClient.UploadFileAsync(WebDavUrl + "/EasyTidy", zipFilePath);
+        ShowBackInfo(zipFilePath);
+        File.Delete(zipFilePath);
+    }
+
+    private async Task ExecuteBackupAsync(Func<Task> backupFunc)
+    {
         try
         {
-            var source = Path.Combine(Constants.CnfPath, "EasyTidy.db");
-            var dbBack = Path.Combine(Constants.CnfPath, "EasyTidy_back.db");
-            BackupAndRestore.BackupDatabase(source,dbBack);
-            var webDavClient = InitializeWebDavClient();
-            var zipFilePath = Path.Combine(Constants.CnfPath, $"EasyTidy_backup_{DateTime.Now:yyyyMMddHHmmss}.zip");
-            ZipUtil.CompressFile(Constants.CnfPath, zipFilePath);
-            var backup = await webDavClient.UploadFileAsync(WebDavUrl + "/EasyTidy", zipFilePath);
-            SettingsBackupRestoreMessageVisible = backup;
-            BackupRestoreMessageSeverity = InfoBarSeverity.Success;
-            SettingsBackupMessage = "BackupSuccessTips".GetLocalized();
-            ShowBackInfo(zipFilePath);
+            await backupFunc();
+            ShowSuccessMessage("BackupSuccessTips");
         }
         catch (Exception ex)
         {
-            Logger.Error($"{ex.Message}");
-            BackupRestoreMessageSeverity = InfoBarSeverity.Error;
-            SettingsBackupMessage = "BackupFailedTips".GetLocalized();
+            Logger.Error($"备份异常：{ex.Message}");
+            ShowErrorMessage("BackupFailedTips");
         }
         finally
         {
+            await DelayCloseMessageVisible();
+        }
+    }
+
+    private async Task ExecuteRestoreAsync(Func<Task> restoreFunc)
+    {
+        try
+        {
+            await restoreFunc();
+            ShowSuccessMessage("RestoreSuccessTips");
+        }
+        catch (Exception ex)
+        {
+            Logger.Error($"还原异常：{ex.Message}");
+            ShowErrorMessage("RestoreFailedTips");
+        }
+        finally
+        {
+            await CleanRestoreTempFiles();
             await DelayCloseMessageVisible();
         }
     }
@@ -734,6 +712,60 @@ public partial class GeneralSettingViewModel : ObservableObject
         Settings.BackupType = BackupType.WebDav;
 
         return webDavClient;
+    }
+
+    private async Task RestoreFromZipAsync(string zipPath)
+    {
+        string restorePath = Path.Combine(Constants.CnfPath, "Restore");
+
+        if (!ZipUtil.DecompressToDirectory(zipPath, restorePath))
+            throw new InvalidOperationException("RestoreFailedTips".GetLocalized());
+
+        var source = Path.Combine(Constants.CnfPath, "EasyTidy.db");
+        var backup = Path.Combine(Constants.CnfPath, "EasyTidy_back.db");
+
+        FileResolver.CopyAllFiles(restorePath, Constants.CnfPath);
+        BackupAndRestore.RestoreDatabase(backup, source);
+        await Task.CompletedTask;
+    }
+
+    private async Task CleanRestoreTempFiles()
+    {
+        string restorePath = Path.Combine(Constants.CnfPath, "Restore");
+        if (Directory.Exists(restorePath))
+        {
+            Directory.Delete(restorePath, recursive: true);
+        }
+        await Task.CompletedTask;
+    }
+
+    private string PrepareBackupFile()
+    {
+        var source = Path.Combine(Constants.CnfPath, "EasyTidy.db");
+        var backup = Path.Combine(Constants.CnfPath, "EasyTidy_back.db");
+        BackupAndRestore.BackupDatabase(source, backup);
+        return Path.Combine(FloderPath, $"EasyTidy_backup_{DateTime.Now:yyyyMMddHHmmss}.zip");
+    }
+
+    private void ShowSuccessMessage(string localizedKey)
+    {
+        SettingsBackupRestoreMessageVisible = true;
+        BackupRestoreMessageSeverity = InfoBarSeverity.Success;
+        SettingsBackupMessage = localizedKey.GetLocalized();
+    }
+
+    private void ShowErrorMessage(string localizedKey)
+    {
+        SettingsBackupRestoreMessageVisible = true;
+        BackupRestoreMessageSeverity = InfoBarSeverity.Error;
+        SettingsBackupMessage = localizedKey.GetLocalized();
+    }
+
+    private void ShowWarningMessage(string localizedKey)
+    {
+        SettingsBackupRestoreMessageVisible = true;
+        BackupRestoreMessageSeverity = InfoBarSeverity.Warning;
+        SettingsBackupMessage = localizedKey.GetLocalized();
     }
 
     /// <summary>

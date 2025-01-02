@@ -1764,6 +1764,26 @@
           <source>Not between</source>
           <target state="translated">Pas entre</target>
         </trans-unit>
+        <trans-unit id="RestoreSelectionTips" translate="yes" xml:space="preserve">
+          <source>Please select the type to restore</source>
+          <target state="translated">Veuillez sélectionner le type à restaurer</target>
+        </trans-unit>
+        <trans-unit id="RestoreFailedTips" translate="yes" xml:space="preserve">
+          <source>Recovery failed</source>
+          <target state="translated">La récupération a échoué</target>
+        </trans-unit>
+        <trans-unit id="WebDavConnectFailed" translate="yes" xml:space="preserve">
+          <source>WebDAV connection failed</source>
+          <target state="translated">Échec de la connexion WebDAV</target>
+        </trans-unit>
+        <trans-unit id="RestoreSuccessTips" translate="yes" xml:space="preserve">
+          <source>Recovery successful</source>
+          <target state="translated">Récupération réussie</target>
+        </trans-unit>
+        <trans-unit id="BackupList" translate="yes" xml:space="preserve">
+          <source>Backup list</source>
+          <target state="translated">Liste de sauvegarde</target>
+        </trans-unit>
       </group>
     </body>
   </file>

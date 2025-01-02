@@ -1,10 +1,10 @@
 
-# 更新
-
-## [1.0.5.1212]之前的更新程序存在BUG,烦请手动下载新版本 1.0.5.1212版本可自动更新
+# 更新(元旦)
 
 [更新下载](https://github.com/SaboZhang/EasyTidy/releases)
 
 - 优化：导航菜单显示 感谢@kat
 
-**Full Changelog**: https://github.com/SaboZhang/EasyTidy/compare/1.1.0.1226...v1.1.1.1231-alpha.3
+**Full Changelog**: <https://github.com/SaboZhang/EasyTidy/compare/1.1.0.1226...1.1.1.0101>
+
+网盘下载：[123网盘](https://www.123684.com/s/hbzgTd-fmmt)|[蓝奏云(2025)](https://wwoo.lanzouu.com/b02u2ne0eh)
