@@ -10,6 +10,7 @@
 - 禁用：加密功能需要优化，暂时不生效（下个版本恢复）
 
 **网盘新增不包含winui跟.NET的版本，更新程序暂不支持更新不包含winui3AppSDK的版本**
+**网盘中**EasyTidy_1.1.2.0105_win-x64_Lite 版本需要自行安装WindowsAppSDK 跟 .NET8 运行时
 
 **Full Changelog**: <https://github.com/SaboZhang/EasyTidy/compare/1.1.0.1226...1.1.2.0105>
 
