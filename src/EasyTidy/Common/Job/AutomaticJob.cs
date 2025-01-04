@@ -2,7 +2,6 @@
 using EasyTidy.Common.Database;
 using EasyTidy.Model;
 using EasyTidy.Service;
-using EasyTidy.Util;
 using Microsoft.EntityFrameworkCore;
 using Quartz;
 
@@ -26,6 +25,12 @@ public class AutomaticJob : IJob
         if (task == null)
         {
             Logger.Error("Task retrieval failed or Task is null.");
+            return;
+        }
+
+        if (string.IsNullOrEmpty(task.TaskSource))
+        {
+            Logger.Warn("源文件夹为空，此次自动任务将退出执行");
             return;
         }
 

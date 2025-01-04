@@ -156,7 +156,7 @@
     <value>Ajouter facilement des fichiers qui doivent être filtrés pour réaliser une gestion précise de fichiers spécifiques. En ajoutant des règles de traitement de fichiers, vous pouvez personnaliser la façon dont les fichiers sont traités pour répondre aux besoins individuels. Dans le même temps, vous pouvez également utiliser la fonction de correspondance de motifs puissante des expressions régulières pour affiner davantage la logique de filtrage et de traitement des fichiers, ce qui rend la gestion des fichiers plus efficace et intelligente. Que vous souhaitiez exclure des types spécifiques de fichiers ou effectuer un traitement spécial sur des fichiers qui correspondent aux modèles spécifiques, vous pouvez facilement le faire ici.</value>
   </data>
   <data name="FilterSettingsControl.ModuleTitle" xml:space="preserve">
-    <value>Filtre</value>
+    <value>Avancé</value>
   </data>
   <data name="AtLeastOneWord" xml:space="preserve">
     <value>Au moins un mot</value>
@@ -1089,7 +1089,7 @@
     <value>Orchestration des tâches</value>
   </data>
   <data name="NavFiltersText.Content" xml:space="preserve">
-    <value>Filters</value>
+    <value>Règles avancées</value>
   </data>
   <data name="NavGeneralText.Content" xml:space="preserve">
     <value>Général</value>

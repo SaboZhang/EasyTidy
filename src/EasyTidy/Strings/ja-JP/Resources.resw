@@ -156,7 +156,7 @@
     <value>特定のファイルを正確に管理するためにフィルタリングする必要があるファイルを簡単に追加できます。ファイル処理ルールを追加することで、個人のニーズに合わせてファイルの処理方法をカスタマイズできます。また、正規表現の強力なパターンマッチング機能を使用して、ファイルのフィルタリングと処理ロジックをさらに洗練することができ、ファイル管理をより効率的かつインテリジェントにすることができます。特定のタイプのファイルを除外する場合でも、特定のパターンに一致するファイルに対して特別な処理を実行する場合でも、ここで簡単に行うことができます。</value>
   </data>
   <data name="FilterSettingsControl.ModuleTitle" xml:space="preserve">
-    <value>フィルタ</value>
+    <value>高級ルール</value>
   </data>
   <data name="AtLeastOneWord" xml:space="preserve">
     <value>少なくとも1文字</value>
@@ -1089,7 +1089,7 @@
     <value>タスクオーケストレーション</value>
   </data>
   <data name="NavFiltersText.Content" xml:space="preserve">
-    <value>フィルタ</value>
+    <value>高級ルール</value>
   </data>
   <data name="NavGeneralText.Content" xml:space="preserve">
     <value>概要</value>

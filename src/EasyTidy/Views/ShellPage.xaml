@@ -76,12 +76,12 @@
                                  Color="Transparent"/>
             </NavigationView.Resources>
             <NavigationView.MenuItems>
-                <NavigationViewItem x:Uid="NavFiltersText"
-                                    Icon="{ui:BitmapIcon Source=/Assets/Fluent/filter.png}"
-                                    helpers:NavigationHelper.NavigateTo="EasyTidy.ViewModels.FilterViewModel"/>
                 <NavigationViewItem x:Uid="NavTaskOrchestrationText"
                                     Icon="{ui:BitmapIcon Source=/Assets/Fluent/task1.png}"
                                     helpers:NavigationHelper.NavigateTo="EasyTidy.ViewModels.TaskOrchestrationViewModel"/>
+                <NavigationViewItem x:Uid="NavFiltersText"
+                    Icon="{ui:BitmapIcon Source=/Assets/Fluent/filter.png}"
+                    helpers:NavigationHelper.NavigateTo="EasyTidy.ViewModels.FilterViewModel"/>
                 <NavigationViewItem x:Uid="NavAutomaticText"
                                     Icon="{ui:BitmapIcon Source=/Assets/Fluent/behaviors.png}"
                                     helpers:NavigationHelper.NavigateTo="EasyTidy.ViewModels.AutomaticViewModel"/>

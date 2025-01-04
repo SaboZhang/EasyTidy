@@ -1442,7 +1442,7 @@
         </trans-unit>
         <trans-unit id="NavFiltersText.Content" translate="yes" xml:space="preserve">
           <source>Filters</source>
-          <target state="translated">過濾器</target>
+          <target state="translated">高級規則</target>
         </trans-unit>
         <trans-unit id="NavGeneralText.Content" translate="yes" xml:space="preserve">
           <source>General</source>

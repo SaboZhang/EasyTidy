@@ -111,7 +111,7 @@ public partial class FilterUtil
             ComparisonResult.GreaterThan => fileValue > filterValue,
             ComparisonResult.LessThan => fileValue < filterValue,
             ComparisonResult.Equal => fileValue == filterValue,
-            ComparisonResult.Between => fileValue > filterValue && fileValue < filterValueTwo,
+            ComparisonResult.Between => fileValue >= filterValue && fileValue <= filterValueTwo,
             ComparisonResult.NotBetween => fileValue < filterValue || fileValue > filterValueTwo,
             _ => false,
         };
