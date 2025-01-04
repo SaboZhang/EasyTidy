@@ -269,14 +269,23 @@ public static class OperationHandler
         {
             await FileActuator.ExecuteFileOperationAsync(parameters);
         });
+        LogService.Logger.Info("执行加密任务完成");
     }
 
     private static async Task CreateSoftLink(OperationParameters parameters)
     {
         await Task.Run(async () =>
         {
-            await FileActuator.ExecuteFileOperationAsync(parameters);
+            if (parameters.RuleModel.RuleType == TaskRuleType.FileRule)
+            {
+                await FileActuator.ExecuteFileOperationAsync(parameters);
+            }
+            else
+            {
+                await FolderActuator.ExecuteFolderOperationAsync(parameters);
+            }
         });
+        LogService.Logger.Info("执行软连接任务完成");
     }
 
     private static async Task CreateHandLink(OperationParameters parameters)
@@ -285,6 +294,7 @@ public static class OperationHandler
         {
             await FileActuator.ExecuteFileOperationAsync(parameters);
         });
+        LogService.Logger.Info("执行硬连接任务完成");
     }
 
 }

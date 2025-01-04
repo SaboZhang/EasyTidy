@@ -156,8 +156,7 @@
                      x:Uid="DialogSourcePlaceholder"
                      Margin="6,0,0,0"
                      Width="210"
-                     Text="{x:Bind ViewModel.TaskSource, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                     IsEnabled="False"/>
+                     Text="{x:Bind ViewModel.TaskSource, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             <Button x:Name="SourceButton"
                     x:Uid="DialogSourceButton"
                     Command="{x:Bind ViewModel.SelectSourcePathCommand}"/>

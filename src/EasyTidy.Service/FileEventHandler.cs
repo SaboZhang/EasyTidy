@@ -141,6 +141,11 @@ public static class FileEventHandler
     /// <param name="parameter"></param>
     private static void HandleFileChange(string path, OperationParameters parameter)
     {
+        if (string.IsNullOrEmpty(parameter.SourcePath))
+        {
+            LogService.Logger.Warn("源文件夹为空，此次自动任务将退出执行");
+            return;
+        }
         try
         {
             if (!IsPathUnderWatch(parameter.SourcePath, parameter.TargetPath)) return;

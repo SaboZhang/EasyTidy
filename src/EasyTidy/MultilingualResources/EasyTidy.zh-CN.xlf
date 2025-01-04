@@ -198,7 +198,7 @@
         </trans-unit>
         <trans-unit id="FilterSettingsControl.ModuleTitle" translate="yes" xml:space="preserve">
           <source>Filter</source>
-          <target state="translated">过滤器</target>
+          <target state="translated">高级规则</target>
         </trans-unit>
         <trans-unit id="AtLeastOneWord" translate="yes" xml:space="preserve">
           <source>At least one word</source>
@@ -1430,11 +1430,11 @@
         </trans-unit>
         <trans-unit id="NavTaskOrchestrationText.Content" translate="yes" xml:space="preserve">
           <source>Task Orchestration</source>
-          <target state="translated">任务编排</target>
+          <target state="translated">整理任务</target>
         </trans-unit>
         <trans-unit id="NavFiltersText.Content" translate="yes" xml:space="preserve">
           <source>Filters</source>
-          <target state="translated">过滤规则</target>
+          <target state="translated">高级规则</target>
         </trans-unit>
         <trans-unit id="NavGeneralText.Content" translate="yes" xml:space="preserve">
           <source>General</source>

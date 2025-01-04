@@ -306,6 +306,7 @@ public static class FileActuator
                 break;
             case OperationMode.Encryption:
                 // TODO: 加密文件
+                // await ExecuteEncryption(parameters.SourcePath, parameters.TargetPath, "123456");
                 break;
             case OperationMode.HardLink:
                 CreateFileHardLink(parameters.SourcePath, parameters.TargetPath);
@@ -812,6 +813,13 @@ public static class FileActuator
             throw new System.ComponentModel.Win32Exception(errorCode, "Failed to create hard link.");
         }
         return result;
+    }
+
+    private static async Task ExecuteEncryption(string path, string target, string pass)
+    {
+        
+        CryptoUtil.EncryptFile(path,target, pass);
+        await Task.CompletedTask;
     }
 
     /// <summary>
