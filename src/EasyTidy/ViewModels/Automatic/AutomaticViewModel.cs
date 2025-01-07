@@ -917,11 +917,6 @@ public partial class AutomaticViewModel : ObservableRecipient
     /// </summary>
     private void UpdateAutomaticTable(TaskOrchestrationTable old, AutomaticTable auto, CustomConfigContentDialog dialog)
     {
-        DateTime dateValue = DateTime.Parse(SelectTaskTime);
-        if (!RegularTaskRunning)
-        {
-            dateValue = ResetToZeroTime(dateValue);
-        }
         var existingAutoTable = old.AutomaticTable;
         if (existingAutoTable != null)
         {
@@ -930,8 +925,8 @@ public partial class AutomaticViewModel : ObservableRecipient
             existingAutoTable.RegularTaskRunning = CustomRegularTaskRunning;
             existingAutoTable.OnScheduleExecution = CustomSchedule || !string.IsNullOrEmpty(dialog.Expression);
             existingAutoTable.DelaySeconds = dialog.Delay;
-            existingAutoTable.Hourly = dateValue.Hour.ToString();
-            existingAutoTable.Minutes = dateValue.Minute.ToString();
+            existingAutoTable.Hourly = auto.Hourly.ToString();
+            existingAutoTable.Minutes = auto.Minutes.ToString();
 
             // 更新 Schedule
             if (existingAutoTable.Schedule != null && existingAutoTable.OnScheduleExecution)

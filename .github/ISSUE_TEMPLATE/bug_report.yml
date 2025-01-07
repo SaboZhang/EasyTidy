@@ -14,9 +14,9 @@ body:
     attributes:
       label: 🔎 Search before asking
       description: >
-        Please search the EasyTidy [Docs](https://docs.luckyits.com/), [Issues](https://github.com/SaboZhang/Organize/issues) to see if a similar bug report already exists.
+        Please search the EasyTidy [Docs](https://easytidy.luckyits.com/), [Issues](https://github.com/SaboZhang/Organize/issues) to see if a similar bug report already exists.
       options:
-        - label: I have searched the EasyTidy [Docs](https://docs.luckyits.com/) and found no similar bug report.
+        - label: I have searched the EasyTidy [Docs](https://easytidy.luckyits.com/) and found no similar bug report.
           required: true
         - label: I have searched the EasyTidy [Issues](https://github.com/SaboZhang/Organize/issues) and found no similar bug report.
           required: true
@@ -57,7 +57,7 @@ body:
     attributes:
       label: 🌰 Steps to Reproduce the Issue (问题复现步骤)
       description: >
-        When reporting issues, providing detailed steps to reproduce the problem helps in 
+        When reporting issues, providing detailed steps to reproduce the problem helps in
         accurately identifying the bug, facilitating quicker resolution. (请务必提供该复现步骤，这样节省大家时间)
       placeholder: |
         ```bash

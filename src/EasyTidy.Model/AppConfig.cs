@@ -5,8 +5,8 @@ using System;
 namespace EasyTidy.Model;
 public partial class AppConfig : JsonSettings, IVersionable
 {
-    [EnforcedVersion("1.1.1.0101")]
-    public virtual Version Version { get; set; } = new Version(1, 1, 1, 0101);
+    [EnforcedVersion("1.1.3.0105")]
+    public virtual Version Version { get; set; } = new Version(1, 1, 3, 0105);
 
     public override string FileName { get; set; } = Constants.AppConfigPath;
 

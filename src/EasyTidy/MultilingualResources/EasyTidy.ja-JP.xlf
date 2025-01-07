@@ -198,7 +198,7 @@
         </trans-unit>
         <trans-unit id="FilterSettingsControl.ModuleTitle" translate="yes" xml:space="preserve">
           <source>Filter</source>
-          <target state="translated">フィルタ</target>
+          <target state="translated">高級ルール</target>
         </trans-unit>
         <trans-unit id="AtLeastOneWord" translate="yes" xml:space="preserve">
           <source>At least one word</source>
@@ -1442,7 +1442,7 @@
         </trans-unit>
         <trans-unit id="NavFiltersText.Content" translate="yes" xml:space="preserve">
           <source>Filters</source>
-          <target state="translated">フィルタ</target>
+          <target state="translated">高級ルール</target>
         </trans-unit>
         <trans-unit id="NavGeneralText.Content" translate="yes" xml:space="preserve">
           <source>General</source>

@@ -65,6 +65,27 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
+                <Button x:Name="NoticeButton"
+                        Width="28"
+                        Height="32"
+                        Content="&#xE946;"
+                        Margin="-8,0,0,0"
+                        Padding="0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Background="Transparent"
+                        BorderBrush="Transparent"
+                        FontFamily="{ThemeResource SymbolThemeFontFamily}">
+                    <Button.Flyout>
+                        <Flyout>
+                            <StackPanel>
+                                <TextBlock Text="介于：指的是选择那些位于两个指定值之间的项（包括这两个值本身），即大于或者等于第一个值且小于或者等于第二个值" TextWrapping="Wrap"/>
+                                <TextBlock Text="不介于：指的是选择那些不在这两个指定值之间的项，小于第一个值，或者大于第二个值" TextWrapping="Wrap"/>
+                                <TextBlock Text="选择「介于」或者「不介于」的条件时两个值之间用英文逗号分割，最小值在前，最大值在后" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Flyout>
+                    </Button.Flyout>
+                </Button>
             </StackPanel>
             <StackPanel x:Name="CreatePropertyStackPanel"
                         Orientation="Horizontal"

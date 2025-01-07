@@ -156,7 +156,7 @@
     <value>轻松地添加需要过滤的文件，实现对特定文件的精准管理。通过增加文件处理规则，你能够自定义文件的处理方式，满足个性化的需求。同时，还可以利用正则表达式强大的模式匹配功能，进一步细化文件的筛选和处理逻辑，让文件管理更加高效、智能。无论是排除特定类型的文件，还是对符合特定模式的文件进行特殊处理，都能在这里轻松实现。</value>
   </data>
   <data name="FilterSettingsControl.ModuleTitle" xml:space="preserve">
-    <value>过滤器</value>
+    <value>高级规则</value>
   </data>
   <data name="AtLeastOneWord" xml:space="preserve">
     <value>至少一个单词</value>
@@ -1080,10 +1080,10 @@
     <value>自动化</value>
   </data>
   <data name="NavTaskOrchestrationText.Content" xml:space="preserve">
-    <value>任务编排</value>
+    <value>整理任务</value>
   </data>
   <data name="NavFiltersText.Content" xml:space="preserve">
-    <value>过滤规则</value>
+    <value>高级规则</value>
   </data>
   <data name="NavGeneralText.Content" xml:space="preserve">
     <value>常规</value>

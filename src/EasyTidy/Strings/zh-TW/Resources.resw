@@ -1089,7 +1089,7 @@
     <value>任務編排</value>
   </data>
   <data name="NavFiltersText.Content" xml:space="preserve">
-    <value>過濾器</value>
+    <value>高級規則</value>
   </data>
   <data name="NavGeneralText.Content" xml:space="preserve">
     <value>常規</value>
