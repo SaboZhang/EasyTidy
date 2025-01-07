@@ -9,9 +9,11 @@
 <p align="center">EasyTidy A simple file auto-classification tool makes it easy to create automatic workflows with files
 </p>
 
-[**English**](./README_EN.md) | **简体中文**
+**English** | [**简体中文**](./README.md)
 
 EasyTidy is a powerful file management software. It can automatically process and organize files and folders, leaving your file system in an orderly manner. Features include: Powerful file filtering: You can filter files by file name, directory, size, date, attributes, content or regular expressions to accurately locate the files you need. Flexible execution mode: Supports manual operation and automatic execution. In terms of automatic execution, you can set a delay start, or you can execute it at fixed intervals, and you can also customize the execution cycle through the CRON expression to meet the file management needs in different scenarios.
+
+Quick start：[Documentation](https://easytidy.luckyits.com)
 
 Technology used: C# .net8 winui3 implementation
 
