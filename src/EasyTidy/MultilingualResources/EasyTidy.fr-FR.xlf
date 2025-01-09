@@ -1784,6 +1784,10 @@
           <source>Backup list</source>
           <target state="translated">Liste de sauvegarde</target>
         </trans-unit>
+        <trans-unit id="FileSnapshotText" translate="yes" xml:space="preserve">
+          <source>File snapshot</source>
+          <target state="new">File snapshot</target>
+        </trans-unit>
       </group>
     </body>
   </file>

@@ -23,6 +23,8 @@
     <WindowsPackageType>None</WindowsPackageType>
     <DefaultLanguage>en-Us</DefaultLanguage>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	  <PublishTrimmed>true</PublishTrimmed>
+	  <TrimMode>Link</TrimMode>
   </PropertyGroup>
   <PropertyGroup Label="MultilingualAppToolkit">
     <MultilingualAppToolkitVersion>4.0</MultilingualAppToolkitVersion>
@@ -99,6 +101,7 @@
     <Content Remove="Assets\Fluent\window.png" />
     <Content Remove="Assets\Inactive.ico" />
     <Content Remove="Assets\LockScreenLogo.scale-200.png" />
+    <Content Remove="Assets\Modules\template.html" />
     <Content Remove="Assets\Red.ico" />
     <Content Remove="Assets\Script\quartz_sqlite.sql" />
     <Content Remove="Assets\SplashScreen.scale-200.png" />
@@ -199,10 +202,6 @@
     <PackageReference Include="CommunityToolkit.WinUI.Converters" />
     <PackageReference Include="CommunityToolkit.WinUI.Controls.SettingsControls" />
     <PackageReference Include="H.NotifyIcon.WinUI" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
     <PackageReference Include="Microsoft.Extensions.Hosting" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" />

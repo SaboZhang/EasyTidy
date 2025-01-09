@@ -153,4 +153,9 @@ public partial class FilterUtil
         return string.Join(";", combinedExtensions);
     }
 
+    public static int ToUnixTimestamp(DateTime value)
+    {
+        return (int)Math.Truncate((value.ToUniversalTime().Subtract(new DateTime(1970, 1, 1))).TotalSeconds);
+    }
+
 }

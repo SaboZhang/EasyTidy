@@ -3,6 +3,8 @@ using EasyTidy.Model;
 using EasyTidy.Util;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -303,8 +305,74 @@ public static class OperationHandler
         await Task.Run(() => 
         {
             var snapshot = FileResolver.GetDirectorySnapshot(parameters.SourcePath);
+            string templatePath = Path.Combine(Constants.ExecutePath, "Assets", "Modules", "template.html");
+            if (!parameters.TargetPath.EndsWith(".html"))
+            {
+                parameters.TargetPath = Path.Combine(parameters.TargetPath, "exportFiles.html");
+            }
+            GenerateHtmlFromFileSystem(templatePath, parameters.TargetPath ,snapshot);
         });
         LogService.Logger.Info("目录快照创建成功");
+    }
+
+    public static void GenerateHtmlFromFileSystem(string templatePath, string outputPath, FileSystemNode rootNode)
+    {
+        // Read the template file.
+        StringBuilder sbTemplate = new StringBuilder();
+        using (StreamReader reader = new StreamReader(templatePath))
+        {
+            sbTemplate.Append(reader.ReadToEnd());
+        }
+
+        // Replace placeholders in the template with actual data.
+        sbTemplate.Replace("[TITLE]", "File System Snapshot");
+        sbTemplate.Replace("[APP LINK]", "http://example.com");
+        sbTemplate.Replace("[APP NAME]", "FileSystemSnapshotGenerator");
+        sbTemplate.Replace("[APP VER]", "1.0");
+        sbTemplate.Replace("[GEN TIME]", DateTime.Now.ToString("t"));
+        sbTemplate.Replace("[GEN DATE]", DateTime.Now.ToString("d"));
+
+        // Build the JavaScript content array from the file system tree.
+        string jsContent = BuildJavaScriptContent(rootNode);
+
+        // Insert the JavaScript content into the template.
+        sbTemplate.Replace("[DIR DATA]", jsContent);
+
+        // Write the final HTML to the output file.
+        using (StreamWriter writer = new StreamWriter(outputPath, false, Encoding.UTF8))
+        {
+            writer.Write(sbTemplate.ToString());
+        }
+    }
+
+    private static string BuildJavaScriptContent(FileSystemNode node)
+    {
+        StringBuilder result = new StringBuilder();
+
+        // Start of directory entry.
+        result.Append($"D.p(['{node.Path}*0*{FilterUtil.ToUnixTimestamp(node.ModifiedDate)}',");
+
+        long dirSize = (long)node.Size;
+        foreach (var child in node.Children)
+        {
+            if (child.IsFolder)
+            {
+                result.Append(BuildJavaScriptContent(child));
+            }
+            else
+            {
+                result.Append($"'{child.Name}*{child.Size}*{FilterUtil.ToUnixTimestamp(child.ModifiedDate)}',");
+                dirSize += (long)child.Size; // Add file size to parent directory's size.
+            }
+        }
+
+        // Add total directory size and subdirectories reference.
+        result.Append($"{dirSize},''");
+
+        // End of directory entry.
+        result.Append("])");
+
+        return result.ToString();
     }
 
 }

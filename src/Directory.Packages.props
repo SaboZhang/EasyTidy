@@ -35,7 +35,6 @@
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Caching.Memory" Version="9.0.0" />
     <PackageVersion Include="System.Text.Json" Version="9.0.0" />
-    <PackageVersion Include="TagLibSharp" Version="2.3.0" />
     <PackageVersion Include="WebDAVClient" Version="2.2.1" />
     <PackageVersion Include="XAMLTools.MSBuild" Version="1.0.0-alpha0167" />
   </ItemGroup>

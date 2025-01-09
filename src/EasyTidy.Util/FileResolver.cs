@@ -380,26 +380,36 @@ public class FileResolver
         {
             Name = Path.GetFileName(directoryPath),
             Path = directoryPath,
-            IsFolder = true
+            IsFolder = true,
+            FolderCount = 0, // 初始化为0
+            FileCount = 0,
+            Size = 0
         };
 
         try
         {
-            // 获取所有子目录
             foreach (var dir in Directory.GetDirectories(directoryPath))
             {
+                var dirInfo = new DirectoryInfo(dir);
+
+                if (ShouldSkipFile(dirInfo.Attributes))
+                    continue;
+
                 var childNode = ScanDirectory(dir);
                 root.Children.Add(childNode);
 
-                // 累加子目录和文件的数量
-                root.FolderCount += childNode.FolderCount + 1; // 包括当前子目录
-                root.FileCount += childNode.FileCount; // 子目录内的文件数量
+                // 更新当前目录的计数和大小
+                root.FolderCount++;
+                root.FileCount += childNode.FileCount;
+                root.Size += childNode.Size;
             }
 
-            // 获取所有文件
             foreach (var file in Directory.GetFiles(directoryPath))
             {
                 var fileInfo = new FileInfo(file);
+
+                if (ShouldSkipFile(fileInfo.Attributes))
+                    continue;
 
                 root.Children.Add(new FileSystemNode
                 {
@@ -410,19 +420,31 @@ public class FileResolver
                     ModifiedDate = fileInfo.LastWriteTime
                 });
 
-                root.FileCount++; // 累加当前文件
+                // 更新当前目录的文件计数和大小
+                root.FileCount++;
+                root.Size += fileInfo.Length;
             }
         }
         catch (UnauthorizedAccessException)
         {
-            root.Children.Add(new FileSystemNode
-            {
-                Name = "Access Denied",
-                IsFolder = false
-            });
+            // 处理访问被拒绝的情况，这里选择忽略
         }
 
         return root;
+    }
+
+    private static bool ShouldSkipFile(FileAttributes attributes)
+    {
+        bool isSystemFile = (attributes & FileAttributes.System) != 0;
+        bool isHiddenFile = (attributes & FileAttributes.Hidden) != 0;
+
+        if (((bool)CommonUtil.Configs.GeneralConfig.IrrelevantFiles && isSystemFile) ||
+            ((bool)CommonUtil.Configs.GeneralConfig.HiddenFiles && isHiddenFile))
+        {
+            return true;
+        }
+
+        return false;
     }
 
 }
