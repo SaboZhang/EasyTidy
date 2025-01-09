@@ -33,6 +33,7 @@ public static class OperationHandler
             { OperationMode.Encryption, EncryptionAsync },
             { OperationMode.HardLink, CreateHandLink },
             { OperationMode.SoftLink, CreateSoftLink },
+            { OperationMode.FileSnapshot, CreateSnapshot },
         };
     }
 
@@ -295,6 +296,15 @@ public static class OperationHandler
             await FileActuator.ExecuteFileOperationAsync(parameters);
         });
         LogService.Logger.Info("执行硬连接任务完成");
+    }
+
+    private static async Task CreateSnapshot(OperationParameters parameters)
+    {
+        await Task.Run(() => 
+        {
+            var snapshot = FileResolver.GetDirectorySnapshot(parameters.SourcePath);
+        });
+        LogService.Logger.Info("目录快照创建成功");
     }
 
 }

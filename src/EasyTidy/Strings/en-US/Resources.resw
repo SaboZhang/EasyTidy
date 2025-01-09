@@ -1440,4 +1440,7 @@
   <data name="BackupList" xml:space="preserve">
     <value>Backup list</value>
   </data>
+  <data name="FileSnapshotText" xml:space="preserve">
+    <value>File snapshot</value>
+  </data>
 </root>

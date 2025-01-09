@@ -366,4 +366,63 @@ public class FileResolver
         }
     }
 
+    public static FileSystemNode GetDirectorySnapshot(string directoryPath)
+    {
+        if (!Directory.Exists(directoryPath))
+            throw new DirectoryNotFoundException($"目录不存在: {directoryPath}");
+
+        return ScanDirectory(directoryPath);
+    }
+
+    private static FileSystemNode ScanDirectory(string directoryPath)
+    {
+        var root = new FileSystemNode
+        {
+            Name = Path.GetFileName(directoryPath),
+            Path = directoryPath,
+            IsFolder = true
+        };
+
+        try
+        {
+            // 获取所有子目录
+            foreach (var dir in Directory.GetDirectories(directoryPath))
+            {
+                var childNode = ScanDirectory(dir);
+                root.Children.Add(childNode);
+
+                // 累加子目录和文件的数量
+                root.FolderCount += childNode.FolderCount + 1; // 包括当前子目录
+                root.FileCount += childNode.FileCount; // 子目录内的文件数量
+            }
+
+            // 获取所有文件
+            foreach (var file in Directory.GetFiles(directoryPath))
+            {
+                var fileInfo = new FileInfo(file);
+
+                root.Children.Add(new FileSystemNode
+                {
+                    Name = fileInfo.Name,
+                    Path = fileInfo.FullName,
+                    IsFolder = false,
+                    Size = fileInfo.Length,
+                    ModifiedDate = fileInfo.LastWriteTime
+                });
+
+                root.FileCount++; // 累加当前文件
+            }
+        }
+        catch (UnauthorizedAccessException)
+        {
+            root.Children.Add(new FileSystemNode
+            {
+                Name = "Access Denied",
+                IsFolder = false
+            });
+        }
+
+        return root;
+    }
+
 }
