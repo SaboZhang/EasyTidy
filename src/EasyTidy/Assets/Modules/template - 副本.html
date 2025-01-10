@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File System Snapshot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+            margin: 0;
+        }
+        #treeview {
+            width: 30%;
+            border-right: 1px solid #ccc;
+            overflow-y: auto;
+            padding: 10px;
+        }
+        #details {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+        }
+        ul {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+        .node {
+            cursor: pointer;
+            padding: 5px;
+        }
+        .folder::before {
+            content: "📂 ";
+        }
+        .file::before {
+            content: "📄 ";
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="treeview"></div>
+    <div id="details">
+        <h2>Sub-Nodes</h2>
+        <ul id="detailsContent">Select a folder to view its contents.</ul>
+    </div>
+
+    <script>
+        var dirs = [];
+		var D = dirs;
+		Array.prototype.p = Array.prototype.push;
+		
+[DIR DATA]
+
+        // 当前路径
+        let currentPath = "root";
+
+        // 渲染树形菜单
+        function renderTree() {
+            const treeview = document.getElementById('treeview');
+            treeview.innerHTML = '';
+
+            function createNode(nodeData) {
+                const li = document.createElement('li');
+                li.className = `node ${nodeData.isFolder ? 'folder' : 'file'}`;
+                li.textContent = nodeData.name;
+                li.dataset.path = nodeData.path;
+                li.dataset.isFolder = nodeData.isFolder;
+
+                // 点击事件
+                li.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    if (nodeData.isFolder) {
+                        currentPath = nodeData.path;
+                        showDetails(nodeData);
+                    }
+                });
+
+                if (nodeData.children && nodeData.children.length > 0) {
+                    const ul = document.createElement('ul');
+                    ul.classList.add('hidden');
+                    nodeData.children.forEach(child => ul.appendChild(createNode(child)));
+                    li.appendChild(ul);
+                }
+
+                return li;
+            }
+
+            const rootNodes = parseDataToTree(dirs);
+            const ul = document.createElement('ul');
+            rootNodes.forEach(node => ul.appendChild(createNode(node)));
+            treeview.appendChild(ul);
+        }
+
+        // 显示子节点信息
+        function showDetails(nodeData) {
+            const detailsContent = document.getElementById('detailsContent');
+            detailsContent.innerHTML = '';
+
+            if (nodeData.children && nodeData.children.length > 0) {
+                nodeData.children.forEach(child => {
+                    const li = document.createElement('li');
+                    li.textContent = `${child.isFolder ? '📂' : '📄'} ${child.name}`;
+                    li.className = 'node';
+
+                    li.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        if (child.isFolder) {
+                            currentPath = child.path;
+                            showDetails(child);
+                            scrollToTreeNode(child.path);
+                        }
+                    });
+
+                    detailsContent.appendChild(li);
+                });
+            } else {
+                detailsContent.textContent = 'This folder is empty.';
+            }
+        }
+
+        // 滚动到树中的对应节点
+        function scrollToTreeNode(path) {
+            const treeNodes = document.querySelectorAll('#treeview .node');
+            treeNodes.forEach(node => {
+                if (node.dataset.path === path) {
+                    node.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            });
+        }
+
+        // 将数据转换为树形结构
+        function parseDataToTree(data) {
+            const nodes = data.map(entry => {
+                const [path, size, modified] = entry;
+                return {
+                    path,
+                    name: path.split('/').pop(),
+                    size: parseInt(size),
+                    modified: parseInt(modified),
+                    isFolder: false,
+                    children: []
+                };
+            });
+
+            data.forEach((entry, index) => {
+                const childrenIndices = entry[3] ? entry[3].split('*').map(Number) : [];
+                nodes[index].isFolder = childrenIndices.length > 0;
+                nodes[index].children = childrenIndices.map(id => nodes[id]);
+            });
+
+            return nodes.filter(node => !node.path.includes('/'));
+        }
+
+        // 初始化
+        renderTree();
+        showDetails(parseDataToTree(dirs)[0]);
+    </script>
+</body>
+</html>
