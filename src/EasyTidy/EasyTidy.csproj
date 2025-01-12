@@ -23,8 +23,6 @@
     <WindowsPackageType>None</WindowsPackageType>
     <DefaultLanguage>en-Us</DefaultLanguage>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-	  <PublishTrimmed>true</PublishTrimmed>
-	  <TrimMode>Link</TrimMode>
   </PropertyGroup>
   <PropertyGroup Label="MultilingualAppToolkit">
     <MultilingualAppToolkitVersion>4.0</MultilingualAppToolkitVersion>
