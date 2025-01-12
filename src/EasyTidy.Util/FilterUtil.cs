@@ -153,4 +153,14 @@ public partial class FilterUtil
         return string.Join(";", combinedExtensions);
     }
 
+    public static int ToUnixTimestamp(DateTime value)
+    {
+        if (value == default(DateTime) || value == DateTime.MinValue)
+        {
+            // 设置为当前时间的 Unix 时间戳，或返回一个固定值
+            value = DateTime.Now;
+        }
+        return (int)Math.Truncate((value.ToUniversalTime().Subtract(new DateTime(1970, 1, 1))).TotalSeconds);
+    }
+
 }

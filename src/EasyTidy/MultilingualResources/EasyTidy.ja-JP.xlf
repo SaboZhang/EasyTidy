@@ -1784,6 +1784,26 @@
           <source>Backup list</source>
           <target state="translated">バックアップリスト</target>
         </trans-unit>
+        <trans-unit id="FileSnapshotText" translate="yes" xml:space="preserve">
+          <source>File snapshot</source>
+          <target state="translated">ファイルのスナップショット</target>
+        </trans-unit>
+        <trans-unit id="FileCountText" translate="yes" xml:space="preserve">
+          <source>{0} files in</source>
+          <target state="translated">{0} ファイル</target>
+        </trans-unit>
+        <trans-unit id="FolderCountText" translate="yes" xml:space="preserve">
+          <source>{0} folders</source>
+          <target state="translated">{0} フォルダ</target>
+        </trans-unit>
+        <trans-unit id="GeneratedText" translate="yes" xml:space="preserve">
+          <source>Generated {0}</source>
+          <target state="translated">生成された {0}</target>
+        </trans-unit>
+        <trans-unit id="RuleInfoText" translate="yes" xml:space="preserve">
+          <source>Rule: {0}</source>
+          <target state="translated">ルール: {0}</target>
+        </trans-unit>
       </group>
     </body>
   </file>

@@ -1306,4 +1306,19 @@
   <data name="BackupList" xml:space="preserve">
     <value>Liste de sauvegarde</value>
   </data>
+  <data name="FileSnapshotText" xml:space="preserve">
+    <value>Instantané de fichier</value>
+  </data>
+  <data name="FileCountText" xml:space="preserve">
+    <value>{0} fichiers dans</value>
+  </data>
+  <data name="FolderCountText" xml:space="preserve">
+    <value>{0} dossiers</value>
+  </data>
+  <data name="GeneratedText" xml:space="preserve">
+    <value>Généré {0}</value>
+  </data>
+  <data name="RuleInfoText" xml:space="preserve">
+    <value>Règle: {0}</value>
+  </data>
 </root>

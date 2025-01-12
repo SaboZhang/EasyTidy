@@ -66,6 +66,8 @@ public enum OperationMode
 
     [Display(Name = "SoftLinkText")] SoftLink,
 
+    [Display(Name = "FileSnapshotText")] FileSnapshot,
+
 }
 
 public enum YesOrNo
