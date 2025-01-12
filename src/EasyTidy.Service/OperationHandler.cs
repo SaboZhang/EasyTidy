@@ -1,4 +1,5 @@
-﻿using EasyTidy.Log;
+﻿using CommunityToolkit.WinUI;
+using EasyTidy.Log;
 using EasyTidy.Model;
 using EasyTidy.Util;
 using Newtonsoft.Json;
@@ -304,162 +305,143 @@ public static class OperationHandler
 
     private static async Task CreateSnapshot(OperationParameters parameters)
     {
-        await Task.Run(() => 
+        // 使用 ConfigureAwait(false) 避免上下文捕获问题
+        await Task.Run(() =>
         {
-            var snapshot = FileResolver.GetDirectorySnapshot(parameters.SourcePath);
+            // 获取目录快照
+            var snapshot = FileResolver.GetDirectorySnapshot(parameters.SourcePath, parameters);
+
+            // 确保目标路径为 HTML 文件
             string templatePath = Path.Combine(Constants.ExecutePath, "Assets", "Modules", "template.html");
             if (!parameters.TargetPath.EndsWith(".html"))
             {
-                parameters.TargetPath = Path.Combine(parameters.TargetPath, "exportFiles.html");
+                var snapName = Path.GetFileName(parameters.SourcePath);
+                snapName = string.IsNullOrWhiteSpace(snapName)
+                    ? (Path.GetPathRoot(parameters.SourcePath)?.TrimEnd(Path.DirectorySeparatorChar).Replace(":", string.Empty) ?? "EasyTidySnapshot") + ".html"
+                    : snapName + ".html";
+                parameters.TargetPath = Path.Combine(parameters.TargetPath, snapName);
             }
-            GenerateHtmlFromFileSystem(templatePath, parameters.TargetPath ,snapshot);
-        });
+
+            // 生成 HTML
+            GenerateHtmlFromFileSystem(templatePath, parameters.TargetPath, snapshot, parameters.RuleModel.Rule);
+        }).ConfigureAwait(false);
+
         LogService.Logger.Info("目录快照创建成功");
     }
 
-    public static void GenerateHtmlFromFileSystem(string templatePath, string outputPath, FileSystemNode rootNode)
+    public static void GenerateHtmlFromFileSystem(string templatePath, string outputPath, FileSystemNode rootNode, string rule)
     {
         // 读取模板文件
-        string templateContent;
-        using (StreamReader reader = new StreamReader(templatePath))
-        {
-            templateContent = reader.ReadToEnd();
-        }
+        string templateContent = File.ReadAllText(templatePath);
 
-        // 替换模板中的占位符
-        templateContent = templateContent
-            .Replace("[TITLE]", "File System Snapshot")
-            .Replace("[APP LINK]", "http://example.com")
-            .Replace("[APP NAME]", "FileSystemSnapshotGenerator")
-            .Replace("[APP VER]", "1.0")
-            .Replace("[GEN TIME]", DateTime.Now.ToString("t"))
-            .Replace("[GEN DATE]", DateTime.Now.ToString("d"))
-            .Replace("[NUM FILES]", rootNode.FileCount.ToString())
-            .Replace("[NUM DIRS]", rootNode.FolderCount.ToString())
-            .Replace("[TOT SIZE]", rootNode.Size.ToString())
-            .Replace( "[LINK FILES]", "false" )
-			.Replace( "[LINK PROTOCOL]", "" )
-			.Replace( "[LINK ROOT]", "" )
-			.Replace( "[SOURCE ROOT]", rootNode.Name.Replace( @"\", "/" ) );
+        // 替换模板占位符
+        templateContent = ReplaceTemplatePlaceholders(templateContent, rootNode);
 
         // 构建文件系统树的 JavaScript 内容
-        var jsContent = BuildJavaScriptContent(rootNode);
+        string jsContent = BuildJavaScriptContent(rootNode);
+
+        var ruleInfo = string.Format("RuleInfoText".GetLocalized(), rule);
 
         // 插入 JavaScript 内容到模板
-        templateContent = templateContent.Replace("[DIR DATA]", jsContent);
+        templateContent = templateContent.Replace("[DIR DATA]", jsContent).Replace("[RULE INFO]", ruleInfo);
 
         // 写入最终 HTML 到输出文件
-        using (StreamWriter writer = new StreamWriter(outputPath, false, Encoding.UTF8))
-        {
-            writer.Write(templateContent);
-        }
+        File.WriteAllText(outputPath, templateContent, Encoding.UTF8);
     }
 
-    private static string BuildJsonTree(FileSystemNode rootNode)
+    private static string ReplaceTemplatePlaceholders(string templateContent, FileSystemNode rootNode)
     {
-        Dictionary<string, JsTreeNode> nodeDictionary = new Dictionary<string, JsTreeNode>();
-        Queue<(FileSystemNode Node, string ParentId)> queue = new Queue<(FileSystemNode, string)>();
-
-        // 初始化队列，从根节点开始
-        string rootId = Guid.NewGuid().ToString();
-        queue.Enqueue((rootNode, "#"));
-
-        while (queue.Count > 0)
-        {
-            var (node, parentId) = queue.Dequeue();
-
-            // 创建当前节点
-            var jsTreeNode = new JsTreeNode
-            {
-                id = Guid.NewGuid().ToString(),
-                parent = parentId,
-                text = node.Name + (node.Size.HasValue ? $" ({node.Size} bytes)" : ""),
-                children = node.IsFolder && node.Children.Any() ? node.Children.Select(c => Guid.NewGuid().ToString()).ToList() : null
-            };
-
-            // 将节点加入字典以便后续引用
-            nodeDictionary[jsTreeNode.id] = jsTreeNode;
-
-            // 对于每个子节点，增加缩进级别并加入队列
-            foreach (var child in node.Children)
-            {
-                queue.Enqueue((child, jsTreeNode.id));
-            }
-        }
-
-        // 更新子节点ID，确保它们指向正确的父节点
-        foreach (var kvp in nodeDictionary)
-        {
-            if (kvp.Value.children != null)
-            {
-                // 更新子节点ID为实际存在的节点ID
-                kvp.Value.children = kvp.Value.children.Select(childId =>
-                {
-                    var childNode = nodeDictionary.FirstOrDefault(n => n.Value.parent == kvp.Key);
-                    return childNode.Value?.id ?? childId; // 如果找不到匹配的子节点，则保留原始ID
-                }).ToList();
-            }
-        }
-
-        // 将树节点序列化为 JSON 字符串
-        return JsonConvert.SerializeObject(nodeDictionary.Values.ToList(), Formatting.None);
+        var title = Constants.AppName + " " + "FileSnapshotText".GetLocalized();
+        var fileCount = string.Format("FileCountText".GetLocalized(), rootNode.FileCount.ToString());
+        var folderCount = string.Format("FolderCountText".GetLocalized(), rootNode.FolderCount.ToString());
+        var genDate = string.Format("GeneratedText".GetLocalized(), DateTime.Now.ToString("yyyy-MM-dd "));
+        return templateContent
+            .Replace("[TITLE]", title)
+            .Replace("[APP LINK]", "https://easytidy.luckyits.com")
+            .Replace("[APP NAME]", Constants.AppName)
+            .Replace("[APP VER]", Constants.Version)
+            .Replace("[GEN TIME]", DateTime.Now.ToString("HH:mm:ss"))
+            .Replace("[GEN DATE]", genDate)
+            .Replace("[NUM FILES]", fileCount)
+            .Replace("[NUM DIRS]", folderCount)
+            .Replace("[TOT SIZE]", rootNode.Size.ToString())
+            .Replace("[LINK FILES]", "false")
+            .Replace("[LINK PROTOCOL]", string.Empty)
+            .Replace("[LINK ROOT]", string.Empty)
+            .Replace("[SOURCE ROOT]", rootNode.Name.Replace(@"\", "/"));
     }
 
     private static string BuildJavaScriptContent(FileSystemNode rootNode)
     {
-        // 使用 StringBuilder 收集所有节点的 D.p 数据
-        StringBuilder jsBuilder = new StringBuilder();
-        Queue<(FileSystemNode Node, string ParentPath)> queue = new Queue<(FileSystemNode, string)>();
+        var jsBuilder = new StringBuilder();
+        var queue = new Queue<(FileSystemNode Node, int Index)>();
+        var dirIndexMap = new Dictionary<string, string>();
+        int globalIndex = 0;
 
-        // 初始化队列
-        queue.Enqueue((rootNode, string.Empty));
+        // 初始化根节点
+        if (rootNode != null)
+        {
+            string rootFullPath = rootNode.Path.Replace("\\", "/");
+            dirIndexMap.Add(rootFullPath, globalIndex++.ToString());
+            queue.Enqueue((rootNode, int.Parse(dirIndexMap[rootFullPath])));
+        }
 
         while (queue.Count > 0)
         {
-            var (node, parentPath) = queue.Dequeue();
+            var (node, currentIndex) = queue.Dequeue();
+            string nodeFullPath = node.Path.Replace("\\", "/");
 
-            // 当前节点路径
-            string nodePath = parentPath == string.Empty
-                ? node.Path.Replace("\\", "/")
-                : $"{parentPath}/{node.Name}";
+            // 当前节点的文件和文件夹信息
+            var nodeData = new StringBuilder($"D.p([\"{nodeFullPath}*0*{FilterUtil.ToUnixTimestamp(node.ModifiedDate)}\"");
+            long totalSize = 0; // 当前节点的文件总大小
+            var fileData = new List<string>(); // 文件信息
+            var childIndices = new List<string>(); // 子文件夹索引
 
-            // 构建当前节点的基础信息
-            StringBuilder nodeData = new StringBuilder();
-            nodeData.Append($"D.p(['{nodePath}*0*{FilterUtil.ToUnixTimestamp(node.ModifiedDate)}',");
-
-            // 子文件夹索引和文件数据
-            List<string> childIndices = new List<string>();
-            List<string> fileData = new List<string>();
-            long totalSize = 0;
-
-            for (int i = 0; i < node.Children.Count; i++)
+            foreach (var child in node.Children)
             {
-                var child = node.Children[i];
+                string childFullPath = Path.Combine(nodeFullPath, child.Name).Replace("\\", "/");
                 if (child.IsFolder)
                 {
-                    // 子文件夹：加入队列并记录索引
-                    queue.Enqueue((child, nodePath));
-                    childIndices.Add(i.ToString());
+                    // 为子文件夹分配索引
+                    if (!dirIndexMap.ContainsKey(childFullPath))
+                    {
+                        dirIndexMap[childFullPath] = globalIndex++.ToString();
+                    }
+                    queue.Enqueue((child, int.Parse(dirIndexMap[childFullPath])));
+                    childIndices.Add(dirIndexMap[childFullPath]);
                 }
                 else
                 {
-                    // 子文件：记录文件数据
-                    fileData.Add($"'{child.Name}*{child.Size}*{FilterUtil.ToUnixTimestamp(child.ModifiedDate)}'");
-                    totalSize += (long)child.Size;
+                    // 收集文件信息
+                    fileData.Add($"\"{child.Name}*{child.Size}*{FilterUtil.ToUnixTimestamp(child.ModifiedDate)}\"");
+                    totalSize += child.Size ?? 0;
                 }
             }
 
-            // 计算总大小（包括当前文件夹大小）
-            totalSize += node.Size ?? 0;
+            // 拼接文件数据
+            if (fileData.Count > 0)
+            {
+                nodeData.Append(',').Append(string.Join(",", fileData));
+            }
 
-            // 拼接当前节点的数据
-            nodeData.Append(string.Join(",", fileData));
-            nodeData.Append($",{totalSize},'{string.Join("*", childIndices)}'])");
+            // 添加文件总大小
+            nodeData.Append($",{totalSize},");
 
-            // 将节点数据追加到结果
+            // 添加子文件夹索引
+            if (childIndices.Count > 0)
+            {
+                nodeData.Append($"\"{string.Join("*", childIndices)}\"");
+            }
+            else
+            {
+                nodeData.Append("\"\"");
+            }
+
+            nodeData.Append("])");
             jsBuilder.AppendLine(nodeData.ToString());
         }
 
         return jsBuilder.ToString();
     }
+    
 }

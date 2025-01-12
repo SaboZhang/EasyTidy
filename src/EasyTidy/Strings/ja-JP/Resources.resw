@@ -1306,4 +1306,19 @@
   <data name="BackupList" xml:space="preserve">
     <value>バックアップリスト</value>
   </data>
+  <data name="FileSnapshotText" xml:space="preserve">
+    <value>ファイルのスナップショット</value>
+  </data>
+  <data name="FileCountText" xml:space="preserve">
+    <value>{0} ファイル</value>
+  </data>
+  <data name="FolderCountText" xml:space="preserve">
+    <value>{0} フォルダ</value>
+  </data>
+  <data name="GeneratedText" xml:space="preserve">
+    <value>生成された {0}</value>
+  </data>
+  <data name="RuleInfoText" xml:space="preserve">
+    <value>ルール: {0}</value>
+  </data>
 </root>

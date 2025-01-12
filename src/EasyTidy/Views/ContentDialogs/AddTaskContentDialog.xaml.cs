@@ -280,8 +280,8 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
                 {
                     case OperationMode.Delete:
                         RenameButton.Visibility = Visibility.Collapsed;
-                        TaskTargetPanel.Visibility = Visibility.Collapsed;
-                        TaskSourcePanel.Visibility = Visibility.Visible;
+                        TaskTargetPanel.Visibility = Visibility.Visible;
+                        TaskSourcePanel.Visibility = Visibility.Collapsed;
                         break;
                     case OperationMode.RecycleBin:
                         TaskSourcePanel.Visibility = Visibility.Visible;

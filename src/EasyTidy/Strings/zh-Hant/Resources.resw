@@ -1303,4 +1303,19 @@
   <data name="BackupList" xml:space="preserve">
     <value>備份清單</value>
   </data>
+  <data name="FileSnapshotText" xml:space="preserve">
+    <value>檔案快照</value>
+  </data>
+  <data name="FileCountText" xml:space="preserve">
+    <value>{0} 個文件在</value>
+  </data>
+  <data name="FolderCountText" xml:space="preserve">
+    <value>{0} 個資料夾中</value>
+  </data>
+  <data name="GeneratedText" xml:space="preserve">
+    <value>生成日期 {0}</value>
+  </data>
+  <data name="RuleInfoText" xml:space="preserve">
+    <value>規則: {0}</value>
+  </data>
 </root>

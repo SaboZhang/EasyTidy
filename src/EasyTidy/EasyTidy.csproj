@@ -248,6 +248,9 @@
     <None Update="Assets\LockScreenLogo.scale-200.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Assets\Modules\template.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Assets\Red.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

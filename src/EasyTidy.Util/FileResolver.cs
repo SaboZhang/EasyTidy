@@ -366,15 +366,15 @@ public class FileResolver
         }
     }
 
-    public static FileSystemNode GetDirectorySnapshot(string directoryPath)
+    public static FileSystemNode GetDirectorySnapshot(string directoryPath, OperationParameters parameters)
     {
         if (!Directory.Exists(directoryPath))
             throw new DirectoryNotFoundException($"目录不存在: {directoryPath}");
 
-        return ScanDirectory(directoryPath);
+        return ScanDirectory(directoryPath, parameters);
     }
 
-    private static FileSystemNode ScanDirectory(string directoryPath)
+    private static FileSystemNode ScanDirectory(string directoryPath, OperationParameters parameters)
     {
         var root = new FileSystemNode
         {
@@ -388,46 +388,75 @@ public class FileResolver
 
         try
         {
+            // 遍历子文件夹
             foreach (var dir in Directory.GetDirectories(directoryPath))
             {
-                var dirInfo = new DirectoryInfo(dir);
+                try
+                {
+                    var dirInfo = new DirectoryInfo(dir);
 
-                if (ShouldSkipFile(dirInfo.Attributes))
-                    continue;
+                    if (ShouldSkipFile(dirInfo.Attributes))
+                        continue;
 
-                var childNode = ScanDirectory(dir);
-                root.Children.Add(childNode);
+                    if (ShouldSkipFolder(parameters, dir)) 
+                    { 
+                        continue;
+                    }
 
-                // 更新当前目录的计数和大小
-                root.FolderCount++;
-                root.FileCount += childNode.FileCount;
-                root.Size += childNode.Size;
+                    var childNode = ScanDirectory(dir, parameters);
+                    root.Children.Add(childNode);
+
+                    // 更新当前目录的计数和大小
+                    root.FolderCount++;
+                    root.FileCount += childNode.FileCount;
+                    root.Size += childNode.Size ?? 0;
+                }
+                catch (Exception ex)
+                {
+                    // 捕获子文件夹访问异常（可选日志）
+                    Console.WriteLine($"无法访问文件夹: {dir}. 错误: {ex.Message}");
+                }
             }
 
+            // 遍历文件
             foreach (var file in Directory.GetFiles(directoryPath))
             {
-                var fileInfo = new FileInfo(file);
-
-                if (ShouldSkipFile(fileInfo.Attributes))
-                    continue;
-
-                root.Children.Add(new FileSystemNode
+                try
                 {
-                    Name = fileInfo.Name,
-                    Path = fileInfo.FullName,
-                    IsFolder = false,
-                    Size = fileInfo.Length,
-                    ModifiedDate = fileInfo.LastWriteTime
-                });
+                    var fileInfo = new FileInfo(file);
 
-                // 更新当前目录的文件计数和大小
-                root.FileCount++;
-                root.Size += fileInfo.Length;
+                    if (ShouldSkipFile(fileInfo.Attributes))
+                        continue;
+
+                    if (!"*".Equals(parameters.RuleModel.Rule) && FilterUtil.ShouldSkip(parameters.Funcs, file, parameters.PathFilter))
+                    {
+                        continue;
+                    }
+
+                    root.Children.Add(new FileSystemNode
+                    {
+                        Name = fileInfo.Name,
+                        Path = fileInfo.FullName,
+                        IsFolder = false,
+                        Size = fileInfo.Length,
+                        ModifiedDate = fileInfo.LastWriteTime
+                    });
+
+                    // 更新当前目录的文件计数和大小
+                    root.FileCount++;
+                    root.Size += fileInfo.Length;
+                }
+                catch (Exception ex)
+                {
+                    // 捕获文件访问异常（可选日志）
+                    Console.WriteLine($"无法访问文件: {file}. 错误: {ex.Message}");
+                }
             }
         }
-        catch (UnauthorizedAccessException)
+        catch (UnauthorizedAccessException ex)
         {
-            // 处理访问被拒绝的情况，这里选择忽略
+            // 捕获根目录级别的访问异常（可选日志）
+            Console.WriteLine($"无法访问目录: {directoryPath}. 错误: {ex.Message}");
         }
 
         return root;
@@ -445,6 +474,18 @@ public class FileResolver
         }
 
         return false;
+    }
+
+    public static bool ShouldSkipFolder(OperationParameters parameters, string dir)
+    {
+        if ("**".Equals(parameters.RuleModel.Rule) || "*".Equals(parameters.RuleModel.Rule))
+        {
+            return false;
+        }
+        return (FilterUtil.ShouldSkip(parameters.Funcs, dir, parameters.PathFilter ) 
+            && parameters.RuleModel.RuleType == TaskRuleType.FolderRule )
+            || FilterUtil.ContainsTwoConsecutiveChars(parameters.RuleModel.Rule, '*')
+            || FilterUtil.ContainsTwoConsecutiveChars(parameters.RuleModel.Rule, '#');
     }
 
 }

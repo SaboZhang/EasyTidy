@@ -1443,4 +1443,16 @@
   <data name="FileSnapshotText" xml:space="preserve">
     <value>File snapshot</value>
   </data>
+  <data name="FileCountText" xml:space="preserve">
+    <value>{0} files in</value>
+  </data>
+  <data name="FolderCountText" xml:space="preserve">
+    <value>{0} folders</value>
+  </data>
+  <data name="GeneratedText" xml:space="preserve">
+    <value>Generated {0}</value>
+  </data>
+  <data name="RuleInfoText" xml:space="preserve">
+    <value>Rule: {0}</value>
+  </data>
 </root>

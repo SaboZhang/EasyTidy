@@ -1788,6 +1788,22 @@
           <source>File snapshot</source>
           <target state="new">File snapshot</target>
         </trans-unit>
+        <trans-unit id="FileCountText" translate="yes" xml:space="preserve">
+          <source>{0} files in</source>
+          <target state="new">{0} files in</target>
+        </trans-unit>
+        <trans-unit id="FolderCountText" translate="yes" xml:space="preserve">
+          <source>{0} folders</source>
+          <target state="new">{0} folders</target>
+        </trans-unit>
+        <trans-unit id="GeneratedText" translate="yes" xml:space="preserve">
+          <source>Generated {0}</source>
+          <target state="new">Generated {0}</target>
+        </trans-unit>
+        <trans-unit id="RuleInfoText" translate="yes" xml:space="preserve">
+          <source>Rule: {0}</source>
+          <target state="new">Rule: {0}</target>
+        </trans-unit>
       </group>
     </body>
   </file>
