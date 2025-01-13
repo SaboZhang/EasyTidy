@@ -1804,6 +1804,14 @@
           <source>Rule: {0}</source>
           <target state="new">Rule: {0}</target>
         </trans-unit>
+        <trans-unit id="ValidRuleText" translate="yes" xml:space="preserve">
+          <source>Rule verification failed</source>
+          <target state="new">Rule verification failed</target>
+        </trans-unit>
+        <trans-unit id="VaildFailedText" translate="yes" xml:space="preserve">
+          <source>Group name or task name or rule is empty</source>
+          <target state="new">Group name or task name or rule is empty</target>
+        </trans-unit>
       </group>
     </body>
   </file>

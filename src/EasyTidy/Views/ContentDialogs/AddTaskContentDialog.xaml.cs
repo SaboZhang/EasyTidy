@@ -3,6 +3,7 @@
 
 using CommunityToolkit.WinUI;
 using EasyTidy.Model;
+using Microsoft.UI.Xaml.Input;
 using System.Collections;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -311,44 +312,7 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
         }
     }
 
-    private void TaskGroupNameBox_LosingFocus(UIElement sender, Microsoft.UI.Xaml.Input.LosingFocusEventArgs args)
-    {
-        if (ViewModel.DialogClosed) 
-        {
-            ViewModel.DialogClosed = false;
-            return;
-        }
-        var text = (sender as TextBox)?.Text;
-        if (string.IsNullOrWhiteSpace(text))
-        {
-            ValidTextBlock.Visibility = Visibility.Visible;
-            ValidTaskGroupNameBox.Text = "GroupInformationVerificationAdd".GetLocalized() + "\n" + "GroupInformationVerification".GetLocalized();
-            IsValid = false;
-        }
-        else
-        {
-            ValidTextBlock.Visibility = Visibility.Collapsed;
-            IsValid = true;
-        }
-    }
-
-    private void ValidateRuleString_LosingFocus(UIElement sender, Microsoft.UI.Xaml.Input.LosingFocusEventArgs args)
-    {
-        var text = (sender as TextBox)?.Text;
-        IsValid = ValidateRuleString(text);
-        if (!IsValid && !string.IsNullOrWhiteSpace(text)) 
-        {
-            // 验证未通过显示错误信息
-            TaskRuleBoxValid.Visibility = Visibility.Visible;
-        }
-        else
-        {
-            // 隐藏错误提示框
-            TaskRuleBoxValid.Visibility = Visibility.Collapsed;
-        }
-    }
-
-    private static bool ValidateRuleString(string input)
+    private bool ValidateRuleString(string input)
     {
         if (string.IsNullOrWhiteSpace(input))
         {
@@ -377,7 +341,7 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
         }
 
         // 条件3: 合法的正则表达式
-        return IsValidRegex(input);
+        return IsValidRegex(input) && IsRegex;
     }
 
     private static bool IsValidRegex(string pattern)
@@ -391,5 +355,79 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
         {
             return false;
         }
+    }
+
+    private void TaskGroupNameBox_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        var text = (sender as TextBox)?.Text;
+        if (string.IsNullOrWhiteSpace(text))
+        {
+            ValidTextBlock.Visibility = Visibility.Visible;
+            ValidTextBlock.Text = "GroupInformationVerificationAdd".GetLocalized() + "\n" + "GroupInformationVerification".GetLocalized();
+            IsValid = false;
+        }
+        else
+        {
+            ValidTextBlock.Visibility = Visibility.Collapsed;
+            IsValid = true;
+        }
+    }
+
+    private void TaskRuleBox_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        var text = (sender as TextBox)?.Text;
+        IsValid = ValidateRuleString(text);
+        if (!IsValid && !string.IsNullOrWhiteSpace(text))
+        {
+            // 验证未通过显示错误信息
+            TaskRuleBoxValid.Visibility = Visibility.Visible;
+            TaskRuleBoxValid.Text = "ValidRuleText".GetLocalized();
+        }
+        else
+        {
+            // 隐藏错误提示框
+            TaskRuleBoxValid.Visibility = Visibility.Collapsed;
+        }
+    }
+
+    private void TaskGroupNameBox_LostFocus(object sender, RoutedEventArgs e)
+    {
+        var text = (sender as TextBox)?.Text;
+        IsValid = ValidGroupName(text);
+        if (!IsValid)
+        {
+            ValidTextBlock.Visibility = Visibility.Visible;
+            ValidTextBlock.Text = "GroupInformationVerificationAdd".GetLocalized() + "\n" + "GroupInformationVerification".GetLocalized();
+        }
+        else
+        {
+            ValidTextBlock.Visibility = Visibility.Collapsed;
+        }
+    }
+
+    private void TaskRuleBox_LostFocus(object sender, RoutedEventArgs e)
+    {
+        var text = (sender as TextBox)?.Text;
+        IsValid = ValidateRuleString(text);
+        if (!IsValid)
+        {
+            // 验证未通过显示错误信息
+            TaskRuleBoxValid.Visibility = Visibility.Visible;
+            TaskRuleBoxValid.Text = "ValidRuleText".GetLocalized();
+        }
+        else
+        {
+            // 隐藏错误提示框
+            TaskRuleBoxValid.Visibility = Visibility.Collapsed;
+        }
+    }
+
+    private bool ValidGroupName(string text)
+    {
+        if (string.IsNullOrWhiteSpace(text))
+        {
+            return false;
+        }
+        return true;
     }
 }

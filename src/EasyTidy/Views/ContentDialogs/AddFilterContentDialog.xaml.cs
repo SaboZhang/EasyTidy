@@ -279,11 +279,6 @@ public sealed partial class AddFilterContentDialog : ContentDialog, INotifyDataE
 
     private void NameTextBox_LostFocus(object sender, RoutedEventArgs e)
     {
-        if (ViewModel.DialogClosed) 
-        {
-            ViewModel.DialogClosed = false;
-            return;
-        }
         var text = (sender as TextBox)?.Text;
         if (text.IsNullOrWhiteSpace())
         {

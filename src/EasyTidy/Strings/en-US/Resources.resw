@@ -1455,4 +1455,10 @@
   <data name="RuleInfoText" xml:space="preserve">
     <value>Rule: {0}</value>
   </data>
+  <data name="ValidRuleText" xml:space="preserve">
+    <value>Rule verification failed</value>
+  </data>
+  <data name="VaildFailedText" xml:space="preserve">
+    <value>Group name or task name or rule is empty</value>
+  </data>
 </root>
