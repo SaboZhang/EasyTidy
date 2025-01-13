@@ -3,6 +3,7 @@
 
 using CommunityToolkit.WinUI;
 using EasyTidy.Model;
+using Microsoft.UI.Xaml.Input;
 using System.Collections;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -118,10 +119,8 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
     {
         foreach (var category in viewModel.MenuCategories)
         {
-            // ´´½¨µÚÒ»¼¶²Ëµ¥Ïî
             var subItem = new MenuFlyoutSubItem { Text = category.Title };
 
-            // Ìí¼ÓµÚ¶ş¼¶²Ëµ¥Ïî
             for (int i = 0; i < category.Items.Count; i++)
             {
                 var menuItem = new MenuFlyoutItem { Text = category.Items[i] };
@@ -133,33 +132,27 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
                 }
             }
 
-            // ½« SubItem Ìí¼Óµ½Ö÷ MenuFlyout
             RuleFlyout.Items.Add(subItem);
         }
-        // ÔÚËùÓĞÖ÷²Ëµ¥ÏîÖ®ºóÌí¼Ó ToggleMenuFlyoutItem
+
         var toggleItem = new ToggleMenuFlyoutItem
         {
             Text = "RegardedExpressionText".GetLocalized(),
             IsChecked = IsRegex
         };
 
-        // ×¢²á Click ÊÂ¼ş´¦Àí³ÌĞò
         toggleItem.Click += (sender, e) =>
         {
-            // ÇĞ»» IsChecked ×´Ì¬
             IsRegex = !IsRegex;
-            // µ÷ÓÃ·½·¨ÒÔ´¦Àí×´Ì¬±ä»¯
             OnIsRegexChanged(IsRegex);
             toggleItem.IsChecked = IsRegex;
         };
-        // ¸üĞÂ UI
         DispatcherQueue.TryEnqueue(() =>
         {
             toggleItem.IsChecked = IsRegex;
         });
 
-        // Ìí¼Ó¿ÉÑ¡µÄ·Ö¸ô·ûºÍ ToggleMenuFlyoutItem µ½Ö÷ MenuFlyout
-        RuleFlyout.Items.Add(new MenuFlyoutSeparator());  // ·Ö¸ô·û
+        RuleFlyout.Items.Add(new MenuFlyoutSeparator()); 
         RuleFlyout.Items.Add(toggleItem);                 // ToggleMenuFlyoutItem
     }
 
@@ -284,9 +277,9 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
                         TaskSourcePanel.Visibility = Visibility.Collapsed;
                         break;
                     case OperationMode.RecycleBin:
-                        TaskSourcePanel.Visibility = Visibility.Visible;
+                        TaskSourcePanel.Visibility = Visibility.Collapsed;
                         RenameButton.Visibility = Visibility.Collapsed;
-                        TaskTargetPanel.Visibility = Visibility.Collapsed;
+                        TaskTargetPanel.Visibility = Visibility.Visible;
                         break;
                     case OperationMode.Rename:
                         RenameButton.Visibility = Visibility.Visible;
@@ -319,17 +312,122 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
         }
     }
 
-    private void TaskGroupNameBox_LosingFocus(UIElement sender, Microsoft.UI.Xaml.Input.LosingFocusEventArgs args)
+    private bool ValidateRuleString(string input)
+    {
+        if (string.IsNullOrWhiteSpace(input))
+        {
+            return false;
+        }
+
+        // æ£€æŸ¥æ˜¯å¦ä½¿ç”¨åˆ†å·æˆ–ç«–çº¿åˆ†å‰²
+        bool containsSeparator = input.Contains(';') || input.Contains('|');
+
+        // æ£€æŸ¥æ˜¯å¦åŒ…å« *
+        bool containsAsterisk = input.Contains('*');
+
+        // æ£€æŸ¥æ˜¯å¦åŒ…å« #
+        bool containsHash = input.Contains('#');
+
+        // æ¡ä»¶1: åŒ…å«åˆ†éš”ç¬¦ä¸”åŒ…å« *
+        if (containsSeparator && containsAsterisk)
+        {
+            return true;
+        }
+
+        // æ¡ä»¶2: ä¸åŒ…å«åˆ†éš”ç¬¦ï¼Œä½†åŒ…å« * æˆ– #
+        if (!containsSeparator && (containsAsterisk || containsHash))
+        {
+            return true;
+        }
+
+        // æ¡ä»¶3: åˆæ³•çš„æ­£åˆ™è¡¨è¾¾å¼
+        return IsValidRegex(input) && IsRegex;
+    }
+
+    private static bool IsValidRegex(string pattern)
+    {
+        try
+        {
+            _ = Regex.IsMatch("", pattern); // å°è¯•åŒ¹é…ç©ºå­—ç¬¦ä¸²
+            return true;
+        }
+        catch (ArgumentException)
+        {
+            return false;
+        }
+    }
+
+    private void TaskGroupNameBox_TextChanged(object sender, TextChangedEventArgs e)
     {
         var text = (sender as TextBox)?.Text;
         if (string.IsNullOrWhiteSpace(text))
         {
             ValidTextBlock.Visibility = Visibility.Visible;
-            ValidTaskGroupNameBox.Text = "GroupInformationVerificationAdd".GetLocalized() + "\n" + "GroupInformationVerification".GetLocalized();
+            ValidTextBlock.Text = "GroupInformationVerificationAdd".GetLocalized() + "\n" + "GroupInformationVerification".GetLocalized();
+            IsValid = false;
+        }
+        else
+        {
+            ValidTextBlock.Visibility = Visibility.Collapsed;
+            IsValid = true;
+        }
+    }
+
+    private void TaskRuleBox_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        var text = (sender as TextBox)?.Text;
+        IsValid = ValidateRuleString(text);
+        if (!IsValid && !string.IsNullOrWhiteSpace(text))
+        {
+            // éªŒè¯æœªé€šè¿‡æ˜¾ç¤ºé”™è¯¯ä¿¡æ¯
+            TaskRuleBoxValid.Visibility = Visibility.Visible;
+            TaskRuleBoxValid.Text = "ValidRuleText".GetLocalized();
+        }
+        else
+        {
+            // éšè—é”™è¯¯æç¤ºæ¡†
+            TaskRuleBoxValid.Visibility = Visibility.Collapsed;
+        }
+    }
+
+    private void TaskGroupNameBox_LostFocus(object sender, RoutedEventArgs e)
+    {
+        var text = (sender as TextBox)?.Text;
+        IsValid = ValidGroupName(text);
+        if (!IsValid)
+        {
+            ValidTextBlock.Visibility = Visibility.Visible;
+            ValidTextBlock.Text = "GroupInformationVerificationAdd".GetLocalized() + "\n" + "GroupInformationVerification".GetLocalized();
         }
         else
         {
             ValidTextBlock.Visibility = Visibility.Collapsed;
         }
+    }
+
+    private void TaskRuleBox_LostFocus(object sender, RoutedEventArgs e)
+    {
+        var text = (sender as TextBox)?.Text;
+        IsValid = ValidateRuleString(text);
+        if (!IsValid)
+        {
+            // éªŒè¯æœªé€šè¿‡æ˜¾ç¤ºé”™è¯¯ä¿¡æ¯
+            TaskRuleBoxValid.Visibility = Visibility.Visible;
+            TaskRuleBoxValid.Text = "ValidRuleText".GetLocalized();
+        }
+        else
+        {
+            // éšè—é”™è¯¯æç¤ºæ¡†
+            TaskRuleBoxValid.Visibility = Visibility.Collapsed;
+        }
+    }
+
+    private bool ValidGroupName(string text)
+    {
+        if (string.IsNullOrWhiteSpace(text))
+        {
+            return false;
+        }
+        return true;
     }
 }

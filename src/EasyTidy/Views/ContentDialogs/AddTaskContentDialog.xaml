@@ -10,7 +10,7 @@
     xmlns:model="using:EasyTidy.Model"
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core" 
     xmlns:ui="using:CommunityToolkit.WinUI"
-    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:i="using:Microsoft.Xaml.Interactivity" 
     CornerRadius="{ThemeResource OverlayCornerRadius}"
     DefaultButton="Primary">
 
@@ -29,7 +29,8 @@
                      Width="210"
                      Margin="6,0,0,0"
                      x:Uid="TaskGroupBox"
-                     LosingFocus="TaskGroupNameBox_LosingFocus" />
+                     TextChanged="TaskGroupNameBox_TextChanged"
+                     LostFocus="TaskGroupNameBox_LostFocus"/>
             <ComboBox x:Name="TaskGroupNameComboBox"
                       x:Uid="DialogTaskGroup"
                       MaxWidth="100"
@@ -49,8 +50,7 @@
         <TextBlock Foreground="{ThemeResource SystemFillColorCriticalBrush}"
                    x:Name="ValidTextBlock"
                    Margin="122,0,0,0"
-                   Tag="{Binding (ui:TextBoxExtensions.IsValid), ElementName=TaskGroupNameBox}">
-            <Run Text="" x:Name="ValidTaskGroupNameBox" />
+                   Visibility="Collapsed">
         </TextBlock>
         <StackPanel x:Name="TaskNamePanel"
                     Orientation="Horizontal"
@@ -80,7 +80,8 @@
                      x:Uid="DialogTaskRulePlaceholder"
                      Margin="6,0,0,0"
                      Width="210"
-                     Text="{x:Bind TaskRule, Mode=TwoWay}"/>
+                     Text="{x:Bind TaskRule, Mode=TwoWay}"
+                     LostFocus="TaskRuleBox_LostFocus"/>
             <Button x:Name="RuleButton"
                     Width="52"
                     Height="32"
@@ -120,6 +121,10 @@
                 </Button.Resources>
             </Button>
         </StackPanel>
+        <TextBlock Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+                   x:Name="TaskRuleBoxValid"
+                   Margin="122,0,0,0"
+                   Visibility="Collapsed"/>
         <StackPanel x:Name="TaskOperatePanel"
                     Orientation="Horizontal"
                     Spacing="8"

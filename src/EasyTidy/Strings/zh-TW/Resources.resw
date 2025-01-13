@@ -1318,4 +1318,7 @@
   <data name="RuleInfoText" xml:space="preserve">
     <value>規則: {0}</value>
   </data>
+  <data name="ValidRuleText" xml:space="preserve">
+    <value>規則驗證失敗</value>
+  </data>
 </root>
