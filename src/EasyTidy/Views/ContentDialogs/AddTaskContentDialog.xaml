@@ -80,7 +80,8 @@
                      x:Uid="DialogTaskRulePlaceholder"
                      Margin="6,0,0,0"
                      Width="210"
-                     Text="{x:Bind TaskRule, Mode=TwoWay}"/>
+                     Text="{x:Bind TaskRule, Mode=TwoWay}"
+                     LosingFocus="ValidateRuleString_LosingFocus"/>
             <Button x:Name="RuleButton"
                     Width="52"
                     Height="32"
@@ -120,6 +121,10 @@
                 </Button.Resources>
             </Button>
         </StackPanel>
+        <TextBlock Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+                   x:Name="TaskRuleBoxValid"
+                   Margin="122,0,0,0"
+                   Visibility="Collapsed"/>
         <StackPanel x:Name="TaskOperatePanel"
                     Orientation="Horizontal"
                     Spacing="8"

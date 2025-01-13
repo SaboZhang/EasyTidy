@@ -391,66 +391,13 @@ public class FileResolver
             // 遍历子文件夹
             foreach (var dir in Directory.GetDirectories(directoryPath))
             {
-                try
-                {
-                    var dirInfo = new DirectoryInfo(dir);
-
-                    if (ShouldSkipFile(dirInfo.Attributes))
-                        continue;
-
-                    if (ShouldSkipFolder(parameters, dir)) 
-                    { 
-                        continue;
-                    }
-
-                    var childNode = ScanDirectory(dir, parameters);
-                    root.Children.Add(childNode);
-
-                    // 更新当前目录的计数和大小
-                    root.FolderCount++;
-                    root.FileCount += childNode.FileCount;
-                    root.Size += childNode.Size ?? 0;
-                }
-                catch (Exception ex)
-                {
-                    // 捕获子文件夹访问异常（可选日志）
-                    Console.WriteLine($"无法访问文件夹: {dir}. 错误: {ex.Message}");
-                }
+                HandleSubdirectory(root, dir, parameters);
             }
 
             // 遍历文件
             foreach (var file in Directory.GetFiles(directoryPath))
             {
-                try
-                {
-                    var fileInfo = new FileInfo(file);
-
-                    if (ShouldSkipFile(fileInfo.Attributes))
-                        continue;
-
-                    if (!"*".Equals(parameters.RuleModel.Rule) && FilterUtil.ShouldSkip(parameters.Funcs, file, parameters.PathFilter))
-                    {
-                        continue;
-                    }
-
-                    root.Children.Add(new FileSystemNode
-                    {
-                        Name = fileInfo.Name,
-                        Path = fileInfo.FullName,
-                        IsFolder = false,
-                        Size = fileInfo.Length,
-                        ModifiedDate = fileInfo.LastWriteTime
-                    });
-
-                    // 更新当前目录的文件计数和大小
-                    root.FileCount++;
-                    root.Size += fileInfo.Length;
-                }
-                catch (Exception ex)
-                {
-                    // 捕获文件访问异常（可选日志）
-                    Console.WriteLine($"无法访问文件: {file}. 错误: {ex.Message}");
-                }
+                HandleFile(root, file, parameters);
             }
         }
         catch (UnauthorizedAccessException ex)
@@ -460,6 +407,69 @@ public class FileResolver
         }
 
         return root;
+    }
+
+    private static void HandleSubdirectory(FileSystemNode root, string dir, OperationParameters parameters)
+    {
+        try
+        {
+            var dirInfo = new DirectoryInfo(dir);
+
+            if (ShouldSkipFile(dirInfo.Attributes) || ShouldSkipFolder(parameters, dir))
+                return;
+
+            var childNode = ScanDirectory(dir, parameters);
+            root.Children.Add(childNode);
+
+            // 更新当前目录的计数和大小
+            root.FolderCount++;
+            root.FileCount += childNode.FileCount;
+            root.Size += childNode.Size ?? 0;
+        }
+        catch (Exception ex)
+        {
+            // 捕获子文件夹访问异常（可选日志）
+            Console.WriteLine($"无法访问文件夹: {dir}. 错误: {ex.Message}");
+        }
+    }
+
+    private static void HandleFile(FileSystemNode root, string file, OperationParameters parameters)
+    {
+        try
+        {
+            var fileInfo = new FileInfo(file);
+
+            if (ShouldSkipFile(fileInfo.Attributes) ||
+                (!"*".Equals(parameters.RuleModel.Rule) && FilterUtil.ShouldSkip(parameters.Funcs, file, parameters.PathFilter)))
+            {
+                return;
+            }
+
+            root.Children.Add(new FileSystemNode
+            {
+                Name = fileInfo.Name,
+                Path = fileInfo.FullName,
+                IsFolder = false,
+                Size = fileInfo.Length,
+                ModifiedDate = GetFileModifiedDate(fileInfo)
+            });
+
+            // 更新当前目录的文件计数和大小
+            root.FileCount++;
+            root.Size += fileInfo.Length;
+        }
+        catch (Exception ex)
+        {
+            // 捕获文件访问异常（可选日志）
+            Console.WriteLine($"无法访问文件: {file}. 错误: {ex.Message}");
+        }
+    }
+
+    private static DateTime GetFileModifiedDate(FileInfo fileInfo)
+    {
+        return fileInfo.LastWriteTime != DateTime.MinValue
+            ? fileInfo.LastWriteTime
+            : fileInfo.CreationTime;
     }
 
     private static bool ShouldSkipFile(FileAttributes attributes)

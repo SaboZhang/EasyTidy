@@ -136,7 +136,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         try
         {
             var dialog = sender as AddTaskContentDialog;
-            if (dialog.HasErrors)
+            if (!dialog.IsValid)
             {
                 args.Cancel = true;
                 return;
