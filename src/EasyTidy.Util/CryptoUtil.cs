@@ -81,31 +81,70 @@ public class CryptoUtil
     }
 
     /// <summary>
-    /// 文件加密
+    /// 文件加密,支持使用常用解密工具进行解密 AES-256 with PBKDF2-derived key
     /// </summary>
     /// <param name="inputFile"></param>
     /// <param name="outputFile"></param>
     /// <param name="password"></param>
     public static void EncryptFile(string inputFile, string outputFile, string password)
     {
-        using (var inputFileStream = new FileStream(inputFile, FileMode.Open, FileAccess.Read))
-        using (var outputFileStream = new FileStream(outputFile, FileMode.Create, FileAccess.Write))
-        using (var aes = Aes.Create())
+        if (string.IsNullOrWhiteSpace(inputFile) || !File.Exists(inputFile))
         {
-            // 设置密钥和 IV
-            aes.Key = SHA256.HashData(Encoding.UTF8.GetBytes(password));
-            aes.IV = new byte[16]; // 初始化向量为 0
+            throw new ArgumentException("输入文件路径无效或文件不存在。");
+        }
 
-            // 写入文件头信息（方便手动解密）
-            outputFileStream.Write(aes.IV, 0, aes.IV.Length);
+        if (string.IsNullOrWhiteSpace(password))
+        {
+            throw new ArgumentException("密码不能为空。");
+        }
 
-            using (var cryptoStream = new CryptoStream(
-                outputFileStream,
-                aes.CreateEncryptor(),
-                CryptoStreamMode.Write))
+        try
+        {
+            using (var inputFileStream = new FileStream(inputFile, FileMode.Open, FileAccess.Read))
+            using (var outputFileStream = new FileStream(outputFile, FileMode.Create, FileAccess.Write))
+            using (var aes = Aes.Create())
             {
-                inputFileStream.CopyTo(cryptoStream);
+                aes.Mode = CipherMode.CBC;
+                aes.Padding = PaddingMode.PKCS7;
+
+                // 生成随机盐值
+                byte[] salt = RandomNumberGenerator.GetBytes(16);
+
+                // 使用推荐的构造方法，指定 HMACSHA256 和安全的迭代次数
+                using (var keyDerivationFunction = new Rfc2898DeriveBytes(password, salt, 100000, HashAlgorithmName.SHA256))
+                {
+                    aes.Key = keyDerivationFunction.GetBytes(32);
+                    aes.IV = RandomNumberGenerator.GetBytes(16);
+                }
+
+                // 写入文件头：盐值和 IV
+                outputFileStream.Write(salt, 0, salt.Length);
+                outputFileStream.Write(aes.IV, 0, aes.IV.Length);
+
+                // 使用分块加密方式
+                byte[] buffer = new byte[1048576]; // 1 MB 缓冲区
+                int bytesRead;
+
+                using (var cryptoStream = new CryptoStream(outputFileStream, aes.CreateEncryptor(), CryptoStreamMode.Write))
+                {
+                    while ((bytesRead = inputFileStream.Read(buffer, 0, buffer.Length)) > 0)
+                    {
+                        cryptoStream.Write(buffer, 0, bytesRead);
+                    }
+                }
             }
+
+            // 为加密文件添加后缀
+            string encryptedFileName = outputFile + "enc";
+            if (File.Exists(encryptedFileName))
+            {
+                File.Delete(encryptedFileName); // 删除已存在的加密文件以避免冲突
+            }
+            File.Move(outputFile, encryptedFileName);
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException("加密过程中发生错误。", ex);
         }
     }
 
@@ -117,25 +156,56 @@ public class CryptoUtil
     /// <param name="password"></param>
     public static void DecryptFile(string inputFile, string outputFile, string password)
     {
-        using (var inputFileStream = new FileStream(inputFile, FileMode.Open, FileAccess.Read))
-        using (var outputFileStream = new FileStream(outputFile, FileMode.Create, FileAccess.Write))
-        using (var aes = Aes.Create())
+        if (string.IsNullOrWhiteSpace(inputFile) || !File.Exists(inputFile))
         {
-            // 读取文件头信息
-            byte[] iv = new byte[16];
-            inputFileStream.Read(iv, 0, iv.Length);
+            throw new ArgumentException("输入文件路径无效或文件不存在。");
+        }
 
-            // 设置密钥和 IV
-            aes.Key = SHA256.HashData(Encoding.UTF8.GetBytes(password));
-            aes.IV = iv;
+        if (string.IsNullOrWhiteSpace(password))
+        {
+            throw new ArgumentException("密码不能为空。");
+        }
 
-            using (var cryptoStream = new CryptoStream(
-                inputFileStream,
-                aes.CreateDecryptor(),
-                CryptoStreamMode.Read))
+        try
+        {
+            using (var inputFileStream = new FileStream(inputFile, FileMode.Open, FileAccess.Read))
+            using (var outputFileStream = new FileStream(outputFile, FileMode.Create, FileAccess.Write))
+            using (var aes = Aes.Create())
             {
-                cryptoStream.CopyTo(outputFileStream);
+                aes.Mode = CipherMode.CBC;
+                aes.Padding = PaddingMode.PKCS7;
+
+                // 从文件头读取盐值和 IV
+                byte[] salt = new byte[16];
+                inputFileStream.Read(salt, 0, salt.Length);
+
+                byte[] iv = new byte[16];
+                inputFileStream.Read(iv, 0, iv.Length);
+
+                // 派生密钥
+                using (var keyDerivationFunction = new Rfc2898DeriveBytes(password, salt, 100000, HashAlgorithmName.SHA256))
+                {
+                    aes.Key = keyDerivationFunction.GetBytes(32);
+                    aes.IV = iv;
+                }
+
+                // 使用分块解密方式
+                byte[] buffer = new byte[1048576]; // 1 MB 缓冲区
+                int bytesRead;
+
+                using (var cryptoStream = new CryptoStream(inputFileStream, aes.CreateDecryptor(), CryptoStreamMode.Read))
+                {
+                    while ((bytesRead = cryptoStream.Read(buffer, 0, buffer.Length)) > 0)
+                    {
+                        outputFileStream.Write(buffer, 0, bytesRead);
+                    }
+                }
             }
         }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException("解密过程中发生错误。", ex);
+        }
     }
+
 }

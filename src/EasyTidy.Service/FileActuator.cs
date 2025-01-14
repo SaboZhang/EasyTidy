@@ -2,7 +2,6 @@ using EasyTidy.Log;
 using EasyTidy.Model;
 using EasyTidy.Util;
 using Microsoft.VisualBasic.FileIO;
-using SharpCompress.Common;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;

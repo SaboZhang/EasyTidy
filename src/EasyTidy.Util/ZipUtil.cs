@@ -550,5 +550,74 @@ public class ZipUtil
         return filteredFiles;
     }
 
+    /// <summary>
+    /// 压缩文件，并设置密码
+    /// </summary>
+    /// <param name="inputFilePath"></param>
+    /// <param name="outputFilePath"></param>
+    /// <param name="password"></param>
+    /// <exception cref="ArgumentException"></exception>
+    /// <exception cref="FileNotFoundException"></exception>
+    /// <exception cref="InvalidOperationException"></exception>
+    public static void CompressWithPassword(string inputFilePath, string outputFilePath, string password)
+    {
+        if (string.IsNullOrWhiteSpace(inputFilePath) || !File.Exists(inputFilePath))
+        {
+            throw new ArgumentException("输入文件路径无效或文件不存在。");
+        }
+
+        if (string.IsNullOrWhiteSpace(outputFilePath))
+        {
+            throw new ArgumentException("输出文件路径无效。");
+        }
+
+        if (string.IsNullOrWhiteSpace(password))
+        {
+            throw new ArgumentException("密码不能为空。");
+        }
+
+        string sevenZipPath = Path.Combine(Constants.ExecutePath, "Assets", "lib", "7z.exe");
+        if (!File.Exists(sevenZipPath))
+        {
+            throw new FileNotFoundException("7-Zip 可执行文件未找到，请检查路径是否正确。", sevenZipPath);
+        }
+
+        try
+        {
+            // 构建命令参数
+            string arguments = $"a \"{outputFilePath}\" \"{inputFilePath}\" -p\"{password}\" -mhe";
+
+            // 创建进程以执行 7-Zip 命令
+            var processStartInfo = new ProcessStartInfo
+            {
+                FileName = sevenZipPath,
+                Arguments = arguments,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false,
+                CreateNoWindow = true
+            };
+
+            using (var process = Process.Start(processStartInfo))
+            {
+                if (process == null)
+                {
+                    throw new InvalidOperationException("无法启动 7-Zip 进程。");
+                }
+
+                process.WaitForExit();
+
+                if (process.ExitCode != 0)
+                {
+                    string error = process.StandardError.ReadToEnd();
+                    throw new InvalidOperationException($"7-Zip 压缩失败：{error}");
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException("压缩过程中发生错误。", ex);
+        }
+    }
 
 }
