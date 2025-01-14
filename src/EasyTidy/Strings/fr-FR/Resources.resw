@@ -1322,6 +1322,12 @@
     <value>Règle: {0}</value>
   </data>
   <data name="ValidRuleText" xml:space="preserve">
-    <value>ルール検証は失敗しました</value>
+    <value>Échec de vérification de règle</value>
+  </data>
+  <data name="ShutdownExecutionCard.Header" xml:space="preserve">
+    <value>Exécuter à l'arrêt</value>
+  </data>
+  <data name="ShutdownExecutionCard.Description" xml:space="preserve">
+    <value>Exécuter des tâches lors de l'arrêt nécessite le démarrage d'EasyTidy</value>
   </data>
 </root>

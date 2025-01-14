@@ -305,7 +305,7 @@ public static class FileActuator
                 break;
             case OperationMode.Encryption:
                 // TODO: 加密文件
-                // await ExecuteEncryption(parameters.SourcePath, parameters.TargetPath, "123456");
+                await ExecuteEncryption(parameters.SourcePath, parameters.TargetPath, "123456");
                 break;
             case OperationMode.HardLink:
                 CreateFileHardLink(parameters.SourcePath, parameters.TargetPath);
@@ -816,8 +816,16 @@ public static class FileActuator
 
     private static async Task ExecuteEncryption(string path, string target, string pass)
     {
-        
-        CryptoUtil.EncryptFile(path,target, pass);
+        var enc = Encrypted.SevenZip;
+        switch (enc)
+        {
+            case Encrypted.SevenZip:
+                ZipUtil.CompressWithPassword(path, target, pass);
+                break;
+            case Encrypted.AES256WithPBKDF2DerivedKey:
+                CryptoUtil.EncryptFile(path, target, pass);
+                break;
+        }
         await Task.CompletedTask;
     }
 

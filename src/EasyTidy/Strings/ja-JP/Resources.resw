@@ -1324,4 +1324,10 @@
   <data name="ValidRuleText" xml:space="preserve">
     <value>ルール検証は失敗しました</value>
   </data>
+  <data name="ShutdownExecutionCard.Header" xml:space="preserve">
+    <value>シャットダウン時に実行</value>
+  </data>
+  <data name="ShutdownExecutionCard.Description" xml:space="preserve">
+    <value>シャットダウン時タスクを実行する場合は EasyTidy の開始が必要</value>
+  </data>
 </root>

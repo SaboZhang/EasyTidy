@@ -1321,4 +1321,10 @@
   <data name="ValidRuleText" xml:space="preserve">
     <value>規則驗證失敗</value>
   </data>
+  <data name="ShutdownExecutionCard.Header" xml:space="preserve">
+    <value>關閉時執行</value>
+  </data>
+  <data name="ShutdownExecutionCard.Description" xml:space="preserve">
+    <value>程式退出或關閉電腦時執行，關機執行需要 EasyTidy 啟動狀態</value>
+  </data>
 </root>

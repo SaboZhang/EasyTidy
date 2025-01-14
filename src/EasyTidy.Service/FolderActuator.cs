@@ -157,6 +157,7 @@ public class FolderActuator
                 break;
             case OperationMode.Encryption:
                 // TODO: 加密文件
+                await ExecuteEncryption(parameters.SourcePath, parameters.TargetPath, "123456");
                 break;
             case OperationMode.SoftLink:
                 CreateFolderSymbolicLink(parameters.TargetPath, parameters.SourcePath);
@@ -409,6 +410,21 @@ public class FolderActuator
             // 清理临时目录
             Directory.Delete(tempDirectory, true);
         }
+    }
+
+    private static async Task ExecuteEncryption(string path, string target, string pass)
+    {
+        var enc = Encrypted.SevenZip;
+        switch (enc)
+        {
+            case Encrypted.SevenZip:
+                ZipUtil.EncryptFolderToZip(path, target, pass);
+                break;
+            case Encrypted.AES256WithPBKDF2DerivedKey:
+                CryptoUtil.EncryptFile(path, target, pass);
+                break;
+        }
+        await Task.CompletedTask;
     }
 
     private static void CreateFolderSymbolicLink(string filePath, string tragetPath)

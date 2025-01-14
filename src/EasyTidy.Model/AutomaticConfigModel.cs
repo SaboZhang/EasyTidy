@@ -6,6 +6,8 @@ public class AutomaticConfigModel
 
     public bool IsStartupExecution { get; set; } = false;
 
+    public bool IsShutdownExecution { get; set; } = false;
+
     public bool RegularTaskRunning { get; set; } = false;
 
     public bool OnScheduleExecution { get; set; } = false;

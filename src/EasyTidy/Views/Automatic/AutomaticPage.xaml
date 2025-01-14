@@ -97,6 +97,13 @@
                                             IsEnabled="{x:Bind ViewModel.OnScheduleExecution, Mode=OneWay}"/>
                                 </StackPanel>
                             </ctk:SettingsCard>
+                            <ctk:SettingsCard x:Uid="ShutdownExecutionCard">
+                                <ctk:SettingsCard.HeaderIcon>
+                                    <FontIcon Glyph="&#xF83D;"/>
+                                </ctk:SettingsCard.HeaderIcon>
+                                <ToggleSwitch x:Name="ShutdownExecution"
+                                              IsOn="{x:Bind ViewModel.IsShutdownExecution, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </ctk:SettingsCard>
 
                         </etc:SettingsGroup>
                         <etc:SettingsGroup x:Uid="TaskAssociation">
@@ -114,7 +121,7 @@
                                             <StackPanel Grid.Column="0"
                                                         Margin="0,0,0,0"
                                                         Orientation="Vertical">
-                                                <Button Content="&#xE74C;" 
+                                                <Button Content="&#xE74C;"
                                                         FontFamily="{ThemeResource SymbolThemeFontFamily}"
                                                         Style="{StaticResource SubtleButtonStyle}"
                                                         ToolTipService.ToolTip="切换展示方式"
@@ -220,7 +227,7 @@
                                                     </DataTemplate>
                                                 </ItemsView.ItemTemplate>
                                             </ItemsView>
-                                            <ListView Grid.Column="1" 
+                                            <ListView Grid.Column="1"
                                                       x:Name="TaskListViews"
                                                       Visibility="Collapsed"
                                                       ItemsSource="{x:Bind ViewModel.AutomaticModelACV, Mode=TwoWay}">

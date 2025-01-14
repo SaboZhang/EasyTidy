@@ -80,6 +80,22 @@ public partial class AutomaticViewModel : ObservableRecipient
         }
     }
 
+    private bool? _isShutdownExecution;
+
+    public bool IsShutdownExecution
+    {
+        get => _isShutdownExecution ?? CurConfig.IsShutdownExecution;
+        set
+        {
+            if (_isShutdownExecution != value)
+            {
+                _isShutdownExecution = value;
+                CurConfig.IsShutdownExecution = value;
+                NotifyPropertyChanged();
+            }
+        }
+    }
+
     /// <summary>
     /// 周期执行
     /// </summary>

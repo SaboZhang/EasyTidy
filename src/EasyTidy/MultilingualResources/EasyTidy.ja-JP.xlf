@@ -1812,6 +1812,22 @@
           <source>Group name or task name or rule is empty</source>
           <target state="new">Group name or task name or rule is empty</target>
         </trans-unit>
+        <trans-unit id="ShutdownExecutionCard.Header" translate="yes" xml:space="preserve">
+          <source>Execute on shutdown</source>
+          <target state="translated">シャットダウン時に実行</target>
+        </trans-unit>
+        <trans-unit id="ShutdownExecutionCard.Description" translate="yes" xml:space="preserve">
+          <source>Execute Tasks When Shutting Down Require EasyTidy To Start</source>
+          <target state="translated">シャットダウン時タスクを実行する場合は EasyTidy の開始が必要</target>
+        </trans-unit>
+        <trans-unit id="SevenZipText" translate="yes" xml:space="preserve">
+          <source>7zip</source>
+          <target state="new">7zip</target>
+        </trans-unit>
+        <trans-unit id="AESText" translate="yes" xml:space="preserve">
+          <source>AES-256 with PBKDF2-derived key</source>
+          <target state="new">AES-256 with PBKDF2-derived key</target>
+        </trans-unit>
       </group>
     </body>
   </file>

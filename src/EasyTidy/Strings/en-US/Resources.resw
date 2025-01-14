@@ -1461,4 +1461,16 @@
   <data name="VaildFailedText" xml:space="preserve">
     <value>Group name or task name or rule is empty</value>
   </data>
+  <data name="ShutdownExecutionCard.Header" xml:space="preserve">
+    <value>Execute on shutdown</value>
+  </data>
+  <data name="ShutdownExecutionCard.Description" xml:space="preserve">
+    <value>Execute Tasks When Shutting Down Require EasyTidy To Start</value>
+  </data>
+  <data name="SevenZipText" xml:space="preserve">
+    <value>7zip</value>
+  </data>
+  <data name="AESText" xml:space="preserve">
+    <value>AES-256 with PBKDF2-derived key</value>
+  </data>
 </root>

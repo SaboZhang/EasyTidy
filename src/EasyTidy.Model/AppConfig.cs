@@ -32,5 +32,7 @@ public partial class AppConfig : JsonSettings, IVersionable
 
     public virtual bool PreserveDirectoryStructure { get; set; } = true;
 
+    public virtual string EncryptedPassword { get; set; } = "123456";
+
     public virtual BackupModel? BackupConfig { get; set; } = new();
 }

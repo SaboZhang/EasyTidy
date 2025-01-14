@@ -330,6 +330,19 @@
                 </Button.Flyout>
             </Button>
         </StackPanel>
+        <StackPanel x:Name="EncryptedPanel" Spacing="8" Margin="0,8,0,0" Visibility="Collapsed">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="加密方式:" Width="110" Margin="0,5,0,0"/>
+                <ComboBox Margin="14,0,0,0" MinWidth="210">
+                    <x:String>7zip</x:String>
+                    <x:String>AES-256 with PBKDF2-derived key</x:String>
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="加密密码:" Width="110" Margin="0,5,0,0"/>
+                <PasswordBox Margin="14,0,0,0" MinWidth="210"></PasswordBox>
+            </StackPanel>
+        </StackPanel>
         <StackPanel x:Name="TaskEnablePanel"
                     Orientation="Horizontal"
                     Spacing="8"

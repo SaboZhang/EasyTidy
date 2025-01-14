@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using Windows.UI.ViewManagement;
 
 namespace EasyTidy.Util;
 
@@ -426,47 +427,112 @@ public class ZipUtil
     /// <param name="outputZipPath"></param>
     /// <param name="password"></param>
     /// <exception cref="DirectoryNotFoundException"></exception>
+    /// <summary>
+    /// 使用 7-Zip 压缩文件夹并加密。
+    /// </summary>
+    /// <param name="folderPath">待压缩的文件夹路径。</param>
+    /// <param name="outputZipPath">压缩后的输出文件路径。</param>
+    /// <param name="password">压缩文件的密码。</param>
     public static void EncryptFolderToZip(string folderPath, string outputZipPath, string password)
     {
-        if (!Directory.Exists(folderPath))
-            throw new DirectoryNotFoundException("指定的文件夹不存在");
+        ValidatePaths(folderPath, outputZipPath, password);
 
-        // 创建临时无密码的 ZIP 文件
-        string tempZipPath = Path.GetTempFileName();
+        // 从固定路径加载 7-Zip
+        string sevenZipPath = Get7ZipPath();
+
+        // 如果输出路径没有扩展名，默认添加 .7z
+        if (string.IsNullOrWhiteSpace(Path.GetExtension(outputZipPath)))
+        {
+            outputZipPath += ".7z";
+        }
+
+        string arguments = Build7ZipArguments(folderPath, outputZipPath, password);
+
+        Execute7ZipProcess(sevenZipPath, arguments, folderPath);
+    }
+
+    /// <summary>
+    /// 验证路径合法性。
+    /// </summary>
+    private static void ValidatePaths(string folderPath, string outputZipPath, string password)
+    {
+        if (string.IsNullOrWhiteSpace(folderPath) || (!Directory.Exists(folderPath) && !File.Exists(folderPath)))
+            throw new ArgumentException("指定的文件或者文件夹不存在。");
+
+        if (string.IsNullOrWhiteSpace(outputZipPath))
+            throw new ArgumentException("输出压缩文件路径无效。", nameof(outputZipPath));
+
+        if (string.IsNullOrWhiteSpace(password))
+            throw new ArgumentException("密码不能为空。", nameof(password));
+    }
+
+    /// <summary>
+    /// 获取 7-Zip 的路径。
+    /// </summary>
+    private static string Get7ZipPath()
+    {
+        string sevenZipPath = Path.Combine(Constants.ExecutePath, "Assets", "lib", "7z.exe");
+
+        if (!File.Exists(sevenZipPath))
+            throw new FileNotFoundException("7-Zip 可执行文件未找到，请检查路径是否正确。", sevenZipPath);
+
+        return sevenZipPath;
+    }
+
+    /// <summary>
+    /// 构建 7-Zip 命令参数。
+    /// </summary>
+    private static string Build7ZipArguments(string inputPath, string outputZipPath, string password)
+    {
+        // -a 添加文件到压缩包；-p 设置密码；-mhe 隐藏文件名（7z 格式支持）
+        if (Directory.Exists(inputPath))
+        {
+            // 如果是文件夹，则压缩整个文件夹
+            return $"a \"{outputZipPath}\" \"{inputPath}\\*\" -p\"{password}\" -mhe";
+        }
+        else if (File.Exists(inputPath))
+        {
+            // 如果是文件，则压缩单个文件
+            return $"a \"{outputZipPath}\" \"{inputPath}\" -p\"{password}\" -mhe";
+        }
+        throw new InvalidOperationException("输入路径既不是文件夹也不是文件。");
+    }
+
+    /// <summary>
+    /// 执行 7-Zip 命令行进程。
+    /// </summary>
+    private static void Execute7ZipProcess(string sevenZipPath, string arguments, string workingDirectory)
+    {
+        var processStartInfo = new ProcessStartInfo
+        {
+            FileName = sevenZipPath,
+            Arguments = arguments,
+            RedirectStandardOutput = true,
+            RedirectStandardError = true,
+            UseShellExecute = false,
+            CreateNoWindow = true,
+            WorkingDirectory = workingDirectory
+        };
 
         try
         {
-            // 打包文件夹到无密码的 ZIP 文件
-            ZipFile.CreateFromDirectory(folderPath, tempZipPath);
-
-            // 为 ZIP 文件加密
-            EncryptZip(tempZipPath, outputZipPath, password);
-        }
-        finally
-        {
-            // 删除临时文件
-            if (File.Exists(tempZipPath))
-                File.Delete(tempZipPath);
-        }
-    }
-
-    private static void EncryptZip(string inputZipPath, string outputZipPath, string password)
-    {
-        using (var inputFileStream = new FileStream(inputZipPath, FileMode.Open, FileAccess.Read))
-        using (var outputFileStream = new FileStream(outputZipPath, FileMode.Create, FileAccess.Write))
-        using (var aes = System.Security.Cryptography.Aes.Create())
-        {
-            aes.Key = System.Security.Cryptography.SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(password));
-            aes.IV = new byte[16]; // 默认初始化向量为 0（与大多数工具兼容）
-
-            // 写入加密的文件内容
-            using (var cryptoStream = new System.Security.Cryptography.CryptoStream(
-                outputFileStream,
-                aes.CreateEncryptor(),
-                System.Security.Cryptography.CryptoStreamMode.Write))
+            using (var process = Process.Start(processStartInfo))
             {
-                inputFileStream.CopyTo(cryptoStream);
+                if (process == null)
+                    throw new InvalidOperationException("无法启动 7-Zip 进程。");
+
+                process.WaitForExit();
+
+                if (process.ExitCode != 0)
+                {
+                    string errorOutput = process.StandardError.ReadToEnd();
+                    throw new InvalidOperationException($"7-Zip 压缩失败，错误信息：{errorOutput}");
+                }
             }
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException("执行 7-Zip 压缩过程中发生错误。", ex);
         }
     }
 
@@ -556,68 +622,21 @@ public class ZipUtil
     /// <param name="inputFilePath"></param>
     /// <param name="outputFilePath"></param>
     /// <param name="password"></param>
-    /// <exception cref="ArgumentException"></exception>
-    /// <exception cref="FileNotFoundException"></exception>
-    /// <exception cref="InvalidOperationException"></exception>
     public static void CompressWithPassword(string inputFilePath, string outputFilePath, string password)
     {
-        if (string.IsNullOrWhiteSpace(inputFilePath) || !File.Exists(inputFilePath))
+        ValidatePaths(inputFilePath, outputFilePath, password);
+
+        string sevenZipPath = Get7ZipPath();
+
+        if (!Path.GetExtension(outputFilePath).Equals(".7z", StringComparison.OrdinalIgnoreCase) 
+            && !Path.GetExtension(outputFilePath).Equals(".zip", StringComparison.OrdinalIgnoreCase))
         {
-            throw new ArgumentException("输入文件路径无效或文件不存在。");
+            outputFilePath += ".7z";
         }
 
-        if (string.IsNullOrWhiteSpace(outputFilePath))
-        {
-            throw new ArgumentException("输出文件路径无效。");
-        }
+        string arguments = Build7ZipArguments(inputFilePath, outputFilePath, password);
 
-        if (string.IsNullOrWhiteSpace(password))
-        {
-            throw new ArgumentException("密码不能为空。");
-        }
-
-        string sevenZipPath = Path.Combine(Constants.ExecutePath, "Assets", "lib", "7z.exe");
-        if (!File.Exists(sevenZipPath))
-        {
-            throw new FileNotFoundException("7-Zip 可执行文件未找到，请检查路径是否正确。", sevenZipPath);
-        }
-
-        try
-        {
-            // 构建命令参数
-            string arguments = $"a \"{outputFilePath}\" \"{inputFilePath}\" -p\"{password}\" -mhe";
-
-            // 创建进程以执行 7-Zip 命令
-            var processStartInfo = new ProcessStartInfo
-            {
-                FileName = sevenZipPath,
-                Arguments = arguments,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
-                UseShellExecute = false,
-                CreateNoWindow = true
-            };
-
-            using (var process = Process.Start(processStartInfo))
-            {
-                if (process == null)
-                {
-                    throw new InvalidOperationException("无法启动 7-Zip 进程。");
-                }
-
-                process.WaitForExit();
-
-                if (process.ExitCode != 0)
-                {
-                    string error = process.StandardError.ReadToEnd();
-                    throw new InvalidOperationException($"7-Zip 压缩失败：{error}");
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException("压缩过程中发生错误。", ex);
-        }
+        Execute7ZipProcess(sevenZipPath, arguments, "");
     }
 
 }
