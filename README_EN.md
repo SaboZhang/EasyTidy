@@ -19,6 +19,10 @@ If you find that DropIT's task monitoring doesn't meet your needs, or the price 
 
 Technology used: C# .net8 winui3 implementation
 
+## License
+
+This project is licensed under the MIT License. However, the **Snap2HTML** snapshot HTML template included in the project is separately licensed under the GPL. Therefore, if you choose to use the **Snap2HTML** HTML template, you must also comply with the terms of the GPL license for that template. Conversely, if the **Snap2HTML** HTML template is not used, the entire project is governed solely by the terms of the MIT License.
+
 TODO:
 
 1.界面设计
