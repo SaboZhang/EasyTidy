@@ -304,8 +304,8 @@ public static class FileActuator
                 await CompressFileAsync(parameters);
                 break;
             case OperationMode.Encryption:
-                // TODO: 加密文件
-                await ExecuteEncryption(parameters.SourcePath, parameters.TargetPath, "123456");
+                var pass = CryptoUtil.DesDecrypt(CommonUtil.Configs.EncryptedPassword);
+                await ExecuteEncryption(parameters.SourcePath, parameters.TargetPath, pass);
                 break;
             case OperationMode.HardLink:
                 CreateFileHardLink(parameters.SourcePath, parameters.TargetPath);
@@ -816,7 +816,7 @@ public static class FileActuator
 
     private static async Task ExecuteEncryption(string path, string target, string pass)
     {
-        var enc = Encrypted.SevenZip;
+        var enc = CommonUtil.Configs.Encrypted;
         switch (enc)
         {
             case Encrypted.SevenZip:

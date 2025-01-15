@@ -156,8 +156,8 @@ public class FolderActuator
                 await CompressFolderAsync(parameters);
                 break;
             case OperationMode.Encryption:
-                // TODO: 加密文件
-                await ExecuteEncryption(parameters.SourcePath, parameters.TargetPath, "123456");
+                var pass = CryptoUtil.DesDecrypt(CommonUtil.Configs.EncryptedPassword);
+                await ExecuteEncryption(parameters.SourcePath, parameters.TargetPath, pass);
                 break;
             case OperationMode.SoftLink:
                 CreateFolderSymbolicLink(parameters.TargetPath, parameters.SourcePath);
@@ -421,7 +421,7 @@ public class FolderActuator
                 ZipUtil.EncryptFolderToZip(path, target, pass);
                 break;
             case Encrypted.AES256WithPBKDF2DerivedKey:
-                CryptoUtil.EncryptFile(path, target, pass);
+                EncryptFolder(path, target, pass);
                 break;
         }
         await Task.CompletedTask;
@@ -486,6 +486,22 @@ public class FolderActuator
 
         // 比较目标路径
         return string.Equals(fileInfo.LinkTarget, targetPath, StringComparison.OrdinalIgnoreCase);
+    }
+
+    public static void EncryptFolder(string folder, string outputFolder, string pass)
+    {
+        DirectoryInfo di = new DirectoryInfo(folder);
+
+        foreach (FileInfo file in di.EnumerateFiles()) 
+        {
+            string encryptedFilePath = Path.Combine(outputFolder, file.Name);
+            CryptoUtil.EncryptFile(file.FullName, encryptedFilePath, pass);
+        }
+
+        foreach (DirectoryInfo subDir in di.EnumerateDirectories())
+        {
+            EncryptFolder(subDir.FullName, outputFolder, pass);
+        }
     }
 
 }

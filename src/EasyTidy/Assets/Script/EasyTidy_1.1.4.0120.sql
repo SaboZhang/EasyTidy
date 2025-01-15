@@ -1,0 +1,1 @@
+ALTER TABLE Automatic ADD COLUMN OnShutdownExecution INTEGER DEFAULT 0;

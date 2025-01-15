@@ -142,6 +142,9 @@ public partial class AutomaticViewModel : ObservableRecipient
     public bool _customStartupExecution = false;
 
     [ObservableProperty]
+    public bool _customShutdownExecution = false;
+
+    [ObservableProperty]
     public bool _customRegularTaskRunning = false;
 
     [ObservableProperty]
@@ -342,7 +345,8 @@ public partial class AutomaticViewModel : ObservableRecipient
             (a => a?.IsFileChange, () => IsFileChange, "FileChange_Text"),
             (a => a?.RegularTaskRunning, () => RegularTaskRunning, "RegularTaskRunning_Text"),
             (a => a?.IsStartupExecution, () => IsStartupExecution, "StartupExecution_Text"),
-            (a => a?.OnScheduleExecution, () => OnScheduleExecution, "ScheduleExecution_Text")
+            (a => a?.OnScheduleExecution, () => OnScheduleExecution, "ScheduleExecution_Text"),
+            (a => a?.OnShutdownExecution, () => IsShutdownExecution, "ShutdownExecution_Text")
         };
 
         // 定义通用布尔值获取函数
@@ -511,6 +515,7 @@ public partial class AutomaticViewModel : ObservableRecipient
                 Minutes = dateValue.Minute.ToString(),
                 OnScheduleExecution = OnScheduleExecution,
                 IsStartupExecution = IsStartupExecution,
+                OnShutdownExecution = IsShutdownExecution,
                 Schedule = schedule,
                 TaskOrchestrationList = list
             };
@@ -568,6 +573,7 @@ public partial class AutomaticViewModel : ObservableRecipient
                 CustomStartupExecution = old.AutomaticTable?.IsStartupExecution ?? false; // 默认值为 false
                 CustomRegularTaskRunning = old.AutomaticTable?.RegularTaskRunning ?? false; // 默认值为 false
                 CustomOnScheduleExecution = old.AutomaticTable?.OnScheduleExecution ?? false; // 默认值为 false
+                CustomShutdownExecution = old.AutomaticTable?.OnShutdownExecution ?? false;
                 dialog.Minute = oldSchedule?.Minutes ?? "";
                 dialog.Hour = oldSchedule?.Hours ?? "";
                 dialog.DayOfWeek = oldSchedule?.WeeklyDayNumber ?? "";
@@ -890,6 +896,7 @@ public partial class AutomaticViewModel : ObservableRecipient
             IsFileChange = CustomFileChange,
             IsStartupExecution = CustomStartupExecution,
             RegularTaskRunning = CustomRegularTaskRunning,
+            OnShutdownExecution = CustomShutdownExecution,
             OnScheduleExecution = CustomSchedule || !string.IsNullOrEmpty(dialog.Expression),
             DelaySeconds = dialog.Delay,
             Hourly = dateValue.Hour.ToString(),
@@ -939,6 +946,7 @@ public partial class AutomaticViewModel : ObservableRecipient
             existingAutoTable.IsFileChange = CustomFileChange;
             existingAutoTable.IsStartupExecution = CustomStartupExecution;
             existingAutoTable.RegularTaskRunning = CustomRegularTaskRunning;
+            existingAutoTable.OnShutdownExecution = CustomShutdownExecution;
             existingAutoTable.OnScheduleExecution = CustomSchedule || !string.IsNullOrEmpty(dialog.Expression);
             existingAutoTable.DelaySeconds = dialog.Delay;
             existingAutoTable.Hourly = auto.Hourly.ToString();
@@ -1087,7 +1095,8 @@ public partial class AutomaticViewModel : ObservableRecipient
         Logger.Debug($"AutomaticViewModel: NotifyPropertyChanged {propertyName}");
         GetExecutionMode(null);
         if (propertyName == nameof(IsFileChange) || propertyName == nameof(RegularTaskRunning)
-            || propertyName == nameof(IsStartupExecution) || propertyName == nameof(OnScheduleExecution))
+            || propertyName == nameof(IsStartupExecution) || propertyName == nameof(OnScheduleExecution)
+            || propertyName == nameof(IsShutdownExecution))
         {
             await OnPageLoaded();
         }

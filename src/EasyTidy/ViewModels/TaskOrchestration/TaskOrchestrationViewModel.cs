@@ -122,7 +122,10 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
             Title = "AdditionalText".GetLocalized(),
             PrimaryButtonText = "SaveText".GetLocalized(),
             CloseButtonText = "CancelText".GetLocalized(),
-            TaskTarget = string.Empty
+            TaskTarget = string.Empty,
+            Password = string.IsNullOrEmpty(Settings.EncryptedPassword) 
+            ? string.Empty 
+            : CryptoUtil.DesDecrypt(Settings.EncryptedPassword)
         };
         SelectedGroupName = string.Empty;
         SelectedGroupIndex = -1;
@@ -141,6 +144,9 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 args.Cancel = true;
                 return;
             }
+            Settings.EncryptedPassword = string.IsNullOrEmpty(Settings.EncryptedPassword) 
+            ? CryptoUtil.DesEncrypt(dialog.Password) 
+            : Settings.EncryptedPassword;
             await _dbContext.TaskOrchestration.AddAsync(new TaskOrchestrationTable
             {
                 TaskName = dialog.TaskName,

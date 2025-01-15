@@ -637,6 +637,10 @@ public class ZipUtil
         string arguments = Build7ZipArguments(inputFilePath, outputFilePath, password);
 
         Execute7ZipProcess(sevenZipPath, arguments, "");
+        if (CommonUtil.Configs.OriginalFile)
+        {
+            File.Delete(inputFilePath);
+        }
     }
 
 }

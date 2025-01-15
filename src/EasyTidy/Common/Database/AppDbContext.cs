@@ -30,31 +30,63 @@ public partial class AppDbContext : DbContext
 
     public async Task InitializeDatabaseAsync()
     {
-        var DirPath = Constants.CnfPath;
-        if (!Directory.Exists(DirPath))
+        var dirPath = Constants.CnfPath;
+        if (!Directory.Exists(dirPath))
         {
-            Directory.CreateDirectory(DirPath);
+            Directory.CreateDirectory(dirPath);
         }
+
+        // 确保数据库已创建
         await Database.EnsureCreatedAsync();
 
-        if (!await ScriptExecutionStatus.AnyAsync(s => s.ScriptName == "quartz_sqlite" && s.Status == "executed"))
+        // 获取 SQL 脚本文件夹路径
+        string scriptsFolderPath = Path.Combine(Constants.ExecutePath, "Assets", "Script");
+
+        if (!Directory.Exists(scriptsFolderPath))
         {
-            string scriptPath = Path.Combine(Constants.ExecutePath, "Assets", "Script", "quartz_sqlite.sql");
-            ExecuteSqlScript(scriptPath);
-            ScriptExecutionStatus.Add(new ScriptExecutionStatus
+            Logger.Error($"Scripts folder not found: {scriptsFolderPath}");
+            return;
+        }
+
+        // 获取所有 .sql 文件并按文件名排序
+        var scriptFiles = Directory.GetFiles(scriptsFolderPath, "*.sql").OrderBy(Path.GetFileName);
+
+        foreach (var scriptFilePath in scriptFiles)
+        {
+            string scriptName = Path.GetFileNameWithoutExtension(scriptFilePath);
+
+            // 检查脚本是否已经执行过
+            if (!await ScriptExecutionStatus.AnyAsync(s => s.ScriptName == scriptName && s.Status == "executed"))
             {
-                ScriptName = "quartz_sqlite",
-                Status = "executed",
-                ExecutionDate = DateTime.UtcNow
-            });
-            await SaveChangesAsync();
+                try
+                {
+                    await ExecuteSqlScriptAsync(scriptFilePath);
+
+                    // 记录脚本执行状态
+                    ScriptExecutionStatus.Add(new ScriptExecutionStatus
+                    {
+                        ScriptName = scriptName,
+                        Status = "executed",
+                        ExecutionDate = DateTime.UtcNow
+                    });
+
+                    await SaveChangesAsync();
+                }
+                catch (Exception ex)
+                {
+                    // 捕获并记录执行异常
+                    Logger.Error($"Failed to execute script {scriptName}: {ex.Message}");
+                    throw;
+                }
+            }
+            Logger.Info("EasyTidy 默认数据初始化完成！");
         }
     }
 
-    private void ExecuteSqlScript(string scriptPath)
+    private async Task ExecuteSqlScriptAsync(string scriptPath)
     {
-        var script = File.ReadAllText(scriptPath);
-        Database.ExecuteSqlRawAsync(script);
+        var scriptContent = await File.ReadAllTextAsync(scriptPath);
+        await Database.ExecuteSqlRawAsync(scriptContent);
     }
 
     private static readonly JsonSerializerOptions JsonOptions = new JsonSerializerOptions

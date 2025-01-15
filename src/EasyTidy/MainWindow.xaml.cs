@@ -1,9 +1,11 @@
+using System.Threading.Tasks;
 using EasyTidy.Common.Extensions;
 using EasyTidy.Contracts.Service;
 using EasyTidy.Log;
 using EasyTidy.Model;
 using EasyTidy.Service;
 using EasyTidy.Util;
+using Microsoft.Win32;
 using Windows.UI.ViewManagement;
 using WinUIEx;
 
@@ -35,6 +37,7 @@ public sealed partial class MainWindow : WindowEx
         if (!RuntimeHelper.IsMSIX)
         {
             this.Closed += OnProcessExit;
+            SystemEvents.SessionEnding += OnSessionEnding;
         }
     }
 
@@ -53,10 +56,26 @@ public sealed partial class MainWindow : WindowEx
     {
         if (Logger != null && !App.HandleClosedEvents)
         {
+            await SaveAppState();
             await QuartzHelper.StopAllJob();
             FileEventHandler.StopAllMonitoring();
             Logger.Info($"{Constants.AppName}_v{Constants.Version} Closed...\n");
             LogService.UnRegister();
+        }
+    }
+
+    private async void OnSessionEnding(object sender, EventArgs e)
+    {
+        // 系统即将关闭或用户注销时触发
+        await SaveAppState();
+    }
+
+    private async Task SaveAppState()
+    {
+        if (Settings.AutomaticConfig.IsShutdownExecution)
+        {
+            await ShutdownService.OnShutdownAsync();
+            Logger.Info("退出执行成功！");
         }
     }
 }

@@ -52,6 +52,15 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal"
                         Spacing="8">
+                <TextBlock x:Uid="DialogAtStartup"
+                           Margin="0,30,0,0"
+                           Width="140"/>
+                <ToggleSwitch IsOn="{x:Bind ViewModel.CustomShutdownExecution, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              Width="100"
+                              Margin="0,22,0,0"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"
+                        Spacing="8">
                 <TextBlock x:Uid="RegularTaskRunningText"
                            Margin="0,30,0,0"
                            Width="140"/>

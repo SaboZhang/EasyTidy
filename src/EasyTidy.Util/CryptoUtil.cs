@@ -135,12 +135,12 @@ public class CryptoUtil
             }
 
             // 为加密文件添加后缀
-            string encryptedFileName = outputFile + "enc";
-            if (File.Exists(encryptedFileName))
+            string encryptedFileName = outputFile + ".enc";
+            File.Move(outputFile, encryptedFileName, true);
+            if (CommonUtil.Configs.OriginalFile) 
             {
-                File.Delete(encryptedFileName); // 删除已存在的加密文件以避免冲突
+                File.Delete(inputFile);
             }
-            File.Move(outputFile, encryptedFileName);
         }
         catch (Exception ex)
         {
