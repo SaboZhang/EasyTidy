@@ -82,6 +82,7 @@
                          Margin="6,0,0,0"
                          Width="210"
                          Text="{x:Bind TaskRule, Mode=TwoWay}"
+                         TextChanged="TaskRuleBox_TextChanged"
                          LostFocus="TaskRuleBox_LostFocus"/>
                 <Button x:Name="RuleButton"
                         Width="52"
@@ -347,9 +348,13 @@
                             Width="110"
                             Margin="0,5,0,0"/>
                     <ComboBox Margin="14,0,0,0"
-                            MinWidth="210">
-                        <x:String>7zip</x:String>
-                        <x:String>AES-256 with PBKDF2-derived key</x:String>
+                              ItemsSource="{x:Bind ViewModel.Encrypteds, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              MinWidth="210">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Converter={StaticResource EnumDisplayNameConverter}}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
                     </ComboBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
@@ -362,10 +367,10 @@
                         Password="{x:Bind Password, Mode=TwoWay}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="是否删除源文件:"
+                    <TextBlock Text="源文件:"
                             Width="110"
                             Margin="0,5,0,0"/>
-                    <CheckBox/>
+                    <CheckBox Margin="14,0,0,0" Content="删除源文件"/>
                 </StackPanel>
             </StackPanel>
             <StackPanel x:Name="TaskEnablePanel"

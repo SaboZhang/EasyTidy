@@ -1822,11 +1822,15 @@
         </trans-unit>
         <trans-unit id="SevenZipText" translate="yes" xml:space="preserve">
           <source>7zip</source>
-          <target state="new">7zip</target>
+          <target state="translated">7zip</target>
         </trans-unit>
         <trans-unit id="AESText" translate="yes" xml:space="preserve">
           <source>AES-256 with PBKDF2-derived key</source>
-          <target state="new">AES-256 with PBKDF2-derived key</target>
+          <target state="translated">AES-256 with PBKDF2-derived key</target>
+        </trans-unit>
+        <trans-unit id="DialogAtShutdown.Text" translate="yes" xml:space="preserve">
+          <source>When closed：</source>
+          <target state="translated">閉じた状態で：</target>
         </trans-unit>
       </group>
     </body>

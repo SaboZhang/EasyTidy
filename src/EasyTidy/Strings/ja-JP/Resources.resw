@@ -1330,4 +1330,13 @@
   <data name="ShutdownExecutionCard.Description" xml:space="preserve">
     <value>シャットダウン時タスクを実行する場合は EasyTidy の開始が必要</value>
   </data>
+  <data name="SevenZipText" xml:space="preserve">
+    <value>7zip</value>
+  </data>
+  <data name="AESText" xml:space="preserve">
+    <value>AES-256 with PBKDF2-derived key</value>
+  </data>
+  <data name="DialogAtShutdown.Text" xml:space="preserve">
+    <value>閉じた状態で：</value>
+  </data>
 </root>

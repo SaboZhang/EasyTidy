@@ -3,6 +3,8 @@ using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
+using Windows.UI;
 
 namespace EasyTidy.Common.Database;
 
@@ -60,27 +62,98 @@ public partial class AppDbContext : DbContext
             {
                 try
                 {
-                    await ExecuteSqlScriptAsync(scriptFilePath);
-
-                    // 记录脚本执行状态
-                    ScriptExecutionStatus.Add(new ScriptExecutionStatus
+                    // 检查是否需要执行此脚本
+                    if (await NeedsToExecuteScriptAsync(scriptFilePath))
                     {
-                        ScriptName = scriptName,
-                        Status = "executed",
-                        ExecutionDate = DateTime.UtcNow
-                    });
+                        await ExecuteSqlScriptAsync(scriptFilePath);
 
-                    await SaveChangesAsync();
+                        // 记录脚本执行状态
+                        ScriptExecutionStatus.Add(new ScriptExecutionStatus
+                        {
+                            ScriptName = scriptName,
+                            Status = "executed",
+                            ExecutionDate = DateTime.UtcNow
+                        });
+
+                        await SaveChangesAsync();
+                    }
                 }
                 catch (Exception ex)
                 {
-                    // 捕获并记录执行异常
                     Logger.Error($"Failed to execute script {scriptName}: {ex.Message}");
                     throw;
                 }
             }
-            Logger.Info("EasyTidy 默认数据初始化完成！");
         }
+
+        Logger.Info("EasyTidy 默认数据初始化完成！");
+    }
+
+    /// <summary>
+    /// 检查是否需要执行 SQL 脚本
+    /// </summary>
+    /// <param name="scriptFilePath">SQL 脚本路径</param>
+    /// <returns>是否需要执行</returns>
+    private async Task<bool> NeedsToExecuteScriptAsync(string scriptFilePath)
+    {
+        string scriptContent = await File.ReadAllTextAsync(scriptFilePath);
+        var requiredFields = ExtractFieldsFromScript(scriptContent);
+
+        foreach (var field in requiredFields)
+        {
+            if (await FieldExistsAsync(field.TableName, field.FieldName))
+            {
+                Logger.Info($"Field '{field.FieldName}' in table '{field.TableName}' already exists, skipping script.");
+                return false; // 如果字段已存在，则跳过整个脚本
+            }
+        }
+
+        return true; // 如果字段不存在，需要执行脚本
+    }
+
+    /// <summary>
+    /// 检查表中的字段是否已存在
+    /// </summary>
+    /// <param name="tableName">表名</param>
+    /// <param name="fieldName">字段名</param>
+    /// <returns>字段是否存在</returns>
+    private async Task<bool> FieldExistsAsync(string tableName, string fieldName)
+    {
+        var query = $"PRAGMA table_info({tableName});";
+
+        await using var connection = Database.GetDbConnection();
+        await connection.OpenAsync();
+
+        await using var command = connection.CreateCommand();
+        command.CommandText = query;
+
+        await using var reader = await command.ExecuteReaderAsync();
+        while (await reader.ReadAsync())
+        {
+            if (string.Equals(reader["name"].ToString(), fieldName, StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// 从 SQL 脚本中提取表名和字段名
+    /// </summary>
+    /// <param name="scriptContent">SQL 脚本内容</param>
+    /// <returns>提取的表名和字段名集合</returns>
+    private IEnumerable<(string TableName, string FieldName)> ExtractFieldsFromScript(string scriptContent)
+    {
+        // 匹配 ALTER TABLE ... ADD COLUMN ... 的语法
+        var matches = Regex.Matches(
+            scriptContent,
+            @"ALTER TABLE\s+(\w+)\s+ADD\s+COLUMN\s+(\w+)",
+            RegexOptions.IgnoreCase);
+
+        return matches.Select(match =>
+            (TableName: match.Groups[1].Value, FieldName: match.Groups[2].Value));
     }
 
     private async Task ExecuteSqlScriptAsync(string scriptPath)

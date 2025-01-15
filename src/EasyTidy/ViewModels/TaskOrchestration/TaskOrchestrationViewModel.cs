@@ -39,6 +39,9 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
     private IList<OperationMode> operationModes = Enum.GetValues(typeof(OperationMode)).Cast<OperationMode>().ToList();
 
     [ObservableProperty]
+    private IList<Encrypted> _encrypteds = Enum.GetValues(typeof(Encrypted)).Cast<Encrypted>().ToList();
+
+    [ObservableProperty]
     private OperationMode _selectedOperationMode;
 
     [ObservableProperty]

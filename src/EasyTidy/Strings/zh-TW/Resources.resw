@@ -1327,4 +1327,13 @@
   <data name="ShutdownExecutionCard.Description" xml:space="preserve">
     <value>程式退出或關閉電腦時執行，關機執行需要 EasyTidy 啟動狀態</value>
   </data>
+  <data name="SevenZipText" xml:space="preserve">
+    <value>7zip</value>
+  </data>
+  <data name="AESText" xml:space="preserve">
+    <value>AES-256 with PBKDF2-derived key</value>
+  </data>
+  <data name="DialogAtShutdown.Text" xml:space="preserve">
+    <value>關閉時：</value>
+  </data>
 </root>

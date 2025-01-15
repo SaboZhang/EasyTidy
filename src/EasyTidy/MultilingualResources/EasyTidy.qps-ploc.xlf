@@ -1828,6 +1828,10 @@
           <source>AES-256 with PBKDF2-derived key</source>
           <target state="new">AES-256 with PBKDF2-derived key</target>
         </trans-unit>
+        <trans-unit id="DialogAtShutdown.Text" translate="yes" xml:space="preserve">
+          <source>When closed：</source>
+          <target state="new">When closed：</target>
+        </trans-unit>
       </group>
     </body>
   </file>
