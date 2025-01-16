@@ -2,6 +2,7 @@
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
 using EasyTidy.Model;
+using Microsoft.UI.Xaml.Controls.Primitives;
 using Windows.ApplicationModel.DataTransfer;
 
 namespace EasyTidy.Views;
@@ -126,14 +127,33 @@ public sealed partial class TaskOrchestrationPage : Page
         }
     }
 
-    public bool TagOrder { get; set; } = false;
-
-    public bool IdOrder { get; set; } = true;
-
     private void Order_Click(object sender, RoutedEventArgs e)
     {
-        TagOrder = !TagOrder;
-        IdOrder = !IdOrder;
+        var btn = sender as ToggleButton;
+        if (btn == null || !btn.IsChecked.HasValue)
+            return;
+
+        bool isIdOrder = btn.IsChecked.Value;
+
+        UpdateTaskOrder(isIdOrder);
+        UpdateSettings(isIdOrder);
     }
+
+    private void UpdateTaskOrder(bool isIdOrder)
+    {
+        foreach (var task in ViewModel.TaskList)
+        {
+            task.TagOrder = isIdOrder;
+        }
+
+        ViewModel.TaskListACV.Refresh();
+    }
+
+    private void UpdateSettings(bool isIdOrder)
+    {
+        Settings.IdOrder = isIdOrder;
+        Settings.Save();
+    }
+
 
 }

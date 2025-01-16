@@ -1832,6 +1832,30 @@
           <source>When closed：</source>
           <target state="new">When closed：</target>
         </trans-unit>
+        <trans-unit id="SequentialDisplayText.Content" translate="yes" xml:space="preserve">
+          <source>ID order display</source>
+          <target state="new">ID order display</target>
+        </trans-unit>
+        <trans-unit id="EncryptedText.Text" translate="yes" xml:space="preserve">
+          <source>Encrypted:</source>
+          <target state="new">Encrypted:</target>
+        </trans-unit>
+        <trans-unit id="EncryptedPassword.Text" translate="yes" xml:space="preserve">
+          <source>encrypted password:</source>
+          <target state="new">encrypted password:</target>
+        </trans-unit>
+        <trans-unit id="SourceFile.Text" translate="yes" xml:space="preserve">
+          <source>Source file:</source>
+          <target state="new">Source file:</target>
+        </trans-unit>
+        <trans-unit id="DeleteSourceFile.Content" translate="yes" xml:space="preserve">
+          <source>Delete source file</source>
+          <target state="new">Delete source file</target>
+        </trans-unit>
+        <trans-unit id="ShutdownExecution_Text" translate="yes" xml:space="preserve">
+          <source>Execute on close</source>
+          <target state="new">Execute on close</target>
+        </trans-unit>
       </group>
     </body>
   </file>

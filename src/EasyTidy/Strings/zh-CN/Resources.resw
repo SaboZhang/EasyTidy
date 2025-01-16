@@ -1357,4 +1357,22 @@
   <data name="DialogAtShutdown.Text" xml:space="preserve">
     <value>关闭时：</value>
   </data>
+  <data name="SequentialDisplayText.Content" xml:space="preserve">
+    <value>ID顺序显示</value>
+  </data>
+  <data name="EncryptedText.Text" xml:space="preserve">
+    <value>加密方式:</value>
+  </data>
+  <data name="EncryptedPassword.Text" xml:space="preserve">
+    <value>加密密码:</value>
+  </data>
+  <data name="SourceFile.Text" xml:space="preserve">
+    <value>源文件:</value>
+  </data>
+  <data name="DeleteSourceFile.Content" xml:space="preserve">
+    <value>删除源文件</value>
+  </data>
+  <data name="ShutdownExecution_Text" xml:space="preserve">
+    <value>关闭时执行</value>
+  </data>
 </root>

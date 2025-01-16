@@ -387,7 +387,8 @@ public partial class AutomaticViewModel : ObservableRecipient
                 "RegularTaskRunning_Text".GetLocalized() + "-" + "RegularTask_Text".GetLocalized(), 
                 task.AutomaticTable?.Hourly?.ToString() ?? "0", task.AutomaticTable?.Minutes?.ToString() ?? "0")),
             (a => a?.IsStartupExecution, () => IsStartupExecution, "StartupExecution_Text".GetLocalized()),
-            (a => a?.OnScheduleExecution, () => OnScheduleExecution, "ScheduleExecution_Text".GetLocalized())
+            (a => a?.OnScheduleExecution, () => OnScheduleExecution, "ScheduleExecution_Text".GetLocalized()),
+            (a => a?.OnShutdownExecution, () => IsShutdownExecution, "ShutdownExecution_Text".GetLocalized())
         };
 
         // 定义通用布尔值获取函数

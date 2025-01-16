@@ -1832,6 +1832,30 @@
           <source>When closed：</source>
           <target state="translated">閉じた状態で：</target>
         </trans-unit>
+        <trans-unit id="SequentialDisplayText.Content" translate="yes" xml:space="preserve">
+          <source>ID order display</source>
+          <target state="translated">ID注文表示</target>
+        </trans-unit>
+        <trans-unit id="EncryptedText.Text" translate="yes" xml:space="preserve">
+          <source>Encrypted:</source>
+          <target state="translated">暗号化された:</target>
+        </trans-unit>
+        <trans-unit id="EncryptedPassword.Text" translate="yes" xml:space="preserve">
+          <source>encrypted password:</source>
+          <target state="translated">暗号化されたパスワード:</target>
+        </trans-unit>
+        <trans-unit id="SourceFile.Text" translate="yes" xml:space="preserve">
+          <source>Source file:</source>
+          <target state="translated">ソースファイル:</target>
+        </trans-unit>
+        <trans-unit id="DeleteSourceFile.Content" translate="yes" xml:space="preserve">
+          <source>Delete source file</source>
+          <target state="translated">ソースファイルを削除する</target>
+        </trans-unit>
+        <trans-unit id="ShutdownExecution_Text" translate="yes" xml:space="preserve">
+          <source>Execute on close</source>
+          <target state="translated">閉じると実行する</target>
+        </trans-unit>
       </group>
     </body>
   </file>

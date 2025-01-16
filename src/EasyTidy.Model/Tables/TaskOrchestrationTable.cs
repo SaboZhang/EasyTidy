@@ -45,4 +45,18 @@ public class TaskOrchestrationTable
 
     public AutomaticTable AutomaticTable { get; set; }
 
+    [NotMapped]
+    public bool TagOrder { get; set; } = false;
+
+    [NotMapped]
+    public bool IdOrder
+    {
+        get => !TagOrder;
+        set
+        {
+            // 更新互斥属性的值
+            TagOrder = !value;
+        }
+    }
+
 }

@@ -47,7 +47,9 @@
                         </ctk:SettingsCard.HeaderIcon>
                         <StackPanel Orientation="Horizontal"
                                     Spacing="10">
-                            <Button Content="ID顺序显示" Click="Order_Click"/>
+                            <ToggleButton x:Uid="SequentialDisplayText"
+                                          IsChecked="{x:Bind ViewModel.OrederChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                          Click="Order_Click"/>
                             <Button x:Uid="TaskAddTaskButton"
                                     x:Name="TaskButton"
                                     Style="{StaticResource AccentButtonStyle}"
@@ -142,12 +144,13 @@
                                                 <ColumnDefinition Width="200"/>
                                             </Grid.ColumnDefinitions>
                                             <TextBlock Text="{x:Bind ID}"
+                                                       x:Name="IdTextBlock"
                                                        VerticalAlignment="Center"
-                                                       Visibility="{x:Bind IdOrder, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                                       Visibility="{x:Bind IdOrder, Converter={StaticResource BoolToVisibilityConverter}}"/>
                                             <TextBlock x:Name="IndexTextBlock"
                                                        VerticalAlignment="Center"
                                                        Text="{Binding Tag, ElementName=TaskListView}"
-                                                       Visibility="{x:Bind TagOrder, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                                       Visibility="{x:Bind TagOrder, Converter={StaticResource BoolToVisibilityConverter}}"/>
                                             <TextBlock Grid.Column="1"
                                                        Text="{x:Bind TaskName}"
                                                        VerticalAlignment="Center"/>

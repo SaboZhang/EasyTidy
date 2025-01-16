@@ -1339,4 +1339,22 @@
   <data name="DialogAtShutdown.Text" xml:space="preserve">
     <value>Lorsqu'il est fermé：</value>
   </data>
+  <data name="SequentialDisplayText.Content" xml:space="preserve">
+    <value>Affichage de l'identifiant de commande</value>
+  </data>
+  <data name="EncryptedText.Text" xml:space="preserve">
+    <value>Chiffré:</value>
+  </data>
+  <data name="EncryptedPassword.Text" xml:space="preserve">
+    <value>mot de passe chiffré:</value>
+  </data>
+  <data name="SourceFile.Text" xml:space="preserve">
+    <value>Fichier source:</value>
+  </data>
+  <data name="DeleteSourceFile.Content" xml:space="preserve">
+    <value>Supprimer le fichier source</value>
+  </data>
+  <data name="ShutdownExecution_Text" xml:space="preserve">
+    <value>Exécuter à la fermeture</value>
+  </data>
 </root>

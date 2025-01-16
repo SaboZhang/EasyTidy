@@ -40,5 +40,5 @@ public partial class AppConfig : JsonSettings, IVersionable
 
     public virtual BackupModel? BackupConfig { get; set; } = new();
 
-    public virtual bool Order { get; set; } = false;
+    public virtual bool IdOrder { get; set; } = false;
 }

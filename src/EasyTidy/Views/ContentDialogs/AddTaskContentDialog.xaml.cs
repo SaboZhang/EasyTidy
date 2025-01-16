@@ -92,6 +92,10 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
 
     public string Password { get; set; }
 
+    public Encrypted Encencrypted { get; set; }
+
+    public bool IsSourceFile { get; set; }
+
     public bool IsRegex
     {
         get => _isRegex;

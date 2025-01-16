@@ -1476,4 +1476,22 @@
   <data name="DialogAtShutdown.Text" xml:space="preserve">
     <value>When closed：</value>
   </data>
+  <data name="SequentialDisplayText.Content" xml:space="preserve">
+    <value>ID order display</value>
+  </data>
+  <data name="EncryptedText.Text" xml:space="preserve">
+    <value>Encrypted:</value>
+  </data>
+  <data name="EncryptedPassword.Text" xml:space="preserve">
+    <value>encrypted password:</value>
+  </data>
+  <data name="SourceFile.Text" xml:space="preserve">
+    <value>Source file:</value>
+  </data>
+  <data name="DeleteSourceFile.Content" xml:space="preserve">
+    <value>Delete source file</value>
+  </data>
+  <data name="ShutdownExecution_Text" xml:space="preserve">
+    <value>Execute on close</value>
+  </data>
 </root>

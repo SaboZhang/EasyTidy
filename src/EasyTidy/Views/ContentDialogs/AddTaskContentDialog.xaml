@@ -344,11 +344,12 @@
                     Margin="0,8,0,0"
                     Visibility="Collapsed">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="加密方式:"
+                    <TextBlock x:Uid="EncryptedText"
                             Width="110"
                             Margin="0,5,0,0"/>
                     <ComboBox Margin="14,0,0,0"
                               ItemsSource="{x:Bind ViewModel.Encrypteds, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              SelectedItem="{x:Bind Encencrypted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                               MinWidth="210">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
@@ -358,19 +359,21 @@
                     </ComboBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="加密密码:"
-                            Width="110"
-                            Margin="0,5,0,0"/>
+                    <TextBlock x:Uid="EncryptedPassword"
+                               Width="110"
+                               TextWrapping="Wrap"
+                               Margin="0,5,0,0"/>
                     <PasswordBox
                         Margin="14,0,0,0"
                         MinWidth="210"
-                        Password="{x:Bind Password, Mode=TwoWay}"/>
+                        Height="32"
+                        Password="{x:Bind Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="源文件:"
+                    <TextBlock x:Uid="SourceFile"
                             Width="110"
                             Margin="0,5,0,0"/>
-                    <CheckBox Margin="14,0,0,0" Content="删除源文件"/>
+                    <CheckBox Margin="14,0,0,0" IsChecked="{x:Bind IsSourceFile, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Uid="DeleteSourceFile"/>
                 </StackPanel>
             </StackPanel>
             <StackPanel x:Name="TaskEnablePanel"
