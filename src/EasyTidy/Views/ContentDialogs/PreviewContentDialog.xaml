@@ -37,25 +37,32 @@
                     Spacing="8">
                 <TextBox Text="{x:Bind TaskGroup, Mode=TwoWay}"
                          ToolTipService.ToolTip="{x:Bind TaskGroup, Mode=TwoWay}"
-                         IsReadOnly="True"/>
+                         IsReadOnly="True"
+                         MinWidth="240"/>
                 <TextBox Text="{x:Bind TaskName, Mode=TwoWay}"
                          ToolTipService.ToolTip="{x:Bind TaskName, Mode=TwoWay}"
-                         IsReadOnly="True"/>
+                         IsReadOnly="True"
+                         MinWidth="240"/>
                 <TextBox Text="{x:Bind OperatingMethod, Mode=TwoWay}"
                          ToolTipService.ToolTip="{x:Bind OperatingMethod, Mode=TwoWay}"
-                         IsReadOnly="True"/>
+                         IsReadOnly="True"
+                         MinWidth="240"/>
                 <TextBox Text="{x:Bind Rules, Mode=TwoWay}"
                          ToolTipService.ToolTip="{x:Bind Rules, Mode=TwoWay}"
-                         IsReadOnly="True"/>
+                         IsReadOnly="True"
+                         MinWidth="240"/>
                 <TextBox Text="{x:Bind FilterId, Mode=TwoWay}"
                          ToolTipService.ToolTip="{x:Bind FilterId, Mode=TwoWay}"
-                         IsReadOnly="True"/>
+                         IsReadOnly="True"
+                         MinWidth="240"/>
                 <TextBox Text="{x:Bind FileFlow, Mode=TwoWay}"
                          ToolTipService.ToolTip="{x:Bind FileFlow, Mode=TwoWay}"
-                         IsReadOnly="True"/>
+                         IsReadOnly="True"
+                         MinWidth="240"/>
                 <TextBox Text="{x:Bind AutomatedRules, Mode=TwoWay}"
                          ToolTipService.ToolTip="{x:Bind AutomatedRules, Mode=TwoWay}"
-                         IsReadOnly="True"/>
+                         IsReadOnly="True"
+                         MinWidth="240"/>
                 <StackPanel Orientation="Horizontal"
                         Spacing="8">
                     <TextBlock x:Uid="IsFolder"/>

@@ -168,3 +168,9 @@ public enum DateType
     Edit,
     Visit
 }
+
+public enum Encrypted
+{
+    [Display(Name = "SevenZipText")] SevenZip,
+    [Display(Name = "AESText")] AES256WithPBKDF2DerivedKey
+}

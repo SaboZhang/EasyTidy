@@ -39,6 +39,9 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
     private IList<OperationMode> operationModes = Enum.GetValues(typeof(OperationMode)).Cast<OperationMode>().ToList();
 
     [ObservableProperty]
+    private IList<Encrypted> _encrypteds = Enum.GetValues(typeof(Encrypted)).Cast<Encrypted>().ToList();
+
+    [ObservableProperty]
     private OperationMode _selectedOperationMode;
 
     [ObservableProperty]
@@ -96,6 +99,21 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
     [ObservableProperty]
     private bool _isExecuting = false;
 
+    private bool? _orederChecked;
+
+    public bool OrederChecked
+    {
+        get => _orederChecked ?? Settings.IdOrder;
+        set
+        {
+            if (_orederChecked != value)
+            {
+                _orederChecked = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+
     private static DateTime LastInvocationTime = DateTime.MinValue;
 
     public void Initialize(StackedNotificationsBehavior notificationQueue)
@@ -122,7 +140,12 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
             Title = "AdditionalText".GetLocalized(),
             PrimaryButtonText = "SaveText".GetLocalized(),
             CloseButtonText = "CancelText".GetLocalized(),
-            TaskTarget = string.Empty
+            TaskTarget = string.Empty,
+            Password = string.IsNullOrEmpty(Settings.EncryptedPassword) 
+            ? string.Empty 
+            : CryptoUtil.DesDecrypt(Settings.EncryptedPassword),
+            Encencrypted = Settings.Encrypted,
+            IsSourceFile = Settings.OriginalFile
         };
         SelectedGroupName = string.Empty;
         SelectedGroupIndex = -1;
@@ -141,6 +164,11 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 args.Cancel = true;
                 return;
             }
+            Settings.EncryptedPassword = string.IsNullOrEmpty(Settings.EncryptedPassword) 
+            ? CryptoUtil.DesEncrypt(dialog.Password) 
+            : Settings.EncryptedPassword;
+            Settings.Encrypted = dialog.Encencrypted;
+            Settings.OriginalFile = dialog.IsSourceFile;
             await _dbContext.TaskOrchestration.AddAsync(new TaskOrchestrationTable
             {
                 TaskName = dialog.TaskName,
@@ -320,6 +348,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                         {
                             item.TaskSource = "DesktopText".GetLocalized();
                         }
+                        item.TagOrder = Settings.IdOrder;
                     }
                     GroupList = new(list.Select(x => x.GroupName.GroupName).Distinct().ToList());
                     var newList = list.Select(x => x.GroupName.GroupName).Distinct().ToList();
@@ -384,6 +413,11 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 dialog.EnabledFlag = task.IsEnabled;
                 dialog.IsRegex = task.IsRegex;
                 dialog.RuleType = task.RuleType;
+                dialog.IsSourceFile = Settings.OriginalFile;
+                dialog.Password = string.IsNullOrEmpty(Settings.EncryptedPassword) 
+                ? string.Empty 
+                : CryptoUtil.DesDecrypt(Settings.EncryptedPassword);
+                dialog.Encencrypted = Settings.Encrypted;
 
                 dialog.PrimaryButtonClick += async (s, e) =>
                 {
@@ -405,6 +439,9 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                     oldTask.GroupName = group;
                     oldTask.IsRegex = dialog.IsRegex;
                     oldTask.RuleType = dialog.RuleType;
+                    Settings.EncryptedPassword = dialog.Password;
+                    Settings.Encrypted = dialog.Encencrypted;
+                    Settings.OriginalFile = dialog.IsSourceFile;
                     oldTask.Filter = SelectedFilter != null 
                     ? await _dbContext.Filters.Where(x => x.Id == SelectedFilter.Id).FirstOrDefaultAsync()
                     : null;

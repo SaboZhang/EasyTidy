@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -273,7 +274,14 @@ public static class OperationHandler
     {
         await Task.Run(async () =>
         {
-            await FileActuator.ExecuteFileOperationAsync(parameters);
+            if (parameters.RuleModel.RuleType == TaskRuleType.FileRule)
+            {
+                await FileActuator.ExecuteFileOperationAsync(parameters);
+            }
+            else
+            {
+                await FolderActuator.ExecuteFolderOperationAsync(parameters);
+            }
         });
         LogService.Logger.Info("执行加密任务完成");
     }

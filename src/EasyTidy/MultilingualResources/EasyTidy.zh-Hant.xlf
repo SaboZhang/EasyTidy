@@ -1812,6 +1812,50 @@
           <source>Group name or task name or rule is empty</source>
           <target state="new">Group name or task name or rule is empty</target>
         </trans-unit>
+        <trans-unit id="ShutdownExecutionCard.Header" translate="yes" xml:space="preserve">
+          <source>Execute on shutdown</source>
+          <target state="translated">關閉時執行</target>
+        </trans-unit>
+        <trans-unit id="ShutdownExecutionCard.Description" translate="yes" xml:space="preserve">
+          <source>Execute Tasks When Shutting Down Require EasyTidy To Start</source>
+          <target state="translated">程式退出或關閉電腦時執行，關機執行需要 EasyTidy 啟動狀態</target>
+        </trans-unit>
+        <trans-unit id="SevenZipText" translate="yes" xml:space="preserve">
+          <source>7zip</source>
+          <target state="translated">7zip</target>
+        </trans-unit>
+        <trans-unit id="AESText" translate="yes" xml:space="preserve">
+          <source>AES-256 with PBKDF2-derived key</source>
+          <target state="translated">AES-256 with PBKDF2-derived key</target>
+        </trans-unit>
+        <trans-unit id="DialogAtShutdown.Text" translate="yes" xml:space="preserve">
+          <source>When closed：</source>
+          <target state="translated">關閉時：</target>
+        </trans-unit>
+        <trans-unit id="SequentialDisplayText.Content" translate="yes" xml:space="preserve">
+          <source>ID order display</source>
+          <target state="translated">ID順序顯示</target>
+        </trans-unit>
+        <trans-unit id="EncryptedText.Text" translate="yes" xml:space="preserve">
+          <source>Encrypted:</source>
+          <target state="translated">加密方式:</target>
+        </trans-unit>
+        <trans-unit id="EncryptedPassword.Text" translate="yes" xml:space="preserve">
+          <source>encrypted password:</source>
+          <target state="translated">加密密碼:</target>
+        </trans-unit>
+        <trans-unit id="SourceFile.Text" translate="yes" xml:space="preserve">
+          <source>Source file:</source>
+          <target state="translated">原始檔案:</target>
+        </trans-unit>
+        <trans-unit id="DeleteSourceFile.Content" translate="yes" xml:space="preserve">
+          <source>Delete source file</source>
+          <target state="translated">删除原始檔案</target>
+        </trans-unit>
+        <trans-unit id="ShutdownExecution_Text" translate="yes" xml:space="preserve">
+          <source>Execute on close</source>
+          <target state="translated">關閉時執行</target>
+        </trans-unit>
       </group>
     </body>
   </file>

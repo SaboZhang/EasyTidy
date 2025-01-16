@@ -1812,6 +1812,50 @@
           <source>Group name or task name or rule is empty</source>
           <target state="new">Group name or task name or rule is empty</target>
         </trans-unit>
+        <trans-unit id="ShutdownExecutionCard.Header" translate="yes" xml:space="preserve">
+          <source>Execute on shutdown</source>
+          <target state="translated">シャットダウン時に実行</target>
+        </trans-unit>
+        <trans-unit id="ShutdownExecutionCard.Description" translate="yes" xml:space="preserve">
+          <source>Execute Tasks When Shutting Down Require EasyTidy To Start</source>
+          <target state="translated">シャットダウン時タスクを実行する場合は EasyTidy の開始が必要</target>
+        </trans-unit>
+        <trans-unit id="SevenZipText" translate="yes" xml:space="preserve">
+          <source>7zip</source>
+          <target state="translated">7zip</target>
+        </trans-unit>
+        <trans-unit id="AESText" translate="yes" xml:space="preserve">
+          <source>AES-256 with PBKDF2-derived key</source>
+          <target state="translated">AES-256 with PBKDF2-derived key</target>
+        </trans-unit>
+        <trans-unit id="DialogAtShutdown.Text" translate="yes" xml:space="preserve">
+          <source>When closed：</source>
+          <target state="translated">閉じた状態で：</target>
+        </trans-unit>
+        <trans-unit id="SequentialDisplayText.Content" translate="yes" xml:space="preserve">
+          <source>ID order display</source>
+          <target state="translated">ID注文表示</target>
+        </trans-unit>
+        <trans-unit id="EncryptedText.Text" translate="yes" xml:space="preserve">
+          <source>Encrypted:</source>
+          <target state="translated">暗号化された:</target>
+        </trans-unit>
+        <trans-unit id="EncryptedPassword.Text" translate="yes" xml:space="preserve">
+          <source>encrypted password:</source>
+          <target state="translated">暗号化されたパスワード:</target>
+        </trans-unit>
+        <trans-unit id="SourceFile.Text" translate="yes" xml:space="preserve">
+          <source>Source file:</source>
+          <target state="translated">ソースファイル:</target>
+        </trans-unit>
+        <trans-unit id="DeleteSourceFile.Content" translate="yes" xml:space="preserve">
+          <source>Delete source file</source>
+          <target state="translated">ソースファイルを削除する</target>
+        </trans-unit>
+        <trans-unit id="ShutdownExecution_Text" translate="yes" xml:space="preserve">
+          <source>Execute on close</source>
+          <target state="translated">閉じると実行する</target>
+        </trans-unit>
       </group>
     </body>
   </file>

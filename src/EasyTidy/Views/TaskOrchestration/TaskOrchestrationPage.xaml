@@ -47,6 +47,9 @@
                         </ctk:SettingsCard.HeaderIcon>
                         <StackPanel Orientation="Horizontal"
                                     Spacing="10">
+                            <ToggleButton x:Uid="SequentialDisplayText"
+                                          IsChecked="{x:Bind ViewModel.OrederChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                          Click="Order_Click"/>
                             <Button x:Uid="TaskAddTaskButton"
                                     x:Name="TaskButton"
                                     Style="{StaticResource AccentButtonStyle}"
@@ -85,6 +88,7 @@
                                       CanDrag="True"
                                       SelectionMode="Single"
                                       DragItemsStarting="ListView_DragItemsStarting"
+                                      ContainerContentChanging="TaskListView_ContainerContentChanging"
                                       Height="600">
                                 <ListView.Header>
                                     <Grid Padding="16,12"
@@ -140,7 +144,13 @@
                                                 <ColumnDefinition Width="200"/>
                                             </Grid.ColumnDefinitions>
                                             <TextBlock Text="{x:Bind ID}"
-                                                       VerticalAlignment="Center"/>
+                                                       x:Name="IdTextBlock"
+                                                       VerticalAlignment="Center"
+                                                       Visibility="{x:Bind IdOrder, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                            <TextBlock x:Name="IndexTextBlock"
+                                                       VerticalAlignment="Center"
+                                                       Text="{Binding Tag, ElementName=TaskListView}"
+                                                       Visibility="{x:Bind TagOrder, Converter={StaticResource BoolToVisibilityConverter}}"/>
                                             <TextBlock Grid.Column="1"
                                                        Text="{x:Bind TaskName}"
                                                        VerticalAlignment="Center"/>

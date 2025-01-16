@@ -2,6 +2,7 @@
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
 using EasyTidy.Model;
+using Microsoft.UI.Xaml.Controls.Primitives;
 using Windows.ApplicationModel.DataTransfer;
 
 namespace EasyTidy.Views;
@@ -107,4 +108,52 @@ public sealed partial class TaskOrchestrationPage : Page
         }
 
     }
+
+    private void TaskListView_ContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
+    {
+        // 获取当前项的索引
+        var index = TaskListView.Items.IndexOf(args.Item);
+
+        // 获取对应的 TextBlock 并设置序号
+        if (args.ItemContainer != null)
+        {
+            var grid = args.ItemContainer.ContentTemplateRoot as Grid;
+            var textBlock = grid?.FindName("IndexTextBlock") as TextBlock;
+
+            if (textBlock != null)
+            {
+                textBlock.Text = (index + 1).ToString();
+            }
+        }
+    }
+
+    private void Order_Click(object sender, RoutedEventArgs e)
+    {
+        var btn = sender as ToggleButton;
+        if (btn == null || !btn.IsChecked.HasValue)
+            return;
+
+        bool isIdOrder = btn.IsChecked.Value;
+
+        UpdateTaskOrder(isIdOrder);
+        UpdateSettings(isIdOrder);
+    }
+
+    private void UpdateTaskOrder(bool isIdOrder)
+    {
+        foreach (var task in ViewModel.TaskList)
+        {
+            task.TagOrder = isIdOrder;
+        }
+
+        ViewModel.TaskListACV.Refresh();
+    }
+
+    private void UpdateSettings(bool isIdOrder)
+    {
+        Settings.IdOrder = isIdOrder;
+        Settings.Save();
+    }
+
+
 }

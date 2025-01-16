@@ -24,6 +24,8 @@ public class AutomaticTable
 
     public bool OnScheduleExecution { get; set; } = false;
 
+    public bool OnShutdownExecution { get; set; } = false;
+
     public ScheduleTable Schedule { get; set; }
 
     public List<TaskOrchestrationTable> TaskOrchestrationList { get; set; }

@@ -1812,6 +1812,50 @@
           <source>Group name or task name or rule is empty</source>
           <target state="new">Group name or task name or rule is empty</target>
         </trans-unit>
+        <trans-unit id="ShutdownExecutionCard.Header" translate="yes" xml:space="preserve">
+          <source>Execute on shutdown</source>
+          <target state="new">Execute on shutdown</target>
+        </trans-unit>
+        <trans-unit id="ShutdownExecutionCard.Description" translate="yes" xml:space="preserve">
+          <source>Execute Tasks When Shutting Down Require EasyTidy To Start</source>
+          <target state="new">Execute Tasks When Shutting Down Require EasyTidy To Start</target>
+        </trans-unit>
+        <trans-unit id="SevenZipText" translate="yes" xml:space="preserve">
+          <source>7zip</source>
+          <target state="new">7zip</target>
+        </trans-unit>
+        <trans-unit id="AESText" translate="yes" xml:space="preserve">
+          <source>AES-256 with PBKDF2-derived key</source>
+          <target state="new">AES-256 with PBKDF2-derived key</target>
+        </trans-unit>
+        <trans-unit id="DialogAtShutdown.Text" translate="yes" xml:space="preserve">
+          <source>When closed：</source>
+          <target state="new">When closed：</target>
+        </trans-unit>
+        <trans-unit id="SequentialDisplayText.Content" translate="yes" xml:space="preserve">
+          <source>ID order display</source>
+          <target state="new">ID order display</target>
+        </trans-unit>
+        <trans-unit id="EncryptedText.Text" translate="yes" xml:space="preserve">
+          <source>Encrypted:</source>
+          <target state="new">Encrypted:</target>
+        </trans-unit>
+        <trans-unit id="EncryptedPassword.Text" translate="yes" xml:space="preserve">
+          <source>encrypted password:</source>
+          <target state="new">encrypted password:</target>
+        </trans-unit>
+        <trans-unit id="SourceFile.Text" translate="yes" xml:space="preserve">
+          <source>Source file:</source>
+          <target state="new">Source file:</target>
+        </trans-unit>
+        <trans-unit id="DeleteSourceFile.Content" translate="yes" xml:space="preserve">
+          <source>Delete source file</source>
+          <target state="new">Delete source file</target>
+        </trans-unit>
+        <trans-unit id="ShutdownExecution_Text" translate="yes" xml:space="preserve">
+          <source>Execute on close</source>
+          <target state="new">Execute on close</target>
+        </trans-unit>
       </group>
     </body>
   </file>

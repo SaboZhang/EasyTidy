@@ -1324,4 +1324,37 @@
   <data name="ValidRuleText" xml:space="preserve">
     <value>ルール検証は失敗しました</value>
   </data>
+  <data name="ShutdownExecutionCard.Header" xml:space="preserve">
+    <value>シャットダウン時に実行</value>
+  </data>
+  <data name="ShutdownExecutionCard.Description" xml:space="preserve">
+    <value>シャットダウン時タスクを実行する場合は EasyTidy の開始が必要</value>
+  </data>
+  <data name="SevenZipText" xml:space="preserve">
+    <value>7zip</value>
+  </data>
+  <data name="AESText" xml:space="preserve">
+    <value>AES-256 with PBKDF2-derived key</value>
+  </data>
+  <data name="DialogAtShutdown.Text" xml:space="preserve">
+    <value>閉じた状態で：</value>
+  </data>
+  <data name="SequentialDisplayText.Content" xml:space="preserve">
+    <value>ID注文表示</value>
+  </data>
+  <data name="EncryptedText.Text" xml:space="preserve">
+    <value>暗号化された:</value>
+  </data>
+  <data name="EncryptedPassword.Text" xml:space="preserve">
+    <value>暗号化されたパスワード:</value>
+  </data>
+  <data name="SourceFile.Text" xml:space="preserve">
+    <value>ソースファイル:</value>
+  </data>
+  <data name="DeleteSourceFile.Content" xml:space="preserve">
+    <value>ソースファイルを削除する</value>
+  </data>
+  <data name="ShutdownExecution_Text" xml:space="preserve">
+    <value>閉じると実行する</value>
+  </data>
 </root>

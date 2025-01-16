@@ -3,6 +3,8 @@ using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
+using Windows.UI;
 
 namespace EasyTidy.Common.Database;
 
@@ -30,31 +32,134 @@ public partial class AppDbContext : DbContext
 
     public async Task InitializeDatabaseAsync()
     {
-        var DirPath = Constants.CnfPath;
-        if (!Directory.Exists(DirPath))
+        var dirPath = Constants.CnfPath;
+        if (!Directory.Exists(dirPath))
         {
-            Directory.CreateDirectory(DirPath);
+            Directory.CreateDirectory(dirPath);
         }
+
+        // 确保数据库已创建
         await Database.EnsureCreatedAsync();
 
-        if (!await ScriptExecutionStatus.AnyAsync(s => s.ScriptName == "quartz_sqlite" && s.Status == "executed"))
+        // 获取 SQL 脚本文件夹路径
+        string scriptsFolderPath = Path.Combine(Constants.ExecutePath, "Assets", "Script");
+
+        if (!Directory.Exists(scriptsFolderPath))
         {
-            string scriptPath = Path.Combine(Constants.ExecutePath, "Assets", "Script", "quartz_sqlite.sql");
-            ExecuteSqlScript(scriptPath);
-            ScriptExecutionStatus.Add(new ScriptExecutionStatus
-            {
-                ScriptName = "quartz_sqlite",
-                Status = "executed",
-                ExecutionDate = DateTime.UtcNow
-            });
-            await SaveChangesAsync();
+            Logger.Error($"Scripts folder not found: {scriptsFolderPath}");
+            return;
         }
+
+        // 获取所有 .sql 文件并按文件名排序
+        var scriptFiles = Directory.GetFiles(scriptsFolderPath, "*.sql").OrderBy(Path.GetFileName);
+
+        foreach (var scriptFilePath in scriptFiles)
+        {
+            string scriptName = Path.GetFileNameWithoutExtension(scriptFilePath);
+
+            // 检查脚本是否已经执行过
+            if (!await ScriptExecutionStatus.AnyAsync(s => s.ScriptName == scriptName && s.Status == "executed"))
+            {
+                try
+                {
+                    // 检查是否需要执行此脚本
+                    if (await NeedsToExecuteScriptAsync(scriptFilePath))
+                    {
+                        await ExecuteSqlScriptAsync(scriptFilePath);
+
+                        // 记录脚本执行状态
+                        ScriptExecutionStatus.Add(new ScriptExecutionStatus
+                        {
+                            ScriptName = scriptName,
+                            Status = "executed",
+                            ExecutionDate = DateTime.UtcNow
+                        });
+
+                        await SaveChangesAsync();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Logger.Error($"Failed to execute script {scriptName}: {ex.Message}");
+                    throw;
+                }
+            }
+        }
+
+        Logger.Info("EasyTidy 默认数据初始化完成！");
     }
 
-    private void ExecuteSqlScript(string scriptPath)
+    /// <summary>
+    /// 检查是否需要执行 SQL 脚本
+    /// </summary>
+    /// <param name="scriptFilePath">SQL 脚本路径</param>
+    /// <returns>是否需要执行</returns>
+    private async Task<bool> NeedsToExecuteScriptAsync(string scriptFilePath)
     {
-        var script = File.ReadAllText(scriptPath);
-        Database.ExecuteSqlRawAsync(script);
+        string scriptContent = await File.ReadAllTextAsync(scriptFilePath);
+        var requiredFields = ExtractFieldsFromScript(scriptContent);
+
+        foreach (var field in requiredFields)
+        {
+            if (await FieldExistsAsync(field.TableName, field.FieldName))
+            {
+                Logger.Info($"Field '{field.FieldName}' in table '{field.TableName}' already exists, skipping script.");
+                return false; // 如果字段已存在，则跳过整个脚本
+            }
+        }
+
+        return true; // 如果字段不存在，需要执行脚本
+    }
+
+    /// <summary>
+    /// 检查表中的字段是否已存在
+    /// </summary>
+    /// <param name="tableName">表名</param>
+    /// <param name="fieldName">字段名</param>
+    /// <returns>字段是否存在</returns>
+    private async Task<bool> FieldExistsAsync(string tableName, string fieldName)
+    {
+        var query = $"PRAGMA table_info({tableName});";
+
+        await using var connection = Database.GetDbConnection();
+        await connection.OpenAsync();
+
+        await using var command = connection.CreateCommand();
+        command.CommandText = query;
+
+        await using var reader = await command.ExecuteReaderAsync();
+        while (await reader.ReadAsync())
+        {
+            if (string.Equals(reader["name"].ToString(), fieldName, StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// 从 SQL 脚本中提取表名和字段名
+    /// </summary>
+    /// <param name="scriptContent">SQL 脚本内容</param>
+    /// <returns>提取的表名和字段名集合</returns>
+    private IEnumerable<(string TableName, string FieldName)> ExtractFieldsFromScript(string scriptContent)
+    {
+        // 匹配 ALTER TABLE ... ADD COLUMN ... 的语法
+        var matches = Regex.Matches(
+            scriptContent,
+            @"ALTER TABLE\s+(\w+)\s+ADD\s+COLUMN\s+(\w+)",
+            RegexOptions.IgnoreCase);
+
+        return matches.Select(match =>
+            (TableName: match.Groups[1].Value, FieldName: match.Groups[2].Value));
+    }
+
+    private async Task ExecuteSqlScriptAsync(string scriptPath)
+    {
+        var scriptContent = await File.ReadAllTextAsync(scriptPath);
+        await Database.ExecuteSqlRawAsync(scriptContent);
     }
 
     private static readonly JsonSerializerOptions JsonOptions = new JsonSerializerOptions

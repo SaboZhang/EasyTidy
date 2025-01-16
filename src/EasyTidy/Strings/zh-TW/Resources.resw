@@ -1321,4 +1321,37 @@
   <data name="ValidRuleText" xml:space="preserve">
     <value>規則驗證失敗</value>
   </data>
+  <data name="ShutdownExecutionCard.Header" xml:space="preserve">
+    <value>關閉時執行</value>
+  </data>
+  <data name="ShutdownExecutionCard.Description" xml:space="preserve">
+    <value>程式退出或關閉電腦時執行，關機執行需要 EasyTidy 啟動狀態</value>
+  </data>
+  <data name="SevenZipText" xml:space="preserve">
+    <value>7zip</value>
+  </data>
+  <data name="AESText" xml:space="preserve">
+    <value>AES-256 with PBKDF2-derived key</value>
+  </data>
+  <data name="DialogAtShutdown.Text" xml:space="preserve">
+    <value>關閉時：</value>
+  </data>
+  <data name="SequentialDisplayText.Content" xml:space="preserve">
+    <value>ID順序顯示</value>
+  </data>
+  <data name="EncryptedText.Text" xml:space="preserve">
+    <value>加密方式:</value>
+  </data>
+  <data name="EncryptedPassword.Text" xml:space="preserve">
+    <value>加密密碼:</value>
+  </data>
+  <data name="SourceFile.Text" xml:space="preserve">
+    <value>原始檔案:</value>
+  </data>
+  <data name="DeleteSourceFile.Content" xml:space="preserve">
+    <value>删除原始檔案</value>
+  </data>
+  <data name="ShutdownExecution_Text" xml:space="preserve">
+    <value>關閉時執行</value>
+  </data>
 </root>

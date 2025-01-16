@@ -90,6 +90,12 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
 
     public int Priority { get; set; } = 0;
 
+    public string Password { get; set; }
+
+    public Encrypted Encencrypted { get; set; }
+
+    public bool IsSourceFile { get; set; }
+
     public bool IsRegex
     {
         get => _isRegex;
@@ -275,28 +281,39 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
                         RenameButton.Visibility = Visibility.Collapsed;
                         TaskTargetPanel.Visibility = Visibility.Visible;
                         TaskSourcePanel.Visibility = Visibility.Collapsed;
+                        EncryptedPanel.Visibility = Visibility.Collapsed;
                         break;
                     case OperationMode.RecycleBin:
                         TaskSourcePanel.Visibility = Visibility.Collapsed;
                         RenameButton.Visibility = Visibility.Collapsed;
                         TaskTargetPanel.Visibility = Visibility.Visible;
+                        EncryptedPanel.Visibility = Visibility.Collapsed;
                         break;
                     case OperationMode.Rename:
                         RenameButton.Visibility = Visibility.Visible;
                         TaskTargetTitle.Text = "NewNameAndPath".GetLocalized();
                         TaskSourcePanel.Visibility = Visibility.Collapsed;
                         TaskTargetPanel.Visibility = Visibility.Visible;
+                        EncryptedPanel.Visibility = Visibility.Collapsed;
                         break;
                     case OperationMode.UploadWebDAV:
                         TaskTargetPanel.Visibility = Visibility.Collapsed;
                         RenameButton.Visibility = Visibility.Collapsed;
                         TaskSourcePanel.Visibility = Visibility.Visible;
                         ViewModel.TaskTarget = ViewModel.TaskSource;
+                        EncryptedPanel.Visibility = Visibility.Collapsed;
+                        break;
+                    case OperationMode.Encryption:
+                        TaskSourcePanel.Visibility = Visibility.Visible;
+                        TaskTargetPanel.Visibility = Visibility.Visible;
+                        RenameButton.Visibility = Visibility.Collapsed;
+                        EncryptedPanel.Visibility = Visibility.Visible;
                         break;
                     default:
                         RenameButton.Visibility = Visibility.Collapsed;
                         TaskSourcePanel.Visibility = Visibility.Visible;
                         TaskTargetPanel.Visibility = Visibility.Visible;
+                        EncryptedPanel.Visibility = Visibility.Collapsed;
                         break;
                 }
             }
