@@ -47,6 +47,7 @@
                         </ctk:SettingsCard.HeaderIcon>
                         <StackPanel Orientation="Horizontal"
                                     Spacing="10">
+                            <Button Content="ID顺序显示" Click="Order_Click"/>
                             <Button x:Uid="TaskAddTaskButton"
                                     x:Name="TaskButton"
                                     Style="{StaticResource AccentButtonStyle}"
@@ -85,6 +86,7 @@
                                       CanDrag="True"
                                       SelectionMode="Single"
                                       DragItemsStarting="ListView_DragItemsStarting"
+                                      ContainerContentChanging="TaskListView_ContainerContentChanging"
                                       Height="600">
                                 <ListView.Header>
                                     <Grid Padding="16,12"
@@ -140,7 +142,12 @@
                                                 <ColumnDefinition Width="200"/>
                                             </Grid.ColumnDefinitions>
                                             <TextBlock Text="{x:Bind ID}"
-                                                       VerticalAlignment="Center"/>
+                                                       VerticalAlignment="Center"
+                                                       Visibility="{x:Bind IdOrder, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                            <TextBlock x:Name="IndexTextBlock"
+                                                       VerticalAlignment="Center"
+                                                       Text="{Binding Tag, ElementName=TaskListView}"
+                                                       Visibility="{x:Bind TagOrder, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"/>
                                             <TextBlock Grid.Column="1"
                                                        Text="{x:Bind TaskName}"
                                                        VerticalAlignment="Center"/>

@@ -107,4 +107,33 @@ public sealed partial class TaskOrchestrationPage : Page
         }
 
     }
+
+    private void TaskListView_ContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
+    {
+        // 获取当前项的索引
+        var index = TaskListView.Items.IndexOf(args.Item);
+
+        // 获取对应的 TextBlock 并设置序号
+        if (args.ItemContainer != null)
+        {
+            var grid = args.ItemContainer.ContentTemplateRoot as Grid;
+            var textBlock = grid?.FindName("IndexTextBlock") as TextBlock;
+
+            if (textBlock != null)
+            {
+                textBlock.Text = (index + 1).ToString();
+            }
+        }
+    }
+
+    public bool TagOrder { get; set; } = false;
+
+    public bool IdOrder { get; set; } = true;
+
+    private void Order_Click(object sender, RoutedEventArgs e)
+    {
+        TagOrder = !TagOrder;
+        IdOrder = !IdOrder;
+    }
+
 }

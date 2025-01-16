@@ -5,6 +5,7 @@
 
 - 新增：文件夹快照
 - 新增：关闭时执行
+- 新增：任务按顺序显示方式
 - 优化：移除多余的引用
 - 优化：优化验证逻辑
 - 恢复：恢复加密功能（支持7zip 压缩加密跟AES-256 with PBKDF2-derived key 加密）7zip加密任意压缩工具都可进行解密；AES-256 with PBKDF2-derived key可使用openssl 等常见加密解密工具解密（支持任何标准 AES-CBC 解密工具），EasyTidy 解密功能预计下个版本中增加

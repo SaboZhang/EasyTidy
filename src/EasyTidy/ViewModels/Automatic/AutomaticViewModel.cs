@@ -552,7 +552,8 @@ public partial class AutomaticViewModel : ObservableRecipient
             Title = "CustomConfigurationText".GetLocalized(),
             PrimaryButtonText = "SaveText".GetLocalized(),
             CloseButtonText = "CancelText".GetLocalized(),
-            SecondaryButtonText = "Test".GetLocalized()
+            SecondaryButtonText = "Test".GetLocalized(),
+            ModifiedFlg = true
         };
 
         if (dataContent is AutomaticModel data)

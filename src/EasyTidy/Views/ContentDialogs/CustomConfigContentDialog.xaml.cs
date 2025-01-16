@@ -33,6 +33,7 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
                 _delay = value;
                 ValidateDelay(_delay);
                 OnPropertyChanged();
+                UpdateIsValid();
             }
         }
     }
@@ -52,6 +53,7 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
                 _minute = value;
                 ValidateMinute(_minute);
                 OnPropertyChanged();
+                UpdateIsValid();
             }
         }
     }
@@ -71,6 +73,7 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
                 _hour = value;
                 ValidateHour(_hour);
                 OnPropertyChanged();
+                UpdateIsValid();
             }
         }
     }
@@ -90,6 +93,7 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
                 _dayOfWeek = value;
                 ValidateDayOfWeek(_dayOfWeek);
                 OnPropertyChanged();
+                UpdateIsValid();
             }
         }
     }
@@ -109,6 +113,7 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
                 _dayOfMonth = value;
                 ValidateDayOfMonth(_dayOfMonth);
                 OnPropertyChanged();
+                UpdateIsValid();
             }
         }
     }
@@ -128,6 +133,7 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
                 _monthlyDay = value;
                 ValidateMonthlyDay(_monthlyDay);
                 OnPropertyChanged();
+                UpdateIsValid();
             }
         }
     }
@@ -153,24 +159,43 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
 
     public bool IsValid { get; set; }
 
+    public bool DelayIsValid { get; set; }
+    public bool MinuteIsValid { get; set; }
+    public bool HourIsValid { get; set; }
+    public bool DayOfWeekIsValid { get; set; }
+    public bool DayOfMonthIsValid { get; set; }
+    public bool MonthlyDayIsValid { get; set; }
+    public bool ModifiedFlg { get; set; }
+    private bool _isFirstLoad = true;
+
+    public void UpdateIsValid()
+    {
+        IsValid = DelayIsValid && MinuteIsValid && HourIsValid &&
+                  DayOfWeekIsValid && DayOfMonthIsValid && MonthlyDayIsValid;
+    }
+
+    private void OnLoaded(object sender, RoutedEventArgs e)
+    {
+        _isFirstLoad = false;
+    }
+
     public CustomConfigContentDialog()
     {
         ViewModel = App.GetService<AutomaticViewModel>();
         this.InitializeComponent();
         XamlRoot = App.MainWindow.Content.XamlRoot;
         RequestedTheme = ViewModel.ThemeSelectorService.Theme;
-        ValidateDelay(_delay);
-        ValidateMinute(_minute);
-        ValidateHour(_hour);
-        ValidateDayOfWeek(_dayOfWeek);
-        ValidateDayOfMonth(_dayOfMonth);
-        ValidateMonthlyDay(_monthlyDay);
     }
 
     private void ValidateDelay(string delay)
     {
+        var flg = ModifiedFlg;
+        if (flg && _isFirstLoad) 
+        {
+            DelayIsValid = true;
+        }
         var errors = new List<string>(1);
-        if (!IsValid && string.IsNullOrEmpty(delay) && ViewModel.CustomFileChange)
+        if (!DelayIsValid && string.IsNullOrEmpty(delay) && ViewModel.CustomFileChange)
         {
             DelayValid.Text = "ValidateDelay".GetLocalized();
             DelayValid.Visibility = Visibility.Visible;
@@ -189,8 +214,13 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
     /// <param name="minute"></param>
     private void ValidateMinute(string minute)
     {
+        var flg = ModifiedFlg;
+        if (flg && _isFirstLoad) 
+        {
+            MinuteIsValid = true;
+        }
         var errors = new List<string>(1);
-        if (!IsValid && !string.IsNullOrEmpty(minute))
+        if (!MinuteIsValid && !string.IsNullOrEmpty(minute))
         {
             MinuteValid.Text = "MinuteFormatInfo".GetLocalized();
             MinuteValid.Visibility = Visibility.Visible;
@@ -209,8 +239,13 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
     /// <param name="hour"></param>
     private void ValidateHour(string hour)
     {
+        var flg = ModifiedFlg;
+        if (flg && _isFirstLoad) 
+        {
+            HourIsValid = true;
+        }
         var errors = new List<string>(1);
-        if (!IsValid && !string.IsNullOrEmpty(hour))
+        if (!HourIsValid && !string.IsNullOrEmpty(hour))
         {
             HourValid.Text = "HourFormatInfo".GetLocalized();
             HourValid.Visibility = Visibility.Visible;
@@ -229,8 +264,13 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
     /// <param name="dayOfWeek"></param>
     private void ValidateDayOfWeek(string dayOfWeek)
     {
+        var flg = ModifiedFlg;
+        if (flg && _isFirstLoad) 
+        {
+            DayOfWeekIsValid = true;
+        }
         var errors = new List<string>(1);
-        if (!IsValid && !string.IsNullOrEmpty(dayOfWeek))
+        if (!DayOfWeekIsValid && !string.IsNullOrEmpty(dayOfWeek))
         {
             DayOfWeekValid.Text = "WeeksFormatInfo".GetLocalized();
             DayOfWeekValid.Visibility = Visibility.Visible;
@@ -249,8 +289,13 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
     /// <param name="dayOfMonth"></param>
     private void ValidateDayOfMonth(string dayOfMonth)
     {
+        var flg = ModifiedFlg;
+        if (flg && _isFirstLoad) 
+        {
+            DayOfMonthIsValid = true;
+        }
         var errors = new List<string>(1);
-        if (!IsValid && !string.IsNullOrEmpty(dayOfMonth))
+        if (!DayOfMonthIsValid && !string.IsNullOrEmpty(dayOfMonth))
         {
             DayOfMonthValid.Text = "DateFormatInfo".GetLocalized();
             DayOfMonthValid.Visibility = Visibility.Visible;
@@ -269,8 +314,13 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
     /// <param name="monthlyDay"></param>
     private void ValidateMonthlyDay(string monthlyDay)
     {
+        var flg = ModifiedFlg;
+        if (flg && _isFirstLoad) 
+        {
+            MonthlyDayIsValid = true;
+        }
         var errors = new List<string>(1);
-        if (!IsValid && !string.IsNullOrEmpty(monthlyDay))
+        if (!MonthlyDayIsValid && !string.IsNullOrEmpty(monthlyDay))
         {
             MonthlyDayValid.Text = "MonthFormatInfo".GetLocalized();
             MonthlyDayValid.Visibility = Visibility.Visible;
