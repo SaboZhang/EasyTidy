@@ -23,22 +23,48 @@ Technology used: C# .net8 winui3 implementation
 
 This project is licensed under the MIT License. However, the **Snap2HTML** snapshot HTML template included in the project is separately licensed under the GPL. Therefore, if you choose to use the **Snap2HTML** HTML template, you must also comply with the terms of the GPL license for that template. Conversely, if the **Snap2HTML** HTML template is not used, the entire project is governed solely by the terms of the MIT License.
 
-## Function List
+## Feature List
 
-- [x] file move
-- [x] file copy
-- [x] Delete
-- [x] Recycling Bin
-- [x] rename
-- [x] Automatic decompression
-- [x] zip file
+- [x] Move Files
+- [x] Copy Files
+- [x] Delete Files
+- [x] Recycle Bin
+- [x] Rename Files
+- [x] Auto Extract
+- [x] Compress Files
 - [x] Upload to WebDAV
-- [x] file encryption
-- [x] hard connection
-- [x] Symbolic connections (soft connections)
-- [x] file snapshot
-- [x] CRON automatically executes
-- [x] Execute on startup
-- [x] Periodic execution
-- [x] Execute according to plan
-- [x] Execute when is closed
+- [x] File Encryption
+- [x] Task Drag-and-Drop Priority Sorting
+- [x] Backup
+- [x] Hard Links
+- [x] Symbolic Links (Soft Links)
+- [x] File Snapshots
+- [x] Automatically Execute Based on CRON
+- [x] Execute on Startup
+- [x] Execute Periodically
+- [x] Execute as Scheduled
+- [x] Execute on Shutdown
+
+## Feature Roadmap
+
+### Short-Term Goals (Next Three Months)
+
+- [ ] Implement right-click menu functionality to trigger file organization
+- [ ] File window drag-and-drop
+- [ ] Integrate AI article summarization feature
+- [ ] Append file content to specified files
+- [ ] Performance optimization
+
+### Mid-Term Goals
+
+- [ ] Explore more efficient execution methods
+- [ ] Cloud Drive Upload? (To be planned)
+- [ ] WebDAV Download
+
+### Long-Term Goals
+
+- [ ] Explore the feasibility of AI-driven task categorization (Currently, AI categorization is not as effective as expected)
+
+## Community Participation
+
+We welcome feedback and contributions from everyone! If you have any suggestions or want to help, please visit our [Issue Tracker](https://github.com/SaboZhang/EasyTidy/issues) or contact us via email at <service@luckyits.com> or <tao993859833@Live.cn>
