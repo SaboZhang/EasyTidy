@@ -6,7 +6,7 @@
 <p align="center">
 <a href="https://github.com/SaboZhang/EasyTidy/blob/main/LICENSE" target="_self"></a>
 <h1 align="center">EasyTidy</h1>
-<p align="center">EasyTidy 一个简单的文件自动分类整理工具,轻松创建文件的自动工作流程
+<p align="center">EasyTidy 一个<strong>简单</strong>的文件<strong>自动分类整理</strong>工具,轻松创建文件的自动工作流程
 </p>
 
 [**English**](./README_EN.md) | **简体中文**
@@ -34,6 +34,8 @@ EasyTidy 是一款功能强大的文件管理软件。它能够自动处理和�
 - [x] 压缩文件
 - [x] 上传至WebDAV
 - [x] 文件加密
+- [x] 任务拖拽优先级排序
+- [x] 备份
 - [x] 硬连接
 - [x] 符号连接（软连接）
 - [x] 文件快照
@@ -42,3 +44,27 @@ EasyTidy 是一款功能强大的文件管理软件。它能够自动处理和�
 - [x] 定期执行
 - [x] 按照计划执行
 - [x] 关闭时执行
+
+## 功能规划
+
+### 短期目标 (接下来三个月)
+
+- [ ] 实现右键菜单功能，通过右键执行触发文件整理
+- [ ] 文件窗口拖拽
+- [ ] 引入AI文章总结功能
+- [ ] 文件内容追加到指定文件
+- [ ] 效率优化
+
+### 中期目标
+
+- [ ] 探索更多效率执行方式
+- [ ] 云盘上传？（待规划）
+- [ ] WebDAV 下载
+
+### 长期目标
+
+- [ ] 探索AI接入执行分类的可行性（现阶段AI分类不太符合预期效果）
+
+## 社区参与
+
+欢迎所有人的反馈和贡献！如果你有任何建议或想要帮忙，请访问我们的 [问题跟踪器](https://github.com/SaboZhang/EasyTidy/issues) 或通过邮件与我联系<service@luckyits.com> 或者 <tao993859833@Live.cn>
