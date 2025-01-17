@@ -11,13 +11,23 @@
 
 **English** | [**简体中文**](./README.md)
 
-EasyTidy is a powerful file management software. It can automatically process and organize files and folders, leaving your file system in an orderly manner. Features include: Powerful file filtering: You can filter files by file name, directory, size, date, attributes, content or regular expressions to accurately locate the files you need. Flexible execution mode: Supports manual operation and automatic execution. In terms of automatic execution, you can set a delay start, or you can execute it at fixed intervals, and you can also customize the execution cycle through the CRON expression to meet the file management needs in different scenarios.Open source and free
+EasyTidy is a powerful file management software that automates the organization and handling of files and folders, keeping your file system neat and organized. Key features include:
 
-Quick start：[Documentation](https://easytidy.luckyits.com)
+- **Powerful File Filtering**: Filter files accurately based on their name, location, size, date, attributes, content, or regular expressions, making it easy to locate the files you need.
+- **Flexible Execution Modes**: Supports both manual and automatic execution. You can set delayed starts, periodic execution, or define custom schedules using CRON expressions, catering to different file management needs.
+- **Open Source and Free**: Fully open-source and free to use. We welcome contributions and feedback from the community.
 
-If you find that DropIT's task monitoring doesn't meet your needs, or the price of File Juggler 3 is not quite suitable, you can give EasyTidy a try. EasyTidy is currently under active development, and we welcome your suggestions. Reasonable feature requests will be considered and accepted.
+### Getting Started
 
-Technology used: C# .net8 winui3 implementation
+[Documentation](https://easytidy.luckyits.com)
+
+If you find DropIT's task monitoring insufficient or if File Juggler 3's pricing doesn't fit your needs, consider trying EasyTidy. It is actively under development, and we welcome feature requests which will be considered and accepted where reasonable.
+
+### Technologies Used
+
+- C#
+- .NET 8
+- WinUI 3
 
 ## License
 
@@ -44,6 +54,7 @@ This project is licensed under the MIT License. However, the **Snap2HTML** snaps
 - [x] Execute Periodically
 - [x] Execute as Scheduled
 - [x] Execute on Shutdown
+- [ ] Localization Support: Currently supports **简体中文**, **繁體中文**, **English**, **日本語**, **Français**. We welcome everyone to participate and contribute translations in other languages.[Localization language files](https://github.com/SaboZhang/EasyTidy/tree/main/src/EasyTidy/MultilingualResources)
 
 ## Feature Roadmap
 
