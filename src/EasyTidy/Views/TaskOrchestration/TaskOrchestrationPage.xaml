@@ -25,115 +25,76 @@
         </ic:EventTriggerBehavior>
     </i:Interaction.Behaviors>
 
-    <StackPanel x:Name="ContentArea" Margin="0,-58,0,0" >
-        <InfoBar MaxWidth="480"
-              Margin="10"
-              HorizontalAlignment="Center"
-              VerticalAlignment="Bottom">
-            <i:Interaction.Behaviors>
-                <behaviors:StackedNotificationsBehavior x:Name="NotificationQueue" />
-            </i:Interaction.Behaviors>
-        </InfoBar>
-        <etc:SettingsPageControl
-            x:Name="SettingsControl"
-            x:Uid="TaskSettingsPage"
-            ModuleImageSource="ms-appx:///Assets/Modules/FileTask.png">
-            <etc:SettingsPageControl.ModuleContent>
-                <StackPanel>
-                    <ctk:SettingsCard x:Name="AddTask"
-                                      x:Uid="TaskAddTask">
-                        <ctk:SettingsCard.HeaderIcon>
-                            <FontIcon Glyph="&#xE7C4;"/>
-                        </ctk:SettingsCard.HeaderIcon>
-                        <StackPanel Orientation="Horizontal"
-                                    Spacing="10">
-                            <ToggleButton x:Uid="SequentialDisplayText"
-                                          IsChecked="{x:Bind ViewModel.OrederChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                          Click="Order_Click"/>
-                            <Button x:Uid="TaskAddTaskButton"
-                                    x:Name="TaskButton"
-                                    Style="{StaticResource AccentButtonStyle}"
-                                    Command="{x:Bind ViewModel.AddTaskClickCommand}"/>
-                            <ComboBox x:Name="GroupNameComboBox"
-                                      x:Uid="TaskDisplay"
-                                      ItemsSource="{x:Bind ViewModel.GroupNameList, Mode=OneWay}"
-                                      SelectedItem="{x:Bind ViewModel.SelectedGroupName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                                <i:Interaction.Behaviors>
-                                    <ic:EventTriggerBehavior EventName="SelectionChanged">
-                                        <ic:EventTriggerBehavior.Actions>
-                                            <ic:InvokeCommandAction Command="{x:Bind ViewModel.GroupNameChangedCommand}"/>
-                                        </ic:EventTriggerBehavior.Actions>
-                                    </ic:EventTriggerBehavior>
-                                </i:Interaction.Behaviors>
-                            </ComboBox>
-                            <Button x:Uid="GroupExecution" 
-                                    Command="{x:Bind ViewModel.ExecuteGroupTaskCommand}"
-                                    Style="{StaticResource AccentButtonStyle}"
-                                    IsEnabled="{x:Bind ViewModel.IsExecuting, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        </StackPanel>
-                    </ctk:SettingsCard>
+    <ScrollView Margin="0,-58,0,0"
+            VerticalScrollBarVisibility="Hidden">
+        <StackPanel x:Name="ContentArea" Margin="0,-58,0,0" >
+            <InfoBar MaxWidth="480"
+          Margin="10"
+          HorizontalAlignment="Center"
+          VerticalAlignment="Bottom">
+                <i:Interaction.Behaviors>
+                    <behaviors:StackedNotificationsBehavior x:Name="NotificationQueue" />
+                </i:Interaction.Behaviors>
+            </InfoBar>
+            <etc:SettingsPageControl
+        x:Name="SettingsControl"
+        x:Uid="TaskSettingsPage"
+        ModuleImageSource="ms-appx:///Assets/Modules/FileTask.png">
+                <etc:SettingsPageControl.ModuleContent>
                     <StackPanel>
-                        <TextBlock x:Name="TaskList"
-                                   TextWrapping="Wrap"
-                                   x:Uid="TaskListView"
-                                   Margin="0,20,20,0"/>
-                        <ProgressRing x:Name="Load"
-                                      IsActive="{x:Bind ViewModel.IsActive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <ctk:SettingsCard x:Name="AddTask"
+                                  x:Uid="TaskAddTask">
+                            <ctk:SettingsCard.HeaderIcon>
+                                <FontIcon Glyph="&#xE7C4;"/>
+                            </ctk:SettingsCard.HeaderIcon>
+                            <StackPanel Orientation="Horizontal"
+                                Spacing="10">
+                                <ToggleButton x:Uid="SequentialDisplayText"
+                                      IsChecked="{x:Bind ViewModel.OrederChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                      Click="Order_Click"/>
+                                <Button x:Uid="TaskAddTaskButton"
+                                x:Name="TaskButton"
+                                Style="{StaticResource AccentButtonStyle}"
+                                Command="{x:Bind ViewModel.AddTaskClickCommand}"/>
+                                <ComboBox x:Name="GroupNameComboBox"
+                                  x:Uid="TaskDisplay"
+                                  ItemsSource="{x:Bind ViewModel.GroupNameList, Mode=OneWay}"
+                                  SelectedItem="{x:Bind ViewModel.SelectedGroupName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                    <i:Interaction.Behaviors>
+                                        <ic:EventTriggerBehavior EventName="SelectionChanged">
+                                            <ic:EventTriggerBehavior.Actions>
+                                                <ic:InvokeCommandAction Command="{x:Bind ViewModel.GroupNameChangedCommand}"/>
+                                            </ic:EventTriggerBehavior.Actions>
+                                        </ic:EventTriggerBehavior>
+                                    </i:Interaction.Behaviors>
+                                </ComboBox>
+                                <Button x:Uid="GroupExecution" 
+                                Command="{x:Bind ViewModel.ExecuteGroupTaskCommand}"
+                                Style="{StaticResource AccentButtonStyle}"
+                                IsEnabled="{x:Bind ViewModel.IsExecuting, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+                        </ctk:SettingsCard>
                         <StackPanel>
-                            <ListView x:Name="TaskListView"
-                                      ItemsSource="{x:Bind ViewModel.TaskListACV, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                      HorizontalContentAlignment="Stretch"
-                                      CanReorderItems="True"
-                                      CanDragItems="True"
-                                      CanDrag="True"
-                                      SelectionMode="Single"
-                                      DragItemsStarting="ListView_DragItemsStarting"
-                                      ContainerContentChanging="TaskListView_ContainerContentChanging"
-                                      Height="600">
-                                <ListView.Header>
-                                    <Grid Padding="16,12"
-                                          ColumnSpacing="16">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="40"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="200"/>
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock Text="ID"
-                                                   HorizontalAlignment="Left"
-                                                   VerticalAlignment="Center"/>
-                                        <TextBlock Grid.Column="1"
-                                                   x:Uid="TaskListTaskName"
-                                                   VerticalAlignment="Center"/>
-                                        <TextBlock Grid.Column="2"
-                                                   x:Uid="TaskListSource"
-                                                   VerticalAlignment="Center"/>
-                                        <TextBlock Grid.Column="3"
-                                                   x:Uid="TaskListTarget"
-                                                   VerticalAlignment="Center"/>
-                                        <TextBlock Grid.Column="4"
-                                                   x:Uid="TaskListShortcuts"
-                                                   VerticalAlignment="Center"
-                                                   HorizontalAlignment="Center"/>
-                                        <TextBlock Grid.Column="5"
-                                                   x:Uid="TaskListEnable"
-                                                   VerticalAlignment="Center"
-                                                   HorizontalAlignment="Center"/>
-                                        <TextBlock Grid.Column="6"
-                                                   x:Uid="TaskListOperation"
-                                                   HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"/>
-                                    </Grid>
-                                </ListView.Header>
-                                <ListView.ItemTemplate>
-                                    <DataTemplate x:DataType="model:TaskOrchestrationTable">
-                                        <Grid ColumnSpacing="16" 
-                                              AllowDrop="True"
-                                              Drop="ListView_DropAsync"
-                                              DragOver="ListView_DragOver">
+                            <TextBlock x:Name="TaskList"
+                               TextWrapping="Wrap"
+                               x:Uid="TaskListView"
+                               Margin="0,20,20,0"/>
+                            <ProgressRing x:Name="Load"
+                                  IsActive="{x:Bind ViewModel.IsActive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <StackPanel>
+                                <ListView x:Name="TaskListView"
+                                  ItemsSource="{x:Bind ViewModel.TaskListACV, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                  HorizontalContentAlignment="Stretch"
+                                  CanReorderItems="True"
+                                  CanDragItems="True"
+                                  CanDrag="True"
+                                  SelectionMode="Single"
+                                  DragItemsStarting="ListView_DragItemsStarting"
+                                  ContainerContentChanging="TaskListView_ContainerContentChanging"
+                                  Height="600">
+                                    <ListView.Header>
+                                        <Grid Padding="16,12"
+                                      ColumnSpacing="16">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="40"/>
                                                 <ColumnDefinition Width="*"/>
@@ -143,81 +104,123 @@
                                                 <ColumnDefinition Width="*"/>
                                                 <ColumnDefinition Width="200"/>
                                             </Grid.ColumnDefinitions>
-                                            <TextBlock Text="{x:Bind ID}"
-                                                       x:Name="IdTextBlock"
-                                                       VerticalAlignment="Center"
-                                                       Visibility="{x:Bind IdOrder, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                                            <TextBlock x:Name="IndexTextBlock"
-                                                       VerticalAlignment="Center"
-                                                       Text="{Binding Tag, ElementName=TaskListView}"
-                                                       Visibility="{x:Bind TagOrder, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                            <TextBlock Text="ID"
+                                               HorizontalAlignment="Left"
+                                               VerticalAlignment="Center"/>
                                             <TextBlock Grid.Column="1"
-                                                       Text="{x:Bind TaskName}"
-                                                       VerticalAlignment="Center"/>
+                                               x:Uid="TaskListTaskName"
+                                               VerticalAlignment="Center"/>
                                             <TextBlock Grid.Column="2"
-                                                       Text="{x:Bind TaskSource}"
-                                                       VerticalAlignment="Center"
-                                                       ToolTipService.ToolTip="{x:Bind TaskSource}"/>
+                                               x:Uid="TaskListSource"
+                                               VerticalAlignment="Center"/>
                                             <TextBlock Grid.Column="3"
-                                                       Text="{x:Bind TaskTarget}"
-                                                       VerticalAlignment="Center"
-                                                       ToolTipService.ToolTip="{x:Bind TaskTarget}"/>
+                                               x:Uid="TaskListTarget"
+                                               VerticalAlignment="Center"/>
                                             <TextBlock Grid.Column="4"
-                                                       Text="{x:Bind Shortcut, Mode=TwoWay, Converter={StaticResource BoolToStringConverter}}"
-                                                       VerticalAlignment="Center"
-                                                       HorizontalAlignment="Center"/>
+                                               x:Uid="TaskListShortcuts"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Center"/>
                                             <TextBlock Grid.Column="5"
-                                                       Text="{x:Bind IsEnabled, Mode=TwoWay, Converter={StaticResource BoolToStringConverter}}"
-                                                       VerticalAlignment="Center"
-                                                       HorizontalAlignment="Center"/>
-                                            <StackPanel HorizontalAlignment="Center"
-                                                        Orientation="Horizontal"
-                                                        Spacing="8"
-                                                        Grid.Column="6">
-                                                <Button x:Name="EditButton"
-                                                        Style="{StaticResource SubtleButtonStyle}"
-                                                        DataContext="{x:Bind}"
-                                                        Width="42"
-                                                        Height="42"
-                                                        x:Uid="EditButton"
-                                                        Click="EditButton_Click">
-                                                    <Image Source="/Assets/Fluent/edit.png"/>
-                                                </Button>
-                                                <Button x:Name="DeleteButton"
-                                                        Style="{StaticResource SubtleButtonStyle}"
-                                                        DataContext="{x:Bind}"
-                                                        Width="42"
-                                                        Height="42"
-                                                        x:Uid="DeleteButton"
-                                                        Click="DeleteButton_Click">
-                                                    <Image Source="/Assets/Fluent/delete.png"/>
-                                                </Button>
-                                                <Button x:Name="RunButton"
-                                                        Content="{ui:BitmapIcon Source=Assets/Fluent/run.png}"
-                                                        Style="{StaticResource SubtleButtonStyle}"
-                                                        DataContext="{x:Bind}"
-                                                        Width="42"
-                                                        Height="42"
-                                                        x:Uid="RunButton"
-                                                        Click="RunButton_Click"/>
-                                                <Button x:Name="IsEnableButton"
-                                                        Content="{ui:BitmapIcon Source=Assets/Fluent/isanble.png}"
-                                                        Style="{StaticResource SubtleButtonStyle}"
-                                                        DataContext="{x:Bind}"
-                                                        Width="42"
-                                                        Height="42"
-                                                        x:Uid="IsEnableButton"
-                                                        Click="IsEnableButton_Click"/>
-                                            </StackPanel>
+                                               x:Uid="TaskListEnable"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Center"/>
+                                            <TextBlock Grid.Column="6"
+                                               x:Uid="TaskListOperation"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"/>
                                         </Grid>
-                                    </DataTemplate>
-                                </ListView.ItemTemplate>
-                            </ListView>
+                                    </ListView.Header>
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate x:DataType="model:TaskOrchestrationTable">
+                                            <Grid ColumnSpacing="16" 
+                                          AllowDrop="True"
+                                          Drop="ListView_DropAsync"
+                                          DragOver="ListView_DragOver">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="40"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="200"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="{x:Bind ID}"
+                                                   x:Name="IdTextBlock"
+                                                   VerticalAlignment="Center"
+                                                   Visibility="{x:Bind IdOrder, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                                <TextBlock x:Name="IndexTextBlock"
+                                                   VerticalAlignment="Center"
+                                                   Text="{Binding Tag, ElementName=TaskListView}"
+                                                   Visibility="{x:Bind TagOrder, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                                <TextBlock Grid.Column="1"
+                                                   Text="{x:Bind TaskName}"
+                                                   VerticalAlignment="Center"/>
+                                                <TextBlock Grid.Column="2"
+                                                   Text="{x:Bind TaskSource}"
+                                                   VerticalAlignment="Center"
+                                                   ToolTipService.ToolTip="{x:Bind TaskSource}"/>
+                                                <TextBlock Grid.Column="3"
+                                                   Text="{x:Bind TaskTarget}"
+                                                   VerticalAlignment="Center"
+                                                   ToolTipService.ToolTip="{x:Bind TaskTarget}"/>
+                                                <TextBlock Grid.Column="4"
+                                                   Text="{x:Bind Shortcut, Mode=TwoWay, Converter={StaticResource BoolToStringConverter}}"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Center"/>
+                                                <TextBlock Grid.Column="5"
+                                                   Text="{x:Bind IsEnabled, Mode=TwoWay, Converter={StaticResource BoolToStringConverter}}"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Center"/>
+                                                <StackPanel HorizontalAlignment="Center"
+                                                    Orientation="Horizontal"
+                                                    Spacing="8"
+                                                    Grid.Column="6">
+                                                    <Button x:Name="EditButton"
+                                                    Style="{StaticResource SubtleButtonStyle}"
+                                                    DataContext="{x:Bind}"
+                                                    Width="42"
+                                                    Height="42"
+                                                    x:Uid="EditButton"
+                                                    Click="EditButton_Click">
+                                                        <Image Source="/Assets/Fluent/edit.png"/>
+                                                    </Button>
+                                                    <Button x:Name="DeleteButton"
+                                                    Style="{StaticResource SubtleButtonStyle}"
+                                                    DataContext="{x:Bind}"
+                                                    Width="42"
+                                                    Height="42"
+                                                    x:Uid="DeleteButton"
+                                                    Click="DeleteButton_Click">
+                                                        <Image Source="/Assets/Fluent/delete.png"/>
+                                                    </Button>
+                                                    <Button x:Name="RunButton"
+                                                    Content="{ui:BitmapIcon Source=Assets/Fluent/run.png}"
+                                                    Style="{StaticResource SubtleButtonStyle}"
+                                                    DataContext="{x:Bind}"
+                                                    Width="42"
+                                                    Height="42"
+                                                    x:Uid="RunButton"
+                                                    Click="RunButton_Click"/>
+                                                    <Button x:Name="IsEnableButton"
+                                                    Content="{ui:BitmapIcon Source=Assets/Fluent/isanble.png}"
+                                                    Style="{StaticResource SubtleButtonStyle}"
+                                                    DataContext="{x:Bind}"
+                                                    Width="42"
+                                                    Height="42"
+                                                    x:Uid="IsEnableButton"
+                                                    Click="IsEnableButton_Click"/>
+                                                </StackPanel>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </StackPanel>
                         </StackPanel>
                     </StackPanel>
-                </StackPanel>
-            </etc:SettingsPageControl.ModuleContent>
-        </etc:SettingsPageControl>
+                </etc:SettingsPageControl.ModuleContent>
+            </etc:SettingsPageControl>
 
-    </StackPanel>
+        </StackPanel>
+    </ScrollView>
 </Page>

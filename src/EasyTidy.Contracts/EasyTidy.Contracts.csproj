@@ -14,5 +14,5 @@
   <ItemGroup>
     <ProjectReference Include="..\EasyTidy.Model\EasyTidy.Model.csproj" />
   </ItemGroup>
-  
+
 </Project>
