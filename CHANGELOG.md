@@ -17,6 +17,6 @@
 **网盘中**EasyTidy_1.1.2.0105_win-x64_Lite 版本需要自行安装WindowsAppSDK 跟 .NET8 运行时
 新增msi安装包跟单体应用
 
-**Full Changelog**: <https://github.com/SaboZhang/EasyTidy/compare/1.1.3.0104...1.1.4.0117-alpha.5>
+**Full Changelog**: <https://github.com/SaboZhang/EasyTidy/compare/1.1.3.0104...1.2.0.0119>
 
 网盘下载：[123网盘](https://www.123684.com/s/hbzgTd-fmmt)|[蓝奏云(2025)](https://wwoo.lanzouu.com/b02u2ne0eh)
