@@ -14,9 +14,10 @@
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:behaviors="using:EasyTidy.Behaviors"
     Loaded="OnLoaded"
+    Background="Transparent"
     mc:Ignorable="d">
 
-    <Grid>
+    <Grid Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="48"/>
             <RowDefinition Height="*"/>
@@ -114,8 +115,8 @@
                     </behaviors:NavigationViewHeaderBehavior.DefaultHeaderTemplate>
                 </behaviors:NavigationViewHeaderBehavior>
             </i:Interaction.Behaviors>
-            
-            <Frame x:Name="NavFrame"/>
+
+            <Frame x:Name="NavFrame" Background="Transparent"/>
         </NavigationView>
 
         <views:TrayIconView x:Name="TrayIconView" />

@@ -5,8 +5,11 @@ using EasyTidy.Log;
 using EasyTidy.Model;
 using EasyTidy.Service;
 using EasyTidy.Util;
+using Microsoft.UI.Windowing;
+using Microsoft.UI;
 using Microsoft.Win32;
 using Windows.UI.ViewManagement;
+using WinRT.Interop;
 using WinUIEx;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -39,6 +42,7 @@ public sealed partial class MainWindow : WindowEx
             this.Closed += OnProcessExit;
             SystemEvents.SessionEnding += OnSessionEnding;
         }
+
     }
 
     // this handles updating the caption button colors correctly when indows system theme is changed
