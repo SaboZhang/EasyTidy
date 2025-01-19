@@ -1,5 +1,5 @@
 
-# 更新(测试版本)
+# 更新(大寒)
 
 [更新下载](https://github.com/SaboZhang/EasyTidy/releases)
 
