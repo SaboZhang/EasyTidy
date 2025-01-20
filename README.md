@@ -81,5 +81,3 @@ EasyTidy 是一款功能强大的文件管理软件，致力于自动化处理�
 ## 社区参与
 
 欢迎所有人的反馈和贡献！如果你有任何建议或想要帮忙，请访问我们的 [问题跟踪器](https://github.com/SaboZhang/EasyTidy/issues) 也可通过邮件与我联系<service@luckyits.com> 或者 <tao993859833@Live.cn>
-
-<iframe src="https://sponsor.luckyits.top/" style="overflow-x:hidden;overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;"  frameborder="0" scrolling="no"></iframe>

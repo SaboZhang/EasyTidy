@@ -79,5 +79,3 @@ This project is licensed under the MIT License. However, the **Snap2HTML** snaps
 ## Community Participation
 
 We welcome feedback and contributions from everyone! If you have any suggestions or want to help, please visit our [Issue Tracker](https://github.com/SaboZhang/EasyTidy/issues) or contact us via email at <service@luckyits.com> or <tao993859833@Live.cn>
-
-<iframe src="https://sponsor.luckyits.top/" style="overflow-x:hidden;overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;"  frameborder="0" scrolling="no"></iframe>
