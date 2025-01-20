@@ -87,6 +87,7 @@ public class QuartzHelper
         var jobKey = new JobKey(jobName, groupName);
         if (!await _scheduler.CheckExists(jobKey))
         {
+            LogService.Logger.Warn($"不存在此jobkey:{jobKey}");
             return;
         }
 

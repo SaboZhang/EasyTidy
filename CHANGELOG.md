@@ -14,7 +14,7 @@
 - 修复：任务列表过长时无法完整显示 #69
 
 **网盘新增不包含winui跟.NET的版本，更新程序暂不支持更新不包含winui3AppSDK的版本**
-**网盘中**EasyTidy_1.1.2.0105_win-x64_Lite 版本需要自行安装WindowsAppSDK 跟 .NET8 运行时
+**网盘中**EasyTidy_<版本号>_win-x64_Lite 版本需要自行安装WindowsAppSDK 跟 .NET8 运行时
 新增msi安装包跟单体应用（请在网盘中获取）
 
 **Full Changelog**: <https://github.com/SaboZhang/EasyTidy/compare/1.1.3.0104...1.2.0.0120>
