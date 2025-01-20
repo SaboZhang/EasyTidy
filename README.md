@@ -17,6 +17,8 @@ EasyTidy 是一款功能强大的文件管理软件，致力于自动化处理�
 - **灵活的执行模式**：不仅支持手动操作，还能自动执行。您可以设置延时启动、定时执行或通过 CRON 表达式自定义执行周期，满足不同场景下的文件管理需求。
 - **开源且免费**：完全免费且开源，欢迎大家参与并贡献代码。
 
+**国内镜像网站**：[Gitee](https://gitee.com/tao_SaboZhang/EasyTidy) 可通过网盘进行下载，提供便捷访问渠道。
+
 ### 快速开始
 
 [使用文档](https://easytidy.luckyits.com)
@@ -31,7 +33,7 @@ EasyTidy 是一款功能强大的文件管理软件，致力于自动化处理�
 
 ## 关于 License
 
-本项目整体采用MIT协议进行授权。对于项目中包含的 **Snap2HTML** 快照HTML模板，其单独遵循GPL协议。因此，如果您选择使用 **Snap2HTML** 提供的HTML模板，那么必须同时遵守该模板的GPL协议条款。反之，如果不涉及使用 **Snap2HTML** 的HTML模板，整个项目的使用仅需遵循MIT协议即可。
+本项目整体采用MIT协议进行授权。对于项目中包含的 **Snap2HTML** 快照HTML模板，其单独遵循GPL3协议。因此，如果您选择使用 **Snap2HTML** 提供的HTML模板，那么必须同时遵守该模板的GPL3协议条款。反之，如果不涉及使用 **Snap2HTML** 的HTML模板，整个项目的使用仅需遵循MIT协议即可。
 
 ## 功能列表
 
@@ -79,3 +81,5 @@ EasyTidy 是一款功能强大的文件管理软件，致力于自动化处理�
 ## 社区参与
 
 欢迎所有人的反馈和贡献！如果你有任何建议或想要帮忙，请访问我们的 [问题跟踪器](https://github.com/SaboZhang/EasyTidy/issues) 也可通过邮件与我联系<service@luckyits.com> 或者 <tao993859833@Live.cn>
+
+<iframe src="https://sponsor.luckyits.top/" style="overflow-x:hidden;overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;"  frameborder="0" scrolling="no"></iframe>

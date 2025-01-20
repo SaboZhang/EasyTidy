@@ -512,63 +512,99 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         IsActive = true;
         try
         {
-            if (dataContext != null)
+            if (dataContext is not TaskOrchestrationTable task)
             {
-                var task = dataContext as TaskOrchestrationTable;
-                var delete = await _dbContext.TaskOrchestration
-                    .Include(x => x.GroupName)
-                    .Include(x => x.AutomaticTable)
-                    .Where(x => x.ID == task.ID).FirstOrDefaultAsync();
-                if (delete != null)
-                {
-                    if (delete.AutomaticTable != null)
-                    {
-                        var automaticTable = delete.AutomaticTable;
-                        var scheduleId = automaticTable.Schedule != null ? automaticTable.Schedule.ID : 0;
-                        var schedule = await _dbContext.Schedule.Where(x => x.ID == scheduleId).FirstOrDefaultAsync();
-                        if (schedule != null)
-                        {
-                            _dbContext.Schedule.Remove(schedule);
-                        }
-                        // 检查是否还有其他任务关联同一个 AutomaticTable
-                        var isAutomaticTableInUse = await _dbContext.TaskOrchestration
-                            .AnyAsync(x => x.AutomaticTable.ID == automaticTable.ID && x.ID != delete.ID);
-
-                        if (!isAutomaticTableInUse)
-                        {
-                            _dbContext.Automatic.Remove(automaticTable);
-                        }
-                    }
-                    _dbContext.TaskOrchestration.Remove(delete);
-                    await _dbContext.SaveChangesAsync();
-                    var group = delete.GroupName;
-                    if (group != null)
-                    {
-                        var hasOtherTasks = await _dbContext.TaskOrchestration
-                            .AnyAsync(x => x.GroupName.Id == group.Id);
-                        // 如果没有其他任务，则删除组
-                        if (!hasOtherTasks)
-                        {
-                            _dbContext.TaskGroup.Remove(group);
-                            await _dbContext.SaveChangesAsync();
-                        }
-                    }
-                }
-                await QuartzHelper.DeleteJob(task.TaskName + "#" + task.ID.ToString(), task.GroupName.GroupName);
-                FileEventHandler.StopMonitor(task.TaskSource, task.TaskTarget);
-                await OnPageLoaded();
-                _notificationQueue.ShowWithWindowExtension("DeleteSuccessfulText".GetLocalized(), InfoBarSeverity.Success);
-                _ = ClearNotificationAfterDelay(3000);
+                _notificationQueue.ShowWithWindowExtension("InvalidTaskData".GetLocalized(), InfoBarSeverity.Error);
+                return;
             }
+
+            // 使用事务确保一致性
+            using var transaction = await _dbContext.Database.BeginTransactionAsync();
+
+            var delete = await _dbContext.TaskOrchestration
+                .Include(x => x.GroupName)
+                .Include(x => x.AutomaticTable)
+                .FirstOrDefaultAsync(x => x.ID == task.ID);
+
+            if (delete == null)
+            {
+                _notificationQueue.ShowWithWindowExtension("TaskNotFoundText".GetLocalized(), InfoBarSeverity.Warning);
+                return;
+            }
+
+            await DeleteAssociatedAutomaticTable(delete.AutomaticTable, delete.ID);
+            await DeleteTask(delete);
+            await DeleteEmptyGroup(delete.GroupName);
+
+            await transaction.CommitAsync(); // 提交事务
+
+            // 删除Quartz任务和停止文件监控
+            await DeleteQuartzJob(task);
+            FileEventHandler.StopMonitor(task.TaskSource, task.TaskTarget);
+
+            // 刷新页面并通知用户
+            await OnPageLoaded();
+            _notificationQueue.ShowWithWindowExtension("DeleteSuccessfulText".GetLocalized(), InfoBarSeverity.Success);
+            _ = ClearNotificationAfterDelay(3000);
         }
         catch (Exception ex)
         {
+            Logger.Error($"TaskOrchestrationViewModel: OnDeleteTask 异常信息 {ex}");
             _notificationQueue.ShowWithWindowExtension("DeleteFailedText".GetLocalized(), InfoBarSeverity.Error);
             _ = ClearNotificationAfterDelay(3000);
-            Logger.Error($"TaskOrchestrationViewModel: OnDeleteTask 异常信息 {ex}");
+        }
+        finally
+        {
             IsActive = false;
         }
-        IsActive = false;
+    }
+
+    private async Task DeleteAssociatedAutomaticTable(AutomaticTable automaticTable, int taskId)
+    {
+        if (automaticTable == null) return;
+
+        var scheduleId = automaticTable?.Schedule?.ID;
+        var schedule = await _dbContext.Schedule
+            .FirstOrDefaultAsync(x => x.ID == scheduleId);
+
+        if (schedule != null)
+        {
+            _dbContext.Schedule.Remove(schedule);
+        }
+
+        var isAutomaticTableInUse = await _dbContext.TaskOrchestration
+            .AnyAsync(x => x.AutomaticTable.ID == automaticTable.ID && x.ID != taskId);
+
+        if (!isAutomaticTableInUse)
+        {
+            _dbContext.Automatic.Remove(automaticTable);
+        }
+    }
+
+    private async Task DeleteTask(TaskOrchestrationTable delete)
+    {
+        _dbContext.TaskOrchestration.Remove(delete);
+        await _dbContext.SaveChangesAsync();
+    }
+
+    private async Task DeleteEmptyGroup(TaskGroupTable group)
+    {
+        if (group == null) return;
+
+        var hasOtherTasks = await _dbContext.TaskOrchestration
+            .AnyAsync(x => x.GroupName.Id == group.Id);
+
+        if (!hasOtherTasks)
+        {
+            _dbContext.TaskGroup.Remove(group);
+            await _dbContext.SaveChangesAsync();
+        }
+    }
+
+    private async Task DeleteQuartzJob(TaskOrchestrationTable task)
+    {
+        if (task.GroupName == null) return;
+        await QuartzHelper.DeleteJob(task.TaskName + "#" + task.ID, task.GroupName.GroupName);
     }
 
     /// <summary>

@@ -31,7 +31,7 @@ If you find DropIT's task monitoring insufficient or if File Juggler 3's pricing
 
 ## License
 
-This project is licensed under the MIT License. However, the **Snap2HTML** snapshot HTML template included in the project is separately licensed under the GPL. Therefore, if you choose to use the **Snap2HTML** HTML template, you must also comply with the terms of the GPL license for that template. Conversely, if the **Snap2HTML** HTML template is not used, the entire project is governed solely by the terms of the MIT License.
+This project is licensed under the MIT License. However, the **Snap2HTML** snapshot HTML template included in the project is separately licensed under the GPL3. Therefore, if you choose to use the **Snap2HTML** HTML template, you must also comply with the terms of the GPL3 license for that template. Conversely, if the **Snap2HTML** HTML template is not used, the entire project is governed solely by the terms of the MIT License.
 
 ## Feature List
 
@@ -79,3 +79,5 @@ This project is licensed under the MIT License. However, the **Snap2HTML** snaps
 ## Community Participation
 
 We welcome feedback and contributions from everyone! If you have any suggestions or want to help, please visit our [Issue Tracker](https://github.com/SaboZhang/EasyTidy/issues) or contact us via email at <service@luckyits.com> or <tao993859833@Live.cn>
+
+<iframe src="https://sponsor.luckyits.top/" style="overflow-x:hidden;overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;"  frameborder="0" scrolling="no"></iframe>

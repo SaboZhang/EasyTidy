@@ -708,7 +708,7 @@ public partial class AutomaticViewModel : ObservableRecipient
                 dialog.Rules = task.TaskRule;
                 dialog.OperatingMethod = EnumHelper.GetDisplayName(task.OperationMode);
                 dialog.AutomatedRules = GetExecutionText(task);
-                dialog.FilterId = task.Filter?.Id.ToString() ?? "0";
+                dialog.FilterId = task.Filter?.FilterName ?? string.Empty;
                 var path = task.TaskSource.Equals("DesktopText".GetLocalized())
                     ? Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
                     : task.TaskSource;
