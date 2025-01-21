@@ -17,6 +17,16 @@ EasyTidy is a powerful file management software that automates the organization 
 - **Flexible Execution Modes**: Supports both manual and automatic execution. You can set delayed starts, periodic execution, or define custom schedules using CRON expressions, catering to different file management needs.
 - **Open Source and Free**: Fully open-source and free to use. We welcome contributions and feedback from the community.
 
+## Access
+
+| Overseas | Domestic |
+| :--: | :--: |
+| **[Github](https://github.com/SaboZhang/EasyTidy)** | **[Gitee](https://gitee.com/tao_SaboZhang/EasyTidy)** |
+
+## Installation
+
+Download the latest [Release](https://github.com/SaboZhang/EasyTidy/releases) version and extract it to use.
+
 ### Getting Started
 
 [Documentation](https://easytidy.luckyits.com)
@@ -79,3 +89,11 @@ This project is licensed under the MIT License. However, the **Snap2HTML** snaps
 ## Community Participation
 
 We welcome feedback and contributions from everyone! If you have any suggestions or want to help, please visit our [Issue Tracker](https://github.com/SaboZhang/EasyTidy/issues) or contact us via email at <service@luckyits.com> or <tao993859833@Live.cn>
+
+## Sponsor
+
+If you like it, you can buy the author a cup of coffee.
+
+| 微信 | 支付宝 | PayPal |
+| :--: | :--: | :--: |
+| ![wechcatpay](./image/WeChanQR.png) | ![alipay](./image/AliPayQR.png) | <a href="https://www.paypal.me/EasyTidy" target="_blank"><img align="center" alt="EasyTidy" width="240"  src="./image/paypal.png" /></a> |

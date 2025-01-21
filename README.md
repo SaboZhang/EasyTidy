@@ -17,7 +17,15 @@ EasyTidy 是一款功能强大的文件管理软件，致力于自动化处理�
 - **灵活的执行模式**：不仅支持手动操作，还能自动执行。您可以设置延时启动、定时执行或通过 CRON 表达式自定义执行周期，满足不同场景下的文件管理需求。
 - **开源且免费**：完全免费且开源，欢迎大家参与并贡献代码。
 
-**国内镜像网站**：[Gitee](https://gitee.com/tao_SaboZhang/EasyTidy) 可通过网盘进行下载，提供便捷访问渠道。
+## 访问
+
+| 国外 | 国内 |
+| :--: | :--: |
+| **[Github](https://github.com/SaboZhang/EasyTidy)** | **[Gitee](https://gitee.com/tao_SaboZhang/EasyTidy)** |
+
+## Installation
+
+下载最新版本 [Release](https://github.com/SaboZhang/EasyTidy/releases) 后解压即可使用
 
 ### 快速开始
 
@@ -81,3 +89,11 @@ EasyTidy 是一款功能强大的文件管理软件，致力于自动化处理�
 ## 社区参与
 
 欢迎所有人的反馈和贡献！如果你有任何建议或想要帮忙，请访问我们的 [问题跟踪器](https://github.com/SaboZhang/EasyTidy/issues) 也可通过邮件与我联系<service@luckyits.com> 或者 <tao993859833@Live.cn>
+
+## 打赏
+
+觉得不错的话可以请作者喝杯阔落
+
+| 微信 | 支付宝 | PayPal |
+| :--: | :--: | :--: |
+| ![wechcatpay](./image/WeChanQR.png) | ![alipay](./image/AliPayQR.png) | <a href="https://www.paypal.me/EasyTidy" target="_blank"><img align="center" alt="EasyTidy" width="280"  src="./image/paypal.png" /></a> |

@@ -120,9 +120,9 @@ public partial class FilterUtil
     /// <summary>
     /// 比较日期
     /// </summary>
-    /// <param name="fileDate"></param>
-    /// <param name="filterDate"></param>
-    /// <param name="comparison"></param>
+    /// <param name="fileDate">文件日期</param>
+    /// <param name="filterDate">指定的时间单位转换之后的日期</param>
+    /// <param name="comparison">比较方式</param>
     /// <returns></returns>
     internal static bool CompareDates(DateTime fileDate, ComparisonResult comparison, params DateTime[] filterDates)
     {
@@ -132,11 +132,11 @@ public partial class FilterUtil
         }
         return comparison switch
         {
-            ComparisonResult.GreaterThan => filterDates.All(filterDate => fileDate > filterDate),
-            ComparisonResult.LessThan => filterDates.All(filterDate => fileDate < filterDate),
+            ComparisonResult.GreaterThan => filterDates.All(filterDate => filterDate > fileDate),
+            ComparisonResult.LessThan => filterDates.All(filterDate => filterDate < fileDate),
             ComparisonResult.Equal => filterDates.All(filterDate => fileDate == filterDate),
-            ComparisonResult.Between when filterDates.Length == 2 => fileDate >= filterDates[0] && fileDate <= filterDates[1],
-            ComparisonResult.NotBetween when filterDates.Length == 2 => fileDate < filterDates[0] || fileDate > filterDates[1], // 不在两个日期之间
+            ComparisonResult.Between when filterDates.Length == 2 => filterDates[0] >= fileDate && filterDates[1] <= fileDate,
+            ComparisonResult.NotBetween when filterDates.Length == 2 => filterDates[0] < fileDate || filterDates[1] > fileDate, // 不在两个日期之间
             _ => false,
         };
     }
