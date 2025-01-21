@@ -23,7 +23,7 @@ EasyTidy 是一款功能强大的文件管理软件，致力于自动化处理�
 | :--: | :--: |
 | **[Github](https://github.com/SaboZhang/EasyTidy)** | **[Gitee](https://gitee.com/tao_SaboZhang/EasyTidy)** |
 
-## Installation
+## 安装
 
 下载最新版本 [Release](https://github.com/SaboZhang/EasyTidy/releases) 后解压即可使用
 
