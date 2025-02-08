@@ -1,7 +1,10 @@
-# 更新日志 (大寒)
+# 更新日志 (工作日)
 
+- 新增：winget下载方式 感谢@YU-7
 - 优化：优化任务删除逻辑
 - 修复：修复高级规则的结果与实际不符的情况。
+- 修复：更新程序不生效的BUG #77
+- 修复：最小化启动不生效的BUG #78
 
 ## 版本说明
 
@@ -11,7 +14,7 @@
 
 ## 更新日志详情
 
-- **[Full Changelog](https://github.com/SaboZhang/EasyTidy/compare/1.1.3.0104...1.2.0.0120)**
+- **[Full Changelog](https://github.com/SaboZhang/EasyTidy/compare/1.2.0.0120...1.2.1.208)**
 
 ## 下载链接
 
