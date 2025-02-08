@@ -23,9 +23,9 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
         string year = DateTime.Now.Year.ToString();
-        string datePart = App.CurrentVersion.Substring(App.CurrentVersion.LastIndexOf('.') + 1);
-        string month = datePart.Substring(0, 2);
-        string day = datePart.Substring(2, 2);
+        string datePart = App.CurrentVersion[(App.CurrentVersion.LastIndexOf('.') + 1)..];
+        string month = datePart.Length == 3 ? datePart[0].ToString() : datePart[..2];
+        string day = datePart[^2..];
         VersionText.Text = $"新版本号：v{App.CurrentVersion}\n构建日期：{year}年{month}月{day}日";
         Loaded += MainWindow_Loaded;
 

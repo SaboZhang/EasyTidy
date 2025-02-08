@@ -2,7 +2,7 @@
   "profiles": {
     "EasyTidy.UpdateLauncher": {
       "commandName": "Project",
-      "commandLineArgs": "1.0.3.1119"
+      "commandLineArgs": "1.0.3.219"
     }
   }
 }

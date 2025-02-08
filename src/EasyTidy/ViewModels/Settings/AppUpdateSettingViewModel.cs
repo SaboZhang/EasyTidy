@@ -71,7 +71,7 @@ public partial class AppUpdateSettingViewModel : ObservableObject
                 {
                     IsUpdateAvailable = true;
                     ChangeLog = update.Changelog;
-                    DownloadUrl = update.Assets[0].Url;
+                    DownloadUrl = update.Assets.FirstOrDefault(a => a.Url.EndsWith(".zip", StringComparison.OrdinalIgnoreCase))?.Url ?? "";
                     LoadingStatus = string.Format("FoundANewVersion".GetLocalized(), update.TagName, update.CreatedAt, update.PublishedAt);
                 }
                 else
@@ -116,7 +116,8 @@ public partial class AppUpdateSettingViewModel : ObservableObject
                     LoadingStatus = string.Format("FoundANewVersion".GetLocalized(), update.TagName, update.CreatedAt, update.PublishedAt);
                     App.MainWindow.DispatcherQueue.TryEnqueue(async () =>
                     {
-                        await ShowUpdateDialogAsync(update.Changelog, update.Assets[0].Url);
+                        await ShowUpdateDialogAsync(update.Changelog,
+                            update.Assets.FirstOrDefault(a => a.Url.EndsWith(".zip", StringComparison.OrdinalIgnoreCase))?.Url ?? "");
                     });
                 }
                 else
@@ -285,27 +286,32 @@ public partial class AppUpdateSettingViewModel : ObservableObject
         try
         {
             const string updateFolder = "Update";
+            string basePath = AppDomain.CurrentDomain.BaseDirectory;
+            string updatePath = Path.Combine(basePath, updateFolder);
 
-            string GetPath(string fileName)
-            {
-                return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
-            }
-
-            string GetCachePath(string fileName)
-            {
-                var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, updateFolder, fileName);
-                return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, updateFolder, fileName);
-            }
+            string GetPath(string fileName) => Path.Combine(basePath, fileName);
+            string GetCachePath(string fileName) => Path.Combine(updatePath, fileName);
 
             string[] requiredFiles = ["UpdateLauncher.exe", "update.zip"];
 
             if (requiredFiles.All(file => File.Exists(GetPath(file))))
             {
-                Directory.CreateDirectory(GetPath(updateFolder));
+                Directory.CreateDirectory(updatePath);
 
-                foreach (var file in requiredFiles) File.Copy(GetPath(file), GetCachePath(file), true);
+                // 复制所有文件，确保全部复制完成后再继续
+                foreach (var file in requiredFiles)
+                {
+                    string source = GetPath(file);
+                    string destination = GetCachePath(file);
+                    File.Copy(source, destination, true);
+                }
 
+                // 确保所有文件都已复制后再执行更新
                 CommonUtil.ExecuteProgram(GetCachePath("UpdateLauncher.exe"), [Constants.Version]);
+            }
+            else
+            {
+                Logger.Warn("Missing required update files. Installation aborted.");
             }
         }
         catch (Exception ex)
