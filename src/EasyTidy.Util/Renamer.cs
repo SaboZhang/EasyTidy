@@ -17,6 +17,10 @@ public partial class Renamer
     private const string RSTRING_ALPHA_PARAMETER = "rstringalpha";
     private const string RSTRING_DIGIT_PARAMETER = "rstringdigit";
     private const string RUUIDV4_PARAMETER = "ruuidv4";
+    private const string FOLDER_PARAMETER = "source";
+    private const string PARENT_PARAMETER = "parent";
+    private const string REGEX_PARAMETER = "regex";
+    private const string REPLACE_PARAMETER = "replace";
 
     /// <summary>
     /// 解析模板参数
@@ -38,34 +42,101 @@ public partial class Renamer
         {
             string[] parameters = match.Groups[1].Value.Split(',');
 
-            // 判断不同的模板参数类型并处理
-            if (match.Value.Contains(INCREMENT_PARAMETER) || match.Value.Contains("start") || match.Value.Contains("padding") || match.Value.Equals("${}"))
-            {
-                return ParseIncrement(parameters);
-            }
-            else if (match.Value.Contains(RSTRING_ALNUM_PARAMETER))
-            {
-                return ParseRandom(parameters, "alnum");
-            }
-            else if (match.Value.Contains(RSTRING_ALPHA_PARAMETER))
-            {
-                return ParseRandom(parameters, "alpha");
-            }
-            else if (match.Value.Contains(RSTRING_DIGIT_PARAMETER))
-            {
-                return ParseRandom(parameters, "digit");
-            }
-            else if (match.Value.Contains(RUUIDV4_PARAMETER))
-            {
-                return GenerateUUID();
-            }
-            return match.Value;
+            // 获取处理方法
+            Func<string[], string> templateHandler = GetTemplateHandler(match.Value, source);
+
+            // 执行模板处理
+            return templateHandler != null ? templateHandler(parameters) : match.Value;
         });
 
         // 替换日期模板
         result = ReplaceDateTemplates(result, creationTime);
 
         return File.Exists(source) ? ReplaceFileName(source, result) : result;
+    }
+
+    // 获取模板参数处理方法
+    private static Func<string[], string> GetTemplateHandler(string matchValue, string source)
+    {
+        if (matchValue.Contains(INCREMENT_PARAMETER) || matchValue.Contains("start") || matchValue.Contains("padding") || matchValue.Equals("${}"))
+        {
+            return ParseIncrement;
+        }
+        else if (matchValue.Contains(RSTRING_ALNUM_PARAMETER))
+        {
+            return parameters => ParseRandom(parameters, "alnum");
+        }
+        else if (matchValue.Contains(RSTRING_ALPHA_PARAMETER))
+        {
+            return parameters => ParseRandom(parameters, "alpha");
+        }
+        else if (matchValue.Contains(RSTRING_DIGIT_PARAMETER))
+        {
+            return parameters => ParseRandom(parameters, "digit");
+        }
+        else if (matchValue.Contains(RUUIDV4_PARAMETER))
+        {
+            return _ => GenerateUUID();
+        }
+        else if (matchValue.Contains(PARENT_PARAMETER) || matchValue.Contains(FOLDER_PARAMETER))
+        {
+            return _ => GetFolderNameFromSource(source, matchValue);
+        }
+        else if (matchValue.Contains(REGEX_PARAMETER))
+        {
+            return parameters => RegexReplaceHandler(parameters, source);
+        }
+        else if (matchValue.Contains(REPLACE_PARAMETER))
+        {
+            return parameters => ReplaceHandler(parameters, source);
+        }
+
+        return null; // 如果没有匹配到处理方法，返回null
+    }
+
+    /// <summary>
+    /// 根据传入的 source（文件或目录路径）获取目录名称。
+    /// 如果 source 是目录，则返回其名称；
+    /// 如果 source 是文件，则返回文件所在目录的名称；
+    /// 如果 source 不存在，则返回空字符串。
+    /// </summary>
+    /// <param name="source">文件或目录的完整路径</param>
+    /// <returns>目录名称或空字符串</returns>
+    private static string GetFolderNameFromSource(string source, string matchValue)
+    {
+        if (Directory.Exists(source))
+        {
+            // 获取上一级目录名称
+            if (matchValue.Contains(PARENT_PARAMETER))
+            {
+                return GetParentFolderName(source);
+            }
+            // 其他情况直接返回文件夹名称
+            return new DirectoryInfo(source).Name;
+        }
+        else if (File.Exists(source) && matchValue.Contains(PARENT_PARAMETER))
+        {
+            // source 为文件，获取其所在目录
+            string directory = Path.GetDirectoryName(source);
+            return !string.IsNullOrEmpty(directory) ? new DirectoryInfo(directory).Name : string.Empty;
+        }
+        else if (File.Exists(source) && matchValue.Contains(FOLDER_PARAMETER))
+        {
+            // source 为文件，获取其所在目录
+            string fileName = Path.GetFileNameWithoutExtension(source);
+            return !string.IsNullOrEmpty(fileName) ? fileName : string.Empty;
+        }
+        return string.Empty;
+    }
+
+    private static string GetParentFolderName(string source)
+    {
+        if (Directory.Exists(source))
+        {
+            DirectoryInfo parentDirectory = Directory.GetParent(source);
+            return parentDirectory?.Name ?? string.Empty;
+        }
+        return string.Empty;
     }
 
     /// <summary>
@@ -237,4 +308,62 @@ public partial class Renamer
     /// <returns></returns>
     [GeneratedRegex(@"\$\{(.*?)\}")]
     private static partial Regex TemplateRegex();
+
+    /// <summary>
+    /// 正则替换
+    /// </summary>
+    /// <param name="parameters">解析的参数</param>
+    /// <param name="source">要修改的源文件或者文件夹名称</param>
+    /// <returns></returns>
+    private static string RegexReplaceHandler(string[] parameters, string source)
+    {
+        if (parameters.Length < 2) return string.Empty;
+
+        // 路径预处理
+        source = File.Exists(source) ? Path.GetFileNameWithoutExtension(source)
+               : Directory.Exists(source) ? new DirectoryInfo(source).Name
+               : source;
+
+        string pattern = parameters[0].Replace("regex=", "");
+        string replacement = parameters[1] ?? string.Empty;
+
+        return Regex.Replace(source, pattern, replacement, RegexOptions.Compiled);
+    }
+
+    /// <summary>
+    /// 替换处理
+    /// </summary>
+    /// <param name="parameters">替换参数</param>
+    /// <param name="source">原名称</param>
+    /// <returns></returns>
+    private static string ReplaceHandler(string[] parameters, string source)
+    {
+        if (parameters.Length < 2) return string.Empty;
+
+        // 路径预处理
+        source = File.Exists(source) ? Path.GetFileNameWithoutExtension(source)
+               : Directory.Exists(source) ? new DirectoryInfo(source).Name
+               : source;
+
+        string oldValue = parameters[0].Replace("replace=","");
+        string newValue = parameters[1];
+        bool caseSensitive = parameters.Length > 2 && bool.TryParse(parameters[2], out bool result) && result;
+
+        StringComparison comparison = caseSensitive ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase;
+
+        return ReplaceWithComparison(source, oldValue, newValue, comparison);
+    }
+
+    // 自定义字符串替换，支持大小写敏感控制
+    private static string ReplaceWithComparison(string input, string oldValue, string newValue, StringComparison comparison)
+    {
+        int index = input.IndexOf(oldValue, comparison);
+        if (index < 0)
+        {
+            return input; // 没找到匹配项，返回原始字符串
+        }
+
+        return string.Concat(input.AsSpan(0, index), newValue, input.AsSpan(index + oldValue.Length));
+    }
+
 }
