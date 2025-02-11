@@ -1856,6 +1856,38 @@
           <source>Execute on close</source>
           <target state="new">Execute on close</target>
         </trans-unit>
+        <trans-unit id="ReplaceCheatSheet_ReplaceSource" translate="yes" xml:space="preserve">
+          <source>source file name</source>
+          <target state="new">source file name</target>
+        </trans-unit>
+        <trans-unit id="ReplaceCheatSheet_ReplaceParent" translate="yes" xml:space="preserve">
+          <source>Parent directory name</source>
+          <target state="new">Parent directory name</target>
+        </trans-unit>
+        <trans-unit id="ReplaceCheatSheet_Replace" translate="yes" xml:space="preserve">
+          <source>Replace specified characters case-insensitively</source>
+          <target state="new">Replace specified characters case-insensitively</target>
+        </trans-unit>
+        <trans-unit id="ReplaceCheatSheet_ReplaceIgnoreCase" translate="yes" xml:space="preserve">
+          <source>Replace specified string with case sensitivity</source>
+          <target state="new">Replace specified string with case sensitivity</target>
+        </trans-unit>
+        <trans-unit id="ReplaceCheatSheet_ReplaceDelete" translate="yes" xml:space="preserve">
+          <source>Replace the specified character with an empty character</source>
+          <target state="new">Replace the specified character with an empty character</target>
+        </trans-unit>
+        <trans-unit id="ReplaceCheatSheet_ReplaceRegex" translate="yes" xml:space="preserve">
+          <source>Replace with specific character by regex</source>
+          <target state="new">Replace with specific character by regex</target>
+        </trans-unit>
+        <trans-unit id="ReplaceCheatSheet_ReplaceRegexDelete" translate="yes" xml:space="preserve">
+          <source>Replace the specified characters with spaces using regex</source>
+          <target state="new">Replace the specified characters with spaces using regex</target>
+        </trans-unit>
+        <trans-unit id="ReplaceCheatSheet_Title.Text" translate="yes" xml:space="preserve">
+          <source>Substitute with a regular expression or specified characters</source>
+          <target state="new">Substitute with a regular expression or specified characters</target>
+        </trans-unit>
       </group>
     </body>
   </file>

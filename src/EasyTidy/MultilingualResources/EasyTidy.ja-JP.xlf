@@ -1856,6 +1856,38 @@
           <source>Execute on close</source>
           <target state="translated">閉じると実行する</target>
         </trans-unit>
+        <trans-unit id="ReplaceCheatSheet_ReplaceSource" translate="yes" xml:space="preserve">
+          <source>source file name</source>
+          <target state="translated">ソースファイル名</target>
+        </trans-unit>
+        <trans-unit id="ReplaceCheatSheet_ReplaceParent" translate="yes" xml:space="preserve">
+          <source>Parent directory name</source>
+          <target state="translated">親ディレクトリ名</target>
+        </trans-unit>
+        <trans-unit id="ReplaceCheatSheet_Replace" translate="yes" xml:space="preserve">
+          <source>Replace specified characters case-insensitively</source>
+          <target state="translated">指定された文字を大文字小文字に関係なく置き換えます</target>
+        </trans-unit>
+        <trans-unit id="ReplaceCheatSheet_ReplaceIgnoreCase" translate="yes" xml:space="preserve">
+          <source>Replace specified string with case sensitivity</source>
+          <target state="translated">指定した文字列を大文字小文字を区別して置換する</target>
+        </trans-unit>
+        <trans-unit id="ReplaceCheatSheet_ReplaceDelete" translate="yes" xml:space="preserve">
+          <source>Replace the specified character with an empty character</source>
+          <target state="translated">指定された文字を空文字に置換する</target>
+        </trans-unit>
+        <trans-unit id="ReplaceCheatSheet_ReplaceRegex" translate="yes" xml:space="preserve">
+          <source>Replace with specific character by regex</source>
+          <target state="translated">正規表現で特定の文字に置き換える</target>
+        </trans-unit>
+        <trans-unit id="ReplaceCheatSheet_ReplaceRegexDelete" translate="yes" xml:space="preserve">
+          <source>Replace the specified characters with spaces using regex</source>
+          <target state="translated">正規表現を使用して指定された文字をスペースに置き換える</target>
+        </trans-unit>
+        <trans-unit id="ReplaceCheatSheet_Title.Text" translate="yes" xml:space="preserve">
+          <source>Substitute with a regular expression or specified characters</source>
+          <target state="translated">正規表現または指定された文字で置換します</target>
+        </trans-unit>
       </group>
     </body>
   </file>

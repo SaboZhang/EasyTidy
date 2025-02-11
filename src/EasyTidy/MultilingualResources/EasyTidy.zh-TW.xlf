@@ -1856,6 +1856,38 @@
           <source>Execute on close</source>
           <target state="translated">關閉時執行</target>
         </trans-unit>
+        <trans-unit id="ReplaceCheatSheet_ReplaceSource" translate="yes" xml:space="preserve">
+          <source>source file name</source>
+          <target state="translated">原始檔案名稱</target>
+        </trans-unit>
+        <trans-unit id="ReplaceCheatSheet_ReplaceParent" translate="yes" xml:space="preserve">
+          <source>Parent directory name</source>
+          <target state="translated">上級目錄名稱</target>
+        </trans-unit>
+        <trans-unit id="ReplaceCheatSheet_Replace" translate="yes" xml:space="preserve">
+          <source>Replace specified characters case-insensitively</source>
+          <target state="translated">取代指定字串不分大小寫</target>
+        </trans-unit>
+        <trans-unit id="ReplaceCheatSheet_ReplaceIgnoreCase" translate="yes" xml:space="preserve">
+          <source>Replace specified string with case sensitivity</source>
+          <target state="translated">替換指定字串區分大小寫</target>
+        </trans-unit>
+        <trans-unit id="ReplaceCheatSheet_ReplaceDelete" translate="yes" xml:space="preserve">
+          <source>Replace the specified character with an empty character</source>
+          <target state="translated">替換指定字串為空</target>
+        </trans-unit>
+        <trans-unit id="ReplaceCheatSheet_ReplaceRegex" translate="yes" xml:space="preserve">
+          <source>Replace with specific character by regex</source>
+          <target state="translated">使用正则替换为指定字符串</target>
+        </trans-unit>
+        <trans-unit id="ReplaceCheatSheet_ReplaceRegexDelete" translate="yes" xml:space="preserve">
+          <source>Replace the specified characters with spaces using regex</source>
+          <target state="translated">以正規取代為空字元</target>
+        </trans-unit>
+        <trans-unit id="ReplaceCheatSheet_Title.Text" translate="yes" xml:space="preserve">
+          <source>Substitute with a regular expression or specified characters</source>
+          <target state="translated">使用正則表達式或者指定字符替換</target>
+        </trans-unit>
       </group>
     </body>
   </file>

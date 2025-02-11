@@ -958,13 +958,13 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         RandomizerModel.Add(new PatternSnippetModel("${ruuidv4}", "RandomizerCheatSheet_Uuid".GetLocalized()));
 
         // 初始化替换方式
-        ReplaceModel.Add(new PatternSnippetModel("${source}", "ReplaceCheatSheet_ReplaceSource"));
-        ReplaceModel.Add(new PatternSnippetModel("${parent}", "ReplaceCheatSheet_ReplaceParent"));
-        ReplaceModel.Add(new PatternSnippetModel("${replace=old,new,false}", "ReplaceCheatSheet_Replace"));
-        ReplaceModel.Add(new PatternSnippetModel("${replace=old,new,true}", "ReplaceCheatSheet_ReplaceIgnoreCase"));
-        ReplaceModel.Add(new PatternSnippetModel("${replace=old,,false}", "ReplaceCheatSheet_ReplaceDelete"));
-        ReplaceModel.Add(new PatternSnippetModel("${regex=^foo,new}", "ReplaceCheatSheet_ReplaceRegex"));
-        ReplaceModel.Add(new PatternSnippetModel("${regex=^foo,}", "ReplaceCheatSheet_ReplaceRegexDelete"));
+        ReplaceModel.Add(new PatternSnippetModel("${source}", "ReplaceCheatSheet_ReplaceSource".GetLocalized()));
+        ReplaceModel.Add(new PatternSnippetModel("${parent}", "ReplaceCheatSheet_ReplaceParent".GetLocalized()));
+        ReplaceModel.Add(new PatternSnippetModel("${replace=old,new,false}", "ReplaceCheatSheet_Replace".GetLocalized()));
+        ReplaceModel.Add(new PatternSnippetModel("${replace=old,new,true}", "ReplaceCheatSheet_ReplaceIgnoreCase".GetLocalized()));
+        ReplaceModel.Add(new PatternSnippetModel("${replace=old,,false}", "ReplaceCheatSheet_ReplaceDelete".GetLocalized()));
+        ReplaceModel.Add(new PatternSnippetModel("${regex=^foo,new}", "ReplaceCheatSheet_ReplaceRegex".GetLocalized()));
+        ReplaceModel.Add(new PatternSnippetModel("${regex=^foo,}", "ReplaceCheatSheet_ReplaceRegexDelete".GetLocalized()));
     }
 
     private async Task ClearNotificationAfterDelay(int delayMilliseconds)
