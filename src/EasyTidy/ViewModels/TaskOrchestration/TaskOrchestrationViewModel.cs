@@ -32,6 +32,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         DateTimeModel = new ObservableCollection<PatternSnippetModel>();
         CounterModel = new ObservableCollection<PatternSnippetModel>();
         RandomizerModel = new ObservableCollection<PatternSnippetModel>();
+        ReplaceModel = new ObservableCollection<PatternSnippetModel>();
         InitializeRenameModel();
     }
 
@@ -95,6 +96,9 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
 
     [ObservableProperty]
     public ObservableCollection<PatternSnippetModel> _randomizerModel;
+
+    [ObservableProperty]
+    public ObservableCollection<PatternSnippetModel> _replaceModel;
 
     [ObservableProperty]
     private bool _isExecuting = false;
@@ -261,7 +265,8 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
     {
         return DateTimeModel.Select(x => x.Code)
             .Concat(CounterModel.Select(x => x.Code))
-            .Concat(RandomizerModel.Select(x => x.Code));
+            .Concat(RandomizerModel.Select(x => x.Code))
+            .Concat(ReplaceModel.Select(x => x.Code));
     }
 
     // 判断 sourcePath 是否为桌面路径
@@ -951,6 +956,15 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         RandomizerModel.Add(new PatternSnippetModel("${rstringalpha=13}", "RandomizerCheatSheet_Alpha".GetLocalized()));
         RandomizerModel.Add(new PatternSnippetModel("${rstringdigit=36}", "RandomizerCheatSheet_Digit".GetLocalized()));
         RandomizerModel.Add(new PatternSnippetModel("${ruuidv4}", "RandomizerCheatSheet_Uuid".GetLocalized()));
+
+        // 初始化替换方式
+        ReplaceModel.Add(new PatternSnippetModel("${source}", "ReplaceCheatSheet_ReplaceSource".GetLocalized()));
+        ReplaceModel.Add(new PatternSnippetModel("${parent}", "ReplaceCheatSheet_ReplaceParent".GetLocalized()));
+        ReplaceModel.Add(new PatternSnippetModel("${replace=old,new,false}", "ReplaceCheatSheet_Replace".GetLocalized()));
+        ReplaceModel.Add(new PatternSnippetModel("${replace=old,new,true}", "ReplaceCheatSheet_ReplaceIgnoreCase".GetLocalized()));
+        ReplaceModel.Add(new PatternSnippetModel("${replace=old,,false}", "ReplaceCheatSheet_ReplaceDelete".GetLocalized()));
+        ReplaceModel.Add(new PatternSnippetModel("${regex=^foo,new}", "ReplaceCheatSheet_ReplaceRegex".GetLocalized()));
+        ReplaceModel.Add(new PatternSnippetModel("${regex=^foo,}", "ReplaceCheatSheet_ReplaceRegexDelete".GetLocalized()));
     }
 
     private async Task ClearNotificationAfterDelay(int delayMilliseconds)

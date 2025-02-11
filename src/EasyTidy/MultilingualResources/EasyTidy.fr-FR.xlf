@@ -1856,6 +1856,38 @@
           <source>Execute on close</source>
           <target state="translated">Exécuter à la fermeture</target>
         </trans-unit>
+        <trans-unit id="ReplaceCheatSheet_ReplaceSource" translate="yes" xml:space="preserve">
+          <source>source file name</source>
+          <target state="translated">Nom du fichier d'origine</target>
+        </trans-unit>
+        <trans-unit id="ReplaceCheatSheet_ReplaceParent" translate="yes" xml:space="preserve">
+          <source>Parent directory name</source>
+          <target state="translated">Nom du répertoire parent</target>
+        </trans-unit>
+        <trans-unit id="ReplaceCheatSheet_Replace" translate="yes" xml:space="preserve">
+          <source>Replace specified characters case-insensitively</source>
+          <target state="translated">Remplacer indifféremment les caractères spécifiés par des minuscules ou des majuscules</target>
+        </trans-unit>
+        <trans-unit id="ReplaceCheatSheet_ReplaceIgnoreCase" translate="yes" xml:space="preserve">
+          <source>Replace specified string with case sensitivity</source>
+          <target state="translated">Remplacer la chaîne spécifiée avec la sensibilité à la casse</target>
+        </trans-unit>
+        <trans-unit id="ReplaceCheatSheet_ReplaceDelete" translate="yes" xml:space="preserve">
+          <source>Replace the specified character with an empty character</source>
+          <target state="translated">Remplacer le caractère spécifié par un caractère vide</target>
+        </trans-unit>
+        <trans-unit id="ReplaceCheatSheet_ReplaceRegex" translate="yes" xml:space="preserve">
+          <source>Replace with specific character by regex</source>
+          <target state="translated">Remplacer par un caractère spécifique par regex</target>
+        </trans-unit>
+        <trans-unit id="ReplaceCheatSheet_ReplaceRegexDelete" translate="yes" xml:space="preserve">
+          <source>Replace the specified characters with spaces using regex</source>
+          <target state="translated">Remplacer les caractères spécifiés par des espaces en utilisant regex</target>
+        </trans-unit>
+        <trans-unit id="ReplaceCheatSheet_Title.Text" translate="yes" xml:space="preserve">
+          <source>Substitute with a regular expression or specified characters</source>
+          <target state="translated">Substituer par une expression régulière ou des caractères spécifiés</target>
+        </trans-unit>
       </group>
     </body>
   </file>

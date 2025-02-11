@@ -1357,4 +1357,28 @@
   <data name="ShutdownExecution_Text" xml:space="preserve">
     <value>Exécuter à la fermeture</value>
   </data>
+  <data name="ReplaceCheatSheet_ReplaceSource" xml:space="preserve">
+    <value>Nom du fichier d'origine</value>
+  </data>
+  <data name="ReplaceCheatSheet_ReplaceParent" xml:space="preserve">
+    <value>Nom du répertoire parent</value>
+  </data>
+  <data name="ReplaceCheatSheet_Replace" xml:space="preserve">
+    <value>Remplacer indifféremment les caractères spécifiés par des minuscules ou des majuscules</value>
+  </data>
+  <data name="ReplaceCheatSheet_ReplaceIgnoreCase" xml:space="preserve">
+    <value>Remplacer la chaîne spécifiée avec la sensibilité à la casse</value>
+  </data>
+  <data name="ReplaceCheatSheet_ReplaceDelete" xml:space="preserve">
+    <value>Remplacer le caractère spécifié par un caractère vide</value>
+  </data>
+  <data name="ReplaceCheatSheet_ReplaceRegex" xml:space="preserve">
+    <value>Remplacer par un caractère spécifique par regex</value>
+  </data>
+  <data name="ReplaceCheatSheet_ReplaceRegexDelete" xml:space="preserve">
+    <value>Remplacer les caractères spécifiés par des espaces en utilisant regex</value>
+  </data>
+  <data name="ReplaceCheatSheet_Title.Text" xml:space="preserve">
+    <value>Substituer par une expression régulière ou des caractères spécifiés</value>
+  </data>
 </root>

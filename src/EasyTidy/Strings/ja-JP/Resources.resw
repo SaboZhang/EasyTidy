@@ -1357,4 +1357,28 @@
   <data name="ShutdownExecution_Text" xml:space="preserve">
     <value>閉じると実行する</value>
   </data>
+  <data name="ReplaceCheatSheet_ReplaceSource" xml:space="preserve">
+    <value>ソースファイル名</value>
+  </data>
+  <data name="ReplaceCheatSheet_ReplaceParent" xml:space="preserve">
+    <value>親ディレクトリ名</value>
+  </data>
+  <data name="ReplaceCheatSheet_Replace" xml:space="preserve">
+    <value>指定された文字を大文字小文字に関係なく置き換えます</value>
+  </data>
+  <data name="ReplaceCheatSheet_ReplaceIgnoreCase" xml:space="preserve">
+    <value>指定した文字列を大文字小文字を区別して置換する</value>
+  </data>
+  <data name="ReplaceCheatSheet_ReplaceDelete" xml:space="preserve">
+    <value>指定された文字を空文字に置換する</value>
+  </data>
+  <data name="ReplaceCheatSheet_ReplaceRegex" xml:space="preserve">
+    <value>正規表現で特定の文字に置き換える</value>
+  </data>
+  <data name="ReplaceCheatSheet_ReplaceRegexDelete" xml:space="preserve">
+    <value>正規表現を使用して指定された文字をスペースに置き換える</value>
+  </data>
+  <data name="ReplaceCheatSheet_Title.Text" xml:space="preserve">
+    <value>正規表現または指定された文字で置換します</value>
+  </data>
 </root>

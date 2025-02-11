@@ -1494,4 +1494,28 @@
   <data name="ShutdownExecution_Text" xml:space="preserve">
     <value>Execute on close</value>
   </data>
+  <data name="ReplaceCheatSheet_ReplaceSource" xml:space="preserve">
+    <value>source file name</value>
+  </data>
+  <data name="ReplaceCheatSheet_ReplaceParent" xml:space="preserve">
+    <value>Parent directory name</value>
+  </data>
+  <data name="ReplaceCheatSheet_Replace" xml:space="preserve">
+    <value>Replace specified characters case-insensitively</value>
+  </data>
+  <data name="ReplaceCheatSheet_ReplaceIgnoreCase" xml:space="preserve">
+    <value>Replace specified string with case sensitivity</value>
+  </data>
+  <data name="ReplaceCheatSheet_ReplaceDelete" xml:space="preserve">
+    <value>Replace the specified character with an empty character</value>
+  </data>
+  <data name="ReplaceCheatSheet_ReplaceRegex" xml:space="preserve">
+    <value>Replace with specific character by regex</value>
+  </data>
+  <data name="ReplaceCheatSheet_ReplaceRegexDelete" xml:space="preserve">
+    <value>Replace the specified characters with spaces using regex</value>
+  </data>
+  <data name="ReplaceCheatSheet_Title.Text" xml:space="preserve">
+    <value>Substitute with a regular expression or specified characters</value>
+  </data>
 </root>

@@ -1354,4 +1354,28 @@
   <data name="ShutdownExecution_Text" xml:space="preserve">
     <value>關閉時執行</value>
   </data>
+  <data name="ReplaceCheatSheet_ReplaceSource" xml:space="preserve">
+    <value>原始檔案名稱</value>
+  </data>
+  <data name="ReplaceCheatSheet_ReplaceParent" xml:space="preserve">
+    <value>上級目錄名稱</value>
+  </data>
+  <data name="ReplaceCheatSheet_Replace" xml:space="preserve">
+    <value>取代指定字串不分大小寫</value>
+  </data>
+  <data name="ReplaceCheatSheet_ReplaceIgnoreCase" xml:space="preserve">
+    <value>替換指定字串區分大小寫</value>
+  </data>
+  <data name="ReplaceCheatSheet_ReplaceDelete" xml:space="preserve">
+    <value>替換指定字串為空</value>
+  </data>
+  <data name="ReplaceCheatSheet_ReplaceRegex" xml:space="preserve">
+    <value>使用正则替换为指定字符串</value>
+  </data>
+  <data name="ReplaceCheatSheet_ReplaceRegexDelete" xml:space="preserve">
+    <value>以正規取代為空字元</value>
+  </data>
+  <data name="ReplaceCheatSheet_Title.Text" xml:space="preserve">
+    <value>使用正則表達式或者指定字符替換</value>
+  </data>
 </root>
