@@ -91,7 +91,7 @@
                                   SelectionMode="Single"
                                   DragItemsStarting="ListView_DragItemsStarting"
                                   ContainerContentChanging="TaskListView_ContainerContentChanging"
-                                  Height="600">
+                                  MinHeight="400">
                                     <ListView.Header>
                                         <Grid Padding="16,12"
                                       ColumnSpacing="16">
