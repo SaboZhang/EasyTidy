@@ -9,73 +9,13 @@ if ([string]::IsNullOrEmpty($version)) {
     exit
 }
 
-# 查找符合条件的目录
-$baseDir = "src\EasyTidy\bin\x64\Release"
-$matchedDir = Get-ChildItem -Path $baseDir -Directory -Filter "net*-windows*" | Select-Object -First 1
-
-if ($matchedDir -eq $null) {
-    Write-Error "No matching directory found in $baseDir."
-    exit
-}
-
-$sourceDir = Join-Path -Path $matchedDir.FullName -ChildPath "win-x64"
-$targetDir = $matchedDir.FullName
-
-# 重命名目录
-if (Test-Path -Path $sourceDir) {
-    Rename-Item -Path $sourceDir -NewName "EasyTidy"
-}
-
-# 检查并删除发布目录
-function CheckAndDeletePublishDir($publishDir) {
-    if (Test-Path $publishDir) {
-		Write-Host ""
-		Write-Host "[Cache] Starting clear."
-		Write-Host "========================================"
-		Write-Host "[Cache] Deleting existing publish directory $publishDir..."
-		Write-Host "========================================"
-        try {
-            Remove-Item -Path $publishDir -Recurse -Force
-			Write-Host ""
-			Write-Host "========================================"
-            Write-Host "[Cache] Deleted $publishDir successfully."
-			Write-Host "========================================"
-        } catch {
-			Write-Host ""
-			Write-Host "========================================"
-            Write-Host "[Cache] Failed to delete $publishDir. Stopping script."
-			Write-Host "========================================"
-            exit
-        }
-    } else {
-		Write-Host ""
-		Write-Host "========================================"
-		Write-Host "[Cache] $publishDir not existing."
-		Write-Host "========================================"
-	}
-}
-
-# 将相对发布目录路径转换为绝对路径
-$publishDirAbsolute = [System.IO.Path]::GetFullPath("publish")
-
-CheckAndDeletePublishDir $publishDirAbsolute
-
-# 重新创建 publish
-if (!(Test-Path -Path ./publish)) {
-    New-Item -ItemType Directory -Path ./publish
-}
-
-Copy-Item -Path ./run.bat -Destination ./publish/run.bat
-
-Copy-Item -Path "$targetDir\EasyTidy" -Destination ./publish -Recurse
-
-Copy-Item -Path ./update/UpdateLauncher.exe -Destination ./publish/EasyTidy/UpdateLauncher.exe
+Copy-Item -Path ./run.bat -Destination ./Output/run.bat
 
 # 使用7-Zip创建ZIP文件
-& 7z a -tzip "EasyTidy_${version}_win-x64.zip" ./publish/*
+& 7z a -tzip "EasyTidy_${version}_win-x64.zip" ./Output/*
 
 # 使用7-Zip创建7z文件
-& 7z a -t7z "EasyTidy_${version}_win-x64_7z.7z" ./publish/*
+& 7z a -t7z "EasyTidy_${version}_win-x64_7z.7z" ./Output/*
 
 # 使用7-Zip计算SHA256哈希值
 & 7z h -scrcsha256 "EasyTidy_${version}_win-x64.zip" "EasyTidy_${version}_win-x64_7z.7z" | Out-File "EasyTidy_${version}_win-x64_sha256.txt"
