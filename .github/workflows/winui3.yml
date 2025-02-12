@@ -56,7 +56,7 @@ jobs:
     # Create the app by building and publishing the project
     - name: Create the app
       run: |
-        msbuild $env:Solution_Name /t:Publish /p:Configuration=$env:Configuration /p:Platform=$env:Platform /p:DebugType=None  /p:PublishDir="..\Output\EasyTidy\"
+        msbuild $env:Solution_Name /t:Publish /p:Configuration=$env:Configuration /p:Platform=$env:Platform /p:DebugType=None  /p:PublishDir="..\..\Output\EasyTidy\"
       env:
         Configuration: ${{ matrix.configuration }}
         Platform: ${{ matrix.platform }}
