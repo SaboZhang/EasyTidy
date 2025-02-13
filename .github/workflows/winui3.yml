@@ -66,6 +66,7 @@ jobs:
     # Upload the app
     - name: Upload app
       run: |
+        .\publish.ps1
         .\7z.ps1 ${{ github.ref_name }}
 
     - name: Release

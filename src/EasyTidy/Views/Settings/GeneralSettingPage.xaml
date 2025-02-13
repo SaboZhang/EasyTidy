@@ -120,17 +120,31 @@
                         </ctk:SettingsCard.HeaderIcon>
                         <ToggleSwitch IsOn="{x:Bind ViewModel.IsStartup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </ctk:SettingsCard>
+                    <ctk:SettingsCard x:Uid="GeneralMinimizeCard">
+                        <ctk:SettingsCard.HeaderIcon>
+                            <FontIcon Glyph="&#xEE47;"/>
+                        </ctk:SettingsCard.HeaderIcon>
+                        <ToggleSwitch IsOn="{x:Bind ViewModel.Minimize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </ctk:SettingsCard>
                     <ctk:SettingsCard x:Uid="GeneralCheckCard">
                         <ctk:SettingsCard.HeaderIcon>
                             <FontIcon Glyph="&#xECC5;"/>
                         </ctk:SettingsCard.HeaderIcon>
                         <ToggleSwitch IsOn="{x:Bind ViewModel.IsStartupCheck, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </ctk:SettingsCard>
-                    <ctk:SettingsCard x:Uid="GeneralMinimizeCard">
+                    <ctk:SettingsCard x:Uid="GeneralCheckCard">
                         <ctk:SettingsCard.HeaderIcon>
-                            <FontIcon Glyph="&#xEE47;"/>
+                            <FontIcon Glyph="&#xE709;"/>
                         </ctk:SettingsCard.HeaderIcon>
-                        <ToggleSwitch IsOn="{x:Bind ViewModel.Minimize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <StackPanel Orientation="Horizontal"
+                                    Spacing="8">
+                            <TextBlock Margin="0,8,0,0" Text="更新代理:"/>
+                            <TextBox
+                                MinWidth="240"
+                                MaxWidth="320"
+                                Text="{x:Bind ViewModel.ProxyAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <ToggleSwitch IsOn="{x:Bind ViewModel.IsUseProxy, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
                     </ctk:SettingsCard>
                     <ctk:SettingsCard x:Uid="GeneralMultipleInstanceCard">
                         <ctk:SettingsCard.HeaderIcon>

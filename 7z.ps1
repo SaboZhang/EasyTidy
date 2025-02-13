@@ -11,6 +11,8 @@ if ([string]::IsNullOrEmpty($version)) {
 
 Copy-Item -Path ./run.bat -Destination ./Output/run.bat
 
+Copy-Item -Path ./update/UpdateLauncher.exe -Destination ./Output/EasyTidy/UpdateLauncher.exe -Force
+
 # 使用7-Zip创建ZIP文件
 & 7z a -tzip "EasyTidy_${version}_win-x64.zip" ./Output/*
 

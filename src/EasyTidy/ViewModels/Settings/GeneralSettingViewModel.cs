@@ -236,6 +236,46 @@ public partial class GeneralSettingViewModel : ObservableObject
             }
         }
     }
+
+    private bool? _isUseProxy;
+
+    public bool IsUseProxy
+    {
+        get
+        {
+            return (bool)(_isUseProxy ?? CurConfig.IsUseProxy);
+        }
+
+        set
+        {
+            if (_isUseProxy != value)
+            {
+                _isUseProxy = value;
+                CurConfig.IsUseProxy = value;
+                NotifyPropertyChanged();
+            }
+        }
+    }
+
+    private string _proxyAddress;
+
+    public string ProxyAddress
+    {
+        get
+        {
+            return _proxyAddress = CurConfig.ProxyAddress;
+        }
+        set
+        {
+            if (_proxyAddress != value)
+            {
+                _proxyAddress = value;
+                CurConfig.ProxyAddress = value;
+                NotifyPropertyChanged();
+            }
+        }
+    }
+    
     /// <summary>
     ///     是否开机启动
     /// </summary>

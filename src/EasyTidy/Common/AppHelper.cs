@@ -10,7 +10,7 @@ public static partial class AppHelper
 {
     public static AppConfig Settings = JsonSettings.Configure<AppConfig>()
                                .WithRecovery(RecoveryAction.RenameAndLoadDefault)
-                               .WithVersioning(VersioningResultAction.RenameAndLoadDefault)
+                               .WithVersioning(VersioningResultAction.DoNothing)
                                .LoadNow()
                                .EnableAutosave();
 
@@ -40,6 +40,8 @@ public static partial class AppHelper
         Settings.GeneralConfig.SubFolder = viewModel.SubFolder;
         Settings.GeneralConfig.IsStartup = viewModel.IsStartup;
         Settings.GeneralConfig.IsStartupCheck = viewModel.IsStartupCheck;
+        Settings.GeneralConfig.IsUseProxy = viewModel.IsUseProxy;
+        Settings.GeneralConfig.ProxyAddress = viewModel.ProxyAddress;
         Settings.GeneralConfig.FileOperationType = viewModel.OperationType;
         Settings.GeneralConfig.EmptyFiles = viewModel.EmptyFiles;
         Settings.GeneralConfig.HiddenFiles = viewModel.HiddenFiles;
