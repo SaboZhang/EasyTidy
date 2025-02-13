@@ -1,6 +1,11 @@
-﻿using EasyTidy.Service;
+﻿using EasyTidy.Common.Extensions;
+using EasyTidy.Model;
+using EasyTidy.Service;
 using H.NotifyIcon;
+using Microsoft.UI.Composition.SystemBackdrops;
+using Microsoft.UI.Xaml.Media;
 using System.Diagnostics;
+using WinUIEx;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -16,9 +21,12 @@ public sealed partial class TrayIconView : UserControl
     [ObservableProperty]
     private bool _isWindowVisible;
 
+    public MainViewModel ViewModel { get; }
+
     public TrayIconView()
     {
         InitializeComponent();
+        ViewModel = App.GetService<MainViewModel>();
     }
 
     [RelayCommand]
@@ -39,21 +47,23 @@ public sealed partial class TrayIconView : UserControl
     [RelayCommand]
     private void ShowHideWindow()
     {
-        var window = App.MainWindow;
-        if (window == null)
+        // 如果窗口已经关闭，则重新创建
+        if (App.ChildWindow == null || App.ChildWindow.IsClosed())
         {
-            return;
+            App.ChildWindow = new WindowEx(); // 重新创建窗口
         }
-
-        if (window.Visible)
-        {
-            window.Hide();
-        }
-        else
-        {
-            window.Show();
-        }
-        IsWindowVisible = window.Visible;
+        App.ChildWindow.Title = "子窗口标题";
+        App.ChildWindow.ExtendsContentIntoTitleBar = true;
+        var childWindow = App.ChildWindow;
+        var subPage = new MainPage();
+        childWindow.Content = subPage; // 使用你的自定义控件作为窗口内容
+        childWindow.MaxHeight = 340;
+        childWindow.MaxWidth = 300;
+        childWindow.MoveAndResize(1800, 900, 300, 340);
+        childWindow.IsMaximizable = false;
+        childWindow.SystemBackdrop = new MicaBackdrop() { Kind = MicaKind.Base };
+        childWindow.SetRequestedTheme(ViewModel.ThemeSelectorService.Theme);
+        childWindow.Activate();
     }
 
     /// <summary>

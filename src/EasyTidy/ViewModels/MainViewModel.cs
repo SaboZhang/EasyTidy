@@ -12,6 +12,9 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty]
     private object? selected;
 
+    [ObservableProperty]
+    private IThemeSelectorService _themeSelectorService;
+
     public INavigationService NavigationService
     {
         get;
@@ -24,6 +27,7 @@ public partial class MainViewModel : ObservableObject
     public MainViewModel()
     {
         _dbContext = App.GetService<AppDbContext>();
+        _themeSelectorService = App.GetService<IThemeSelectorService>();
     }
 
     public void OnAutoSuggestBoxTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)

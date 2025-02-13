@@ -132,13 +132,13 @@
                         </ctk:SettingsCard.HeaderIcon>
                         <ToggleSwitch IsOn="{x:Bind ViewModel.IsStartupCheck, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </ctk:SettingsCard>
-                    <ctk:SettingsCard x:Uid="GeneralCheckCard">
+                    <ctk:SettingsCard x:Uid="GeneralProxyCard">
                         <ctk:SettingsCard.HeaderIcon>
                             <FontIcon Glyph="&#xE709;"/>
                         </ctk:SettingsCard.HeaderIcon>
                         <StackPanel Orientation="Horizontal"
                                     Spacing="8">
-                            <TextBlock Margin="0,8,0,0" Text="更新代理:"/>
+                            <TextBlock Margin="0,8,0,0" x:Uid="UpdateProxy"/>
                             <TextBox
                                 MinWidth="240"
                                 MaxWidth="320"

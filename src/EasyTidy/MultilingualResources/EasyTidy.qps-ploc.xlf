@@ -1888,6 +1888,26 @@
           <source>Substitute with a regular expression or specified characters</source>
           <target state="new">Substitute with a regular expression or specified characters</target>
         </trans-unit>
+        <trans-unit id="GeneralProxyCard.Description" translate="yes" xml:space="preserve">
+          <source>Set whether to enable the mirror during updates and the custom mirror address</source>
+          <target state="new">Set whether to enable the mirror during updates and the custom mirror address</target>
+        </trans-unit>
+        <trans-unit id="GeneralProxyCard.Header" translate="yes" xml:space="preserve">
+          <source>Set up update mirror</source>
+          <target state="new">Set up update mirror</target>
+        </trans-unit>
+        <trans-unit id="UpdateProxy.Text" translate="yes" xml:space="preserve">
+          <source>Update Proxy:</source>
+          <target state="new">Update Proxy:</target>
+        </trans-unit>
+        <trans-unit id="DefaultTask.Text" translate="yes" xml:space="preserve">
+          <source>Default Task:</source>
+          <target state="new">Default Task:</target>
+        </trans-unit>
+        <trans-unit id="FileDragAndDrop.Text" translate="yes" xml:space="preserve">
+          <source>Drag the file here to execute automatically</source>
+          <target state="new">Drag the file here to execute automatically</target>
+        </trans-unit>
       </group>
     </body>
   </file>

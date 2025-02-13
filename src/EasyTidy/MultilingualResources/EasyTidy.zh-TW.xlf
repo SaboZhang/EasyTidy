@@ -1888,6 +1888,26 @@
           <source>Substitute with a regular expression or specified characters</source>
           <target state="translated">使用正則表達式或者指定字符替換</target>
         </trans-unit>
+        <trans-unit id="GeneralProxyCard.Description" translate="yes" xml:space="preserve">
+          <source>Set whether to enable the mirror during updates and the custom mirror address</source>
+          <target state="translated">設定是否在更新時啟用鏡像及自定義鏡像地址</target>
+        </trans-unit>
+        <trans-unit id="GeneralProxyCard.Header" translate="yes" xml:space="preserve">
+          <source>Set up update mirror</source>
+          <target state="translated">設定更新鏡像</target>
+        </trans-unit>
+        <trans-unit id="UpdateProxy.Text" translate="yes" xml:space="preserve">
+          <source>Update Proxy:</source>
+          <target state="translated">更新代理:</target>
+        </trans-unit>
+        <trans-unit id="DefaultTask.Text" translate="yes" xml:space="preserve">
+          <source>Default Task:</source>
+          <target state="translated">默認任務:</target>
+        </trans-unit>
+        <trans-unit id="FileDragAndDrop.Text" translate="yes" xml:space="preserve">
+          <source>Drag the file here to execute automatically</source>
+          <target state="translated">將文件拖曳至此處自動執行</target>
+        </trans-unit>
       </group>
     </body>
   </file>

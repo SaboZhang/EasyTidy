@@ -1518,4 +1518,19 @@
   <data name="ReplaceCheatSheet_Title.Text" xml:space="preserve">
     <value>Substitute with a regular expression or specified characters</value>
   </data>
+  <data name="GeneralProxyCard.Description" xml:space="preserve">
+    <value>Set whether to enable the mirror during updates and the custom mirror address</value>
+  </data>
+  <data name="GeneralProxyCard.Header" xml:space="preserve">
+    <value>Set up update mirror</value>
+  </data>
+  <data name="UpdateProxy.Text" xml:space="preserve">
+    <value>Update Proxy:</value>
+  </data>
+  <data name="DefaultTask.Text" xml:space="preserve">
+    <value>Default Task:</value>
+  </data>
+  <data name="FileDragAndDrop.Text" xml:space="preserve">
+    <value>Drag the file here to execute automatically</value>
+  </data>
 </root>

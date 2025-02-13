@@ -50,4 +50,17 @@ public static class WindowExExtensions
         action(dialog);
         await dialog.ShowAsync();
     }
+
+    public static bool IsClosed(this WindowEx window)
+    {
+        try
+        {
+            var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
+            return hwnd == IntPtr.Zero;
+        }
+        catch
+        {
+            return true;
+        }
+    }
 }

@@ -21,6 +21,7 @@ public partial class App : Application
     private readonly DispatcherQueue _dispatcherQueue;
 
     public static WindowEx MainWindow { get; } = new MainWindow();
+    public static WindowEx ChildWindow { get; set; } = new WindowEx();
     public static new App Current => (App)Application.Current;
     public string AppVersion { get; set; } = Constants.Version;
     public IHost Host
