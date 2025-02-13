@@ -1381,4 +1381,19 @@
   <data name="ReplaceCheatSheet_Title.Text" xml:space="preserve">
     <value>正規表現または指定された文字で置換します</value>
   </data>
+  <data name="GeneralProxyCard.Description" xml:space="preserve">
+    <value>更新中にミラーを有効にするかどうかとカスタムミラーアドレスを設定してください</value>
+  </data>
+  <data name="GeneralProxyCard.Header" xml:space="preserve">
+    <value>更新ミラーを設定する</value>
+  </data>
+  <data name="UpdateProxy.Text" xml:space="preserve">
+    <value>プロキシを更新:</value>
+  </data>
+  <data name="DefaultTask.Text" xml:space="preserve">
+    <value>デフォルトタスク:</value>
+  </data>
+  <data name="FileDragAndDrop.Text" xml:space="preserve">
+    <value>ファイルをここにドラッグして自動的に実行します</value>
+  </data>
 </root>

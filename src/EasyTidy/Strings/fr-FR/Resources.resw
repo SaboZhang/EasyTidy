@@ -1381,4 +1381,19 @@
   <data name="ReplaceCheatSheet_Title.Text" xml:space="preserve">
     <value>Substituer par une expression régulière ou des caractères spécifiés</value>
   </data>
+  <data name="GeneralProxyCard.Description" xml:space="preserve">
+    <value>Définissez si vous souhaitez activer le miroir pendant les mises à jour et l'adresse du miroir personnalisé</value>
+  </data>
+  <data name="GeneralProxyCard.Header" xml:space="preserve">
+    <value>Configurer un miroir de mise à jour</value>
+  </data>
+  <data name="UpdateProxy.Text" xml:space="preserve">
+    <value>Mettre à jour le proxy:</value>
+  </data>
+  <data name="DefaultTask.Text" xml:space="preserve">
+    <value>Tâche par défaut:</value>
+  </data>
+  <data name="FileDragAndDrop.Text" xml:space="preserve">
+    <value>Faites glisser le fichier ici pour exécuter automatiquement</value>
+  </data>
 </root>

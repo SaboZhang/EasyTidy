@@ -1399,4 +1399,19 @@
   <data name="ReplaceCheatSheet_Title.Text" xml:space="preserve">
     <value>使用正则表达式或者指定字符替换</value>
   </data>
+  <data name="GeneralProxyCard.Description" xml:space="preserve">
+    <value>设置是否在更新时启用镜像及自定义镜像地址</value>
+  </data>
+  <data name="GeneralProxyCard.Header" xml:space="preserve">
+    <value>设置更新镜像</value>
+  </data>
+  <data name="UpdateProxy.Text" xml:space="preserve">
+    <value>更新代理:</value>
+  </data>
+  <data name="DefaultTask.Text" xml:space="preserve">
+    <value>默认任务:</value>
+  </data>
+  <data name="FileDragAndDrop.Text" xml:space="preserve">
+    <value>文件拖拽到此处自动执行</value>
+  </data>
 </root>
