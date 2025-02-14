@@ -11,8 +11,19 @@
     xmlns:ui="using:CommunityToolkit.WinUI"
     xmlns:helpers="using:EasyTidy.Common"
     xmlns:view="using:EasyTidy.Views"
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
     mc:Ignorable="d">
-    <Grid x:Name="ContentArea">
+
+    <i:Interaction.Behaviors>
+        <ic:EventTriggerBehavior EventName="Loaded">
+            <ic:EventTriggerBehavior.Actions>
+                <ic:InvokeCommandAction Command="{x:Bind ViewModel.PageLoadedCommand}"/>
+            </ic:EventTriggerBehavior.Actions>
+        </ic:EventTriggerBehavior>
+    </i:Interaction.Behaviors>
+
+    <Grid x:Name="ContentArea" AllowDrop="True" DragOver="ContentArea_DragOver" Drop="ContentArea_Drop">
         <Grid.RowDefinitions>
             <RowDefinition Height="48"/>
             <RowDefinition Height="*"/>
@@ -37,7 +48,12 @@
             Margin="0,0,0,40">
             <TextBlock Margin="0,5,0,0"
                     x:Uid="DefaultTask"/>
-            <ComboBox></ComboBox>
+            <ComboBox
+                x:Name="DefaultFileMoveRules"
+                DisplayMemberPath="GroupName.GroupName"
+                SelectedIndex="0"
+                ItemsSource="{x:Bind ViewModel.TaskListACV, Mode=OneWay}">
+            </ComboBox>
         </StackPanel>
 
         <TextBlock
