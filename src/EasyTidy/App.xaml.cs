@@ -5,6 +5,7 @@ using EasyTidy.Contracts.Service;
 using EasyTidy.Log;
 using EasyTidy.Model;
 using EasyTidy.Service;
+using EasyTidy.Service.AIService;
 using EasyTidy.Util.UtilInterface;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
@@ -100,6 +101,9 @@ public partial class App : Application
                 services.AddTransient<FilterViewModel>();
                 services.AddTransient<ShellPage>();
                 services.AddTransient<ShellViewModel>();
+                services.AddTransient<AiSettingsPage>();
+                services.AddTransient<AiSettingsViewModel>();
+                services.AddTransient<AIServiceFactory>();
 
                 // Register AppDbContext
                 services.AddDbContext<AppDbContext>(options =>

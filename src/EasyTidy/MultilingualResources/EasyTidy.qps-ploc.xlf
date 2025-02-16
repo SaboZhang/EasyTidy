@@ -1908,6 +1908,26 @@
           <source>Drag the file here to execute automatically</source>
           <target state="new">Drag the file here to execute automatically</target>
         </trans-unit>
+        <trans-unit id="AISummaryText" translate="yes" xml:space="preserve">
+          <source>AI Summary</source>
+          <target state="new">AI Summary</target>
+        </trans-unit>
+        <trans-unit id="AIClassificationText" translate="yes" xml:space="preserve">
+          <source>AI Classification</source>
+          <target state="new">AI Classification</target>
+        </trans-unit>
+        <trans-unit id="Settings_AI_Header" translate="yes" xml:space="preserve">
+          <source>AI model configuration</source>
+          <target state="new">AI model configuration</target>
+        </trans-unit>
+        <trans-unit id="Settings_AI_Description" translate="yes" xml:space="preserve">
+          <source>Used to configure the AI model calling interface and set the default model to be used</source>
+          <target state="new">Used to configure the AI model calling interface and set the default model to be used</target>
+        </trans-unit>
+        <trans-unit id="AiSettingPage_Header" translate="yes" xml:space="preserve">
+          <source>AI settings</source>
+          <target state="new">AI settings</target>
+        </trans-unit>
       </group>
     </body>
   </file>

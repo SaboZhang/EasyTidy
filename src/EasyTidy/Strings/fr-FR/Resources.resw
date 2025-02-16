@@ -1396,4 +1396,19 @@
   <data name="FileDragAndDrop.Text" xml:space="preserve">
     <value>Faites glisser le fichier ici pour exécuter automatiquement</value>
   </data>
+  <data name="AISummaryText" xml:space="preserve">
+    <value>Résumé IA</value>
+  </data>
+  <data name="AIClassificationText" xml:space="preserve">
+    <value>Classification IA</value>
+  </data>
+  <data name="Settings_AI_Header" xml:space="preserve">
+    <value>Configuration du modèle d'IA</value>
+  </data>
+  <data name="Settings_AI_Description" xml:space="preserve">
+    <value>Utilisé pour configurer l'interface d'appel du modèle d'IA et définir le modèle par défaut à utiliser</value>
+  </data>
+  <data name="AiSettingPage_Header" xml:space="preserve">
+    <value>Paramètres de l'IA</value>
+  </data>
 </root>

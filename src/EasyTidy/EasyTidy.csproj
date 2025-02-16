@@ -175,6 +175,7 @@
     <None Remove="Views\Filters\FiltersPage.xaml" />
     <None Remove="Views\Logs\LogsPage.xaml" />
     <None Remove="Views\NotificationView.xaml" />
+    <None Remove="Views\Settings\AiSettingsPage.xaml" />
     <None Remove="Views\ShellPage.xaml" />
     <None Remove="Views\TaskOrchestration\TaskOrchestrationPage.xaml" />
     <None Remove="Views\TrayIconView.xaml" />
@@ -272,6 +273,9 @@
     <None Update="Themes\Styles\TextBlock.xaml">
       <Generator>MSBuild:Compile</Generator>
     </None>
+    <Page Update="Views\Settings\AiSettingsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Views\ContentDialogs\WebDavListContentDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -388,6 +392,7 @@
     <PRIResource Remove="Strings\en-US\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Assets\AI\" />
     <Folder Include="Themes\Controls\" />
   </ItemGroup>
   <ItemGroup>

@@ -1533,4 +1533,19 @@
   <data name="FileDragAndDrop.Text" xml:space="preserve">
     <value>Drag the file here to execute automatically</value>
   </data>
+  <data name="AISummaryText" xml:space="preserve">
+    <value>AI Summary</value>
+  </data>
+  <data name="AIClassificationText" xml:space="preserve">
+    <value>AI Classification</value>
+  </data>
+  <data name="AiSettingPage_Header" xml:space="preserve">
+    <value>AI settings</value>
+  </data>
+  <data name="Settings_AI_Header" xml:space="preserve">
+    <value>AI model configuration</value>
+  </data>
+  <data name="Settings_AI_Description" xml:space="preserve">
+    <value>Used to configure the AI model calling interface and set the default model to be used</value>
+  </data>
 </root>

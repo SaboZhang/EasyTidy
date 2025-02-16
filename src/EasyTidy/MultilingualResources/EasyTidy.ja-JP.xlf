@@ -1908,6 +1908,26 @@
           <source>Drag the file here to execute automatically</source>
           <target state="translated">ファイルをここにドラッグして自動的に実行します</target>
         </trans-unit>
+        <trans-unit id="AISummaryText" translate="yes" xml:space="preserve">
+          <source>AI Summary</source>
+          <target state="translated">AIサマリー</target>
+        </trans-unit>
+        <trans-unit id="AIClassificationText" translate="yes" xml:space="preserve">
+          <source>AI Classification</source>
+          <target state="translated">AI分類</target>
+        </trans-unit>
+        <trans-unit id="Settings_AI_Header" translate="yes" xml:space="preserve">
+          <source>AI model configuration</source>
+          <target state="translated">AIモデルの設定</target>
+        </trans-unit>
+        <trans-unit id="Settings_AI_Description" translate="yes" xml:space="preserve">
+          <source>Used to configure the AI model calling interface and set the default model to be used</source>
+          <target state="translated">AIモデル呼び出しインターフェースを設定し、使用するデフォルトモデルを設定するために使用されます</target>
+        </trans-unit>
+        <trans-unit id="AiSettingPage_Header" translate="yes" xml:space="preserve">
+          <source>AI settings</source>
+          <target state="translated">AI設定</target>
+        </trans-unit>
       </group>
     </body>
   </file>

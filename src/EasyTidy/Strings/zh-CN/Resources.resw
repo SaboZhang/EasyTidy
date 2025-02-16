@@ -1414,4 +1414,19 @@
   <data name="FileDragAndDrop.Text" xml:space="preserve">
     <value>文件拖拽到此处自动执行</value>
   </data>
+  <data name="AISummaryText" xml:space="preserve">
+    <value>AI总结</value>
+  </data>
+  <data name="AIClassificationText" xml:space="preserve">
+    <value>AI分类</value>
+  </data>
+  <data name="Settings_AI_Header" xml:space="preserve">
+    <value>AI模型设置</value>
+  </data>
+  <data name="Settings_AI_Description" xml:space="preserve">
+    <value>配置AI模型调用接口，设置默认模型</value>
+  </data>
+  <data name="AiSettingPage_Header" xml:space="preserve">
+    <value>AI设置</value>
+  </data>
 </root>

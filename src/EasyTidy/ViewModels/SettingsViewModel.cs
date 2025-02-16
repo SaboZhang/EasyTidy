@@ -25,6 +25,7 @@ public partial class SettingsViewModel : ObservableObject
         var settings = new[]
         {
             new Setting("General", string.Empty, "Settings_General_Header".GetLocalized(), "Settings_General_Description".GetLocalized(), "ms-appx:///Assets/Fluent/general.png", false, false),
+            new Setting("AiSettings", string.Empty, "Settings_AI_Header".GetLocalized(), "Settings_AI_Description".GetLocalized(), "ms-appx:///Assets/Fluent/nlp2.png", false, false),
             new Setting("Theme", string.Empty, "ThemeSettingPage_Header".GetLocalized(), "ThemeSettingPage_Description".GetLocalized(), "ms-appx:///Assets/Fluent/theme.png", false, false),
             new Setting("AppUpdate", string.Empty, "AppUpdateSetting_Header".GetLocalized(), "AppUpdateSetting_Description".GetLocalized(), "ms-appx:///Assets/Fluent/update.png", false, false),
             new Setting("About", string.Empty, "AboutUsSettingPage_Header".GetLocalized(), "AboutUsSettingPage_Description".GetLocalized(), "ms-appx:///Assets/Fluent/info.png", false, false),
@@ -66,6 +67,9 @@ public partial class SettingsViewModel : ObservableObject
                 return;
             case "AppUpdate":
                 navigationService.NavigateTo(typeof(AppUpdateSettingViewModel).FullName!);
+                return;
+            case "AiSettings":
+                navigationService.NavigateTo(typeof(AiSettingsViewModel).FullName!);
                 return;
             default:
                 return;
