@@ -1888,6 +1888,46 @@
           <source>Substitute with a regular expression or specified characters</source>
           <target state="new">Substitute with a regular expression or specified characters</target>
         </trans-unit>
+        <trans-unit id="GeneralProxyCard.Description" translate="yes" xml:space="preserve">
+          <source>Set whether to enable the mirror during updates and the custom mirror address</source>
+          <target state="new">Set whether to enable the mirror during updates and the custom mirror address</target>
+        </trans-unit>
+        <trans-unit id="GeneralProxyCard.Header" translate="yes" xml:space="preserve">
+          <source>Set up update mirror</source>
+          <target state="new">Set up update mirror</target>
+        </trans-unit>
+        <trans-unit id="UpdateProxy.Text" translate="yes" xml:space="preserve">
+          <source>Update Proxy:</source>
+          <target state="new">Update Proxy:</target>
+        </trans-unit>
+        <trans-unit id="DefaultTask.Text" translate="yes" xml:space="preserve">
+          <source>Default Task:</source>
+          <target state="new">Default Task:</target>
+        </trans-unit>
+        <trans-unit id="FileDragAndDrop.Text" translate="yes" xml:space="preserve">
+          <source>Drag the file here to execute automatically</source>
+          <target state="new">Drag the file here to execute automatically</target>
+        </trans-unit>
+        <trans-unit id="AISummaryText" translate="yes" xml:space="preserve">
+          <source>AI Summary</source>
+          <target state="new">AI Summary</target>
+        </trans-unit>
+        <trans-unit id="AIClassificationText" translate="yes" xml:space="preserve">
+          <source>AI Classification</source>
+          <target state="new">AI Classification</target>
+        </trans-unit>
+        <trans-unit id="Settings_AI_Header" translate="yes" xml:space="preserve">
+          <source>AI model configuration</source>
+          <target state="new">AI model configuration</target>
+        </trans-unit>
+        <trans-unit id="Settings_AI_Description" translate="yes" xml:space="preserve">
+          <source>Used to configure the AI model calling interface and set the default model to be used</source>
+          <target state="new">Used to configure the AI model calling interface and set the default model to be used</target>
+        </trans-unit>
+        <trans-unit id="AiSettingPage_Header" translate="yes" xml:space="preserve">
+          <source>AI settings</source>
+          <target state="new">AI settings</target>
+        </trans-unit>
       </group>
     </body>
   </file>

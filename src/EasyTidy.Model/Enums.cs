@@ -57,9 +57,6 @@ public enum OperationMode
 
     [Display(Name = "UploadWebDavText")] UploadWebDAV,
 
-    /// <summary>
-    /// TODO: Implement this feature
-    /// </summary>
     [Display(Name = "EncryptionText")] Encryption,
 
     [Display(Name = "HardLinkText")] HardLink,
@@ -67,6 +64,10 @@ public enum OperationMode
     [Display(Name = "SoftLinkText")] SoftLink,
 
     [Display(Name = "FileSnapshotText")] FileSnapshot,
+
+    [Display(Name = "AISummaryText")] AISummary,
+
+    [Display(Name = "AIClassificationText")] AIClassification
 
 }
 
@@ -173,4 +174,12 @@ public enum Encrypted
 {
     [Display(Name = "SevenZipText")] SevenZip,
     [Display(Name = "AESText")] AES256WithPBKDF2DerivedKey
+}
+
+public enum ServiceType
+{
+    OpenAI,
+    QWen,
+    Ollama,
+    HuggingFace
 }

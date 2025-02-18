@@ -7,6 +7,7 @@ using EasyTidy.Common.Job;
 using EasyTidy.Contracts.Service;
 using EasyTidy.Model;
 using EasyTidy.Service;
+using EasyTidy.Service.AIService;
 using EasyTidy.Views.ContentDialogs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.UI.Dispatching;
@@ -21,13 +22,16 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
 
     private StackedNotificationsBehavior? _notificationQueue;
 
+    private readonly AIServiceFactory _factory;
+
     [ObservableProperty]
     private IThemeSelectorService _themeSelectorService;
 
-    public TaskOrchestrationViewModel(IThemeSelectorService themeSelectorService)
+    public TaskOrchestrationViewModel(IThemeSelectorService themeSelectorService, AIServiceFactory factory)
     {
         _themeSelectorService = themeSelectorService;
         _dbContext = App.GetService<AppDbContext>();
+        _factory = factory;
         LoadRulesMenu();
         DateTimeModel = new ObservableCollection<PatternSnippetModel>();
         CounterModel = new ObservableCollection<PatternSnippetModel>();
@@ -699,6 +703,8 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                         await OperationHandler.ExecuteOperationAsync(item.OperationMode, operationParameters);
                         _notificationQueue.ShowWithWindowExtension("ExecutionSuccessfulText".GetLocalized(), InfoBarSeverity.Success);
                         _ = ClearNotificationAfterDelay(3000);
+                        // AI执行
+                        // var ai = _factory.GetService(ServiceType.OpenAI);
                     }
                 }
             }

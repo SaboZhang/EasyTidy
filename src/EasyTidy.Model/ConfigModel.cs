@@ -22,6 +22,10 @@ public class ConfigModel
 
     public bool? IsStartupCheck { get; set; } = false;
 
+    public bool? IsUseProxy { get; set; } = false;
+
+    public string ProxyAddress { get; set; } = "https://gh-proxy.com/";
+
     public bool? EmptyFiles { get; set; } = true;
 
     public bool? HiddenFiles { get; set; } = false;

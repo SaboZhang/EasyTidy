@@ -1381,4 +1381,34 @@
   <data name="ReplaceCheatSheet_Title.Text" xml:space="preserve">
     <value>正規表現または指定された文字で置換します</value>
   </data>
+  <data name="GeneralProxyCard.Description" xml:space="preserve">
+    <value>更新中にミラーを有効にするかどうかとカスタムミラーアドレスを設定してください</value>
+  </data>
+  <data name="GeneralProxyCard.Header" xml:space="preserve">
+    <value>更新ミラーを設定する</value>
+  </data>
+  <data name="UpdateProxy.Text" xml:space="preserve">
+    <value>プロキシを更新:</value>
+  </data>
+  <data name="DefaultTask.Text" xml:space="preserve">
+    <value>デフォルトタスク:</value>
+  </data>
+  <data name="FileDragAndDrop.Text" xml:space="preserve">
+    <value>ファイルをここにドラッグして自動的に実行します</value>
+  </data>
+  <data name="AISummaryText" xml:space="preserve">
+    <value>AIサマリー</value>
+  </data>
+  <data name="AIClassificationText" xml:space="preserve">
+    <value>AI分類</value>
+  </data>
+  <data name="Settings_AI_Header" xml:space="preserve">
+    <value>AIモデルの設定</value>
+  </data>
+  <data name="Settings_AI_Description" xml:space="preserve">
+    <value>AIモデル呼び出しインターフェースを設定し、使用するデフォルトモデルを設定するために使用されます</value>
+  </data>
+  <data name="AiSettingPage_Header" xml:space="preserve">
+    <value>AI設定</value>
+  </data>
 </root>

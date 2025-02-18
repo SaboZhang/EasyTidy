@@ -5,6 +5,7 @@ using EasyTidy.Contracts.Service;
 using EasyTidy.Log;
 using EasyTidy.Model;
 using EasyTidy.Service;
+using EasyTidy.Service.AIService;
 using EasyTidy.Util.UtilInterface;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
@@ -21,6 +22,7 @@ public partial class App : Application
     private readonly DispatcherQueue _dispatcherQueue;
 
     public static WindowEx MainWindow { get; } = new MainWindow();
+    public static WindowEx ChildWindow { get; set; } = new WindowEx();
     public static new App Current => (App)Application.Current;
     public string AppVersion { get; set; } = Constants.Version;
     public IHost Host
@@ -99,6 +101,9 @@ public partial class App : Application
                 services.AddTransient<FilterViewModel>();
                 services.AddTransient<ShellPage>();
                 services.AddTransient<ShellViewModel>();
+                services.AddTransient<AiSettingsPage>();
+                services.AddTransient<AiSettingsViewModel>();
+                services.AddTransient<AIServiceFactory>();
 
                 // Register AppDbContext
                 services.AddDbContext<AppDbContext>(options =>

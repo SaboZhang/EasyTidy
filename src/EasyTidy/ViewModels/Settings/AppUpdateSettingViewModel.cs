@@ -160,11 +160,18 @@ public partial class AppUpdateSettingViewModel : ObservableObject
         var progressText = new TextBlock
         {
             Text = "PreparingToDownload".GetLocalized(),
-            Margin = new Thickness(0, 5, 0, 0)
+            Margin = new Thickness(0, 5, 0, 0),
+            HorizontalAlignment = HorizontalAlignment.Left
         };
 
-        var stackPanel = new StackPanel();
-        stackPanel.Children.Add(new ScrollView
+        // 使用 Grid 来确保 UI 在小屏幕时不溢出
+        var grid = new Grid();
+        grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) }); // 可伸缩的内容区域
+        grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto }); // 固定进度条区域
+        grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto }); // 固定文本区域
+
+        // 更新日志区域（可滚动）
+        var scrollViewer = new ScrollViewer
         {
             Content = new TextBlock
             {
@@ -173,16 +180,25 @@ public partial class AppUpdateSettingViewModel : ObservableObject
                 Margin = new Thickness(10)
             },
             Margin = new Thickness(10),
-            MaxHeight = 480
-        });
-        stackPanel.Children.Add(progressText);
-        stackPanel.Children.Add(progressBar);
+            MaxHeight = 480, // 限制高度，防止遮挡下面的进度条
+            VerticalScrollBarVisibility = ScrollBarVisibility.Auto
+        };
+        Grid.SetRow(scrollViewer, 0);
+        grid.Children.Add(scrollViewer);
+
+        // 进度文本
+        Grid.SetRow(progressText, 1);
+        grid.Children.Add(progressText);
+
+        // 进度条
+        Grid.SetRow(progressBar, 2);
+        grid.Children.Add(progressBar);
 
         // 创建 ContentDialog 来显示更新信息
         var updateDialog = new ContentDialog
         {
             Title = "ReleaseNotes".GetLocalized(),
-            Content = stackPanel,
+            Content = grid,
             CloseButtonText = "Close".GetLocalized(),
             PrimaryButtonText = "Download".GetLocalized(),
             XamlRoot = mainWindow.Content.XamlRoot,
@@ -194,15 +210,14 @@ public partial class AppUpdateSettingViewModel : ObservableObject
         updateDialog.PrimaryButtonClick += async (sender, args) =>
         {
             var deferral = args.GetDeferral();
-            // 打开下载链接或实现下载逻辑
             try
             {
-                // 创建进度报告器
                 var progressReporter = new Progress<double>(progress =>
                 {
                     progressBar.Value = progress;
                     progressText.Text = "Downloading".GetLocalized() + $"... {progress:F1}%";
                 });
+
                 await Download(downloadUrl, progressReporter);
                 progressText.Text = "DownloadComplete".GetLocalized();
                 isShow = true;
@@ -244,6 +259,11 @@ public partial class AppUpdateSettingViewModel : ObservableObject
     private async Task Download(string downloadUrl, IProgress<double>? progress = null)
     {
         var httpClient = new HttpClient(new SocketsHttpHandler());
+        if (Settings.GeneralConfig.IsUseProxy ?? false)
+        {
+            string proxy = Settings.GeneralConfig.ProxyAddress.TrimEnd('/') + "/";
+            downloadUrl = proxy + downloadUrl;
+        }
 
         try
         {

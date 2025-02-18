@@ -1888,6 +1888,46 @@
           <source>Substitute with a regular expression or specified characters</source>
           <target state="translated">使用正则表达式或者指定字符替换</target>
         </trans-unit>
+        <trans-unit id="GeneralProxyCard.Description" translate="yes" xml:space="preserve">
+          <source>Set whether to enable the mirror during updates and the custom mirror address</source>
+          <target state="translated">设置是否在更新时启用镜像及自定义镜像地址</target>
+        </trans-unit>
+        <trans-unit id="GeneralProxyCard.Header" translate="yes" xml:space="preserve">
+          <source>Set up update mirror</source>
+          <target state="translated">设置更新镜像</target>
+        </trans-unit>
+        <trans-unit id="UpdateProxy.Text" translate="yes" xml:space="preserve">
+          <source>Update Proxy:</source>
+          <target state="translated">更新代理:</target>
+        </trans-unit>
+        <trans-unit id="DefaultTask.Text" translate="yes" xml:space="preserve">
+          <source>Default Task:</source>
+          <target state="translated">默认任务:</target>
+        </trans-unit>
+        <trans-unit id="FileDragAndDrop.Text" translate="yes" xml:space="preserve">
+          <source>Drag the file here to execute automatically</source>
+          <target state="translated">文件拖拽到此处自动执行</target>
+        </trans-unit>
+        <trans-unit id="AISummaryText" translate="yes" xml:space="preserve">
+          <source>AI Summary</source>
+          <target state="translated">AI总结</target>
+        </trans-unit>
+        <trans-unit id="AIClassificationText" translate="yes" xml:space="preserve">
+          <source>AI Classification</source>
+          <target state="translated">AI分类</target>
+        </trans-unit>
+        <trans-unit id="Settings_AI_Header" translate="yes" xml:space="preserve">
+          <source>AI model configuration</source>
+          <target state="translated">AI模型设置</target>
+        </trans-unit>
+        <trans-unit id="Settings_AI_Description" translate="yes" xml:space="preserve">
+          <source>Used to configure the AI model calling interface and set the default model to be used</source>
+          <target state="translated">配置AI模型调用接口，设置默认模型</target>
+        </trans-unit>
+        <trans-unit id="AiSettingPage_Header" translate="yes" xml:space="preserve">
+          <source>AI settings</source>
+          <target state="translated">AI设置</target>
+        </trans-unit>
       </group>
     </body>
   </file>
