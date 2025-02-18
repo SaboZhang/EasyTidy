@@ -704,7 +704,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                         _notificationQueue.ShowWithWindowExtension("ExecutionSuccessfulText".GetLocalized(), InfoBarSeverity.Success);
                         _ = ClearNotificationAfterDelay(3000);
                         // AI执行
-                        var ai = _factory.GetService(ServiceType.OpenAI);
+                        // var ai = _factory.GetService(ServiceType.OpenAI);
                     }
                 }
             }
