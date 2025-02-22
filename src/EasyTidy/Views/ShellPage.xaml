@@ -17,7 +17,7 @@
     Background="Transparent"
     mc:Ignorable="d">
 
-    <Grid Background="Transparent">
+    <Grid Background="Transparent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid.RowDefinitions>
             <RowDefinition Height="48"/>
             <RowDefinition Height="*"/>

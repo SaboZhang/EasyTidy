@@ -1,16 +1,11 @@
-using System.Threading.Tasks;
-using EasyTidy.Common.Extensions;
-using EasyTidy.Contracts.Service;
 using EasyTidy.Log;
 using EasyTidy.Model;
 using EasyTidy.Service;
-using EasyTidy.Util;
-using Microsoft.UI.Windowing;
-using Microsoft.UI;
 using Microsoft.Win32;
 using Windows.UI.ViewManagement;
 using WinRT.Interop;
 using WinUIEx;
+using System.Runtime.InteropServices;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -27,6 +22,18 @@ public sealed partial class MainWindow : WindowEx
 
     private UISettings _settings;
 
+    [StructLayout(LayoutKind.Sequential)]
+    struct MARGINS
+    {
+        public int cxLeftWidth;
+        public int cxRightWidth;
+        public int cyTopHeight;
+        public int cyBottomHeight;
+    }
+
+    [DllImport("dwmapi")]
+    static extern IntPtr DwmExtendFrameIntoClientArea(IntPtr hWnd, ref MARGINS pMarInset);
+
     public MainWindow()
     {
         this.InitializeComponent();
@@ -42,6 +49,11 @@ public sealed partial class MainWindow : WindowEx
             this.Closed += OnProcessExit;
             SystemEvents.SessionEnding += OnSessionEnding;
         }
+        var handle = WindowNative.GetWindowHandle(this);
+        var margins = new MARGINS { cxLeftWidth = 0, cxRightWidth = 0, cyBottomHeight = 0, cyTopHeight = 2 };
+        Activated +=
+          (object sender, WindowActivatedEventArgs args) => DwmExtendFrameIntoClientArea(handle, ref margins);
+
 
     }
 

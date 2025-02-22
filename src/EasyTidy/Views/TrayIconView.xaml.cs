@@ -75,6 +75,7 @@ public sealed partial class TrayIconView : UserControl
         App._mutex?.ReleaseMutex();
         App.HandleClosedEvents = false;
         TrayIcon.Dispose();
+        App.ChildWindow?.Close();
         App.MainWindow?.Close();
     }
 
@@ -90,6 +91,7 @@ public sealed partial class TrayIconView : UserControl
         Process.Start(appPath);
         App.HandleClosedEvents = false;
         TrayIcon.Dispose();
+        App.ChildWindow?.Close();
         App.MainWindow?.Close();
         // Environment.Exit(0);
     }
