@@ -313,9 +313,29 @@ public static class FileActuator
             case OperationMode.SoftLink:
                 CreateFileSymbolicLink(parameters.SourcePath, parameters.TargetPath);
                 break;
+            case OperationMode.AISummary:
+                await CreateAISummary(parameters);
+                break;
+            case OperationMode.AIClassification:
+                await CreateAIClassification(parameters);
+                break;
             default:
                 throw new NotSupportedException($"Operation mode '{parameters.OperationMode}' is not supported.");
         }
+    }
+
+    private static async Task CreateAIClassification(OperationParameters parameters)
+    {
+        var cts = new CancellationTokenSource();
+        await StreamHandlerAsync(parameters.AIServiceLlm,parameters.Prompt, cts.Token);
+        // 取消任务
+        // cts.Cancel();
+    }
+
+    private static async Task CreateAISummary(OperationParameters parameters)
+    {
+        var cts = new CancellationTokenSource();
+        await StreamHandlerAsync(parameters.AIServiceLlm, parameters.Prompt, cts.Token);
     }
 
     /// <summary>
@@ -966,6 +986,20 @@ public static class FileActuator
                 throw new System.ComponentModel.Win32Exception(Marshal.GetLastWin32Error());
             }
         }
+    }
+
+    private static async Task StreamHandlerAsync(IAIServiceLlm aIServiceLlm, string content, CancellationToken token)
+    {
+        await aIServiceLlm.PredictAsync(
+            new RequestModel(content),
+            msg =>
+            {
+                LogService.Logger.Info($"AI 服务返回: {msg}");
+                aIServiceLlm.Data.IsSuccess = true;
+                aIServiceLlm.Data.Result += msg;
+            }, 
+            token
+        );
     }
 
 }

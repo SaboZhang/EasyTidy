@@ -25,6 +25,8 @@ public class AiSettingsViewModel : ObservableObject
         };
     }
 
+
+
     private IAIServiceLlm CreateAIServiceLlm(AIServiceTable entity)
     {
         IAIServiceLlm aIServiceLlm = entity.Type switch
@@ -42,10 +44,10 @@ public class AiSettingsViewModel : ObservableObject
         var properties = entity.GetType().GetProperties();
         foreach (var prop in properties)
         {
-            var translatorProp = aIServiceLlm.GetType().GetProperty(prop.Name);
-            if (translatorProp != null && translatorProp.CanWrite)
+            var easyTidyProp = aIServiceLlm.GetType().GetProperty(prop.Name);
+            if (easyTidyProp != null && easyTidyProp.CanWrite)
             {
-                translatorProp.SetValue(aIServiceLlm, prop.GetValue(entity));
+                easyTidyProp.SetValue(aIServiceLlm, prop.GetValue(entity));
             }
         }
 

@@ -22,7 +22,8 @@ public partial class OpenAIService : ObservableObject, IAIServiceLlm
     { }
 
     public OpenAIService(
-        Guid identify, string url, 
+        Guid identify, 
+        string url, 
         string name = "", 
         ServiceType type = ServiceType.OpenAI, 
         string appID = "", string appKey = "", 
@@ -55,6 +56,8 @@ public partial class OpenAIService : ObservableObject, IAIServiceLlm
     private string _appID = string.Empty;
     [ObservableProperty]
     private string _appKey = string.Empty;
+    [ObservableProperty]
+    private ServiceResult _data = ServiceResult.Reset;
     [ObservableProperty]
     private string _model = "gpt-3.5-turbo";
     [ObservableProperty]

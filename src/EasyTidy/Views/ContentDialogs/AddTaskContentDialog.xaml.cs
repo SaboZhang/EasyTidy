@@ -158,7 +158,7 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
             toggleItem.IsChecked = IsRegex;
         });
 
-        RuleFlyout.Items.Add(new MenuFlyoutSeparator()); 
+        RuleFlyout.Items.Add(new MenuFlyoutSeparator());
         RuleFlyout.Items.Add(toggleItem);                 // ToggleMenuFlyoutItem
     }
 
@@ -270,55 +270,94 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
 
     private void TaskOperateList_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (sender != null)
+        if (sender is ComboBox selected && selected.SelectedItem != null)
         {
-            var selected = sender as ComboBox;
-            if (selected != null && selected.SelectedItem != null)
+            // 先隐藏所有面板
+            SetAllPanelsVisibility(PanelVisibilityConstants.Collapsed);
+
+            // 根据操作模式显示面板
+            switch (selected.SelectedItem)
             {
-                switch (selected.SelectedItem)
-                {
-                    case OperationMode.Delete:
-                        RenameButton.Visibility = Visibility.Collapsed;
-                        TaskTargetPanel.Visibility = Visibility.Visible;
-                        TaskSourcePanel.Visibility = Visibility.Collapsed;
-                        EncryptedPanel.Visibility = Visibility.Collapsed;
-                        break;
-                    case OperationMode.RecycleBin:
-                        TaskSourcePanel.Visibility = Visibility.Collapsed;
-                        RenameButton.Visibility = Visibility.Collapsed;
-                        TaskTargetPanel.Visibility = Visibility.Visible;
-                        EncryptedPanel.Visibility = Visibility.Collapsed;
-                        break;
-                    case OperationMode.Rename:
-                        RenameButton.Visibility = Visibility.Visible;
-                        TaskTargetTitle.Text = "NewNameAndPath".GetLocalized();
-                        TaskSourcePanel.Visibility = Visibility.Collapsed;
-                        TaskTargetPanel.Visibility = Visibility.Visible;
-                        EncryptedPanel.Visibility = Visibility.Collapsed;
-                        break;
-                    case OperationMode.UploadWebDAV:
-                        TaskTargetPanel.Visibility = Visibility.Collapsed;
-                        RenameButton.Visibility = Visibility.Collapsed;
-                        TaskSourcePanel.Visibility = Visibility.Visible;
-                        ViewModel.TaskTarget = ViewModel.TaskSource;
-                        EncryptedPanel.Visibility = Visibility.Collapsed;
-                        break;
-                    case OperationMode.Encryption:
-                        TaskSourcePanel.Visibility = Visibility.Visible;
-                        TaskTargetPanel.Visibility = Visibility.Visible;
-                        RenameButton.Visibility = Visibility.Collapsed;
-                        EncryptedPanel.Visibility = Visibility.Visible;
-                        break;
-                    default:
-                        RenameButton.Visibility = Visibility.Collapsed;
-                        TaskSourcePanel.Visibility = Visibility.Visible;
-                        TaskTargetPanel.Visibility = Visibility.Visible;
-                        EncryptedPanel.Visibility = Visibility.Collapsed;
-                        break;
-                }
+                case OperationMode.Delete:
+                    HandleDeleteMode();
+                    break;
+                case OperationMode.RecycleBin:
+                    HandleRecycleBinMode();
+                    break;
+                case OperationMode.Rename:
+                    HandleRenameMode();
+                    break;
+                case OperationMode.UploadWebDAV:
+                    HandleUploadWebDAVMode();
+                    break;
+                case OperationMode.Encryption:
+                    HandleEncryptionMode();
+                    break;
+                case OperationMode.AISummary:
+                case OperationMode.AIClassification:
+                    HandleAISummaryMode();
+                    break;
+                default:
+                    HandleDefaultMode();
+                    break;
             }
         }
     }
+
+    private void SetAllPanelsVisibility(Visibility visibility)
+    {
+        RenameButton.Visibility = visibility;
+        TaskTargetPanel.Visibility = visibility;
+        TaskSourcePanel.Visibility = visibility;
+        EncryptedPanel.Visibility = visibility;
+        TaskPromptPanel.Visibility = visibility;
+        PromptPanel.Visibility = visibility;
+    }
+
+    private void HandleDeleteMode()
+    {
+        TaskTargetPanel.Visibility = PanelVisibilityConstants.Visible;
+    }
+
+    private void HandleRecycleBinMode()
+    {
+        TaskTargetPanel.Visibility = PanelVisibilityConstants.Visible;
+    }
+
+    private void HandleRenameMode()
+    {
+        RenameButton.Visibility = PanelVisibilityConstants.Visible;
+        TaskTargetTitle.Text = "NewNameAndPath".GetLocalized();
+        TaskTargetPanel.Visibility = PanelVisibilityConstants.Visible;
+    }
+
+    private void HandleUploadWebDAVMode()
+    {
+        TaskSourcePanel.Visibility = PanelVisibilityConstants.Visible;
+        ViewModel.TaskTarget = ViewModel.TaskSource;
+    }
+
+    private void HandleEncryptionMode()
+    {
+        TaskSourcePanel.Visibility = PanelVisibilityConstants.Visible;
+        TaskTargetPanel.Visibility = PanelVisibilityConstants.Visible;
+        EncryptedPanel.Visibility = PanelVisibilityConstants.Visible;
+    }
+
+    private void HandleAISummaryMode()
+    {
+        TaskSourcePanel.Visibility = PanelVisibilityConstants.Visible;
+        TaskTargetPanel.Visibility = PanelVisibilityConstants.Visible;
+        TaskPromptPanel.Visibility = PanelVisibilityConstants.Visible;
+        PromptPanel.Visibility = PanelVisibilityConstants.Visible;
+    }
+
+    private void HandleDefaultMode()
+    {
+        TaskSourcePanel.Visibility = PanelVisibilityConstants.Visible;
+        TaskTargetPanel.Visibility = PanelVisibilityConstants.Visible;
+    }
+
 
     private void RenameItemClick(object sender, ItemClickEventArgs e)
     {
@@ -447,4 +486,10 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
         }
         return true;
     }
+}
+
+public static class PanelVisibilityConstants
+{
+    public static readonly Visibility Collapsed = Visibility.Collapsed;
+    public static readonly Visibility Visible = Visibility.Visible;
 }
