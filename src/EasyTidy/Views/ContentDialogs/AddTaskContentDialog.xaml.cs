@@ -329,6 +329,7 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
         RenameButton.Visibility = PanelVisibilityConstants.Visible;
         TaskTargetTitle.Text = "NewNameAndPath".GetLocalized();
         TaskTargetPanel.Visibility = PanelVisibilityConstants.Visible;
+        TaskSourcePanel.Visibility = PanelVisibilityConstants.Visible;
     }
 
     private void HandleUploadWebDAVMode()
