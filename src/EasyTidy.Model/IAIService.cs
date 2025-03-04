@@ -25,6 +25,8 @@ public interface IAIService
 
     string Model { get; set; }
 
+    ServiceResult Data { get; set; }
+
     List<UserDefinePrompt> UserDefinePrompts { get; set; }
 
     Task PredictAsync(object request, Action<string> onDataReceived, CancellationToken token);

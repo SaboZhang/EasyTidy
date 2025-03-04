@@ -56,7 +56,7 @@
             <StackPanel x:Name="TaskNamePanel"
                         Orientation="Horizontal"
                         Spacing="8"
-                        Margin="0,10,0,0">
+                        Margin="0,20,0,0">
                 <TextBlock x:Name="TaskTitle"
                            x:Uid="DialogTaskName"
                            Margin="0,5,0,0"
@@ -151,6 +151,32 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
+            </StackPanel>
+            <StackPanel x:Name="TaskPromptPanel"
+                        Margin="0,20,0,0"
+                        Orientation="Horizontal"
+                        Spacing="8">
+                <TextBlock Text="Prompt:" Width="110"/>
+                <StackPanel Orientation="Horizontal"
+                            Margin="4,-4,0,0">
+                    <RadioButton Content="系统内置" IsChecked="True"/>
+                    <RadioButton Content="自定义"/>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel x:Name="PromptPanel"
+                        Orientation="Horizontal">
+                <TextBlock Width="110"/>
+                <StackPanel Margin="12,0,0,0">
+                    <RichEditBox 
+                        Header="system" 
+                        Width="210" 
+                        MaxHeight="120" />
+                    <RichEditBox 
+                        Margin="0,4,0,0"
+                        Header="user" 
+                        Width="210" 
+                        MaxHeight="120" />
+                </StackPanel>
             </StackPanel>
             <StackPanel x:Name="TaskSourcePanel"
                         Orientation="Horizontal"

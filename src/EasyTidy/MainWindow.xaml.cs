@@ -49,11 +49,13 @@ public sealed partial class MainWindow : WindowEx
             this.Closed += OnProcessExit;
             SystemEvents.SessionEnding += OnSessionEnding;
         }
-        var handle = WindowNative.GetWindowHandle(this);
-        var margins = new MARGINS { cxLeftWidth = 0, cxRightWidth = 0, cyBottomHeight = 0, cyTopHeight = 2 };
-        Activated +=
-          (object sender, WindowActivatedEventArgs args) => DwmExtendFrameIntoClientArea(handle, ref margins);
-
+        if (IsWindows10())
+        {
+            var handle = WindowNative.GetWindowHandle(this);
+            var margins = new MARGINS { cxLeftWidth = 0, cxRightWidth = 0, cyBottomHeight = 0, cyTopHeight = 2 };
+            Activated +=
+              (object sender, WindowActivatedEventArgs args) => DwmExtendFrameIntoClientArea(handle, ref margins);
+        }
 
     }
 
@@ -93,5 +95,10 @@ public sealed partial class MainWindow : WindowEx
             await ShutdownService.OnShutdownAsync();
             Logger.Info("退出执行成功！");
         }
+    }
+
+    private static bool IsWindows10()
+    {
+        return Environment.OSVersion.Version.Major >= 10 && Environment.OSVersion.Version.Minor < 22000;
     }
 }

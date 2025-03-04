@@ -40,6 +40,8 @@ public static class OperationHandler
             { OperationMode.HardLink, CreateHandLink },
             { OperationMode.SoftLink, CreateSoftLink },
             { OperationMode.FileSnapshot, CreateSnapshot },
+            { OperationMode.AISummary, CreateAISummary },
+            { OperationMode.AIClassification, CreateAIClassification },
         };
     }
 
@@ -451,5 +453,21 @@ public static class OperationHandler
 
         return jsBuilder.ToString();
     }
-    
+
+    private static async Task CreateAIClassification(OperationParameters parameters)
+    {
+        await Task.Run(async () =>
+        {
+            await FileActuator.ExecuteFileOperationAsync(parameters);
+        });
+    }
+
+    private static async Task CreateAISummary(OperationParameters parameters)
+    {
+        await Task.Run(async () =>
+        {
+            await FileActuator.ExecuteFileOperationAsync(parameters);
+        });
+    }
+
 }

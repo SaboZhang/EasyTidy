@@ -1,7 +1,8 @@
-# 更新日志 (雨水)
+# 更新日志 (惊蛰)
 
 - 修复：Windows10下有边框黑线的问题 #68
 - 修复：在退出之后仍有后台进程残留的BUG
+- 修复：重命名设置异常的BUG
 
 ## 版本说明
 
@@ -12,7 +13,7 @@
 
 ## 更新日志详情
 
-- **[Full Changelog](https://github.com/SaboZhang/EasyTidy/compare/1.2.3.218...1.2.4.315)**
+- **[Full Changelog](https://github.com/SaboZhang/EasyTidy/compare/1.2.3.218...1.2.4.305)**
 
 ## 下载链接
 
