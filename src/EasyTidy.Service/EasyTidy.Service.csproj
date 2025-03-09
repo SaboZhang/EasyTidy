@@ -22,6 +22,7 @@
   <ItemGroup>
 	  <PackageReference Include="Microsoft.WindowsAppSDK" />
 	  <PackageReference Include="Microsoft.Windows.SDK.BuildTools" />
+	  <PackageReference Include="NPOI" />
 	  <PackageReference Include="Quartz" />
 	  <PackageReference Include="Quartz.Serialization.Json" />
 	  <PackageReference Include="System.Data.SQLite.Core" />

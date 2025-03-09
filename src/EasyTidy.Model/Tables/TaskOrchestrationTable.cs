@@ -59,4 +59,6 @@ public class TaskOrchestrationTable
         }
     }
 
+    public Guid AIIdentify { get; set; }
+
 }

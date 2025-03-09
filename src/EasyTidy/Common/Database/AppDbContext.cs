@@ -298,4 +298,6 @@ public partial class AppDbContext : DbContext
 
     public DbSet<ScriptExecutionStatus> ScriptExecutionStatus { get; set; }
 
+    public DbSet<AIServiceTable> AIService { get; set; }
+
 }

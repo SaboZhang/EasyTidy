@@ -1,7 +1,9 @@
+using CommunityToolkit.WinUI;
 using EasyTidy.Log;
 using EasyTidy.Model;
 using EasyTidy.Util;
 using Microsoft.VisualBasic.FileIO;
+using Org.BouncyCastle.Utilities.Encoders;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -163,7 +165,8 @@ public static class FileActuator
         {
             OldTargetPath = baseParameters.TargetPath,
             OldSourcePath = sourceFilePath,
-            RuleModel = baseParameters.RuleModel
+            RuleModel = baseParameters.RuleModel,
+            AIServiceLlm = baseParameters.AIServiceLlm
         };
     }
 
@@ -335,7 +338,40 @@ public static class FileActuator
     private static async Task CreateAISummary(OperationParameters parameters)
     {
         var cts = new CancellationTokenSource();
-        await StreamHandlerAsync(parameters.AIServiceLlm, parameters.Prompt, cts.Token);
+        parameters.Prompt = "总结";
+        var fileType = FileReader.GetFileType(parameters.SourcePath);
+        string conntent = string.Empty;
+        switch (fileType)
+        {
+            case FileType.Xls:
+            case FileType.Xlsx:
+                var conntents = FileReader.ReadExcel(parameters.SourcePath);
+                foreach (var item in conntents)
+                {
+                    conntent += item;
+                }
+                break;
+            case FileType.Doc:
+            case FileType.Docx:
+                conntent = FileReader.ReadWord(parameters.SourcePath);
+                break;
+            case FileType.Pdf:
+                conntent = FileReader.ExtractTextFromPdf(parameters.SourcePath);
+                break;
+            default:
+                LogService.Logger.Error($"不支持的文件类型: {fileType}");
+                cts.Cancel();
+                return;
+        }
+        await StreamHandlerAsync(parameters.AIServiceLlm, conntent, cts.Token);
+        string formattedTime = DateTime.Now.ToString("yyyyMMddHHmmssfff");
+        string fileName = $"{"AISummaryText".GetLocalized()}-{formattedTime}.pdf";
+        string filePath = Path.Combine(parameters.OldTargetPath, fileName);
+        if (parameters.AIServiceLlm.Data.IsSuccess)
+        {
+            FileWriterUtil.WriteObjectToPdf(parameters.AIServiceLlm.Data.Result, filePath);
+        }
+
     }
 
     /// <summary>
@@ -990,6 +1026,8 @@ public static class FileActuator
 
     private static async Task StreamHandlerAsync(IAIServiceLlm aIServiceLlm, string content, CancellationToken token)
     {
+        aIServiceLlm.Data = ServiceResult.Reset;
+
         await aIServiceLlm.PredictAsync(
             new RequestModel(content),
             msg =>
@@ -1000,6 +1038,11 @@ public static class FileActuator
             }, 
             token
         );
+    }
+
+    private static async Task NonStreamHandlerAsync(IAIServiceLlm aIServiceLlm, string content, CancellationToken token)
+    {
+        aIServiceLlm.Data = await aIServiceLlm.PredictAsync(new RequestModel(content), token);
     }
 
 }

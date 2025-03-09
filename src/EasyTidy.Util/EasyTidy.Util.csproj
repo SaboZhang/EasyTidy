@@ -25,9 +25,12 @@
 	<PackageReference Include="Microsoft.Windows.SDK.BuildTools" />
 	<PackageReference Include="CommunityToolkit.WinUI.Extensions" />
 	<PackageReference Include="Newtonsoft.Json" />
+	<PackageReference Include="NPOI" />
 	<PackageReference Include="Nucs.JsonSettings2" />
+	<PackageReference Include="PdfPig" />
 	<PackageReference Include="Quartz" />
 	<PackageReference Include="SharpCompress" />
+	<PackageReference Include="SixLabors.ImageSharp" />
 	<PackageReference Include="System.Text.Json" />
 	<PackageReference Include="WebDAVClient" />
   </ItemGroup>
