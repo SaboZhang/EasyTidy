@@ -74,8 +74,8 @@ public partial class OpenAIService : ObservableObject, IAIServiceLlm
         new UserDefinePrompt(
             "分类",
             [
-                new Prompt("system", "You are a text summarizer, you can only summarize the text, never interpret it."),
-                new Prompt("user", "Summarize the following text in $source: $content")
+                new Prompt("system", "You are a document classification expert who can categorize files based on their names."),
+                new Prompt("user", "Please classify these $source as: $target; Output in JSON format.")
             ]
         ),
     ];
@@ -88,7 +88,7 @@ public partial class OpenAIService : ObservableObject, IAIServiceLlm
         if (request is not RequestModel req)
             throw new Exception($"请求数据出错: {request}");
 
-        var content = req.Text;
+        var source = req.Text;
         UriBuilder uriBuilder = new(Url);
 
         // 兼容旧版API: https://platform.openai.com/docs/guides/text-generation
@@ -103,8 +103,8 @@ public partial class OpenAIService : ObservableObject, IAIServiceLlm
         var a_messages =
             (UserDefinePrompts.FirstOrDefault(x => x.Enabled)?.Prompts ?? throw new Exception("请先完善Propmpt配置")).Clone();
         a_messages.ToList().ForEach(item =>
-            item.Content = item.Content.Replace("$source", "").Replace("$target", "")
-                .Replace("$content", content));
+            item.Content = item.Content.Replace("$source", source).Replace("$target", "")
+                .Replace("$content", "zh-CN"));
 
         // 温度限定
         var a_temperature = Math.Clamp(Temperature, 0, 2);
@@ -181,5 +181,10 @@ public partial class OpenAIService : ObservableObject, IAIServiceLlm
 
             throw new Exception(msg);
         }
+    }
+
+    public Task<ServiceResult> PredictAsync(object request, CancellationToken token)
+    {
+        throw new NotImplementedException();
     }
 }

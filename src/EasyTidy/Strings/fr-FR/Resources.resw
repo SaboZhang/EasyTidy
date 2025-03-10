@@ -1411,4 +1411,10 @@
   <data name="AiSettingPage_Header" xml:space="preserve">
     <value>Paramètres de l'IA</value>
   </data>
+  <data name="SharedToggleSwitch.OffContent" xml:space="preserve">
+    <value>Désactivé</value>
+  </data>
+  <data name="SharedToggleSwitch.OnContent" xml:space="preserve">
+    <value>Sur</value>
+  </data>
 </root>

@@ -4,6 +4,7 @@ using EasyTidy.Common.Database;
 using EasyTidy.Contracts.Service;
 using EasyTidy.Model;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Windows.Globalization;
 using System.Data;
 using WinUIEx;
 
@@ -29,6 +30,7 @@ public class ActivationService : IActivationService
     {
         // Execute tasks before activation.
         await InitializeAsync();
+        SetApplicationLanguage();
 
         // Set the MainWindow Content.
         if (App.MainWindow.Content == null)
@@ -112,6 +114,15 @@ public class ActivationService : IActivationService
         {
             _themeSelectorService.ApplyTheme();
             App.MainWindow.Activate();
+        }
+    }
+
+    private void SetApplicationLanguage()
+    {
+        if (!string.IsNullOrEmpty(Settings.Language))
+        {
+            Logger.Info($"当前语言被设置为：{Settings.Language}");
+            ApplicationLanguages.PrimaryLanguageOverride = Settings.Language;
         }
     }
 

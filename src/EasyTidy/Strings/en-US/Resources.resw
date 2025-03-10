@@ -1548,4 +1548,10 @@
   <data name="Settings_AI_Description" xml:space="preserve">
     <value>Used to configure the AI model calling interface and set the default model to be used</value>
   </data>
+  <data name="SharedToggleSwitch.OffContent" xml:space="preserve">
+    <value>Off</value>
+  </data>
+  <data name="SharedToggleSwitch.OnContent" xml:space="preserve">
+    <value>On</value>
+  </data>
 </root>

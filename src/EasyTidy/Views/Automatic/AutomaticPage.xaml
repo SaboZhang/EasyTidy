@@ -27,7 +27,7 @@
     </i:Interaction.Behaviors>
 
     <ScrollView Margin="0,-58,0,0"
-                VerticalScrollBarVisibility="Hidden">
+                VerticalScrollBarVisibility="Auto">
         <StackPanel x:Name="ContentArea">
             <InfoBar MaxWidth="480"
                      Margin="10"
@@ -52,7 +52,7 @@
                                 </ctk:SettingsCard.HeaderIcon>
                                 <StackPanel Orientation="Horizontal"
                                             Spacing="8">
-                                    <ToggleSwitch x:Name="FileChange"
+                                    <ToggleSwitch x:Name="FileChange" x:Uid="SharedToggleSwitch"
                                                   IsOn="{x:Bind ViewModel.IsFileChange, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                     <TextBlock x:Uid="FileChangeDelay"
                                                Margin="20,8,0,0"/>
@@ -66,7 +66,7 @@
                                 <ctk:SettingsCard.HeaderIcon>
                                     <FontIcon Glyph="&#xE7E8;"/>
                                 </ctk:SettingsCard.HeaderIcon>
-                                <ToggleSwitch x:Name="StartupExecution"
+                                <ToggleSwitch x:Name="StartupExecution" x:Uid="SharedToggleSwitch"
                                               IsOn="{x:Bind ViewModel.IsStartupExecution, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             </ctk:SettingsCard>
                             <ctk:SettingsCard x:Uid="RegularTaskRunningCard">
@@ -75,7 +75,7 @@
                                 </ctk:SettingsCard.HeaderIcon>
                                 <StackPanel Orientation="Horizontal"
                                             Spacing="8">
-                                    <ToggleSwitch x:Name="RegularTaskRunning"
+                                    <ToggleSwitch x:Name="RegularTaskRunning" x:Uid="SharedToggleSwitch"
                                                   IsOn="{x:Bind ViewModel.RegularTaskRunning, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                     <TextBlock x:Uid="RegularTaskRunningBlock"
                                                Margin="20,8,0,0"/>
@@ -90,7 +90,7 @@
                                 </ctk:SettingsCard.HeaderIcon>
                                 <StackPanel Orientation="Horizontal"
                                             Spacing="8">
-                                    <ToggleSwitch x:Name="OnScheduleExecutionSwitch"
+                                    <ToggleSwitch x:Name="OnScheduleExecutionSwitch" x:Uid="SharedToggleSwitch"
                                                   IsOn="{x:Bind ViewModel.OnScheduleExecution, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                     <Button x:Uid="ConfigurationButton"
                                             Command="{x:Bind ViewModel.PlanExecutionCommand}"
@@ -101,7 +101,7 @@
                                 <ctk:SettingsCard.HeaderIcon>
                                     <FontIcon Glyph="&#xF83D;"/>
                                 </ctk:SettingsCard.HeaderIcon>
-                                <ToggleSwitch x:Name="ShutdownExecution"
+                                <ToggleSwitch x:Name="ShutdownExecution" x:Uid="SharedToggleSwitch"
                                               IsOn="{x:Bind ViewModel.IsShutdownExecution, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             </ctk:SettingsCard>
 

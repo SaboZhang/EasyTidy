@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.UI.Dispatching;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Threading.Tasks;
 
 namespace EasyTidy.ViewModels;
 
@@ -639,6 +640,8 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 var task = dataContext as TaskOrchestrationTable;
                 var automatic = new AutomaticJob();
                 var rule = await automatic.GetSpecialCasesRule(task.GroupName.Id, task.TaskRule);
+                var ai = await _dbContext.AIService.Where(x => x.Identify.ToString().Equals(task.AIIdentify.ToString())).FirstOrDefaultAsync();
+                var llm = AIServiceFactory.CreateAIServiceLlm(ai);
                 var operationParameters = new OperationParameters(
                     operationMode: task.OperationMode,
                     sourcePath: task.TaskSource.Equals("DesktopText".GetLocalized())
@@ -650,7 +653,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                     funcs: FilterUtil.GeneratePathFilters(rule, task.RuleType),
                     pathFilter: FilterUtil.GetPathFilters(task.Filter),
                     ruleModel: new RuleModel { Filter = task.Filter, Rule = task.TaskRule, RuleType = task.RuleType })
-                { RuleName = task.TaskRule };
+                { RuleName = task.TaskRule, AIServiceLlm = llm };
                 await OperationHandler.ExecuteOperationAsync(task.OperationMode, operationParameters);
                 _notificationQueue.ShowWithWindowExtension("ExecutionSuccessfulText".GetLocalized(), InfoBarSeverity.Success);
                 _ = ClearNotificationAfterDelay(3000);
@@ -686,6 +689,8 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                     var orderList = list.OrderByDescending(x => x.Priority);
                     foreach (var item in orderList)
                     {
+                        var ai = await _dbContext.AIService.Where(x => x.Identify.ToString().Equals(item.AIIdentify.ToString())).FirstOrDefaultAsync();
+                        var llm = AIServiceFactory.CreateAIServiceLlm(ai);
                         var automatic = new AutomaticJob();
                         var rule = await automatic.GetSpecialCasesRule(item.GroupName.Id, item.TaskRule);
                         var operationParameters = new OperationParameters(
@@ -699,12 +704,11 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                             funcs: FilterUtil.GeneratePathFilters(rule, item.RuleType),
                             pathFilter: FilterUtil.GetPathFilters(item.Filter),
                             ruleModel: new RuleModel { Filter = item.Filter, Rule = item.TaskRule, RuleType = item.RuleType })
-                        { RuleName = item.TaskRule };
+                        { RuleName = item.TaskRule, AIServiceLlm = llm };
                         await OperationHandler.ExecuteOperationAsync(item.OperationMode, operationParameters);
                         _notificationQueue.ShowWithWindowExtension("ExecutionSuccessfulText".GetLocalized(), InfoBarSeverity.Success);
                         _ = ClearNotificationAfterDelay(3000);
-                        // AI执行
-                        // var ai = _factory.GetService(ServiceType.OpenAI);
+
                     }
                 }
             }

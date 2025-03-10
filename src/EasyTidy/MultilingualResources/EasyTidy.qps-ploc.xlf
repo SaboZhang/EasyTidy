@@ -1928,6 +1928,14 @@
           <source>AI settings</source>
           <target state="new">AI settings</target>
         </trans-unit>
+        <trans-unit id="SharedToggleSwitch.OffContent" translate="yes" xml:space="preserve">
+          <source>Off</source>
+          <target state="new">Off</target>
+        </trans-unit>
+        <trans-unit id="SharedToggleSwitch.OnContent" translate="yes" xml:space="preserve">
+          <source>On</source>
+          <target state="new">On</target>
+        </trans-unit>
       </group>
     </body>
   </file>

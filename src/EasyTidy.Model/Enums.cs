@@ -183,3 +183,14 @@ public enum ServiceType
     Ollama,
     HuggingFace
 }
+
+public enum FileType
+{
+    Unknown,
+    Txt,
+    Pdf,
+    Doc,
+    Docx,
+    Xls,
+    Xlsx
+}
