@@ -1429,4 +1429,10 @@
   <data name="AiSettingPage_Header" xml:space="preserve">
     <value>AI设置</value>
   </data>
+  <data name="SharedToggleSwitch.OffContent" xml:space="preserve">
+    <value>关</value>
+  </data>
+  <data name="SharedToggleSwitch.OnContent" xml:space="preserve">
+    <value>开</value>
+  </data>
 </root>

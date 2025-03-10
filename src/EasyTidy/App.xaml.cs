@@ -152,7 +152,6 @@ public partial class App : Application
         }
         App.GetService<IAppNotificationService>().Show(string.Format("AppNotificationPayload".GetLocalized(), Constants.Version));
         await App.GetService<IActivationService>().ActivateAsync(args);
-        SetApplicationLanguage();
 
         Logger.Info("EasyTidy Initialized Successfully!");
     }
@@ -165,15 +164,6 @@ public partial class App : Application
 #else
         LogService.Register(loggingService, "", LogLevel.Debug, AppVersion);
 #endif
-    }
-
-    private void SetApplicationLanguage()
-    {
-        if (!string.IsNullOrEmpty(Settings.Language))
-        {
-            Logger.Info($"当前语言被设置为：{Settings.Language}");
-            ApplicationLanguages.PrimaryLanguageOverride = Settings.Language;
-        }
     }
 
     private bool IsSingleInstance()
