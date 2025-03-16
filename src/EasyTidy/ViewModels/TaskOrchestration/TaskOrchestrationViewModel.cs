@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.UI.Dispatching;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace EasyTidy.ViewModels;
@@ -178,10 +179,19 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
             : Settings.EncryptedPassword;
             Settings.Encrypted = dialog.Encencrypted;
             Settings.OriginalFile = dialog.IsSourceFile;
+            var ai = await _dbContext.AIService.Where(x => x.IsEnabled).FirstOrDefaultAsync();
+            if (ai != null && SelectedOperationMode == OperationMode.AIClassification)
+            {
+                ai.UserDefinePromptsJson = dialog.CustomPrompt;
+            }
+            else if (ai != null && SelectedOperationMode == OperationMode.AISummary)
+            {
+                ai.UserDefinePromptsJson = GetUserDefinePromptsJson(dialog.SystemPrompt, dialog.UserPrompt);
+            }
             await _dbContext.TaskOrchestration.AddAsync(new TaskOrchestrationTable
             {
                 TaskName = dialog.TaskName,
-                TaskRule = dialog.TaskRule,
+                TaskRule = string.IsNullOrEmpty(dialog.TaskRule) && SelectedOperationMode == OperationMode.AIClassification ? "*" : dialog.TaskRule,
                 TaskSource = SelectedOperationMode == OperationMode.Delete || SelectedOperationMode == OperationMode.RecycleBin
                 ? TaskTarget : ExtractBasePath(TaskTarget, SelectedOperationMode, TaskSource),
                 Shortcut = dialog.Shortcut,
@@ -200,7 +210,8 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 },
                 Filter = SelectedFilter != null
                 ? await _dbContext.Filters.Where(x => x.Id == SelectedFilter.Id).FirstOrDefaultAsync() : null,
-                IsRegex = dialog.IsRegex
+                IsRegex = dialog.IsRegex,
+                AIIdentify = ai != null ? ai.Identify : Guid.Empty,
             });
             await _dbContext.SaveChangesAsync();
             if (dialog.Shortcut)
@@ -278,6 +289,22 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
     private bool IsLocalizedDesktopPath(string path)
     {
         return path.Equals("DesktopText".GetLocalized(), StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static string GetUserDefinePromptsJson(string systemPrompt, string userPrompt)
+    {
+        var promptConfig = new
+        {
+            enabled = true,
+            name = "总结",
+            prompts = new[]
+            {
+                new { content = systemPrompt, role = "system" },
+                new { content = userPrompt, role = "user" }
+            }
+        };
+
+        return JsonSerializer.Serialize(promptConfig, new JsonSerializerOptions { WriteIndented = true });
     }
 
     /// <summary>

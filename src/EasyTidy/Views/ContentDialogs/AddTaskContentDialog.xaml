@@ -8,9 +8,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     xmlns:model="using:EasyTidy.Model"
-    xmlns:ic="using:Microsoft.Xaml.Interactions.Core" 
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:ui="using:CommunityToolkit.WinUI"
-    xmlns:i="using:Microsoft.Xaml.Interactivity" 
+    xmlns:i="using:Microsoft.Xaml.Interactivity" xmlns:etc="using:EasyTidy.Behaviors"
     CornerRadius="{ThemeResource OverlayCornerRadius}"
     DefaultButton="Primary">
 
@@ -67,6 +67,29 @@
                          Margin="6,0,0,0"
                          Width="210"
                          Text="{x:Bind TaskName, Mode=TwoWay}"/>
+            </StackPanel>
+            <StackPanel x:Name="TaskOperatePanel"
+                        Orientation="Horizontal"
+                        Spacing="8"
+                        Margin="0,20,0,0">
+                <TextBlock x:Name="TaskOperateTitle"
+                           x:Uid="DialogOperatingMethod"
+                           Margin="0,5,0,0"
+                           Width="110"
+                           TextWrapping="Wrap"/>
+                <ComboBox x:Name="TaskOperateList"
+                          ItemsSource="{x:Bind ViewModel.OperationModes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          SelectedItem="{x:Bind ViewModel.SelectedOperationMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          x:Uid="DialogTaskOperateListPlaceholder"
+                          Margin="6,0,0,0"
+                          Width="210"
+                          SelectionChanged="TaskOperateList_SelectionChanged">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource EnumDisplayNameConverter}}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
             </StackPanel>
             <StackPanel x:Name="TaskRulePanel"
                         Orientation="Horizontal"
@@ -129,28 +152,25 @@
                        x:Name="TaskRuleBoxValid"
                        Margin="122,0,0,0"
                        Visibility="Collapsed"/>
-            <StackPanel x:Name="TaskOperatePanel"
+            <StackPanel x:Name="CustomPromptPanel"
+                        Margin="0,20,0,0"
                         Orientation="Horizontal"
-                        Spacing="8"
-                        Margin="0,20,0,0">
-                <TextBlock x:Name="TaskOperateTitle"
-                           x:Uid="DialogOperatingMethod"
-                           Margin="0,5,0,0"
+                        Spacing="8">
+                <TextBlock Text="Prompt:"
                            Width="110"
-                           TextWrapping="Wrap"/>
-                <ComboBox x:Name="TaskOperateList"
-                          ItemsSource="{x:Bind ViewModel.OperationModes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                          SelectedItem="{x:Bind ViewModel.SelectedOperationMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                          x:Uid="DialogTaskOperateListPlaceholder"
-                          Margin="6,0,0,0"
-                          Width="210"
-                          SelectionChanged="TaskOperateList_SelectionChanged">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Converter={StaticResource EnumDisplayNameConverter}}"/>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
+                           Margin="0,5,0,0"/>
+                <RichEditBox Width="210"
+                             x:Name="CustomPromptBox"
+                             AcceptsReturn="True"
+                             MaxHeight="120"
+                             Margin="6,0,0,0"
+                             PlaceholderText="请描述你的分类需求">
+                    <i:Interaction.Behaviors>
+                        <etc:RichEditBoxBehavior
+                            x:Name="RichEditBoxBehavior"
+                            Text="{x:Bind CustomPrompt, Mode=TwoWay}"/>
+                    </i:Interaction.Behaviors>
+                </RichEditBox>
             </StackPanel>
             <StackPanel x:Name="TaskPromptPanel"
                         Margin="0,20,0,0"
@@ -167,14 +187,14 @@
                         Orientation="Horizontal">
                 <TextBlock Width="110"/>
                 <StackPanel Margin="12,0,0,0">
-                    <RichEditBox 
-                        Header="system" 
-                        Width="210" 
+                    <RichEditBox
+                        Header="system"
+                        Width="210"
                         MaxHeight="120" />
-                    <RichEditBox 
+                    <RichEditBox
                         Margin="0,4,0,0"
-                        Header="user" 
-                        Width="210" 
+                        Header="user"
+                        Width="210"
                         MaxHeight="120" />
                 </StackPanel>
             </StackPanel>

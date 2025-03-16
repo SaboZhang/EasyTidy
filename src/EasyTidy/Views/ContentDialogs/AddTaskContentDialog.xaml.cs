@@ -22,6 +22,9 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
     private string _taskRule;
     private bool _isRegex = false;
     private TaskRuleType _ruleType = TaskRuleType.CustomRule;
+    private string _customPrompt;
+    private string _systemPrompt;
+    private string _userPrompt;
 
     private bool _isShowTaskSource = true;
 
@@ -95,6 +98,45 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
     public Encrypted Encencrypted { get; set; }
 
     public bool IsSourceFile { get; set; }
+
+    public string CustomPrompt
+    {
+        get => _customPrompt;
+        set
+        {
+            if (_customPrompt != value)
+            {
+                _customPrompt = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+
+    public string SystemPrompt
+    {
+        get => _systemPrompt;
+        set
+        {
+            if (_systemPrompt != value)
+            {
+                _systemPrompt = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+
+    public string UserPrompt
+    {
+        get => _userPrompt;
+        set
+        {
+            if (_userPrompt != value)
+            {
+                _userPrompt = value;
+                OnPropertyChanged();
+            }
+        }
+    }
 
     public bool IsRegex
     {
@@ -294,8 +336,10 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
                     HandleEncryptionMode();
                     break;
                 case OperationMode.AISummary:
-                case OperationMode.AIClassification:
                     HandleAISummaryMode();
+                    break;
+                case OperationMode.AIClassification:
+                    HandleAIClassificationMode();
                     break;
                 default:
                     HandleDefaultMode();
@@ -312,16 +356,20 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
         EncryptedPanel.Visibility = visibility;
         TaskPromptPanel.Visibility = visibility;
         PromptPanel.Visibility = visibility;
+        CustomPromptPanel.Visibility = visibility;
+        TaskRulePanel.Visibility = visibility;
     }
 
     private void HandleDeleteMode()
     {
         TaskTargetPanel.Visibility = PanelVisibilityConstants.Visible;
+        TaskRulePanel.Visibility = PanelVisibilityConstants.Visible;
     }
 
     private void HandleRecycleBinMode()
     {
         TaskTargetPanel.Visibility = PanelVisibilityConstants.Visible;
+        TaskRulePanel.Visibility = PanelVisibilityConstants.Visible;
     }
 
     private void HandleRenameMode()
@@ -330,11 +378,13 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
         TaskTargetTitle.Text = "NewNameAndPath".GetLocalized();
         TaskTargetPanel.Visibility = PanelVisibilityConstants.Visible;
         TaskSourcePanel.Visibility = PanelVisibilityConstants.Visible;
+        TaskRulePanel.Visibility = PanelVisibilityConstants.Visible;
     }
 
     private void HandleUploadWebDAVMode()
     {
         TaskSourcePanel.Visibility = PanelVisibilityConstants.Visible;
+        TaskRulePanel.Visibility = PanelVisibilityConstants.Visible;
         ViewModel.TaskTarget = ViewModel.TaskSource;
     }
 
@@ -343,6 +393,7 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
         TaskSourcePanel.Visibility = PanelVisibilityConstants.Visible;
         TaskTargetPanel.Visibility = PanelVisibilityConstants.Visible;
         EncryptedPanel.Visibility = PanelVisibilityConstants.Visible;
+        TaskRulePanel.Visibility = PanelVisibilityConstants.Visible;
     }
 
     private void HandleAISummaryMode()
@@ -351,12 +402,26 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
         TaskTargetPanel.Visibility = PanelVisibilityConstants.Visible;
         TaskPromptPanel.Visibility = PanelVisibilityConstants.Visible;
         PromptPanel.Visibility = PanelVisibilityConstants.Visible;
+        CustomPromptPanel.Visibility = PanelVisibilityConstants.Collapsed;
+        TaskRulePanel.Visibility = PanelVisibilityConstants.Visible;
+    }
+
+    private void HandleAIClassificationMode()
+    {
+        TaskSourcePanel.Visibility = PanelVisibilityConstants.Visible;
+        TaskTargetPanel.Visibility = PanelVisibilityConstants.Visible;
+        TaskPromptPanel.Visibility = PanelVisibilityConstants.Collapsed;
+        PromptPanel.Visibility = PanelVisibilityConstants.Collapsed;
+        CustomPromptPanel.Visibility = PanelVisibilityConstants.Visible;
+        TaskRulePanel.Visibility = PanelVisibilityConstants.Collapsed;
+        TaskRule = "*";
     }
 
     private void HandleDefaultMode()
     {
         TaskSourcePanel.Visibility = PanelVisibilityConstants.Visible;
         TaskTargetPanel.Visibility = PanelVisibilityConstants.Visible;
+        TaskRulePanel.Visibility = PanelVisibilityConstants.Visible;
     }
 
 

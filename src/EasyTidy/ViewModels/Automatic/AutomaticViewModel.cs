@@ -8,6 +8,7 @@ using EasyTidy.Common.Model;
 using EasyTidy.Contracts.Service;
 using EasyTidy.Model;
 using EasyTidy.Service;
+using EasyTidy.Service.AIService;
 using EasyTidy.Views.ContentDialogs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.UI.Dispatching;
@@ -522,8 +523,11 @@ public partial class AutomaticViewModel : ObservableRecipient
             };
             await _dbContext.Automatic.AddAsync(automatic);
             await _dbContext.SaveChangesAsync();
+            var aiIdentify = list.Where(x => x.AIIdentify != Guid.Empty).Select(x => x.AIIdentify).FirstOrDefault();
+            var ai = _dbContext.AIService.FirstOrDefault(x => x.Identify == aiIdentify);
+            var llm = AIServiceFactory.CreateAIServiceLlm(ai);
             await OnPageLoaded();
-            await AutomaticJob.AddTaskConfig(automatic, OnScheduleExecution);
+            await AutomaticJob.AddTaskConfig(automatic, OnScheduleExecution, llm);
             _notificationQueue.ShowWithWindowExtension("SaveSuccessfulText".GetLocalized(), InfoBarSeverity.Success);
             _ = ClearNotificationAfterDelay(3000);
         }
@@ -615,6 +619,7 @@ public partial class AutomaticViewModel : ObservableRecipient
             }
             // 创建自动化配置对象
             var auto = CreateAutomaticTable(dialog, dateValue);
+            IAIServiceLlm? llm = null;
 
             if (ReceivedParameter is TaskOrchestrationTable old)
             {
@@ -632,11 +637,14 @@ public partial class AutomaticViewModel : ObservableRecipient
                     old.AutomaticTable = auto;
                 }
                 auto.TaskOrchestrationList = list;
+                var aiIdentify = list.Where(x => x.AIIdentify != Guid.Empty).Select(x => x.AIIdentify).FirstOrDefault();
+                var ai = _dbContext.AIService.FirstOrDefault(x => x.Identify == aiIdentify);
+                llm = AIServiceFactory.CreateAIServiceLlm(ai);
             }
 
             // 保存更改到数据库并添加定时任务
             await _dbContext.SaveChangesAsync();
-            await AutomaticJob.AddTaskConfig(auto, CustomSchedule);
+            await AutomaticJob.AddTaskConfig(auto, CustomSchedule, llm);
             await OnPageLoaded();
         }
         catch (Exception ex)

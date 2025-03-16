@@ -3,7 +3,6 @@ using EasyTidy.Log;
 using EasyTidy.Model;
 using EasyTidy.Util;
 using Microsoft.VisualBasic.FileIO;
-using Org.BouncyCastle.Utilities.Encoders;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -338,7 +337,6 @@ public static class FileActuator
     private static async Task CreateAISummary(OperationParameters parameters)
     {
         var cts = new CancellationTokenSource();
-        parameters.Prompt = "总结";
         var fileType = FileReader.GetFileType(parameters.SourcePath);
         string conntent = string.Empty;
         switch (fileType)
