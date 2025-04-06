@@ -3,13 +3,13 @@ using EasyTidy.Log;
 using EasyTidy.Model;
 using EasyTidy.Util;
 using Microsoft.VisualBasic.FileIO;
-using Org.BouncyCastle.Utilities.Encoders;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -110,7 +110,7 @@ public static class FileActuator
 
     private static void EnsureTargetDirectory(OperationParameters parameters, string? directoryPath = null)
     {
-        if (!Directory.Exists(parameters.TargetPath) 
+        if (!Directory.Exists(parameters.TargetPath)
         && parameters.OperationMode != OperationMode.Rename && string.IsNullOrEmpty(directoryPath))
         {
             Directory.CreateDirectory(parameters.TargetPath);
@@ -166,7 +166,8 @@ public static class FileActuator
             OldTargetPath = baseParameters.TargetPath,
             OldSourcePath = sourceFilePath,
             RuleModel = baseParameters.RuleModel,
-            AIServiceLlm = baseParameters.AIServiceLlm
+            AIServiceLlm = baseParameters.AIServiceLlm,
+            Prompt = baseParameters.Prompt
         };
     }
 
@@ -260,13 +261,13 @@ public static class FileActuator
     /// <exception cref="NotSupportedException"></exception>
     internal static async Task ProcessFileAsync(OperationParameters parameters)
     {
-        if (FilterUtil.ShouldSkip(parameters.Funcs, parameters.SourcePath, parameters.PathFilter) 
+        if (FilterUtil.ShouldSkip(parameters.Funcs, parameters.SourcePath, parameters.PathFilter)
             && parameters.OperationMode != OperationMode.RecycleBin && parameters.OperationMode != OperationMode.ZipFile)
         {
             LogService.Logger.Debug($"执行文件操作 ShouldSkip {parameters.TargetPath}");
             return;
         }
-        if (!CommonUtil.Configs?.GeneralConfig.EmptyFiles ?? true) 
+        if (!CommonUtil.Configs?.GeneralConfig.EmptyFiles ?? true)
         {
              FileInfo info = new(parameters.SourcePath);
              if (info.Length == 0)
@@ -330,15 +331,98 @@ public static class FileActuator
     private static async Task CreateAIClassification(OperationParameters parameters)
     {
         var cts = new CancellationTokenSource();
-        await StreamHandlerAsync(parameters.AIServiceLlm,parameters.Prompt, cts.Token);
-        // 取消任务
-        // cts.Cancel();
+        var customPrompt = ParseUserDefinePrompt(parameters.Prompt);
+        var systemPrompt = new Prompt("system", PromptConstants.SystemPrompt);
+        var userPrompt = new Prompt("user", PromptConstants.UserPrompt);
+        var prompts = new List<Prompt> { systemPrompt, userPrompt };
+        var userDefinePrompt = new UserDefinePrompt("分类", prompts, true);
+        var userDefinePrompts = new List<UserDefinePrompt> { userDefinePrompt };
+        parameters.AIServiceLlm.UserDefinePrompts = userDefinePrompts;
+
+        try
+        {
+            // 步骤1：判断操作类型
+            await StreamHandlerAsync(parameters.AIServiceLlm, customPrompt, cts.Token);
+            var setup1 = parameters.AIServiceLlm.Data.Result?.ToString() ?? string.Empty;
+            LogService.Logger.Info($"步骤1 - 判断操作类型: {setup1}");
+            var res = FilterUtil.ExtractKeyValuePairsFromRaw(setup1);
+
+            // 步骤2：判断路径信息
+            await UpdatePromptAndExecute(parameters, prompts, PromptConstants.SetupTwoPrompt, customPrompt, cts, "步骤2 - 判断路径信息", res);
+
+            // 步骤3：判断文件类型
+            await UpdatePromptAndExecute(parameters, prompts, PromptConstants.SetupThreePrompt, customPrompt, cts, "步骤3 - 判断文件类型", res);
+        }
+        catch (Exception ex)
+        {
+            LogService.Logger.Error($"AI 分类执行错误: {ex.Message}");
+            throw;
+        }
+        finally
+        {
+            cts.Cancel();
+        }
+    }
+
+    private static async Task<string> UpdatePromptAndExecute(
+        OperationParameters parameters,
+        List<Prompt> prompts,
+        string newPromptContent,
+        string customPrompt,
+        CancellationTokenSource cts,
+        string stepDescription,
+        Dictionary<string, string>? keyValuePairs = null)
+    {
+        var promptToUpdate = prompts.FirstOrDefault(p => p.Role.Equals("user"));
+        if (promptToUpdate != null)
+        {
+            promptToUpdate.Content = newPromptContent;
+            await StreamHandlerAsync(parameters.AIServiceLlm, customPrompt, cts.Token);
+            var result = parameters.AIServiceLlm.Data.Result?.ToString() ?? string.Empty;
+            var res = FilterUtil.ExtractKeyValuePairsFromRaw(result);
+            if (keyValuePairs != null && keyValuePairs.TryGetValue("operation", out string type))
+            {
+                var operationMode = EnumHelper.ParseEnum<OperationMode>(type);
+                res.TryGetValue("included", out string included);
+                if (included != null && included.Equals("Y"))
+                {
+                    res.TryGetValue("sourcePath", out string sourcePath);
+                    res.TryGetValue("destinationPath", out string targetPath);
+                }
+                res.TryGetValue("rule", out string rule);
+                res.TryGetValue("filter", out string filter);
+                res.TryGetValue("content", out string content);
+            }
+            LogService.Logger.Info($"{stepDescription}: {res}");
+            return result;
+        }
+        throw new InvalidOperationException("未找到用户提示配置");
+    }
+
+    private static readonly JsonSerializerOptions _jsonSerializerOptions = new JsonSerializerOptions
+    {
+        PropertyNameCaseInsensitive = true
+    };
+
+    // 解析用户定义的promptJson并提权"user"的内容
+    private static string ParseUserDefinePrompt(string promptJson)
+    {
+        if (string.IsNullOrEmpty(promptJson))
+        {
+            return string.Empty;
+        }
+        var userDefinePrompts = JsonSerializer.Deserialize<List<UserDefinePrompt>>(promptJson, _jsonSerializerOptions);
+        var userPrompt = userDefinePrompts?
+            .FirstOrDefault(x => x.Name == "分类" && x.Enabled)?
+            .Prompts?
+            .FirstOrDefault(x => x.Role == "user")?
+            .Content;
+        return userPrompt ?? string.Empty;
     }
 
     private static async Task CreateAISummary(OperationParameters parameters)
     {
         var cts = new CancellationTokenSource();
-        parameters.Prompt = "总结";
         var fileType = FileReader.GetFileType(parameters.SourcePath);
         string conntent = string.Empty;
         switch (fileType)
@@ -1035,7 +1119,7 @@ public static class FileActuator
                 LogService.Logger.Info($"AI 服务返回: {msg}");
                 aIServiceLlm.Data.IsSuccess = true;
                 aIServiceLlm.Data.Result += msg;
-            }, 
+            },
             token
         );
     }

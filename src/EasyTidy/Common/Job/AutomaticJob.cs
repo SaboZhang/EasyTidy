@@ -111,7 +111,7 @@ public class AutomaticJob : IJob
     /// <param name="automaticTable"></param>
     /// <param name="customSchedule"></param>
     /// <returns></returns>
-    public static async Task AddTaskConfig(AutomaticTable automaticTable, bool customSchedule = false)
+    public static async Task AddTaskConfig(AutomaticTable automaticTable, bool customSchedule = false, IAIServiceLlm llm = null)
     {
         if (automaticTable == null) return;
 
@@ -168,7 +168,8 @@ public class AutomaticJob : IJob
                     new RuleModel() { Filter = item.Filter, Rule = item.TaskRule, RuleType = item.RuleType})
                 {
                     Priority = item.Priority,
-                    CreateTime = item.CreateTime
+                    CreateTime = item.CreateTime,
+                    AIServiceLlm = llm,
                 };
                 FileEventHandler.MonitorFolder(parameters, delay);
 

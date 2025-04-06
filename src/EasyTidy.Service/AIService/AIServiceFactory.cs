@@ -29,7 +29,7 @@ public class AIServiceFactory
             : throw new Exception("未知的 AI 服务商");
     }
 
-    public static IAIServiceLlm CreateAIServiceLlm(AIServiceTable entity)
+    public static IAIServiceLlm CreateAIServiceLlm(AIServiceTable entity, string prompt = null)
     {
         IAIServiceLlm aIServiceLlm = entity.Type switch
         {
@@ -37,9 +37,9 @@ public class AIServiceFactory
             _ => throw new NotImplementedException(),
         };
 
-        if (!string.IsNullOrEmpty(entity.UserDefinePromptsJson))
+        if (!string.IsNullOrEmpty(prompt))
         {
-            aIServiceLlm.UserDefinePrompts = JsonConvert.DeserializeObject<List<UserDefinePrompt>>(entity.UserDefinePromptsJson) ?? new List<UserDefinePrompt>();
+            aIServiceLlm.UserDefinePrompts = JsonConvert.DeserializeObject<List<UserDefinePrompt>>(prompt) ?? new List<UserDefinePrompt>();
         }
 
         // 反射填充属性
