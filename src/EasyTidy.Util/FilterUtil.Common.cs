@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
+using System.Text.RegularExpressions;
 
 namespace EasyTidy.Util;
 
@@ -139,5 +141,90 @@ public partial class FilterUtil
             ComparisonResult.NotBetween when filterDates.Length == 2 => filterDates[0] < fileDate || filterDates[1] > fileDate, // 不在两个日期之间
             _ => false,
         };
+    }
+
+    public static Dictionary<string, string> ExtractKeyValuePairsFromRaw(string raw)
+    {
+        try
+        {
+            if (string.IsNullOrEmpty(raw))
+            {
+                return new Dictionary<string, string>();
+            }
+
+            // Step 1: Remove code block symbols and clean the JSON string
+            string cleanedJson = Regex.Replace(raw, @"```(?:json|c#)?\s*([\s\S]*?)```", "$1").Trim();
+
+            // 如果没有找到代码块，尝试直接解析原始内容
+            if (string.IsNullOrEmpty(cleanedJson))
+            {
+                cleanedJson = raw.Trim();
+            }
+
+            // 尝试查找第一个 { 和最后一个 } 之间的内容
+            int startIndex = cleanedJson.IndexOf('{');
+            int endIndex = cleanedJson.LastIndexOf('}');
+
+            if (startIndex >= 0 && endIndex > startIndex)
+            {
+                cleanedJson = cleanedJson.Substring(startIndex, endIndex - startIndex + 1);
+            }
+            else
+            {
+                LogService.Logger.Warn($"无法找到有效的AI输出内容: {cleanedJson}");
+                return new Dictionary<string, string>();
+            }
+
+            // Step 2: Parse as JSON with options
+            var options = new JsonDocumentOptions
+            {
+                AllowTrailingCommas = true,
+                CommentHandling = JsonCommentHandling.Skip
+            };
+
+            // Step 3: Parse JSON and extract key-value pairs
+            var result = new Dictionary<string, string>();
+            using var doc = JsonDocument.Parse(cleanedJson, options);
+            ExtractRecursive(doc.RootElement, result, "");
+            return result;
+        }
+        catch (JsonException ex)
+        {
+            LogService.Logger.Error($"JSON解析错误: {ex.Message}, 原始内容: {raw}");
+            return new Dictionary<string, string>();
+        }
+        catch (Exception ex)
+        {
+            LogService.Logger.Error($"提取键值对时发生错误: {ex.Message}");
+            return new Dictionary<string, string>();
+        }
+    }
+
+    private static void ExtractRecursive(JsonElement element, Dictionary<string, string> dict, string prefix)
+    {
+        switch (element.ValueKind)
+        {
+            case JsonValueKind.Object:
+                foreach (var prop in element.EnumerateObject())
+                {
+                    string fullKey = string.IsNullOrEmpty(prefix) ? prop.Name : $"{prefix}.{prop.Name}";
+                    ExtractRecursive(prop.Value, dict, fullKey);
+                }
+                break;
+
+            case JsonValueKind.Array:
+                int index = 0;
+                foreach (var item in element.EnumerateArray())
+                {
+                    string arrayKey = $"{prefix}[{index}]";
+                    ExtractRecursive(item, dict, arrayKey);
+                    index++;
+                }
+                break;
+
+            default:
+                dict[prefix] = element.ToString();
+                break;
+        }
     }
 }

@@ -13,7 +13,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.UI.Dispatching;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace EasyTidy.ViewModels;
@@ -151,8 +153,8 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
             PrimaryButtonText = "SaveText".GetLocalized(),
             CloseButtonText = "CancelText".GetLocalized(),
             TaskTarget = string.Empty,
-            Password = string.IsNullOrEmpty(Settings.EncryptedPassword) 
-            ? string.Empty 
+            Password = string.IsNullOrEmpty(Settings.EncryptedPassword)
+            ? string.Empty
             : CryptoUtil.DesDecrypt(Settings.EncryptedPassword),
             Encencrypted = Settings.Encrypted,
             IsSourceFile = Settings.OriginalFile
@@ -174,20 +176,18 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 args.Cancel = true;
                 return;
             }
-            Settings.EncryptedPassword = string.IsNullOrEmpty(Settings.EncryptedPassword) 
-            ? CryptoUtil.DesEncrypt(dialog.Password) 
+            Settings.EncryptedPassword = string.IsNullOrEmpty(Settings.EncryptedPassword)
+            ? CryptoUtil.DesEncrypt(dialog.Password)
             : Settings.EncryptedPassword;
             Settings.Encrypted = dialog.Encencrypted;
             Settings.OriginalFile = dialog.IsSourceFile;
             var ai = await _dbContext.AIService.Where(x => x.IsEnabled).FirstOrDefaultAsync();
-            if (ai != null && SelectedOperationMode == OperationMode.AIClassification)
+            var prompt = SelectedOperationMode switch
             {
-                ai.UserDefinePromptsJson = dialog.CustomPrompt;
-            }
-            else if (ai != null && SelectedOperationMode == OperationMode.AISummary)
-            {
-                ai.UserDefinePromptsJson = GetUserDefinePromptsJson(dialog.SystemPrompt, dialog.UserPrompt);
-            }
+                OperationMode.AIClassification => GetUserDefinePromptsJson(string.Empty, dialog.CustomPrompt, "分类"),
+                OperationMode.AISummary => GetUserDefinePromptsJson(dialog.SystemPrompt, dialog.UserPrompt, "总结"),
+                _ => string.Empty
+            };
             await _dbContext.TaskOrchestration.AddAsync(new TaskOrchestrationTable
             {
                 TaskName = dialog.TaskName,
@@ -212,6 +212,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 ? await _dbContext.Filters.Where(x => x.Id == SelectedFilter.Id).FirstOrDefaultAsync() : null,
                 IsRegex = dialog.IsRegex,
                 AIIdentify = ai != null ? ai.Identify : Guid.Empty,
+                UserDefinePromptsJson = prompt
             });
             await _dbContext.SaveChangesAsync();
             if (dialog.Shortcut)
@@ -291,20 +292,36 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         return path.Equals("DesktopText".GetLocalized(), StringComparison.OrdinalIgnoreCase);
     }
 
-    private static string GetUserDefinePromptsJson(string systemPrompt, string userPrompt)
+    private static readonly JsonSerializerOptions CachedJsonOptions = new()
     {
-        var promptConfig = new
+        WriteIndented = true,
+        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+        Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+    };
+
+    private static string GetUserDefinePromptsJson(string systemPrompt, string userPrompt, string promptName)
+    {
+        var promptConfigs = new List<object>
         {
-            enabled = true,
-            name = "总结",
-            prompts = new[]
+            new
             {
-                new { content = systemPrompt, role = "system" },
-                new { content = userPrompt, role = "user" }
+                enabled = true,
+                name = promptName,
+                prompts = new[]
+                {
+                    new {
+                        content = string.IsNullOrEmpty(systemPrompt) ? "" : systemPrompt,
+                        role = "system"
+                    },
+                    new {
+                        content = string.IsNullOrEmpty(userPrompt) ? "" : userPrompt,
+                        role = "user"
+                    }
+                }
             }
         };
 
-        return JsonSerializer.Serialize(promptConfig, new JsonSerializerOptions { WriteIndented = true });
+        return JsonSerializer.Serialize(promptConfigs, CachedJsonOptions);
     }
 
     /// <summary>
@@ -451,8 +468,8 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 dialog.IsRegex = task.IsRegex;
                 dialog.RuleType = task.RuleType;
                 dialog.IsSourceFile = Settings.OriginalFile;
-                dialog.Password = string.IsNullOrEmpty(Settings.EncryptedPassword) 
-                ? string.Empty 
+                dialog.Password = string.IsNullOrEmpty(Settings.EncryptedPassword)
+                ? string.Empty
                 : CryptoUtil.DesDecrypt(Settings.EncryptedPassword);
                 dialog.Encencrypted = Settings.Encrypted;
 
@@ -479,7 +496,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                     Settings.EncryptedPassword = dialog.Password;
                     Settings.Encrypted = dialog.Encencrypted;
                     Settings.OriginalFile = dialog.IsSourceFile;
-                    oldTask.Filter = SelectedFilter != null 
+                    oldTask.Filter = SelectedFilter != null
                     ? await _dbContext.Filters.Where(x => x.Id == SelectedFilter.Id).FirstOrDefaultAsync()
                     : null;
                     await _dbContext.SaveChangesAsync();
@@ -518,8 +535,8 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
             }
             return group;
         }
-        catch (Exception ex) 
-        { 
+        catch (Exception ex)
+        {
             Logger.Error($"TaskOrchestrationViewModel: GroupUpdateOrCreate 异常信息 {ex}");
             return null;
         }
@@ -531,11 +548,11 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         {
             await QuartzHelper.UpdateJob(taskName, groupName, newTaskName, newGroupName);
         }
-        catch (Exception ex) 
+        catch (Exception ex)
         {
             Logger.Error($"TaskOrchestrationViewModel: UpdateQuartzGroup 异常信息 {ex}");
         }
-        
+
     }
 
     /// <summary>
@@ -668,7 +685,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 var automatic = new AutomaticJob();
                 var rule = await automatic.GetSpecialCasesRule(task.GroupName.Id, task.TaskRule);
                 var ai = await _dbContext.AIService.Where(x => x.Identify.ToString().Equals(task.AIIdentify.ToString())).FirstOrDefaultAsync();
-                var llm = AIServiceFactory.CreateAIServiceLlm(ai);
+                var llm = AIServiceFactory.CreateAIServiceLlm(ai, task.UserDefinePromptsJson);
                 var operationParameters = new OperationParameters(
                     operationMode: task.OperationMode,
                     sourcePath: task.TaskSource.Equals("DesktopText".GetLocalized())
@@ -680,7 +697,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                     funcs: FilterUtil.GeneratePathFilters(rule, task.RuleType),
                     pathFilter: FilterUtil.GetPathFilters(task.Filter),
                     ruleModel: new RuleModel { Filter = task.Filter, Rule = task.TaskRule, RuleType = task.RuleType })
-                { RuleName = task.TaskRule, AIServiceLlm = llm };
+                { RuleName = task.TaskRule, AIServiceLlm = llm, Prompt = task.UserDefinePromptsJson };
                 await OperationHandler.ExecuteOperationAsync(task.OperationMode, operationParameters);
                 _notificationQueue.ShowWithWindowExtension("ExecutionSuccessfulText".GetLocalized(), InfoBarSeverity.Success);
                 _ = ClearNotificationAfterDelay(3000);
@@ -717,7 +734,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                     foreach (var item in orderList)
                     {
                         var ai = await _dbContext.AIService.Where(x => x.Identify.ToString().Equals(item.AIIdentify.ToString())).FirstOrDefaultAsync();
-                        var llm = AIServiceFactory.CreateAIServiceLlm(ai);
+                        var llm = AIServiceFactory.CreateAIServiceLlm(ai, item.UserDefinePromptsJson);
                         var automatic = new AutomaticJob();
                         var rule = await automatic.GetSpecialCasesRule(item.GroupName.Id, item.TaskRule);
                         var operationParameters = new OperationParameters(
@@ -731,7 +748,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                             funcs: FilterUtil.GeneratePathFilters(rule, item.RuleType),
                             pathFilter: FilterUtil.GetPathFilters(item.Filter),
                             ruleModel: new RuleModel { Filter = item.Filter, Rule = item.TaskRule, RuleType = item.RuleType })
-                        { RuleName = item.TaskRule, AIServiceLlm = llm };
+                        { RuleName = item.TaskRule, AIServiceLlm = llm, Prompt = item.UserDefinePromptsJson };
                         await OperationHandler.ExecuteOperationAsync(item.OperationMode, operationParameters);
                         _notificationQueue.ShowWithWindowExtension("ExecutionSuccessfulText".GetLocalized(), InfoBarSeverity.Success);
                         _ = ClearNotificationAfterDelay(3000);

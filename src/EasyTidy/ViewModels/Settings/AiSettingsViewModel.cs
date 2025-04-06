@@ -24,33 +24,4 @@ public class AiSettingsViewModel : ObservableObject
             new("AiSettingPage_Header".GetLocalized(), typeof(AiSettingsViewModel).FullName!),
         };
     }
-
-
-
-    private IAIServiceLlm CreateAIServiceLlm(AIServiceTable entity)
-    {
-        IAIServiceLlm aIServiceLlm = entity.Type switch
-        {
-            ServiceType.OpenAI => new OpenAIService(),
-            _ => throw new NotImplementedException(),
-        };
-
-        if (!string.IsNullOrEmpty(entity.UserDefinePromptsJson))
-        {
-            aIServiceLlm.UserDefinePrompts = JsonConvert.DeserializeObject<List<UserDefinePrompt>>(entity.UserDefinePromptsJson) ?? new List<UserDefinePrompt>();
-        }
-
-        // 反射填充属性
-        var properties = entity.GetType().GetProperties();
-        foreach (var prop in properties)
-        {
-            var easyTidyProp = aIServiceLlm.GetType().GetProperty(prop.Name);
-            if (easyTidyProp != null && easyTidyProp.CanWrite)
-            {
-                easyTidyProp.SetValue(aIServiceLlm, prop.GetValue(entity));
-            }
-        }
-
-        return aIServiceLlm;
-    }
 }

@@ -29,5 +29,4 @@ public class AIServiceTable
 
     public string Model { get; set; }
 
-    public string? UserDefinePromptsJson { get; set; }
 }

@@ -61,4 +61,6 @@ public class TaskOrchestrationTable
 
     public Guid AIIdentify { get; set; }
 
+    public string? UserDefinePromptsJson { get; set; }
+
 }
