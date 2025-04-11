@@ -473,7 +473,7 @@ public static class FileActuator
             FileResolver.HandleFileConflict(sourcePath, targetPath, fileOperationType, () =>
             {
                 File.Move(sourcePath, targetPath, true);
-            });
+            }, true);
         }
         catch (Exception ex)
         {
