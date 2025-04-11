@@ -12,6 +12,13 @@ namespace EasyTidy.Common.Database;
 
 public partial class BackupAndRestore
 {
+    private AppDbContext _dbContext;
+
+    public BackupAndRestore()
+    {
+        _dbContext = App.GetService<AppDbContext>();;
+    }
+
     public static void BackupDatabase(string sourcePath, string backupPath)
     {
         if (File.Exists(backupPath))
@@ -62,7 +69,13 @@ public partial class BackupAndRestore
                 targetConnection.Open();
 
                 // 恢复过程
-                targetConnection.BackupDatabase(backupConnection, "main", "main", -1, null, 0);
+                backupConnection.BackupDatabase(targetConnection, "main", "main", -1, null, 0);
+                // 检查是否存在在备份之后新增的表跟字段
+                Task.Run(async () =>
+                {
+                    BackupAndRestore backupAndRestore = new();
+                    await backupAndRestore._dbContext.InitializeDatabaseAsync();
+                }).Wait();
 
                 Logger.Info("Database restoration completed successfully.");
             }
