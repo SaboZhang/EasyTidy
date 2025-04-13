@@ -136,6 +136,8 @@
                             <TeachingTip.HeroContent>
                                 <ListView x:Name="DialogFilterListView"
                                           MaxHeight="320"
+                                          IsItemClickEnabled="True"
+                                          ItemClick="DialogFilterListView_ItemClick"
                                           ItemsSource="{x:Bind ViewModel.FilterListACV, Mode=TwoWay}">
                                     <ListView.ItemTemplate>
                                         <DataTemplate x:DataType="model:FilterTable">
