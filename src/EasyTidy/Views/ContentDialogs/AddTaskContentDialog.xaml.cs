@@ -613,6 +613,12 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
             }
         }
     }
+
+    private void DialogFilterListView_ItemClick(object sender, ItemClickEventArgs e)
+    {
+        FilterButtonTeachingTip.IsOpen = false;
+        ViewModel.ItemClickChangedCommand.Execute(sender);
+    }
 }
 
 public static class PanelVisibilityConstants

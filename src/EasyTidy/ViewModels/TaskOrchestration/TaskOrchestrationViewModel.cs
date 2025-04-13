@@ -947,6 +947,29 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         }
     }
 
+    [RelayCommand]
+    private async Task OnItemClickChanged(object dataContext)
+    {
+        try
+        {
+            if (dataContext != null)
+            {
+                var listView = dataContext as ListView;
+                var item = listView.Items[0];
+                if (item is FilterTable filter)
+                {
+                    SelectedFilter = filter;
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.Error($"TaskOrchestrationViewModel: OnSelectedItemChanged 异常信息 {ex}");
+        }
+
+        await Task.CompletedTask;
+    }
+
     public async Task OnTaskListCollectionChangedAsync(TaskOrchestrationTable task, int draggedIndex, int droppedIndex)
     {
         if ((DateTime.Now - LastInvocationTime).TotalMilliseconds < 800)
