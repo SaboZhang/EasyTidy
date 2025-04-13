@@ -42,6 +42,7 @@ public static class OperationHandler
             { OperationMode.FileSnapshot, CreateSnapshot },
             { OperationMode.AISummary, CreateAISummary },
             { OperationMode.AIClassification, CreateAIClassification },
+            { OperationMode.RunExternalPrograms, RunExternalPrograms },
         };
     }
 
@@ -463,6 +464,14 @@ public static class OperationHandler
     }
 
     private static async Task CreateAISummary(OperationParameters parameters)
+    {
+        await Task.Run(async () =>
+        {
+            await FileActuator.ExecuteFileOperationAsync(parameters);
+        });
+    }
+
+    private static async Task RunExternalPrograms(OperationParameters parameters)
     {
         await Task.Run(async () =>
         {

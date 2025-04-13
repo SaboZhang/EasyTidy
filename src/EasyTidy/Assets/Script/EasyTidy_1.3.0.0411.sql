@@ -1,5 +1,6 @@
 ALTER TABLE TaskOrchestration ADD COLUMN AIIdentify TEXT DEFAULT "00000000-0000-0000-0000-000000000000";
 ALTER TABLE TaskOrchestration ADD COLUMN UserDefinePromptsJson TEXT DEFAULT NULL;
+ALTER TABLE TaskOrchestration ADD COLUMN Argument TEXT NULL;
 
 PRAGMA foreign_keys = false;
 
@@ -16,7 +17,9 @@ CREATE TABLE "AIService" (
   "Url" TEXT,
   "AppID" TEXT,
   "AppKey" TEXT,
-  "Model" TEXT
+  "Model" TEXT,
+  "Temperature" REAL DEFAULT 0.8,
+  "IsDefault" INTEGER DEFAULT 0
 );
 
 PRAGMA foreign_keys = true;

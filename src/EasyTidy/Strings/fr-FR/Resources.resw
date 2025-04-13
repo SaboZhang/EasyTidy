@@ -1417,4 +1417,88 @@
   <data name="SharedToggleSwitch.OnContent" xml:space="preserve">
     <value>Sur</value>
   </data>
+  <data name="OpenAITxt" xml:space="preserve">
+    <value>OpenAI</value>
+  </data>
+  <data name="TongyiTxt" xml:space="preserve">
+    <value>TONGYI</value>
+  </data>
+  <data name="OllamaTxt" xml:space="preserve">
+    <value>Ollama</value>
+  </data>
+  <data name="HuggingFaceTxt" xml:space="preserve">
+    <value>Hugging Face</value>
+  </data>
+  <data name="OpenAIFormatTxt" xml:space="preserve">
+    <value>OpenAI Format</value>
+  </data>
+  <data name="AddCustomChatModel" xml:space="preserve">
+    <value>Ajouter un modèle de chat</value>
+  </data>
+  <data name="DeleteAIService" xml:space="preserve">
+    <value>Supprimer le service d'IA</value>
+  </data>
+  <data name="SureDelete" xml:space="preserve">
+    <value>Êtes-vous certain de vouloir supprimer ce service d'IA ?</value>
+  </data>
+  <data name="UpdateAIService" xml:space="preserve">
+    <value>Mise à jour du service d'IA</value>
+  </data>
+  <data name="ChatModels.Text" xml:space="preserve">
+    <value>Modèles de chat</value>
+  </data>
+  <data name="DefaultAI.Header" xml:space="preserve">
+    <value>Modèle par défaut</value>
+  </data>
+  <data name="DefaultAI.Description" xml:space="preserve">
+    <value>Définir le modèle d'IA par défaut à utiliser</value>
+  </data>
+  <data name="SetAsDefault.Content" xml:space="preserve">
+    <value>Définir par défaut</value>
+  </data>
+  <data name="NewModel.Content" xml:space="preserve">
+    <value>Modèle ajouté</value>
+  </data>
+  <data name="ModelName.Text" xml:space="preserve">
+    <value>Nom du modèle</value>
+  </data>
+  <data name="Provider.Text" xml:space="preserve">
+    <value>Fournisseur</value>
+  </data>
+  <data name="DisplayName.Text" xml:space="preserve">
+    <value>Nom d'affichage</value>
+  </data>
+  <data name="DialogModelName.Header" xml:space="preserve">
+    <value>Nom du modèle</value>
+  </data>
+  <data name="DialogName.Header" xml:space="preserve">
+    <value>Nom d'affichage</value>
+  </data>
+  <data name="DialogProvider.Header" xml:space="preserve">
+    <value>Fournisseur</value>
+  </data>
+  <data name="DialogBasePath.Header" xml:space="preserve">
+    <value>URL de base</value>
+  </data>
+  <data name="APPID.Header" xml:space="preserve">
+    <value>ID de l'application</value>
+  </data>
+  <data name="APIKey.Header" xml:space="preserve">
+    <value>Clé API</value>
+  </data>
+  <data name="Temperature.Header" xml:space="preserve">
+    <value>Température</value>
+  </data>
+  <data name="Tips.Text" xml:space="preserve">
+    <value>Il n'est généralement pas recommandé d'inclure la partie Path dans l'adresse de l'API de l'interface, à moins que vous ne soyez absolument certain de ce que vous faites. Par exemple, dans l'adresse de l'interface OpenAI https://api.openai.com/v1/chat/completions, le Path est /v1/chat/completions.</value>
+  </data>
+  <data name="RunExternalProgramsText" xml:space="preserve">
+    <value>Exécuter des programmes externes</value>
+  </data>
+  <data name="DialogRunSourceFolder.Text" xml:space="preserve">
+    <value>Programme/Script</value>
+  </data>
+  <data name="ExecutionParameters.Text" xml:space="preserve">
+    <value>Argument</value>
+  </data>
 </root>

@@ -234,6 +234,15 @@
     <ProjectReference Include="..\EasyTidy.Util\EasyTidy.Util.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <None Update="Assets\AI\default_ai.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\AI\openaiformat.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\AI\QWen.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Assets\icon.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -250,6 +259,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Assets\Red.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\Script\EasyTidy_1.3.0.0411.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Assets\Script\quartz_sqlite.sql">
@@ -291,6 +303,9 @@
     <None Update="Themes\Styles\TextBlock.xaml">
       <Generator>MSBuild:Compile</Generator>
     </None>
+    <Page Update="Views\ContentDialogs\AddAIContentDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\Settings\AiSettingsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

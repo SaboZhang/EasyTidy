@@ -67,7 +67,9 @@ public enum OperationMode
 
     [Display(Name = "AISummaryText")] AISummary,
 
-    [Display(Name = "AIClassificationText")] AIClassification
+    [Display(Name = "AIClassificationText")] AIClassification,
+
+    [Display(Name = "RunExternalProgramsText")] RunExternalPrograms
 
 }
 
@@ -178,10 +180,16 @@ public enum Encrypted
 
 public enum ServiceType
 {
+    [Display(Name = "OpenAITxt")]
     OpenAI,
+    [Display(Name = "TongyiTxt")]
     QWen,
+    [Display(Name = "OllamaTxt")]
     Ollama,
-    HuggingFace
+    [Display(Name = "HuggingFaceTxt")]
+    HuggingFace,
+    [Display(Name = "OpenAIFormatTxt")]
+    OpenAIFormat
 }
 
 public enum FileType
@@ -193,4 +201,10 @@ public enum FileType
     Docx,
     Xls,
     Xlsx
+}
+
+public enum PromptType
+{
+    BuiltIn,
+    Custom
 }

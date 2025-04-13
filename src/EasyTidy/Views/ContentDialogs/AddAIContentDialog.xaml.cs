@@ -1,4 +1,4 @@
-using EasyTidy.Common.Views;
+using EasyTidy.Model;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -17,40 +17,38 @@ using Windows.Foundation.Collections;
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
-namespace EasyTidy.Views;
+namespace EasyTidy.Views.ContentDialogs;
 
 /// <summary>
 /// An empty page that can be used on its own or navigated to within a Frame.
 /// </summary>
-public sealed partial class AiSettingsPage : ToolPage
+public sealed partial class AddAIContentDialog : ContentDialog
 {
     public AiSettingsViewModel ViewModel { get; set; }
-
-    public AiSettingsPage()
+    public AddAIContentDialog()
     {
         ViewModel = App.GetService<AiSettingsViewModel>();
         this.InitializeComponent();
-        DataContext = ViewModel;
         XamlRoot = App.MainWindow.Content.XamlRoot;
+        RequestedTheme = ViewModel.ThemeSelectorService.Theme;
     }
 
-    private void EditButton_Click(object sender, RoutedEventArgs e)
-    {
-        ViewModel.UpdateAIServiceClickCommand.Execute(sender as Button);
-    }
+    public string ModelName { get; set; }
 
-    private void DeleteButton_Click(object sender, RoutedEventArgs e)
-    {
-        ViewModel.DeleteAIServiceClickCommand.Execute(sender as Button);
-    }
+    public string Identifier { get; set; }
 
-    private void CheckBox_Checked(object sender, RoutedEventArgs e)
-    {
-        ViewModel.ChangeIsEnabledCommand.Execute(sender as CheckBox);
-    }
+    public string AppKey { get; set; }
 
-    private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
-    {
-        ViewModel.ChangeIsEnabledCommand.Execute(sender as CheckBox);
-    }
+    public string AppID { get; set; }
+
+    public ServiceType ServiceType { get; set; }
+
+    public bool IsEnable { get; set; }
+
+    public string BaseUrl { get; set; }
+
+    public string ChatModel { get; set; }
+
+    public double Temperature { get; set; } = 0.8;
+
 }

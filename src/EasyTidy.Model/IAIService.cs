@@ -37,4 +37,6 @@ public interface IAIService
 public interface IAIServiceLlm : IAIService
 {
     double Temperature { get; set; }
+
+    bool IsDefault { get; set; }
 }

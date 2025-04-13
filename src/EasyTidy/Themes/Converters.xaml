@@ -9,7 +9,9 @@
     <cover:BoolToStringConverter x:Key="BoolToStringConverter" />
     <cover:StringToBoolConverter x:Key="StringToBoolConverter" />
     <cover:LineDashStrokeArrayConverter x:Key="LineDashStrokeArrayConverter" />
+    <cover:BoolToEnumConverter x:Key="BoolToEnumConverter"/>
+    <cover:EnumToImageConverter x:Key="EnumToImageConverter"/>
 
     <converter:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
-    
+
 </ResourceDictionary>

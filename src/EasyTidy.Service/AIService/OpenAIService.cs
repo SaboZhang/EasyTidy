@@ -45,7 +45,7 @@ public partial class OpenAIService : ObservableObject, IAIServiceLlm
     [ObservableProperty] 
     private ServiceType _type = 0;
     [ObservableProperty] 
-    private double _temperature = 1.0;
+    private double _temperature = 0.8;
     [ObservableProperty] 
     private bool _isEnabled = true;
     [ObservableProperty] 
@@ -79,6 +79,9 @@ public partial class OpenAIService : ObservableObject, IAIServiceLlm
             ]
         ),
     ];
+
+    [ObservableProperty]
+    private bool _isDefault = true;
 
     public async Task PredictAsync(object request, Action<string> onDataReceived, CancellationToken token)
     {
