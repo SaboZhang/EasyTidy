@@ -181,11 +181,16 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
             : Settings.EncryptedPassword;
             Settings.Encrypted = dialog.Encencrypted;
             Settings.OriginalFile = dialog.IsSourceFile;
-            var ai = await _dbContext.AIService.Where(x => x.IsEnabled).FirstOrDefaultAsync();
+            var ai = await _dbContext.AIService.Where(x => x.IsDefault == true && x.IsEnabled == true).FirstOrDefaultAsync();
+            if (ai == null && (SelectedOperationMode == OperationMode.AIClassification || SelectedOperationMode == OperationMode.AISummary))
+            {
+                _notificationQueue.ShowWithWindowExtension("SaveSuccessfulText".GetLocalized(), InfoBarSeverity.Error);
+                return;
+            }
             var prompt = SelectedOperationMode switch
             {
                 OperationMode.AIClassification => GetUserDefinePromptsJson(string.Empty, dialog.CustomPrompt, "分类"),
-                OperationMode.AISummary => GetUserDefinePromptsJson(dialog.SystemPrompt, dialog.UserPrompt, "总结"),
+                OperationMode.AISummary when dialog.SelectedMode == PromptType.Custom => GetUserDefinePromptsJson(dialog.SystemPrompt, dialog.UserPrompt, "总结"),
                 _ => string.Empty
             };
             await _dbContext.TaskOrchestration.AddAsync(new TaskOrchestrationTable
@@ -211,8 +216,11 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 Filter = SelectedFilter != null
                 ? await _dbContext.Filters.Where(x => x.Id == SelectedFilter.Id).FirstOrDefaultAsync() : null,
                 IsRegex = dialog.IsRegex,
-                AIIdentify = ai != null ? ai.Identify : Guid.Empty,
-                UserDefinePromptsJson = prompt
+                AIIdentify = ai != null 
+                && (SelectedOperationMode == OperationMode.AIClassification 
+                || SelectedOperationMode == OperationMode.AISummary) ? ai.Identify : Guid.Empty,
+                UserDefinePromptsJson = prompt,
+                Argument = dialog.Argument
             });
             await _dbContext.SaveChangesAsync();
             if (dialog.Shortcut)
@@ -361,6 +369,21 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         }
     }
 
+    [RelayCommand]
+    private async Task OnSelectRunSourcePath()
+    {
+        try
+        {
+            var runFile = await FileAndFolderPickerHelper.PickSingleFileAsync(App.MainWindow, ["*"]);
+            TaskSource = runFile?.Path ?? "";
+        }
+        catch (Exception ex)
+        {
+            TaskSource = "";
+            Logger.Error($"TaskOrchestrationViewModel: OnSelectRunPath 异常信息 {ex}");
+        }
+    }
+
     /// <summary>
     /// 选择目标文件
     /// </summary>
@@ -472,6 +495,18 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 ? string.Empty
                 : CryptoUtil.DesDecrypt(Settings.EncryptedPassword);
                 dialog.Encencrypted = Settings.Encrypted;
+                dialog.SelectedMode = PromptType.BuiltIn;
+                dialog.Argument = task.Argument;
+                if (task.OperationMode == OperationMode.AIClassification)
+                {
+                    dialog.CustomPrompt = FilterUtil.ParseUserDefinePrompt(task.UserDefinePromptsJson);
+                }
+                if (task.OperationMode == OperationMode.AISummary && !string.IsNullOrEmpty(task.UserDefinePromptsJson))
+                {
+                    dialog.SelectedMode = PromptType.Custom;
+                    dialog.SystemPrompt = FilterUtil.ParseUserDefinePrompt(task.UserDefinePromptsJson, "总结", "system");
+                    dialog.UserPrompt = FilterUtil.ParseUserDefinePrompt(task.UserDefinePromptsJson, "总结", "user");
+                }
 
                 dialog.PrimaryButtonClick += async (s, e) =>
                 {
@@ -496,9 +531,17 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                     Settings.EncryptedPassword = dialog.Password;
                     Settings.Encrypted = dialog.Encencrypted;
                     Settings.OriginalFile = dialog.IsSourceFile;
+                    oldTask.Argument = dialog.Argument;
                     oldTask.Filter = SelectedFilter != null
                     ? await _dbContext.Filters.Where(x => x.Id == SelectedFilter.Id).FirstOrDefaultAsync()
                     : null;
+                    var prompt = SelectedOperationMode switch
+                    {
+                        OperationMode.AIClassification => GetUserDefinePromptsJson(string.Empty, dialog.CustomPrompt, "分类"),
+                        OperationMode.AISummary when dialog.SelectedMode == PromptType.Custom => GetUserDefinePromptsJson(dialog.SystemPrompt, dialog.UserPrompt, "总结"),
+                        _ => string.Empty
+                    };
+                    oldTask.UserDefinePromptsJson = prompt;
                     await _dbContext.SaveChangesAsync();
                     await OnPageLoaded();
                     _notificationQueue.ShowWithWindowExtension("ModifySuccessfullyText".GetLocalized(), InfoBarSeverity.Success);
@@ -685,7 +728,11 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 var automatic = new AutomaticJob();
                 var rule = await automatic.GetSpecialCasesRule(task.GroupName.Id, task.TaskRule);
                 var ai = await _dbContext.AIService.Where(x => x.Identify.ToString().Equals(task.AIIdentify.ToString())).FirstOrDefaultAsync();
-                var llm = AIServiceFactory.CreateAIServiceLlm(ai, task.UserDefinePromptsJson);
+                IAIServiceLlm llm = null;
+                if (task.OperationMode == OperationMode.AIClassification || task.OperationMode == OperationMode.AISummary)
+                {
+                    llm = AIServiceFactory.CreateAIServiceLlm(ai, task.UserDefinePromptsJson);
+                }
                 var operationParameters = new OperationParameters(
                     operationMode: task.OperationMode,
                     sourcePath: task.TaskSource.Equals("DesktopText".GetLocalized())
@@ -697,7 +744,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                     funcs: FilterUtil.GeneratePathFilters(rule, task.RuleType),
                     pathFilter: FilterUtil.GetPathFilters(task.Filter),
                     ruleModel: new RuleModel { Filter = task.Filter, Rule = task.TaskRule, RuleType = task.RuleType })
-                { RuleName = task.TaskRule, AIServiceLlm = llm, Prompt = task.UserDefinePromptsJson };
+                { RuleName = task.TaskRule, AIServiceLlm = llm, Prompt = task.UserDefinePromptsJson, Argument = task.Argument };
                 await OperationHandler.ExecuteOperationAsync(task.OperationMode, operationParameters);
                 _notificationQueue.ShowWithWindowExtension("ExecutionSuccessfulText".GetLocalized(), InfoBarSeverity.Success);
                 _ = ClearNotificationAfterDelay(3000);
@@ -734,7 +781,11 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                     foreach (var item in orderList)
                     {
                         var ai = await _dbContext.AIService.Where(x => x.Identify.ToString().Equals(item.AIIdentify.ToString())).FirstOrDefaultAsync();
-                        var llm = AIServiceFactory.CreateAIServiceLlm(ai, item.UserDefinePromptsJson);
+                        IAIServiceLlm llm = null;
+                        if (item.OperationMode == OperationMode.AIClassification || item.OperationMode == OperationMode.AISummary)
+                        {
+                            llm = AIServiceFactory.CreateAIServiceLlm(ai, item.UserDefinePromptsJson);
+                        }
                         var automatic = new AutomaticJob();
                         var rule = await automatic.GetSpecialCasesRule(item.GroupName.Id, item.TaskRule);
                         var operationParameters = new OperationParameters(
@@ -748,7 +799,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                             funcs: FilterUtil.GeneratePathFilters(rule, item.RuleType),
                             pathFilter: FilterUtil.GetPathFilters(item.Filter),
                             ruleModel: new RuleModel { Filter = item.Filter, Rule = item.TaskRule, RuleType = item.RuleType })
-                        { RuleName = item.TaskRule, AIServiceLlm = llm, Prompt = item.UserDefinePromptsJson };
+                        { RuleName = item.TaskRule, AIServiceLlm = llm, Prompt = item.UserDefinePromptsJson, Argument = item.Argument };
                         await OperationHandler.ExecuteOperationAsync(item.OperationMode, operationParameters);
                         _notificationQueue.ShowWithWindowExtension("ExecutionSuccessfulText".GetLocalized(), InfoBarSeverity.Success);
                         _ = ClearNotificationAfterDelay(3000);

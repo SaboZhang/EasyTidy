@@ -1414,4 +1414,88 @@
   <data name="SharedToggleSwitch.OnContent" xml:space="preserve">
     <value>開</value>
   </data>
+  <data name="OpenAITxt" xml:space="preserve">
+    <value>OpenAI</value>
+  </data>
+  <data name="TongyiTxt" xml:space="preserve">
+    <value>TONGYI</value>
+  </data>
+  <data name="OllamaTxt" xml:space="preserve">
+    <value>Ollama</value>
+  </data>
+  <data name="HuggingFaceTxt" xml:space="preserve">
+    <value>Hugging Face</value>
+  </data>
+  <data name="OpenAIFormatTxt" xml:space="preserve">
+    <value>OpenAI Format</value>
+  </data>
+  <data name="AddCustomChatModel" xml:space="preserve">
+    <value>新增聊天模型</value>
+  </data>
+  <data name="DeleteAIService" xml:space="preserve">
+    <value>新增聊天模型</value>
+  </data>
+  <data name="SureDelete" xml:space="preserve">
+    <value>您確定要刪除此AI服務嗎？</value>
+  </data>
+  <data name="UpdateAIService" xml:space="preserve">
+    <value>更新AI服务</value>
+  </data>
+  <data name="ChatModels.Text" xml:space="preserve">
+    <value>聊天模型</value>
+  </data>
+  <data name="DefaultAI.Header" xml:space="preserve">
+    <value>預設模型</value>
+  </data>
+  <data name="DefaultAI.Description" xml:space="preserve">
+    <value>設置默認AI模型用於使用</value>
+  </data>
+  <data name="SetAsDefault.Content" xml:space="preserve">
+    <value>設為預設</value>
+  </data>
+  <data name="NewModel.Content" xml:space="preserve">
+    <value>新增模型</value>
+  </data>
+  <data name="ModelName.Text" xml:space="preserve">
+    <value>模型名稱</value>
+  </data>
+  <data name="Provider.Text" xml:space="preserve">
+    <value>供應商</value>
+  </data>
+  <data name="DisplayName.Text" xml:space="preserve">
+    <value>顯示名稱</value>
+  </data>
+  <data name="DialogModelName.Header" xml:space="preserve">
+    <value>模型名稱</value>
+  </data>
+  <data name="DialogName.Header" xml:space="preserve">
+    <value>顯示名稱</value>
+  </data>
+  <data name="DialogProvider.Header" xml:space="preserve">
+    <value>供應商</value>
+  </data>
+  <data name="DialogBasePath.Header" xml:space="preserve">
+    <value>基礎網址</value>
+  </data>
+  <data name="APPID.Header" xml:space="preserve">
+    <value>App ID</value>
+  </data>
+  <data name="APIKey.Header" xml:space="preserve">
+    <value>API Key</value>
+  </data>
+  <data name="Temperature.Header" xml:space="preserve">
+    <value>溫度</value>
+  </data>
+  <data name="Tips.Text" xml:space="preserve">
+    <value>接口API地址不建議填寫Path部分，除非你很清楚你在幹什麼，如OpenAI接口地址為 https://api.openai.com/v1/chat/completions 其中Path為 /v/chat/completions</value>
+  </data>
+  <data name="RunExternalProgramsText" xml:space="preserve">
+    <value>執行外部程式</value>
+  </data>
+  <data name="DialogRunSourceFolder.Text" xml:space="preserve">
+    <value>程式/腳本</value>
+  </data>
+  <data name="ExecutionParameters.Text" xml:space="preserve">
+    <value>運行參數</value>
+  </data>
 </root>

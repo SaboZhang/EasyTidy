@@ -1936,6 +1936,118 @@
           <source>On</source>
           <target state="new">On</target>
         </trans-unit>
+        <trans-unit id="OpenAITxt" translate="yes" xml:space="preserve">
+          <source>OpenAI</source>
+          <target state="new">OpenAI</target>
+        </trans-unit>
+        <trans-unit id="TongyiTxt" translate="yes" xml:space="preserve">
+          <source>QWen</source>
+          <target state="new">QWen</target>
+        </trans-unit>
+        <trans-unit id="OllamaTxt" translate="yes" xml:space="preserve">
+          <source>Ollama</source>
+          <target state="new">Ollama</target>
+        </trans-unit>
+        <trans-unit id="HuggingFaceTxt" translate="yes" xml:space="preserve">
+          <source>Hugging Face</source>
+          <target state="new">Hugging Face</target>
+        </trans-unit>
+        <trans-unit id="OpenAIFormatTxt" translate="yes" xml:space="preserve">
+          <source>OpenAI Format</source>
+          <target state="new">OpenAI Format</target>
+        </trans-unit>
+        <trans-unit id="AddCustomChatModel" translate="yes" xml:space="preserve">
+          <source>Add Chat Model</source>
+          <target state="new">Add Chat Model</target>
+        </trans-unit>
+        <trans-unit id="DeleteAIService" translate="yes" xml:space="preserve">
+          <source>Delete AI Service</source>
+          <target state="new">Delete AI Service</target>
+        </trans-unit>
+        <trans-unit id="SureDelete" translate="yes" xml:space="preserve">
+          <source>Are you sure you want to delete this AI service?</source>
+          <target state="new">Are you sure you want to delete this AI service?</target>
+        </trans-unit>
+        <trans-unit id="UpdateAIService" translate="yes" xml:space="preserve">
+          <source>Update AI Service</source>
+          <target state="new">Update AI Service</target>
+        </trans-unit>
+        <trans-unit id="ChatModels.Text" translate="yes" xml:space="preserve">
+          <source>Chat Models</source>
+          <target state="new">Chat Models</target>
+        </trans-unit>
+        <trans-unit id="DefaultAI.Header" translate="yes" xml:space="preserve">
+          <source>Default model</source>
+          <target state="new">Default model</target>
+        </trans-unit>
+        <trans-unit id="DefaultAI.Description" translate="yes" xml:space="preserve">
+          <source>Set the default AI model for use</source>
+          <target state="new">Set the default AI model for use</target>
+        </trans-unit>
+        <trans-unit id="SetAsDefault.Content" translate="yes" xml:space="preserve">
+          <source>Set as default</source>
+          <target state="new">Set as default</target>
+        </trans-unit>
+        <trans-unit id="NewModel.Content" translate="yes" xml:space="preserve">
+          <source>Added Model</source>
+          <target state="new">Added Model</target>
+        </trans-unit>
+        <trans-unit id="ModelName.Text" translate="yes" xml:space="preserve">
+          <source>Model name</source>
+          <target state="new">Model name</target>
+        </trans-unit>
+        <trans-unit id="Provider.Text" translate="yes" xml:space="preserve">
+          <source>Provider</source>
+          <target state="new">Provider</target>
+        </trans-unit>
+        <trans-unit id="DisplayName.Text" translate="yes" xml:space="preserve">
+          <source>Display name</source>
+          <target state="new">Display name</target>
+        </trans-unit>
+        <trans-unit id="DialogModelName.Header" translate="yes" xml:space="preserve">
+          <source>Model name</source>
+          <target state="new">Model name</target>
+        </trans-unit>
+        <trans-unit id="DialogName.Header" translate="yes" xml:space="preserve">
+          <source>Display Name</source>
+          <target state="new">Display Name</target>
+        </trans-unit>
+        <trans-unit id="DialogProvider.Header" translate="yes" xml:space="preserve">
+          <source>Provider</source>
+          <target state="new">Provider</target>
+        </trans-unit>
+        <trans-unit id="DialogBasePath.Header" translate="yes" xml:space="preserve">
+          <source>Base URL</source>
+          <target state="new">Base URL</target>
+        </trans-unit>
+        <trans-unit id="APPID.Header" translate="yes" xml:space="preserve">
+          <source>App ID</source>
+          <target state="new">App ID</target>
+        </trans-unit>
+        <trans-unit id="APIKey.Header" translate="yes" xml:space="preserve">
+          <source>API Key</source>
+          <target state="new">API Key</target>
+        </trans-unit>
+        <trans-unit id="Temperature.Header" translate="yes" xml:space="preserve">
+          <source>Temperature</source>
+          <target state="new">Temperature</target>
+        </trans-unit>
+        <trans-unit id="Tips.Text" translate="yes" xml:space="preserve">
+          <source>It's generally not recommended to include the Path portion in the Interface API address, unless you're absolutely certain about what you're doing. For example, in the OpenAI interface address https://api.openai.com/v1/chat/completions, the Path is /v1/chat/completions.</source>
+          <target state="new">It's generally not recommended to include the Path portion in the Interface API address, unless you're absolutely certain about what you're doing. For example, in the OpenAI interface address https://api.openai.com/v1/chat/completions, the Path is /v1/chat/completions.</target>
+        </trans-unit>
+        <trans-unit id="RunExternalProgramsText" translate="yes" xml:space="preserve">
+          <source>Run external programs</source>
+          <target state="new">Run external programs</target>
+        </trans-unit>
+        <trans-unit id="DialogRunSourceFolder.Text" translate="yes" xml:space="preserve">
+          <source>Program/Script</source>
+          <target state="new">Program/Script</target>
+        </trans-unit>
+        <trans-unit id="ExecutionParameters.Text" translate="yes" xml:space="preserve">
+          <source>argument</source>
+          <target state="new">argument</target>
+        </trans-unit>
       </group>
     </body>
   </file>

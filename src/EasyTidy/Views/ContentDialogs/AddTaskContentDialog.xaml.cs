@@ -6,6 +6,7 @@ using EasyTidy.Model;
 using Microsoft.UI.Xaml.Input;
 using System.Collections;
 using System.ComponentModel;
+using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
@@ -151,7 +152,23 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
         }
     }
 
+    private PromptType _selectedMode = PromptType.BuiltIn;
+    public PromptType SelectedMode
+    {
+        get => _selectedMode;
+        set
+        {
+            if (_selectedMode != value)
+            {
+                _selectedMode = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+
     public bool IsValid { get; set; }
+
+    public string Argument { get; set; } = string.Empty;
 
     public AddTaskContentDialog()
     {
@@ -341,6 +358,9 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
                 case OperationMode.AIClassification:
                     HandleAIClassificationMode();
                     break;
+                case OperationMode.RunExternalPrograms:
+                    ExcuteExternal();
+                    break;
                 default:
                     HandleDefaultMode();
                     break;
@@ -358,18 +378,22 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
         PromptPanel.Visibility = visibility;
         CustomPromptPanel.Visibility = visibility;
         TaskRulePanel.Visibility = visibility;
+        ArgumentPanel.Visibility = visibility;
+        RunTaskPanel.Visibility = visibility;
     }
 
     private void HandleDeleteMode()
     {
         TaskTargetPanel.Visibility = PanelVisibilityConstants.Visible;
         TaskRulePanel.Visibility = PanelVisibilityConstants.Visible;
+        RunTaskPanel.Visibility = PanelVisibilityConstants.Collapsed;
     }
 
     private void HandleRecycleBinMode()
     {
         TaskTargetPanel.Visibility = PanelVisibilityConstants.Visible;
         TaskRulePanel.Visibility = PanelVisibilityConstants.Visible;
+        RunTaskPanel.Visibility = PanelVisibilityConstants.Collapsed;
     }
 
     private void HandleRenameMode()
@@ -379,6 +403,7 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
         TaskTargetPanel.Visibility = PanelVisibilityConstants.Visible;
         TaskSourcePanel.Visibility = PanelVisibilityConstants.Visible;
         TaskRulePanel.Visibility = PanelVisibilityConstants.Visible;
+        RunTaskPanel.Visibility = PanelVisibilityConstants.Collapsed;
     }
 
     private void HandleUploadWebDAVMode()
@@ -386,6 +411,7 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
         TaskSourcePanel.Visibility = PanelVisibilityConstants.Visible;
         TaskRulePanel.Visibility = PanelVisibilityConstants.Visible;
         ViewModel.TaskTarget = ViewModel.TaskSource;
+        RunTaskPanel.Visibility = PanelVisibilityConstants.Collapsed;
     }
 
     private void HandleEncryptionMode()
@@ -394,6 +420,7 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
         TaskTargetPanel.Visibility = PanelVisibilityConstants.Visible;
         EncryptedPanel.Visibility = PanelVisibilityConstants.Visible;
         TaskRulePanel.Visibility = PanelVisibilityConstants.Visible;
+        RunTaskPanel.Visibility = PanelVisibilityConstants.Collapsed;
     }
 
     private void HandleAISummaryMode()
@@ -404,6 +431,11 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
         PromptPanel.Visibility = PanelVisibilityConstants.Visible;
         CustomPromptPanel.Visibility = PanelVisibilityConstants.Collapsed;
         TaskRulePanel.Visibility = PanelVisibilityConstants.Visible;
+        RunTaskPanel.Visibility = PanelVisibilityConstants.Collapsed;
+        if (SelectedMode == PromptType.BuiltIn)
+        {
+            PromptPanel.Visibility = PanelVisibilityConstants.Collapsed;
+        }
     }
 
     private void HandleAIClassificationMode()
@@ -415,6 +447,7 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
         CustomPromptPanel.Visibility = PanelVisibilityConstants.Visible;
         TaskRulePanel.Visibility = PanelVisibilityConstants.Collapsed;
         TaskRule = "*";
+        RunTaskPanel.Visibility = PanelVisibilityConstants.Collapsed;
     }
 
     private void HandleDefaultMode()
@@ -422,8 +455,20 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
         TaskSourcePanel.Visibility = PanelVisibilityConstants.Visible;
         TaskTargetPanel.Visibility = PanelVisibilityConstants.Visible;
         TaskRulePanel.Visibility = PanelVisibilityConstants.Visible;
+        ArgumentPanel.Visibility = PanelVisibilityConstants.Collapsed;
+        RunTaskPanel.Visibility = PanelVisibilityConstants.Collapsed;
     }
 
+    private void ExcuteExternal()
+    {
+        TaskTargetPanel.Visibility = PanelVisibilityConstants.Visible;
+        RunTaskPanel.Visibility = PanelVisibilityConstants.Visible;
+        TaskSourcePanel.Visibility = PanelVisibilityConstants.Collapsed;
+        TaskRulePanel.Visibility = PanelVisibilityConstants.Collapsed;
+        ArgumentPanel.Visibility = PanelVisibilityConstants.Visible;
+        TaskRule = "*";
+        TaskTargetTitle.Text = "工作目录";
+    }
 
     private void RenameItemClick(object sender, ItemClickEventArgs e)
     {
@@ -551,6 +596,22 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
             return false;
         }
         return true;
+    }
+
+    private void RadioButton_Checked(object sender, RoutedEventArgs e)
+    {
+        var radioButton = sender as RadioButton;
+        if (radioButton != null)
+        {
+            if (radioButton.Name.Equals("BuiltIn"))
+            {
+                PromptPanel.Visibility = PanelVisibilityConstants.Collapsed;
+            }
+            else if (radioButton.Name.Equals("Custom"))
+            {
+                PromptPanel.Visibility = PanelVisibilityConstants.Visible;
+            }
+        }
     }
 }
 

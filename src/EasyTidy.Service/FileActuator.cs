@@ -6,10 +6,11 @@ using Microsoft.VisualBasic.FileIO;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text.Json;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -34,7 +35,8 @@ public static class FileActuator
         {
 
             if (Path.GetExtension(parameters.SourcePath).Equals(".lnk", StringComparison.OrdinalIgnoreCase)
-                || string.IsNullOrEmpty(parameters.TargetPath))
+                || (string.IsNullOrEmpty(parameters.TargetPath) 
+                && parameters.OperationMode != OperationMode.RunExternalPrograms))
             {
                 return;
             }
@@ -46,6 +48,10 @@ public static class FileActuator
                     await ProcessDirectoryAsync(parameters);
                 }
                 else if (File.Exists(parameters.SourcePath))
+                {
+                    await ProcessFileAsync(parameters);
+                }
+                else if (parameters.OperationMode == OperationMode.RunExternalPrograms)
                 {
                     await ProcessFileAsync(parameters);
                 }
@@ -101,6 +107,9 @@ public static class FileActuator
                 break;
             case OperationMode.Rename:
                 await HandleRenameOperation(parameters);
+                break;
+            case OperationMode.AIClassification:
+                await CreateAIClassification(parameters);
                 break;
             default:
                 await HandleDefaultOperation(parameters);
@@ -262,7 +271,9 @@ public static class FileActuator
     internal static async Task ProcessFileAsync(OperationParameters parameters)
     {
         if (FilterUtil.ShouldSkip(parameters.Funcs, parameters.SourcePath, parameters.PathFilter)
-            && parameters.OperationMode != OperationMode.RecycleBin && parameters.OperationMode != OperationMode.ZipFile)
+            && parameters.OperationMode != OperationMode.RecycleBin 
+            && parameters.OperationMode != OperationMode.ZipFile 
+            && parameters.OperationMode != OperationMode.RunExternalPrograms)
         {
             LogService.Logger.Debug($"执行文件操作 ShouldSkip {parameters.TargetPath}");
             return;
@@ -323,35 +334,183 @@ public static class FileActuator
             case OperationMode.AIClassification:
                 await CreateAIClassification(parameters);
                 break;
+            case OperationMode.RunExternalPrograms:
+                await ExecuteExternal(parameters.SourcePath, parameters.Argument, parameters.TargetPath);
+                break;
             default:
                 throw new NotSupportedException($"Operation mode '{parameters.OperationMode}' is not supported.");
         }
     }
 
-    private static async Task CreateAIClassification(OperationParameters parameters)
+    /// <summary>
+    /// 初始化AI分类所需的提示配置
+    /// </summary>
+    private static List<Prompt> InitializePrompts(OperationParameters parameters)
     {
-        var cts = new CancellationTokenSource();
-        var customPrompt = ParseUserDefinePrompt(parameters.Prompt);
         var systemPrompt = new Prompt("system", PromptConstants.SystemPrompt);
         var userPrompt = new Prompt("user", PromptConstants.UserPrompt);
         var prompts = new List<Prompt> { systemPrompt, userPrompt };
+
         var userDefinePrompt = new UserDefinePrompt("分类", prompts, true);
         var userDefinePrompts = new List<UserDefinePrompt> { userDefinePrompt };
         parameters.AIServiceLlm.UserDefinePrompts = userDefinePrompts;
 
+        return prompts;
+    }
+
+    /// <summary>
+    /// 执行AI分类的步骤1：判断操作类型
+    /// </summary>
+    private static async Task<Dictionary<string, string>> ExecuteStepOne(IAIServiceLlm aiService, string customPrompt, CancellationToken token)
+    {
+        await StreamHandlerAsync(aiService, customPrompt, token);
+        var setup1 = aiService.Data.Result?.ToString() ?? string.Empty;
+        LogService.Logger.Info($"步骤1 - 判断操作类型: {setup1}");
+        return FilterUtil.ExtractKeyValuePairsFromRaw(setup1);
+    }
+
+    /// <summary>
+    /// 执行AI分类的步骤4：获取过滤器配置
+    /// </summary>
+    private static async Task<FilterTable> ExecuteStepFour(
+        IAIServiceLlm aiService,
+        List<Prompt> prompts,
+        string filter,
+        CancellationToken token)
+    {
+        var promptToUpdate = prompts.FirstOrDefault(p => p.Role.Equals("user"));
+        if (promptToUpdate == null)
+        {
+            LogService.Logger.Warn("未找到用户提示配置，返回空的过滤器配置");
+            return new FilterTable();
+        }
+
+        promptToUpdate.Content = PromptConstants.SetupFourPrompt;
+        await StreamHandlerAsync(aiService, filter, token);
+        var setup4 = aiService.Data.Result?.ToString() ?? string.Empty;
+        LogService.Logger.Debug($"步骤4 - 获取过滤器配置: {setup4}");
+
+        if (string.IsNullOrEmpty(setup4))
+        {
+            LogService.Logger.Warn("步骤4返回结果为空，返回空的过滤器配置");
+            return new FilterTable();
+        }
+
+        try
+        {
+            return FilterUtil.ParseFilterTableFromJson(setup4);
+        }
+        catch (Exception ex)
+        {
+            LogService.Logger.Error($"解析过滤器配置失败: {ex.Message}");
+            return new FilterTable();
+        }
+    }
+
+    /// <summary>
+    /// 构建新的操作参数
+    /// </summary>
+    private static OperationParameters BuildParameters(
+        OperationParameters parameters,
+        string sourcePath,
+        string targetPath,
+        string rule,
+        FilterTable filter,
+        string content,
+        OperationMode operationMode)
+    {
+        try
+        {
+            parameters.SourcePath = string.IsNullOrEmpty(sourcePath) ? parameters.SourcePath : sourcePath;
+            parameters.TargetPath = string.IsNullOrEmpty(targetPath) ? parameters.TargetPath : targetPath;
+
+            if (filter != null)
+            {
+                filter.ContentValue = content.Replace("contains:", "").Replace("regex:", "");
+                parameters.RuleModel = new RuleModel()
+                {
+                    Rule = rule,
+                    RuleType = TaskRuleType.FileRule,
+                    Filter = filter,
+                };
+            }
+
+            parameters.Funcs = FilterUtil.GeneratePathFilters(rule, TaskRuleType.FileRule);
+            parameters.OperationMode = operationMode;
+            parameters.PathFilter = FilterUtil.GetPathFilters(filter);
+
+            return parameters;
+        }
+        catch (Exception ex)
+        {
+            LogService.Logger.Error($"构建操作参数失败: {ex.Message}");
+            throw;
+        }
+    }
+
+    /// <summary>
+    /// 执行AI分类的主要流程
+    /// </summary>
+    private static async Task CreateAIClassification(OperationParameters parameters)
+    {
+        var cts = new CancellationTokenSource();
+        var customPrompt = FilterUtil.ParseUserDefinePrompt(parameters.Prompt);
+        var prompts = InitializePrompts(parameters);
+
         try
         {
             // 步骤1：判断操作类型
-            await StreamHandlerAsync(parameters.AIServiceLlm, customPrompt, cts.Token);
-            var setup1 = parameters.AIServiceLlm.Data.Result?.ToString() ?? string.Empty;
-            LogService.Logger.Info($"步骤1 - 判断操作类型: {setup1}");
-            var res = FilterUtil.ExtractKeyValuePairsFromRaw(setup1);
+            var step1Result = await ExecuteStepOne(parameters.AIServiceLlm, customPrompt, cts.Token);
 
             // 步骤2：判断路径信息
-            await UpdatePromptAndExecute(parameters, prompts, PromptConstants.SetupTwoPrompt, customPrompt, cts, "步骤2 - 判断路径信息", res);
+            var step2Result = await UpdatePromptAndExecute(
+                parameters,
+                prompts,
+                PromptConstants.SetupTwoPrompt,
+                customPrompt,
+                cts,
+                "步骤2 - 判断路径信息",
+                step1Result);
 
             // 步骤3：判断文件类型
-            await UpdatePromptAndExecute(parameters, prompts, PromptConstants.SetupThreePrompt, customPrompt, cts, "步骤3 - 判断文件类型", res);
+            var step3Result = await UpdatePromptAndExecute(
+                parameters,
+                prompts,
+                PromptConstants.SetupThreePrompt,
+                customPrompt,
+                cts,
+                "步骤3 - 判断文件类型",
+                step1Result);
+            if (string.IsNullOrEmpty(step3Result.Rule))
+            {
+                cts.Cancel();
+                return;
+            }
+
+            // 步骤4：获取过滤器配置（如果需要）
+            FilterTable filterTable = null;
+            if (step3Result != null &&
+                !string.IsNullOrEmpty(step3Result.RawResult) &&
+                !string.IsNullOrEmpty(step3Result.Filter))
+            {
+                filterTable = await ExecuteStepFour(
+                    parameters.AIServiceLlm,
+                    prompts,
+                    step3Result.Filter,
+                    cts.Token);
+            }
+
+            // 构建新的操作参数并执行
+            var newParameters = BuildParameters(
+                parameters,
+                step2Result.SourcePath,
+                step2Result.TargetPath,
+                step3Result.Rule,
+                filterTable,
+                step3Result.Content,
+                step2Result.OperationMode);
+
+            await ProcessDirectoryAsync(newParameters);
         }
         catch (Exception ex)
         {
@@ -364,7 +523,10 @@ public static class FileActuator
         }
     }
 
-    private static async Task<string> UpdatePromptAndExecute(
+    /// <summary>
+    /// 更新提示并执行AI分类
+    /// </summary>
+    private static async Task<AIClassificationResult> UpdatePromptAndExecute(
         OperationParameters parameters,
         List<Prompt> prompts,
         string newPromptContent,
@@ -373,51 +535,56 @@ public static class FileActuator
         string stepDescription,
         Dictionary<string, string>? keyValuePairs = null)
     {
-        var promptToUpdate = prompts.FirstOrDefault(p => p.Role.Equals("user"));
-        if (promptToUpdate != null)
+        try
         {
+            var promptToUpdate = prompts.FirstOrDefault(p => p.Role.Equals("user"));
+            if (promptToUpdate == null)
+            {
+                LogService.Logger.Error("未找到用户提示配置");
+                throw new InvalidOperationException("未找到用户提示配置");
+            }
+
             promptToUpdate.Content = newPromptContent;
             await StreamHandlerAsync(parameters.AIServiceLlm, customPrompt, cts.Token);
+
             var result = parameters.AIServiceLlm.Data.Result?.ToString() ?? string.Empty;
+            var classificationResult = new AIClassificationResult
+            {
+                RawResult = result
+            };
+
             var res = FilterUtil.ExtractKeyValuePairsFromRaw(result);
             if (keyValuePairs != null && keyValuePairs.TryGetValue("operation", out string type))
             {
-                var operationMode = EnumHelper.ParseEnum<OperationMode>(type);
+                classificationResult.OperationMode = (OperationMode)EnumHelper.ParseEnum<OperationMode>(type);
                 res.TryGetValue("included", out string included);
-                if (included != null && included.Equals("Y"))
+                classificationResult.IsIncluded = included?.Equals("Y") ?? false;
+
+                if (classificationResult.IsIncluded)
                 {
                     res.TryGetValue("sourcePath", out string sourcePath);
                     res.TryGetValue("destinationPath", out string targetPath);
+                    classificationResult.SourcePath = sourcePath;
+                    classificationResult.TargetPath = targetPath;
                 }
+
                 res.TryGetValue("rule", out string rule);
                 res.TryGetValue("filter", out string filter);
                 res.TryGetValue("content", out string content);
+
+                classificationResult.Rule = rule;
+                classificationResult.Filter = filter;
+                classificationResult.Content = content;
             }
+
             LogService.Logger.Info($"{stepDescription}: {res}");
-            return result;
+            return classificationResult;
         }
-        throw new InvalidOperationException("未找到用户提示配置");
-    }
-
-    private static readonly JsonSerializerOptions _jsonSerializerOptions = new JsonSerializerOptions
-    {
-        PropertyNameCaseInsensitive = true
-    };
-
-    // 解析用户定义的promptJson并提权"user"的内容
-    private static string ParseUserDefinePrompt(string promptJson)
-    {
-        if (string.IsNullOrEmpty(promptJson))
+        catch (Exception ex)
         {
-            return string.Empty;
+            LogService.Logger.Error($"更新提示并执行失败: {ex.Message}");
+            throw;
         }
-        var userDefinePrompts = JsonSerializer.Deserialize<List<UserDefinePrompt>>(promptJson, _jsonSerializerOptions);
-        var userPrompt = userDefinePrompts?
-            .FirstOrDefault(x => x.Name == "分类" && x.Enabled)?
-            .Prompts?
-            .FirstOrDefault(x => x.Role == "user")?
-            .Content;
-        return userPrompt ?? string.Empty;
     }
 
     private static async Task CreateAISummary(OperationParameters parameters)
@@ -967,6 +1134,80 @@ public static class FileActuator
                 break;
         }
         await Task.CompletedTask;
+    }
+
+    private static async Task ExecuteExternal(string filePath, string arguments = "", string workingDirectory = "", int timeout = 60000)
+    {
+        string result = await RunAsync(filePath, arguments, workingDirectory, timeout);
+        var commandDescription = Path.GetFileName(filePath);
+        await IsRunResultSuccessAsync(result, $"执行 {commandDescription}");
+    }
+
+    private static async Task IsRunResultSuccessAsync(string result, string commandDescription = "")
+    {
+        await Task.Run(() =>
+        {
+            if (string.IsNullOrWhiteSpace(result))
+            {
+                LogService.Logger.Warn($"外部命令 [{commandDescription}] 返回为空，可能执行失败。");
+            }
+
+            var lower = result.ToLowerInvariant();
+
+            if (lower.Contains("error") || lower.Contains("fail") ||
+                lower.Contains("未找到") || lower.Contains("not recognized"))
+            {
+                LogService.Logger.Error($"外部命令 [{commandDescription}] 执行失败，返回信息：{result}");
+            }
+
+            LogService.Logger.Info($"外部命令 [{commandDescription}] 执行成功。");
+        });
+    }
+
+    private static async Task<string> RunAsync(string filePath, string arguments = "", string workingDirectory = "", int timeout = 60000)
+    {
+        var output = new StringBuilder();
+        var error = new StringBuilder();
+
+        using var process = new Process
+        {
+            StartInfo = new ProcessStartInfo
+            {
+                FileName = filePath,
+                Arguments = arguments,
+                WorkingDirectory = string.IsNullOrWhiteSpace(workingDirectory) ? Environment.CurrentDirectory : workingDirectory,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false,
+                CreateNoWindow = true
+            },
+            EnableRaisingEvents = true
+        };
+
+        process.OutputDataReceived += (sender, e) =>
+        {
+            if (!string.IsNullOrEmpty(e.Data))
+                output.AppendLine(e.Data);
+        };
+        process.ErrorDataReceived += (sender, e) =>
+        {
+            if (!string.IsNullOrEmpty(e.Data))
+                error.AppendLine(e.Data);
+        };
+
+        process.Start();
+        process.BeginOutputReadLine();
+        process.BeginErrorReadLine();
+
+        if (await Task.Run(() => process.WaitForExit(timeout)))
+        {
+            return output.Length > 0 ? output.ToString() : error.ToString();
+        }
+        else
+        {
+            process.Kill();
+            throw new TimeoutException("外部程序执行超时");
+        }
     }
 
     /// <summary>

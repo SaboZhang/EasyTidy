@@ -7,19 +7,31 @@ public class EnumToVisibilityConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, string language)
     {
-        return value switch
+        if (value == null || parameter == null)
+            return Visibility.Collapsed;
+
+        string enumValue = value.ToString();
+        string targetValue = parameter.ToString();
+
+        if (string.Equals(enumValue, targetValue, StringComparison.OrdinalIgnoreCase))
         {
-            BackupType backupType => backupType switch
-            {
-                BackupType.Local => Visibility.Collapsed,
-                _ => Visibility.Visible
-            },
-            _ => Visibility.Collapsed
-        };
+            return Visibility.Visible;
+        }
+
+        return Visibility.Collapsed;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, string language)
     {
-        throw new NotImplementedException();
+        if (value is Visibility visibility &&
+            visibility == Visibility.Visible &&
+            parameter is string enumName &&
+            targetType.IsEnum &&
+            Enum.TryParse(targetType, enumName, out var enumValue))
+        {
+            return enumValue;
+        }
+
+        return DependencyProperty.UnsetValue;
     }
 }

@@ -179,8 +179,8 @@
                 <TextBlock Text="Prompt:" Width="110"/>
                 <StackPanel Orientation="Horizontal"
                             Margin="4,-4,0,0">
-                    <RadioButton Content="系统内置" IsChecked="True"/>
-                    <RadioButton Content="自定义"/>
+                    <RadioButton x:Name="BuiltIn" Content="系统内置" Checked="RadioButton_Checked" IsChecked="{x:Bind SelectedMode, Converter={StaticResource BoolToEnumConverter}, ConverterParameter=BuiltIn, Mode=TwoWay}"/>
+                    <RadioButton x:Name="Custom" Content="自定义" Checked="RadioButton_Checked" IsChecked="{x:Bind SelectedMode, Converter={StaticResource BoolToEnumConverter}, ConverterParameter=Custom, Mode=TwoWay}"/>
                 </StackPanel>
             </StackPanel>
             <StackPanel x:Name="PromptPanel"
@@ -190,13 +190,43 @@
                     <RichEditBox
                         Header="system"
                         Width="210"
-                        MaxHeight="120" />
+                        MaxHeight="120" >
+                        <i:Interaction.Behaviors>
+                            <etc:RichEditBoxBehavior
+                                x:Name="SystemPromptEdit"
+                                Text="{x:Bind SystemPrompt, Mode=TwoWay}"/>
+                        </i:Interaction.Behaviors>
+                    </RichEditBox>
                     <RichEditBox
                         Margin="0,4,0,0"
                         Header="user"
                         Width="210"
-                        MaxHeight="120" />
+                        MaxHeight="120" >
+                        <i:Interaction.Behaviors>
+                            <etc:RichEditBoxBehavior
+                                x:Name="UserPromptEdit"
+                                Text="{x:Bind UserPrompt, Mode=TwoWay}"/>
+                        </i:Interaction.Behaviors>
+                    </RichEditBox>
                 </StackPanel>
+            </StackPanel>
+            <StackPanel x:Name="RunTaskPanel"
+                        Orientation="Horizontal"
+                        Spacing="8"
+                        Margin="0,20,0,0">
+                <TextBlock x:Name="RunTaskSourceTitle"
+                           x:Uid="DialogRunSourceFolder"
+                           Margin="0,5,0,0"
+                           Width="110"
+                           TextWrapping="Wrap"/>
+                <TextBox x:Name="RunSource"
+                         x:Uid="DialogSourcePlaceholder"
+                         Margin="6,0,0,0"
+                         Width="210"
+                         Text="{x:Bind ViewModel.TaskSource, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button x:Name="RunSourceButton"
+                        x:Uid="DialogSourceButton"
+                        Command="{x:Bind ViewModel.SelectRunSourcePathCommand}"/>
             </StackPanel>
             <StackPanel x:Name="TaskSourcePanel"
                         Orientation="Horizontal"
@@ -428,6 +458,13 @@
                         </Flyout>
                     </Button.Flyout>
                 </Button>
+            </StackPanel>
+            <StackPanel x:Name="ArgumentPanel"
+                Orientation="Horizontal"
+                        Spacing="8"
+                        Margin="0,10,0,0">
+                <TextBlock x:Uid="ExecutionParameters" Width="110" Margin="0,8,0,0"/>
+                <TextBox Margin="6,0,0,0" Text="{x:Bind Argument, Mode=TwoWay}" Width="210"/>
             </StackPanel>
             <StackPanel x:Name="EncryptedPanel"
                     Spacing="8"

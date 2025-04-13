@@ -1936,6 +1936,118 @@
           <source>On</source>
           <target state="translated">開</target>
         </trans-unit>
+        <trans-unit id="OpenAITxt" translate="yes" xml:space="preserve">
+          <source>OpenAI</source>
+          <target state="translated">OpenAI</target>
+        </trans-unit>
+        <trans-unit id="TongyiTxt" translate="yes" xml:space="preserve">
+          <source>QWen</source>
+          <target state="translated">TONGYI</target>
+        </trans-unit>
+        <trans-unit id="OllamaTxt" translate="yes" xml:space="preserve">
+          <source>Ollama</source>
+          <target state="translated">Ollama</target>
+        </trans-unit>
+        <trans-unit id="HuggingFaceTxt" translate="yes" xml:space="preserve">
+          <source>Hugging Face</source>
+          <target state="translated">Hugging Face</target>
+        </trans-unit>
+        <trans-unit id="OpenAIFormatTxt" translate="yes" xml:space="preserve">
+          <source>OpenAI Format</source>
+          <target state="translated">OpenAI Format</target>
+        </trans-unit>
+        <trans-unit id="AddCustomChatModel" translate="yes" xml:space="preserve">
+          <source>Add Chat Model</source>
+          <target state="translated">新增聊天模型</target>
+        </trans-unit>
+        <trans-unit id="DeleteAIService" translate="yes" xml:space="preserve">
+          <source>Delete AI Service</source>
+          <target state="translated">刪除AI服務</target>
+        </trans-unit>
+        <trans-unit id="SureDelete" translate="yes" xml:space="preserve">
+          <source>Are you sure you want to delete this AI service?</source>
+          <target state="translated">您確定要刪除此AI服務嗎？</target>
+        </trans-unit>
+        <trans-unit id="UpdateAIService" translate="yes" xml:space="preserve">
+          <source>Update AI Service</source>
+          <target state="translated">更新AI服務</target>
+        </trans-unit>
+        <trans-unit id="ChatModels.Text" translate="yes" xml:space="preserve">
+          <source>Chat Models</source>
+          <target state="translated">聊天模型</target>
+        </trans-unit>
+        <trans-unit id="DefaultAI.Header" translate="yes" xml:space="preserve">
+          <source>Default model</source>
+          <target state="translated">預設模型</target>
+        </trans-unit>
+        <trans-unit id="DefaultAI.Description" translate="yes" xml:space="preserve">
+          <source>Set the default AI model for use</source>
+          <target state="translated">設置默認AI模型用於使用</target>
+        </trans-unit>
+        <trans-unit id="SetAsDefault.Content" translate="yes" xml:space="preserve">
+          <source>Set as default</source>
+          <target state="translated">設為預設</target>
+        </trans-unit>
+        <trans-unit id="NewModel.Content" translate="yes" xml:space="preserve">
+          <source>Added Model</source>
+          <target state="translated">新增模型</target>
+        </trans-unit>
+        <trans-unit id="ModelName.Text" translate="yes" xml:space="preserve">
+          <source>Model name</source>
+          <target state="translated">模型名稱</target>
+        </trans-unit>
+        <trans-unit id="Provider.Text" translate="yes" xml:space="preserve">
+          <source>Provider</source>
+          <target state="translated">供應商</target>
+        </trans-unit>
+        <trans-unit id="DisplayName.Text" translate="yes" xml:space="preserve">
+          <source>Display name</source>
+          <target state="translated">顯示名稱</target>
+        </trans-unit>
+        <trans-unit id="DialogModelName.Header" translate="yes" xml:space="preserve">
+          <source>Model name</source>
+          <target state="translated">模型名稱</target>
+        </trans-unit>
+        <trans-unit id="DialogName.Header" translate="yes" xml:space="preserve">
+          <source>Display Name</source>
+          <target state="translated">顯示名稱</target>
+        </trans-unit>
+        <trans-unit id="DialogProvider.Header" translate="yes" xml:space="preserve">
+          <source>Provider</source>
+          <target state="translated">供應商</target>
+        </trans-unit>
+        <trans-unit id="DialogBasePath.Header" translate="yes" xml:space="preserve">
+          <source>Base URL</source>
+          <target state="translated">基礎網址</target>
+        </trans-unit>
+        <trans-unit id="APPID.Header" translate="yes" xml:space="preserve">
+          <source>App ID</source>
+          <target state="translated">App ID</target>
+        </trans-unit>
+        <trans-unit id="APIKey.Header" translate="yes" xml:space="preserve">
+          <source>API Key</source>
+          <target state="translated">API Key</target>
+        </trans-unit>
+        <trans-unit id="Temperature.Header" translate="yes" xml:space="preserve">
+          <source>Temperature</source>
+          <target state="translated">溫度</target>
+        </trans-unit>
+        <trans-unit id="Tips.Text" translate="yes" xml:space="preserve">
+          <source>It's generally not recommended to include the Path portion in the Interface API address, unless you're absolutely certain about what you're doing. For example, in the OpenAI interface address https://api.openai.com/v1/chat/completions, the Path is /v1/chat/completions.</source>
+          <target state="translated">接口API地址不建議填寫Path部分，除非你很清楚你在幹什麼，如OpenAI接口地址為 https://api.openai.com/v1/chat/completions 其中Path為 /v/chat/completions</target>
+        </trans-unit>
+        <trans-unit id="RunExternalProgramsText" translate="yes" xml:space="preserve">
+          <source>Run external programs</source>
+          <target state="translated">執行外部程式</target>
+        </trans-unit>
+        <trans-unit id="DialogRunSourceFolder.Text" translate="yes" xml:space="preserve">
+          <source>Program/Script</source>
+          <target state="translated">程式/腳本</target>
+        </trans-unit>
+        <trans-unit id="ExecutionParameters.Text" translate="yes" xml:space="preserve">
+          <source>argument</source>
+          <target state="translated">運行參數:</target>
+        </trans-unit>
       </group>
     </body>
   </file>

@@ -43,6 +43,8 @@ public class TaskOrchestrationTable
 
     public DateTime CreateTime { get; set; } = DateTime.Now;
 
+    public string? Argument { get; set; }
+
     public AutomaticTable AutomaticTable { get; set; }
 
     [NotMapped]

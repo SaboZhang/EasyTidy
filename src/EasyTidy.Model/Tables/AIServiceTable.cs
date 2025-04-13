@@ -29,4 +29,8 @@ public class AIServiceTable
 
     public string Model { get; set; }
 
+    public double Temperature { get; set; } = 0.8;
+
+    public bool IsDefault { get; set; } = false;
+
 }

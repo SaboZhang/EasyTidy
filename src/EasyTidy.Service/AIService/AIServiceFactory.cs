@@ -10,19 +10,19 @@ namespace EasyTidy.Service.AIService;
 
 public class AIServiceFactory
 {
-    private readonly Dictionary<ServiceType, IAIService> _services;
+    private readonly Dictionary<ServiceType, string> _services;
 
     public AIServiceFactory()
     {
-        _services = new Dictionary<ServiceType, IAIService>
+        _services = new Dictionary<ServiceType, string>
             {
-                { ServiceType.OpenAI, null },
-                { ServiceType.Ollama, null },
-                { ServiceType.QWen, null }
+                { ServiceType.OpenAI, "https://api.openai.com" },
+                { ServiceType.Ollama, "http://localhost:11434" },
+                { ServiceType.QWen, "https://dashscope.aliyuncs.com/compatible-mode" }
             };
     }
 
-    public IAIService GetService(ServiceType provider)
+    public string GetService(ServiceType provider)
     {
         return _services.TryGetValue(provider, out var service)
             ? service

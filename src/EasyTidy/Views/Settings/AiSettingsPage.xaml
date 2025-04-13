@@ -6,14 +6,143 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ev ="using:EasyTidy.Common.Views"
-    xmlns:behaviors="using:EasyTidy.Behaviors"
+    xmlns:behaviors="using:EasyTidy.Behaviors" 
+    xmlns:ctk="using:CommunityToolkit.WinUI.Controls"
+    xmlns:ui="using:CommunityToolkit.WinUI"
+    xmlns:model="using:EasyTidy.Model"
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
     behaviors:NavigationViewHeaderBehavior.HeaderTemplate="{StaticResource BreadcrumbBarDataTemplate}"
     behaviors:NavigationViewHeaderBehavior.HeaderContext="{Binding}"
     mc:Ignorable="d">
 
+    <i:Interaction.Behaviors>
+        <ic:EventTriggerBehavior EventName="Loaded">
+            <ic:EventTriggerBehavior.Actions>
+                <ic:InvokeCommandAction Command="{x:Bind ViewModel.PageLoadedCommand}"/>
+            </ic:EventTriggerBehavior.Actions>
+        </ic:EventTriggerBehavior>
+    </i:Interaction.Behaviors>
+
     <ScrollView x:Name="ContentArea" VerticalScrollBarVisibility="Auto">
         <StackPanel>
-            
+            <ctk:SettingsCard
+                x:Uid="DefaultAI"
+                HeaderIcon="{ui:BitmapIcon Source=Assets/AI/default_ai.png}"
+                MaxWidth="{ThemeResource MaxPageContentWidth}" Margin="{ThemeResource ContentPageMargin}">
+                <StackPanel Orientation="Horizontal"
+                            Spacing="5">
+                    <ComboBox 
+                        x:Name="DefaultModel"
+                        ItemsSource="{x:Bind ViewModel.DefaultChatModels, Mode=TwoWay}"
+                        MinWidth="180"
+                        DisplayMemberPath="DisplayName"
+                        SelectedItem="{x:Bind ViewModel.DefaultChatModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    </ComboBox>
+                    <Button x:Uid="SetAsDefault" Command="{x:Bind ViewModel.SetDefaultClickCommand}" />
+                    <Button x:Uid="NewModel" Style="{StaticResource AccentButtonStyle}" Command="{x:Bind ViewModel.AddAIClickCommand}" />
+                </StackPanel>
+            </ctk:SettingsCard>
+            <StackPanel 
+                MaxWidth="{ThemeResource MaxPageContentWidth}" 
+                Margin="{ThemeResource ContentPageMargin}">
+                <TextBlock x:Uid="ChatModels" Margin="10" />
+                <StackPanel>
+                    <ListView x:Name="LstAI"
+                              ItemsSource="{x:Bind ViewModel.AiListACV, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              >
+                        <ListView.Header>
+                            <Grid Padding="16,12"
+                                  ColumnSpacing="16">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="160"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="100"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock x:Uid="ModelName"
+                                           HorizontalAlignment="Left"
+                                           VerticalAlignment="Center"/>
+                                <TextBlock Grid.Column="1"
+                                           x:Uid="Provider"
+                                           VerticalAlignment="Center"/>
+                                <TextBlock Grid.Column="2"
+                                           x:Uid="DisplayName"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"/>
+                                <TextBlock Grid.Column="3"
+                                           x:Uid="TaskListEnable"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"/>
+                                <TextBlock Grid.Column="4"
+                                           x:Uid="OperationBlock"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"/>
+                            </Grid>
+                        </ListView.Header>
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="model:AIServiceTable">
+                                <Grid ColumnSpacing="16" >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="160"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="100"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{x:Bind Model}"
+                                               x:Name="ModelTextBlock"
+                                               VerticalAlignment="Center"/>
+                                    <StackPanel Orientation="Horizontal"
+                                                Spacing="6"
+                                                Grid.Column="1">
+                                        <Image Source="{x:Bind Type, Converter={StaticResource EnumToImageConverter}}" Width="20" Height="20"/>
+                                        <TextBlock x:Name="ProviderTextBlock"
+                                                   Text="{x:Bind Type, Converter={StaticResource EnumDisplayNameConverter}}"
+                                                   Margin="0,11,0,0"/>
+                                    </StackPanel>
+                                    <TextBlock Grid.Column="2"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Center"
+                                               Text="{x:Bind Name}"/>
+                                    <StackPanel Grid.Column="3"
+                                                Orientation="Horizontal"
+                                                VerticalAlignment="Center"
+                                                HorizontalAlignment="Right">
+                                        <CheckBox IsChecked="{x:Bind IsEnabled, Mode=TwoWay}" 
+                                                  Checked="CheckBox_Checked" 
+                                                  Unchecked="CheckBox_Unchecked" />
+                                    </StackPanel>
+                                    <StackPanel HorizontalAlignment="Center"
+                                                Orientation="Horizontal"
+                                                Spacing="8"
+                                                Grid.Column="4">
+                                        <Button x:Name="EditButton"
+                                                Style="{StaticResource SubtleButtonStyle}"
+                                                DataContext="{x:Bind}"
+                                                Width="42"
+                                                Height="42"
+                                                x:Uid="EditButton"
+                                                Click="EditButton_Click">
+                                            <Image Source="/Assets/Fluent/edit.png"/>
+                                        </Button>
+                                        <Button x:Name="DeleteButton"
+                                                Style="{StaticResource SubtleButtonStyle}"
+                                                DataContext="{x:Bind}"
+                                                Width="42"
+                                                Height="42"
+                                                x:Uid="DeleteButton"
+                                                Click="DeleteButton_Click">
+                                            <Image Source="/Assets/Fluent/delete.png"/>
+                                        </Button>
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackPanel>
+            </StackPanel>
         </StackPanel>
     </ScrollView>
 </ev:ToolPage>

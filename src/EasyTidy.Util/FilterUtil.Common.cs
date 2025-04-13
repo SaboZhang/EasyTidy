@@ -2,9 +2,9 @@
 using EasyTidy.Model;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 
 namespace EasyTidy.Util;
@@ -227,4 +227,47 @@ public partial class FilterUtil
                 break;
         }
     }
+
+    private static readonly JsonSerializerOptions _jsonOptions = new JsonSerializerOptions
+    {
+        PropertyNameCaseInsensitive = true,
+        Converters = { new JsonStringEnumConverter() }
+    };
+
+    public static FilterTable ParseFilterTableFromJson(string json)
+    {
+        json = CleanJson(json);
+        return JsonSerializer.Deserialize<FilterTable>(json, _jsonOptions)!;
+    }
+
+    private static string CleanJson(string input)
+    {
+        if (input.TrimStart().StartsWith("```"))
+        {
+            // 去掉 Markdown 代码块标记符
+            return Regex.Replace(input, @"```(?:json|c#)?\s*([\s\S]*?)```", "$1").Trim();
+        }
+        return input.Trim();
+    }
+
+    private static readonly JsonSerializerOptions _jsonSerializerOptions = new JsonSerializerOptions
+    {
+        PropertyNameCaseInsensitive = true
+    };
+
+    public static string ParseUserDefinePrompt(string promptJson, string name = "分类", string role = "user")
+    {
+        if (string.IsNullOrEmpty(promptJson))
+        {
+            return string.Empty;
+        }
+        var userDefinePrompts = JsonSerializer.Deserialize<List<UserDefinePrompt>>(promptJson, _jsonSerializerOptions);
+        var userPrompt = userDefinePrompts?
+            .FirstOrDefault(x => x.Name == name && x.Enabled)?
+            .Prompts?
+            .FirstOrDefault(x => x.Role == role)?
+            .Content;
+        return userPrompt ?? string.Empty;
+    }
+
 }
