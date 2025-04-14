@@ -1501,4 +1501,7 @@
   <data name="ExecutionParameters.Text" xml:space="preserve">
     <value>Argument</value>
   </data>
+  <data name="AI_Notice" xml:space="preserve">
+    <value>Veuillez définir l'IA par défaut en premier</value>
+  </data>
 </root>

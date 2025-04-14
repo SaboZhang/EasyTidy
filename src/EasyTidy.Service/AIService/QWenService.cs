@@ -2,8 +2,8 @@
 using EasyTidy.Log;
 using EasyTidy.Model;
 using EasyTidy.Util;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,24 +11,22 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace EasyTidy.Service.AIService;
 
-public partial class OpenAIService : ObservableObject, IAIServiceLlm
+public partial class QWenService : ObservableObject, IAIServiceLlm
 {
-    public OpenAIService()
-        : this(Guid.NewGuid(), "https://api.openai.com", "OpenAI")
-    { }
+    public QWenService() : this(Guid.NewGuid(), "https://dashscope.aliyuncs.com", "TONGYI") { }
 
-    public OpenAIService(
-        Guid identify, 
-        string url, 
-        string name = "", 
-        ServiceType type = ServiceType.OpenAI, 
-        string appID = "", string appKey = "", 
-        bool isEnabled = true, 
-        string model = "gpt-3.5-turbo")
+    public QWenService(
+        Guid identify,
+        string url,
+        string name = "",
+        ServiceType type = ServiceType.OpenAI,
+        string appID = "", string appKey = "",
+        bool isEnabled = true,
+        string model = "qwen-max"
+        )
     {
         Identify = identify;
         Url = url;
@@ -40,15 +38,15 @@ public partial class OpenAIService : ObservableObject, IAIServiceLlm
         Model = model;
     }
 
-    [ObservableProperty] 
+    [ObservableProperty]
     private Guid _identify = Guid.Empty;
-    [ObservableProperty] 
+    [ObservableProperty]
     private ServiceType _type = 0;
-    [ObservableProperty] 
+    [ObservableProperty]
     private double _temperature = 0.8;
-    [ObservableProperty] 
+    [ObservableProperty]
     private bool _isEnabled = true;
-    [ObservableProperty] 
+    [ObservableProperty]
     private string _name = string.Empty;
     [ObservableProperty]
     private string _url = string.Empty;
@@ -59,9 +57,9 @@ public partial class OpenAIService : ObservableObject, IAIServiceLlm
     [ObservableProperty]
     private ServiceResult _data = ServiceResult.Reset;
     [ObservableProperty]
-    private string _model = "gpt-3.5-turbo";
+    private string _model = "qwen-max";
     [ObservableProperty]
-    private List<UserDefinePrompt> _userDefinePrompts = 
+    private List<UserDefinePrompt> _userDefinePrompts =
     [
         new UserDefinePrompt(
             "总结",
@@ -83,9 +81,14 @@ public partial class OpenAIService : ObservableObject, IAIServiceLlm
     [ObservableProperty]
     private bool _isDefault = true;
 
+    public Task<ServiceResult> PredictAsync(object request, CancellationToken token)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task PredictAsync(object request, Action<string> onDataReceived, CancellationToken token)
     {
-        if (string.IsNullOrEmpty(Url) /* || string.IsNullOrEmpty(AppKey)*/)
+        if (string.IsNullOrEmpty(Url))
             throw new Exception("请先完善配置");
 
         if (request is not RequestModel req)
@@ -95,13 +98,11 @@ public partial class OpenAIService : ObservableObject, IAIServiceLlm
         var language = req.Language;
         UriBuilder uriBuilder = new(Url);
 
-        // 兼容旧版API: https://platform.openai.com/docs/guides/text-generation
-        if (!uriBuilder.Path.EndsWith("/v1/chat/completions") && !uriBuilder.Path.EndsWith("/v1/completions"))
-            uriBuilder.Path = "/v1/chat/completions";
+        if (!uriBuilder.Path.EndsWith("/compatible-mode/v1/chat/completions")) uriBuilder.Path = "/compatible-mode/v1/chat/completions";
 
         // 选择模型
         var a_model = Model.Trim();
-        a_model = string.IsNullOrEmpty(a_model) ? "gpt-3.5-turbo" : a_model;
+        a_model = string.IsNullOrEmpty(a_model) ? "qwen-max" : a_model;
 
         // 替换Prompt关键字
         var a_messages =
@@ -110,7 +111,7 @@ public partial class OpenAIService : ObservableObject, IAIServiceLlm
             item.Content = item.Content.Replace("$source", source).Replace("$content", language));
 
         // 温度限定
-        var a_temperature = Math.Clamp(Temperature, 0, 2);
+        var a_temperature = Math.Clamp(Temperature, 0, 1);
 
         // 构建请求数据
         var reqData = new
@@ -128,7 +129,7 @@ public partial class OpenAIService : ObservableObject, IAIServiceLlm
             await HttpUtil.PostAsync(
                 uriBuilder.Uri,
                 jsonData,
-                AppKey,
+                $"Bearer {AppKey}",
                 msg =>
                 {
                     if (string.IsNullOrEmpty(msg?.Trim()))
@@ -146,8 +147,9 @@ public partial class OpenAIService : ObservableObject, IAIServiceLlm
                     if (parsedData is null)
                         return;
 
-                    // 提取content的值
-                    var contentValue = parsedData["choices"]?.FirstOrDefault()?["delta"]?["content"]?.ToString();
+                    // 通义千问返回字段与OpenAI存在差异，需增加容错处理：
+                    var contentValue = parsedData["choices"]?[0]?["delta"]?["content"]?.ToString()
+                        ?? parsedData["output"]?["choices"]?[0]?["message"]?["content"]?.ToString();
 
                     if (string.IsNullOrEmpty(contentValue))
                         return;
@@ -184,10 +186,5 @@ public partial class OpenAIService : ObservableObject, IAIServiceLlm
 
             throw new Exception(msg);
         }
-    }
-
-    public Task<ServiceResult> PredictAsync(object request, CancellationToken token)
-    {
-        throw new NotImplementedException();
     }
 }

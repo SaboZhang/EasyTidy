@@ -15,11 +15,13 @@ public class AIServiceFactory
     public AIServiceFactory()
     {
         _services = new Dictionary<ServiceType, string>
-            {
-                { ServiceType.OpenAI, "https://api.openai.com" },
-                { ServiceType.Ollama, "http://localhost:11434" },
-                { ServiceType.QWen, "https://dashscope.aliyuncs.com/compatible-mode" }
-            };
+        {
+            { ServiceType.OpenAI, "https://api.openai.com" },
+            { ServiceType.Ollama, "http://localhost:11434" },
+            { ServiceType.QWen, "https://dashscope.aliyuncs.com" },
+            { ServiceType.HuggingFace, "https://api-inference.huggingface.co" },
+            { ServiceType.OpenAIFormat, string.Empty },
+        };
     }
 
     public string GetService(ServiceType provider)
@@ -34,10 +36,10 @@ public class AIServiceFactory
         IAIServiceLlm aIServiceLlm = entity.Type switch
         {
             ServiceType.OpenAI => new OpenAIService(),
-            ServiceType.QWen => new OpenAIService(),
-            ServiceType.Ollama => new OpenAIService(),
-            ServiceType.HuggingFace => new OpenAIService(),
-            ServiceType.OpenAIFormat => new OpenAIService(),
+            ServiceType.QWen => new QWenService(),
+            ServiceType.Ollama => new OllamaService(),
+            ServiceType.HuggingFace => new HuggingFaceService(),
+            ServiceType.OpenAIFormat => new OpenAICompatibleService(),
             _ => throw new NotImplementedException(),
         };
 

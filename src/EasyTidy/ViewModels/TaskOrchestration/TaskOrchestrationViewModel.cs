@@ -188,7 +188,9 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
             {
                 // _notificationQueue.ShowWithWindowExtension("SaveSuccessfulText".GetLocalized(), InfoBarSeverity.Error);
                 // var tips = BuildToastXmlString("AI服务", "请先设置默认的AI服务");
-                var tips = new AppNotificationBuilder().AddText("请先设置默认的AI服务").AddButton(new AppNotificationButton("设置").AddArgument("action", "AiSettings")).AddArgument("contentId", "351");
+                var tips = new AppNotificationBuilder().AddText("AI_Notice".GetLocalized())
+                    .AddButton(new AppNotificationButton("Settings".GetLocalized())
+                    .AddArgument("action", "AiSettings")).AddArgument("contentId", "351");
                 AppNotificationService.Show(tips.BuildNotification().Payload);
                 return;
             }
@@ -730,6 +732,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
             if (dataContext != null)
             {
                 var task = dataContext as TaskOrchestrationTable;
+                string language = string.IsNullOrEmpty(Settings.Language) ? "Follow the document language" : Settings.Language;
                 var automatic = new AutomaticJob();
                 var rule = await automatic.GetSpecialCasesRule(task.GroupName.Id, task.TaskRule);
                 var ai = await _dbContext.AIService.Where(x => x.Identify.ToString().Equals(task.AIIdentify.ToString())).FirstOrDefaultAsync();
@@ -749,7 +752,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                     funcs: FilterUtil.GeneratePathFilters(rule, task.RuleType),
                     pathFilter: FilterUtil.GetPathFilters(task.Filter),
                     ruleModel: new RuleModel { Filter = task.Filter, Rule = task.TaskRule, RuleType = task.RuleType })
-                { RuleName = task.TaskRule, AIServiceLlm = llm, Prompt = task.UserDefinePromptsJson, Argument = task.Argument };
+                { RuleName = task.TaskRule, AIServiceLlm = llm, Prompt = task.UserDefinePromptsJson, Argument = task.Argument, Language = language };
                 await OperationHandler.ExecuteOperationAsync(task.OperationMode, operationParameters);
                 _notificationQueue.ShowWithWindowExtension("ExecutionSuccessfulText".GetLocalized(), InfoBarSeverity.Success);
                 _ = ClearNotificationAfterDelay(3000);
@@ -783,6 +786,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 if (list != null)
                 {
                     var orderList = list.OrderByDescending(x => x.Priority);
+                    string language = string.IsNullOrEmpty(Settings.Language) ? "Follow the document language" : Settings.Language;
                     foreach (var item in orderList)
                     {
                         var ai = await _dbContext.AIService.Where(x => x.Identify.ToString().Equals(item.AIIdentify.ToString())).FirstOrDefaultAsync();
@@ -804,7 +808,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                             funcs: FilterUtil.GeneratePathFilters(rule, item.RuleType),
                             pathFilter: FilterUtil.GetPathFilters(item.Filter),
                             ruleModel: new RuleModel { Filter = item.Filter, Rule = item.TaskRule, RuleType = item.RuleType })
-                        { RuleName = item.TaskRule, AIServiceLlm = llm, Prompt = item.UserDefinePromptsJson, Argument = item.Argument };
+                        { RuleName = item.TaskRule, AIServiceLlm = llm, Prompt = item.UserDefinePromptsJson, Argument = item.Argument, Language = language };
                         await OperationHandler.ExecuteOperationAsync(item.OperationMode, operationParameters);
                         _notificationQueue.ShowWithWindowExtension("ExecutionSuccessfulText".GetLocalized(), InfoBarSeverity.Success);
                         _ = ClearNotificationAfterDelay(3000);

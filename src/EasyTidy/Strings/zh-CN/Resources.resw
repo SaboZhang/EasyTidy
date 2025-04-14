@@ -1519,4 +1519,7 @@
   <data name="ExecutionParameters.Text" xml:space="preserve">
     <value>运行参数</value>
   </data>
+  <data name="AI_Notice" xml:space="preserve">
+    <value>请先设置默认的AI服务</value>
+  </data>
 </root>

@@ -2,8 +2,10 @@
 using EasyTidy.Common.Database;
 using EasyTidy.Model;
 using EasyTidy.Service;
+using EasyTidy.Service.AIService;
 using Microsoft.EntityFrameworkCore;
 using Quartz;
+using System.Threading.Tasks;
 
 
 namespace EasyTidy.Common.Job;
@@ -35,6 +37,13 @@ public class AutomaticJob : IJob
         }
 
         var rule = await GetSpecialCasesRule(task.GroupName.Id, task.TaskRule);
+        string language = string.IsNullOrEmpty(Settings.Language) ? "Follow the document language" : Settings.Language;
+        var ai = await _dbContext.AIService.Where(x => x.Identify.ToString().Equals(task.AIIdentify.ToString())).FirstOrDefaultAsync();
+        IAIServiceLlm llm = null;
+        if (task.OperationMode == OperationMode.AIClassification || task.OperationMode == OperationMode.AISummary)
+        {
+            llm = AIServiceFactory.CreateAIServiceLlm(ai, task.UserDefinePromptsJson);
+        }
         var operationParameters = new OperationParameters(
             operationMode: task.OperationMode,
             sourcePath: task.TaskSource.Equals("DesktopText".GetLocalized())
@@ -46,7 +55,7 @@ public class AutomaticJob : IJob
             funcs: FilterUtil.GeneratePathFilters(rule, task.RuleType),
             pathFilter: FilterUtil.GetPathFilters(task.Filter),
             ruleModel: new RuleModel { Filter = task.Filter, Rule = task.TaskRule, RuleType = task.RuleType })
-        { RuleName = task.TaskRule };
+        { RuleName = task.TaskRule, Language = language, AIServiceLlm = llm, Prompt = task.UserDefinePromptsJson, Argument = task.Argument };
 
         Logger.Info($"开始定时执行 SourcePath: {operationParameters.SourcePath}, TargetPath: {operationParameters.TargetPath}");
         // 启动独立的线程来执行操作，避免参数冲突
@@ -153,6 +162,7 @@ public class AutomaticJob : IJob
 
             if (automaticTable.IsFileChange)
             {
+                string language = string.IsNullOrEmpty(Settings.Language) ? "Follow the document language" : Settings.Language;
                 var delay = Convert.ToInt32(automaticTable.DelaySeconds);
                 var sub = Settings.GeneralConfig?.SubFolder ?? false;
                 var parameters = new OperationParameters(
@@ -170,6 +180,9 @@ public class AutomaticJob : IJob
                     Priority = item.Priority,
                     CreateTime = item.CreateTime,
                     AIServiceLlm = llm,
+                    Prompt = item.UserDefinePromptsJson,
+                    Language = language,
+                    Argument = item.Argument
                 };
                 FileEventHandler.MonitorFolder(parameters, delay);
 

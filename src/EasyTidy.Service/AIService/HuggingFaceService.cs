@@ -2,8 +2,8 @@
 using EasyTidy.Log;
 using EasyTidy.Model;
 using EasyTidy.Util;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,23 +11,20 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace EasyTidy.Service.AIService;
 
-public partial class OpenAIService : ObservableObject, IAIServiceLlm
+public partial class HuggingFaceService : ObservableObject, IAIServiceLlm
 {
-    public OpenAIService()
-        : this(Guid.NewGuid(), "https://api.openai.com", "OpenAI")
-    { }
+    public HuggingFaceService() : this(Guid.NewGuid(), "https://api-inference.huggingface.co", "HuggingFace") { }
 
-    public OpenAIService(
-        Guid identify, 
-        string url, 
-        string name = "", 
-        ServiceType type = ServiceType.OpenAI, 
-        string appID = "", string appKey = "", 
-        bool isEnabled = true, 
+    public HuggingFaceService(
+        Guid identify,
+        string url,
+        string name = "",
+        ServiceType type = ServiceType.HuggingFace,
+        string appID = "", string appKey = "",
+        bool isEnabled = true,
         string model = "gpt-3.5-turbo")
     {
         Identify = identify;
@@ -40,15 +37,15 @@ public partial class OpenAIService : ObservableObject, IAIServiceLlm
         Model = model;
     }
 
-    [ObservableProperty] 
+    [ObservableProperty]
     private Guid _identify = Guid.Empty;
-    [ObservableProperty] 
+    [ObservableProperty]
     private ServiceType _type = 0;
-    [ObservableProperty] 
+    [ObservableProperty]
     private double _temperature = 0.8;
-    [ObservableProperty] 
+    [ObservableProperty]
     private bool _isEnabled = true;
-    [ObservableProperty] 
+    [ObservableProperty]
     private string _name = string.Empty;
     [ObservableProperty]
     private string _url = string.Empty;
@@ -61,7 +58,7 @@ public partial class OpenAIService : ObservableObject, IAIServiceLlm
     [ObservableProperty]
     private string _model = "gpt-3.5-turbo";
     [ObservableProperty]
-    private List<UserDefinePrompt> _userDefinePrompts = 
+    private List<UserDefinePrompt> _userDefinePrompts =
     [
         new UserDefinePrompt(
             "总结",
@@ -83,42 +80,59 @@ public partial class OpenAIService : ObservableObject, IAIServiceLlm
     [ObservableProperty]
     private bool _isDefault = true;
 
+    public Task<ServiceResult> PredictAsync(object request, CancellationToken token)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task PredictAsync(object request, Action<string> onDataReceived, CancellationToken token)
     {
-        if (string.IsNullOrEmpty(Url) /* || string.IsNullOrEmpty(AppKey)*/)
-            throw new Exception("请先完善配置");
+        if (string.IsNullOrEmpty(Url) || string.IsNullOrEmpty(AppKey))
+            throw new Exception("请先完善 Hugging Face 配置");
 
         if (request is not RequestModel req)
             throw new Exception($"请求数据出错: {request}");
 
-        var source = req.Text;
+        var input = req.Text;
         var language = req.Language;
+
         UriBuilder uriBuilder = new(Url);
 
-        // 兼容旧版API: https://platform.openai.com/docs/guides/text-generation
-        if (!uriBuilder.Path.EndsWith("/v1/chat/completions") && !uriBuilder.Path.EndsWith("/v1/completions"))
-            uriBuilder.Path = "/v1/chat/completions";
+        // 选择模型名称
+        var modelId = Model.Trim();
+        modelId = string.IsNullOrEmpty(modelId) ? "meta-llama/Llama-2-7b-chat-hf" : modelId;
 
-        // 选择模型
-        var a_model = Model.Trim();
-        a_model = string.IsNullOrEmpty(a_model) ? "gpt-3.5-turbo" : a_model;
+        if (!uriBuilder.Path.EndsWith($"/models/{modelId}"))
+            uriBuilder.Path = $"/models/{modelId}";
 
         // 替换Prompt关键字
-        var a_messages =
-            (UserDefinePrompts.FirstOrDefault(x => x.Enabled)?.Prompts ?? throw new Exception("请先完善Propmpt配置")).Clone();
-        a_messages.ToList().ForEach(item =>
-            item.Content = item.Content.Replace("$source", source).Replace("$content", language));
+        var promptTemplate =
+            (UserDefinePrompts.FirstOrDefault(x => x.Enabled)?.Prompts ?? throw new Exception("请先完善Prompt配置")).Clone();
 
-        // 温度限定
+        promptTemplate.ToList().ForEach(item =>
+            item.Content = item.Content.Replace("$source", input).Replace("$content", language));
+
+        var finalPrompt = string.Join("\n", promptTemplate.Select(p => p.Content));
+
+        // 温度
         var a_temperature = Math.Clamp(Temperature, 0, 2);
 
-        // 构建请求数据
         var reqData = new
         {
-            model = a_model,
-            messages = a_messages,
-            temperature = a_temperature,
-            stream = true
+            inputs = finalPrompt,
+            parameters = new
+            {
+                temperature = a_temperature,
+                return_full_text = false,
+                do_sample = true,
+                top_p = 0.95,
+                max_new_tokens = 1024
+            },
+            options = new
+            {
+                wait_for_model = true,
+                use_cache = false
+            }
         };
 
         var jsonData = JsonConvert.SerializeObject(reqData);
@@ -128,31 +142,30 @@ public partial class OpenAIService : ObservableObject, IAIServiceLlm
             await HttpUtil.PostAsync(
                 uriBuilder.Uri,
                 jsonData,
-                AppKey,
+                $"Bearer {AppKey}",
                 msg =>
                 {
-                    if (string.IsNullOrEmpty(msg?.Trim()))
+                    if (string.IsNullOrWhiteSpace(msg))
                         return;
 
-                    var preprocessString = msg.Replace("data:", "").Trim();
+                    try
+                    {
+                        // HF接口可能返回多个候选结果
+                        var predictions = JsonConvert.DeserializeObject<JArray>(msg);
 
-                    // 结束标记
-                    if (preprocessString.Equals("[DONE]"))
-                        return;
+                        if (predictions is null || predictions.Count == 0)
+                            return;
 
-                    // 解析JSON数据
-                    var parsedData = JsonConvert.DeserializeObject<JObject>(preprocessString);
-
-                    if (parsedData is null)
-                        return;
-
-                    // 提取content的值
-                    var contentValue = parsedData["choices"]?.FirstOrDefault()?["delta"]?["content"]?.ToString();
-
-                    if (string.IsNullOrEmpty(contentValue))
-                        return;
-
-                    onDataReceived?.Invoke(contentValue);
+                        var content = predictions[0]?["generated_text"]?.ToString();
+                        if (!string.IsNullOrEmpty(content))
+                        {
+                            onDataReceived?.Invoke(content);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        LogService.Logger.Error($"({Name})({Identify}) JSON解析失败: {ex.Message}");
+                    }
                 },
                 token
             ).ConfigureAwait(false);
@@ -163,7 +176,7 @@ public partial class OpenAIService : ObservableObject, IAIServiceLlm
         }
         catch (HttpRequestException ex) when (ex.StatusCode == null)
         {
-            var msg = $"请检查服务是否可以正常访问: ({Url}).";
+            var msg = $"请检查 Hugging Face 服务是否可以访问: {Name} ({Url})。";
             throw new HttpRequestException(msg);
         }
         catch (HttpRequestException)
@@ -176,18 +189,12 @@ public partial class OpenAIService : ObservableObject, IAIServiceLlm
             if (ex.InnerException is { } innEx)
             {
                 var innMsg = JsonConvert.DeserializeObject<JObject>(innEx.Message);
-                msg += $" {innMsg?["error"]?["message"]}";
-                LogService.Logger.Error($"({Identify}) raw content:\n{innEx.Message}");
+                msg += $" {innMsg?["error"]}";
+                LogService.Logger.Error($"({Name})({Identify}) raw content:\n{innEx.Message}");
             }
 
             msg = msg.Trim();
-
             throw new Exception(msg);
         }
-    }
-
-    public Task<ServiceResult> PredictAsync(object request, CancellationToken token)
-    {
-        throw new NotImplementedException();
     }
 }
