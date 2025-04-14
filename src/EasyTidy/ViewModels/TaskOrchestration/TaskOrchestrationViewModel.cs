@@ -11,6 +11,7 @@ using EasyTidy.Service.AIService;
 using EasyTidy.Views.ContentDialogs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.UI.Dispatching;
+using Microsoft.Windows.AppNotifications.Builder;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Text.Encodings.Web;
@@ -26,16 +27,17 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
 
     private StackedNotificationsBehavior? _notificationQueue;
 
-    private readonly AIServiceFactory _factory;
-
     [ObservableProperty]
     private IThemeSelectorService _themeSelectorService;
+
+    [ObservableProperty]
+    private IAppNotificationService _appNotificationService;
 
     public TaskOrchestrationViewModel(IThemeSelectorService themeSelectorService, AIServiceFactory factory)
     {
         _themeSelectorService = themeSelectorService;
         _dbContext = App.GetService<AppDbContext>();
-        _factory = factory;
+        _appNotificationService = App.GetService<IAppNotificationService>();
         LoadRulesMenu();
         DateTimeModel = new ObservableCollection<PatternSnippetModel>();
         CounterModel = new ObservableCollection<PatternSnippetModel>();
@@ -184,7 +186,10 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
             var ai = await _dbContext.AIService.Where(x => x.IsDefault == true && x.IsEnabled == true).FirstOrDefaultAsync();
             if (ai == null && (SelectedOperationMode == OperationMode.AIClassification || SelectedOperationMode == OperationMode.AISummary))
             {
-                _notificationQueue.ShowWithWindowExtension("SaveSuccessfulText".GetLocalized(), InfoBarSeverity.Error);
+                // _notificationQueue.ShowWithWindowExtension("SaveSuccessfulText".GetLocalized(), InfoBarSeverity.Error);
+                // var tips = BuildToastXmlString("AI服务", "请先设置默认的AI服务");
+                var tips = new AppNotificationBuilder().AddText("请先设置默认的AI服务").AddButton(new AppNotificationButton("设置").AddArgument("action", "AiSettings")).AddArgument("contentId", "351");
+                AppNotificationService.Show(tips.BuildNotification().Payload);
                 return;
             }
             var prompt = SelectedOperationMode switch

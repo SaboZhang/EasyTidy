@@ -30,21 +30,21 @@ public class AppNotificationService : IAppNotificationService
     {
         // TODO: Handle notification invocations when your app is already running.
 
-        //// // Navigate to a specific page based on the notification arguments.
-        //// if (ParseArguments(args.Argument)["action"] == "Settings")
-        //// {
-        ////    App.MainWindow.DispatcherQueue.TryEnqueue(() =>
-        ////    {
-        ////        _navigationService.NavigateTo(typeof(SettingsViewModel).FullName!);
-        ////    });
-        //// }
+        // Navigate to a specific page based on the notification arguments.
+        if (ParseArguments(args.Argument)["action"] == "AiSettings")
+        {
+           App.MainWindow.DispatcherQueue.TryEnqueue(() =>
+           {
+               _navigationService.NavigateTo(typeof(AiSettingsViewModel).FullName!);
+           });
+        }
 
         App.MainWindow.DispatcherQueue.TryEnqueue(() =>
         {
-            if (!string.IsNullOrEmpty(args.Argument))
-            {
-                App.MainWindow.ShowMessageDialogAsync("TODO: Handle notification invocations when your app is already running.", "Notification Invoked");
-            }
+            // if (!string.IsNullOrEmpty(args.Argument))
+            // {
+            //     App.MainWindow.ShowMessageDialogAsync("TODO: Handle notification invocations when your app is already running.", "Notification Invoked");
+            // }
 
             App.MainWindow.BringToFront();
         });
@@ -54,6 +54,13 @@ public class AppNotificationService : IAppNotificationService
     {
         var appNotification = new AppNotification(payload);
 
+        AppNotificationManager.Default.Show(appNotification);
+
+        return appNotification.Id != 0;
+    }
+
+    public bool Show(AppNotification appNotification)
+    {
         AppNotificationManager.Default.Show(appNotification);
 
         return appNotification.Id != 0;

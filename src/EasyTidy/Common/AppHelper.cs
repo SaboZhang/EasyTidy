@@ -1,4 +1,5 @@
-﻿using EasyTidy.Model;
+﻿using System.Security;
+using EasyTidy.Model;
 using Nucs.JsonSettings;
 using Nucs.JsonSettings.Autosave;
 using Nucs.JsonSettings.Fluent;
@@ -62,6 +63,38 @@ public static partial class AppHelper
         Settings.AutomaticConfig.RegularTaskRunning = viewModel.RegularTaskRunning;
         Settings.AutomaticConfig.OnScheduleExecution = viewModel.OnScheduleExecution;
         Settings.AutomaticConfig = Settings.AutomaticConfig;
+    }
+
+    public static string BuildToastXmlString(string title, string content, string? imageUri = null, Dictionary<string, string>? buttons = null)
+    {
+        // 转义避免非法字符
+        string safeTitle = SecurityElement.Escape(title);
+        string safeContent = SecurityElement.Escape(content);
+
+        string xml = $@"
+<toast>
+  <visual>
+    <binding template='ToastGeneric'>
+      <text>{safeTitle}</text>
+      <text>{safeContent}</text>"
+      + (string.IsNullOrWhiteSpace(imageUri) ? "" : $@"
+      <image placement='inline' src='{SecurityElement.Escape(imageUri)}' />")
+      + @"
+    </binding>
+  </visual>";
+
+        if (buttons != null && buttons.Count > 0)
+        {
+            xml += "<actions>";
+            foreach (var btn in buttons)
+            {
+                xml += $@"<action content='{SecurityElement.Escape(btn.Key)}' arguments='{SecurityElement.Escape(btn.Value)}' />";
+            }
+            xml += "</actions>";
+        }
+
+        xml += "</toast>";
+        return xml;
     }
 
 }
