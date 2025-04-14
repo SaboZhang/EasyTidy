@@ -34,6 +34,10 @@ public class AIServiceFactory
         IAIServiceLlm aIServiceLlm = entity.Type switch
         {
             ServiceType.OpenAI => new OpenAIService(),
+            ServiceType.QWen => new OpenAIService(),
+            ServiceType.Ollama => new OpenAIService(),
+            ServiceType.HuggingFace => new OpenAIService(),
+            ServiceType.OpenAIFormat => new OpenAIService(),
             _ => throw new NotImplementedException(),
         };
 
