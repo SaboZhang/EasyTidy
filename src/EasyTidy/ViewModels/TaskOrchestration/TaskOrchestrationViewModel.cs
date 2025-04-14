@@ -11,6 +11,7 @@ using EasyTidy.Service.AIService;
 using EasyTidy.Views.ContentDialogs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.UI.Dispatching;
+using Microsoft.Windows.AppNotifications.Builder;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Text.Encodings.Web;
@@ -26,16 +27,17 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
 
     private StackedNotificationsBehavior? _notificationQueue;
 
-    private readonly AIServiceFactory _factory;
-
     [ObservableProperty]
     private IThemeSelectorService _themeSelectorService;
+
+    [ObservableProperty]
+    private IAppNotificationService _appNotificationService;
 
     public TaskOrchestrationViewModel(IThemeSelectorService themeSelectorService, AIServiceFactory factory)
     {
         _themeSelectorService = themeSelectorService;
         _dbContext = App.GetService<AppDbContext>();
-        _factory = factory;
+        _appNotificationService = App.GetService<IAppNotificationService>();
         LoadRulesMenu();
         DateTimeModel = new ObservableCollection<PatternSnippetModel>();
         CounterModel = new ObservableCollection<PatternSnippetModel>();
@@ -184,7 +186,12 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
             var ai = await _dbContext.AIService.Where(x => x.IsDefault == true && x.IsEnabled == true).FirstOrDefaultAsync();
             if (ai == null && (SelectedOperationMode == OperationMode.AIClassification || SelectedOperationMode == OperationMode.AISummary))
             {
-                _notificationQueue.ShowWithWindowExtension("SaveSuccessfulText".GetLocalized(), InfoBarSeverity.Error);
+                // _notificationQueue.ShowWithWindowExtension("SaveSuccessfulText".GetLocalized(), InfoBarSeverity.Error);
+                // var tips = BuildToastXmlString("AI服务", "请先设置默认的AI服务");
+                var tips = new AppNotificationBuilder().AddText("AI_Notice".GetLocalized())
+                    .AddButton(new AppNotificationButton("Settings".GetLocalized())
+                    .AddArgument("action", "AiSettings")).AddArgument("contentId", "351");
+                AppNotificationService.Show(tips.BuildNotification().Payload);
                 return;
             }
             var prompt = SelectedOperationMode switch
@@ -725,6 +732,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
             if (dataContext != null)
             {
                 var task = dataContext as TaskOrchestrationTable;
+                string language = string.IsNullOrEmpty(Settings.Language) ? "Follow the document language" : Settings.Language;
                 var automatic = new AutomaticJob();
                 var rule = await automatic.GetSpecialCasesRule(task.GroupName.Id, task.TaskRule);
                 var ai = await _dbContext.AIService.Where(x => x.Identify.ToString().Equals(task.AIIdentify.ToString())).FirstOrDefaultAsync();
@@ -744,7 +752,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                     funcs: FilterUtil.GeneratePathFilters(rule, task.RuleType),
                     pathFilter: FilterUtil.GetPathFilters(task.Filter),
                     ruleModel: new RuleModel { Filter = task.Filter, Rule = task.TaskRule, RuleType = task.RuleType })
-                { RuleName = task.TaskRule, AIServiceLlm = llm, Prompt = task.UserDefinePromptsJson, Argument = task.Argument };
+                { RuleName = task.TaskRule, AIServiceLlm = llm, Prompt = task.UserDefinePromptsJson, Argument = task.Argument, Language = language };
                 await OperationHandler.ExecuteOperationAsync(task.OperationMode, operationParameters);
                 _notificationQueue.ShowWithWindowExtension("ExecutionSuccessfulText".GetLocalized(), InfoBarSeverity.Success);
                 _ = ClearNotificationAfterDelay(3000);
@@ -778,6 +786,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 if (list != null)
                 {
                     var orderList = list.OrderByDescending(x => x.Priority);
+                    string language = string.IsNullOrEmpty(Settings.Language) ? "Follow the document language" : Settings.Language;
                     foreach (var item in orderList)
                     {
                         var ai = await _dbContext.AIService.Where(x => x.Identify.ToString().Equals(item.AIIdentify.ToString())).FirstOrDefaultAsync();
@@ -799,7 +808,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                             funcs: FilterUtil.GeneratePathFilters(rule, item.RuleType),
                             pathFilter: FilterUtil.GetPathFilters(item.Filter),
                             ruleModel: new RuleModel { Filter = item.Filter, Rule = item.TaskRule, RuleType = item.RuleType })
-                        { RuleName = item.TaskRule, AIServiceLlm = llm, Prompt = item.UserDefinePromptsJson, Argument = item.Argument };
+                        { RuleName = item.TaskRule, AIServiceLlm = llm, Prompt = item.UserDefinePromptsJson, Argument = item.Argument, Language = language };
                         await OperationHandler.ExecuteOperationAsync(item.OperationMode, operationParameters);
                         _notificationQueue.ShowWithWindowExtension("ExecutionSuccessfulText".GetLocalized(), InfoBarSeverity.Success);
                         _ = ClearNotificationAfterDelay(3000);

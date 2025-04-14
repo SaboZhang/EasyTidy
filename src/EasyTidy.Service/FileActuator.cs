@@ -361,9 +361,9 @@ public static class FileActuator
     /// <summary>
     /// 执行AI分类的步骤1：判断操作类型
     /// </summary>
-    private static async Task<Dictionary<string, string>> ExecuteStepOne(IAIServiceLlm aiService, string customPrompt, CancellationToken token)
+    private static async Task<Dictionary<string, string>> ExecuteStepOne(IAIServiceLlm aiService, string customPrompt, string lang ,CancellationToken token)
     {
-        await StreamHandlerAsync(aiService, customPrompt, token);
+        await StreamHandlerAsync(aiService, customPrompt, lang ,token);
         var setup1 = aiService.Data.Result?.ToString() ?? string.Empty;
         LogService.Logger.Info($"步骤1 - 判断操作类型: {setup1}");
         return FilterUtil.ExtractKeyValuePairsFromRaw(setup1);
@@ -376,6 +376,7 @@ public static class FileActuator
         IAIServiceLlm aiService,
         List<Prompt> prompts,
         string filter,
+        string lang,
         CancellationToken token)
     {
         var promptToUpdate = prompts.FirstOrDefault(p => p.Role.Equals("user"));
@@ -386,7 +387,7 @@ public static class FileActuator
         }
 
         promptToUpdate.Content = PromptConstants.SetupFourPrompt;
-        await StreamHandlerAsync(aiService, filter, token);
+        await StreamHandlerAsync(aiService, filter, lang, token);
         var setup4 = aiService.Data.Result?.ToString() ?? string.Empty;
         LogService.Logger.Debug($"步骤4 - 获取过滤器配置: {setup4}");
 
@@ -460,7 +461,7 @@ public static class FileActuator
         try
         {
             // 步骤1：判断操作类型
-            var step1Result = await ExecuteStepOne(parameters.AIServiceLlm, customPrompt, cts.Token);
+            var step1Result = await ExecuteStepOne(parameters.AIServiceLlm, customPrompt, parameters.Language ,cts.Token);
 
             // 步骤2：判断路径信息
             var step2Result = await UpdatePromptAndExecute(
@@ -497,6 +498,7 @@ public static class FileActuator
                     parameters.AIServiceLlm,
                     prompts,
                     step3Result.Filter,
+                    parameters.Language,
                     cts.Token);
             }
 
@@ -545,7 +547,7 @@ public static class FileActuator
             }
 
             promptToUpdate.Content = newPromptContent;
-            await StreamHandlerAsync(parameters.AIServiceLlm, customPrompt, cts.Token);
+            await StreamHandlerAsync(parameters.AIServiceLlm, customPrompt, parameters.Language, cts.Token);
 
             var result = parameters.AIServiceLlm.Data.Result?.ToString() ?? string.Empty;
             var classificationResult = new AIClassificationResult
@@ -614,7 +616,7 @@ public static class FileActuator
                 cts.Cancel();
                 return;
         }
-        await StreamHandlerAsync(parameters.AIServiceLlm, conntent, cts.Token);
+        await StreamHandlerAsync(parameters.AIServiceLlm, conntent, parameters.Language, cts.Token);
         string formattedTime = DateTime.Now.ToString("yyyyMMddHHmmssfff");
         string fileName = $"{"AISummaryText".GetLocalized()}-{formattedTime}.pdf";
         string filePath = Path.Combine(parameters.OldTargetPath, fileName);
@@ -1349,12 +1351,12 @@ public static class FileActuator
         }
     }
 
-    private static async Task StreamHandlerAsync(IAIServiceLlm aIServiceLlm, string content, CancellationToken token)
+    private static async Task StreamHandlerAsync(IAIServiceLlm aIServiceLlm, string content, string lang, CancellationToken token)
     {
         aIServiceLlm.Data = ServiceResult.Reset;
 
         await aIServiceLlm.PredictAsync(
-            new RequestModel(content),
+            new RequestModel(content, lang),
             msg =>
             {
                 LogService.Logger.Info($"AI 服务返回: {msg}");

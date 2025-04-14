@@ -1498,4 +1498,7 @@
   <data name="ExecutionParameters.Text" xml:space="preserve">
     <value>運行參數</value>
   </data>
+  <data name="AI_Notice" xml:space="preserve">
+    <value>請先設定預設的 AI</value>
+  </data>
 </root>

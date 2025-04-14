@@ -2048,6 +2048,10 @@
           <source>argument</source>
           <target state="translated">Argument</target>
         </trans-unit>
+        <trans-unit id="AI_Notice" translate="yes" xml:space="preserve">
+          <source>Please set the default AI first</source>
+          <target state="translated">Veuillez définir l'IA par défaut en premier</target>
+        </trans-unit>
       </group>
     </body>
   </file>

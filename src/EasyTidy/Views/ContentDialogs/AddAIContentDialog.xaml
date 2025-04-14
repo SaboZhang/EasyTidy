@@ -10,23 +10,45 @@
     DefaultButton="Primary"
     mc:Ignorable="d">
 
-    <StackPanel Spacing="8">
-        <TextBox x:Uid="DialogModelName" Text="{x:Bind ChatModel, Mode=TwoWay}" MinWidth="260"/>
-        <TextBox x:Uid="DialogName" Text="{x:Bind ModelName, Mode=TwoWay}" MinWidth="260"/>
-        <ComboBox x:Uid="DialogProvider" MinWidth="320" 
-                  ItemsSource="{x:Bind ViewModel.ServiceTypes}"
-                  SelectedItem="{x:Bind ServiceType, Mode=TwoWay}"
-                  SelectedIndex="0">
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Converter={StaticResource EnumDisplayNameConverter}}"/>
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-        </ComboBox>
-        <TextBox x:Uid="DialogBasePath" Text="{x:Bind BaseUrl, Mode=TwoWay}" MinWidth="260"/>
-        <TextBlock x:Uid="Tips" MinWidth="260" MaxWidth="320" TextWrapping="WrapWholeWords" />
-        <PasswordBox x:Uid="APPID" Password="{x:Bind AppID, Mode=TwoWay}" MinWidth="260" />
-        <PasswordBox x:Uid="APIKey" Password="{x:Bind AppKey, Mode=TwoWay}" MinWidth="260" />
-        <Slider x:Uid="Temperature" Minimum="0" Maximum="2" Value="{x:Bind Temperature, Mode=TwoWay}" SmallChange="0.1" StepFrequency="0.1"/>
-    </StackPanel>
+    <ScrollView VerticalScrollBarVisibility="Hidden">
+        <StackPanel Spacing="8">
+            <TextBox x:Uid="DialogModelName"
+                    Text="{x:Bind ChatModel, Mode=TwoWay}"
+                    MinWidth="260"/>
+            <TextBox x:Uid="DialogName"
+                    Text="{x:Bind ModelName, Mode=TwoWay}"
+                    MinWidth="260"/>
+            <ComboBox x:Uid="DialogProvider"
+                    MinWidth="320"
+                      ItemsSource="{x:Bind ViewModel.ServiceTypes}"
+                      SelectedItem="{x:Bind ServiceType, Mode=TwoWay}"
+                      SelectedIndex="0">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Converter={StaticResource EnumDisplayNameConverter}}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <TextBox x:Uid="DialogBasePath"
+                    Text="{x:Bind BaseUrl, Mode=TwoWay}"
+                    MinWidth="260"/>
+            <TextBlock x:Uid="Tips"
+                    MinWidth="260"
+                    MaxWidth="320"
+                    TextWrapping="WrapWholeWords"/>
+            <PasswordBox x:Uid="APPID"
+                    Password="{x:Bind AppID, Mode=TwoWay}"
+                    MinWidth="260"/>
+            <PasswordBox x:Uid="APIKey"
+                    Password="{x:Bind AppKey, Mode=TwoWay}"
+                    MinWidth="260"/>
+            <Slider x:Uid="Temperature"
+                    Minimum="0"
+                    Maximum="2"
+                    Value="{x:Bind Temperature, Mode=TwoWay}"
+                    SmallChange="0.1"
+                    StepFrequency="0.1"/>
+        </StackPanel>
+    </ScrollView>
+
 </ContentDialog>

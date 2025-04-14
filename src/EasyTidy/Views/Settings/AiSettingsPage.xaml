@@ -107,12 +107,15 @@
                                                HorizontalAlignment="Center"
                                                Text="{x:Bind Name}"/>
                                     <StackPanel Grid.Column="3"
+                                                Width="28"
                                                 Orientation="Horizontal"
                                                 VerticalAlignment="Center"
-                                                HorizontalAlignment="Right">
-                                        <CheckBox IsChecked="{x:Bind IsEnabled, Mode=TwoWay}" 
-                                                  Checked="CheckBox_Checked" 
-                                                  Unchecked="CheckBox_Unchecked" />
+                                                HorizontalAlignment="Center">
+                                        <CheckBox IsChecked="{x:Bind IsEnabled, Mode=TwoWay}"
+                                                  Checked="CheckBox_Checked"
+                                                  Unchecked="CheckBox_Unchecked"
+                                                  Content=""
+                                                  Padding="0"/>
                                     </StackPanel>
                                     <StackPanel HorizontalAlignment="Center"
                                                 Orientation="Horizontal"

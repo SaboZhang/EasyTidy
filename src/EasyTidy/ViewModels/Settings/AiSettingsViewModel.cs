@@ -96,7 +96,7 @@ public partial class AiSettingsViewModel : ObservableObject
             {
                 AiList = observableAiList;
                 AiListACV = acv;
-                ServiceType = defaultChatModelEntry.Type;
+                // ServiceType = defaultChatModelEntry.Type;
                 DefaultChatModels = defaultChatModels;
                 DefaultChatModel = defaultChatModel;
             });

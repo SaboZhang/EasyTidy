@@ -2048,6 +2048,10 @@
           <source>argument</source>
           <target state="translated">運行參數</target>
         </trans-unit>
+        <trans-unit id="AI_Notice" translate="yes" xml:space="preserve">
+          <source>Please set the default AI first</source>
+          <target state="translated">請先設定預設的 AI</target>
+        </trans-unit>
       </group>
     </body>
   </file>

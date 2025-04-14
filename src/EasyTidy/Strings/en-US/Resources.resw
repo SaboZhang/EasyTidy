@@ -1638,4 +1638,7 @@
   <data name="ExecutionParameters.Text" xml:space="preserve">
     <value>argument</value>
   </data>
+  <data name="AI_Notice" xml:space="preserve">
+    <value>Please set the default AI first</value>
+  </data>
 </root>
