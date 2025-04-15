@@ -636,9 +636,12 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 return;
             }
 
+            var group = delete.GroupName;
+
             await DeleteAssociatedAutomaticTable(delete.AutomaticTable, delete.ID);
-            await DeleteTask(delete);
-            await DeleteEmptyGroup(delete.GroupName);
+            _dbContext.TaskOrchestration.Remove(delete);
+            await _dbContext.SaveChangesAsync();
+            await DeleteEmptyGroup(group);
 
             await transaction.CommitAsync(); // 提交事务
 
@@ -683,12 +686,6 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         {
             _dbContext.Automatic.Remove(automaticTable);
         }
-    }
-
-    private async Task DeleteTask(TaskOrchestrationTable delete)
-    {
-        _dbContext.TaskOrchestration.Remove(delete);
-        await _dbContext.SaveChangesAsync();
     }
 
     private async Task DeleteEmptyGroup(TaskGroupTable group)

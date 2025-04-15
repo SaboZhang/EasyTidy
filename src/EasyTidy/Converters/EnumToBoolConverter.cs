@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace EasyTidy.Converters;
 
-public class BoolToEnumConverter : IValueConverter
+public partial class BoolToEnumConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, string language)
     {

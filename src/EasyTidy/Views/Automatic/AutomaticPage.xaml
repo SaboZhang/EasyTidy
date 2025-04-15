@@ -8,7 +8,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="using:CommunityToolkit.WinUI"
     xmlns:ctk="using:CommunityToolkit.WinUI.Controls"
-    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:model="using:EasyTidy.Model"
     xmlns:etc="using:EasyTidy.Views.UserControls"
@@ -19,11 +18,11 @@
     mc:Ignorable="d">
 
     <i:Interaction.Behaviors>
-        <ic:EventTriggerBehavior EventName="Loaded">
-            <ic:EventTriggerBehavior.Actions>
-                <ic:InvokeCommandAction Command="{x:Bind ViewModel.PageLoadedCommand}"/>
-            </ic:EventTriggerBehavior.Actions>
-        </ic:EventTriggerBehavior>
+        <i:EventTriggerBehavior EventName="Loaded">
+            <i:EventTriggerBehavior.Actions>
+                <i:InvokeCommandAction Command="{x:Bind ViewModel.PageLoadedCommand}"/>
+            </i:EventTriggerBehavior.Actions>
+        </i:EventTriggerBehavior>
     </i:Interaction.Behaviors>
 
     <ScrollView Margin="0,-58,0,0"

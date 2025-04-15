@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EasyTidy.Converters;
 
-public class EnumToImageConverter : IValueConverter
+public partial class EnumToImageConverter : IValueConverter
 {
     public string? Prefix { get; set; } = "ms-appx:///Assets/AI/";
     public string? Suffix { get; set; } = ".png";

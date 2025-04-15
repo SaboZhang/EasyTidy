@@ -8,7 +8,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     xmlns:model="using:EasyTidy.Model"
-    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:ui="using:CommunityToolkit.WinUI"
     xmlns:i="using:Microsoft.Xaml.Interactivity" xmlns:etc="using:EasyTidy.Behaviors"
     CornerRadius="{ThemeResource OverlayCornerRadius}"
@@ -40,11 +39,11 @@
                           SelectedItem="{x:Bind ViewModel.SelectedTaskGroupName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                           SelectedIndex="{x:Bind ViewModel.SelectedGroupIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     <i:Interaction.Behaviors>
-                        <ic:EventTriggerBehavior EventName="SelectionChanged">
-                            <ic:EventTriggerBehavior.Actions>
-                                <ic:InvokeCommandAction Command="{x:Bind ViewModel.GroupSelectionChangedCommand}"/>
-                            </ic:EventTriggerBehavior.Actions>
-                        </ic:EventTriggerBehavior>
+                        <i:EventTriggerBehavior EventName="SelectionChanged">
+                            <i:EventTriggerBehavior.Actions>
+                                <i:InvokeCommandAction Command="{x:Bind ViewModel.GroupSelectionChangedCommand}"/>
+                            </i:EventTriggerBehavior.Actions>
+                        </i:EventTriggerBehavior>
                     </i:Interaction.Behaviors>
                 </ComboBox>
             </StackPanel>

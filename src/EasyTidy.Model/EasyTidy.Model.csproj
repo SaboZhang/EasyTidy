@@ -11,6 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+	 <PackageReference Include="Microsoft.Windows.CsWinRT" />
 	 <PackageReference Include="Microsoft.Windows.SDK.BuildTools" />
 	 <PackageReference Include="CommunityToolkit.WinUI.Extensions" />
 	 <PackageReference Include="Microsoft.WindowsAppSDK" />

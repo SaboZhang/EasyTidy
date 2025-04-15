@@ -591,6 +591,8 @@ public static class FileActuator
 
     private static async Task CreateAISummary(OperationParameters parameters)
     {
+        if (Path.GetFileName(parameters.SourcePath).Contains("AISummaryText".GetLocalized())) return;
+
         var cts = new CancellationTokenSource();
         var fileType = FileReader.GetFileType(parameters.SourcePath);
         string conntent = string.Empty;
@@ -617,8 +619,9 @@ public static class FileActuator
                 return;
         }
         await StreamHandlerAsync(parameters.AIServiceLlm, conntent, parameters.Language, cts.Token);
+        var oldName = Path.GetFileName(parameters.SourcePath);
         string formattedTime = DateTime.Now.ToString("yyyyMMddHHmmssfff");
-        string fileName = $"{"AISummaryText".GetLocalized()}-{formattedTime}.pdf";
+        string fileName = $"{"AISummaryText".GetLocalized()}-{formattedTime}-{oldName}.pdf";
         string filePath = Path.Combine(parameters.OldTargetPath, fileName);
         if (parameters.AIServiceLlm.Data.IsSuccess)
         {
