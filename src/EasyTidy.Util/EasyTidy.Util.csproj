@@ -29,6 +29,7 @@
 	<PackageReference Include="NPOI" />
 	<PackageReference Include="Nucs.JsonSettings2" />
 	<PackageReference Include="PdfPig" />
+	<PackageReference Include="PDFsharp" />
 	<PackageReference Include="Quartz" />
 	<PackageReference Include="SharpCompress" />
 	<PackageReference Include="SixLabors.ImageSharp" />
