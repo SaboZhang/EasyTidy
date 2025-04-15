@@ -127,6 +127,9 @@ public partial class OpenAICompatibleService : ObservableObject, IAIServiceLlm
 
         try
         {
+            var sb = new StringBuilder();
+            bool isThink = false;
+
             await HttpUtil.PostAsync(
                 uriBuilder.Uri,
                 jsonData,
@@ -136,8 +139,12 @@ public partial class OpenAICompatibleService : ObservableObject, IAIServiceLlm
                     if (string.IsNullOrEmpty(msg?.Trim()))
                         return;
 
-                    var preprocessString =
-                        msg.Replace("data:", "").Trim();
+                    var preprocessString = msg.Replace("data:", "").Trim();
+                    // 结束标记
+                    if (preprocessString.Equals("[DONE]"))
+                        return;
+                        
+                    LogService.Logger.Debug($"OpenAICompatibleService: {preprocessString}");
 
                     // 解析JSON数据
                     var parsedData = JsonConvert.DeserializeObject<JObject>(preprocessString);
@@ -145,16 +152,43 @@ public partial class OpenAICompatibleService : ObservableObject, IAIServiceLlm
                     if (parsedData is null)
                         return;
 
-                    // 如果done不是true、false或者done标记为true则结束读取结果
-                    if (!bool.TryParse(parsedData["done"]?.ToString() ?? "", out var done) || done)
-                        return;
-
                     // 提取content的值
-                    var contentValue = parsedData["message"]?["content"]?.ToString();
-                    // var contentValue = parsedData["choices"]?.FirstOrDefault()?["delta"]?["content"]?.ToString();
+                    var contentValue = parsedData["choices"]?.FirstOrDefault()?["delta"]?["content"]?.ToString();
 
                     if (string.IsNullOrEmpty(contentValue))
                         return;
+
+                    /***********************************************************************
+                        * 推理模型思考内容
+                        * 1. content字段内：Groq（推理后带有换行）
+                        * 2. reasoning_content字段内：DeepSeek、硅基流动（推理后带有换行）、第三方服务商
+                        ************************************************************************/
+
+                    #region 针对content内容中含有推理内容的优化
+
+                    if (contentValue == "<think>")
+                        isThink = true;
+                    if (contentValue == "</think>")
+                    {
+                        isThink = false;
+                        // 跳过当前内容
+                        return;
+                    }
+
+                    if (isThink)
+                        return;
+
+                    #endregion
+
+                    #region 针对推理过后带有换行的情况进行优化
+
+                    // 优化推理模型思考结束后的\n\n符号
+                    if (string.IsNullOrWhiteSpace(sb.ToString()) && string.IsNullOrWhiteSpace(contentValue))
+                        return;
+
+                    sb.Append(contentValue);
+
+                    #endregion
 
                     onDataReceived?.Invoke(contentValue);
                 },

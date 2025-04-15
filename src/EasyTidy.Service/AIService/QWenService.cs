@@ -123,6 +123,7 @@ public partial class QWenService : ObservableObject, IAIServiceLlm
         };
 
         var jsonData = JsonConvert.SerializeObject(reqData);
+        LogService.Logger.Debug("请求数据如下:\n" + jsonData);
 
         try
         {

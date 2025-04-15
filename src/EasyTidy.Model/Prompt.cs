@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace EasyTidy.Model;
 
@@ -30,7 +31,10 @@ public class UserDefinePrompt : ICloneable
 
 public class Prompt : ICloneable
 {
+    [property: JsonProperty("content")]
     public string Content { get; set; }
+
+    [property: JsonProperty("role")]
     public string Role { get; set; }
 
     public Prompt()

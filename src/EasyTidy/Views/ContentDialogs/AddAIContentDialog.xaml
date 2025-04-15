@@ -13,8 +13,12 @@
     <ScrollView VerticalScrollBarVisibility="Hidden">
         <StackPanel Spacing="8">
             <TextBox x:Uid="DialogModelName"
-                    Text="{x:Bind ChatModel, Mode=TwoWay}"
+                    Text="{x:Bind ChatModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     MinWidth="260"/>
+            <TextBlock x:Name="ChatModelError" 
+                Text="{x:Bind ErrorMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+                Visibility="Collapsed" />
             <TextBox x:Uid="DialogName"
                     Text="{x:Bind ModelName, Mode=TwoWay}"
                     MinWidth="260"/>
