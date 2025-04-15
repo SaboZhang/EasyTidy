@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace EasyTidy.Converters;
 
-public class EnumDisplayNameConverter : IValueConverter
+public partial class EnumDisplayNameConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, string language)
     {

@@ -9,7 +9,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:views="using:EasyTidy.Views"
     xmlns:ctk="using:CommunityToolkit.WinUI.Controls"
-    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:etc="using:EasyTidy.Views.UserControls"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:ui="using:CommunityToolkit.WinUI"
@@ -19,11 +18,11 @@
     mc:Ignorable="d">
 
     <i:Interaction.Behaviors>
-        <ic:EventTriggerBehavior EventName="Loaded">
-            <ic:EventTriggerBehavior.Actions>
-                <ic:InvokeCommandAction Command="{x:Bind ViewModel.PageLoadedCommand}"/>
-            </ic:EventTriggerBehavior.Actions>
-        </ic:EventTriggerBehavior>
+        <i:EventTriggerBehavior EventName="Loaded">
+            <i:EventTriggerBehavior.Actions>
+                <i:InvokeCommandAction Command="{x:Bind ViewModel.PageLoadedCommand}"/>
+            </i:EventTriggerBehavior.Actions>
+        </i:EventTriggerBehavior>
     </i:Interaction.Behaviors>
 
     <ScrollView x:Name="ContentArea" VerticalScrollBarVisibility="Auto">
@@ -50,11 +49,11 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                             <i:Interaction.Behaviors>
-                                <ic:EventTriggerBehavior EventName="SelectionChanged">
-                                    <ic:EventTriggerBehavior.Actions>
-                                        <ic:InvokeCommandAction Command="{x:Bind ViewModel.FileOperationTypeChangedCommand}"/>
-                                    </ic:EventTriggerBehavior.Actions>
-                                </ic:EventTriggerBehavior>
+                                <i:EventTriggerBehavior EventName="SelectionChanged">
+                                    <i:EventTriggerBehavior.Actions>
+                                        <i:InvokeCommandAction Command="{x:Bind ViewModel.FileOperationTypeChangedCommand}"/>
+                                    </i:EventTriggerBehavior.Actions>
+                                </i:EventTriggerBehavior>
                             </i:Interaction.Behaviors>
                         </ComboBox>
                     </ctk:SettingsCard>

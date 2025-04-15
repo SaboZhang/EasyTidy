@@ -4,27 +4,29 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageVersion Include="CommunityToolkit.Mvvm" Version="8.4.0" />
-    <PackageVersion Include="CommunityToolkit.WinUI.Behaviors" Version="8.1.240916" />
-    <PackageVersion Include="CommunityToolkit.WinUI.Collections" Version="8.1.240916" />
-    <PackageVersion Include="CommunityToolkit.WinUI.Controls.Primitives" Version="8.1.240916" />
-    <PackageVersion Include="CommunityToolkit.WinUI.Converters" Version="8.1.240916" />
-    <PackageVersion Include="CommunityToolkit.WinUI.Controls.SettingsControls" Version="8.1.240916" />
-    <PackageVersion Include="CommunityToolkit.WinUI.Extensions" Version="8.1.240916" />
-    <PackageVersion Include="H.NotifyIcon.WinUI" Version="2.2.0" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
+    <PackageVersion Include="CommunityToolkit.WinUI.Behaviors" Version="8.2.250402" />
+    <PackageVersion Include="CommunityToolkit.WinUI.Collections" Version="8.2.250402" />
+    <PackageVersion Include="CommunityToolkit.WinUI.Controls.Primitives" Version="8.2.250402" />
+    <PackageVersion Include="CommunityToolkit.WinUI.Converters" Version="8.2.250402" />
+    <PackageVersion Include="CommunityToolkit.WinUI.Controls.SettingsControls" Version="8.2.250402" />
+    <PackageVersion Include="CommunityToolkit.WinUI.Extensions" Version="8.2.250402" />
+    <PackageVersion Include="H.NotifyIcon.WinUI" Version="2.3.0" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageVersion>
-    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="9.0.2" />
-    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="9.0.2" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="9.0.4" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="9.0.4" />
+    <PackageVersion Include="Microsoft.Windows.CsWinRT" Version="2.2.0" />
     <PackageVersion Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
-    <PackageVersion Include="Microsoft.WindowsAppSDK" Version="1.6.250108002" />
-    <PackageVersion Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.9" />
+    <PackageVersion Include="Microsoft.WindowsAppSDK" Version="1.6.250402001" />
+    <PackageVersion Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="3.0.0" />
     <PackageVersion Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageVersion Include="NPOI" Version="2.7.2" />
+    <PackageVersion Include="NPOI" Version="2.7.3" />
     <PackageVersion Include="Nucs.JsonSettings2" Version="2.0.4" />
     <PackageVersion Include="Nucs.JsonSettings2.Autosave" Version="2.0.3" />
     <PackageVersion Include="PdfPig" Version="0.1.10" />
+    <PackageVersion Include="PDFsharp" Version="6.1.1" />
     <PackageVersion Include="Quartz" Version="3.14.0" />
     <PackageVersion Include="Quartz.Serialization.Json" Version="3.14.0" />
     <PackageVersion Include="SharpCompress" Version="0.39.0" />
@@ -35,9 +37,9 @@
     <PackageVersion Include="WinUIEx" Version="2.5.1" />
     <PackageVersion Include="Serilog" Version="4.2.0" />
     <PackageVersion Include="Serilog.Sinks.File" Version="6.0.0" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.2" />
-    <PackageVersion Include="Microsoft.Extensions.Caching.Memory" Version="9.0.2" />
-    <PackageVersion Include="System.Text.Json" Version="9.0.2" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.4" />
+    <PackageVersion Include="Microsoft.Extensions.Caching.Memory" Version="9.0.4" />
+    <PackageVersion Include="System.Text.Json" Version="9.0.4" />
     <PackageVersion Include="WebDAVClient" Version="2.2.1" />
     <PackageVersion Include="XAMLTools.MSBuild" Version="1.0.0-alpha0167" />
   </ItemGroup>

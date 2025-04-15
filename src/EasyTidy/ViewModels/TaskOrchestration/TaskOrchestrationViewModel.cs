@@ -636,9 +636,12 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 return;
             }
 
+            var group = delete.GroupName;
+
             await DeleteAssociatedAutomaticTable(delete.AutomaticTable, delete.ID);
-            await DeleteTask(delete);
-            await DeleteEmptyGroup(delete.GroupName);
+            _dbContext.TaskOrchestration.Remove(delete);
+            await _dbContext.SaveChangesAsync();
+            await DeleteEmptyGroup(group);
 
             await transaction.CommitAsync(); // 提交事务
 
@@ -685,12 +688,6 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         }
     }
 
-    private async Task DeleteTask(TaskOrchestrationTable delete)
-    {
-        _dbContext.TaskOrchestration.Remove(delete);
-        await _dbContext.SaveChangesAsync();
-    }
-
     private async Task DeleteEmptyGroup(TaskGroupTable group)
     {
         if (group == null) return;
@@ -732,10 +729,11 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
             if (dataContext != null)
             {
                 var task = dataContext as TaskOrchestrationTable;
-                string language = string.IsNullOrEmpty(Settings.Language) ? "Follow the document language" : Settings.Language;
+                string language = string.IsNullOrEmpty(Settings.Language) 
+                ? "Please respond in the language of the provided content." : Settings.Language;
                 var automatic = new AutomaticJob();
                 var rule = await automatic.GetSpecialCasesRule(task.GroupName.Id, task.TaskRule);
-                var ai = await _dbContext.AIService.Where(x => x.Identify.ToString().Equals(task.AIIdentify.ToString())).FirstOrDefaultAsync();
+                var ai = await _dbContext.AIService.Where(x => x.Identify.Equals(task.AIIdentify)).FirstOrDefaultAsync();
                 IAIServiceLlm llm = null;
                 if (task.OperationMode == OperationMode.AIClassification || task.OperationMode == OperationMode.AISummary)
                 {

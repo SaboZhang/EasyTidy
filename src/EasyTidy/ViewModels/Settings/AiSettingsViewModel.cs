@@ -128,6 +128,13 @@ public partial class AiSettingsViewModel : ObservableObject
         try
         {
             var dialog = sender as AddAIContentDialog;
+            dialog.ValidateProperty(dialog.ChatModel, "ChatModel");
+            if (dialog.HasErrors)
+            {
+                // 阻止对话框关闭
+                args.Cancel = true;
+                return;
+            }
             string baseUrl = dialog.BaseUrl;
             if (string.IsNullOrWhiteSpace(baseUrl))
             {

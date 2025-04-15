@@ -10,18 +10,17 @@
     xmlns:ctk="using:CommunityToolkit.WinUI.Controls"
     xmlns:ui="using:CommunityToolkit.WinUI"
     xmlns:model="using:EasyTidy.Model"
-    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     behaviors:NavigationViewHeaderBehavior.HeaderTemplate="{StaticResource BreadcrumbBarDataTemplate}"
     behaviors:NavigationViewHeaderBehavior.HeaderContext="{Binding}"
     mc:Ignorable="d">
 
     <i:Interaction.Behaviors>
-        <ic:EventTriggerBehavior EventName="Loaded">
-            <ic:EventTriggerBehavior.Actions>
-                <ic:InvokeCommandAction Command="{x:Bind ViewModel.PageLoadedCommand}"/>
-            </ic:EventTriggerBehavior.Actions>
-        </ic:EventTriggerBehavior>
+        <i:EventTriggerBehavior EventName="Loaded">
+            <i:EventTriggerBehavior.Actions>
+                <i:InvokeCommandAction Command="{x:Bind ViewModel.PageLoadedCommand}"/>
+            </i:EventTriggerBehavior.Actions>
+        </i:EventTriggerBehavior>
     </i:Interaction.Behaviors>
 
     <ScrollView x:Name="ContentArea" VerticalScrollBarVisibility="Auto">

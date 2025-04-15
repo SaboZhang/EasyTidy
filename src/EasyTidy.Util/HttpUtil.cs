@@ -149,7 +149,7 @@ public class HttpUtil
     }
 
     public static async Task PostAsync(Uri uri, string req, string? key, Action<string> onDataReceived,
-        CancellationToken token, int timeout = 10)
+        CancellationToken token, int timeout = 20)
     {
         var header = new Dictionary<string, string>
         {
@@ -159,7 +159,7 @@ public class HttpUtil
     }
 
     public static async Task PostAsync(Uri uri, Dictionary<string, string>? header, string req,  Action<string> onDataReceived,
-        CancellationToken token, int timeout = 10)
+        CancellationToken token, int timeout = 20)
     {
         using var client = CreateHttpClient(timeout);
 
