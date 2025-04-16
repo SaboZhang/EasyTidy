@@ -179,7 +179,28 @@ public partial class AiSettingsViewModel : ObservableObject
 
         var newDefaultId = DefaultChatModel.Identifier;
 
-        // 更新所有使用旧默认 AI 的任务引用
+        // 查找目标 AI 实体
+        var newDefaultAi = await _dbContext.AIService
+            .FirstOrDefaultAsync(x => x.Identify.ToString() == newDefaultId.ToString());
+
+        if (newDefaultAi == null)
+        {
+            Logger.Warn($"未找到匹配的 AI 服务，Identifier: {newDefaultId}");
+            return;
+        }
+
+        // 查询当前已有的默认项（若有）
+        var oldDefaults = await _dbContext.AIService
+            .Where(x => x.IsDefault && x.Identify != newDefaultId)
+            .ToListAsync();
+
+        // 取消所有旧默认
+        foreach (var old in oldDefaults)
+        {
+            old.IsDefault = false;
+        }
+
+        // 更新所有引用旧默认值的任务引用
         var taskList = await _dbContext.TaskOrchestration
             .Where(x => x.AIIdentify != Guid.Empty)
             .ToListAsync();
@@ -189,26 +210,10 @@ public partial class AiSettingsViewModel : ObservableObject
             task.AIIdentify = newDefaultId;
         }
 
-        // 重置旧的默认 AI 标识
-        var oldDefaults = await _dbContext.AIService
-            .Where(x => x.IsDefault)
-            .ToListAsync();
+        // 设置新的默认项
+        newDefaultAi.IsDefault = true;
 
-        foreach (var old in oldDefaults)
-        {
-            old.IsDefault = false;
-        }
-
-        // 设置新的默认 AI
-        var newDefaultAi = await _dbContext.AIService
-            .FirstOrDefaultAsync(x => x.Identify == newDefaultId);
-
-        if (newDefaultAi != null)
-        {
-            newDefaultAi.IsDefault = true;
-        }
-
-        // 保存所有变更
+        // 保存所有更改
         await _dbContext.SaveChangesAsync();
 
         // 刷新页面绑定

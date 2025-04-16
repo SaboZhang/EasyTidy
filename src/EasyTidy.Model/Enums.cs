@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -22,17 +23,17 @@ public enum BackupType
 public enum FileOperationType
 {
 
-    [Display(Name = "SkipText")] Skip,
+    [Description("跳过目标文件")] [Display(Name = "SkipText")] Skip,
 
-    [Display(Name = "OverrideText")] Override,
+    [Description("覆盖目标文件")] [Display(Name = "OverrideText")] Override,
 
-    [Display(Name = "OverwriteIfNewerText")] OverwriteIfNewer,
+    [Description("如果较新则覆盖目标文件")] [Display(Name = "OverwriteIfNewerText")] OverwriteIfNewer,
 
-    [Display(Name = "OverrideIfSizesDifferText")] OverrideIfSizesDiffer,
+    [Description("如果大小不同则覆盖目标文件")] [Display(Name = "OverrideIfSizesDifferText")] OverrideIfSizesDiffer,
 
-    [Display(Name = "ReNameAppendText")] ReNameAppend,
+    [Description("重命名为'文件名(1)'的格式")] [Display(Name = "ReNameAppendText")] ReNameAppend,
 
-    [Display(Name = "ReNameAddDateText")] ReNameAddDate
+    [Description("原文件名称后拼接日期")] [Display(Name = "ReNameAddDateText")] ReNameAddDate
 }
 
 /// <summary>

@@ -1,4 +1,4 @@
-# 更新日志 (惊蛰)
+# 更新日志 (AI)
 
 - 修复：修复翻译异常的BUG #91(不包含日志，日志暂时未做本地化)
 - 修复：移动文件时，选择覆盖/重命名时源文件没有移动的问题
@@ -19,7 +19,7 @@
 
 ## 更新日志详情
 
-- **[Full Changelog](https://github.com/SaboZhang/EasyTidy/compare/1.2.3.218...1.2.4.305)**
+- **[Full Changelog](https://github.com/SaboZhang/EasyTidy/compare/1.2.3.218...1.3.0.416)**
 
 ## 下载链接
 
