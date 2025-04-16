@@ -13,11 +13,12 @@ using UglyToad.PdfPig.Writer;
 
 namespace EasyTidy.Util;
 
-public class FileWriterUtil: IFontResolver
+public class FileWriterUtil
 {
     /// <summary>
     /// 将对象的文本内容写入 PDF 文件，自动进行换行和分页处理。
     /// </summary>
+    [Obsolete("已弃用", true)]
     public static void WriteObjectToPdf(object obj, string filePath)
     {
         ValidateInputs(obj, filePath);
@@ -194,24 +195,24 @@ public class FileWriterUtil: IFontResolver
     /// <param name="outputFilePath">输出的 PDF 文件路径</param>
     public static void WriteObjectToPdf(object obj, string outputFilePath, string title = "总结文档")
     {
-        if (obj == null) throw new ArgumentNullException(nameof(obj));
+        ArgumentNullException.ThrowIfNull(obj);
+
         if (string.IsNullOrWhiteSpace(outputFilePath)) throw new ArgumentException("输出路径不能为空", nameof(outputFilePath));
 
         string content = obj.ToString();
 
-        PdfDocument document = new PdfDocument();
+        PdfDocument document = new();
         document.Info.Title = title;
 
         // 加载系统中文字体
         string fontName = "SimHei";
 
-        XFont font = new XFont(fontName, 12, XFontStyleEx.Regular, new XPdfFontOptions(PdfFontEncoding.Unicode));
+        XFont font = new(fontName, 12, XFontStyleEx.Regular, new XPdfFontOptions(PdfFontEncoding.Unicode));
         double margin = 40;
         double lineHeight = font.GetHeight();
 
         // 文字布局宽度
         double usableWidth = 0;
-        double usableHeight = 0;
 
         // 当前页面与绘图对象
         PdfPage page = null;
@@ -219,7 +220,7 @@ public class FileWriterUtil: IFontResolver
         double y = 0;
 
         // 分段绘制文本（支持自动换行）
-        using (StringReader reader = new StringReader(content))
+        using (StringReader reader = new(content))
         {
             string line;
 
@@ -231,7 +232,7 @@ public class FileWriterUtil: IFontResolver
                     page = document.AddPage();
                     gfx = XGraphics.FromPdfPage(page);
                     usableWidth = page.Width.Point - 2 * margin;
-                    usableHeight = page.Height.Point - 2 * margin;
+                    double usableHeight = page.Height.Point - 2 * margin;
                     y = margin;
                 }
 
@@ -255,8 +256,8 @@ public class FileWriterUtil: IFontResolver
 
         // 保存文件
         document.Save(outputFilePath);
-            document.Close();
-        }
+        document.Close();
+    }
 
     /// <summary>
     /// 按页面宽度自动拆分字符串（支持中文）

@@ -8,6 +8,7 @@ using System.IO;
 using EasyTidy.Model;
 using System.Text;
 using UglyToad.PdfPig;
+using System.Linq;
 
 namespace EasyTidy.Util;
 
@@ -177,19 +178,49 @@ public class FileReader
 
     private static bool IsTextFile(string filePath)
     {
-        const int sampleSize = 1024;
-        byte[] buffer = new byte[sampleSize];
-        using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+        try
         {
-            int bytesRead = fs.Read(buffer, 0, sampleSize);
-            for (int i = 0; i < bytesRead; i++)
+            byte[] buffer = File.ReadAllBytes(filePath);
+            if (buffer.Length == 0) return false;
+
+            // 1. BOM检测
+            if (buffer.Length >= 4 && buffer[0] == 0x00 && buffer[1] == 0x00 &&
+                buffer[2] == 0xFE && buffer[3] == 0xFF) return true; // UTF-32 BE
+            if (buffer.Length >= 4 && buffer[0] == 0xFF && buffer[1] == 0xFE &&
+                buffer[2] == 0x00 && buffer[3] == 0x00) return true; // UTF-32 LE
+
+            // 2. 二进制检测
+            int nullCount = buffer.Count(b => b == 0);
+            if (nullCount > buffer.Length * 0.1) return false; // 过多NULL字符
+
+            // 3. 多编码验证
+            var encodings = new Encoding[]
             {
-                byte b = buffer[i];
-                if (b > 0x7F && b < 0xA0) // 非 ASCII 字符
-                    return false;
+                Encoding.UTF8,
+                Encoding.Unicode,
+                Encoding.GetEncoding("iso-8859-1")
+            };
+
+            foreach (var enc in encodings)
+            {
+                try
+                {
+                    string text = enc.GetString(buffer);
+                    return text.All(c =>
+                        !char.IsControl(c) ||
+                        c == '\r' || c == '\n' ||
+                        c == '\t' || c == '\f' || c == '\b');
+                }
+                catch { continue; }
             }
+            return false;
         }
-        return true;
+        catch (Exception ex) when (
+            ex is UnauthorizedAccessException ||
+            ex is IOException)
+        {
+            return false;
+        }
     }
 
     public static string ExtractTextFromPdf(string pdfPath)

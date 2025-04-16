@@ -614,6 +614,9 @@ public static class FileActuator
             case FileType.Pdf:
                 content = FileReader.ExtractTextFromPdf(parameters.SourcePath);
                 break;
+            case FileType.Txt:
+                content = FileReader.ReadTxt(parameters.SourcePath);
+                break;
             default:
                 LogService.Logger.Error($"不支持的文件类型: {fileType}");
                 cts.Cancel();

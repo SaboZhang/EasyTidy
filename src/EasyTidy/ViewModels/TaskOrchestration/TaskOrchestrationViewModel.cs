@@ -733,7 +733,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 ? "Please respond in the language of the provided content." : Settings.Language;
                 var automatic = new AutomaticJob();
                 var rule = await automatic.GetSpecialCasesRule(task.GroupName.Id, task.TaskRule);
-                var ai = await _dbContext.AIService.Where(x => x.Identify.Equals(task.AIIdentify)).FirstOrDefaultAsync();
+                var ai = await _dbContext.AIService.Where(x => x.Identify.ToString().Equals(task.AIIdentify.ToString())).FirstOrDefaultAsync();
                 IAIServiceLlm llm = null;
                 if (task.OperationMode == OperationMode.AIClassification || task.OperationMode == OperationMode.AISummary)
                 {
