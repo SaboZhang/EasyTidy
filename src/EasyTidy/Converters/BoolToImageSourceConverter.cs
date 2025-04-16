@@ -2,7 +2,7 @@
 using Microsoft.UI.Xaml.Media;
 
 namespace EasyTidy.Converters;
-public class BoolToImageSourceConverter : IValueConverter
+public partial class BoolToImageSourceConverter : IValueConverter
 {
     public ImageSource? TrueImage { get; set; }
     public ImageSource? FalseImage { get; set; }

@@ -3,7 +3,7 @@ using Microsoft.UI.Xaml.Media;
 
 namespace EasyTidy.Converters;
 
-public class LineDashStrokeArrayConverter : IValueConverter
+public partial class LineDashStrokeArrayConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, string language)
     {

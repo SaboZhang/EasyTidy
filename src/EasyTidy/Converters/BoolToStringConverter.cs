@@ -3,7 +3,7 @@ using Microsoft.UI.Xaml.Data;
 
 namespace EasyTidy.Converters;
 
-public class BoolToStringConverter : IValueConverter
+public partial class BoolToStringConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, string language)
     {

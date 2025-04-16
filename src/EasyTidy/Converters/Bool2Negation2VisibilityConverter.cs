@@ -2,7 +2,7 @@
 using Microsoft.UI.Xaml.Data;
 
 namespace EasyTidy.Converters;
-public class Bool2Negation2VisibilityConverter : IValueConverter
+public partial class Bool2Negation2VisibilityConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, string language)
     {
