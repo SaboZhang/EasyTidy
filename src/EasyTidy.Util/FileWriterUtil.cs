@@ -1,15 +1,19 @@
 ﻿using EasyTidy.Model;
+using PdfSharp.Drawing;
+using PdfSharp.Fonts;
+using PdfSharp.Pdf;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using UglyToad.PdfPig.Content;
 using UglyToad.PdfPig.Core;
 using UglyToad.PdfPig.Writer;
 
 namespace EasyTidy.Util;
 
-public class FileWriterUtil
+public class FileWriterUtil: IFontResolver
 {
     /// <summary>
     /// 将对象的文本内容写入 PDF 文件，自动进行换行和分页处理。
@@ -182,5 +186,107 @@ public class FileWriterUtil
     }
 
     #endregion
+
+    /// <summary>
+    /// 将对象内容写入 PDF 文件（支持中文、自动分页）
+    /// </summary>
+    /// <param name="obj">要写入的对象（可转换为字符串）</param>
+    /// <param name="outputFilePath">输出的 PDF 文件路径</param>
+    public static void WriteObjectToPdf(object obj, string outputFilePath, string title = "总结文档")
+    {
+        if (obj == null) throw new ArgumentNullException(nameof(obj));
+        if (string.IsNullOrWhiteSpace(outputFilePath)) throw new ArgumentException("输出路径不能为空", nameof(outputFilePath));
+
+        string content = obj.ToString();
+
+        PdfDocument document = new PdfDocument();
+        document.Info.Title = title;
+
+        // 加载系统中文字体
+        string fontName = "SimHei";
+
+        XFont font = new XFont(fontName, 12, XFontStyleEx.Regular, new XPdfFontOptions(PdfFontEncoding.Unicode));
+        double margin = 40;
+        double lineHeight = font.GetHeight();
+
+        // 文字布局宽度
+        double usableWidth = 0;
+        double usableHeight = 0;
+
+        // 当前页面与绘图对象
+        PdfPage page = null;
+        XGraphics gfx = null;
+        double y = 0;
+
+        // 分段绘制文本（支持自动换行）
+        using (StringReader reader = new StringReader(content))
+        {
+            string line;
+
+            while ((line = reader.ReadLine()) != null)
+            {
+                // 首次或分页创建页面
+                if (page == null)
+                {
+                    page = document.AddPage();
+                    gfx = XGraphics.FromPdfPage(page);
+                    usableWidth = page.Width.Point - 2 * margin;
+                    usableHeight = page.Height.Point - 2 * margin;
+                    y = margin;
+                }
+
+                var formattedLines = SplitLineByWidth(gfx, line, font, usableWidth);
+
+                foreach (var wrappedLine in formattedLines)
+                {
+                    if (y + lineHeight > page.Height.Point - margin)
+                    {
+                        page = document.AddPage();
+                        gfx.Dispose();
+                        gfx = XGraphics.FromPdfPage(page);
+                        y = margin;
+                    }
+
+                    gfx.DrawString(wrappedLine, font, XBrushes.Black, new XRect(margin, y, usableWidth, lineHeight), XStringFormats.TopLeft);
+                    y += lineHeight;
+                }
+            }
+        }
+
+        // 保存文件
+        document.Save(outputFilePath);
+            document.Close();
+        }
+
+    /// <summary>
+    /// 按页面宽度自动拆分字符串（支持中文）
+    /// </summary>
+    private static string[] SplitLineByWidth(XGraphics gfx, string text, XFont font, double maxWidth)
+    {
+        var result = new List<string>();
+        var sb = new StringBuilder();
+        double width = 0;
+
+        foreach (char ch in text)
+        {
+            var w = gfx.MeasureString(ch.ToString(), font).Width;
+            if (width + w > maxWidth)
+            {
+                result.Add(sb.ToString());
+                sb.Clear();
+                width = 0;
+            }
+
+            sb.Append(ch);
+            width += w;
+        }
+
+        if (sb.Length > 0)
+        {
+            result.Add(sb.ToString());
+        }
+
+        return result.ToArray();
+    }
 
 }

@@ -6,6 +6,7 @@ using Microsoft.VisualBasic.FileIO;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -595,37 +596,37 @@ public static class FileActuator
 
         var cts = new CancellationTokenSource();
         var fileType = FileReader.GetFileType(parameters.SourcePath);
-        string conntent = string.Empty;
+        string content = string.Empty;
         switch (fileType)
         {
             case FileType.Xls:
             case FileType.Xlsx:
-                var conntents = FileReader.ReadExcel(parameters.SourcePath);
-                foreach (var item in conntents)
+                var contents = FileReader.ReadExcel(parameters.SourcePath);
+                foreach (var item in contents)
                 {
-                    conntent += item;
+                    content += item;
                 }
                 break;
             case FileType.Doc:
             case FileType.Docx:
-                conntent = FileReader.ReadWord(parameters.SourcePath);
+                content = FileReader.ReadWord(parameters.SourcePath);
                 break;
             case FileType.Pdf:
-                conntent = FileReader.ExtractTextFromPdf(parameters.SourcePath);
+                content = FileReader.ExtractTextFromPdf(parameters.SourcePath);
                 break;
             default:
                 LogService.Logger.Error($"不支持的文件类型: {fileType}");
                 cts.Cancel();
                 return;
         }
-        await StreamHandlerAsync(parameters.AIServiceLlm, conntent, parameters.Language, cts.Token);
-        var oldName = Path.GetFileName(parameters.SourcePath);
+        await StreamHandlerAsync(parameters.AIServiceLlm, content, parameters.Language, cts.Token);
+        var oldName = Path.GetFileNameWithoutExtension(parameters.SourcePath);
         string formattedTime = DateTime.Now.ToString("yyyyMMddHHmmssfff");
         string fileName = $"{"AISummaryText".GetLocalized()}-{formattedTime}-{oldName}.pdf";
         string filePath = Path.Combine(parameters.OldTargetPath, fileName);
         if (parameters.AIServiceLlm.Data.IsSuccess)
         {
-            FileWriterUtil.WriteObjectToPdf(parameters.AIServiceLlm.Data.Result, filePath);
+            FileWriterUtil.WriteObjectToPdf(parameters.AIServiceLlm.Data.Result, filePath, oldName);
         }
 
     }
@@ -637,7 +638,7 @@ public static class FileActuator
     /// <param name="targetPath"></param>
     /// <param name="fileOperationType"></param>
     /// <returns></returns>
-    private static async Task MoveFile(string sourcePath, string targetPath, FileOperationType fileOperationType)
+    private static async Task MoveFile([Description("源文件/目录路径")] string sourcePath, [Description("目标文件/目录路径")] string targetPath, FileOperationType fileOperationType)
     {
         await _semaphore.WaitAsync(); // 请求对文件操作的独占访问
         try
