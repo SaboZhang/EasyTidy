@@ -100,3 +100,7 @@ EasyTidy 是一款功能强大的文件管理软件，致力于自动化处理�
 | 微信 | 支付宝 | PayPal |
 | :--: | :--: | :--: |
 | ![wechcatpay](./image/WeChanQR.png) | ![alipay](./image/AliPayQR.png) | <a href="https://www.paypal.me/EasyTidy" target="_blank"><img align="center" alt="EasyTidy" width="280"  src="./image/paypal.png" /></a> |
+
+## 交流群(微信)
+
+<img align="center" alt="EasyTidy" width="280" src="./image/社区.jpg" />

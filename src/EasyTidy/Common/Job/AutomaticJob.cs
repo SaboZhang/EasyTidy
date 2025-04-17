@@ -38,7 +38,7 @@ public class AutomaticJob : IJob
 
         var rule = await GetSpecialCasesRule(task.GroupName.Id, task.TaskRule);
         string language = string.IsNullOrEmpty(Settings.Language) ? "Follow the document language" : Settings.Language;
-        var ai = await _dbContext.AIService.Where(x => x.Identify.ToString().Equals(task.AIIdentify.ToString())).FirstOrDefaultAsync();
+        var ai = await _dbContext.AIService.Where(x => x.Identify.ToString().ToLower().Equals(task.AIIdentify.ToString().ToLower())).FirstOrDefaultAsync();
         IAIServiceLlm llm = null;
         if (task.OperationMode == OperationMode.AIClassification || task.OperationMode == OperationMode.AISummary)
         {
