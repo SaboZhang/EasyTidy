@@ -181,7 +181,7 @@ public partial class AiSettingsViewModel : ObservableObject
 
         // 查找目标 AI 实体
         var newDefaultAi = await _dbContext.AIService
-            .FirstOrDefaultAsync(x => x.Identify.ToString() == newDefaultId.ToString());
+            .FirstOrDefaultAsync(x => x.Identify.ToString().ToLower().Equals(newDefaultId.ToString().ToLower()));
 
         if (newDefaultAi == null)
         {

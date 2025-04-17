@@ -733,7 +733,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 ? "Please respond in the language of the provided content." : Settings.Language;
                 var automatic = new AutomaticJob();
                 var rule = await automatic.GetSpecialCasesRule(task.GroupName.Id, task.TaskRule);
-                var ai = await _dbContext.AIService.Where(x => x.Identify.ToString().Equals(task.AIIdentify.ToString())).FirstOrDefaultAsync();
+                var ai = await _dbContext.AIService.Where(x => x.Identify.ToString().ToLower().Equals(task.AIIdentify.ToString().ToLower())).FirstOrDefaultAsync();
                 IAIServiceLlm llm = null;
                 if (task.OperationMode == OperationMode.AIClassification || task.OperationMode == OperationMode.AISummary)
                 {
@@ -787,7 +787,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                     string language = string.IsNullOrEmpty(Settings.Language) ? "Follow the document language" : Settings.Language;
                     foreach (var item in orderList)
                     {
-                        var ai = await _dbContext.AIService.Where(x => x.Identify.ToString().Equals(item.AIIdentify.ToString())).FirstOrDefaultAsync();
+                        var ai = await _dbContext.AIService.Where(x => x.Identify.ToString().ToLower().Equals(item.AIIdentify.ToString().ToLower())).FirstOrDefaultAsync();
                         IAIServiceLlm llm = null;
                         if (item.OperationMode == OperationMode.AIClassification || item.OperationMode == OperationMode.AISummary)
                         {
