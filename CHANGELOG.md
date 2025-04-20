@@ -1,4 +1,4 @@
-# 更新日志 (AI)
+# 更新日志 (谷雨)
 
 - 修复：修复 AI 设置默认值时的BUG
 - 新增：社区微信交流群
@@ -13,7 +13,7 @@
 
 ## 更新日志详情
 
-- **[Full Changelog](https://github.com/SaboZhang/EasyTidy/compare/1.2.3.218...1.3.0.416)**
+- **[Full Changelog](https://github.com/SaboZhang/EasyTidy/compare/1.3.0.416...1.3.1.420)**
 
 ## 下载链接
 
