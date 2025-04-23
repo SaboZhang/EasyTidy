@@ -18,45 +18,48 @@
         </i:EventTriggerBehavior>
     </i:Interaction.Behaviors>
 
-    <StackPanel Margin="0,-42,0,0">
-        <etc:SettingsPageControl
-            x:Name="ContentArea"
-            x:Uid="LogsSettingsControl"
-            ModuleImageSource="ms-appx:///Assets/Modules/PT.png">
-            <etc:SettingsPageControl.ModuleContent>
-                <StackPanel>
-                    <ctk:SettingsCard
-                        x:Uid="LogsSettingsCard">
-                        <ctk:SettingsCard.HeaderIcon>
-                            <FontIcon Glyph="&#xEE92;"/>
-                        </ctk:SettingsCard.HeaderIcon>
-                        <StackPanel Orientation="Horizontal"
-                                    Spacing="10">
-                            <Button x:Uid="ClearButton"
-                                    Command="{x:Bind ViewModel.ClearLogsCommand}"/>
-                            <Button x:Uid="LogsFolder"
-                                    Style="{StaticResource AccentButtonStyle}"
-                                    Command="{x:Bind ViewModel.OpenLogsFolderCommand}"/>
-                            <Button x:Uid="RefreshButton"
-                                    Style="{StaticResource AccentButtonStyle}"
-                                    Command="{x:Bind ViewModel.PageLoadedCommand}"/>
-                        </StackPanel>
-                    </ctk:SettingsCard>
-                    <etc:SettingsGroup x:Uid="LogsGroup">
-                        <ListView ItemsSource="{x:Bind ViewModel.LogsListACV, Mode=TwoWay}"
-                                  SelectionMode="None"
-                                  MinHeight="100"
-                                  MaxHeight="580">
-                            <ListView.ItemTemplate>
-                                <DataTemplate x:DataType="x:String">
-                                    <TextBlock Text="{x:Bind}"
-                                               TextWrapping="Wrap"/>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                    </etc:SettingsGroup>
-                </StackPanel>
-            </etc:SettingsPageControl.ModuleContent>
-        </etc:SettingsPageControl>
-    </StackPanel>
+    <ScrollView Margin="0,-58,0,0"
+                VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="0,-42,0,0">
+            <etc:SettingsPageControl
+                x:Name="ContentArea"
+                x:Uid="LogsSettingsControl"
+                ModuleImageSource="ms-appx:///Assets/Modules/PT.png">
+                <etc:SettingsPageControl.ModuleContent>
+                    <StackPanel>
+                        <ctk:SettingsCard
+                            x:Uid="LogsSettingsCard">
+                            <ctk:SettingsCard.HeaderIcon>
+                                <FontIcon Glyph="&#xEE92;"/>
+                            </ctk:SettingsCard.HeaderIcon>
+                            <StackPanel Orientation="Horizontal"
+                                        Spacing="10">
+                                <Button x:Uid="ClearButton"
+                                        Command="{x:Bind ViewModel.ClearLogsCommand}"/>
+                                <Button x:Uid="LogsFolder"
+                                        Style="{StaticResource AccentButtonStyle}"
+                                        Command="{x:Bind ViewModel.OpenLogsFolderCommand}"/>
+                                <Button x:Uid="RefreshButton"
+                                        Style="{StaticResource AccentButtonStyle}"
+                                        Command="{x:Bind ViewModel.PageLoadedCommand}"/>
+                            </StackPanel>
+                        </ctk:SettingsCard>
+                        <etc:SettingsGroup x:Uid="LogsGroup">
+                            <ListView ItemsSource="{x:Bind ViewModel.LogsListACV, Mode=TwoWay}"
+                                      SelectionMode="None"
+                                      MinHeight="100"
+                                      MaxHeight="580">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate x:DataType="x:String">
+                                        <TextBlock Text="{x:Bind}"
+                                                   TextWrapping="Wrap"/>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </etc:SettingsGroup>
+                    </StackPanel>
+                </etc:SettingsPageControl.ModuleContent>
+            </etc:SettingsPageControl>
+        </StackPanel>
+    </ScrollView>
 </Page>

@@ -25,246 +25,224 @@
         </i:EventTriggerBehavior>
     </i:Interaction.Behaviors>
 
-    <ScrollView Margin="0,-58,0,0"
-                VerticalScrollBarVisibility="Auto">
-        <StackPanel x:Name="ContentArea">
-            <InfoBar MaxWidth="480"
-                     Margin="10"
-                     HorizontalAlignment="Center"
-                     VerticalAlignment="Bottom">
-                <i:Interaction.Behaviors>
-                    <behaviors:StackedNotificationsBehavior x:Name="NotificationQueue"/>
-                </i:Interaction.Behaviors>
-            </InfoBar>
+    <Grid>
+        <InfoBar MaxWidth="480"
+                 Margin="10"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Top">
+            <i:Interaction.Behaviors>
+                <behaviors:StackedNotificationsBehavior x:Name="NotificationQueue"/>
+            </i:Interaction.Behaviors>
+        </InfoBar>
+        <ScrollView Margin="0,-58,0,0"
+                    VerticalScrollBarVisibility="Auto">
+            <StackPanel x:Name="ContentArea">
+                <etc:SettingsPageControl x:Name="SettingsControl"
+                                         x:Uid="SettingsPageControl"
+                                         ModuleImageSource="ms-appx:///Assets/Modules/Auto.png">
+                    <etc:SettingsPageControl.ModuleContent>
+                        <StackPanel ChildrenTransitions="{StaticResource SettingsCardsAnimations}"
+                                    Orientation="Vertical">
+                            <etc:SettingsGroup Margin="0,-32,0,0"
+                                               x:Uid="AutoAnalysisGlobal">
+                                <ctk:SettingsCard x:Uid="FileChangeCard">
+                                    <ctk:SettingsCard.HeaderIcon>
+                                        <FontIcon Glyph="&#xF0E4;"/>
+                                    </ctk:SettingsCard.HeaderIcon>
+                                    <StackPanel Orientation="Horizontal"
+                                                Spacing="8">
+                                        <ToggleSwitch x:Name="FileChange"
+                                                x:Uid="SharedToggleSwitch"
+                                                      IsOn="{x:Bind ViewModel.IsFileChange, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                        <TextBlock x:Uid="FileChangeDelay"
+                                                   Margin="20,8,0,0"/>
+                                        <NumberBox Value="{x:Bind ViewModel.DelaySeconds, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                   IsEnabled="{x:Bind ViewModel.IsFileChange, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                        <TextBlock x:Uid="FileChangeSecond"
+                                                   Margin="0,8,0,0"/>
+                                    </StackPanel>
+                                </ctk:SettingsCard>
+                                <ctk:SettingsCard x:Uid="StartupExecutionCard">
+                                    <ctk:SettingsCard.HeaderIcon>
+                                        <FontIcon Glyph="&#xE7E8;"/>
+                                    </ctk:SettingsCard.HeaderIcon>
+                                    <ToggleSwitch x:Name="StartupExecution"
+                                            x:Uid="SharedToggleSwitch"
+                                                  IsOn="{x:Bind ViewModel.IsStartupExecution, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                </ctk:SettingsCard>
+                                <ctk:SettingsCard x:Uid="RegularTaskRunningCard">
+                                    <ctk:SettingsCard.HeaderIcon>
+                                        <FontIcon Glyph="&#xE916;"/>
+                                    </ctk:SettingsCard.HeaderIcon>
+                                    <StackPanel Orientation="Horizontal"
+                                                Spacing="8">
+                                        <ToggleSwitch x:Name="RegularTaskRunning"
+                                                x:Uid="SharedToggleSwitch"
+                                                      IsOn="{x:Bind ViewModel.RegularTaskRunning, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                        <TextBlock x:Uid="RegularTaskRunningBlock"
+                                                   Margin="20,8,0,0"/>
+                                        <TimePicker ClockIdentifier="24HourClock"
+                                                    IsEnabled="{x:Bind ViewModel.RegularTaskRunning, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                    SelectedTime="{x:Bind ViewModel.SelectTaskTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </StackPanel>
+                                </ctk:SettingsCard>
+                                <ctk:SettingsCard x:Uid="ScheduledExecutionCard">
+                                    <ctk:SettingsCard.HeaderIcon>
+                                        <FontIcon Glyph="&#xED28;"/>
+                                    </ctk:SettingsCard.HeaderIcon>
+                                    <StackPanel Orientation="Horizontal"
+                                                Spacing="8">
+                                        <ToggleSwitch x:Name="OnScheduleExecutionSwitch"
+                                                x:Uid="SharedToggleSwitch"
+                                                      IsOn="{x:Bind ViewModel.OnScheduleExecution, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                        <Button x:Uid="ConfigurationButton"
+                                                Command="{x:Bind ViewModel.PlanExecutionCommand}"
+                                                IsEnabled="{x:Bind ViewModel.OnScheduleExecution, Mode=OneWay}"/>
+                                    </StackPanel>
+                                </ctk:SettingsCard>
+                                <ctk:SettingsCard x:Uid="ShutdownExecutionCard">
+                                    <ctk:SettingsCard.HeaderIcon>
+                                        <FontIcon Glyph="&#xF83D;"/>
+                                    </ctk:SettingsCard.HeaderIcon>
+                                    <ToggleSwitch x:Name="ShutdownExecution"
+                                            x:Uid="SharedToggleSwitch"
+                                                  IsOn="{x:Bind ViewModel.IsShutdownExecution, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                </ctk:SettingsCard>
 
-            <etc:SettingsPageControl x:Name="SettingsControl"
-                                     x:Uid="SettingsPageControl"
-                                     ModuleImageSource="ms-appx:///Assets/Modules/Auto.png">
-                <etc:SettingsPageControl.ModuleContent>
-                    <StackPanel ChildrenTransitions="{StaticResource SettingsCardsAnimations}"
-                                Orientation="Vertical">
-                        <etc:SettingsGroup Margin="0,-32,0,0"
-                                           x:Uid="AutoAnalysisGlobal">
-                            <ctk:SettingsCard x:Uid="FileChangeCard">
-                                <ctk:SettingsCard.HeaderIcon>
-                                    <FontIcon Glyph="&#xF0E4;"/>
-                                </ctk:SettingsCard.HeaderIcon>
-                                <StackPanel Orientation="Horizontal"
-                                            Spacing="8">
-                                    <ToggleSwitch x:Name="FileChange" x:Uid="SharedToggleSwitch"
-                                                  IsOn="{x:Bind ViewModel.IsFileChange, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                    <TextBlock x:Uid="FileChangeDelay"
-                                               Margin="20,8,0,0"/>
-                                    <NumberBox Value="{x:Bind ViewModel.DelaySeconds, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                               IsEnabled="{x:Bind ViewModel.IsFileChange, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                    <TextBlock x:Uid="FileChangeSecond"
-                                               Margin="0,8,0,0"/>
-                                </StackPanel>
-                            </ctk:SettingsCard>
-                            <ctk:SettingsCard x:Uid="StartupExecutionCard">
-                                <ctk:SettingsCard.HeaderIcon>
-                                    <FontIcon Glyph="&#xE7E8;"/>
-                                </ctk:SettingsCard.HeaderIcon>
-                                <ToggleSwitch x:Name="StartupExecution" x:Uid="SharedToggleSwitch"
-                                              IsOn="{x:Bind ViewModel.IsStartupExecution, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            </ctk:SettingsCard>
-                            <ctk:SettingsCard x:Uid="RegularTaskRunningCard">
-                                <ctk:SettingsCard.HeaderIcon>
-                                    <FontIcon Glyph="&#xE916;"/>
-                                </ctk:SettingsCard.HeaderIcon>
-                                <StackPanel Orientation="Horizontal"
-                                            Spacing="8">
-                                    <ToggleSwitch x:Name="RegularTaskRunning" x:Uid="SharedToggleSwitch"
-                                                  IsOn="{x:Bind ViewModel.RegularTaskRunning, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                    <TextBlock x:Uid="RegularTaskRunningBlock"
-                                               Margin="20,8,0,0"/>
-                                    <TimePicker ClockIdentifier="24HourClock"
-                                                IsEnabled="{x:Bind ViewModel.RegularTaskRunning, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                SelectedTime="{x:Bind ViewModel.SelectTaskTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                </StackPanel>
-                            </ctk:SettingsCard>
-                            <ctk:SettingsCard x:Uid="ScheduledExecutionCard">
-                                <ctk:SettingsCard.HeaderIcon>
-                                    <FontIcon Glyph="&#xED28;"/>
-                                </ctk:SettingsCard.HeaderIcon>
-                                <StackPanel Orientation="Horizontal"
-                                            Spacing="8">
-                                    <ToggleSwitch x:Name="OnScheduleExecutionSwitch" x:Uid="SharedToggleSwitch"
-                                                  IsOn="{x:Bind ViewModel.OnScheduleExecution, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                    <Button x:Uid="ConfigurationButton"
-                                            Command="{x:Bind ViewModel.PlanExecutionCommand}"
-                                            IsEnabled="{x:Bind ViewModel.OnScheduleExecution, Mode=OneWay}"/>
-                                </StackPanel>
-                            </ctk:SettingsCard>
-                            <ctk:SettingsCard x:Uid="ShutdownExecutionCard">
-                                <ctk:SettingsCard.HeaderIcon>
-                                    <FontIcon Glyph="&#xF83D;"/>
-                                </ctk:SettingsCard.HeaderIcon>
-                                <ToggleSwitch x:Name="ShutdownExecution" x:Uid="SharedToggleSwitch"
-                                              IsOn="{x:Bind ViewModel.IsShutdownExecution, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            </ctk:SettingsCard>
-
-                        </etc:SettingsGroup>
-                        <etc:SettingsGroup x:Uid="TaskAssociation">
-                            <ctk:SettingsExpander x:Uid="ConfigurationTask"
-                                                  HeaderIcon="{ui:FontIcon FontFamily={StaticResource SymbolThemeFontFamily}, Glyph=&#xEA65;}"
-                                                  IsExpanded="True">
-                                <ctk:SettingsExpander.Items>
-                                    <ctk:SettingsCard HorizontalContentAlignment="Stretch"
-                                            ContentAlignment="Vertical">
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="200"/>
-                                                <ColumnDefinition Width="*"/>
-                                            </Grid.ColumnDefinitions>
-                                            <StackPanel Grid.Column="0"
-                                                        Margin="0,0,0,0"
-                                                        Orientation="Vertical">
-                                                <Button Content="&#xE74C;"
-                                                        FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                                        Style="{StaticResource SubtleButtonStyle}"
-                                                        ToolTipService.ToolTip="切换展示方式"
-                                                        Click="ToggleView_Click"
-                                                        Margin="-38,6,0,0"/>
-                                                <TextBlock x:Uid="MissionSelection"
-                                                           Margin="0,-24,0,0"
-                                                           FontWeight="Bold"/>
-                                            </StackPanel>
-                                            <TreeView Grid.Column="0"
-                                                      SelectionMode="None"
-                                                      Margin="-12,32,0,0"
-                                                      ItemsSource="{x:Bind ViewModel.TaskItemsACV, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                                                <TreeView.ItemTemplate>
-                                                    <DataTemplate x:DataType="cm:TaskItem">
-                                                        <TreeViewItem ItemsSource="{x:Bind Children, Mode=TwoWay}">
-                                                            <CheckBox
-                                                                Content="{x:Bind Name, Mode=TwoWay}"
-                                                                IsChecked="{x:Bind IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                                Click="Checkbox_Click"/>
-                                                        </TreeViewItem>
-                                                    </DataTemplate>
-                                                </TreeView.ItemTemplate>
-                                            </TreeView>
-                                            <ItemsView Grid.Column="1"
-                                                       x:Name="TaskItemsView"
-                                                       ItemsSource="{x:Bind ViewModel.AutomaticModelACV, Mode=TwoWay}"
-                                                       HorizontalAlignment="Left"
-                                                       SelectionMode="None"
-                                                       Visibility="Visible">
-                                                <ItemsView.Layout>
-                                                    <UniformGridLayout MinRowSpacing="5" MinColumnSpacing="5" MaximumRowsOrColumns="4"/>
-                                                </ItemsView.Layout>
-                                                <ItemsView.ItemTemplate>
-                                                    <DataTemplate x:DataType="model:AutomaticModel">
-                                                        <ItemContainer Width="160" BorderThickness="1" BorderBrush="{ThemeResource WidgetCardBorderBrush}"
-                                                                       Background="{ThemeResource WidgetCardBackground}">
-                                                            <StackPanel Orientation="Vertical"  Margin="8">
+                            </etc:SettingsGroup>
+                            <etc:SettingsGroup x:Uid="TaskAssociation">
+                                <ctk:SettingsExpander x:Uid="ConfigurationTask"
+                                                      HeaderIcon="{ui:FontIcon FontFamily={StaticResource SymbolThemeFontFamily}, Glyph=&#xEA65;}"
+                                                      IsExpanded="True">
+                                    <ctk:SettingsExpander.Items>
+                                        <ctk:SettingsCard HorizontalContentAlignment="Stretch"
+                                                          ContentAlignment="Vertical">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="200"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <StackPanel Grid.Column="0"
+                                                            Margin="0,0,0,0"
+                                                            Orientation="Vertical">
+                                                    <Button Content="&#xE74C;"
+                                                            FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                                            Style="{StaticResource SubtleButtonStyle}"
+                                                            ToolTipService.ToolTip="切换展示方式"
+                                                            Click="ToggleView_Click"
+                                                            Margin="-38,6,0,0"/>
+                                                    <TextBlock x:Uid="MissionSelection"
+                                                               Margin="0,-24,0,0"
+                                                               FontWeight="Bold"/>
+                                                </StackPanel>
+                                                <TreeView Grid.Column="0"
+                                                          SelectionMode="None"
+                                                          Margin="-12,32,0,0"
+                                                          ItemsSource="{x:Bind ViewModel.TaskItemsACV, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                                    <TreeView.ItemTemplate>
+                                                        <DataTemplate x:DataType="cm:TaskItem">
+                                                            <TreeViewItem ItemsSource="{x:Bind Children, Mode=TwoWay}">
+                                                                <CheckBox
+                                                                    Content="{x:Bind Name, Mode=TwoWay}"
+                                                                    IsChecked="{x:Bind IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                                    Click="Checkbox_Click"/>
+                                                            </TreeViewItem>
+                                                        </DataTemplate>
+                                                    </TreeView.ItemTemplate>
+                                                </TreeView>
+                                                <ItemsView Grid.Column="1"
+                                                           x:Name="TaskItemsView"
+                                                           ItemsSource="{x:Bind ViewModel.AutomaticModelACV, Mode=TwoWay}"
+                                                           HorizontalAlignment="Left"
+                                                           SelectionMode="None"
+                                                           Visibility="Visible">
+                                                    <ItemsView.Layout>
+                                                        <UniformGridLayout MinRowSpacing="5"
+                                                                MinColumnSpacing="5"
+                                                                MaximumRowsOrColumns="4"/>
+                                                    </ItemsView.Layout>
+                                                    <ItemsView.ItemTemplate>
+                                                        <DataTemplate x:DataType="model:AutomaticModel">
+                                                            <ItemContainer Width="160"
+                                                                    BorderThickness="1"
+                                                                    BorderBrush="{ThemeResource WidgetCardBorderBrush}"
+                                                                           Background="{ThemeResource WidgetCardBackground}">
                                                                 <StackPanel Orientation="Vertical"
-                                                                        Spacing="4">
-                                                                    <TextBlock x:Uid="Action"
-                                                                               FontWeight="Bold"
-                                                                               VerticalAlignment="Center"/>
-                                                                    <TextBlock Text="{x:Bind ActionType}"
-                                                                               ToolTipService.ToolTip="{x:Bind ActionType}"/>
-                                                                </StackPanel>
-                                                                <StackPanel Orientation="Vertical"
-                                                                        Spacing="4">
-                                                                    <TextBlock x:Uid="Rules"
-                                                                               FontWeight="Bold"
-                                                                               VerticalAlignment="Center"/>
-                                                                    <TextBlock Grid.Column="1"
-                                                                               Text="{x:Bind Rule, Mode=TwoWay}"
-                                                                               VerticalAlignment="Center"
-                                                                               ToolTipService.ToolTip="{x:Bind Rule}"/>
-                                                                </StackPanel>
-                                                                <StackPanel Orientation="Vertical"
-                                                                        Spacing="4">
-                                                                    <TextBlock
-                                                                        x:Uid="FileFlowDirection"
-                                                                        FontWeight="Bold"
-                                                                        VerticalAlignment="Center"/>
-                                                                    <TextBlock
-                                                                        Text="{x:Bind FileFlow, Mode=TwoWay}"
-                                                                        VerticalAlignment="Center"
-                                                                        TextWrapping="NoWrap"
-                                                                        ToolTipService.ToolTip="{x:Bind FileFlow}"/>
-                                                                </StackPanel>
-                                                                <StackPanel Orientation="Vertical"
-                                                                        Spacing="4">
-                                                                    <TextBlock
-                                                                        x:Uid="AutomaticMode"
-                                                                        FontWeight="Bold"
-                                                                        VerticalAlignment="Center"/>
-                                                                    <TextBlock
-                                                                        Text="{x:Bind ExecutionMode, Mode=TwoWay}"
-                                                                        VerticalAlignment="Center"
-                                                                        ToolTipService.ToolTip="{x:Bind ExecutionMode}"/>
-                                                                </StackPanel>
-                                                                <StackPanel Orientation="Vertical"
-                                                                        Spacing="4">
-                                                                    <StackPanel
-                                                                        HorizontalAlignment="Center"
-                                                                        VerticalAlignment="Center"
-                                                                        Orientation="Horizontal"
-                                                                        Height="40" Opacity=".75"
-                                                                        Spacing="8">
-                                                                        <Button Style="{StaticResource SubtleButtonStyle}"
-                                                                                x:Uid="EditButton"
-                                                                                Content="&#xE70F;"
-                                                                                FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                                                                DataContext="{x:Bind}"
-                                                                                Click="EditButton_Click"/>
-                                                                        <Button Style="{StaticResource SubtleButtonStyle}"
-                                                                                DataContext="{x:Bind}"
-                                                                                Content="&#xE890;"
-                                                                                FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                                                                Click="ViewButton_Click"/>
+                                                                        Margin="8">
+                                                                    <StackPanel Orientation="Vertical"
+                                                                                Spacing="4">
+                                                                        <TextBlock x:Uid="Action"
+                                                                                   FontWeight="Bold"
+                                                                                   VerticalAlignment="Center"/>
+                                                                        <TextBlock Text="{x:Bind ActionType}"
+                                                                                   ToolTipService.ToolTip="{x:Bind ActionType}"/>
+                                                                    </StackPanel>
+                                                                    <StackPanel Orientation="Vertical"
+                                                                                Spacing="4">
+                                                                        <TextBlock x:Uid="Rules"
+                                                                                   FontWeight="Bold"
+                                                                                   VerticalAlignment="Center"/>
+                                                                        <TextBlock Grid.Column="1"
+                                                                                   Text="{x:Bind Rule, Mode=TwoWay}"
+                                                                                   VerticalAlignment="Center"
+                                                                                   ToolTipService.ToolTip="{x:Bind Rule}"/>
+                                                                    </StackPanel>
+                                                                    <StackPanel Orientation="Vertical"
+                                                                                Spacing="4">
+                                                                        <TextBlock
+                                                                            x:Uid="FileFlowDirection"
+                                                                            FontWeight="Bold"
+                                                                            VerticalAlignment="Center"/>
+                                                                        <TextBlock
+                                                                            Text="{x:Bind FileFlow, Mode=TwoWay}"
+                                                                            VerticalAlignment="Center"
+                                                                            TextWrapping="NoWrap"
+                                                                            ToolTipService.ToolTip="{x:Bind FileFlow}"/>
+                                                                    </StackPanel>
+                                                                    <StackPanel Orientation="Vertical"
+                                                                                Spacing="4">
+                                                                        <TextBlock
+                                                                            x:Uid="AutomaticMode"
+                                                                            FontWeight="Bold"
+                                                                            VerticalAlignment="Center"/>
+                                                                        <TextBlock
+                                                                            Text="{x:Bind ExecutionMode, Mode=TwoWay}"
+                                                                            VerticalAlignment="Center"
+                                                                            ToolTipService.ToolTip="{x:Bind ExecutionMode}"/>
+                                                                    </StackPanel>
+                                                                    <StackPanel Orientation="Vertical"
+                                                                                Spacing="4">
+                                                                        <StackPanel
+                                                                            HorizontalAlignment="Center"
+                                                                            VerticalAlignment="Center"
+                                                                            Orientation="Horizontal"
+                                                                            Height="40"
+                                                                                Opacity=".75"
+                                                                            Spacing="8">
+                                                                            <Button Style="{StaticResource SubtleButtonStyle}"
+                                                                                    x:Uid="EditButton"
+                                                                                    Content="&#xE70F;"
+                                                                                    FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                                                                    DataContext="{x:Bind}"
+                                                                                    Click="EditButton_Click"/>
+                                                                            <Button Style="{StaticResource SubtleButtonStyle}"
+                                                                                    DataContext="{x:Bind}"
+                                                                                    Content="&#xE890;"
+                                                                                    FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                                                                    Click="ViewButton_Click"/>
+                                                                        </StackPanel>
                                                                     </StackPanel>
                                                                 </StackPanel>
-                                                            </StackPanel>
-                                                        </ItemContainer>
-                                                    </DataTemplate>
-                                                </ItemsView.ItemTemplate>
-                                            </ItemsView>
-                                            <ListView Grid.Column="1"
-                                                      x:Name="TaskListViews"
-                                                      Visibility="Collapsed"
-                                                      ItemsSource="{x:Bind ViewModel.AutomaticModelACV, Mode=TwoWay}">
-                                                <ListView.Header>
-                                                    <Grid Padding="16,12"
-                                                          ColumnSpacing="16">
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="60"/>
-                                                            <ColumnDefinition Width="*"/>
-                                                            <ColumnDefinition Width="*"/>
-                                                            <ColumnDefinition Width="*"/>
-                                                            <ColumnDefinition Width="80"/>
-                                                        </Grid.ColumnDefinitions>
-                                                        <TextBlock x:Uid="Action"
-                                                                   VerticalAlignment="Center"
-                                                                   FontWeight="Bold"/>
-                                                        <TextBlock Grid.Column="1"
-                                                                   x:Uid="Rules"
-                                                                   VerticalAlignment="Center"
-                                                                   FontWeight="Bold"/>
-                                                        <TextBlock Grid.Column="2"
-                                                                   x:Uid="FileFlowDirection"
-                                                                   VerticalAlignment="Center"
-                                                                   FontWeight="Bold"/>
-                                                        <TextBlock Grid.Column="3"
-                                                                   x:Uid="AutomaticMode"
-                                                                   VerticalAlignment="Center"
-                                                                   FontWeight="Bold"/>
-                                                        <TextBlock Grid.Column="4"
-                                                                   x:Uid="OperationBlock"
-                                                                   HorizontalAlignment="Center"
-                                                                   VerticalAlignment="Center"
-                                                                   FontWeight="Bold"/>
-                                                    </Grid>
-                                                </ListView.Header>
-                                                <ListView.ItemTemplate>
-                                                    <DataTemplate x:DataType="model:AutomaticModel">
-                                                        <Grid
+                                                            </ItemContainer>
+                                                        </DataTemplate>
+                                                    </ItemsView.ItemTemplate>
+                                                </ItemsView>
+                                                <ListView Grid.Column="1"
+                                                          x:Name="TaskListViews"
+                                                          Visibility="Collapsed"
+                                                          ItemsSource="{x:Bind ViewModel.AutomaticModelACV, Mode=TwoWay}">
+                                                    <ListView.Header>
+                                                        <Grid Padding="16,12"
                                                               ColumnSpacing="16">
                                                             <Grid.ColumnDefinitions>
                                                                 <ColumnDefinition Width="60"/>
@@ -273,69 +251,104 @@
                                                                 <ColumnDefinition Width="*"/>
                                                                 <ColumnDefinition Width="80"/>
                                                             </Grid.ColumnDefinitions>
-                                                            <TextBlock Text="{x:Bind ActionType}"
-                                                                ToolTipService.ToolTip="{x:Bind ActionType}"
-                                                                       VerticalAlignment="Center"/>
+                                                            <TextBlock x:Uid="Action"
+                                                                       VerticalAlignment="Center"
+                                                                       FontWeight="Bold"/>
                                                             <TextBlock Grid.Column="1"
-                                                                       Text="{x:Bind Rule, Mode=TwoWay}"
+                                                                       x:Uid="Rules"
                                                                        VerticalAlignment="Center"
-                                                                       ToolTipService.ToolTip="{x:Bind Rule}"/>
+                                                                       FontWeight="Bold"/>
                                                             <TextBlock Grid.Column="2"
-                                                                       Text="{x:Bind FileFlow, Mode=TwoWay}"
+                                                                       x:Uid="FileFlowDirection"
                                                                        VerticalAlignment="Center"
-                                                                       ToolTipService.ToolTip="{x:Bind FileFlow}"/>
+                                                                       FontWeight="Bold"/>
                                                             <TextBlock Grid.Column="3"
-                                                                       Text="{x:Bind ExecutionMode, Mode=TwoWay}"
+                                                                       x:Uid="AutomaticMode"
                                                                        VerticalAlignment="Center"
-                                                                       ToolTipService.ToolTip="{x:Bind ExecutionMode}"/>
-                                                            <StackPanel Grid.Column="4"
-                                                                        HorizontalAlignment="Center"
-                                                                        VerticalAlignment="Center"
-                                                                        Orientation="Horizontal"
-                                                                        Spacing="8">
-                                                                <Button Style="{StaticResource SubtleButtonStyle}"
-                                                                    x:Uid="EditButton"
-                                                                    Content="&#xE70F;"
-                                                                    FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                                                        DataContext="{x:Bind}"
-                                                                        Click="EditButton_Click"/>
-                                                                <Button Style="{StaticResource SubtleButtonStyle}"
-                                                                        DataContext="{x:Bind}"
-                                                                        Content="&#xE890;"
-                                                                        FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                                                        Click="ViewButton_Click"/>
-                                                            </StackPanel>
+                                                                       FontWeight="Bold"/>
+                                                            <TextBlock Grid.Column="4"
+                                                                       x:Uid="OperationBlock"
+                                                                       HorizontalAlignment="Center"
+                                                                       VerticalAlignment="Center"
+                                                                       FontWeight="Bold"/>
                                                         </Grid>
-                                                    </DataTemplate>
-                                                </ListView.ItemTemplate>
-                                            </ListView>
-                                        </Grid>
-                                    </ctk:SettingsCard>
-                                </ctk:SettingsExpander.Items>
-                            </ctk:SettingsExpander>
-                        </etc:SettingsGroup>
-                        <StackPanel Orientation="Horizontal"
-                                    Spacing="8"
-                                    HorizontalAlignment="Right">
-                            <Button x:Uid="SaveButton"
-                                    HorizontalAlignment="Center"
-                                    Margin="0,10,0,0"
-                                    Command="{x:Bind ViewModel.SaveTaskConfigCommand}"/>
+                                                    </ListView.Header>
+                                                    <ListView.ItemTemplate>
+                                                        <DataTemplate x:DataType="model:AutomaticModel">
+                                                            <Grid
+                                                                ColumnSpacing="16">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="60"/>
+                                                                    <ColumnDefinition Width="*"/>
+                                                                    <ColumnDefinition Width="*"/>
+                                                                    <ColumnDefinition Width="*"/>
+                                                                    <ColumnDefinition Width="80"/>
+                                                                </Grid.ColumnDefinitions>
+                                                                <TextBlock Text="{x:Bind ActionType}"
+                                                                           ToolTipService.ToolTip="{x:Bind ActionType}"
+                                                                           VerticalAlignment="Center"/>
+                                                                <TextBlock Grid.Column="1"
+                                                                           Text="{x:Bind Rule, Mode=TwoWay}"
+                                                                           VerticalAlignment="Center"
+                                                                           ToolTipService.ToolTip="{x:Bind Rule}"/>
+                                                                <TextBlock Grid.Column="2"
+                                                                           Text="{x:Bind FileFlow, Mode=TwoWay}"
+                                                                           VerticalAlignment="Center"
+                                                                           ToolTipService.ToolTip="{x:Bind FileFlow}"/>
+                                                                <TextBlock Grid.Column="3"
+                                                                           Text="{x:Bind ExecutionMode, Mode=TwoWay}"
+                                                                           VerticalAlignment="Center"
+                                                                           ToolTipService.ToolTip="{x:Bind ExecutionMode}"/>
+                                                                <StackPanel Grid.Column="4"
+                                                                            HorizontalAlignment="Center"
+                                                                            VerticalAlignment="Center"
+                                                                            Orientation="Horizontal"
+                                                                            Spacing="8">
+                                                                    <Button Style="{StaticResource SubtleButtonStyle}"
+                                                                            x:Uid="EditButton"
+                                                                            Content="&#xE70F;"
+                                                                            FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                                                            DataContext="{x:Bind}"
+                                                                            Click="EditButton_Click"/>
+                                                                    <Button Style="{StaticResource SubtleButtonStyle}"
+                                                                            DataContext="{x:Bind}"
+                                                                            Content="&#xE890;"
+                                                                            FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                                                            Click="ViewButton_Click"/>
+                                                                </StackPanel>
+                                                            </Grid>
+                                                        </DataTemplate>
+                                                    </ListView.ItemTemplate>
+                                                </ListView>
+                                            </Grid>
+                                        </ctk:SettingsCard>
+                                    </ctk:SettingsExpander.Items>
+                                </ctk:SettingsExpander>
+                            </etc:SettingsGroup>
+                            <StackPanel Orientation="Horizontal"
+                                        Spacing="8"
+                                        HorizontalAlignment="Right">
+                                <Button x:Uid="SaveButton"
+                                        HorizontalAlignment="Center"
+                                        Margin="0,10,0,0"
+                                        Command="{x:Bind ViewModel.SaveTaskConfigCommand}"/>
+                            </StackPanel>
                         </StackPanel>
-                    </StackPanel>
-                </etc:SettingsPageControl.ModuleContent>
-                <etc:SettingsPageControl.PrimaryLinks>
-                    <etc:PageLink Link="https://easytidy.luckyits.com"
-                                  x:Uid="GeneralUseDocumentation"/>
-                    <etc:PageLink Link="https://aka.luckyits.top/report_bug"
-                                  x:Uid="GereralReport"/>
-                    <etc:PageLink Link="https://aka.luckyits.top/feature_request"
-                                  x:Uid="GeneralRequestFeature"/>
-                </etc:SettingsPageControl.PrimaryLinks>
+                    </etc:SettingsPageControl.ModuleContent>
+                    <etc:SettingsPageControl.PrimaryLinks>
+                        <etc:PageLink Link="https://easytidy.luckyits.com"
+                                      x:Uid="GeneralUseDocumentation"/>
+                        <etc:PageLink Link="https://aka.luckyits.top/report_bug"
+                                      x:Uid="GereralReport"/>
+                        <etc:PageLink Link="https://aka.luckyits.top/feature_request"
+                                      x:Uid="GeneralRequestFeature"/>
+                    </etc:SettingsPageControl.PrimaryLinks>
 
-            </etc:SettingsPageControl>
-            <ProgressRing x:Name="Load"
-                          IsActive="{x:Bind ViewModel.IsActive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-        </StackPanel>
-    </ScrollView>
+                </etc:SettingsPageControl>
+                <ProgressRing x:Name="Load"
+                              IsActive="{x:Bind ViewModel.IsActive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+        </ScrollView>
+    </Grid>
+
 </Page>
