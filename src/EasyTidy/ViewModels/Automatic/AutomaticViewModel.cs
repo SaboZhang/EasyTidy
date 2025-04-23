@@ -524,8 +524,9 @@ public partial class AutomaticViewModel : ObservableRecipient
             await _dbContext.Automatic.AddAsync(automatic);
             await _dbContext.SaveChangesAsync();
             var aiIdentify = list.Where(x => x.AIIdentify != Guid.Empty).Select(x => x.AIIdentify).FirstOrDefault();
-            var ai = _dbContext.AIService.FirstOrDefault(x => x.Identify == aiIdentify);
-            var llm = AIServiceFactory.CreateAIServiceLlm(ai);
+            var ai = _dbContext.AIService.FirstOrDefault(x => x.Identify.ToString().ToLower().Equals(aiIdentify.ToString().ToLower()));
+            IAIServiceLlm llm = null;
+            if (ai != null) llm = AIServiceFactory.CreateAIServiceLlm(ai);
             await OnPageLoaded();
             await AutomaticJob.AddTaskConfig(automatic, OnScheduleExecution, llm);
             _notificationQueue.ShowWithWindowExtension("SaveSuccessfulText".GetLocalized(), InfoBarSeverity.Success);
@@ -638,8 +639,8 @@ public partial class AutomaticViewModel : ObservableRecipient
                 }
                 auto.TaskOrchestrationList = list;
                 var aiIdentify = list.Where(x => x.AIIdentify != Guid.Empty).Select(x => x.AIIdentify).FirstOrDefault();
-                var ai = _dbContext.AIService.FirstOrDefault(x => x.Identify == aiIdentify);
-                llm = AIServiceFactory.CreateAIServiceLlm(ai);
+                var ai = _dbContext.AIService.FirstOrDefault(x => x.Identify.ToString().ToLower().Equals(aiIdentify.ToString().ToLower()));
+                if (ai != null) llm = AIServiceFactory.CreateAIServiceLlm(ai);
             }
 
             // 保存更改到数据库并添加定时任务
