@@ -10,7 +10,6 @@ using EasyTidy.Util.UtilInterface;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Dispatching;
-using Microsoft.Windows.Globalization;
 using WinUIEx;
 
 namespace EasyTidy;
