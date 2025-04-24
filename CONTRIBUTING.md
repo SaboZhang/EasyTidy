@@ -89,8 +89,8 @@ This project follows the [Contributor Covenant](https://www.contributor-covenant
 
 ## 5. Docs & Localization / 文档与本地化
 
-- Docs live in `/docs` and use Markdown.  
-  文档位于 `/docs`，使用 Markdown  
+- Docs live in [EasyTidy-doc](https://github.com/SaboZhang/EasyTidy-doc) and use Markdown.  
+  文档位于 [EasyTidy-doc](https://github.com/SaboZhang/EasyTidy-doc)，使用 Markdown  
 - Keep file names in sync across languages (e.g., `getting-started.zh.md`).  
   中英文文件命名保持一致，如 `getting-started.zh.md`
 
