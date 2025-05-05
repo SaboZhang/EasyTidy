@@ -1,7 +1,7 @@
-# 更新日志 (BUG修复)
+# 更新日志 (立夏)
 
-- 修复：提示信息遮挡的BUG
-- 修复：自动化保存关联时的BUG
+- 新增：多个AI模型提供商
+- 新增：AI服务验证
 
 ## 版本说明
 
@@ -13,7 +13,7 @@
 
 ## 更新日志详情
 
-- **[Full Changelog](https://github.com/SaboZhang/EasyTidy/compare/1.3.1.420...1.3.2.423)**
+- **[Full Changelog](https://github.com/SaboZhang/EasyTidy/compare/1.3.2.423...1.3.3.505)**
 
 ## 下载链接
 

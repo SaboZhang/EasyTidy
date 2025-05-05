@@ -14,6 +14,7 @@ using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 
@@ -123,4 +124,28 @@ public sealed partial class AddAIContentDialog : ContentDialog, INotifyPropertyC
         OnErrorsChanged(propertyName);
     }
 
+    private async void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+    {
+        try
+        {
+            args.Cancel = true;
+            ShowVerify.IsOpen = true; // 显示验证对话框
+            var result = await ViewModel.VerifyServiceAsync(sender);
+            if (result.Item2)
+            {
+                ShowVerify.Subtitle = result.Item1;
+                args.Cancel = false;
+                
+            }
+            else
+            {
+                ShowVerify.Subtitle = result.Item1;
+            }
+        }
+        finally
+        {
+            await Task.Delay(3000);
+            ShowVerify.IsOpen = false;
+        }
+    }
 }

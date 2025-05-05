@@ -1501,4 +1501,25 @@
   <data name="AI_Notice" xml:space="preserve">
     <value>請先設定預設的 AI</value>
   </data>
+  <data name="GeminiTxt" xml:space="preserve">
+    <value>Gemini</value>
+  </data>
+  <data name="DeepSeekTxt" xml:space="preserve">
+    <value>DeepSeek</value>
+  </data>
+  <data name="ClaudeTxt" xml:space="preserve">
+    <value>Claude</value>
+  </data>
+  <data name="WenxinTxt" xml:space="preserve">
+    <value>文心一言</value>
+  </data>
+  <data name="VerifyModel" xml:space="preserve">
+    <value>聊天模型不能為空</value>
+  </data>
+  <data name="VerifySucess" xml:space="preserve">
+    <value>驗證成功</value>
+  </data>
+  <data name="VerifyText" xml:space="preserve">
+    <value>驗證</value>
+  </data>
 </root>

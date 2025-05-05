@@ -11,22 +11,21 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace EasyTidy.Service.AIService;
 
-public partial class QWenService : ObservableObject, IAIServiceLlm
+public partial class GeminiService : ObservableObject, IAIServiceLlm
 {
-    public QWenService() : this(Guid.NewGuid(), "https://dashscope.aliyuncs.com", "TONGYI") { }
+    public GeminiService() : this(Guid.NewGuid(), "https://generativelanguage.googleapis.com", "Gemini") { }
 
-    public QWenService(
-        Guid identify,
+    public GeminiService(Guid identify,
         string url,
         string name = "",
-        ServiceType type = ServiceType.OpenAI,
+        ServiceType type = ServiceType.Gemini,
         string appID = "", string appKey = "",
         bool isEnabled = true,
-        string model = "qwen-max"
-        )
+        string model = "gemini-2.0-flash")
     {
         Identify = identify;
         Url = url;
@@ -57,7 +56,7 @@ public partial class QWenService : ObservableObject, IAIServiceLlm
     [ObservableProperty]
     private ServiceResult _data = ServiceResult.Reset;
     [ObservableProperty]
-    private string _model = "qwen-max";
+    private string _model = "gemini-2.0-flash";
     [ObservableProperty]
     private List<UserDefinePrompt> _userDefinePrompts =
     [
@@ -88,7 +87,7 @@ public partial class QWenService : ObservableObject, IAIServiceLlm
 
     public async Task PredictAsync(object request, Action<string> onDataReceived, CancellationToken token)
     {
-        if (string.IsNullOrEmpty(Url))
+        if (string.IsNullOrEmpty(Url) || string.IsNullOrEmpty(AppKey))
             throw new Exception("请先完善配置");
 
         if (request is not RequestModel req)
@@ -96,13 +95,17 @@ public partial class QWenService : ObservableObject, IAIServiceLlm
 
         var source = req.Text;
         var language = req.Language;
-        UriBuilder uriBuilder = new(Url);
 
-        if (!uriBuilder.Path.EndsWith("/compatible-mode/v1/chat/completions")) uriBuilder.Path = "/compatible-mode/v1/chat/completions";
+        UriBuilder uriBuilder = new(Url);
 
         // 选择模型
         var a_model = Model.Trim();
-        a_model = string.IsNullOrEmpty(a_model) ? "qwen-max" : a_model;
+        a_model = string.IsNullOrEmpty(a_model) ? "gemini-pro" : a_model;
+
+        if (!uriBuilder.Path.EndsWith($"/v1beta/models/{a_model}:streamGenerateContent"))
+            uriBuilder.Path = $"/v1beta/models/{a_model}:streamGenerateContent";
+
+        uriBuilder.Query = $"key={AppKey}";
 
         // 替换Prompt关键字
         var a_messages =
@@ -111,87 +114,39 @@ public partial class QWenService : ObservableObject, IAIServiceLlm
             item.Content = item.Content.Replace("$source", source).Replace("$content", language));
 
         // 温度限定
-        var a_temperature = Math.Clamp(Temperature, 0, 1);
+        var a_temperature = Math.Clamp(Temperature, 0, 2);
 
         // 构建请求数据
         var reqData = new
         {
-            model = a_model,
-            messages = a_messages,
-            temperature = a_temperature,
-            stream = true
+            contents = a_messages.Select(e => new { role = e.Role, parts = new[] { new { text = e.Content } } }),
+            generationConfig = new { temperature = a_temperature },
+            safetySettings = new[]
+            {
+                new { category = "HARM_CATEGORY_HARASSMENT", threshold = "BLOCK_NONE"},         //骚扰内容。
+                new { category = "HARM_CATEGORY_HATE_SPEECH", threshold = "BLOCK_NONE"},        //仇恨言论和内容。
+                new { category = "HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold = "BLOCK_NONE"},  //露骨色情内容。
+                new { category = "HARM_CATEGORY_DANGEROUS_CONTENT", threshold = "BLOCK_NONE"},  //危险内容。
+            }
         };
 
+        // 为了流式输出与MVVM还是放这里吧
         var jsonData = JsonConvert.SerializeObject(reqData);
-        LogService.Logger.Debug("请求数据如下:\n" + jsonData);
 
         try
         {
-            var sb = new StringBuilder();
-            bool isThink = false;
-
             await HttpUtil.PostAsync(
                 uriBuilder.Uri,
                 jsonData,
-                $"Bearer {AppKey}",
+                null,
                 msg =>
                 {
-                    if (string.IsNullOrEmpty(msg?.Trim()))
-                        return;
+                    // 使用正则表达式提取目标字符串
+                    var pattern = "(?<=\"text\": \")[^\"]+(?=\")";
 
-                    var preprocessString = msg.Replace("data:", "").Trim();
+                    var match = Regex.Match(msg, pattern);
 
-                    // 结束标记
-                    if (preprocessString.Equals("[DONE]"))
-                        return;
-
-                    // 解析JSON数据
-                    var parsedData = JsonConvert.DeserializeObject<JObject>(preprocessString);
-
-                    if (parsedData is null)
-                        return;
-
-                    // 通义千问返回字段与OpenAI存在差异，需增加容错处理：
-                    var contentValue = parsedData["choices"]?[0]?["delta"]?["content"]?.ToString()
-                        ?? parsedData["output"]?["choices"]?[0]?["message"]?["content"]?.ToString()
-                        ?? parsedData["result"]?.ToString();
-
-                    if (string.IsNullOrEmpty(contentValue))
-                        return;
-
-                    /***********************************************************************
-                         * 推理模型思考内容
-                         * 1. content字段内：Groq（推理后带有换行）
-                         * 2. reasoning_content字段内：DeepSeek、硅基流动（推理后带有换行）、第三方服务商
-                         ************************************************************************/
-
-                    #region 针对content内容中含有推理内容的优化
-
-                    if (contentValue == "<think>")
-                        isThink = true;
-                    if (contentValue == "</think>")
-                    {
-                        isThink = false;
-                        // 跳过当前内容
-                        return;
-                    }
-
-                    if (isThink)
-                        return;
-
-                    #endregion
-
-                    #region 针对推理过后带有换行的情况进行优化
-
-                    // 优化推理模型思考结束后的\n\n符号
-                    if (string.IsNullOrWhiteSpace(sb.ToString()) && string.IsNullOrWhiteSpace(contentValue))
-                        return;
-
-                    sb.Append(contentValue);
-
-                    #endregion
-
-                    onDataReceived?.Invoke(contentValue);
+                    if (match.Success) onDataReceived?.Invoke(match.Value.Replace("\\n", "\n"));
                 },
                 token
             ).ConfigureAwait(false);
@@ -202,7 +157,7 @@ public partial class QWenService : ObservableObject, IAIServiceLlm
         }
         catch (HttpRequestException ex) when (ex.StatusCode == null)
         {
-            var msg = $"请检查服务是否可以正常访问: ({Url}).";
+            var msg = $"请检查服务是否可以正常访问: {Name} ({Url}).";
             throw new HttpRequestException(msg);
         }
         catch (HttpRequestException)
@@ -214,9 +169,9 @@ public partial class QWenService : ObservableObject, IAIServiceLlm
             var msg = ex.Message;
             if (ex.InnerException is { } innEx)
             {
-                var innMsg = JsonConvert.DeserializeObject<JObject>(innEx.Message);
-                msg += $" {innMsg?["error"]?["message"]}";
-                LogService.Logger.Error($"({Identify}) raw content:\n{innEx.Message}");
+                var innMsg = JsonConvert.DeserializeObject<JArray>(innEx.Message);
+                msg += $" {innMsg?.FirstOrDefault()?["error"]?["message"]}";
+                LogService.Logger.Error($"({Name})({Identify}) raw content:\n{innEx.Message}");
             }
 
             msg = msg.Trim();

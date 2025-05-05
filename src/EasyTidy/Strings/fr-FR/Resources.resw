@@ -1504,4 +1504,25 @@
   <data name="AI_Notice" xml:space="preserve">
     <value>Veuillez définir l'IA par défaut en premier</value>
   </data>
+  <data name="GeminiTxt" xml:space="preserve">
+    <value>Gemini</value>
+  </data>
+  <data name="DeepSeekTxt" xml:space="preserve">
+    <value>DeepSeek</value>
+  </data>
+  <data name="ClaudeTxt" xml:space="preserve">
+    <value>Claude</value>
+  </data>
+  <data name="WenxinTxt" xml:space="preserve">
+    <value>WenXin</value>
+  </data>
+  <data name="VerifyModel" xml:space="preserve">
+    <value>Le modèle de conversation ne peut être vide</value>
+  </data>
+  <data name="VerifySucess" xml:space="preserve">
+    <value> Vérification réussie</value>
+  </data>
+  <data name="VerifyText" xml:space="preserve">
+    <value>Vérifier</value>
+  </data>
 </root>

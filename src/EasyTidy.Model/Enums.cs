@@ -190,7 +190,15 @@ public enum ServiceType
     [Display(Name = "HuggingFaceTxt")]
     HuggingFace,
     [Display(Name = "OpenAIFormatTxt")]
-    OpenAIFormat
+    OpenAIFormat,
+    [Display(Name = "GeminiTxt")]
+    Gemini,
+    [Display(Name = "DeepSeekTxt")]
+    DeepSeek,
+    [Display(Name = "ClaudeTxt")]
+    Claude,
+    [Display(Name = "WenxinTxt")]
+    WenXin
 }
 
 public enum FileType
