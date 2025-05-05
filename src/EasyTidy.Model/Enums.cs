@@ -198,7 +198,13 @@ public enum ServiceType
     [Display(Name = "ClaudeTxt")]
     Claude,
     [Display(Name = "WenxinTxt")]
-    WenXin
+    WenXin,
+    [Display(Name = "AzureTxt")]
+    Azure,
+    [Display(Name = "HunyuanTxt")]
+    Hunyuan,
+    [Display(Name = "VolcengineTxt")]
+    Volcengine
 }
 
 public enum FileType
@@ -216,4 +222,10 @@ public enum PromptType
 {
     BuiltIn,
     Custom
+}
+
+public enum PropertyCase
+{
+    PascalCase,
+    CamelCase
 }

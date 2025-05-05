@@ -2080,6 +2080,18 @@
           <source>Verify</source>
           <target state="translated">驗證</target>
         </trans-unit>
+        <trans-unit id="AzureTxt" translate="yes" xml:space="preserve">
+          <source>Azure OpenAI</source>
+          <target state="translated">Azure OpenAI</target>
+        </trans-unit>
+        <trans-unit id="HunyuanTxt" translate="yes" xml:space="preserve">
+          <source>Hunyuan</source>
+          <target state="new">Hunyuan</target>
+        </trans-unit>
+        <trans-unit id="VolcengineTxt" translate="yes" xml:space="preserve">
+          <source>Volcengine</source>
+          <target state="new">Volcengine</target>
+        </trans-unit>
       </group>
     </body>
   </file>

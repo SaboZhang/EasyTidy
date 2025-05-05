@@ -131,7 +131,7 @@ public partial class GeminiService : ObservableObject, IAIServiceLlm
         };
 
         // 为了流式输出与MVVM还是放这里吧
-        var jsonData = JsonConvert.SerializeObject(reqData);
+        var jsonData = Json.SerializeForModel(reqData, PropertyCase.CamelCase);
 
         try
         {

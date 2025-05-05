@@ -16,7 +16,7 @@ namespace EasyTidy.Service.AIService;
 
 public partial class DeepSeekService : ObservableObject, IAIServiceLlm
 {
-    public DeepSeekService() : this(Guid.NewGuid(), "https://api.deepseek.ai", "DeepSeek") { }
+    public DeepSeekService() : this(Guid.NewGuid(), "https://api.deepseek.com", "DeepSeek") { }
 
     public DeepSeekService(Guid identify,
         string url,

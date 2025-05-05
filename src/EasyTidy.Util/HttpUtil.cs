@@ -169,7 +169,14 @@ public class HttpUtil
         if (header != null)
             foreach (var item in header)
             {
-                request.Headers.Add(item.Key, item.Value);
+                if (item.Key.Equals("Authorization", StringComparison.OrdinalIgnoreCase))
+                {
+                    request.Headers.TryAddWithoutValidation(item.Key, item.Value);
+                }
+                else
+                {
+                    request.Headers.TryAddWithoutValidation(item.Key, item.Value);
+                }
             }
 
         using var response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, token)

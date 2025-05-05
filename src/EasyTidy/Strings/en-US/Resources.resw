@@ -1662,4 +1662,13 @@
   <data name="VerifyText" xml:space="preserve">
     <value>Verify</value>
   </data>
+  <data name="AzureTxt" xml:space="preserve">
+    <value>Azure OpenAI</value>
+  </data>
+  <data name="HunyuanTxt" xml:space="preserve">
+    <value>Hunyuan</value>
+  </data>
+  <data name="VolcengineTxt" xml:space="preserve">
+    <value>Volcengine</value>
+  </data>
 </root>

@@ -21,8 +21,12 @@ public class AIServiceFactory
             { ServiceType.QWen, "https://dashscope.aliyuncs.com" },
             { ServiceType.HuggingFace, "https://api-inference.huggingface.co" },
             { ServiceType.Gemini, "https://generativelanguage.googleapis.com" },
-            { ServiceType.DeepSeek, "https://api.deepseek.ai" },
+            { ServiceType.DeepSeek, "https://api.deepseek.com" },
             { ServiceType.Claude, "https://api.anthropic.com" },
+            { ServiceType.WenXin, "https://aip.baidubce.com/rpc/2.0/ai_custom/v1" },
+            { ServiceType.Azure, "https://docs-test-001.openai.azure.com" },
+            { ServiceType.Hunyuan, "https://hunyuan.tencentcloudapi.com" },
+            { ServiceType.Volcengine, "https://ark.cn-beijing.volces.com" },
             { ServiceType.OpenAIFormat, string.Empty },
         };
     }
@@ -43,6 +47,13 @@ public class AIServiceFactory
             ServiceType.Ollama => new OllamaService(),
             ServiceType.HuggingFace => new HuggingFaceService(),
             ServiceType.OpenAIFormat => new OpenAICompatibleService(),
+            ServiceType.Gemini => new GeminiService(),
+            ServiceType.DeepSeek => new DeepSeekService(),
+            ServiceType.Claude => new ClaudeService(),
+            ServiceType.WenXin => new BaiduBceService(),
+            ServiceType.Azure => new AzureOpenAIService(),
+            ServiceType.Hunyuan => new HunyuanService(),
+            ServiceType.Volcengine => new VolcengineService(),
             _ => throw new NotImplementedException(),
         };
 

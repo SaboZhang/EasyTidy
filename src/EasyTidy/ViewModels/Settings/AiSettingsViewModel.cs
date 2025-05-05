@@ -265,10 +265,12 @@ public partial class AiSettingsViewModel : ObservableObject
                 AppID = aiService.AppID,
                 BaseUrl = aiService.Url,
                 ChatModel = aiService.Model,
-                Temperature = aiService.Temperature
+                Temperature = aiService.Temperature,
+                ServiceType = aiService.Type
             };
             dialog.CloseButtonText = "CancelText".GetLocalized();
             dialog.PrimaryButtonText = "SaveText".GetLocalized();
+            dialog.SecondaryButtonText = "VerifyText".GetLocalized();
             dialog.PrimaryButtonClick += async (s, args) =>
             {
                 aiService.Name = dialog.ModelName;
@@ -277,6 +279,7 @@ public partial class AiSettingsViewModel : ObservableObject
                 aiService.Url = dialog.BaseUrl;
                 aiService.Model = dialog.ChatModel;
                 aiService.Temperature = Math.Round(Math.Clamp(dialog.Temperature, 0, 2), 2, MidpointRounding.AwayFromZero);
+                aiService.Type = dialog.ServiceType;
 
                 await _dbContext.SaveChangesAsync();
                 await OnPageLoaded();

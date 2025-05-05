@@ -146,7 +146,7 @@ public partial class ClaudeService : ObservableObject, IAIServiceLlm
             };
         }
 
-        var jsonData = JsonConvert.SerializeObject(reqData);
+        var jsonData = Json.SerializeForModel(reqData, PropertyCase.CamelCase);
 
         var headers = new Dictionary<string, string>
         {

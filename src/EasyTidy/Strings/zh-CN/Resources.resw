@@ -1543,4 +1543,7 @@
   <data name="VerifyText" xml:space="preserve">
     <value>验证</value>
   </data>
+  <data name="AzureTxt" xml:space="preserve">
+    <value>Azure OpenAI</value>
+  </data>
 </root>
