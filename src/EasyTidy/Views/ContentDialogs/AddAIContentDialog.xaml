@@ -8,6 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     CornerRadius="{ThemeResource OverlayCornerRadius}"
     DefaultButton="Primary"
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick"
     mc:Ignorable="d">
 
     <ScrollView VerticalScrollBarVisibility="Hidden">
@@ -52,6 +53,12 @@
                     Value="{x:Bind Temperature, Mode=TwoWay}"
                     SmallChange="0.1"
                     StepFrequency="0.1"/>
+            <TeachingTip 
+                x:Name="ShowVerify"
+                PreferredPlacement="Top"
+	            PlacementMargin="20"
+	            IsLightDismissEnabled="True">
+            </TeachingTip>
         </StackPanel>
     </ScrollView>
 

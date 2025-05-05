@@ -117,6 +117,7 @@ public partial class AiSettingsViewModel : ObservableObject
         };
         dialog.CloseButtonText = "CancelText".GetLocalized();
         dialog.PrimaryButtonText = "SaveText".GetLocalized();
+        dialog.SecondaryButtonText = "VerifyText".GetLocalized();
 
         dialog.PrimaryButtonClick += OnAddAIPrimaryButton;
 
@@ -293,5 +294,49 @@ public partial class AiSettingsViewModel : ObservableObject
             await _dbContext.SaveChangesAsync();
             await OnPageLoaded();
         }
+    }
+
+    public async Task<(string, bool)> VerifyServiceAsync(object sender)
+    {
+        bool isValid = false;
+        string result = string.Empty;
+        var token = new CancellationToken();
+        try
+        {
+            var dialog = sender as AddAIContentDialog;
+            string baseUrl = dialog.BaseUrl;
+            if (string.IsNullOrWhiteSpace(baseUrl))
+            {
+                AIServiceFactory aIServiceFactory = new();
+                baseUrl = aIServiceFactory.GetService(dialog.ServiceType);
+            }
+            if (string.IsNullOrEmpty(dialog.ChatModel))
+            {
+                return ("VerifyModel".GetLocalized(), isValid);
+            }
+            var aiService = new AIServiceTable
+            {
+                Name = dialog.ModelName,
+                Identify = Guid.NewGuid(),
+                Type = dialog.ServiceType,
+                IsEnabled = true,
+                Url = baseUrl,
+                AppKey = dialog.AppKey,
+                AppID = dialog.AppID,
+                Model = dialog.ChatModel,
+                Temperature = Math.Round(Math.Clamp(dialog.Temperature, 0, 2), 2, MidpointRounding.AwayFromZero),
+                IsDefault = false
+            };
+            var llm = AIServiceFactory.CreateAIServiceLlm(aiService);
+            var reqModel = new RequestModel("你好", "ZH-CN");
+            await llm.PredictAsync(reqModel, _ => result = "VerifySucess".GetLocalized(), token);
+            isValid = true;
+        }
+        catch (Exception ex)
+        {
+            Logger.Error($"AiSettingsViewModel: VerifyService 异常信息 {ex}");
+            return (ex.Message, isValid);
+        }
+        return (result, isValid);
     }
 }

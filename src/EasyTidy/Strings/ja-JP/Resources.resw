@@ -1504,4 +1504,25 @@
   <data name="AI_Notice" xml:space="preserve">
     <value>まず、デフォルトのAIを設定してください</value>
   </data>
+  <data name="GeminiTxt" xml:space="preserve">
+    <value>Gemini</value>
+  </data>
+  <data name="DeepSeekTxt" xml:space="preserve">
+    <value>DeepSeek</value>
+  </data>
+  <data name="ClaudeTxt" xml:space="preserve">
+    <value>Claude</value>
+  </data>
+  <data name="WenxinTxt" xml:space="preserve">
+    <value>WenXin</value>
+  </data>
+  <data name="VerifyModel" xml:space="preserve">
+    <value>チャットモデルは空にできません</value>
+  </data>
+  <data name="VerifySucess" xml:space="preserve">
+    <value> 検証に成功しました</value>
+  </data>
+  <data name="VerifyText" xml:space="preserve">
+    <value>検証</value>
+  </data>
 </root>

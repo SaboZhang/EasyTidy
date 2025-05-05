@@ -2052,6 +2052,34 @@
           <source>Please set the default AI first</source>
           <target state="translated">請先設定預設的 AI</target>
         </trans-unit>
+        <trans-unit id="GeminiTxt" translate="yes" xml:space="preserve">
+          <source>Gemini</source>
+          <target state="translated">Gemini</target>
+        </trans-unit>
+        <trans-unit id="DeepSeekTxt" translate="yes" xml:space="preserve">
+          <source>DeepSeek</source>
+          <target state="translated">DeepSeek</target>
+        </trans-unit>
+        <trans-unit id="ClaudeTxt" translate="yes" xml:space="preserve">
+          <source>Claude</source>
+          <target state="translated">Claude</target>
+        </trans-unit>
+        <trans-unit id="WenxinTxt" translate="yes" xml:space="preserve">
+          <source>WenXin</source>
+          <target state="translated">文心一言</target>
+        </trans-unit>
+        <trans-unit id="VerifyModel" translate="yes" xml:space="preserve">
+          <source>The chat model cannot be empty</source>
+          <target state="translated">聊天模型不能為空</target>
+        </trans-unit>
+        <trans-unit id="VerifySucess" translate="yes" xml:space="preserve">
+          <source> Verification successful</source>
+          <target state="translated">驗證成功</target>
+        </trans-unit>
+        <trans-unit id="VerifyText" translate="yes" xml:space="preserve">
+          <source>Verify</source>
+          <target state="translated">驗證</target>
+        </trans-unit>
       </group>
     </body>
   </file>

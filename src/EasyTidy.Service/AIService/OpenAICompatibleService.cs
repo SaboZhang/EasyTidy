@@ -22,7 +22,7 @@ public partial class OpenAICompatibleService : ObservableObject, IAIServiceLlm
         Guid identify,
         string url,
         string name = "",
-        ServiceType type = ServiceType.OpenAI, 
+        ServiceType type = ServiceType.OpenAIFormat, 
         string appID = "", string appKey = "",
         bool isEnabled = true,
         string model = "gpt-3.5-turbo")

@@ -2052,6 +2052,34 @@
           <source>Please set the default AI first</source>
           <target state="translated">Veuillez définir l'IA par défaut en premier</target>
         </trans-unit>
+        <trans-unit id="GeminiTxt" translate="yes" xml:space="preserve">
+          <source>Gemini</source>
+          <target state="translated">Gemini</target>
+        </trans-unit>
+        <trans-unit id="DeepSeekTxt" translate="yes" xml:space="preserve">
+          <source>DeepSeek</source>
+          <target state="translated">DeepSeek</target>
+        </trans-unit>
+        <trans-unit id="ClaudeTxt" translate="yes" xml:space="preserve">
+          <source>Claude</source>
+          <target state="translated">Claude</target>
+        </trans-unit>
+        <trans-unit id="WenxinTxt" translate="yes" xml:space="preserve">
+          <source>WenXin</source>
+          <target state="translated">WenXin</target>
+        </trans-unit>
+        <trans-unit id="VerifyModel" translate="yes" xml:space="preserve">
+          <source>The chat model cannot be empty</source>
+          <target state="translated">Le modèle de conversation ne peut être vide</target>
+        </trans-unit>
+        <trans-unit id="VerifySucess" translate="yes" xml:space="preserve">
+          <source> Verification successful</source>
+          <target state="translated"> Vérification réussie</target>
+        </trans-unit>
+        <trans-unit id="VerifyText" translate="yes" xml:space="preserve">
+          <source>Verify</source>
+          <target state="translated">Vérifier</target>
+        </trans-unit>
       </group>
     </body>
   </file>

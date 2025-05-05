@@ -1641,4 +1641,25 @@
   <data name="AI_Notice" xml:space="preserve">
     <value>Please set the default AI first</value>
   </data>
+  <data name="GeminiTxt" xml:space="preserve">
+    <value>Gemini</value>
+  </data>
+  <data name="DeepSeekTxt" xml:space="preserve">
+    <value>DeepSeek</value>
+  </data>
+  <data name="ClaudeTxt" xml:space="preserve">
+    <value>Claude</value>
+  </data>
+  <data name="WenxinTxt" xml:space="preserve">
+    <value>WenXin</value>
+  </data>
+  <data name="VerifyModel" xml:space="preserve">
+    <value>The chat model cannot be empty</value>
+  </data>
+  <data name="VerifySucess" xml:space="preserve">
+    <value> Verification successful</value>
+  </data>
+  <data name="VerifyText" xml:space="preserve">
+    <value>Verify</value>
+  </data>
 </root>
