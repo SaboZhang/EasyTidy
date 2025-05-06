@@ -12,6 +12,8 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using UglyToad.PdfPig.Tokens;
 
 namespace EasyTidy.Service.AIService;
 
@@ -127,24 +129,18 @@ public partial class VolcengineService : ObservableObject, IAIServiceLlm
             stream = true
         };
 
+        var jsonData = Json.SerializeForModel(reqData, PropertyCase.CamelCase);
+
+        if (!string.IsNullOrEmpty(AppID))
+        {
+            AppKey = await GetTempApiKeyAsync(a_model);
+        }
+
         var header = new Dictionary<string, string>
         {
             { "Authorization", $"Bearer {AppKey}" },
             { "Content-Type", "application/json" }
         };
-        var jsonData = Json.SerializeForModel(reqData, PropertyCase.CamelCase);
-
-        if (!string.IsNullOrEmpty(AppID))
-        {
-            var authData = new
-            {
-                DurationSeconds = 86400,
-                ResourceType = "endpoint",
-                ResourceIds = new string[] {a_model}
-            };
-            var authJsonData = Json.SerializeForModel(authData, PropertyCase.PascalCase);
-            header = BuildSignedHeaders(authJsonData ,"ark","cn-beijing");
-        }
 
         try
         {
@@ -209,7 +205,25 @@ public partial class VolcengineService : ObservableObject, IAIServiceLlm
         }
     }
 
-    public Dictionary<string, string> BuildSignedHeaders(string jsonPayload, string service, string region)
+    private async Task<string> GetTempApiKeyAsync(string a_model)
+    {
+        UriBuilder authBuilder = new(_authUrl);
+        authBuilder.Query = "Action=GetApiKey&Version=2024-01-01";
+        var authData = new
+        {
+            DurationSeconds = 86400,
+            ResourceType = "endpoint",
+            ResourceIds = new string[] { a_model }
+        };
+        var authJsonData = Json.SerializeForModel(authData, PropertyCase.PascalCase);
+        var header = BuildSignedHeaders(authBuilder.Uri, authJsonData, "ark", "cn-beijing");
+        var authResutl = await HttpUtil.PostAsync(authBuilder.Uri, header, authJsonData, CancellationToken.None).ConfigureAwait(false);
+        var apiKeyJson = JsonConvert.DeserializeObject<JObject>(authResutl) ?? throw new Exception("获取API Key失败");
+        var apiKey = apiKeyJson["Result"]?["ApiKey"]?.Value<string>() ?? throw new Exception("获取API Key失败");
+        return apiKey;
+    }
+
+    public Dictionary<string, string> BuildSignedHeaders(Uri url, string jsonPayload, string service, string region)
     {
         // 1. 准备请求时间戳（UTC 时间，格式为 yyyyMMddTHHmmssZ）
         string requestDate = DateTime.UtcNow.ToString("yyyyMMddTHHmmssZ");
@@ -218,10 +232,9 @@ public partial class VolcengineService : ObservableObject, IAIServiceLlm
         // 2. 计算请求体的 SHA256 摘要（十六进制）
         string payloadHash = HashSha256(jsonPayload);
 
-        Uri uri = new(_authUrl);
-        string host = uri.Host;
-        string canonicalUri = uri.AbsolutePath;
-        string canonicalQueryString = "Action=GetApiKey&Version=2024-01-01";
+        string host = url.Host;
+        string canonicalUri = url.AbsolutePath;
+        string canonicalQueryString = url.Query.TrimStart('?');
 
         // 4. 设置 Content-Type
         string contentType = "application/json; charset=utf-8";
@@ -295,7 +308,6 @@ public partial class VolcengineService : ObservableObject, IAIServiceLlm
 
     public static byte[] GetSignatureKey(string secretKey, string date, string region, string service)
     {
-        // byte[] kSecret = Encoding.UTF8.GetBytes(secretKey);
         byte[] kDate = HmacSha256Bytes(Encoding.UTF8.GetBytes(secretKey), date);
         byte[] kRegion = HmacSha256Bytes(kDate, region);
         byte[] kService = HmacSha256Bytes(kRegion, service);

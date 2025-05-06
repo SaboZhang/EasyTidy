@@ -2004,10 +2004,6 @@
           <source>Display name</source>
           <target state="translated">显示名称</target>
         </trans-unit>
-        <trans-unit id="DialogModelName.Header" translate="yes" xml:space="preserve">
-          <source>Model name</source>
-          <target state="translated">模型名称</target>
-        </trans-unit>
         <trans-unit id="DialogName.Header" translate="yes" xml:space="preserve">
           <source>Display Name</source>
           <target state="translated">显示名称</target>
@@ -2019,10 +2015,6 @@
         <trans-unit id="DialogBasePath.Header" translate="yes" xml:space="preserve">
           <source>Base URL</source>
           <target state="translated">基础地址</target>
-        </trans-unit>
-        <trans-unit id="APPID.Header" translate="yes" xml:space="preserve">
-          <source>App ID</source>
-          <target state="translated">App ID</target>
         </trans-unit>
         <trans-unit id="APIKey.Header" translate="yes" xml:space="preserve">
           <source>API Key</source>
@@ -2086,11 +2078,27 @@
         </trans-unit>
         <trans-unit id="HunyuanTxt" translate="yes" xml:space="preserve">
           <source>Hunyuan</source>
-          <target state="new">Hunyuan</target>
+          <target state="translated">腾讯混元</target>
         </trans-unit>
         <trans-unit id="VolcengineTxt" translate="yes" xml:space="preserve">
           <source>Volcengine</source>
-          <target state="new">Volcengine</target>
+          <target state="translated">火山方舟</target>
+        </trans-unit>
+        <trans-unit id="DialogModelName.Text" translate="yes" xml:space="preserve">
+          <source>Model name*</source>
+          <target state="translated">模型名称*</target>
+        </trans-unit>
+        <trans-unit id="APPID.Text" translate="yes" xml:space="preserve">
+          <source>App ID</source>
+          <target state="translated">App ID</target>
+        </trans-unit>
+        <trans-unit id="ModelNameNotice.Text" translate="yes" xml:space="preserve">
+          <source>This field is required! When you choose to use the AK/SK authentication method for Volcengine, you must fill in the "Access Point ID."</source>
+          <target state="translated">此项必填！当您选择使用火山引擎的 AK/SK 鉴权方式时，模型名称填写“接入点ID”。</target>
+        </trans-unit>
+        <trans-unit id="APPIDNotice.Text" translate="yes" xml:space="preserve">
+          <source>This field is only applicable for AK/SK authentication scenarios and needs to be filled in</source>
+          <target state="translated">该字段仅适用于AK/SK认证场景时才需填写</target>
         </trans-unit>
       </group>
     </body>

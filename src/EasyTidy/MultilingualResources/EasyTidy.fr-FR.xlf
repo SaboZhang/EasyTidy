@@ -2004,10 +2004,6 @@
           <source>Display name</source>
           <target state="translated">Nom d'affichage</target>
         </trans-unit>
-        <trans-unit id="DialogModelName.Header" translate="yes" xml:space="preserve">
-          <source>Model name</source>
-          <target state="translated">Nom du modèle</target>
-        </trans-unit>
         <trans-unit id="DialogName.Header" translate="yes" xml:space="preserve">
           <source>Display Name</source>
           <target state="translated">Nom d'affichage</target>
@@ -2019,10 +2015,6 @@
         <trans-unit id="DialogBasePath.Header" translate="yes" xml:space="preserve">
           <source>Base URL</source>
           <target state="translated">URL de base</target>
-        </trans-unit>
-        <trans-unit id="APPID.Header" translate="yes" xml:space="preserve">
-          <source>App ID</source>
-          <target state="translated">ID de l'application</target>
         </trans-unit>
         <trans-unit id="APIKey.Header" translate="yes" xml:space="preserve">
           <source>API Key</source>
@@ -2086,11 +2078,27 @@
         </trans-unit>
         <trans-unit id="HunyuanTxt" translate="yes" xml:space="preserve">
           <source>Hunyuan</source>
-          <target state="new">Hunyuan</target>
+          <target state="translated">Hunyuan</target>
         </trans-unit>
         <trans-unit id="VolcengineTxt" translate="yes" xml:space="preserve">
           <source>Volcengine</source>
-          <target state="new">Volcengine</target>
+          <target state="translated">Volcengine</target>
+        </trans-unit>
+        <trans-unit id="DialogModelName.Text" translate="yes" xml:space="preserve">
+          <source>Model name*</source>
+          <target state="translated">Nom du modèle*</target>
+        </trans-unit>
+        <trans-unit id="APPID.Text" translate="yes" xml:space="preserve">
+          <source>App ID</source>
+          <target state="translated">App ID</target>
+        </trans-unit>
+        <trans-unit id="ModelNameNotice.Text" translate="yes" xml:space="preserve">
+          <source>This field is required! When you choose to use the AK/SK authentication method for Volcengine, you must fill in the "Access Point ID."</source>
+          <target state="translated"> Ce champ est obligatoire ! Lorsque vous choisissez la méthode d'authentification AK/SK de Volcengine, vous devez renseigner l'ID du point de connexion."</target>
+        </trans-unit>
+        <trans-unit id="APPIDNotice.Text" translate="yes" xml:space="preserve">
+          <source>This field is only applicable for AK/SK authentication scenarios and needs to be filled in</source>
+          <target state="translated">Ce champ n'est applicable que pour les scénarios d'authentification AK/SK et doit être rempli</target>
         </trans-unit>
       </group>
     </body>
