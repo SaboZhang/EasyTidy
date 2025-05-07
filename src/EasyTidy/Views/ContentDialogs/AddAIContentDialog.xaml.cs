@@ -129,7 +129,6 @@ public sealed partial class AddAIContentDialog : ContentDialog, INotifyPropertyC
         try
         {
             args.Cancel = true;
-            ShowVerify.IsOpen = true; // 显示验证对话框
             var result = await ViewModel.VerifyServiceAsync(sender);
             if (result.Item2)
             {
@@ -144,6 +143,7 @@ public sealed partial class AddAIContentDialog : ContentDialog, INotifyPropertyC
         }
         finally
         {
+            ShowVerify.IsOpen = true; // 显示验证对话框
             await Task.Delay(3000);
             ShowVerify.IsOpen = false;
         }

@@ -24,7 +24,7 @@ public partial class DeepSeekService : ObservableObject, IAIServiceLlm
         ServiceType type = ServiceType.DeepSeek,
         string appID = "", string appKey = "",
         bool isEnabled = true,
-        string model = "gemini-2.0-flash")
+        string model = "")
     {
         Identify = identify;
         Url = url;
@@ -55,7 +55,7 @@ public partial class DeepSeekService : ObservableObject, IAIServiceLlm
     [ObservableProperty]
     private ServiceResult _data = ServiceResult.Reset;
     [ObservableProperty]
-    private string _model = "gemini-2.0-flash";
+    private string _model = string.Empty;
     [ObservableProperty]
     private List<UserDefinePrompt> _userDefinePrompts =
     [

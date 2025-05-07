@@ -29,7 +29,7 @@ public partial class VolcengineService : ObservableObject, IAIServiceLlm
         ServiceType type = ServiceType.Volcengine,
         string appID = "", string appKey = "",
         bool isEnabled = true,
-        string model = "doubao-1.5-pro-32k-250115"
+        string model = ""
         )
     {
         Identify = identify;

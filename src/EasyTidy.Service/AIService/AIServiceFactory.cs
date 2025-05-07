@@ -19,7 +19,7 @@ public class AIServiceFactory
             { ServiceType.OpenAI, "https://api.openai.com" },
             { ServiceType.Ollama, "http://localhost:11434" },
             { ServiceType.QWen, "https://dashscope.aliyuncs.com" },
-            { ServiceType.HuggingFace, "https://api-inference.huggingface.co" },
+            { ServiceType.HuggingFace, "https://router.huggingface.co" },
             { ServiceType.Gemini, "https://generativelanguage.googleapis.com" },
             { ServiceType.DeepSeek, "https://api.deepseek.com" },
             { ServiceType.Claude, "https://api.anthropic.com" },

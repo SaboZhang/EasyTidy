@@ -27,7 +27,7 @@ public partial class HunyuanService : ObservableObject, IAIServiceLlm
         ServiceType type = ServiceType.Azure,
         string appID = "", string appKey = "",
         bool isEnabled = true,
-        string model = "hunyuan-turbos-latest")
+        string model = "")
     {
         Identify = identify;
         Url = url;

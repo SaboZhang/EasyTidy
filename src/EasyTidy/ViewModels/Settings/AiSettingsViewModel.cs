@@ -331,7 +331,7 @@ public partial class AiSettingsViewModel : ObservableObject
                 IsDefault = false
             };
             var llm = AIServiceFactory.CreateAIServiceLlm(aiService);
-            var reqModel = new RequestModel("你好", "ZH-CN");
+            var reqModel = new RequestModel("你是谁", "ZH-CN");
             await llm.PredictAsync(reqModel, _ => result = "VerifySucess".GetLocalized(), token);
             isValid = true;
         }

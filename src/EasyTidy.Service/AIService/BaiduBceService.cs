@@ -25,7 +25,7 @@ public partial class BaiduBceService : ObservableObject, IAIServiceLlm
         ServiceType type = ServiceType.WenXin,
         string appID = "", string appKey = "",
         bool isEnabled = true,
-        string model = "ernie-bot"
+        string model = ""
         )
     {
         Identify = identify;

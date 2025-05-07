@@ -25,7 +25,7 @@ public partial class QWenService : ObservableObject, IAIServiceLlm
         ServiceType type = ServiceType.OpenAI,
         string appID = "", string appKey = "",
         bool isEnabled = true,
-        string model = "qwen-max"
+        string model = ""
         )
     {
         Identify = identify;
@@ -57,7 +57,7 @@ public partial class QWenService : ObservableObject, IAIServiceLlm
     [ObservableProperty]
     private ServiceResult _data = ServiceResult.Reset;
     [ObservableProperty]
-    private string _model = "qwen-max";
+    private string _model = string.Empty;
     [ObservableProperty]
     private List<UserDefinePrompt> _userDefinePrompts =
     [
@@ -147,14 +147,14 @@ public partial class QWenService : ObservableObject, IAIServiceLlm
 
                     // 解析JSON数据
                     var parsedData = JsonConvert.DeserializeObject<JObject>(preprocessString);
+                    LogService.Logger.Debug("响应数据如下:\n" + preprocessString);
 
                     if (parsedData is null)
                         return;
 
                     // 通义千问返回字段与OpenAI存在差异，需增加容错处理：
                     var contentValue = parsedData["choices"]?[0]?["delta"]?["content"]?.ToString()
-                        ?? parsedData["output"]?["choices"]?[0]?["message"]?["content"]?.ToString()
-                        ?? parsedData["result"]?.ToString();
+                        ?? parsedData["output"]?["choices"]?[0]?["message"]?["content"]?.ToString();
 
                     if (string.IsNullOrEmpty(contentValue))
                         return;

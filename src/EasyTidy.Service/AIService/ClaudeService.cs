@@ -25,7 +25,7 @@ public partial class ClaudeService : ObservableObject, IAIServiceLlm
         ServiceType type = ServiceType.Claude,
         string appID = "", string appKey = "",
         bool isEnabled = true,
-        string model = "claude-3-5-sonnet-20240620"
+        string model = ""
         )
     {
         Identify = identify;

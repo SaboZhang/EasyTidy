@@ -24,7 +24,7 @@ public partial class AzureOpenAIService : ObservableObject, IAIServiceLlm
         ServiceType type = ServiceType.Azure,
         string appID = "", string appKey = "",
         bool isEnabled = true,
-        string model = "gpt35"
+        string model = ""
         )
     {
         Identify = identify;
