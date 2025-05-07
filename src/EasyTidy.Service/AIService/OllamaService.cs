@@ -25,7 +25,7 @@ public partial class OllamaService : ObservableObject, IAIServiceLlm
         ServiceType type = ServiceType.OpenAI,
         string appID = "", string appKey = "",
         bool isEnabled = true,
-        string model = "gpt-3.5-turbo")
+        string model = "")
     {
         Identify = identify;
         Url = url;
@@ -56,7 +56,7 @@ public partial class OllamaService : ObservableObject, IAIServiceLlm
     [ObservableProperty]
     private ServiceResult _data = ServiceResult.Reset;
     [ObservableProperty]
-    private string _model = "gpt-3.5-turbo";
+    private string _model = string.Empty;
     [ObservableProperty]
     private List<UserDefinePrompt> _userDefinePrompts =
     [
@@ -122,7 +122,7 @@ public partial class OllamaService : ObservableObject, IAIServiceLlm
             stream = true
         };
 
-        var jsonData = JsonConvert.SerializeObject(reqData);
+        var jsonData = Json.SerializeForModel(reqData, PropertyCase.CamelCase);
 
         try
         {

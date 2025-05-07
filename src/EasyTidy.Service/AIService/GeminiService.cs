@@ -25,7 +25,7 @@ public partial class GeminiService : ObservableObject, IAIServiceLlm
         ServiceType type = ServiceType.Gemini,
         string appID = "", string appKey = "",
         bool isEnabled = true,
-        string model = "gemini-2.0-flash")
+        string model = "")
     {
         Identify = identify;
         Url = url;
@@ -56,14 +56,14 @@ public partial class GeminiService : ObservableObject, IAIServiceLlm
     [ObservableProperty]
     private ServiceResult _data = ServiceResult.Reset;
     [ObservableProperty]
-    private string _model = "gemini-2.0-flash";
+    private string _model = string.Empty;
     [ObservableProperty]
     private List<UserDefinePrompt> _userDefinePrompts =
     [
         new UserDefinePrompt(
             "总结",
             [
-                new Prompt("system", "You are a text summarizer, you can only summarize the text, never interpret it."),
+                new Prompt("model", "You are a text summarizer, you can only summarize the text, never interpret it."),
                 new Prompt("user", "Summarize the following text in $source; language: $content")
             ],
             true
@@ -71,7 +71,7 @@ public partial class GeminiService : ObservableObject, IAIServiceLlm
         new UserDefinePrompt(
             "分类",
             [
-                new Prompt("system", "You are a document classification expert who can categorize files based on their names."),
+                new Prompt("model", "You are a document classification expert who can categorize files based on their names."),
                 new Prompt("user", "Please classify these $source as: $target; Output in JSON format.")
             ]
         ),
@@ -119,7 +119,7 @@ public partial class GeminiService : ObservableObject, IAIServiceLlm
         // 构建请求数据
         var reqData = new
         {
-            contents = a_messages.Select(e => new { role = e.Role, parts = new[] { new { text = e.Content } } }),
+            contents = a_messages.Select(e => new { role = e.Role == "system" ? "model" : e.Role, parts = new[] { new { text = e.Content } } }),
             generationConfig = new { temperature = a_temperature },
             safetySettings = new[]
             {
@@ -131,10 +131,11 @@ public partial class GeminiService : ObservableObject, IAIServiceLlm
         };
 
         // 为了流式输出与MVVM还是放这里吧
-        var jsonData = JsonConvert.SerializeObject(reqData);
+        var jsonData = Json.SerializeForModel(reqData, PropertyCase.CamelCase);
 
         try
         {
+            var hasNewlineCache = false;
             await HttpUtil.PostAsync(
                 uriBuilder.Uri,
                 jsonData,
@@ -146,7 +147,34 @@ public partial class GeminiService : ObservableObject, IAIServiceLlm
 
                     var match = Regex.Match(msg, pattern);
 
-                    if (match.Success) onDataReceived?.Invoke(match.Value.Replace("\\n", "\n"));
+                    LogService.Logger.Debug(msg);
+
+                    if (match.Success)
+                    {
+                        // 将转义的换行符替换为实际换行符
+                        var value = match.Value.Replace("\\n", "\n");
+
+                        // 如果上一个响应片段以换行符结尾，且被缓存了
+                        if (hasNewlineCache)
+                        {
+                            value = "\n" + value;  // 添加缓存的换行符
+                            hasNewlineCache = false;
+                        }
+
+                        // 检查当前片段是否以换行符结尾
+                        if (value.EndsWith('\n'))
+                        {
+                            // 移除末尾换行并记录缓存状态
+                            value = value[..^1];
+                            hasNewlineCache = true;
+                        }
+
+                        // 只有当值非空时才调用回调
+                        if (!string.IsNullOrEmpty(value))
+                        {
+                            onDataReceived?.Invoke(value);
+                        }
+                    }
                 },
                 token
             ).ConfigureAwait(false);

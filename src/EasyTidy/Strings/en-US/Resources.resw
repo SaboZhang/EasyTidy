@@ -1605,8 +1605,8 @@
   <data name="DisplayName.Text" xml:space="preserve">
     <value>Display name</value>
   </data>
-  <data name="DialogModelName.Header" xml:space="preserve">
-    <value>Model name</value>
+  <data name="DialogModelName.Text" xml:space="preserve">
+    <value>Model name*</value>
   </data>
   <data name="DialogName.Header" xml:space="preserve">
     <value>Display Name</value>
@@ -1617,7 +1617,7 @@
   <data name="DialogBasePath.Header" xml:space="preserve">
     <value>Base URL</value>
   </data>
-  <data name="APPID.Header" xml:space="preserve">
+  <data name="APPID.Text" xml:space="preserve">
     <value>App ID</value>
   </data>
   <data name="APIKey.Header" xml:space="preserve">
@@ -1661,5 +1661,20 @@
   </data>
   <data name="VerifyText" xml:space="preserve">
     <value>Verify</value>
+  </data>
+  <data name="AzureTxt" xml:space="preserve">
+    <value>Azure OpenAI</value>
+  </data>
+  <data name="HunyuanTxt" xml:space="preserve">
+    <value>Hunyuan</value>
+  </data>
+  <data name="VolcengineTxt" xml:space="preserve">
+    <value>Volcengine</value>
+  </data>
+  <data name="ModelNameNotice.Text" xml:space="preserve">
+    <value>This field is required! When you choose to use the AK/SK authentication method for Volcengine, you must fill in the "Access Point ID."</value>
+  </data>
+  <data name="APPIDNotice.Text" xml:space="preserve">
+    <value>This field is only applicable for AK/SK authentication scenarios and needs to be filled in</value>
   </data>
 </root>

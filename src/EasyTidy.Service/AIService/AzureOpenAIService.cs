@@ -14,15 +14,14 @@ using System.Threading.Tasks;
 
 namespace EasyTidy.Service.AIService;
 
-public partial class ClaudeService : ObservableObject, IAIServiceLlm
+public partial class AzureOpenAIService : ObservableObject, IAIServiceLlm
 {
-    public ClaudeService() : this(Guid.NewGuid(), "https://api.anthropic.com", "Claude") { }
-
-    public ClaudeService(
+    public AzureOpenAIService() : this(Guid.NewGuid(), "https://docs-test-001.openai.azure.com", "Azure OpenAI") { }
+    public AzureOpenAIService(
         Guid identify,
         string url,
         string name = "",
-        ServiceType type = ServiceType.Claude,
+        ServiceType type = ServiceType.Azure,
         string appID = "", string appKey = "",
         bool isEnabled = true,
         string model = ""
@@ -99,15 +98,18 @@ public partial class ClaudeService : ObservableObject, IAIServiceLlm
 
         UriBuilder uriBuilder = new(Url);
 
-        if (uriBuilder.Path == "/")
-            uriBuilder.Path = "/v1/messages";
-
         // 选择模型
         var a_model = Model.Trim();
-        a_model = string.IsNullOrEmpty(a_model) ? "claude-3-5-sonnet-20240620" : a_model;
+        a_model = string.IsNullOrEmpty(a_model) ? "gpt35" : a_model;
 
-        // 温度限定
-        var a_temperature = Math.Clamp(Temperature, 0, 1);
+        var path = $"/openai/deployments/{a_model}/chat/completions";
+        if (uriBuilder.Path == "/")
+            uriBuilder.Path = path;
+
+        if (string.IsNullOrEmpty(uriBuilder.Query))
+        {
+            uriBuilder.Query = "?api-version=2024-02-01";
+        }
 
         // 替换Prompt关键字
         var a_messages =
@@ -115,54 +117,32 @@ public partial class ClaudeService : ObservableObject, IAIServiceLlm
         a_messages.ToList().ForEach(item =>
             item.Content = item.Content.Replace("$source", source).Replace("$content", language));
 
-        var systemMsg =
-            a_messages.FirstOrDefault(x => x.Role.Equals("system", StringComparison.CurrentCultureIgnoreCase));
+        // 温度限定
+        var a_temperature = Math.Clamp(Temperature, 0, 2);
 
-        //https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/system-prompts#how-to-give-claude-a-role
-        object reqData;
-        if (systemMsg != null)
+        // 构建请求数据
+        var reqData = new
         {
-            a_messages.Remove(systemMsg);
-
-            reqData = new
-            {
-                model = a_model,
-                messages = a_messages,
-                system = systemMsg.Content,
-                temperature = a_temperature,
-                max_tokens = 4096,
-                stream = true
-            };
-        }
-        else
-        {
-            reqData = new
-            {
-                model = a_model,
-                messages = a_messages,
-                temperature = a_temperature,
-                max_tokens = 4096,
-                stream = true
-            };
-        }
-
-        var jsonData = Json.SerializeForModel(reqData, PropertyCase.CamelCase);
-
-        var headers = new Dictionary<string, string>
-        {
-            { "x-api-key", AppKey },
-            { "anthropic-version", "2023-06-01" }
+            messages = a_messages,
+            temperature = a_temperature,
+            stream = true
         };
+
+        var header = new Dictionary<string, string>
+        {
+            { "api-key", AppKey }
+        };
+        var jsonData = Json.SerializeForModel(reqData, PropertyCase.CamelCase);
 
         try
         {
             await HttpUtil.PostAsync(
                 uriBuilder.Uri,
-                headers,
+                header,
                 jsonData,
                 msg =>
                 {
-                    if (string.IsNullOrEmpty(msg?.Trim()) || msg.StartsWith("event"))
+                    if (string.IsNullOrEmpty(msg?.Trim()))
                         return;
 
                     var preprocessString = msg.Replace("data:", "").Trim();
@@ -178,7 +158,7 @@ public partial class ClaudeService : ObservableObject, IAIServiceLlm
                         return;
 
                     // 提取content的值
-                    var contentValue = parsedData["delta"]?["text"]?.ToString();
+                    var contentValue = parsedData["choices"]?.FirstOrDefault()?["delta"]?["content"]?.ToString();
 
                     if (string.IsNullOrEmpty(contentValue))
                         return;

@@ -1468,9 +1468,6 @@
   <data name="DisplayName.Text" xml:space="preserve">
     <value>表示名</value>
   </data>
-  <data name="DialogModelName.Header" xml:space="preserve">
-    <value>モデル名</value>
-  </data>
   <data name="DialogName.Header" xml:space="preserve">
     <value>表示名</value>
   </data>
@@ -1479,9 +1476,6 @@
   </data>
   <data name="DialogBasePath.Header" xml:space="preserve">
     <value>ベースURL</value>
-  </data>
-  <data name="APPID.Header" xml:space="preserve">
-    <value>App ID</value>
   </data>
   <data name="APIKey.Header" xml:space="preserve">
     <value>API Key</value>
@@ -1524,5 +1518,26 @@
   </data>
   <data name="VerifyText" xml:space="preserve">
     <value>検証</value>
+  </data>
+  <data name="AzureTxt" xml:space="preserve">
+    <value>Azure OpenAI</value>
+  </data>
+  <data name="HunyuanTxt" xml:space="preserve">
+    <value>Hunyuan</value>
+  </data>
+  <data name="VolcengineTxt" xml:space="preserve">
+    <value>Volcengine</value>
+  </data>
+  <data name="DialogModelName.Text" xml:space="preserve">
+    <value>モデル名*</value>
+  </data>
+  <data name="APPID.Text" xml:space="preserve">
+    <value>App ID</value>
+  </data>
+  <data name="ModelNameNotice.Text" xml:space="preserve">
+    <value>この項目は必須です！Volcengine の AK/SK 認証方式を選択した場合、「アクセスポイント ID」を必ず入力してください。</value>
+  </data>
+  <data name="APPIDNotice.Text" xml:space="preserve">
+    <value>このフィールドはAK/SK認証シナリオにのみ適用され、入力する必要があります</value>
   </data>
 </root>

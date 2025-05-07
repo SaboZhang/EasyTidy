@@ -1,4 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using EasyTidy.Model;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using System;
 using System.Threading.Tasks;
 
 namespace EasyTidy.Util;
@@ -20,4 +23,27 @@ public class Json
             return JsonConvert.SerializeObject(value);
         });
     }
+
+    public static string SerializeForModel(object data, PropertyCase propertyCase)
+    {
+        var settings = new JsonSerializerSettings
+        {
+            ContractResolver = propertyCase switch
+            {
+                PropertyCase.PascalCase => new DefaultContractResolver // PascalCase
+                {
+                    NamingStrategy = new DefaultNamingStrategy()
+                },
+                PropertyCase.CamelCase => new DefaultContractResolver // camelCase
+                {
+                    NamingStrategy = new CamelCaseNamingStrategy()
+                },
+                _ => throw new NotSupportedException("Unsupported model type")
+            },
+            NullValueHandling = NullValueHandling.Ignore
+        };
+
+        return JsonConvert.SerializeObject(data, settings);
+    }
+
 }

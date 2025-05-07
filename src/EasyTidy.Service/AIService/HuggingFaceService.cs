@@ -16,7 +16,7 @@ namespace EasyTidy.Service.AIService;
 
 public partial class HuggingFaceService : ObservableObject, IAIServiceLlm
 {
-    public HuggingFaceService() : this(Guid.NewGuid(), "https://api-inference.huggingface.co", "HuggingFace") { }
+    public HuggingFaceService() : this(Guid.NewGuid(), "https://router.huggingface.co", "HuggingFace") { }
 
     public HuggingFaceService(
         Guid identify,
@@ -25,7 +25,7 @@ public partial class HuggingFaceService : ObservableObject, IAIServiceLlm
         ServiceType type = ServiceType.HuggingFace,
         string appID = "", string appKey = "",
         bool isEnabled = true,
-        string model = "gpt-3.5-turbo")
+        string model = "")
     {
         Identify = identify;
         Url = url;
@@ -56,7 +56,7 @@ public partial class HuggingFaceService : ObservableObject, IAIServiceLlm
     [ObservableProperty]
     private ServiceResult _data = ServiceResult.Reset;
     [ObservableProperty]
-    private string _model = "gpt-3.5-turbo";
+    private string _model = string.Empty;
     [ObservableProperty]
     private List<UserDefinePrompt> _userDefinePrompts =
     [
@@ -102,8 +102,8 @@ public partial class HuggingFaceService : ObservableObject, IAIServiceLlm
         var modelId = Model.Trim();
         modelId = string.IsNullOrEmpty(modelId) ? "meta-llama/Llama-2-7b-chat-hf" : modelId;
 
-        if (!uriBuilder.Path.EndsWith($"/models/{modelId}"))
-            uriBuilder.Path = $"/models/{modelId}";
+        if (!uriBuilder.Path.EndsWith($"/hf-inference/models/{modelId}/v1/chat/completions"))
+            uriBuilder.Path = $"/hf-inference/models/{modelId}/v1/chat/completions";
 
         // 替换Prompt关键字
         var promptTemplate =
@@ -112,30 +112,18 @@ public partial class HuggingFaceService : ObservableObject, IAIServiceLlm
         promptTemplate.ToList().ForEach(item =>
             item.Content = item.Content.Replace("$source", input).Replace("$content", language));
 
-        var finalPrompt = string.Join("\n", promptTemplate.Select(p => p.Content));
-
         // 温度
         var a_temperature = Math.Clamp(Temperature, 0, 2);
 
         var reqData = new
         {
-            inputs = finalPrompt,
-            parameters = new
-            {
-                temperature = a_temperature,
-                return_full_text = false,
-                do_sample = true,
-                top_p = 0.95,
-                max_new_tokens = 1024
-            },
-            options = new
-            {
-                wait_for_model = true,
-                use_cache = false
-            }
+            model = modelId,
+            messages = promptTemplate,
+            temperature = a_temperature,
+            stream = true
         };
 
-        var jsonData = JsonConvert.SerializeObject(reqData);
+        var jsonData = Json.SerializeForModel(reqData, PropertyCase.CamelCase);
 
         try
         {
@@ -145,27 +133,28 @@ public partial class HuggingFaceService : ObservableObject, IAIServiceLlm
                 $"Bearer {AppKey}",
                 msg =>
                 {
-                    if (string.IsNullOrWhiteSpace(msg))
+                    if (string.IsNullOrEmpty(msg?.Trim()))
                         return;
 
-                    try
-                    {
-                        // HF接口可能返回多个候选结果
-                        var predictions = JsonConvert.DeserializeObject<JArray>(msg);
+                    var preprocessString = msg.Replace("data:", "").Trim();
 
-                        if (predictions is null || predictions.Count == 0)
-                            return;
+                    // 结束标记
+                    if (preprocessString.Equals("[DONE]"))
+                        return;
 
-                        var content = predictions[0]?["generated_text"]?.ToString();
-                        if (!string.IsNullOrEmpty(content))
-                        {
-                            onDataReceived?.Invoke(content);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        LogService.Logger.Error($"({Name})({Identify}) JSON解析失败: {ex.Message}");
-                    }
+                    // 解析JSON数据
+                    var parsedData = JsonConvert.DeserializeObject<JObject>(preprocessString);
+
+                    if (parsedData is null)
+                        return;
+
+                    // 提取content的值
+                    var contentValue = parsedData["choices"]?.FirstOrDefault()?["delta"]?["content"]?.ToString();
+
+                    if (string.IsNullOrEmpty(contentValue))
+                        return;
+
+                    onDataReceived?.Invoke(contentValue);
                 },
                 token
             ).ConfigureAwait(false);

@@ -1465,9 +1465,6 @@
   <data name="DisplayName.Text" xml:space="preserve">
     <value>顯示名稱</value>
   </data>
-  <data name="DialogModelName.Header" xml:space="preserve">
-    <value>模型名稱</value>
-  </data>
   <data name="DialogName.Header" xml:space="preserve">
     <value>顯示名稱</value>
   </data>
@@ -1476,9 +1473,6 @@
   </data>
   <data name="DialogBasePath.Header" xml:space="preserve">
     <value>基礎網址</value>
-  </data>
-  <data name="APPID.Header" xml:space="preserve">
-    <value>App ID</value>
   </data>
   <data name="APIKey.Header" xml:space="preserve">
     <value>API Key</value>
@@ -1521,5 +1515,26 @@
   </data>
   <data name="VerifyText" xml:space="preserve">
     <value>驗證</value>
+  </data>
+  <data name="AzureTxt" xml:space="preserve">
+    <value>Azure OpenAI</value>
+  </data>
+  <data name="HunyuanTxt" xml:space="preserve">
+    <value>騰訊混元</value>
+  </data>
+  <data name="VolcengineTxt" xml:space="preserve">
+    <value>火山方舟</value>
+  </data>
+  <data name="DialogModelName.Text" xml:space="preserve">
+    <value>模型名稱*</value>
+  </data>
+  <data name="APPID.Text" xml:space="preserve">
+    <value>App ID</value>
+  </data>
+  <data name="ModelNameNotice.Text" xml:space="preserve">
+    <value>此項必填！當您選擇使用火山引擎的 AK/SK 鑑權方式時，模型名稱填寫“接入點ID”。</value>
+  </data>
+  <data name="APPIDNotice.Text" xml:space="preserve">
+    <value>該字段僅適用於AK/SK認證場景時才需填寫</value>
   </data>
 </root>

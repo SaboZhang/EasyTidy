@@ -54,7 +54,7 @@
                             <Grid Padding="16,12"
                                   ColumnSpacing="16">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="160"/>
+                                    <ColumnDefinition MinWidth="160" MaxWidth="240"/>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
@@ -84,7 +84,7 @@
                             <DataTemplate x:DataType="model:AIServiceTable">
                                 <Grid ColumnSpacing="16" >
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="160"/>
+                                        <ColumnDefinition MinWidth="160" MaxWidth="240"/>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="*"/>
@@ -92,19 +92,22 @@
                                     </Grid.ColumnDefinitions>
                                     <TextBlock Text="{x:Bind Model}"
                                                x:Name="ModelTextBlock"
-                                               VerticalAlignment="Center"/>
+                                               VerticalAlignment="Center"
+                                               ToolTipService.ToolTip="{x:Bind Model}"/>
                                     <StackPanel Orientation="Horizontal"
                                                 Spacing="6"
                                                 Grid.Column="1">
                                         <Image Source="{x:Bind Type, Converter={StaticResource EnumToImageConverter}}" Width="20" Height="20"/>
                                         <TextBlock x:Name="ProviderTextBlock"
                                                    Text="{x:Bind Type, Converter={StaticResource EnumDisplayNameConverter}}"
-                                                   Margin="0,11,0,0"/>
+                                                   Margin="0,11,0,0"
+                                                   ToolTipService.ToolTip="{x:Bind Type, Converter={StaticResource EnumDisplayNameConverter}}"/>
                                     </StackPanel>
                                     <TextBlock Grid.Column="2"
                                                VerticalAlignment="Center"
                                                HorizontalAlignment="Center"
-                                               Text="{x:Bind Name}"/>
+                                               Text="{x:Bind Name}"
+                                               ToolTipService.ToolTip="{x:Bind Name}"/>
                                     <StackPanel Grid.Column="3"
                                                 Width="28"
                                                 Orientation="Horizontal"

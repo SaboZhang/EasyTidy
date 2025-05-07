@@ -169,7 +169,14 @@ public class HttpUtil
         if (header != null)
             foreach (var item in header)
             {
-                request.Headers.Add(item.Key, item.Value);
+                if (item.Key.Equals("Authorization", StringComparison.OrdinalIgnoreCase))
+                {
+                    request.Headers.TryAddWithoutValidation(item.Key, item.Value);
+                }
+                else
+                {
+                    request.Headers.TryAddWithoutValidation(item.Key, item.Value);
+                }
             }
 
         using var response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, token)
@@ -185,6 +192,45 @@ public class HttpUtil
             if (!string.IsNullOrEmpty(content))
                 onDataReceived?.Invoke(content);
         }
+    }
+
+    public static async Task<string> PostAsync(Uri uri, Dictionary<string, string>? header, string req, CancellationToken token, int timeout = 20)
+    {
+        using var client = CreateHttpClient(timeout);
+
+        var request = new HttpRequestMessage(HttpMethod.Post, uri)
+        {
+            Content = new StringContent(req, Encoding.UTF8, "application/json")
+        };
+
+        if (header != null)
+        {
+            foreach (var item in header)
+            {
+                request.Headers.TryAddWithoutValidation(item.Key, item.Value);
+            }
+        }
+
+        using var response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, token)
+            .ConfigureAwait(false);
+
+        await ResponseCheckAsync(response, token).ConfigureAwait(false);
+
+        await using var responseStream = await response.Content.ReadAsStreamAsync(token).ConfigureAwait(false);
+        using var reader = new StreamReader(responseStream);
+
+        var result = new StringBuilder();
+
+        while (!reader.EndOfStream && !token.IsCancellationRequested)
+        {
+            var content = await reader.ReadLineAsync().ConfigureAwait(false);
+            if (!string.IsNullOrEmpty(content))
+            {
+                result.AppendLine(content); // 或者直接 Append，取决于是否需要保留换行
+            }
+        }
+
+        return result.ToString();
     }
 
     private static async Task ResponseCheckAsync(HttpResponseMessage response, CancellationToken token)
