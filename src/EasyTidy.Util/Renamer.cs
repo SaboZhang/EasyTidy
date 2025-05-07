@@ -345,7 +345,7 @@ public partial class Renamer
                : Directory.Exists(source) ? new DirectoryInfo(source).Name
                : source;
 
-        string oldValue = parameters[0].Replace("replace=","");
+        string oldValue = parameters[0].Replace("replace=", "");
         string newValue = parameters[1];
         bool caseSensitive = parameters.Length > 2 && bool.TryParse(parameters[2], out bool result) && result;
 

@@ -1540,4 +1540,7 @@
   <data name="APPIDNotice.Text" xml:space="preserve">
     <value>このフィールドはAK/SK認証シナリオにのみ適用され、入力する必要があります</value>
   </data>
+  <data name="SparkTxt" xml:space="preserve">
+    <value>Spark</value>
+  </data>
 </root>

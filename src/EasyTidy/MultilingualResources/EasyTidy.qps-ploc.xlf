@@ -2100,6 +2100,10 @@
           <source>This field is only applicable for AK/SK authentication scenarios and needs to be filled in</source>
           <target state="new">This field is only applicable for AK/SK authentication scenarios and needs to be filled in</target>
         </trans-unit>
+        <trans-unit id="SparkTxt" translate="yes" xml:space="preserve">
+          <source>Spark</source>
+          <target state="new">Spark</target>
+        </trans-unit>
       </group>
     </body>
   </file>

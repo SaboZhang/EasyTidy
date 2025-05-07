@@ -5,7 +5,6 @@ using EasyTidy.Service;
 using EasyTidy.Service.AIService;
 using Microsoft.EntityFrameworkCore;
 using Quartz;
-using System.Threading.Tasks;
 
 
 namespace EasyTidy.Common.Job;
@@ -175,7 +174,7 @@ public class AutomaticJob : IJob
                     handleSubfolders: Settings.GeneralConfig.SubFolder ?? false,
                     funcs: new List<Func<string, bool>>(FilterUtil.GeneratePathFilters(item.TaskRule, item.RuleType)),
                     pathFilter: FilterUtil.GetPathFilters(item.Filter),
-                    new RuleModel() { Filter = item.Filter, Rule = item.TaskRule, RuleType = item.RuleType})
+                    new RuleModel() { Filter = item.Filter, Rule = item.TaskRule, RuleType = item.RuleType })
                 {
                     Priority = item.Priority,
                     CreateTime = item.CreateTime,

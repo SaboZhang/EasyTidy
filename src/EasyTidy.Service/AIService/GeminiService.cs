@@ -2,20 +2,19 @@
 using EasyTidy.Log;
 using EasyTidy.Model;
 using EasyTidy.Util;
-using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Text.RegularExpressions;
 
 namespace EasyTidy.Service.AIService;
 
-public partial class GeminiService : ObservableObject, IAIServiceLlm
+public partial class GeminiService : LLMServiceBase, IAIServiceLlm
 {
     public GeminiService() : this(Guid.NewGuid(), "https://generativelanguage.googleapis.com", "Gemini") { }
 
@@ -38,26 +37,6 @@ public partial class GeminiService : ObservableObject, IAIServiceLlm
     }
 
     [ObservableProperty]
-    private Guid _identify = Guid.Empty;
-    [ObservableProperty]
-    private ServiceType _type = 0;
-    [ObservableProperty]
-    private double _temperature = 0.8;
-    [ObservableProperty]
-    private bool _isEnabled = true;
-    [ObservableProperty]
-    private string _name = string.Empty;
-    [ObservableProperty]
-    private string _url = string.Empty;
-    [ObservableProperty]
-    private string _appID = string.Empty;
-    [ObservableProperty]
-    private string _appKey = string.Empty;
-    [ObservableProperty]
-    private ServiceResult _data = ServiceResult.Reset;
-    [ObservableProperty]
-    private string _model = string.Empty;
-    [ObservableProperty]
     private List<UserDefinePrompt> _userDefinePrompts =
     [
         new UserDefinePrompt(
@@ -76,9 +55,6 @@ public partial class GeminiService : ObservableObject, IAIServiceLlm
             ]
         ),
     ];
-
-    [ObservableProperty]
-    private bool _isDefault = true;
 
     public Task<ServiceResult> PredictAsync(object request, CancellationToken token)
     {

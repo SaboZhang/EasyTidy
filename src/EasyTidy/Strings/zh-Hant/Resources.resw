@@ -1537,4 +1537,7 @@
   <data name="APPIDNotice.Text" xml:space="preserve">
     <value>該字段僅適用於AK/SK認證場景時才需填寫</value>
   </data>
+  <data name="SparkTxt" xml:space="preserve">
+    <value>訊飛星火</value>
+  </data>
 </root>

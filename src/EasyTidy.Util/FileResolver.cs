@@ -492,8 +492,8 @@ public class FileResolver
         {
             return false;
         }
-        return (FilterUtil.ShouldSkip(parameters.Funcs, dir, parameters.PathFilter ) 
-            && parameters.RuleModel.RuleType == TaskRuleType.FolderRule )
+        return (FilterUtil.ShouldSkip(parameters.Funcs, dir, parameters.PathFilter)
+            && parameters.RuleModel.RuleType == TaskRuleType.FolderRule)
             || FilterUtil.ContainsTwoConsecutiveChars(parameters.RuleModel.Rule, '*')
             || FilterUtil.ContainsTwoConsecutiveChars(parameters.RuleModel.Rule, '#');
     }

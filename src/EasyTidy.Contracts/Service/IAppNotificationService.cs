@@ -1,5 +1,5 @@
-﻿using System.Collections.Specialized;
-using Microsoft.Windows.AppNotifications;
+﻿using Microsoft.Windows.AppNotifications;
+using System.Collections.Specialized;
 
 namespace EasyTidy.Contracts.Service;
 

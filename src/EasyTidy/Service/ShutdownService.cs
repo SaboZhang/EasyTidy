@@ -1,4 +1,3 @@
-using System;
 using CommunityToolkit.WinUI;
 using EasyTidy.Common.Database;
 using EasyTidy.Model;
@@ -9,7 +8,7 @@ namespace EasyTidy.Service;
 public class ShutdownService
 {
     private readonly AppDbContext _dbContext;
-    
+
     public ShutdownService()
     {
         _dbContext = App.GetService<AppDbContext>();

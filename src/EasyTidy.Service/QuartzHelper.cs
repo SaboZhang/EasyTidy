@@ -129,7 +129,7 @@ public class QuartzHelper
         var triggers = await _scheduler.GetTriggersOfJob(jobKey);
 
         if (jobDetail != null)
-        {   
+        {
             var newJob = jobDetail.GetJobBuilder()
                 .WithIdentity(newJobKey)
                 .Build();

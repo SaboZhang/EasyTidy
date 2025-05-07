@@ -2100,6 +2100,10 @@
           <source>This field is only applicable for AK/SK authentication scenarios and needs to be filled in</source>
           <target state="translated">该字段仅适用于AK/SK认证场景时才需填写</target>
         </trans-unit>
+        <trans-unit id="SparkTxt" translate="yes" xml:space="preserve">
+          <source>Spark</source>
+          <target state="translated">讯飞星火</target>
+        </trans-unit>
       </group>
     </body>
   </file>

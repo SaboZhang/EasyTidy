@@ -190,7 +190,7 @@ public static class FileEventHandler
                         else
                         {
                             await FolderActuator.ExecuteFolderOperationAsync(parameter);
-                        }          
+                        }
 
                         // 操作完成后，从正在处理的集合中移除
                         _processingFiles.TryRemove(path, out _);
@@ -233,7 +233,7 @@ public static class FileEventHandler
 
     private static bool IsPathUnderWatch(string sourcePath, string targetPath)
     {
-        if (_sourceToTargetsCache.TryGetValue(sourcePath, out var targetList)) 
+        if (_sourceToTargetsCache.TryGetValue(sourcePath, out var targetList))
         {
             return targetList.Any(o => o.TargetPath == targetPath);
         }

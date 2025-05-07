@@ -1677,4 +1677,7 @@
   <data name="APPIDNotice.Text" xml:space="preserve">
     <value>This field is only applicable for AK/SK authentication scenarios and needs to be filled in</value>
   </data>
+  <data name="SparkTxt" xml:space="preserve">
+    <value>Spark</value>
+  </data>
 </root>

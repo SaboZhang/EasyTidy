@@ -1,6 +1,5 @@
 ﻿using EasyTidy.Model;
 using PdfSharp.Drawing;
-using PdfSharp.Fonts;
 using PdfSharp.Pdf;
 using System;
 using System.Collections.Generic;

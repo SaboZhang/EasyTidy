@@ -111,8 +111,8 @@ public class CronExpressionUtil
         // 检查条件并设置 Cron 表达式
         if (repair)
         {
-            if (!string.IsNullOrWhiteSpace(dayOfMonth) 
-                && !string.IsNullOrWhiteSpace(month) 
+            if (!string.IsNullOrWhiteSpace(dayOfMonth)
+                && !string.IsNullOrWhiteSpace(month)
                 && !string.IsNullOrWhiteSpace(dayOfWeek))
             {
                 // 当有具体的日、月和周时，使用 "?" 来忽略周几或具体日

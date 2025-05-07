@@ -1,4 +1,3 @@
-using System;
 using EasyTidy.Model;
 
 namespace EasyTidy.Converters;

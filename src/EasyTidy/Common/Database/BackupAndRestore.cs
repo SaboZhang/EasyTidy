@@ -1,12 +1,4 @@
-﻿using Microsoft.Data.Sqlite;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Data.SQLite;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
+﻿using System.Data.SQLite;
 
 namespace EasyTidy.Common.Database;
 
@@ -16,7 +8,7 @@ public partial class BackupAndRestore
 
     public BackupAndRestore()
     {
-        _dbContext = App.GetService<AppDbContext>();;
+        _dbContext = App.GetService<AppDbContext>(); ;
     }
 
     public static void BackupDatabase(string sourcePath, string backupPath)

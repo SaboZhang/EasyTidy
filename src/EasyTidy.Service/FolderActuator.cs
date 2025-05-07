@@ -1,3 +1,6 @@
+using EasyTidy.Log;
+using EasyTidy.Model;
+using EasyTidy.Util;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -5,9 +8,6 @@ using System.IO.Compression;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using EasyTidy.Log;
-using EasyTidy.Model;
-using EasyTidy.Util;
 
 namespace EasyTidy.Service;
 
@@ -26,7 +26,7 @@ public class FolderActuator
         try
         {
             if (string.IsNullOrEmpty(parameters.TargetPath)) return;
-            if (IsFolder(parameters.RuleModel.Rule, parameters.RuleModel.RuleType) 
+            if (IsFolder(parameters.RuleModel.Rule, parameters.RuleModel.RuleType)
                 && parameters.OperationMode != OperationMode.Extract
                 && parameters.OperationMode != OperationMode.HardLink)
             {
@@ -123,7 +123,7 @@ public class FolderActuator
     /// <exception cref="NotSupportedException"></exception>
     private static async Task ExecuteFolderActionAsync(OperationParameters parameters)
     {
-        if (FilterUtil.ShouldSkip(parameters.Funcs, parameters.SourcePath, parameters.PathFilter) 
+        if (FilterUtil.ShouldSkip(parameters.Funcs, parameters.SourcePath, parameters.PathFilter)
             && parameters.OperationMode != OperationMode.RecycleBin && parameters.OperationMode != OperationMode.ZipFile)
         {
             LogService.Logger.Debug($"执行文件夹操作 {parameters.TargetPath}");
@@ -146,7 +146,7 @@ public class FolderActuator
                 await RenameFolder(parameters.SourcePath, parameters.OldTargetPath);
                 break;
             case OperationMode.RecycleBin:
-                await FileActuator.MoveToRecycleBin(parameters.TargetPath, new List<Func<string, bool>>(parameters.Funcs), 
+                await FileActuator.MoveToRecycleBin(parameters.TargetPath, new List<Func<string, bool>>(parameters.Funcs),
                     parameters.PathFilter, parameters.RuleModel.RuleType, true, parameters.HandleSubfolders);
                 break;
             case OperationMode.UploadWebDAV:
@@ -492,7 +492,7 @@ public class FolderActuator
     {
         DirectoryInfo di = new DirectoryInfo(folder);
 
-        foreach (FileInfo file in di.EnumerateFiles()) 
+        foreach (FileInfo file in di.EnumerateFiles())
         {
             string encryptedFilePath = Path.Combine(outputFolder, file.Name);
             CryptoUtil.EncryptFile(file.FullName, encryptedFilePath, pass);

@@ -53,7 +53,7 @@ public partial class App : Application
     public App()
     {
         this.InitializeComponent();
-       
+
         _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
         // 加载配置
         Host = Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder()

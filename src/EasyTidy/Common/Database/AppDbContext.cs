@@ -1,10 +1,8 @@
 ﻿using EasyTidy.Model;
-using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
-using Windows.UI;
 
 namespace EasyTidy.Common.Database;
 

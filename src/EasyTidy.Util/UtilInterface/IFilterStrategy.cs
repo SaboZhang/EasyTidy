@@ -5,5 +5,5 @@ namespace EasyTidy.Util.UtilInterface;
 
 public interface IFilterStrategy
 {
-     IEnumerable<Func<string, bool>> GenerateFilters(string rule);
+    IEnumerable<Func<string, bool>> GenerateFilters(string rule);
 }

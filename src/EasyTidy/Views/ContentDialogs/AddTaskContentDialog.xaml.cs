@@ -3,10 +3,8 @@
 
 using CommunityToolkit.WinUI;
 using EasyTidy.Model;
-using Microsoft.UI.Xaml.Input;
 using System.Collections;
 using System.ComponentModel;
-using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 

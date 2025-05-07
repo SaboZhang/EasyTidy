@@ -17,7 +17,6 @@ using System.Data;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace EasyTidy.ViewModels;
 
@@ -223,8 +222,8 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 Filter = SelectedFilter != null
                 ? await _dbContext.Filters.Where(x => x.Id == SelectedFilter.Id).FirstOrDefaultAsync() : null,
                 IsRegex = dialog.IsRegex,
-                AIIdentify = ai != null 
-                && (SelectedOperationMode == OperationMode.AIClassification 
+                AIIdentify = ai != null
+                && (SelectedOperationMode == OperationMode.AIClassification
                 || SelectedOperationMode == OperationMode.AISummary) ? ai.Identify : Guid.Empty,
                 UserDefinePromptsJson = prompt,
                 Argument = dialog.Argument
@@ -729,7 +728,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
             if (dataContext != null)
             {
                 var task = dataContext as TaskOrchestrationTable;
-                string language = string.IsNullOrEmpty(Settings.Language) 
+                string language = string.IsNullOrEmpty(Settings.Language)
                 ? "Please respond in the language of the provided content." : Settings.Language;
                 var automatic = new AutomaticJob();
                 var rule = await automatic.GetSpecialCasesRule(task.GroupName.Id, task.TaskRule);
@@ -816,7 +815,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
             }
             IsActive = false;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _notificationQueue.ShowWithWindowExtension("ExecutionFailedText".GetLocalized(), InfoBarSeverity.Error);
             _ = ClearNotificationAfterDelay(3000);

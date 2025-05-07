@@ -124,8 +124,8 @@ public class HttpUtil
         var emptyContent = new StringContent(string.Empty);
         if (headers != null)
             foreach (var header in headers)
-            foreach (var value in header.Value)
-                client.DefaultRequestHeaders.Add(header.Key, value);
+                foreach (var value in header.Value)
+                    client.DefaultRequestHeaders.Add(header.Key, value);
 
         response = await client.PostAsync(url, emptyContent, token).ConfigureAwait(false);
         return await GetResponseContentAsync(response, token).ConfigureAwait(false);
@@ -158,13 +158,13 @@ public class HttpUtil
         await PostAsync(uri, header, req, onDataReceived, token, timeout);
     }
 
-    public static async Task PostAsync(Uri uri, Dictionary<string, string>? header, string req,  Action<string> onDataReceived,
+    public static async Task PostAsync(Uri uri, Dictionary<string, string>? header, string req, Action<string> onDataReceived,
         CancellationToken token, int timeout = 20)
     {
         using var client = CreateHttpClient(timeout);
 
         var request = new HttpRequestMessage(HttpMethod.Post, uri)
-            { Content = new StringContent(req, Encoding.UTF8, "application/json") };
+        { Content = new StringContent(req, Encoding.UTF8, "application/json") };
 
         if (header != null)
             foreach (var item in header)

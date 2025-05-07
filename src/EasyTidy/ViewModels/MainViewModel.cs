@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using CommunityToolkit.WinUI;
+﻿using CommunityToolkit.WinUI;
 using CommunityToolkit.WinUI.Collections;
 using EasyTidy.Common.Database;
 using EasyTidy.Common.Job;
@@ -8,7 +7,7 @@ using EasyTidy.Model;
 using EasyTidy.Service;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.UI.Dispatching;
-using Microsoft.UI.Xaml.Data;
+using System.Collections.ObjectModel;
 
 namespace EasyTidy.ViewModels;
 public partial class MainViewModel : ObservableObject
@@ -46,14 +45,15 @@ public partial class MainViewModel : ObservableObject
         _dbContext = App.GetService<AppDbContext>();
         _themeSelectorService = App.GetService<IThemeSelectorService>();
     }
-    
+
     [RelayCommand]
     private async Task OnPageLoaded()
     {
         try
         {
-            await Task.Run(() =>{
-                dispatcherQueue.TryEnqueue(async () => 
+            await Task.Run(() =>
+            {
+                dispatcherQueue.TryEnqueue(async () =>
                 {
                     var list = await _dbContext.TaskOrchestration.Include(x => x.GroupName)
                     .Where(x => string.IsNullOrEmpty(x.TaskSource))
@@ -64,7 +64,8 @@ public partial class MainViewModel : ObservableObject
                     TaskListACV = new AdvancedCollectionView(TaskList, true);
                 });
             });
-        }catch (Exception ex)
+        }
+        catch (Exception ex)
         {
             Logger.Error(ex.Message);
         }
@@ -137,5 +138,5 @@ public partial class MainViewModel : ObservableObject
             })
         { RuleName = item.TaskRule };
     }
-    
+
 }

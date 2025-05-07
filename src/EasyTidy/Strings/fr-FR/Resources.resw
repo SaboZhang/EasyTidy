@@ -1540,4 +1540,7 @@
   <data name="APPIDNotice.Text" xml:space="preserve">
     <value>Ce champ n'est applicable que pour les scénarios d'authentification AK/SK et doit être rempli</value>
   </data>
+  <data name="SparkTxt" xml:space="preserve">
+    <value>Spark</value>
+  </data>
 </root>

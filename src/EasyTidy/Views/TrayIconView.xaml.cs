@@ -1,5 +1,4 @@
 ﻿using EasyTidy.Common.Extensions;
-using EasyTidy.Model;
 using EasyTidy.Service;
 using H.NotifyIcon;
 using Microsoft.UI.Composition.SystemBackdrops;

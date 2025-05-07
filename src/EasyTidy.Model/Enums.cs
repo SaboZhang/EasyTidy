@@ -23,17 +23,17 @@ public enum BackupType
 public enum FileOperationType
 {
 
-    [Description("跳过目标文件")] [Display(Name = "SkipText")] Skip,
+    [Description("跳过目标文件")][Display(Name = "SkipText")] Skip,
 
-    [Description("覆盖目标文件")] [Display(Name = "OverrideText")] Override,
+    [Description("覆盖目标文件")][Display(Name = "OverrideText")] Override,
 
-    [Description("如果较新则覆盖目标文件")] [Display(Name = "OverwriteIfNewerText")] OverwriteIfNewer,
+    [Description("如果较新则覆盖目标文件")][Display(Name = "OverwriteIfNewerText")] OverwriteIfNewer,
 
-    [Description("如果大小不同则覆盖目标文件")] [Display(Name = "OverrideIfSizesDifferText")] OverrideIfSizesDiffer,
+    [Description("如果大小不同则覆盖目标文件")][Display(Name = "OverrideIfSizesDifferText")] OverrideIfSizesDiffer,
 
-    [Description("重命名为'文件名(1)'的格式")] [Display(Name = "ReNameAppendText")] ReNameAppend,
+    [Description("重命名为'文件名(1)'的格式")][Display(Name = "ReNameAppendText")] ReNameAppend,
 
-    [Description("原文件名称后拼接日期")] [Display(Name = "ReNameAddDateText")] ReNameAddDate
+    [Description("原文件名称后拼接日期")][Display(Name = "ReNameAddDateText")] ReNameAddDate
 }
 
 /// <summary>
@@ -204,7 +204,9 @@ public enum ServiceType
     [Display(Name = "HunyuanTxt")]
     Hunyuan,
     [Display(Name = "VolcengineTxt")]
-    Volcengine
+    Volcengine,
+    [Display(Name = "SparkTxt")]
+    Spark
 }
 
 public enum FileType

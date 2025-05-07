@@ -9,7 +9,6 @@ using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
-using Windows.UI.ViewManagement;
 
 namespace EasyTidy.Util;
 
@@ -257,9 +256,9 @@ public class ZipUtil
 
     private static void ExtractRar7z(string filePath, string targetDirectory, string rootFolderName, string filterExtension)
     {
-        var extensions = string.IsNullOrWhiteSpace(filterExtension) 
-            ? Array.Empty<string>() 
-            : filterExtension.Split([';','|']).Select(ext => ext.Trim()).ToArray();
+        var extensions = string.IsNullOrWhiteSpace(filterExtension)
+            ? Array.Empty<string>()
+            : filterExtension.Split([';', '|']).Select(ext => ext.Trim()).ToArray();
         using var archive = ArchiveFactory.Open(filePath);
         var reader = archive.ExtractAllEntries();
         while (reader.MoveToNextEntry())
@@ -356,9 +355,9 @@ public class ZipUtil
         string finalExtractPath = Path.Combine(directoryPath, folderName);
         Directory.CreateDirectory(finalExtractPath);
 
-        var extensions = string.IsNullOrWhiteSpace(filterExtension) 
-            ? Array.Empty<string>() 
-            : filterExtension.Split([';','|']).Select(ext => ext.Trim()).ToArray();
+        var extensions = string.IsNullOrWhiteSpace(filterExtension)
+            ? Array.Empty<string>()
+            : filterExtension.Split([';', '|']).Select(ext => ext.Trim()).ToArray();
 
         using (var archive = ArchiveFactory.Open(filePath))
         {
@@ -628,7 +627,7 @@ public class ZipUtil
 
         string sevenZipPath = Get7ZipPath();
 
-        if (!Path.GetExtension(outputFilePath).Equals(".7z", StringComparison.OrdinalIgnoreCase) 
+        if (!Path.GetExtension(outputFilePath).Equals(".7z", StringComparison.OrdinalIgnoreCase)
             && !Path.GetExtension(outputFilePath).Equals(".zip", StringComparison.OrdinalIgnoreCase))
         {
             outputFilePath += ".7z";
