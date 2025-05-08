@@ -1680,4 +1680,13 @@
   <data name="SparkTxt" xml:space="preserve">
     <value>Spark</value>
   </data>
+  <data name="MenuText" xml:space="preserve">
+    <value>Process with EasyTidy</value>
+  </data>
+  <data name="GeneralEnabledRightClick.Header" xml:space="preserve">
+    <value> Right-click menu</value>
+  </data>
+  <data name="GeneralEnabledRightClick.Description" xml:space="preserve">
+    <value>Whether to register the context menu in the system</value>
+  </data>
 </root>

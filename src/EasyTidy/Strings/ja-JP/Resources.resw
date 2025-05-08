@@ -1543,4 +1543,7 @@
   <data name="SparkTxt" xml:space="preserve">
     <value>Spark</value>
   </data>
+  <data name="MenuText" xml:space="preserve">
+    <value>EasyTidyで処理します</value>
+  </data>
 </root>

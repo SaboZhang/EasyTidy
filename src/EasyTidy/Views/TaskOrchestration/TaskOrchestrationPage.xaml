@@ -78,10 +78,10 @@
                                 </StackPanel>
                             </ctk:SettingsCard>
                             <StackPanel>
-                                <TextBlock x:Name="TaskList"
-                                           TextWrapping="Wrap"
-                                           x:Uid="TaskListView"
-                                           Margin="0,20,20,0"/>
+                                    <TextBlock x:Name="TaskList"
+                                               TextWrapping="Wrap"
+                                               x:Uid="TaskListView"
+                                               Margin="0,20,20,0"/>
                                 <ProgressRing x:Name="Load"
                                               IsActive="{x:Bind ViewModel.IsActive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <StackPanel>
