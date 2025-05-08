@@ -6,6 +6,7 @@ using EasyTidy.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Windows.Globalization;
 using System.Data;
+using System.Diagnostics;
 using WinUIEx;
 
 namespace EasyTidy.Service;
@@ -31,6 +32,8 @@ public class ActivationService : IActivationService
         // Execute tasks before activation.
         await InitializeAsync();
         SetApplicationLanguage();
+        
+        if (Settings.EnabledRightClick) ContextMenuRegistrar.TryRegister();
 
         // Set the MainWindow Content.
         if (App.MainWindow.Content == null)

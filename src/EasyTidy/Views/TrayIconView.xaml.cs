@@ -51,7 +51,7 @@ public sealed partial class TrayIconView : UserControl
         {
             App.ChildWindow = new WindowEx(); // 重新创建窗口
         }
-        App.ChildWindow.Title = "子窗口标题";
+        App.ChildWindow.Title = "EasyTidy";
         App.ChildWindow.ExtendsContentIntoTitleBar = true;
         var childWindow = App.ChildWindow;
         var subPage = new MainPage();

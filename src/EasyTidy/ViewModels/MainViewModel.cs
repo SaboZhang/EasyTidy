@@ -53,10 +53,13 @@ public partial class MainViewModel : ObservableObject
         {
             await Task.Run(() =>
             {
+                string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
                 dispatcherQueue.TryEnqueue(async () =>
                 {
                     var list = await _dbContext.TaskOrchestration.Include(x => x.GroupName)
-                    .Where(x => string.IsNullOrEmpty(x.TaskSource))
+                    .Where(x => string.IsNullOrEmpty(x.TaskSource) 
+                    || x.TaskSource == "DesktopText".GetLocalized() 
+                    || x.TaskSource.Equals(desktopPath))
                     .GroupBy(x => x.GroupName)
                     .Select(g => g.First())
                     .ToListAsync();
@@ -137,6 +140,12 @@ public partial class MainViewModel : ObservableObject
                 RuleType = item.RuleType
             })
         { RuleName = item.TaskRule };
+    }
+
+    public async Task ExecuteTaskAsync(string path)
+    {
+        Logger.Info($"执行任务: {path}");
+        await Task.CompletedTask;
     }
 
 }

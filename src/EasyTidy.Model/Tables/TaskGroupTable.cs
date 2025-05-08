@@ -16,4 +16,6 @@ public class TaskGroupTable
 
     public List<TaskOrchestrationTable> TaskOrchestrationList { get; set; }
 
+    public bool IsDefault { get; set; } = false;
+
 }
