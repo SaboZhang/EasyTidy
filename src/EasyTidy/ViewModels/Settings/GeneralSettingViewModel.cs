@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.WinUI;
 using CommunityToolkit.WinUI.Collections;
+using EasyTidy.Activation;
 using EasyTidy.Common.Database;
 using EasyTidy.Common.Job;
 using EasyTidy.Common.Model;
@@ -122,6 +123,33 @@ public partial class GeneralSettingViewModel : ObservableObject
             {
                 _subFolder = value;
                 CurConfig.SubFolder = value;
+                NotifyPropertyChanged();
+            }
+        }
+    }
+
+    private bool? _enabledRightClick;
+
+    public bool EnabledRightClick
+    {
+        get
+        {
+            return _enabledRightClick ?? Settings.EnabledRightClick;
+        }
+        set
+        {
+            if (_enabledRightClick != value)
+            {
+                _enabledRightClick = value;
+                Settings.EnabledRightClick = value;
+                if (value)
+                {
+                    ContextMenuRegistrar.TryRegister();
+                }
+                else
+                {
+                    ContextMenuRegistrar.Unregister();
+                }
                 NotifyPropertyChanged();
             }
         }

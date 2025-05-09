@@ -8,6 +8,7 @@ using EasyTidy.Service;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.UI.Dispatching;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace EasyTidy.ViewModels;
 public partial class MainViewModel : ObservableObject
@@ -144,8 +145,39 @@ public partial class MainViewModel : ObservableObject
 
     public async Task ExecuteTaskAsync(string path)
     {
-        Logger.Info($"执行任务: {path}");
-        await Task.CompletedTask;
+        var group = await _dbContext.TaskGroup.Where(x => x.IsDefault == true).FirstOrDefaultAsync();
+        if (group == null) return;
+        var taskList = await GetTasksByGroupIdAsync(group.Id);
+        if (taskList.Count == 0) return;
+
+        var automatic = new AutomaticJob();
+
+        // 预先计算所有任务的规则，避免在循环中重复调用
+        var taskRules = await Task.WhenAll(taskList.Select(async item =>
+        {
+            var rules = await automatic.GetSpecialCasesRule(item.GroupName.Id, item.TaskRule);
+            return new
+            {
+                TaskItem = item,
+                Rules = FilterUtil.GeneratePathFilters(rules, item.RuleType),
+                Filter = FilterUtil.GetPathFilters(item.Filter)
+            };
+        }));
+
+        // **找到第一个符合规则的任务**
+        var matchedTask = taskRules.FirstOrDefault(t => !FilterUtil.ShouldSkip(t.Rules, path, t.Filter));
+
+        if (matchedTask == null)
+        {
+            Logger.Warn($"文件 {path} 无匹配规则，跳过处理");
+            var fileName = Path.GetFileName(path);
+            return; // 没有匹配的任务，直接返回
+        }
+
+        // **执行第一个匹配的任务**
+        var operationParams = CreateOperationParameters(matchedTask.TaskItem, path, matchedTask.Rules);
+        await OperationHandler.ExecuteOperationAsync(matchedTask.TaskItem.OperationMode, operationParams);
+        Logger.Debug($"执行任务: {path}");
     }
 
 }

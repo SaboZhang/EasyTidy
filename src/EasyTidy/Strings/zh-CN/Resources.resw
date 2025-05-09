@@ -1561,4 +1561,7 @@
   <data name="SparkTxt" xml:space="preserve">
     <value>讯飞星火</value>
   </data>
+  <data name="MenuText" xml:space="preserve">
+    <value>使用 EasyTidy 处理</value>
+  </data>
 </root>

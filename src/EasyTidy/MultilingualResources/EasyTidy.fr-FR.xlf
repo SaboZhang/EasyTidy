@@ -2104,6 +2104,18 @@
           <source>Spark</source>
           <target state="translated">Spark</target>
         </trans-unit>
+        <trans-unit id="MenuText" translate="yes" xml:space="preserve">
+          <source>Process with EasyTidy</source>
+          <target state="translated">Traitez avec EasyTidy</target>
+        </trans-unit>
+        <trans-unit id="GeneralEnabledRightClick.Header" translate="yes" xml:space="preserve">
+          <source> Right-click menu</source>
+          <target state="translated">Menu contextuel</target>
+        </trans-unit>
+        <trans-unit id="GeneralEnabledRightClick.Description" translate="yes" xml:space="preserve">
+          <source>Whether to register the context menu in the system</source>
+          <target state="translated">S'il faut enregistrer le menu contextuel dans le système</target>
+        </trans-unit>
       </group>
     </body>
   </file>

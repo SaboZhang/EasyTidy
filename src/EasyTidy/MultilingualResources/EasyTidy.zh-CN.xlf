@@ -2104,6 +2104,18 @@
           <source>Spark</source>
           <target state="translated">讯飞星火</target>
         </trans-unit>
+        <trans-unit id="MenuText" translate="yes" xml:space="preserve">
+          <source>Process with EasyTidy</source>
+          <target state="translated">使用 EasyTidy 处理</target>
+        </trans-unit>
+        <trans-unit id="GeneralEnabledRightClick.Header" translate="yes" xml:space="preserve">
+          <source> Right-click menu</source>
+          <target state="translated">右键菜单</target>
+        </trans-unit>
+        <trans-unit id="GeneralEnabledRightClick.Description" translate="yes" xml:space="preserve">
+          <source>Whether to register the context menu in the system</source>
+          <target state="translated">是否在系统中注册上下文菜单</target>
+        </trans-unit>
       </group>
     </body>
   </file>

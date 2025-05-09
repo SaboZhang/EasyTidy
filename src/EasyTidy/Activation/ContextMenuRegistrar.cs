@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using CommunityToolkit.WinUI;
 using Microsoft.Win32;
 
 namespace EasyTidy.Activation;
@@ -26,15 +27,14 @@ public class ContextMenuRegistrar
     private static void Register(string exePath)
     {
         const string menuName = "EasyTidy";
-        const string menuText = "用 EasyTidy 处理";
 
         var fileKey = Registry.CurrentUser.CreateSubKey($@"Software\Classes\*\shell\{menuName}");
-        fileKey.SetValue("", menuText);
+        fileKey.SetValue("", "MenuText".GetLocalized());
         fileKey.SetValue("Icon", $"\"{exePath}\"");
         fileKey.CreateSubKey("command").SetValue("", $"\"{exePath}\" \"%1\"");
 
         var folderKey = Registry.CurrentUser.CreateSubKey($@"Software\Classes\Directory\shell\{menuName}");
-        folderKey.SetValue("", menuText);
+        folderKey.SetValue("", "MenuText".GetLocalized());
         folderKey.SetValue("Icon", $"\"{exePath}\"");
         folderKey.CreateSubKey("command").SetValue("", $"\"{exePath}\" \"%1\"");
     }
