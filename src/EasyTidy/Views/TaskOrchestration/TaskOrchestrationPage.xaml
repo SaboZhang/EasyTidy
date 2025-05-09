@@ -52,10 +52,9 @@
                                 </ctk:SettingsCard.HeaderIcon>
                                 <StackPanel Orientation="Horizontal"
                                             Spacing="10">
-                                    <ToggleButton x:Uid="SequentialDisplayText"
-                                                  IsChecked="{x:Bind ViewModel.OrederChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                  Click="Order_Click"/>
                                     <Button x:Uid="TaskAddTaskButton"
+                                            Content="&#xED0E;"
+                                            FontFamily="{ThemeResource SymbolThemeFontFamily}"
                                             x:Name="TaskButton"
                                             Style="{StaticResource AccentButtonStyle}"
                                             Command="{x:Bind ViewModel.AddTaskClickCommand}"/>
@@ -78,13 +77,23 @@
                                 </StackPanel>
                             </ctk:SettingsCard>
                             <StackPanel>
-                                <TextBlock x:Name="TaskList"
+                                <StackPanel Orientation="Horizontal"
+                                            Margin="0,10,0,0">
+                                    <TextBlock x:Name="TaskList"
                                            TextWrapping="Wrap"
-                                           x:Uid="TaskListView"
-                                           Margin="0,20,20,0"/>
+                                           x:Uid="TaskListView"/>
+                                    <ToggleButton x:Uid="SequentialDisplayText"
+                                       FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                       Content="&#xE8D0;"
+                                       IsChecked="{x:Bind ViewModel.OrederChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                       Background="Transparent"
+                                       BorderBrush="Transparent"
+                                       Click="Order_Click"
+                                       Margin="4,-2,0,0" />
+                                </StackPanel>
                                 <ProgressRing x:Name="Load"
                                               IsActive="{x:Bind ViewModel.IsActive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                <StackPanel>
+                                <StackPanel Margin="0,-20,0,0">
                                     <ListView x:Name="TaskListView"
                                               ItemsSource="{x:Bind ViewModel.TaskListACV, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                               HorizontalContentAlignment="Stretch"

@@ -836,7 +836,7 @@
           <source>Add Task</source>
           <target state="translated">添加任务</target>
         </trans-unit>
-        <trans-unit id="TaskAddTaskButton.Content" translate="yes" xml:space="preserve">
+        <trans-unit id="TaskAddTaskButton.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
           <source>Add Task</source>
           <target state="translated">添加任务</target>
         </trans-unit>
@@ -1832,7 +1832,7 @@
           <source>When closed：</source>
           <target state="translated">关闭时：</target>
         </trans-unit>
-        <trans-unit id="SequentialDisplayText.Content" translate="yes" xml:space="preserve">
+        <trans-unit id="SequentialDisplayText.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
           <source>ID order display</source>
           <target state="translated">ID顺序显示</target>
         </trans-unit>

@@ -635,7 +635,7 @@
   <data name="TaskAddTask.Header" xml:space="preserve">
     <value>タスクの追加</value>
   </data>
-  <data name="TaskAddTaskButton.Content" xml:space="preserve">
+  <data name="TaskAddTaskButton.ToolTipService.ToolTip" xml:space="preserve">
     <value>タスクの追加</value>
   </data>
   <data name="TaskDisplay.PlaceholderText" xml:space="preserve">
@@ -1339,7 +1339,7 @@
   <data name="DialogAtShutdown.Text" xml:space="preserve">
     <value>閉じた状態で：</value>
   </data>
-  <data name="SequentialDisplayText.Content" xml:space="preserve">
+  <data name="SequentialDisplayText.ToolTipService.ToolTip" xml:space="preserve">
     <value>ID注文表示</value>
   </data>
   <data name="EncryptedText.Text" xml:space="preserve">
