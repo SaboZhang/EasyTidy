@@ -635,7 +635,7 @@
   <data name="TaskAddTask.Header" xml:space="preserve">
     <value>添加任務</value>
   </data>
-  <data name="TaskAddTaskButton.Content" xml:space="preserve">
+  <data name="TaskAddTaskButton.ToolTipService.ToolTip" xml:space="preserve">
     <value>添加任務</value>
   </data>
   <data name="TaskDisplay.PlaceholderText" xml:space="preserve">
@@ -1336,7 +1336,7 @@
   <data name="DialogAtShutdown.Text" xml:space="preserve">
     <value>關閉時：</value>
   </data>
-  <data name="SequentialDisplayText.Content" xml:space="preserve">
+  <data name="SequentialDisplayText.ToolTipService.ToolTip" xml:space="preserve">
     <value>ID順序顯示</value>
   </data>
   <data name="EncryptedText.Text" xml:space="preserve">

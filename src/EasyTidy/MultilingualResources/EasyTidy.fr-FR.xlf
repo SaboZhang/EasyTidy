@@ -836,7 +836,7 @@
           <source>Add Task</source>
           <target state="translated">Ajouter une tâche</target>
         </trans-unit>
-        <trans-unit id="TaskAddTaskButton.Content" translate="yes" xml:space="preserve">
+        <trans-unit id="TaskAddTaskButton.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
           <source>Add Task</source>
           <target state="translated">Ajouter une tâche</target>
         </trans-unit>
@@ -1832,7 +1832,7 @@
           <source>When closed：</source>
           <target state="translated">Lorsqu'il est fermé：</target>
         </trans-unit>
-        <trans-unit id="SequentialDisplayText.Content" translate="yes" xml:space="preserve">
+        <trans-unit id="SequentialDisplayText.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
           <source>ID order display</source>
           <target state="translated">Affichage de l'identifiant de commande</target>
         </trans-unit>
