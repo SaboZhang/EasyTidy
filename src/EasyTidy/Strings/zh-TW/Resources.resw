@@ -1543,4 +1543,10 @@
   <data name="MenuText" xml:space="preserve">
     <value>使用 EasyTidy 處理</value>
   </data>
+  <data name="GeneralEnabledRightClick.Header" xml:space="preserve">
+    <value>右鍵選單</value>
+  </data>
+  <data name="GeneralEnabledRightClick.Description" xml:space="preserve">
+    <value>是否在系統中註冊上下文菜單</value>
+  </data>
 </root>

@@ -1546,4 +1546,10 @@
   <data name="MenuText" xml:space="preserve">
     <value>Traitez avec EasyTidy</value>
   </data>
+  <data name="GeneralEnabledRightClick.Header" xml:space="preserve">
+    <value>Menu contextuel</value>
+  </data>
+  <data name="GeneralEnabledRightClick.Description" xml:space="preserve">
+    <value>S'il faut enregistrer le menu contextuel dans le système</value>
+  </data>
 </root>
