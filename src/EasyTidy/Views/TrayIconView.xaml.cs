@@ -58,7 +58,7 @@ public sealed partial class TrayIconView : UserControl
         childWindow.Content = subPage; // 使用你的自定义控件作为窗口内容
         childWindow.MaxHeight = 340;
         childWindow.MaxWidth = 300;
-        childWindow.MoveAndResize(1800, 900, 300, 340);
+        childWindow.MoveAndResize(1366, 768, 300, 340);
         childWindow.IsMaximizable = false;
         childWindow.SystemBackdrop = new MicaBackdrop() { Kind = MicaKind.Base };
         childWindow.SetRequestedTheme(ViewModel.ThemeSelectorService.Theme);
