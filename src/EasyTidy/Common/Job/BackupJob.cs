@@ -1,11 +1,5 @@
 ﻿using EasyTidy.Model;
-using EasyTidy.Util;
 using Quartz;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EasyTidy.Common.Job;
 
@@ -45,7 +39,7 @@ public class BackupJob : IJob
         var zipFilePath = Path.Combine(Constants.CnfPath, $"EasyTidy_backup_{DateTime.Now:yyyyMMddHHmmss}.zip");
         ZipUtil.CompressFile(Constants.CnfPath, zipFilePath);
         var result = await webDavClient.UploadFileAsync(Settings.WebDavUrl + "/EasyTidy", zipFilePath);
-        if(result)
+        if (result)
         {
             Logger.Info("WebDavBackup: Upload Success");
         }

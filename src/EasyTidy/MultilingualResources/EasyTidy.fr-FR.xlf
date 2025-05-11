@@ -836,7 +836,7 @@
           <source>Add Task</source>
           <target state="translated">Ajouter une tâche</target>
         </trans-unit>
-        <trans-unit id="TaskAddTaskButton.Content" translate="yes" xml:space="preserve">
+        <trans-unit id="TaskAddTaskButton.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
           <source>Add Task</source>
           <target state="translated">Ajouter une tâche</target>
         </trans-unit>
@@ -1832,7 +1832,7 @@
           <source>When closed：</source>
           <target state="translated">Lorsqu'il est fermé：</target>
         </trans-unit>
-        <trans-unit id="SequentialDisplayText.Content" translate="yes" xml:space="preserve">
+        <trans-unit id="SequentialDisplayText.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
           <source>ID order display</source>
           <target state="translated">Affichage de l'identifiant de commande</target>
         </trans-unit>
@@ -2099,6 +2099,30 @@
         <trans-unit id="APPIDNotice.Text" translate="yes" xml:space="preserve">
           <source>This field is only applicable for AK/SK authentication scenarios and needs to be filled in</source>
           <target state="translated">Ce champ n'est applicable que pour les scénarios d'authentification AK/SK et doit être rempli</target>
+        </trans-unit>
+        <trans-unit id="SparkTxt" translate="yes" xml:space="preserve">
+          <source>Spark</source>
+          <target state="translated">Spark</target>
+        </trans-unit>
+        <trans-unit id="MenuText" translate="yes" xml:space="preserve">
+          <source>Process with EasyTidy</source>
+          <target state="translated">Traitez avec EasyTidy</target>
+        </trans-unit>
+        <trans-unit id="GeneralEnabledRightClick.Header" translate="yes" xml:space="preserve">
+          <source> Right-click menu</source>
+          <target state="translated">Menu contextuel</target>
+        </trans-unit>
+        <trans-unit id="GeneralEnabledRightClick.Description" translate="yes" xml:space="preserve">
+          <source>Whether to register the context menu in the system</source>
+          <target state="translated">S'il faut enregistrer le menu contextuel dans le système</target>
+        </trans-unit>
+        <trans-unit id="SetDefaultGroup.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Selected group set as default</source>
+          <target state="translated">Groupe sélectionné défini par défaut</target>
+        </trans-unit>
+        <trans-unit id="CopyStr.Text" translate="yes" xml:space="preserve">
+          <source>Duplicate Task</source>
+          <target state="translated">Dupliquer la tâche</target>
         </trans-unit>
       </group>
     </body>

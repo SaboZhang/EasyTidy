@@ -635,7 +635,7 @@
   <data name="TaskAddTask.Header" xml:space="preserve">
     <value>タスクの追加</value>
   </data>
-  <data name="TaskAddTaskButton.Content" xml:space="preserve">
+  <data name="TaskAddTaskButton.ToolTipService.ToolTip" xml:space="preserve">
     <value>タスクの追加</value>
   </data>
   <data name="TaskDisplay.PlaceholderText" xml:space="preserve">
@@ -1339,7 +1339,7 @@
   <data name="DialogAtShutdown.Text" xml:space="preserve">
     <value>閉じた状態で：</value>
   </data>
-  <data name="SequentialDisplayText.Content" xml:space="preserve">
+  <data name="SequentialDisplayText.ToolTipService.ToolTip" xml:space="preserve">
     <value>ID注文表示</value>
   </data>
   <data name="EncryptedText.Text" xml:space="preserve">
@@ -1539,5 +1539,23 @@
   </data>
   <data name="APPIDNotice.Text" xml:space="preserve">
     <value>このフィールドはAK/SK認証シナリオにのみ適用され、入力する必要があります</value>
+  </data>
+  <data name="SparkTxt" xml:space="preserve">
+    <value>Spark</value>
+  </data>
+  <data name="MenuText" xml:space="preserve">
+    <value>EasyTidyで処理します</value>
+  </data>
+  <data name="GeneralEnabledRightClick.Header" xml:space="preserve">
+    <value>右クリックメニュー</value>
+  </data>
+  <data name="GeneralEnabledRightClick.Description" xml:space="preserve">
+    <value>システムにコンテキストメニューを登録するかどうか</value>
+  </data>
+  <data name="SetDefaultGroup.ToolTipService.ToolTip" xml:space="preserve">
+    <value>選択したグループがデフォルトとして設定されました</value>
+  </data>
+  <data name="CopyStr.Text" xml:space="preserve">
+    <value>タスクの複製</value>
   </data>
 </root>

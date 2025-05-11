@@ -635,7 +635,7 @@
   <data name="TaskAddTask.Header" xml:space="preserve">
     <value>添加任务</value>
   </data>
-  <data name="TaskAddTaskButton.Content" xml:space="preserve">
+  <data name="TaskAddTaskButton.ToolTipService.ToolTip" xml:space="preserve">
     <value>添加任务</value>
   </data>
   <data name="TaskDisplay.PlaceholderText" xml:space="preserve">
@@ -1357,7 +1357,7 @@
   <data name="DialogAtShutdown.Text" xml:space="preserve">
     <value>关闭时：</value>
   </data>
-  <data name="SequentialDisplayText.Content" xml:space="preserve">
+  <data name="SequentialDisplayText.ToolTipService.ToolTip" xml:space="preserve">
     <value>ID顺序显示</value>
   </data>
   <data name="EncryptedText.Text" xml:space="preserve">
@@ -1557,5 +1557,23 @@
   </data>
   <data name="APPIDNotice.Text" xml:space="preserve">
     <value>该字段仅适用于AK/SK认证场景时才需填写</value>
+  </data>
+  <data name="SparkTxt" xml:space="preserve">
+    <value>讯飞星火</value>
+  </data>
+  <data name="MenuText" xml:space="preserve">
+    <value>使用 EasyTidy 处理</value>
+  </data>
+  <data name="GeneralEnabledRightClick.Header" xml:space="preserve">
+    <value>右键菜单</value>
+  </data>
+  <data name="GeneralEnabledRightClick.Description" xml:space="preserve">
+    <value>是否在系统中注册上下文菜单</value>
+  </data>
+  <data name="SetDefaultGroup.ToolTipService.ToolTip" xml:space="preserve">
+    <value>选定的组设置为默认</value>
+  </data>
+  <data name="CopyStr.Text" xml:space="preserve">
+    <value>复制任务</value>
   </data>
 </root>

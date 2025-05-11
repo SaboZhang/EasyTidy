@@ -2,12 +2,9 @@
 using EasyTidy.Log;
 using EasyTidy.Model;
 using EasyTidy.Util;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Reflection.Metadata;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -112,7 +109,7 @@ public static class OperationHandler
                 {
                     await FolderActuator.ExecuteFolderOperationAsync(parameter);
                 }
-               
+
             });
 
             LogService.Logger.Info("执行移动操作完成");
@@ -233,7 +230,7 @@ public static class OperationHandler
             RuleType = parameter.RuleModel.RuleType
         };
         parameter.RuleModel = model;
-        parameter.Funcs = FilterUtil.GeneratePathFilters(rule,parameter.RuleModel.RuleType);
+        parameter.Funcs = FilterUtil.GeneratePathFilters(rule, parameter.RuleModel.RuleType);
         await Task.Run(async () =>
         {
             await FileActuator.ExecuteFileOperationAsync(parameter);

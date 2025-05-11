@@ -137,7 +137,7 @@ public class CryptoUtil
             // 为加密文件添加后缀
             string encryptedFileName = outputFile + ".enc";
             File.Move(outputFile, encryptedFileName, true);
-            if (CommonUtil.Configs.OriginalFile) 
+            if (CommonUtil.Configs.OriginalFile)
             {
                 File.Delete(inputFile);
             }

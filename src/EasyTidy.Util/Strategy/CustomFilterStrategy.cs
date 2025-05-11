@@ -1,5 +1,5 @@
-using System;
 using EasyTidy.Model;
+using System;
 
 namespace EasyTidy.Util.Strategy;
 

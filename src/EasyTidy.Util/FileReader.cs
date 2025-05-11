@@ -1,14 +1,14 @@
-﻿using NPOI.SS.UserModel;
-using NPOI.XSSF.UserModel;
+﻿using EasyTidy.Model;
 using NPOI.HSSF.UserModel;
+using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel;
 using NPOI.XWPF.UserModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using EasyTidy.Model;
+using System.Linq;
 using System.Text;
 using UglyToad.PdfPig;
-using System.Linq;
 
 namespace EasyTidy.Util;
 

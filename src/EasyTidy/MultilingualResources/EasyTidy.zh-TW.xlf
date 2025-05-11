@@ -836,7 +836,7 @@
           <source>Add Task</source>
           <target state="translated">添加任務</target>
         </trans-unit>
-        <trans-unit id="TaskAddTaskButton.Content" translate="yes" xml:space="preserve">
+        <trans-unit id="TaskAddTaskButton.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
           <source>Add Task</source>
           <target state="translated">添加任務</target>
         </trans-unit>
@@ -1832,7 +1832,7 @@
           <source>When closed：</source>
           <target state="translated">關閉時：</target>
         </trans-unit>
-        <trans-unit id="SequentialDisplayText.Content" translate="yes" xml:space="preserve">
+        <trans-unit id="SequentialDisplayText.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
           <source>ID order display</source>
           <target state="translated">ID順序顯示</target>
         </trans-unit>
@@ -2099,6 +2099,30 @@
         <trans-unit id="APPIDNotice.Text" translate="yes" xml:space="preserve">
           <source>This field is only applicable for AK/SK authentication scenarios and needs to be filled in</source>
           <target state="translated">該字段僅適用於AK/SK認證場景時才需填寫</target>
+        </trans-unit>
+        <trans-unit id="SparkTxt" translate="yes" xml:space="preserve">
+          <source>Spark</source>
+          <target state="translated">訊飛星火</target>
+        </trans-unit>
+        <trans-unit id="MenuText" translate="yes" xml:space="preserve">
+          <source>Process with EasyTidy</source>
+          <target state="translated">使用 EasyTidy 處理</target>
+        </trans-unit>
+        <trans-unit id="GeneralEnabledRightClick.Header" translate="yes" xml:space="preserve">
+          <source> Right-click menu</source>
+          <target state="translated">右鍵選單</target>
+        </trans-unit>
+        <trans-unit id="GeneralEnabledRightClick.Description" translate="yes" xml:space="preserve">
+          <source>Whether to register the context menu in the system</source>
+          <target state="translated">是否在系統中註冊上下文菜單</target>
+        </trans-unit>
+        <trans-unit id="SetDefaultGroup.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Selected group set as default</source>
+          <target state="translated">選定的組設置為默認</target>
+        </trans-unit>
+        <trans-unit id="CopyStr.Text" translate="yes" xml:space="preserve">
+          <source>Duplicate Task</source>
+          <target state="translated">複製任務</target>
         </trans-unit>
       </group>
     </body>

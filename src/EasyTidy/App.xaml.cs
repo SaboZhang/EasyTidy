@@ -53,7 +53,7 @@ public partial class App : Application
     public App()
     {
         this.InitializeComponent();
-       
+
         _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
         // 加载配置
         Host = Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder()
@@ -144,10 +144,41 @@ public partial class App : Application
     {
         base.OnLaunched(args);
         InitializeLogging();
+
+        var cmdArgs = Environment.GetCommandLineArgs();
+        string? argPath = cmdArgs.Length > 1 ? cmdArgs[1] : null;
+        bool isRightClick = RightClickPipeService.IsRightClickArgument(argPath);
+
         if (!IsSingleInstance())
         {
-            App.GetService<IAppNotificationService>().Show("RepeatedStartup".GetLocalized());
+            if (isRightClick)
+            {
+                // ✅ 是右键启动，只发送参数，不提示
+                var pipeSender = new RightClickPipeService();
+                await pipeSender.SendToMainInstanceAsync(argPath!);
+            }
+            else
+            {
+                // ✅ 不是右键，提示用户程序已运行
+                App.GetService<IAppNotificationService>().Show("RepeatedStartup".GetLocalized());
+            }
             Environment.Exit(0);
+            return;
+        }
+        // ✅ 主实例：启动监听
+        var pipeService = new RightClickPipeService();
+        pipeService.StartListening(async path =>
+        {
+            await App.MainWindow.DispatcherQueue.EnqueueAsync(async () =>
+            {
+                await App.GetService<MainViewModel>().ExecuteTaskAsync(path);
+            });
+        });
+
+        // ✅ 主实例接收右键参数
+        if (isRightClick)
+        {
+            await App.GetService<MainViewModel>().ExecuteTaskAsync(argPath);
         }
         App.GetService<IAppNotificationService>().Show(string.Format("AppNotificationPayload".GetLocalized(), Constants.Version));
         await App.GetService<IActivationService>().ActivateAsync(args);

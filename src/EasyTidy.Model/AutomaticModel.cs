@@ -1,5 +1,3 @@
-using System;
-
 namespace EasyTidy.Model;
 
 public class AutomaticModel

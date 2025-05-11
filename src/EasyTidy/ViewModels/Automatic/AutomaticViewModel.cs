@@ -382,10 +382,10 @@ public partial class AutomaticViewModel : ObservableRecipient
         var properties = new (Func<AutomaticTable, bool?> Selector, Func<bool> GlobalPropertyGetter, string LocalizedText)[]
         {
             (a => a?.IsFileChange, () => IsFileChange, string.Format(
-                "FileChange_Text".GetLocalized() + "-" + "Latency_Text".GetLocalized(), 
+                "FileChange_Text".GetLocalized() + "-" + "Latency_Text".GetLocalized(),
                 task.AutomaticTable?.DelaySeconds?.ToString() ?? "0")),
             (a => a?.RegularTaskRunning, () => RegularTaskRunning, string.Format(
-                "RegularTaskRunning_Text".GetLocalized() + "-" + "RegularTask_Text".GetLocalized(), 
+                "RegularTaskRunning_Text".GetLocalized() + "-" + "RegularTask_Text".GetLocalized(),
                 task.AutomaticTable?.Hourly?.ToString() ?? "0", task.AutomaticTable?.Minutes?.ToString() ?? "0")),
             (a => a?.IsStartupExecution, () => IsStartupExecution, "StartupExecution_Text".GetLocalized()),
             (a => a?.OnScheduleExecution, () => OnScheduleExecution, "ScheduleExecution_Text".GetLocalized()),

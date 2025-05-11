@@ -155,4 +155,9 @@ public sealed partial class TaskOrchestrationPage : Page
         Settings.Save();
     }
 
+    private void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+    {
+        var menuFlyoutItem = sender as MenuFlyoutItem;
+        ViewModel.CopyTaskCommand.ExecuteAsync(menuFlyoutItem.DataContext);
+    }
 }

@@ -1,30 +1,31 @@
 ﻿using EasyTidy.Log;
 using EasyTidy.Model;
 using EasyTidy.Util;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace EasyTidy.Service.AIService;
 
-public partial class OpenAIService : LLMServiceBase, IAIServiceLlm
+public class SparkService : LLMServiceBase, IAIServiceLlm
 {
-    public OpenAIService()
-        : this(Guid.NewGuid(), "https://api.openai.com", "OpenAI")
-    { }
+    public SparkService() : this(Guid.NewGuid(), "https://spark-api-open.xf-yun.com", "Spark") { }
 
-    public OpenAIService(
+    public SparkService(
         Guid identify,
         string url,
         string name = "",
-        ServiceType type = ServiceType.OpenAI,
+        ServiceType type = ServiceType.Spark,
         string appID = "", string appKey = "",
         bool isEnabled = true,
-        string model = "")
+        string model = ""
+        )
     {
         Identify = identify;
         Url = url;
@@ -34,6 +35,10 @@ public partial class OpenAIService : LLMServiceBase, IAIServiceLlm
         AppKey = appKey;
         IsEnabled = isEnabled;
         Model = model;
+    }
+    public Task<ServiceResult> PredictAsync(object request, CancellationToken token)
+    {
+        throw new NotImplementedException();
     }
 
     public async Task PredictAsync(object request, Action<string> onDataReceived, CancellationToken token)
@@ -48,13 +53,12 @@ public partial class OpenAIService : LLMServiceBase, IAIServiceLlm
         var language = req.Language;
         UriBuilder uriBuilder = new(Url);
 
-        // 兼容旧版API: https://platform.openai.com/docs/guides/text-generation
-        if (!uriBuilder.Path.EndsWith("/v1/chat/completions") && !uriBuilder.Path.EndsWith("/v1/completions"))
+        if (!uriBuilder.Path.EndsWith("/v1/chat/completions") && !uriBuilder.Path.EndsWith("/v2/chat/completions"))
             uriBuilder.Path = "/v1/chat/completions";
 
         // 选择模型
         var a_model = Model.Trim();
-        a_model = string.IsNullOrEmpty(a_model) ? "gpt-3.5-turbo" : a_model;
+        a_model = string.IsNullOrEmpty(a_model) ? "generalv3.5" : a_model;
 
         // 替换Prompt关键字
         var a_messages =
@@ -76,12 +80,18 @@ public partial class OpenAIService : LLMServiceBase, IAIServiceLlm
 
         var jsonData = Json.SerializeForModel(reqData, PropertyCase.CamelCase);
 
+        var headers = new Dictionary<string, string> 
+        { 
+            { "Content-Type", "application/json" },
+            { "Authorization", $"Bearer {AppKey}" }
+        };
+
         try
         {
             await HttpUtil.PostAsync(
                 uriBuilder.Uri,
+                headers,
                 jsonData,
-                AppKey,
                 msg =>
                 {
                     if (string.IsNullOrEmpty(msg?.Trim()))
@@ -137,10 +147,5 @@ public partial class OpenAIService : LLMServiceBase, IAIServiceLlm
 
             throw new Exception(msg);
         }
-    }
-
-    public Task<ServiceResult> PredictAsync(object request, CancellationToken token)
-    {
-        throw new NotImplementedException();
     }
 }

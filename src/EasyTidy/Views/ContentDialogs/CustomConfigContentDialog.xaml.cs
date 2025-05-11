@@ -190,7 +190,7 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
     private void ValidateDelay(string delay)
     {
         var flg = ModifiedFlg;
-        if (flg && _isFirstLoad) 
+        if (flg && _isFirstLoad)
         {
             DelayIsValid = true;
         }
@@ -215,7 +215,7 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
     private void ValidateMinute(string minute)
     {
         var flg = ModifiedFlg;
-        if (flg && _isFirstLoad) 
+        if (flg && _isFirstLoad)
         {
             MinuteIsValid = true;
         }
@@ -240,7 +240,7 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
     private void ValidateHour(string hour)
     {
         var flg = ModifiedFlg;
-        if (flg && _isFirstLoad) 
+        if (flg && _isFirstLoad)
         {
             HourIsValid = true;
         }
@@ -265,7 +265,7 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
     private void ValidateDayOfWeek(string dayOfWeek)
     {
         var flg = ModifiedFlg;
-        if (flg && _isFirstLoad) 
+        if (flg && _isFirstLoad)
         {
             DayOfWeekIsValid = true;
         }
@@ -290,7 +290,7 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
     private void ValidateDayOfMonth(string dayOfMonth)
     {
         var flg = ModifiedFlg;
-        if (flg && _isFirstLoad) 
+        if (flg && _isFirstLoad)
         {
             DayOfMonthIsValid = true;
         }
@@ -315,7 +315,7 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
     private void ValidateMonthlyDay(string monthlyDay)
     {
         var flg = ModifiedFlg;
-        if (flg && _isFirstLoad) 
+        if (flg && _isFirstLoad)
         {
             MonthlyDayIsValid = true;
         }

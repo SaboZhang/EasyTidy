@@ -151,6 +151,12 @@
                         </ctk:SettingsCard.HeaderIcon>
                         <ToggleSwitch IsOn="{x:Bind ViewModel.EnableMultiInstance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </ctk:SettingsCard>
+                    <ctk:SettingsCard x:Uid="GeneralEnabledRightClick">
+                        <ctk:SettingsCard.HeaderIcon>
+                            <FontIcon Glyph="&#xE8B0;"/>
+                        </ctk:SettingsCard.HeaderIcon>
+                        <ToggleSwitch IsOn="{x:Bind ViewModel.EnabledRightClick, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </ctk:SettingsCard>
                 </etc:SettingsGroup>
                 <etc:SettingsGroup x:Uid="GeneralBack"
                                    MaxWidth="{ThemeResource MaxPageContentWidth}"

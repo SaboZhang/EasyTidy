@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.WinUI;
 using CommunityToolkit.WinUI.Collections;
+using EasyTidy.Activation;
 using EasyTidy.Common.Database;
 using EasyTidy.Common.Job;
 using EasyTidy.Common.Model;
@@ -7,10 +8,8 @@ using EasyTidy.Contracts.Service;
 using EasyTidy.Model;
 using EasyTidy.Service;
 using EasyTidy.Views.ContentDialogs;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
-using Windows.Storage.Pickers;
 
 namespace EasyTidy.ViewModels;
 public partial class GeneralSettingViewModel : ObservableObject
@@ -124,6 +123,33 @@ public partial class GeneralSettingViewModel : ObservableObject
             {
                 _subFolder = value;
                 CurConfig.SubFolder = value;
+                NotifyPropertyChanged();
+            }
+        }
+    }
+
+    private bool? _enabledRightClick;
+
+    public bool EnabledRightClick
+    {
+        get
+        {
+            return _enabledRightClick ?? Settings.EnabledRightClick;
+        }
+        set
+        {
+            if (_enabledRightClick != value)
+            {
+                _enabledRightClick = value;
+                Settings.EnabledRightClick = value;
+                if (value)
+                {
+                    ContextMenuRegistrar.TryRegister();
+                }
+                else
+                {
+                    ContextMenuRegistrar.Unregister();
+                }
                 NotifyPropertyChanged();
             }
         }
@@ -275,7 +301,7 @@ public partial class GeneralSettingViewModel : ObservableObject
             }
         }
     }
-    
+
     /// <summary>
     ///     是否开机启动
     /// </summary>
@@ -386,7 +412,7 @@ public partial class GeneralSettingViewModel : ObservableObject
 
     public string WebDavPrefix
     {
-        get 
+        get
         {
             return _webDavPrefix = Settings.UploadPrefix ?? string.Empty;
         }
@@ -495,7 +521,7 @@ public partial class GeneralSettingViewModel : ObservableObject
     {
         if (AutoBackup)
         {
-            var param = new Dictionary<string, object> { { "LocalPath", FloderPath },{ "WebDavPath", WebDavUrl } };
+            var param = new Dictionary<string, object> { { "LocalPath", FloderPath }, { "WebDavPath", WebDavUrl } };
             await QuartzHelper.AddSimpleJobOfHourAsync<BackupJob>("Backup", Settings.BackupType.ToString(), 24 * 3, param);
         }
 
@@ -544,7 +570,7 @@ public partial class GeneralSettingViewModel : ObservableObject
                     break;
             }
         }
-        catch (Exception ex) 
+        catch (Exception ex)
         {
             Logger.Error($"还原失败：{ex.Message}");
             ShowErrorMessage("RestoreFailedTips");
@@ -620,7 +646,7 @@ public partial class GeneralSettingViewModel : ObservableObject
     /// <exception cref="InvalidOperationException"></exception>
     private async Task LocalRestoreAsync()
     {
-        var backFile = await FileAndFolderPickerHelper.PickSingleFileAsync(App.MainWindow, [".zip"]) 
+        var backFile = await FileAndFolderPickerHelper.PickSingleFileAsync(App.MainWindow, [".zip"])
             ?? throw new InvalidOperationException("BackupPathText".GetLocalized());
         await RestoreFromZipAsync(backFile.Path);
     }

@@ -776,7 +776,7 @@
   <data name="TaskAddTask.Header" xml:space="preserve">
     <value>Add Task</value>
   </data>
-  <data name="TaskAddTaskButton.Content" xml:space="preserve">
+  <data name="TaskAddTaskButton.ToolTipService.ToolTip" xml:space="preserve">
     <value>Add Task</value>
   </data>
   <data name="TaskDisplay.PlaceholderText" xml:space="preserve">

@@ -2,9 +2,6 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EasyTidy.Service.AIService;
 
@@ -27,6 +24,7 @@ public class AIServiceFactory
             { ServiceType.Azure, "https://docs-test-001.openai.azure.com" },
             { ServiceType.Hunyuan, "https://hunyuan.tencentcloudapi.com" },
             { ServiceType.Volcengine, "https://ark.cn-beijing.volces.com" },
+            { ServiceType.Spark, "https://spark-api-open.xf-yun.com" },
             { ServiceType.OpenAIFormat, string.Empty },
         };
     }
@@ -54,6 +52,7 @@ public class AIServiceFactory
             ServiceType.Azure => new AzureOpenAIService(),
             ServiceType.Hunyuan => new HunyuanService(),
             ServiceType.Volcengine => new VolcengineService(),
+            ServiceType.Spark => new SparkService(),
             _ => throw new NotImplementedException(),
         };
 

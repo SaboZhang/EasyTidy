@@ -2,7 +2,6 @@
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
 using CommunityToolkit.WinUI;
-using EasyTidy.Util;
 using System.Collections;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;

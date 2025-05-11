@@ -1,7 +1,7 @@
+using EasyTidy.Util.UtilInterface;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using EasyTidy.Util.UtilInterface;
 
 namespace EasyTidy.Util.Strategy;
 

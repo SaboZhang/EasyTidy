@@ -2,10 +2,10 @@ using EasyTidy.Log;
 using EasyTidy.Model;
 using EasyTidy.Service;
 using Microsoft.Win32;
+using System.Runtime.InteropServices;
 using Windows.UI.ViewManagement;
 using WinRT.Interop;
 using WinUIEx;
-using System.Runtime.InteropServices;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.

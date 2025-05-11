@@ -1,6 +1,5 @@
-﻿using System.Text;
-using System.Threading.Tasks;
-using EasyTidy.Model;
+﻿using EasyTidy.Model;
+using System.Text;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
 using WinUIEx;

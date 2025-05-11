@@ -779,7 +779,7 @@
   <data name="TaskAddTask.Header" xml:space="preserve">
     <value>Add Task</value>
   </data>
-  <data name="TaskAddTaskButton.Content" xml:space="preserve">
+  <data name="TaskAddTaskButton.ToolTipService.ToolTip" xml:space="preserve">
     <value>Add Task</value>
   </data>
   <data name="TaskDisplay.PlaceholderText" xml:space="preserve">
@@ -1476,7 +1476,7 @@
   <data name="DialogAtShutdown.Text" xml:space="preserve">
     <value>When closed：</value>
   </data>
-  <data name="SequentialDisplayText.Content" xml:space="preserve">
+  <data name="SequentialDisplayText.ToolTipService.ToolTip" xml:space="preserve">
     <value>ID order display</value>
   </data>
   <data name="EncryptedText.Text" xml:space="preserve">
@@ -1676,5 +1676,23 @@
   </data>
   <data name="APPIDNotice.Text" xml:space="preserve">
     <value>This field is only applicable for AK/SK authentication scenarios and needs to be filled in</value>
+  </data>
+  <data name="SparkTxt" xml:space="preserve">
+    <value>Spark</value>
+  </data>
+  <data name="MenuText" xml:space="preserve">
+    <value>Process with EasyTidy</value>
+  </data>
+  <data name="GeneralEnabledRightClick.Header" xml:space="preserve">
+    <value> Right-click menu</value>
+  </data>
+  <data name="GeneralEnabledRightClick.Description" xml:space="preserve">
+    <value>Whether to register the context menu in the system</value>
+  </data>
+  <data name="SetDefaultGroup.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Selected group set as default</value>
+  </data>
+  <data name="CopyStr.Text" xml:space="preserve">
+    <value>Duplicate Task</value>
   </data>
 </root>

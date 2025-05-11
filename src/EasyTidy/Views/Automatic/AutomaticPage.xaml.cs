@@ -3,7 +3,6 @@
 
 
 using EasyTidy.Common.Model;
-using Microsoft.UI.Xaml.Controls;
 
 namespace EasyTidy.Views;
 /// <summary>
@@ -40,7 +39,7 @@ public sealed partial class AutomaticPage : Page
         ViewModel.PreviewTaskCommand.Execute((sender as Button).DataContext);
     }
 
-    private void Checkbox_Click(object sender, RoutedEventArgs e) 
+    private void Checkbox_Click(object sender, RoutedEventArgs e)
     {
         var checkBox = sender as CheckBox;
         var item = checkBox.DataContext as TaskItem;

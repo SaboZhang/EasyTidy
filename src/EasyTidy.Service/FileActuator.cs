@@ -36,7 +36,7 @@ public static class FileActuator
         {
 
             if (Path.GetExtension(parameters.SourcePath).Equals(".lnk", StringComparison.OrdinalIgnoreCase)
-                || (string.IsNullOrEmpty(parameters.TargetPath) 
+                || (string.IsNullOrEmpty(parameters.TargetPath)
                 && parameters.OperationMode != OperationMode.RunExternalPrograms))
             {
                 return;
@@ -272,8 +272,8 @@ public static class FileActuator
     internal static async Task ProcessFileAsync(OperationParameters parameters)
     {
         if (FilterUtil.ShouldSkip(parameters.Funcs, parameters.SourcePath, parameters.PathFilter)
-            && parameters.OperationMode != OperationMode.RecycleBin 
-            && parameters.OperationMode != OperationMode.ZipFile 
+            && parameters.OperationMode != OperationMode.RecycleBin
+            && parameters.OperationMode != OperationMode.ZipFile
             && parameters.OperationMode != OperationMode.RunExternalPrograms)
         {
             LogService.Logger.Debug($"执行文件操作 ShouldSkip {parameters.TargetPath}");
@@ -281,12 +281,12 @@ public static class FileActuator
         }
         if (!CommonUtil.Configs?.GeneralConfig.EmptyFiles ?? true)
         {
-             FileInfo info = new(parameters.SourcePath);
-             if (info.Length == 0)
-             {
-                 LogService.Logger.Debug($"执行文件操作 跳过空文件 {parameters.TargetPath}");
-                 return;
-             }
+            FileInfo info = new(parameters.SourcePath);
+            if (info.Length == 0)
+            {
+                LogService.Logger.Debug($"执行文件操作 跳过空文件 {parameters.TargetPath}");
+                return;
+            }
         }
 
         LogService.Logger.Info($"开始执行文件操作{parameters.TargetPath}, 操作模式: {parameters.OperationMode}");
@@ -362,9 +362,9 @@ public static class FileActuator
     /// <summary>
     /// 执行AI分类的步骤1：判断操作类型
     /// </summary>
-    private static async Task<Dictionary<string, string>> ExecuteStepOne(IAIServiceLlm aiService, string customPrompt, string lang ,CancellationToken token)
+    private static async Task<Dictionary<string, string>> ExecuteStepOne(IAIServiceLlm aiService, string customPrompt, string lang, CancellationToken token)
     {
-        await StreamHandlerAsync(aiService, customPrompt, lang ,token);
+        await StreamHandlerAsync(aiService, customPrompt, lang, token);
         var setup1 = aiService.Data.Result?.ToString() ?? string.Empty;
         LogService.Logger.Info($"步骤1 - 判断操作类型: {setup1}");
         return FilterUtil.ExtractKeyValuePairsFromRaw(setup1);
@@ -462,7 +462,7 @@ public static class FileActuator
         try
         {
             // 步骤1：判断操作类型
-            var step1Result = await ExecuteStepOne(parameters.AIServiceLlm, customPrompt, parameters.Language ,cts.Token);
+            var step1Result = await ExecuteStepOne(parameters.AIServiceLlm, customPrompt, parameters.Language, cts.Token);
 
             // 步骤2：判断路径信息
             var step2Result = await UpdatePromptAndExecute(
