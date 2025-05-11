@@ -2,8 +2,10 @@
 using EasyTidy.Service;
 using H.NotifyIcon;
 using Microsoft.UI.Composition.SystemBackdrops;
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml.Media;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using WinUIEx;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -46,22 +48,16 @@ public sealed partial class TrayIconView : UserControl
     [RelayCommand]
     private void ShowHideWindow()
     {
-        // 如果窗口已经关闭，则重新创建
-        if (App.ChildWindow == null || App.ChildWindow.IsClosed())
-        {
-            App.ChildWindow = new WindowEx(); // 重新创建窗口
-        }
-        App.ChildWindow.Title = "EasyTidy";
-        App.ChildWindow.ExtendsContentIntoTitleBar = true;
+        WindowsHelper.EnsureChildWindow();
+
         var childWindow = App.ChildWindow;
-        var subPage = new MainPage();
-        childWindow.Content = subPage; // 使用你的自定义控件作为窗口内容
-        childWindow.MaxHeight = 340;
-        childWindow.MaxWidth = 300;
-        childWindow.MoveAndResize(1366, 768, 300, 340);
-        childWindow.IsMaximizable = false;
-        childWindow.SystemBackdrop = new MicaBackdrop() { Kind = MicaKind.Base };
+
+        SetWindowContent(childWindow);
+        WindowsHelper.SetWindowStyle(childWindow);
         childWindow.SetRequestedTheme(ViewModel.ThemeSelectorService.Theme);
+
+        WindowsHelper.PositionWindowBottomRight(childWindow);
+
         childWindow.Activate();
     }
 
@@ -112,5 +108,10 @@ public sealed partial class TrayIconView : UserControl
     {
         await QuartzHelper.TriggerAllJobsOnceAsync();
         await ViewModel.ExecuteAllTaskAsync();
+    }
+
+    private void SetWindowContent(WindowEx window)
+    {
+        window.Content = new MainPage();
     }
 }

@@ -14,6 +14,8 @@ public sealed partial class MainPage : Page
     {
         ViewModel = App.GetService<MainViewModel>();
         this.InitializeComponent();
+        // var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(App.ChildWindow);
+        // WindowsHelper.Initialize(hwnd); // 初始化（只需调用一次）
     }
 
     private void PinBtn_Click(object sender, RoutedEventArgs e)
@@ -22,10 +24,12 @@ public sealed partial class MainPage : Page
         if (top)
         {
             App.ChildWindow.SetIsAlwaysOnTop(false);
+            // WindowsHelper.SetPinned(false);
         }
         else
         {
             App.ChildWindow.SetIsAlwaysOnTop(true);
+            // WindowsHelper.SetPinned(true);
         }
     }
 
