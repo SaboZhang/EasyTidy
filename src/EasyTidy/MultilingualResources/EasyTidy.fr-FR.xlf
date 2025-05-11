@@ -2116,6 +2116,14 @@
           <source>Whether to register the context menu in the system</source>
           <target state="translated">S'il faut enregistrer le menu contextuel dans le système</target>
         </trans-unit>
+        <trans-unit id="SetDefaultGroup.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Selected group set as default</source>
+          <target state="translated">Groupe sélectionné défini par défaut</target>
+        </trans-unit>
+        <trans-unit id="CopyStr.Text" translate="yes" xml:space="preserve">
+          <source>Duplicate Task</source>
+          <target state="translated">Dupliquer la tâche</target>
+        </trans-unit>
       </group>
     </body>
   </file>

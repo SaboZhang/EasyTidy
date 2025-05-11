@@ -16,6 +16,13 @@
     Loaded="OnLoaded"
     Unloaded="OnUnloaded">
 
+    <Page.Resources>
+        <MenuFlyout x:Key="TaskItemFlyout">
+            <MenuFlyoutItem x:Uid="CopyStr" Click="MenuFlyoutItem_Click"/>
+        </MenuFlyout>
+    </Page.Resources>
+
+
     <i:Interaction.Behaviors>
         <i:EventTriggerBehavior EventName="Loaded">
             <i:EventTriggerBehavior.Actions>
@@ -74,6 +81,14 @@
                                             Command="{x:Bind ViewModel.ExecuteGroupTaskCommand}"
                                             Style="{StaticResource AccentButtonStyle}"
                                             IsEnabled="{x:Bind ViewModel.IsExecuting, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <Button x:Uid="SetDefaultGroup"
+                                        FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                            Command="{x:Bind ViewModel.SetDefaultGroupCommand}"
+                                            Background="Transparent"
+                                            BorderBrush="Transparent"
+                                            Content="{x:Bind ViewModel.IsDefaultContent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                            Foreground="#FF9933"
+                                            Margin="-10,0,0,0"/>
                                 </StackPanel>
                             </ctk:SettingsCard>
                             <StackPanel>
@@ -147,7 +162,8 @@
                                                 <Grid ColumnSpacing="16"
                                                       AllowDrop="True"
                                                       Drop="ListView_DropAsync"
-                                                      DragOver="ListView_DragOver">
+                                                      DragOver="ListView_DragOver"
+                                                      ContextFlyout="{StaticResource TaskItemFlyout}">
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="40"/>
                                                         <ColumnDefinition Width="*"/>
@@ -167,7 +183,8 @@
                                                                Visibility="{x:Bind TagOrder, Converter={StaticResource BoolToVisibilityConverter}}"/>
                                                     <TextBlock Grid.Column="1"
                                                                Text="{x:Bind TaskName}"
-                                                               VerticalAlignment="Center"/>
+                                                               VerticalAlignment="Center"
+                                                               ToolTipService.ToolTip="{x:Bind TaskName}"/>
                                                     <TextBlock Grid.Column="2"
                                                                Text="{x:Bind TaskSource}"
                                                                VerticalAlignment="Center"

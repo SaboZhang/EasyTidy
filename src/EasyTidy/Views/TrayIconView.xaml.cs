@@ -111,5 +111,6 @@ public sealed partial class TrayIconView : UserControl
     private async Task ExecuteOnceAsync()
     {
         await QuartzHelper.TriggerAllJobsOnceAsync();
+        await ViewModel.ExecuteAllTaskAsync();
     }
 }

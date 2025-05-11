@@ -1552,4 +1552,10 @@
   <data name="GeneralEnabledRightClick.Description" xml:space="preserve">
     <value>システムにコンテキストメニューを登録するかどうか</value>
   </data>
+  <data name="SetDefaultGroup.ToolTipService.ToolTip" xml:space="preserve">
+    <value>選択したグループがデフォルトとして設定されました</value>
+  </data>
+  <data name="CopyStr.Text" xml:space="preserve">
+    <value>タスクの複製</value>
+  </data>
 </root>

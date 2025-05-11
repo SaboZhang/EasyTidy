@@ -1552,4 +1552,10 @@
   <data name="GeneralEnabledRightClick.Description" xml:space="preserve">
     <value>S'il faut enregistrer le menu contextuel dans le système</value>
   </data>
+  <data name="SetDefaultGroup.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Groupe sélectionné défini par défaut</value>
+  </data>
+  <data name="CopyStr.Text" xml:space="preserve">
+    <value>Dupliquer la tâche</value>
+  </data>
 </root>

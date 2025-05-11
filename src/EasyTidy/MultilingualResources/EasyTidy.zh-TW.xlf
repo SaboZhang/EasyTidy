@@ -2116,6 +2116,14 @@
           <source>Whether to register the context menu in the system</source>
           <target state="translated">是否在系統中註冊上下文菜單</target>
         </trans-unit>
+        <trans-unit id="SetDefaultGroup.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Selected group set as default</source>
+          <target state="translated">選定的組設置為默認</target>
+        </trans-unit>
+        <trans-unit id="CopyStr.Text" translate="yes" xml:space="preserve">
+          <source>Duplicate Task</source>
+          <target state="translated">複製任務</target>
+        </trans-unit>
       </group>
     </body>
   </file>

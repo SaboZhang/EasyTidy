@@ -2116,6 +2116,14 @@
           <source>Whether to register the context menu in the system</source>
           <target state="translated">システムにコンテキストメニューを登録するかどうか</target>
         </trans-unit>
+        <trans-unit id="SetDefaultGroup.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Selected group set as default</source>
+          <target state="translated">選択したグループがデフォルトとして設定されました</target>
+        </trans-unit>
+        <trans-unit id="CopyStr.Text" translate="yes" xml:space="preserve">
+          <source>Duplicate Task</source>
+          <target state="translated">タスクの複製</target>
+        </trans-unit>
       </group>
     </body>
   </file>

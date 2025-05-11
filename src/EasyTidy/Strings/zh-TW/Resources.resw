@@ -1549,4 +1549,10 @@
   <data name="GeneralEnabledRightClick.Description" xml:space="preserve">
     <value>是否在系統中註冊上下文菜單</value>
   </data>
+  <data name="SetDefaultGroup.ToolTipService.ToolTip" xml:space="preserve">
+    <value>選定的組設置為默認</value>
+  </data>
+  <data name="CopyStr.Text" xml:space="preserve">
+    <value>複製任務</value>
+  </data>
 </root>

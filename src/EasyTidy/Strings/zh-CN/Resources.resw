@@ -1570,4 +1570,10 @@
   <data name="GeneralEnabledRightClick.Description" xml:space="preserve">
     <value>是否在系统中注册上下文菜单</value>
   </data>
+  <data name="SetDefaultGroup.ToolTipService.ToolTip" xml:space="preserve">
+    <value>选定的组设置为默认</value>
+  </data>
+  <data name="CopyStr.Text" xml:space="preserve">
+    <value>复制任务</value>
+  </data>
 </root>

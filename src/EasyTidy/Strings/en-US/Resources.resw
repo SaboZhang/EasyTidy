@@ -1689,4 +1689,10 @@
   <data name="GeneralEnabledRightClick.Description" xml:space="preserve">
     <value>Whether to register the context menu in the system</value>
   </data>
+  <data name="SetDefaultGroup.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Selected group set as default</value>
+  </data>
+  <data name="CopyStr.Text" xml:space="preserve">
+    <value>Duplicate Task</value>
+  </data>
 </root>

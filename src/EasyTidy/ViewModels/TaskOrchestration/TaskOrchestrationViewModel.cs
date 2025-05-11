@@ -112,6 +112,9 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
     [ObservableProperty]
     private bool _isExecuting = false;
 
+    [ObservableProperty]
+    private string _isDefaultContent = "\uE734";
+
     private bool? _orederChecked;
 
     public bool OrederChecked
@@ -185,8 +188,6 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
             var ai = await _dbContext.AIService.Where(x => x.IsDefault == true && x.IsEnabled == true).FirstOrDefaultAsync();
             if (ai == null && (SelectedOperationMode == OperationMode.AIClassification || SelectedOperationMode == OperationMode.AISummary))
             {
-                // _notificationQueue.ShowWithWindowExtension("SaveSuccessfulText".GetLocalized(), InfoBarSeverity.Error);
-                // var tips = BuildToastXmlString("AI服务", "请先设置默认的AI服务");
                 var tips = new AppNotificationBuilder().AddText("AI_Notice".GetLocalized())
                     .AddButton(new AppNotificationButton("Settings".GetLocalized())
                     .AddArgument("action", "AiSettings")).AddArgument("contentId", "351");
@@ -199,6 +200,16 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 OperationMode.AISummary when dialog.SelectedMode == PromptType.Custom => GetUserDefinePromptsJson(dialog.SystemPrompt, dialog.UserPrompt, "总结"),
                 _ => string.Empty
             };
+            string groupNameToUse = !string.IsNullOrEmpty(SelectedTaskGroupName) ? SelectedTaskGroupName : GroupTextName;
+            var group = !string.IsNullOrEmpty(groupNameToUse) 
+                && SelectedTaskGroupName != "AllText".GetLocalized()
+                ? await GetOrUpdateTaskGroupAsync(!string.IsNullOrEmpty(SelectedTaskGroupName) ? SelectedTaskGroupName : GroupTextName)
+                : new TaskGroupTable
+                {
+                    GroupName = GroupTextName,
+                    IsUsed = false,
+                    IsDefault = false
+                };
             await _dbContext.TaskOrchestration.AddAsync(new TaskOrchestrationTable
             {
                 TaskName = dialog.TaskName,
@@ -212,13 +223,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 RuleType = dialog.RuleType,
                 CreateTime = DateTime.Now,
                 Priority = 1,
-                GroupName = !string.IsNullOrEmpty(SelectedTaskGroupName) && SelectedTaskGroupName != "AllText".GetLocalized()
-                ? await GetOrUpdateTaskGroupAsync(SelectedTaskGroupName)
-                : new TaskGroupTable
-                {
-                    GroupName = GroupTextName,
-                    IsUsed = false
-                },
+                GroupName = group,
                 Filter = SelectedFilter != null
                 ? await _dbContext.Filters.Where(x => x.Id == SelectedFilter.Id).FirstOrDefaultAsync() : null,
                 IsRegex = dialog.IsRegex,
@@ -242,8 +247,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
             await OnPageLoaded();
             TaskTarget = string.Empty;
             SelectedFilter = null;
-            SelectedGroupName = null;
-            SelectedGroupIndex = -1;
+            SelectedGroupName = "AllText".GetLocalized();
             GroupTextName = string.Empty;
             _notificationQueue.ShowWithWindowExtension("SaveSuccessfulText".GetLocalized(), InfoBarSeverity.Success);
             _ = ClearNotificationAfterDelay(3000);
@@ -348,12 +352,27 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         var taskGroup = await _dbContext.TaskGroup
             .FirstOrDefaultAsync(x => x.GroupName == groupName);
 
-        if (taskGroup != null && taskGroup.IsUsed)
+        if (taskGroup != null)
         {
-            taskGroup.IsUsed = false;
+            if (taskGroup.IsUsed)
+            {
+                taskGroup.IsUsed = false;
+                _dbContext.TaskGroup.Update(taskGroup);
+            }
+            return taskGroup;
         }
-        _dbContext.TaskGroup.Update(taskGroup);
-        return taskGroup;
+
+        var newGroup = new TaskGroupTable
+        {
+            GroupName = groupName,
+            IsUsed = false,
+            IsDefault = false
+        };
+
+        await _dbContext.TaskGroup.AddAsync(newGroup);
+        await _dbContext.SaveChangesAsync();
+
+        return newGroup;
     }
 
     /// <summary>
@@ -416,45 +435,58 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
     private async Task OnPageLoaded()
     {
         IsActive = true;
+        IsDefaultContent = "\uE734";
 
         try
         {
-            await Task.Run(() =>
-            {
-                dispatcherQueue.TryEnqueue(async () =>
-                {
-                    var list = await _dbContext.TaskOrchestration.Include(x => x.GroupName).ToListAsync();
-                    var filterList = await _dbContext.Filters.ToListAsync();
-                    foreach (var item in list)
-                    {
-                        if (item.TaskSource == Environment.GetFolderPath(Environment.SpecialFolder.Desktop))
-                        {
-                            item.TaskSource = "DesktopText".GetLocalized();
-                        }
-                        item.TagOrder = Settings.IdOrder;
-                    }
-                    GroupList = new(list.Select(x => x.GroupName.GroupName).Distinct().ToList());
-                    var newList = list.Select(x => x.GroupName.GroupName).Distinct().ToList();
-                    newList.Insert(0, "AllText".GetLocalized());
-                    GroupNameList = new(newList);
-                    FilterList = new(filterList);
-                    FilterListACV = new AdvancedCollectionView(FilterList, true);
-                    FilterListACV.SortDescriptions.Add(new SortDescription("Id", SortDirection.Ascending));
-                    TaskList = new(list);
-                    TaskListACV = new AdvancedCollectionView(TaskList, true);
-                    TaskListACV.SortDescriptions.Add(new SortDescription("Priority", SortDirection.Descending));
-                    TaskListACV.SortDescriptions.Add(new SortDescription("ID", SortDirection.Ascending));
-                });
-            });
+            // ✅ 1. 后台线程处理数据库加载
+            var list = await _dbContext.TaskOrchestration.Include(x => x.GroupName).ToListAsync();
+            var filterList = await _dbContext.Filters.ToListAsync();
 
+            // ✅ 2. 主线程处理 UI 更新
+            dispatcherQueue.TryEnqueue(() =>
+            {
+                foreach (var item in list)
+                {
+                    if (item.TaskSource == Environment.GetFolderPath(Environment.SpecialFolder.Desktop))
+                    {
+                        item.TaskSource = "DesktopText".GetLocalized();
+                    }
+                    item.TagOrder = Settings.IdOrder;
+                }
+
+                // ✅ 防止 GroupName 为 null
+                var groupNames = list
+                    .Where(x => x.GroupName != null)
+                    .Select(x => x.GroupName.GroupName)
+                    .Distinct()
+                    .ToList();
+
+                GroupList = new(groupNames);
+
+                var newList = new List<string> { "AllText".GetLocalized() };
+                newList.AddRange(groupNames);
+
+                GroupNameList = new(newList);
+                FilterList = new(filterList);
+
+                FilterListACV = new AdvancedCollectionView(FilterList, true);
+                FilterListACV.SortDescriptions.Add(new SortDescription("Id", SortDirection.Ascending));
+
+                TaskList = new(list);
+                TaskListACV = new AdvancedCollectionView(TaskList, true);
+                TaskListACV.SortDescriptions.Add(new SortDescription("Priority", SortDirection.Descending));
+                TaskListACV.SortDescriptions.Add(new SortDescription("ID", SortDirection.Ascending));
+            });
         }
         catch (Exception ex)
         {
-            IsActive = false;
             Logger.Error($"TaskOrchestrationViewModel: OnPageLoad 异常信息 {ex}");
         }
-
-        IsActive = false;
+        finally
+        {
+            IsActive = false;
+        }
     }
 
     /// <summary>
@@ -621,9 +653,6 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 return;
             }
 
-            // 使用事务确保一致性
-            using var transaction = await _dbContext.Database.BeginTransactionAsync();
-
             var delete = await _dbContext.TaskOrchestration
                 .Include(x => x.GroupName)
                 .Include(x => x.AutomaticTable)
@@ -642,14 +671,13 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
             await _dbContext.SaveChangesAsync();
             await DeleteEmptyGroup(group);
 
-            await transaction.CommitAsync(); // 提交事务
-
             // 删除Quartz任务和停止文件监控
             await DeleteQuartzJob(task);
             FileEventHandler.StopMonitor(task.TaskSource, task.TaskTarget);
 
             // 刷新页面并通知用户
-            await OnPageLoaded();
+            TaskListACV.Remove(task);
+            TaskListACV.Refresh();
             _notificationQueue.ShowWithWindowExtension("DeleteSuccessfulText".GetLocalized(), InfoBarSeverity.Success);
             _ = ClearNotificationAfterDelay(3000);
         }
@@ -696,6 +724,8 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
 
         if (!hasOtherTasks)
         {
+            GroupList.Remove(group.GroupName);
+            GroupNameList.Remove(group.GroupName);
             _dbContext.TaskGroup.Remove(group);
             await _dbContext.SaveChangesAsync();
         }
@@ -703,6 +733,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
 
     private async Task DeleteQuartzJob(TaskOrchestrationTable task)
     {
+        await Task.Delay(10);
         if (task.GroupName == null) return;
         await QuartzHelper.DeleteJob(task.TaskName + "#" + task.ID, task.GroupName.GroupName);
     }
@@ -900,6 +931,21 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
             if (!string.IsNullOrEmpty(SelectedGroupName) && !SelectedGroupName.Equals("AllText".GetLocalized()) && list.Count != 0)
             {
                 IsExecuting = true;
+                foreach (var item in list)
+                {
+                    if (item.GroupName.IsDefault)
+                    {
+                        IsDefaultContent = "\uE735";
+                    }
+                    else
+                    {
+                        IsDefaultContent = "\uE734";
+                    }
+                }
+            }
+            else
+            {
+                IsDefaultContent = "\uE734";
             }
 
             TaskList = new(list);
@@ -954,6 +1000,29 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
     }
 
     [RelayCommand]
+    private async Task OnSetDefaultGroup()
+    {
+        if (!string.IsNullOrEmpty(SelectedGroupName))
+        {
+            var group = await _dbContext.TaskGroup.FirstOrDefaultAsync(x => x.GroupName.Equals(SelectedGroupName));
+            if (group != null)
+            {
+                var defaultGroup = await _dbContext.TaskGroup.FirstOrDefaultAsync(x => x.IsDefault == true);
+                if (defaultGroup != null)
+                {
+                    defaultGroup.IsDefault = false;
+                }
+                if (!(group.Id == defaultGroup?.Id))
+                {
+                    group.IsDefault = true;
+                }
+            }
+            await _dbContext.SaveChangesAsync();
+            await OnGroupNameChanged();
+        }
+    }
+
+    [RelayCommand]
     private async Task OnItemClickChanged(object dataContext)
     {
         try
@@ -974,6 +1043,40 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         }
 
         await Task.CompletedTask;
+    }
+
+    [RelayCommand]
+    private async Task OnCopyTaskAsync(object obj)
+    {
+        if (obj as TaskOrchestrationTable is TaskOrchestrationTable task)
+        {
+            var oldTask = await _dbContext.TaskOrchestration.FirstOrDefaultAsync(x => x.ID == task.ID);
+
+            await _dbContext.TaskOrchestration.AddAsync(new TaskOrchestrationTable
+            {
+                AIIdentify = oldTask.AIIdentify,
+                TaskName = oldTask.TaskName + $"Copy-{DateTime.Now.ToString("yyyyMMddHHmmss")}",
+                TaskRule = oldTask.TaskRule,
+                TaskSource = oldTask.TaskSource,
+                GroupName = oldTask.GroupName,
+                Priority = oldTask.Priority,
+                UserDefinePromptsJson = oldTask.UserDefinePromptsJson,
+                OperationMode = oldTask.OperationMode,
+                TaskTarget = oldTask.TaskTarget,
+                Filter = oldTask.Filter,
+                IsEnabled = oldTask.IsEnabled,
+                Shortcut = oldTask.Shortcut,
+                IsRegex = oldTask.IsRegex,
+                IsRelated = oldTask.IsRelated,
+                AutomaticTable = null,
+                CreateTime = DateTime.Now,
+                Argument = oldTask.Argument,
+                RuleType = oldTask.RuleType,
+            });
+
+            await _dbContext.SaveChangesAsync();
+            await OnPageLoaded();
+        }
     }
 
     public async Task OnTaskListCollectionChangedAsync(TaskOrchestrationTable task, int draggedIndex, int droppedIndex)

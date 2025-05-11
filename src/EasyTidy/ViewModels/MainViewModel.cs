@@ -5,8 +5,10 @@ using EasyTidy.Common.Job;
 using EasyTidy.Contracts.Service;
 using EasyTidy.Model;
 using EasyTidy.Service;
+using EasyTidy.Service.AIService;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.UI.Dispatching;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
@@ -180,4 +182,39 @@ public partial class MainViewModel : ObservableObject
         Logger.Debug($"执行任务: {path}");
     }
 
+    public async Task ExecuteAllTaskAsync()
+    {
+        var taskList = await _dbContext.TaskOrchestration
+            .Include(x => x.GroupName)
+            .Include(x => x.Filter)
+            .Include(x => x.AutomaticTable)
+            .Where(x => x.AutomaticTable.Schedule == null).ToListAsync();
+        if (taskList.Count == 0) return;
+        var orderList = taskList.OrderByDescending(x => x.Priority);
+        string language = string.IsNullOrEmpty(Settings.Language) ? "Follow the document language" : Settings.Language;
+        foreach (var item in orderList)
+        {
+            var ai = await _dbContext.AIService.Where(x => x.Identify.ToString().ToLower().Equals(item.AIIdentify.ToString().ToLower())).FirstOrDefaultAsync();
+            IAIServiceLlm llm = null;
+            if (item.OperationMode == OperationMode.AIClassification || item.OperationMode == OperationMode.AISummary)
+            {
+                llm = AIServiceFactory.CreateAIServiceLlm(ai, item.UserDefinePromptsJson);
+            }
+            var automatic = new AutomaticJob();
+            var rule = await automatic.GetSpecialCasesRule(item.GroupName.Id, item.TaskRule);
+            var operationParameters = new OperationParameters(
+                operationMode: item.OperationMode,
+                sourcePath: item.TaskSource.Equals("DesktopText".GetLocalized())
+                ? Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
+                : item.TaskSource,
+                targetPath: item.TaskTarget,
+                fileOperationType: Settings.GeneralConfig.FileOperationType,
+                handleSubfolders: Settings.GeneralConfig.SubFolder ?? false,
+                funcs: FilterUtil.GeneratePathFilters(rule, item.RuleType),
+                pathFilter: FilterUtil.GetPathFilters(item.Filter),
+                ruleModel: new RuleModel { Filter = item.Filter, Rule = item.TaskRule, RuleType = item.RuleType })
+            { RuleName = item.TaskRule, AIServiceLlm = llm, Prompt = item.UserDefinePromptsJson, Argument = item.Argument, Language = language };
+            await OperationHandler.ExecuteOperationAsync(item.OperationMode, operationParameters);
+        }
+    }
 }
