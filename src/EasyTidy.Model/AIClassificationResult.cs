@@ -10,5 +10,6 @@ public class AIClassificationResult
     public string? Content { get; set; }
     public bool IsIncluded { get; set; }
     public string RawResult { get; set; } = string.Empty;
+    public TaskRuleType RuleType { get; set; }
 
 }

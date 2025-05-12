@@ -121,8 +121,10 @@ public static class FileActuator
 
     private static void EnsureTargetDirectory(OperationParameters parameters, string? directoryPath = null)
     {
-        if (!Directory.Exists(parameters.TargetPath)
-        && parameters.OperationMode != OperationMode.Rename && string.IsNullOrEmpty(directoryPath))
+        if (!Directory.Exists(parameters.TargetPath) 
+            && parameters.OperationMode != OperationMode.Rename 
+            && parameters.OperationMode != OperationMode.AIClassification
+            && string.IsNullOrEmpty(directoryPath))
         {
             Directory.CreateDirectory(parameters.TargetPath);
         }
@@ -184,6 +186,10 @@ public static class FileActuator
 
     private static async Task HandleRenameOperation(OperationParameters parameters)
     {
+        if (!string.IsNullOrEmpty(parameters.RenamePattern) && !"UNSUPPORTED".Equals(parameters.RenamePattern))
+        {
+            parameters.TargetPath += parameters.RenamePattern;
+        }
         // 处理重命名操作
         await HandleDefaultOperation(parameters);
         Renamer.ResetIncrement();
@@ -303,7 +309,7 @@ public static class FileActuator
                 await DeleteFile(parameters.TargetPath);
                 break;
             case OperationMode.Rename:
-                await RenameFile(parameters.OldSourcePath, parameters.OldTargetPath);
+                await RenameFile(parameters.OldSourcePath, parameters.OldTargetPath, parameters);
                 break;
             case OperationMode.RecycleBin:
                 await MoveToRecycleBin(parameters.TargetPath, new List<Func<string, bool>>(parameters.Funcs),
@@ -381,14 +387,16 @@ public static class FileActuator
         string lang,
         CancellationToken token)
     {
-        var promptToUpdate = prompts.FirstOrDefault(p => p.Role.Equals("user"));
-        if (promptToUpdate == null)
+        var systemPromptToUpdate = prompts.FirstOrDefault(p => p.Role.Equals("system"));
+        if (systemPromptToUpdate == null)
         {
             LogService.Logger.Warn("未找到用户提示配置，返回空的过滤器配置");
             return new FilterTable();
         }
 
-        promptToUpdate.Content = PromptConstants.SetupFourPrompt;
+        systemPromptToUpdate.Content = PromptConstants.SetupFourPrompt;
+        var userPromptToUpdate = prompts.FirstOrDefault(p => p.Role.Equals("user"));
+        userPromptToUpdate.Content = "Here are my requirements: \r\n $source";
         await StreamHandlerAsync(aiService, filter, lang, token);
         var setup4 = aiService.Data.Result?.ToString() ?? string.Empty;
         LogService.Logger.Debug($"步骤4 - 获取过滤器配置: {setup4}");
@@ -433,17 +441,21 @@ public static class FileActuator
                 parameters.RuleModel = new RuleModel()
                 {
                     Rule = rule,
-                    RuleType = TaskRuleType.FileRule,
+                    RuleType = parameters.RuleModel.RuleType,
                     Filter = filter,
                 };
             }
 
-            parameters.Funcs = FilterUtil.GeneratePathFilters(rule, TaskRuleType.FileRule);
+            parameters.Funcs = FilterUtil.GeneratePathFilters(rule, parameters.RuleModel.RuleType);
             parameters.OperationMode = operationMode;
             parameters.PathFilter = FilterUtil.GetPathFilters(filter);
             if (operationMode == OperationMode.Rename)
             {
-                // 执行重命名操作
+                if (string.IsNullOrEmpty(parameters.TargetPath))
+                {
+                    parameters.TargetPath = parameters.SourcePath;
+                }
+                // 获取重命名规则
                 parameters.RenamePattern = await GenerateSmartFileNameAsync(parameters);
             }
 
@@ -459,7 +471,8 @@ public static class FileActuator
     private static async Task<string> GenerateSmartFileNameAsync(OperationParameters parameters)
     {
         var systemPrompt = new Prompt("system", PromptConstants.RenameSystemPrompt);
-        var userPrompt = new Prompt("user", parameters.Prompt);
+        var customPrompt = FilterUtil.ParseUserDefinePrompt(parameters.Prompt);
+        var userPrompt = new Prompt("user", customPrompt);
         var prompts = new List<Prompt> { systemPrompt, userPrompt };
 
         var userDefinePrompt = new UserDefinePrompt("分类", prompts, true);
@@ -469,12 +482,12 @@ public static class FileActuator
         await StreamHandlerAsync(
             parameters.AIServiceLlm,
             parameters.SourcePath,
-            parameters.Language,
+            "",
             cts.Token);
         var renameData = parameters.AIServiceLlm.Data.Result?.ToString() ?? string.Empty;
         var result = FilterUtil.ExtractKeyValuePairsFromRaw(renameData);
-        result.TryGetValue("renamePattern", out string newName);
-        return newName;
+        result.TryGetValue("renamePattern", out string renamePattern);
+        return renamePattern;
     }
 
     /// <summary>
@@ -529,6 +542,8 @@ public static class FileActuator
                     parameters.Language,
                     cts.Token);
             }
+            
+            parameters.RuleModel.RuleType = step3Result.RuleType;
 
             // 构建新的操作参数并执行
             var newParameters = await BuildParameters(
@@ -567,14 +582,16 @@ public static class FileActuator
     {
         try
         {
-            var promptToUpdate = prompts.FirstOrDefault(p => p.Role.Equals("user"));
-            if (promptToUpdate == null)
+            var systemPromptToUpdate = prompts.FirstOrDefault(p => p.Role.Equals("system"));
+            if (systemPromptToUpdate == null)
             {
                 LogService.Logger.Error("未找到用户提示配置");
                 throw new InvalidOperationException("未找到用户提示配置");
             }
 
-            promptToUpdate.Content = newPromptContent;
+            systemPromptToUpdate.Content = newPromptContent;
+            var userPromptToUpdate = prompts.FirstOrDefault(p => p.Role.Equals("user"));
+            userPromptToUpdate.Content = "Here are my requirements: \r\n $source";
             await StreamHandlerAsync(parameters.AIServiceLlm, customPrompt, parameters.Language, cts.Token);
 
             var result = parameters.AIServiceLlm.Data.Result?.ToString() ?? string.Empty;
@@ -601,10 +618,15 @@ public static class FileActuator
                 res.TryGetValue("rule", out string rule);
                 res.TryGetValue("filter", out string filter);
                 res.TryGetValue("content", out string content);
+                res.TryGetValue("ruleType", out string ruleType);
 
                 classificationResult.Rule = rule;
                 classificationResult.Filter = filter;
                 classificationResult.Content = content;
+                if (Enum.TryParse(ruleType, out TaskRuleType parsedRuleType))
+                {
+                    classificationResult.RuleType = parsedRuleType;
+                }
             }
 
             LogService.Logger.Info($"{stepDescription}: {res}");
@@ -757,12 +779,21 @@ public static class FileActuator
     /// <param name="sourcePath"></param>
     /// <param name="targetPath"></param>
     /// <returns></returns>
-    private static async Task RenameFile(string sourcePath, string targetPath)
+    private static async Task RenameFile(string sourcePath, string targetPath, OperationParameters parameters = null)
     {
         await _semaphore.WaitAsync(); // 请求对文件操作的独占访问
         try
         {
-            var newPath = Renamer.ParseTemplate(sourcePath, targetPath);
+            string newPath;
+            if ("UNSUPPORTED".Equals(parameters.RenamePattern))
+            {
+                // 使用AI直接重命名
+                newPath = await AIRenameFile(sourcePath, parameters);
+            }
+            else
+            {
+                newPath = Renamer.ParseTemplate(sourcePath, targetPath);
+            }
             File.Move(sourcePath, newPath);
 
         }
@@ -775,6 +806,21 @@ public static class FileActuator
         {
             _semaphore.Release(); // 确保释放互斥锁
         }
+    }
+
+    private static async Task<string> AIRenameFile(string sourcePath, OperationParameters parameters)
+    {
+        var systemPrompt = new Prompt("system", PromptConstants.AIRenameFilePrompt);
+        var userPrompt = new Prompt("user", PromptConstants.AIRenameUserPrompt);
+        var prompts = new List<Prompt> { systemPrompt, userPrompt };
+
+        var userDefinePrompt = new UserDefinePrompt("分类", prompts, true);
+        var userDefinePrompts = new List<UserDefinePrompt> { userDefinePrompt };
+        parameters.AIServiceLlm.UserDefinePrompts = userDefinePrompts;
+        var customPrompt = FilterUtil.ParseUserDefinePrompt(parameters.Prompt);
+        await StreamHandlerAsync(parameters.AIServiceLlm, sourcePath, customPrompt, default);
+        var newName = parameters.AIServiceLlm.Data.Result?.ToString() ?? string.Empty;
+        return newName;
     }
 
     /// <summary>
@@ -1380,7 +1426,7 @@ public static class FileActuator
             }
             else
             {
-                throw new System.ComponentModel.Win32Exception(Marshal.GetLastWin32Error());
+                throw new Win32Exception(Marshal.GetLastWin32Error());
             }
         }
     }

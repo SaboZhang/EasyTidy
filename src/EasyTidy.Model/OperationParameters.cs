@@ -39,7 +39,7 @@ public class OperationParameters
     public string Argument { get; set; }
 
     public string Language { get; set; }
-
+    
     public string RenamePattern { get; set; }
 
     public OperationParameters(OperationMode operationMode, string sourcePath, string targetPath, FileOperationType fileOperationType, bool handleSubfolders,
