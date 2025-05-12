@@ -37,6 +37,7 @@ public static class FileActuator
 
             if (Path.GetExtension(parameters.SourcePath).Equals(".lnk", StringComparison.OrdinalIgnoreCase)
                 || (string.IsNullOrEmpty(parameters.TargetPath)
+                && parameters.OperationMode != OperationMode.AIClassification
                 && parameters.OperationMode != OperationMode.RunExternalPrograms))
             {
                 return;
@@ -412,7 +413,7 @@ public static class FileActuator
     /// <summary>
     /// 构建新的操作参数
     /// </summary>
-    private static OperationParameters BuildParameters(
+    private static async Task<OperationParameters> BuildParameters(
         OperationParameters parameters,
         string sourcePath,
         string targetPath,
@@ -440,6 +441,11 @@ public static class FileActuator
             parameters.Funcs = FilterUtil.GeneratePathFilters(rule, TaskRuleType.FileRule);
             parameters.OperationMode = operationMode;
             parameters.PathFilter = FilterUtil.GetPathFilters(filter);
+            if (operationMode == OperationMode.Rename)
+            {
+                // 执行重命名操作
+                parameters.RenamePattern = await GenerateSmartFileNameAsync(parameters);
+            }
 
             return parameters;
         }
@@ -448,6 +454,27 @@ public static class FileActuator
             LogService.Logger.Error($"构建操作参数失败: {ex.Message}");
             throw;
         }
+    }
+
+    private static async Task<string> GenerateSmartFileNameAsync(OperationParameters parameters)
+    {
+        var systemPrompt = new Prompt("system", PromptConstants.RenameSystemPrompt);
+        var userPrompt = new Prompt("user", parameters.Prompt);
+        var prompts = new List<Prompt> { systemPrompt, userPrompt };
+
+        var userDefinePrompt = new UserDefinePrompt("分类", prompts, true);
+        var userDefinePrompts = new List<UserDefinePrompt> { userDefinePrompt };
+        parameters.AIServiceLlm.UserDefinePrompts = userDefinePrompts;
+        var cts = new CancellationTokenSource();
+        await StreamHandlerAsync(
+            parameters.AIServiceLlm,
+            parameters.SourcePath,
+            parameters.Language,
+            cts.Token);
+        var renameData = parameters.AIServiceLlm.Data.Result?.ToString() ?? string.Empty;
+        var result = FilterUtil.ExtractKeyValuePairsFromRaw(renameData);
+        result.TryGetValue("renamePattern", out string newName);
+        return newName;
     }
 
     /// <summary>
@@ -504,7 +531,7 @@ public static class FileActuator
             }
 
             // 构建新的操作参数并执行
-            var newParameters = BuildParameters(
+            var newParameters = await BuildParameters(
                 parameters,
                 step2Result.SourcePath,
                 step2Result.TargetPath,

@@ -6,7 +6,12 @@ namespace EasyTidy.Service;
 
 public class RightClickPipeService
 {
+
+#if !DEBUG
     private const string PipeName = "EasyTidyPipe";
+#else
+    private const string PipeName = "EasyTidyPipeDev";
+#endif
     private bool _listening;
 
     /// <summary>
