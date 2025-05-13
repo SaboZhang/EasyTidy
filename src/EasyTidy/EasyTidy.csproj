@@ -206,6 +206,7 @@
     <PackageReference Include="Microsoft.Windows.CsWinRT" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" />
 	  <PackageReference Include="Microsoft.WindowsAppSDK" />
+	  <PackageReference Include="ModelContextProtocol" />
     <PackageReference Include="Newtonsoft.Json" />
     <PackageReference Include="Nucs.JsonSettings2.Autosave" />
     <PackageReference Include="Quartz" />
