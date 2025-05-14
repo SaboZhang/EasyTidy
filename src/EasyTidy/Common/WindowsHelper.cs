@@ -103,4 +103,9 @@ public class WindowsHelper
 
         return CallWindowProc(_oldWndProc, hWnd, msg, wParam, lParam);
     }
+
+    public static void SetWindowContent(WindowEx window)
+    {
+        window.Content = new MainPage();
+    }
 }

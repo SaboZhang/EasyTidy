@@ -46,20 +46,21 @@ public sealed partial class TrayIconView : UserControl
     /// Shows or hides the main window
     /// </summary>
     [RelayCommand]
-    private void ShowHideWindow()
-    {
-        WindowsHelper.EnsureChildWindow();
+    private void ShowHideWindow() => ViewModel.ToggleChildWindow();
+    //private void ShowHideWindow()
+    //{
+    //    WindowsHelper.EnsureChildWindow();
 
-        var childWindow = App.ChildWindow;
+    //    var childWindow = App.ChildWindow;
 
-        SetWindowContent(childWindow);
-        WindowsHelper.SetWindowStyle(childWindow);
-        childWindow.SetRequestedTheme(ViewModel.ThemeSelectorService.Theme);
+    //    SetWindowContent(childWindow);
+    //    WindowsHelper.SetWindowStyle(childWindow);
+    //    childWindow.SetRequestedTheme(ViewModel.ThemeSelectorService.Theme);
 
-        WindowsHelper.PositionWindowBottomRight(childWindow);
+    //    WindowsHelper.PositionWindowBottomRight(childWindow);
 
-        childWindow.Activate();
-    }
+    //    childWindow.Activate();
+    //}
 
     /// <summary>
     /// Exits the application

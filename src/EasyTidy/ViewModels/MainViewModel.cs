@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.WinUI;
 using CommunityToolkit.WinUI.Collections;
 using EasyTidy.Common.Database;
+using EasyTidy.Common.Extensions;
 using EasyTidy.Common.Job;
 using EasyTidy.Contracts.Service;
 using EasyTidy.Model;
@@ -43,10 +44,14 @@ public partial class MainViewModel : ObservableObject
     {
         get;
     }
+
+    public static MainViewModel Instance { get; private set; }
+
     public MainViewModel()
     {
         _dbContext = App.GetService<AppDbContext>();
         _themeSelectorService = App.GetService<IThemeSelectorService>();
+        Instance = this;
     }
 
     [RelayCommand]
@@ -216,5 +221,20 @@ public partial class MainViewModel : ObservableObject
             { RuleName = item.TaskRule, AIServiceLlm = llm, Prompt = item.UserDefinePromptsJson, Argument = item.Argument, Language = language };
             await OperationHandler.ExecuteOperationAsync(item.OperationMode, operationParameters);
         }
+    }
+
+    public void ToggleChildWindow()
+    {
+        WindowsHelper.EnsureChildWindow();
+
+        var childWindow = App.ChildWindow;
+
+        WindowsHelper.SetWindowContent(childWindow);
+        WindowsHelper.SetWindowStyle(childWindow);
+        childWindow.SetRequestedTheme(ThemeSelectorService.Theme);
+
+        WindowsHelper.PositionWindowBottomRight(childWindow);
+
+        childWindow.Activate();
     }
 }

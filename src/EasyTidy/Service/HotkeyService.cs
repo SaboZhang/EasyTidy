@@ -106,4 +106,17 @@ public class HotkeyService
         return key != VirtualKey.None;
     }
 
+    public void RegisterMultipleAccelerators(Dictionary<string, (string Gesture, Action Action)> gestures)
+    {
+        foreach (var kvp in gestures)
+        {
+            var id = kvp.Key;
+            var gesture = kvp.Value.Gesture;
+            var action = kvp.Value.Action;
+
+            RegisterFromGesture(id, gesture, action);
+        }
+    }
+
+
 }

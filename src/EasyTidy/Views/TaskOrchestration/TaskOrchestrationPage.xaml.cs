@@ -3,6 +3,8 @@
 
 using EasyTidy.Model;
 using Microsoft.UI.Xaml.Controls.Primitives;
+using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Media;
 using Windows.ApplicationModel.DataTransfer;
 
 namespace EasyTidy.Views;
@@ -160,4 +162,58 @@ public sealed partial class TaskOrchestrationPage : Page
         var menuFlyoutItem = sender as MenuFlyoutItem;
         ViewModel.CopyTaskCommand.ExecuteAsync(menuFlyoutItem.DataContext);
     }
+
+    private void LogsListView_PointerEntered(object sender, PointerRoutedEventArgs e)
+    {
+        var scrollViewer = GetFirstDescendantOfType<ScrollViewer>(TaskListView);
+        if (scrollViewer != null)
+        {
+            scrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
+        }
+        if (OuterScrollViewer != null)
+            OuterScrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
+    }
+
+    private void LogsListView_PointerExited(object sender, PointerRoutedEventArgs e)
+    {
+        var scrollViewer = GetFirstDescendantOfType<ScrollViewer>(TaskListView);
+        if (scrollViewer != null)
+        {
+            scrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
+        }
+        if (OuterScrollViewer != null)
+            OuterScrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
+    }
+
+    private void LogsListView_PointerWheelChanged(object sender, PointerRoutedEventArgs e)
+    {
+        // 尝试获取 ListView 内部的 ScrollViewer
+        var scrollViewer = GetFirstDescendantOfType<ScrollViewer>(TaskListView);
+        if (scrollViewer != null)
+        {
+            var properties = e.GetCurrentPoint(TaskListView).Properties;
+            double delta = properties.MouseWheelDelta;
+
+            scrollViewer.ChangeView(null, scrollViewer.VerticalOffset - delta, null, true);
+            e.Handled = true;
+        }
+    }
+
+    public static T GetFirstDescendantOfType<T>(DependencyObject root) where T : DependencyObject
+    {
+        int count = VisualTreeHelper.GetChildrenCount(root);
+        for (int i = 0; i < count; i++)
+        {
+            var child = VisualTreeHelper.GetChild(root, i);
+            if (child is T t)
+                return t;
+
+            var result = GetFirstDescendantOfType<T>(child);
+            if (result != null)
+                return result;
+        }
+        return null;
+    }
+
+
 }

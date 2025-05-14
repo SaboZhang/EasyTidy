@@ -53,6 +53,7 @@ public class ActivationService : IActivationService
 
         // Handle activation via ActivationHandlers.
         await HandleActivationAsync(activationArgs);
+        RegisterHotKey();
     }
 
     private async Task HandleActivationAsync(object activationArgs)
@@ -230,5 +231,32 @@ public class ActivationService : IActivationService
         {
             Logger.Error($"启动监控失败：{ex}");
         }
+    }
+
+    private void RegisterHotKey()
+    {
+        var hotkeyService = App.GetService<HotkeyService>();
+        hotkeyService.RegisterMultipleAccelerators(new Dictionary<string, (string, Action)>
+        {
+            ["ToggleChildWindow"] = ("Alt+D", () =>
+            {
+                // 获取 ViewModel 或通过静态方法调用你定义的 ShowHideWindow
+                MainViewModel.Instance?.ToggleChildWindow();
+            }
+            ),
+
+            ["OpenSettings"] = ("Ctrl+,", () =>
+            {
+                // 导航到设置页面
+                App.GetService<INavigationService>().NavigateTo(typeof(SettingsViewModel).FullName!);
+            }
+            ),
+
+            ["ShowLogs"] = ("Ctrl+L", () =>
+            {
+                App.GetService<INavigationService>().NavigateTo(typeof(LogsViewModel).FullName!);
+            }
+            ),
+        });
     }
 }
