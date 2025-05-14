@@ -166,10 +166,14 @@ public sealed partial class TaskOrchestrationPage : Page
     private void LogsListView_PointerEntered(object sender, PointerRoutedEventArgs e)
     {
         var scrollViewer = GetFirstDescendantOfType<ScrollViewer>(TaskListView);
-        if (scrollViewer != null)
+
+        // 只有在需要时才显示内嵌的 Vertical ScrollBar
+        if (scrollViewer != null && scrollViewer.VerticalScrollBarVisibility != ScrollBarVisibility.Visible)
         {
             scrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
         }
+
+        // 隐藏外部的滚动条
         if (OuterScrollViewer != null)
             OuterScrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
     }
@@ -177,23 +181,30 @@ public sealed partial class TaskOrchestrationPage : Page
     private void LogsListView_PointerExited(object sender, PointerRoutedEventArgs e)
     {
         var scrollViewer = GetFirstDescendantOfType<ScrollViewer>(TaskListView);
-        if (scrollViewer != null)
+
+        // 恢复内嵌的 Vertical ScrollBar 可见性
+        if (scrollViewer != null && scrollViewer.VerticalScrollBarVisibility != ScrollBarVisibility.Hidden)
         {
             scrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
         }
+
+        // 恢复外部滚动条的自动显示
         if (OuterScrollViewer != null)
             OuterScrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
     }
 
     private void LogsListView_PointerWheelChanged(object sender, PointerRoutedEventArgs e)
     {
-        // 尝试获取 ListView 内部的 ScrollViewer
+        // 获取 ListView 内部的 ScrollViewer
         var scrollViewer = GetFirstDescendantOfType<ScrollViewer>(TaskListView);
+
+        // 只在 scrollViewer 存在的情况下进行处理
         if (scrollViewer != null)
         {
             var properties = e.GetCurrentPoint(TaskListView).Properties;
             double delta = properties.MouseWheelDelta;
 
+            // 通过修改垂直偏移来实现自定义滚动
             scrollViewer.ChangeView(null, scrollViewer.VerticalOffset - delta, null, true);
             e.Handled = true;
         }
