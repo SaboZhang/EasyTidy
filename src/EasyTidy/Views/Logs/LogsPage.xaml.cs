@@ -20,7 +20,7 @@ public sealed partial class LogsPage : Page
 
     private void LogsListView_PointerEntered(object sender, PointerRoutedEventArgs e)
     {
-        var scrollViewer = GetFirstDescendantOfType<ScrollViewer>(TaskListView);
+        var scrollViewer = GetFirstDescendantOfType<ScrollViewer>(LogsListView);
 
         // 只有在需要时才显示内嵌的 Vertical ScrollBar
         if (scrollViewer != null && scrollViewer.VerticalScrollBarVisibility != ScrollBarVisibility.Visible)
