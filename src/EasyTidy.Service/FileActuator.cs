@@ -43,6 +43,12 @@ public static class FileActuator
                 return;
             }
 
+            maxRetries = parameters.OperationMode switch
+            {
+                OperationMode.AIClassification or OperationMode.AISummary => 1,
+                _ => maxRetries
+            };
+
             await RetryAsync(maxRetries, async () =>
             {
                 if (Directory.Exists(parameters.SourcePath))

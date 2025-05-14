@@ -45,17 +45,18 @@
                             </StackPanel>
                         </ctk:SettingsCard>
                         <etc:SettingsGroup x:Uid="LogsGroup">
-                            <ListView ItemsSource="{x:Bind ViewModel.LogsListACV, Mode=TwoWay}"
-                                      SelectionMode="None"
-                                      MinHeight="100"
-                                      MaxHeight="580">
-                                <ListView.ItemTemplate>
-                                    <DataTemplate x:DataType="x:String">
-                                        <TextBlock Text="{x:Bind}"
-                                                   TextWrapping="Wrap"/>
-                                    </DataTemplate>
-                                </ListView.ItemTemplate>
-                            </ListView>
+                            <Border MinHeight="100"
+                                    MaxHeight="580">
+                                <ListView ItemsSource="{x:Bind ViewModel.LogsListACV, Mode=TwoWay}"
+                                          SelectionMode="None">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate x:DataType="x:String">
+                                            <TextBlock Text="{x:Bind}"
+                                                       TextWrapping="Wrap"/>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </Border>
                         </etc:SettingsGroup>
                     </StackPanel>
                 </etc:SettingsPageControl.ModuleContent>
