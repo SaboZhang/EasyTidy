@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.WinUI;
 using EasyTidy.Activation;
+using EasyTidy.Common;
 using EasyTidy.Common.Database;
 using EasyTidy.Contracts.Service;
 using EasyTidy.Log;
@@ -64,6 +65,7 @@ public partial class App : Application
                 services.AddTransient<IActivationHandler, AppNotificationActivationHandler>();
                 // Register Core Services
                 services.AddSingleton<ILocalSettingsService, LocalSettingsService>();
+                services.AddSingleton<IConfigManager, ConfigManager>();
                 services.AddSingleton<IThemeSelectorService, ThemeSelectorService>();
                 services.AddTransient<INavigationViewService, NavigationViewService>();
                 services.AddSingleton<IActivationService, ActivationService>();
@@ -112,6 +114,7 @@ public partial class App : Application
                 services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));
                 // Register Hotkey
                 services.AddSingleton<HotkeyService>();
+                services.AddSingleton<HotkeyActionRouter>();
 
             })
             .Build();

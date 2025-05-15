@@ -1,4 +1,5 @@
-﻿using EasyTidy.Contracts.Service;
+﻿using System.Text.Json;
+using EasyTidy.Contracts.Service;
 using EasyTidy.Model;
 using EasyTidy.Util.UtilInterface;
 using Microsoft.Extensions.Options;
@@ -144,5 +145,64 @@ public class LocalSettingsService : ILocalSettingsService
         }
 
         return new CoreSettings(); // 如果未找到键，返回默认值
+    }
+
+    public async Task<T> LoadSettingsAsync<T>(string fileName = null) where T : class
+    {
+        var key = typeof(T).FullName ?? throw new ArgumentException("Invalid type");
+
+        if (RuntimeHelper.IsMSIX)
+        {
+            if (ApplicationData.Current.LocalSettings.Values.TryGetValue(key, out var obj))
+                return await Json.ToObjectAsync<T>((string)obj);
+            return default;
+        }
+
+        if (string.IsNullOrWhiteSpace(fileName))
+        {
+            await InitializeAsync();
+            if (_settings.TryGetValue(key, out var obj))
+                return await Json.ToObjectAsync<T>((string)obj);
+            return default;
+        }
+        else
+        {
+            // 多配置文件模式，直接读取为对象字典
+            var dict = await Task.Run(() => _fileService.Read<Dictionary<string, object>>(_applicationDataFolder, fileName))
+                       ?? new Dictionary<string, object>();
+
+            if (dict.TryGetValue(key, out var obj))
+            {
+                return JsonSerializer.Deserialize<T>(obj.ToString()!);
+            }
+
+            return default;
+        }
+    }
+
+    public async Task SaveSettingsAsync<T>(T settings, string fileName = null) where T : class
+    {
+        var key = typeof(T).FullName ?? throw new ArgumentException("Invalid type");
+
+        var json = await Json.StringifyAsync(settings);
+
+        if (RuntimeHelper.IsMSIX)
+        {
+            ApplicationData.Current.LocalSettings.Values[key] = json;
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(fileName))
+        {
+            await InitializeAsync();
+            _settings[key] = json;
+            await Task.Run(() => _fileService.Save(_applicationDataFolder, _localsettingsFile, _settings));
+        }
+        else
+        {
+            // 多配置文件模式：直接保存对象，避免字符串嵌套
+            var dict = new Dictionary<string, object> { [key] = settings };
+            await Task.Run(() => _fileService.Save(_applicationDataFolder, fileName, dict));
+        }
     }
 }

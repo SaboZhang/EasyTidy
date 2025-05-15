@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Windows.Globalization;
 using System.Data;
 using System.Diagnostics;
+using Windows.System;
 using WinUIEx;
 
 namespace EasyTidy.Service;
@@ -18,6 +19,9 @@ public class ActivationService : IActivationService
     private readonly IThemeSelectorService _themeSelectorService;
     private UIElement? _shell = null;
     private readonly AppDbContext _dbContext;
+    private readonly IConfigManager _configManager;
+
+    private readonly ILocalSettingsService _localSettingsService;
 
     public ActivationService(ActivationHandler<LaunchActivatedEventArgs> defaultHandler, IEnumerable<IActivationHandler> activationHandlers, IThemeSelectorService themeSelectorService)
     {
@@ -25,6 +29,8 @@ public class ActivationService : IActivationService
         _activationHandlers = activationHandlers;
         _themeSelectorService = themeSelectorService;
         _dbContext = App.GetService<AppDbContext>();
+        _configManager = App.GetService<IConfigManager>();
+        _localSettingsService = App.GetService<ILocalSettingsService>();
     }
 
     public async Task ActivateAsync(object activationArgs)
@@ -53,7 +59,7 @@ public class ActivationService : IActivationService
 
         // Handle activation via ActivationHandlers.
         await HandleActivationAsync(activationArgs);
-        RegisterHotKey();
+        await RegisterHotKeyAsync();
     }
 
     private async Task HandleActivationAsync(object activationArgs)
@@ -233,30 +239,25 @@ public class ActivationService : IActivationService
         }
     }
 
-    private void RegisterHotKey()
+    private async Task RegisterHotKeyAsync()
     {
         var hotkeyService = App.GetService<HotkeyService>();
-        hotkeyService.RegisterMultipleAccelerators(new Dictionary<string, (string, Action)>
+        var hotkeyActionRouter = App.GetService<HotkeyActionRouter>();
+        hotkeyService.Initialize(App.MainWindow);
+        bool success = hotkeyService.RegisterHotKey(
+            "ToggleChildWindow",
+            VirtualKey.D,
+            HotkeyService.ModifierKeys.Alt,
+            () => hotkeyActionRouter.HandleAction("ToggleChildWindow")
+        );
+        // var hotkeySettings = await _localSettingsService.LoadSettingsAsync<HotkeysCollection>("Hotkeys.json");
+        var hotkeySettings = new HotkeysCollection();
+        hotkeySettings.Hotkeys.Add(new Hotkey
         {
-            ["ToggleChildWindow"] = ("Alt+D", () =>
-            {
-                // 获取 ViewModel 或通过静态方法调用你定义的 ShowHideWindow
-                MainViewModel.Instance?.ToggleChildWindow();
-            }
-            ),
-
-            ["OpenSettings"] = ("Ctrl+,", () =>
-            {
-                // 导航到设置页面
-                App.GetService<INavigationService>().NavigateTo(typeof(SettingsViewModel).FullName!);
-            }
-            ),
-
-            ["ShowLogs"] = ("Ctrl+L", () =>
-            {
-                App.GetService<INavigationService>().NavigateTo(typeof(LogsViewModel).FullName!);
-            }
-            ),
+            Id = "ToggleChildWindow",
+            KeyGesture = HotkeyService.ToGestureString(VirtualKey.D, VirtualKeyModifiers.Menu),
+            CommandName = "ToggleChildWindow"
         });
+        await _configManager.SaveAsync(hotkeySettings, "Hotkeys.json");
     }
 }

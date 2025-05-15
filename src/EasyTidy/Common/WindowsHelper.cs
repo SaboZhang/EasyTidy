@@ -54,7 +54,7 @@ public class WindowsHelper
 
     public static void SetWindowStyle(WindowEx window)
     {
-        window.Title = "EasyTidy";
+        window.Title = "EasyTidy Drag and drop";
         window.ExtendsContentIntoTitleBar = true;
         window.IsMaximizable = false;
         window.MaxWidth = WindowWidth;
