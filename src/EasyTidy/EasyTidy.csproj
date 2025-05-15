@@ -176,6 +176,7 @@
     <None Remove="Views\Logs\LogsPage.xaml" />
     <None Remove="Views\NotificationView.xaml" />
     <None Remove="Views\Settings\AiSettingsPage.xaml" />
+    <None Remove="Views\Settings\HotKeySettingPage.xaml" />
     <None Remove="Views\ShellPage.xaml" />
     <None Remove="Views\TaskOrchestration\TaskOrchestrationPage.xaml" />
     <None Remove="Views\TrayIconView.xaml" />
@@ -305,6 +306,9 @@
     <None Update="Themes\Styles\TextBlock.xaml">
       <Generator>MSBuild:Compile</Generator>
     </None>
+    <Page Update="Views\Settings\HotKeySettingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Views\ContentDialogs\AddAIContentDialog.xaml">
       <SubType>Designer</SubType>
     </Page>

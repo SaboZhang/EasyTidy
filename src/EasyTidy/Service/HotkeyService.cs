@@ -126,7 +126,7 @@ public partial class HotkeyService : IDisposable
 
     #endregion
 
-    private bool TryParseGesture(string gesture, out VirtualKey key, out ModifierKeys modifiers)
+    public bool TryParseGesture(string gesture, out VirtualKey key, out ModifierKeys modifiers)
     {
         key = VirtualKey.None;
         modifiers = ModifierKeys.None;

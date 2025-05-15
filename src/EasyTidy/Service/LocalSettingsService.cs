@@ -22,6 +22,7 @@ public class LocalSettingsService : ILocalSettingsService
     private IDictionary<string, object> _settings;
 
     private CoreSettings _coreSettings;
+    private HotkeysCollection _hotkeysCollection;
 
     private bool _isInitialized;
 
@@ -35,6 +36,7 @@ public class LocalSettingsService : ILocalSettingsService
 
         _settings = new Dictionary<string, object>();
         _coreSettings = new CoreSettings();
+        _hotkeysCollection = new HotkeysCollection();
     }
 
     private async Task InitializeAsync()
@@ -44,6 +46,8 @@ public class LocalSettingsService : ILocalSettingsService
             _settings = await Task.Run(() => _fileService.Read<IDictionary<string, object>>(_applicationDataFolder, _localsettingsFile)) ?? new Dictionary<string, object>();
 
             _coreSettings = await Task.Run(() => _fileService.Read(_applicationDataFolder, _localsettingsFile)) ?? new CoreSettings();
+
+            _hotkeysCollection = await Task.Run(() => _fileService.Read<HotkeysCollection>(_applicationDataFolder, "Hotkeys.json")) ?? new HotkeysCollection();
 
             _isInitialized = true;
         }
@@ -149,7 +153,7 @@ public class LocalSettingsService : ILocalSettingsService
 
     public async Task<T> LoadSettingsAsync<T>(string fileName = null) where T : class
     {
-        var key = typeof(T).FullName ?? throw new ArgumentException("Invalid type");
+        var key = typeof(T).Name ?? throw new ArgumentException("Invalid type");
 
         if (RuntimeHelper.IsMSIX)
         {
@@ -182,7 +186,7 @@ public class LocalSettingsService : ILocalSettingsService
 
     public async Task SaveSettingsAsync<T>(T settings, string fileName = null) where T : class
     {
-        var key = typeof(T).FullName ?? throw new ArgumentException("Invalid type");
+        var key = typeof(T).Name ?? throw new ArgumentException("Invalid type");
 
         var json = await Json.StringifyAsync(settings);
 

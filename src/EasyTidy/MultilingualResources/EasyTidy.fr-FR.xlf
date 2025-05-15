@@ -2124,6 +2124,14 @@
           <source>Duplicate Task</source>
           <target state="translated">Dupliquer la tâche</target>
         </trans-unit>
+        <trans-unit id="Settings_Hotkey_Header" translate="yes" xml:space="preserve">
+          <source>Shortcut key</source>
+          <target state="translated">Touche de raccourci</target>
+        </trans-unit>
+        <trans-unit id="Settings_Hotkey_Description" translate="yes" xml:space="preserve">
+          <source>Set global shortcuts for the application</source>
+          <target state="translated">Définir des raccourcis globaux pour l'application</target>
+        </trans-unit>
       </group>
     </body>
   </file>

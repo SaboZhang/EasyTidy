@@ -2124,6 +2124,14 @@
           <source>Duplicate Task</source>
           <target state="translated">タスクの複製</target>
         </trans-unit>
+        <trans-unit id="Settings_Hotkey_Header" translate="yes" xml:space="preserve">
+          <source>Shortcut key</source>
+          <target state="translated">ショートカットキー</target>
+        </trans-unit>
+        <trans-unit id="Settings_Hotkey_Description" translate="yes" xml:space="preserve">
+          <source>Set global shortcuts for the application</source>
+          <target state="translated">アプリケーションのグローバルショートカットを設定する</target>
+        </trans-unit>
       </group>
     </body>
   </file>

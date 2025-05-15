@@ -37,7 +37,7 @@ public class FileService : IFileService
             Directory.CreateDirectory(folderPath);
         }
 
-        var fileContent = JsonSerializer.Serialize(content, AppDataJsonContext.Default.GetTypeInfo(typeof(T)));
+        var fileContent = JsonSerializer.Serialize(content, AppDataJsonContext.Default.GetTypeInfo(typeof(T))).Replace("\\u002B", "+");
         File.WriteAllText(Path.Combine(folderPath, fileName), fileContent, Encoding.UTF8);
     }
 

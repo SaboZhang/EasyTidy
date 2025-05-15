@@ -1555,4 +1555,10 @@
   <data name="CopyStr.Text" xml:space="preserve">
     <value>複製任務</value>
   </data>
+  <data name="Settings_Hotkey_Header" xml:space="preserve">
+    <value>快捷鍵</value>
+  </data>
+  <data name="Settings_Hotkey_Description" xml:space="preserve">
+    <value>設定應用的全局快捷鍵</value>
+  </data>
 </root>

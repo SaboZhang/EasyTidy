@@ -2124,6 +2124,14 @@
           <source>Duplicate Task</source>
           <target state="translated">复制任务</target>
         </trans-unit>
+        <trans-unit id="Settings_Hotkey_Header" translate="yes" xml:space="preserve">
+          <source>Shortcut key</source>
+          <target state="translated">快捷键</target>
+        </trans-unit>
+        <trans-unit id="Settings_Hotkey_Description" translate="yes" xml:space="preserve">
+          <source>Set global shortcuts for the application</source>
+          <target state="translated">设置应用的全局快捷键</target>
+        </trans-unit>
       </group>
     </body>
   </file>

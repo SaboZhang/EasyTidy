@@ -23,14 +23,14 @@ public class ActivationService : IActivationService
 
     private readonly ILocalSettingsService _localSettingsService;
 
-    public ActivationService(ActivationHandler<LaunchActivatedEventArgs> defaultHandler, IEnumerable<IActivationHandler> activationHandlers, IThemeSelectorService themeSelectorService)
+    public ActivationService(ActivationHandler<LaunchActivatedEventArgs> defaultHandler, IEnumerable<IActivationHandler> activationHandlers, IThemeSelectorService themeSelectorService, ILocalSettingsService localSettingsService)
     {
         _defaultHandler = defaultHandler;
         _activationHandlers = activationHandlers;
         _themeSelectorService = themeSelectorService;
         _dbContext = App.GetService<AppDbContext>();
         _configManager = App.GetService<IConfigManager>();
-        _localSettingsService = App.GetService<ILocalSettingsService>();
+        _localSettingsService = localSettingsService;
     }
 
     public async Task ActivateAsync(object activationArgs)
@@ -244,20 +244,36 @@ public class ActivationService : IActivationService
         var hotkeyService = App.GetService<HotkeyService>();
         var hotkeyActionRouter = App.GetService<HotkeyActionRouter>();
         hotkeyService.Initialize(App.MainWindow);
-        bool success = hotkeyService.RegisterHotKey(
-            "ToggleChildWindow",
-            VirtualKey.D,
-            HotkeyService.ModifierKeys.Alt,
-            () => hotkeyActionRouter.HandleAction("ToggleChildWindow")
-        );
-        // var hotkeySettings = await _localSettingsService.LoadSettingsAsync<HotkeysCollection>("Hotkeys.json");
-        var hotkeySettings = new HotkeysCollection();
-        hotkeySettings.Hotkeys.Add(new Hotkey
+        //bool success = hotkeyService.RegisterHotKey(
+        //    "ToggleChildWindow",
+        //    VirtualKey.D,
+        //    HotkeyService.ModifierKeys.Alt,
+        //    () => hotkeyActionRouter.HandleAction("ToggleChildWindow")
+        //);
+        var hotkeySettings = await _localSettingsService.LoadSettingsAsync<HotkeysCollection>("Hotkeys.json");
+        //hotkeySettings = new HotkeysCollection();
+        //hotkeySettings.Hotkeys.Add(new Hotkey
+        //{
+        //    Id = "ToggleChildWindow",
+        //    KeyGesture = HotkeyService.ToGestureString(VirtualKey.D, VirtualKeyModifiers.Menu),
+        //    CommandName = "ToggleChildWindow"
+        //});
+        //await _localSettingsService.SaveSettingsAsync(hotkeySettings, "Hotkeys.json");
+
+        foreach (var config in hotkeySettings.Hotkeys)
         {
-            Id = "ToggleChildWindow",
-            KeyGesture = HotkeyService.ToGestureString(VirtualKey.D, VirtualKeyModifiers.Menu),
-            CommandName = "ToggleChildWindow"
-        });
-        await _configManager.SaveAsync(hotkeySettings, "Hotkeys.json");
+            if (hotkeyService.TryParseGesture(config.KeyGesture, out var key, out var modifiers))
+            {
+                bool success = hotkeyService.RegisterHotKey(
+                    config.Id, 
+                    key, modifiers, 
+                    () => hotkeyActionRouter.HandleAction(config.CommandName)
+                );
+                if (!success)
+                {
+                    Logger.Error($"Failed to register hotkey: {config.KeyGesture}");
+                }
+            }
+        }
     }
 }

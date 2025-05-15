@@ -1695,4 +1695,10 @@
   <data name="CopyStr.Text" xml:space="preserve">
     <value>Duplicate Task</value>
   </data>
+  <data name="Settings_Hotkey_Header" xml:space="preserve">
+    <value>Shortcut key</value>
+  </data>
+  <data name="Settings_Hotkey_Description" xml:space="preserve">
+    <value>Set global shortcuts for the application</value>
+  </data>
 </root>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ev:ToolPage
+    xmlns:ev="using:EasyTidy.Common.Views"
+    x:Class="EasyTidy.Views.HotKeySettingPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:EasyTidy.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:etc="using:EasyTidy.Views.UserControls" 
+    xmlns:ctk="using:CommunityToolkit.WinUI.Controls"
+    mc:Ignorable="d"
+    xmlns:behaviors="using:EasyTidy.Behaviors"
+    behaviors:NavigationViewHeaderBehavior.HeaderTemplate="{StaticResource BreadcrumbBarDataTemplate}"
+    behaviors:NavigationViewHeaderBehavior.HeaderContext="{Binding}">
+
+    <StackPanel 
+        Margin="10" 
+        Spacing="5">
+
+        <StackPanel ChildrenTransitions="{StaticResource SettingsCardsAnimations}"
+                    Orientation="Vertical">
+            <etc:SettingsGroup MaxWidth="{ThemeResource MaxPageContentWidth}"
+                               Margin="{ThemeResource ContentPageMargin}"
+                               Header="快捷键">
+                <ctk:SettingsCard Header="拖拽窗口"
+                                  Description="设置显示拖拽窗口的快捷键">
+                    <ctk:SettingsCard.HeaderIcon>
+                        <FontIcon Glyph="&#xEB42;"/>
+                    </ctk:SettingsCard.HeaderIcon>
+                </ctk:SettingsCard>
+                
+            </etc:SettingsGroup>
+            
+        </StackPanel>
+        
+    </StackPanel>
+    
+</ev:ToolPage>

@@ -1558,4 +1558,10 @@
   <data name="CopyStr.Text" xml:space="preserve">
     <value>Dupliquer la tâche</value>
   </data>
+  <data name="Settings_Hotkey_Header" xml:space="preserve">
+    <value>Touche de raccourci</value>
+  </data>
+  <data name="Settings_Hotkey_Description" xml:space="preserve">
+    <value>Définir des raccourcis globaux pour l'application</value>
+  </data>
 </root>
