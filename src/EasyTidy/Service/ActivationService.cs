@@ -1,9 +1,11 @@
 ﻿using CommunityToolkit.WinUI;
 using EasyTidy.Activation;
 using EasyTidy.Common.Database;
+using EasyTidy.Common.Model;
 using EasyTidy.Contracts.Service;
 using EasyTidy.Model;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Windows.AppNotifications.Builder;
 using Microsoft.Windows.Globalization;
 using System.Data;
 using System.Diagnostics;
@@ -19,7 +21,6 @@ public class ActivationService : IActivationService
     private readonly IThemeSelectorService _themeSelectorService;
     private UIElement? _shell = null;
     private readonly AppDbContext _dbContext;
-    private readonly IConfigManager _configManager;
 
     private readonly ILocalSettingsService _localSettingsService;
 
@@ -29,7 +30,6 @@ public class ActivationService : IActivationService
         _activationHandlers = activationHandlers;
         _themeSelectorService = themeSelectorService;
         _dbContext = App.GetService<AppDbContext>();
-        _configManager = App.GetService<IConfigManager>();
         _localSettingsService = localSettingsService;
     }
 
@@ -38,7 +38,7 @@ public class ActivationService : IActivationService
         // Execute tasks before activation.
         await InitializeAsync();
         SetApplicationLanguage();
-        
+
         if (Settings.EnabledRightClick) ContextMenuRegistrar.TryRegister();
 
         // Set the MainWindow Content.
@@ -244,36 +244,47 @@ public class ActivationService : IActivationService
         var hotkeyService = App.GetService<HotkeyService>();
         var hotkeyActionRouter = App.GetService<HotkeyActionRouter>();
         hotkeyService.Initialize(App.MainWindow);
-        //bool success = hotkeyService.RegisterHotKey(
-        //    "ToggleChildWindow",
-        //    VirtualKey.D,
-        //    HotkeyService.ModifierKeys.Alt,
-        //    () => hotkeyActionRouter.HandleAction("ToggleChildWindow")
-        //);
+        await EnsureDefaultHotkeysAsync();
         var hotkeySettings = await _localSettingsService.LoadSettingsAsync<HotkeysCollection>("Hotkeys.json");
-        //hotkeySettings = new HotkeysCollection();
-        //hotkeySettings.Hotkeys.Add(new Hotkey
-        //{
-        //    Id = "ToggleChildWindow",
-        //    KeyGesture = HotkeyService.ToGestureString(VirtualKey.D, VirtualKeyModifiers.Menu),
-        //    CommandName = "ToggleChildWindow"
-        //});
-        //await _localSettingsService.SaveSettingsAsync(hotkeySettings, "Hotkeys.json");
 
-        foreach (var config in hotkeySettings.Hotkeys)
+        if (hotkeySettings?.Hotkeys == null || hotkeySettings.Hotkeys.Count == 0)
+        {
+            Logger.Info("No hotkeys configured. Skipping hotkey registration.");
+            return; // 文件存在但用户不配快捷键 → 直接跳过
+        }
+
+        foreach (var config in hotkeySettings?.Hotkeys ?? Enumerable.Empty<Hotkey>())
         {
             if (hotkeyService.TryParseGesture(config.KeyGesture, out var key, out var modifiers))
             {
                 bool success = hotkeyService.RegisterHotKey(
-                    config.Id, 
-                    key, modifiers, 
+                    config.Id,
+                    key, modifiers,
                     () => hotkeyActionRouter.HandleAction(config.CommandName)
                 );
                 if (!success)
                 {
+                    var tips = new AppNotificationBuilder().AddText($"快捷键{config.KeyGesture}注册失败，请检查是否与其他程序冲突！");
+                    App.GetService<IAppNotificationService>().Show(tips.BuildNotification().Payload);
                     Logger.Error($"Failed to register hotkey: {config.KeyGesture}");
                 }
             }
         }
     }
+
+    private async Task EnsureDefaultHotkeysAsync()
+    {
+        var hotkeySettings = await _localSettingsService.LoadSettingsAsync<HotkeysCollection>("Hotkeys.json");
+
+        if (hotkeySettings == null)
+        {
+            hotkeySettings = new HotkeysCollection
+            {
+                Hotkeys = DefaultHotkeys.Hotkeys.ToList() // 深拷贝一份
+            };
+            await _localSettingsService.SaveSettingsAsync(hotkeySettings, "Hotkeys.json");
+            Logger.Info("Default hotkeys initialized and saved.");
+        }
+    }
+
 }

@@ -418,6 +418,7 @@
   </ItemGroup>
   <ItemGroup>
     <Page Remove="Themes\Styles\TextBlock.xaml" />
+    <Page Remove="Views\UserControls\ShortcutControl\ShortcutControl.xaml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />

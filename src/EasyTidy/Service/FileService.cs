@@ -1,7 +1,10 @@
 ﻿using EasyTidy.Model;
 using EasyTidy.Util.UtilInterface;
+using EasyTidy.Util;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Text.Json.Serialization.Metadata;
 
 namespace EasyTidy.Service;
 
@@ -21,7 +24,7 @@ public class FileService : IFileService
 
         try
         {
-            return JsonSerializer.Deserialize(json, typeof(T), AppDataJsonContext.Default) is T result ? result : default;
+            return DeserializeWithFallback<T>(json, AppDataJsonContext.Default) ?? default;
         }
         catch
         {
@@ -63,4 +66,28 @@ public class FileService : IFileService
     }
 
     public static CoreSettings Config { get; set; }
+
+    public static T DeserializeWithFallback<T>(string json, JsonSerializerContext context)
+    {
+        // 优先用 SourceGenerator TypeInfo
+        var typeInfoObj = context.GetTypeInfo(typeof(T));
+        if (typeInfoObj is JsonTypeInfo<T> typeInfo)
+        {
+            var result = JsonSerializer.Deserialize(json, typeInfo);
+            if (result != null)
+                return result;
+        }
+
+        // fallback：接口用映射的具体类型反序列化
+        var concreteType = JsonTypeMap.GetConcreteType(typeof(T));
+        if (concreteType != null)
+        {
+            var result = JsonSerializer.Deserialize(json, concreteType);
+            if (result != null)
+                return (T)result;
+        }
+
+        // 最后兜底
+        return JsonSerializer.Deserialize<T>(json);
+    }
 }

@@ -55,7 +55,7 @@ public class LocalSettingsService : ILocalSettingsService
 
     public async Task<T> LoadSettingsAsync<T>() where T : class
     {
-        var key = typeof(T).FullName; // 使用类型的完全限定名作为键
+        var key = typeof(T).Name; // 使用类型的完全限定名作为键
 
         if (string.IsNullOrEmpty(key))
             throw new ArgumentException("Invalid type for settings.");
@@ -82,7 +82,7 @@ public class LocalSettingsService : ILocalSettingsService
 
     public async Task SaveSettingsAsync<T>(T settings) where T : class
     {
-        var key = typeof(T).FullName; // 使用类型的完全限定名作为键
+        var key = typeof(T).Name; // 使用类型的完全限定名作为键
 
         if (string.IsNullOrEmpty(key))
             throw new ArgumentException("Invalid type for settings.");

@@ -1,12 +1,15 @@
 using System;
 using System.Runtime.InteropServices;
+using EasyTidy.Common.Model;
+using EasyTidy.Contracts.Service;
+using EasyTidy.Model;
 using Windows.System;
 using WinRT.Interop;
 using WinUIEx;
 
 namespace EasyTidy.Service;
 
-public partial class HotkeyService : IDisposable
+public partial class HotkeyService(ILocalSettingsService localSettingsService, HotkeyActionRouter hotkeyActionRouter) : IDisposable
 {
     private readonly Dictionary<int, Action> _hotKeyActions = new();
     private readonly Dictionary<string, int> _hotKeyIds = new();
@@ -14,6 +17,10 @@ public partial class HotkeyService : IDisposable
     private IntPtr _hwnd;
     private DispatcherQueue _dispatcherQueue;
     private WindowEx _window;
+
+    private readonly ILocalSettingsService _localSettingsService = localSettingsService;
+
+    private readonly HotkeyActionRouter _hotkeyActionRouter = hotkeyActionRouter;
 
     public void Initialize(WindowEx window)
     {
@@ -164,6 +171,44 @@ public partial class HotkeyService : IDisposable
         parts.Add(key.ToString()); // 最后添加主键
 
         return string.Join(" + ", parts);
+    }
+
+    public async Task ResetToDefaultHotkeysAsync()
+    {
+        // 读取当前用户快捷键配置
+        var hotkeySettings = await _localSettingsService.LoadSettingsAsync<HotkeysCollection>("Hotkeys.json");
+        if (hotkeySettings == null)
+            return;
+
+        // 反注册所有已注册的快捷键
+        foreach (var hotkey in hotkeySettings.Hotkeys)
+        {
+            UnregisterHotKey(hotkey.Id);
+        }
+
+        // 重置为默认快捷键（深拷贝 DefaultHotkeys.Hotkeys）
+        hotkeySettings.Hotkeys = DefaultHotkeys.Hotkeys
+        .Select(h => new Hotkey
+        {
+            Id = h.Id,
+            KeyGesture = h.KeyGesture,
+            CommandName = h.CommandName
+        }).ToList();
+
+        // 保存到配置文件
+        await _localSettingsService.SaveSettingsAsync(hotkeySettings);
+
+        // 重新注册默认快捷键
+        foreach (var hotkey in hotkeySettings.Hotkeys)
+        {
+            _ = TryParseGesture(hotkey.KeyGesture, out var key, out var modifiers);
+            RegisterHotKey(
+                hotkey.Id,
+                key,
+                modifiers,
+                () => _hotkeyActionRouter.HandleAction(hotkey.CommandName)
+            );
+        }
     }
 
 }
