@@ -1,11 +1,6 @@
-﻿using EasyTidy.Common.Extensions;
-using EasyTidy.Service;
+﻿using EasyTidy.Service;
 using H.NotifyIcon;
-using Microsoft.UI.Composition.SystemBackdrops;
-using Microsoft.UI.Windowing;
-using Microsoft.UI.Xaml.Media;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
 using WinUIEx;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -47,20 +42,6 @@ public sealed partial class TrayIconView : UserControl
     /// </summary>
     [RelayCommand]
     private void ShowHideWindow() => ViewModel.ToggleChildWindow();
-    //private void ShowHideWindow()
-    //{
-    //    WindowsHelper.EnsureChildWindow();
-
-    //    var childWindow = App.ChildWindow;
-
-    //    SetWindowContent(childWindow);
-    //    WindowsHelper.SetWindowStyle(childWindow);
-    //    childWindow.SetRequestedTheme(ViewModel.ThemeSelectorService.Theme);
-
-    //    WindowsHelper.PositionWindowBottomRight(childWindow);
-
-    //    childWindow.Activate();
-    //}
 
     /// <summary>
     /// Exits the application
@@ -109,10 +90,5 @@ public sealed partial class TrayIconView : UserControl
     {
         await QuartzHelper.TriggerAllJobsOnceAsync();
         await ViewModel.ExecuteAllTaskAsync();
-    }
-
-    private void SetWindowContent(WindowEx window)
-    {
-        window.Content = new MainPage();
     }
 }

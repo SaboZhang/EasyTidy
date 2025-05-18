@@ -157,6 +157,8 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
         }
     }
 
+    public string QuickTime { get; set; } = DateTime.Now.ToString("HH:mm");
+
     public bool IsValid { get; set; }
 
     public bool DelayIsValid { get; set; }
@@ -177,6 +179,8 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
         _isFirstLoad = false;
+        Minute = string.Empty;
+        Hour = string.Empty;
     }
 
     public CustomConfigContentDialog()
@@ -430,6 +434,17 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
         if (!resutl.IsOn)
         {
             DelayValid.Visibility = Visibility.Collapsed;
+        }
+    }
+
+    private void TimePicker_SelectedTimeChanged(TimePicker sender, TimePickerSelectedValueChangedEventArgs args)
+    {
+        DateTime dateValue = DateTime.Parse(QuickTime);
+        if (args.NewTime != null)
+        {
+            var time = args.NewTime.Value;
+            Hour = time.Hours.ToString();
+            Minute = time.Minutes.ToString();
         }
     }
 }

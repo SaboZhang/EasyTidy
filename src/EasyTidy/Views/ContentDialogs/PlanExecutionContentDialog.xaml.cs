@@ -131,6 +131,8 @@ public sealed partial class PlanExecutionContentDialog : ContentDialog, INotifyD
         }
     }
 
+    public string QuickTime { get; set; } = DateTime.Now.ToString("HH:mm");
+
     public bool IsValid { get; set; }
 
     public PlanExecutionContentDialog()
@@ -145,6 +147,12 @@ public sealed partial class PlanExecutionContentDialog : ContentDialog, INotifyD
         ValidateDayOfWeek(_dayOfWeek);
         ValidateDayOfMonth(_dayOfMonth);
         ValidateMonthlyDay(_monthlyDay);
+    }
+
+    private void OnLoaded(object sender, RoutedEventArgs e)
+    {
+        Minute = string.Empty;
+        Hour = string.Empty;
     }
 
     /// <summary>
@@ -340,4 +348,13 @@ public sealed partial class PlanExecutionContentDialog : ContentDialog, INotifyD
         }
     }
 
+    private void TimePicker_SelectedTimeChanged(TimePicker sender, TimePickerSelectedValueChangedEventArgs args)
+    {
+        if (args.NewTime != null)
+        {
+            var time = args.NewTime.Value;
+            Hour = time.Hours.ToString();
+            Minute = time.Minutes.ToString();
+        }
+    }
 }

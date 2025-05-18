@@ -10,6 +10,7 @@
     xmlns:ui="using:CommunityToolkit.WinUI"
     CornerRadius="{ThemeResource OverlayCornerRadius}"
     DefaultButton="Primary"
+    Loaded="OnLoaded"
     mc:Ignorable="d"
     SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
 
@@ -107,6 +108,18 @@
                        x:Name="MonthlyDayValid"
                        Margin="170,0,0,0"
                        Visibility="Collapsed"/>
+            <StackPanel
+                Margin="0,10,0,0"
+                Orientation="Horizontal"
+                Spacing="8">
+                <TextBlock Text="快捷定时(几点几分)"
+                           Width="150"
+                           Margin="0,5,0,0"/>
+                <TimePicker ClockIdentifier="24HourClock"
+                            Margin="12,0,10,0"
+                            SelectedTime="{x:Bind QuickTime, Mode=TwoWay}"
+                            SelectedTimeChanged="TimePicker_SelectedTimeChanged"/>
+            </StackPanel>
             <etc:Divider/>
             <StackPanel Orientation="Horizontal"
                         Spacing="20">

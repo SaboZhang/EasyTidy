@@ -1,0 +1,441 @@
+using CommunityToolkit.WinUI;
+using EasyTidy.Common.Model;
+using EasyTidy.Model;
+using Microsoft.UI.Xaml.Automation;
+using Microsoft.UI.Xaml.Input;
+using System.Collections.ObjectModel;
+using System.Runtime.InteropServices;
+using Windows.System;
+using Windows.UI.Core;
+
+// To learn more about WinUI, the WinUI project structure,
+// and more about our project templates, see: http://aka.ms/winui-project-info.
+
+namespace EasyTidy.Views.UserControls;
+
+public sealed partial class ShortcutControl : UserControl
+{
+
+    private HashSet<VirtualKey> _heldKeys = new();
+    private readonly List<VirtualKey> _pressedSequence = new();
+
+    public event EventHandler<ObservableCollection<HotkeysCollection>> SaveClicked;
+    public event EventHandler ResetRequested;
+    private bool _enabled;
+    private bool _isActive;
+
+    private ShortcutDialogContentControl c = new ShortcutDialogContentControl();
+    private ContentDialog shortcutDialog;
+
+    public string Header { get; set; }
+    public string Keys { get; set; }
+
+    #region DependencyProperties
+
+    public static readonly DependencyProperty ParametersProperty =
+        DependencyProperty.Register(nameof(Parameters), typeof(string), typeof(ShortcutControl), new PropertyMetadata(string.Empty, OnParametersChanged));
+
+    public static readonly DependencyProperty IsActiveProperty =
+        DependencyProperty.Register(nameof(Enabled), typeof(bool), typeof(ShortcutControl), new PropertyMetadata(false, OnIsActiveChanged));
+
+    public static readonly DependencyProperty HotkeySettingsProperty =
+        DependencyProperty.Register(nameof(HotkeySettings), typeof(ObservableCollection<HotkeysCollection>), typeof(ShortcutControl),
+            new PropertyMetadata(null, OnHotkeySettingsChanged));
+
+    public static readonly DependencyProperty AllowDisableProperty =
+        DependencyProperty.Register(nameof(AllowDisable), typeof(bool), typeof(ShortcutControl),
+            new PropertyMetadata(false, OnAllowDisableChanged));
+
+    #endregion
+
+    #region Properties
+
+    public string Parameters
+    {
+        get => (string)GetValue(ParametersProperty);
+        set => SetValue(ParametersProperty, value);
+    }
+
+    public bool Enabled
+    {
+        get => _enabled;
+        set => SetValue(IsActiveProperty, value);
+    }
+
+    public ObservableCollection<HotkeysCollection> HotkeySettings
+    {
+        get => (ObservableCollection<HotkeysCollection>)GetValue(HotkeySettingsProperty);
+        set => SetValue(HotkeySettingsProperty, value);
+    }
+
+    public bool AllowDisable
+    {
+        get => (bool)GetValue(AllowDisableProperty);
+        set => SetValue(AllowDisableProperty, value);
+    }
+
+    #endregion
+
+    public ShortcutControl()
+    {
+        InitializeComponent();
+
+        Loaded += ShortcutControl_Loaded;
+        Unloaded += ShortcutControl_Unloaded;
+
+        shortcutDialog = new ContentDialog
+        {
+            Title = "Activation_Shortcut_Title".GetLocalized(),
+            Content = c,
+            PrimaryButtonText = "Activation_Shortcut_Save".GetLocalized(),
+            SecondaryButtonText = "Activation_Shortcut_Reset".GetLocalized(),
+            CloseButtonText = "Activation_Shortcut_Cancel".GetLocalized(),
+            DefaultButton = ContentDialogButton.Primary
+        };
+
+        shortcutDialog.SecondaryButtonClick += ShortcutDialog_Reset;
+        shortcutDialog.RightTapped += ShortcutDialog_Disable;
+
+        AutomationProperties.SetName(EditButton, "Activation_Shortcut_Title".GetLocalized());
+        OnAllowDisableChanged(this, null);
+        c.KeyDown += OnKeyDown;
+        c.KeyUp += OnKeyUp;
+    }
+
+    #region EventHandlers
+
+    private static void OnParametersChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (d is ShortcutControl control)
+        {
+            control.UpdatePreviewKeys();
+        }
+    }
+
+    private static void OnIsActiveChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (d is ShortcutControl control)
+        {
+            control.EditButton.IsEnabled = (bool)e.NewValue;
+            control._enabled = (bool)e.NewValue;
+        }
+    }
+
+    private static void OnHotkeySettingsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (d is ShortcutControl control)
+        {
+            control.UpdatePreviewKeys();
+        }
+    }
+
+    private static void OnAllowDisableChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        var me = d as ShortcutControl;
+        if (me == null)
+        {
+            return;
+        }
+        var description = me.c?.FindDescendant<TextBlock>();
+        if (description == null)
+        {
+            return;
+        }
+
+        var newValue = (bool)(e?.NewValue ?? false);
+
+        var text = newValue ? "Activation_Shortcut_With_Disable_Description".GetLocalized() : "Activation_Shortcut_Description".GetLocalized();
+        description.Text = text;
+    }
+
+    private void ShortcutControl_Loaded(object sender, RoutedEventArgs e)
+    {
+        shortcutDialog.PrimaryButtonClick += ShortcutDialog_PrimaryButtonClick;
+        shortcutDialog.Opened += ShortcutDialog_Opened;
+        shortcutDialog.Closing += ShortcutDialog_Closing;
+    }
+
+    private void ShortcutControl_Unloaded(object sender, RoutedEventArgs e)
+    {
+        shortcutDialog.PrimaryButtonClick -= ShortcutDialog_PrimaryButtonClick;
+        shortcutDialog.Opened -= ShortcutDialog_Opened;
+        shortcutDialog.Closing -= ShortcutDialog_Closing;
+    }
+
+    private void ShortcutDialog_Opened(ContentDialog sender, ContentDialogOpenedEventArgs args)
+    {
+        _isActive = true;
+        UpdatePreviewKeys();
+
+    }
+
+    private void ShortcutDialog_Closing(ContentDialog sender, ContentDialogClosingEventArgs args)
+    {
+        _isActive = false;
+    }
+
+    private void ShortcutDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+    {
+        var keyGesture = string.Join(" + ", c.Keys);
+        // 创建新的 Hotkey
+        var newHotkey = new Hotkey
+        {
+            Id = Parameters,
+            KeyGesture = keyGesture,
+            CommandName = Parameters
+        };
+        // 尝试在 HotkeySettings 中找到对应的 HotkeysCollection
+        var targetCollection = HotkeySettings.FirstOrDefault();
+
+        if (targetCollection == null)
+        {
+            targetCollection = new HotkeysCollection();
+            HotkeySettings.Add(targetCollection);
+        }
+
+        // 添加或替换已有快捷键（按 Id 唯一）
+        var existing = targetCollection.Hotkeys.FirstOrDefault(h => h.Id == Parameters);
+        if (existing != null)
+        {
+            existing.KeyGesture = keyGesture;
+        }
+        else
+        {
+            targetCollection.Hotkeys.Add(newHotkey);
+        }
+
+        SaveClicked?.Invoke(this, HotkeySettings);
+
+        shortcutDialog.Hide();
+    }
+
+    private void ShortcutDialog_Reset(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+    {
+        ResetRequested?.Invoke(this, EventArgs.Empty);
+        // Reset logic if needed
+        UpdatePreviewKeys();
+        shortcutDialog.Hide();
+    }
+
+    private void ShortcutDialog_Disable(object sender, RightTappedRoutedEventArgs e)
+    {
+        if (AllowDisable)
+        {
+            HotkeySettings?.Clear();
+            UpdatePreviewKeys();
+            shortcutDialog.Hide();
+        }
+    }
+
+    private async void OpenDialogButton_Click(object sender, RoutedEventArgs e)
+    {
+        c.Keys = HotkeySettings?.SelectMany(hkc => hkc.Hotkeys)
+            .FirstOrDefault(hk => hk.Id == Parameters)?
+            .KeyGesture?
+            .Split('+', StringSplitOptions.RemoveEmptyEntries)
+            .Select(k => (object)k.Trim())
+            .Where(k => !string.IsNullOrWhiteSpace(k.ToString()))
+            .ToList()
+            ?? new List<object>();
+
+        c.IsWarningAltGr = c.Keys.Contains("Ctrl") && c.Keys.Contains("Alt") && !c.Keys.Contains("Win");
+
+        shortcutDialog.XamlRoot = this.XamlRoot;
+        shortcutDialog.RequestedTheme = ActualTheme;
+
+        await shortcutDialog.ShowAsync();
+    }
+
+    private void OnKeyDown(object sender, KeyRoutedEventArgs e)
+    {
+        var key = e.Key;
+
+        // 按下任何非 Win 键时，手动检测 Win 是否已松开
+        if (key != VirtualKey.LeftWindows && key != VirtualKey.RightWindows)
+        {
+            foreach (var winKey in new[] { VirtualKey.LeftWindows, VirtualKey.RightWindows })
+            {
+                bool isStillDown = (GetAsyncKeyState((int)winKey) & 0x8000) != 0;
+
+                if (!isStillDown)
+                {
+                    // 手动清除 Win
+                    _heldKeys.Remove(winKey);
+                    _pressedSequence.Remove(winKey);
+                }
+            }
+        }
+
+        // 防止重复添加同一按键
+        if (_heldKeys.Add(key))
+        {
+            if (key == VirtualKey.LeftWindows || key == VirtualKey.RightWindows)
+            {
+                if (!_pressedSequence.Contains(key))
+                {
+                    _pressedSequence.Add(key);
+                }
+            }
+            else
+            {
+                _pressedSequence.Add(key);
+            }
+
+            UpdateShortcutKeys();
+        }
+
+        e.Handled = true;
+    }
+
+    private void OnKeyUp(object sender, KeyRoutedEventArgs e)
+    {
+        var key = e.Key;
+
+        _heldKeys.Remove(key);
+        if (key != VirtualKey.LeftWindows && key != VirtualKey.RightWindows)
+        {
+            _pressedSequence.Remove(key);
+        }
+
+        e.Handled = true;
+    }
+
+    private void UpdateShortcutKeys()
+    {
+        string[] modifierOrder = { "Win", "Ctrl", "Alt", "Shift" };
+
+        // 按顺序将修饰键放前面，其余的排在后面
+        var formattedKeys = _pressedSequence
+            .Select(FormatKey)
+            .OrderBy(k =>
+            {
+                int index = Array.IndexOf(modifierOrder, k);
+                return index >= 0 ? index : modifierOrder.Length;
+            })
+            .ToList();
+
+        // 转换为 object 列表保存
+        c.Keys = formattedKeys.Cast<object>().ToList();
+
+        c.IsWarningAltGr = c.Keys.Contains("Ctrl") && c.Keys.Contains("Alt") && !c.Keys.Contains("Win");
+
+        bool isValid = IsValidKeyCombination(formattedKeys);
+
+        if (isValid)
+        {
+            EnableKeys();
+        }
+        else
+        {
+            DisableKeys();
+        }
+    }
+
+    private void EnableKeys()
+    {
+        shortcutDialog.IsPrimaryButtonEnabled = true;
+        c.IsError = false;
+    }
+
+    private void DisableKeys()
+    {
+        shortcutDialog.IsPrimaryButtonEnabled = false;
+        // 判断是否是“仅两个修饰键”的情况
+        var formattedKeys = c.Keys?.Select(k => k.ToString()).ToList() ?? new();
+        string[] modifiers = { "Ctrl", "Alt", "Shift", "Win" };
+        string[] invalidSingleKeys = { "Tab", "Caps Lock" };
+
+        var modifierKeys = formattedKeys.Where(k => modifiers.Contains(k)).ToList();
+        var normalKeys = formattedKeys.Except(modifierKeys).ToList();
+
+        // 单个 Tab 或 CapsLock 键，标红
+        if (normalKeys.Count == 1 && modifierKeys.Count == 0 &&
+            invalidSingleKeys.Contains(normalKeys[0]))
+        {
+            c.IsError = true;
+        }
+        else
+        {
+            // 其他非法组合不标红（允许）
+            c.IsError = false;
+        }
+    }
+
+    #endregion
+
+    private void UpdatePreviewKeys()
+    {
+        var keys = HotkeySettings?.SelectMany(hkc => hkc.Hotkeys)
+            .FirstOrDefault(hk => hk.Id == Parameters)?
+            .KeyGesture?
+            .Split('+', StringSplitOptions.RemoveEmptyEntries)
+            .Select(k => (object)k.Trim())
+            .Where(k => !string.IsNullOrWhiteSpace(k.ToString()))
+            .ToList()
+            ?? new List<object>();
+        PreviewKeysControl.ItemsSource = keys;
+        AutomationProperties.SetHelpText(EditButton, string.Join(", ", keys));
+        c.Keys = keys;
+    }
+
+    private string FormatKey(VirtualKey key)
+    {
+        return key switch
+        {
+            VirtualKey.Control => "Ctrl",
+            VirtualKey.Menu => "Alt",
+            VirtualKey.LeftWindows => "Win",
+            VirtualKey.RightWindows => "Win", // VirtualKey.RightWindows
+            VirtualKey.Shift => "Shift",
+            VirtualKey.Escape => "Esc",
+            VirtualKey.Left => "←",
+            VirtualKey.Right => "→",
+            VirtualKey.Up => "↑",
+            VirtualKey.Down => "↓",
+            VirtualKey.Enter => "Enter",
+            VirtualKey.CapitalLock => "Caps Lock",
+            (VirtualKey)0xBC => ",",    // VK_OEM_COMMA
+            (VirtualKey)0xBE => ".",    // VK_OEM_PERIOD
+            (VirtualKey)0xBA => ";",    // VK_OEM_1 (美国键盘分号)
+            (VirtualKey)0xDE => "\"",   // VK_OEM_7 (美国键盘引号)
+            (VirtualKey)0xBF => "?",    // VK_OEM_2 (美国键盘斜杠)
+            (VirtualKey)0xBD => "-",    // VK_OEM_MINUS
+            (VirtualKey)0xBB => "+",    // VK_OEM_PLUS
+            (VirtualKey)0xDB => "[",    // VK_OEM_4
+            (VirtualKey)0xDD => "]",    // VK_OEM_6
+            (VirtualKey)0xDC => "\\",   // VK_OEM_5
+            (VirtualKey)0xC0 => "~",    // VK_OEM_3
+            _ => key.ToString() // 其他键直接用默认名称
+        };
+    }
+
+    [DllImport("user32.dll")]
+    private static extern short GetAsyncKeyState(int vKey);
+
+    private static bool IsValidKeyCombination(List<string> keys)
+    {
+        if (keys == null || keys.Count == 0)
+            return false;
+
+        string[] modifiers = { "Ctrl", "Alt", "Shift", "Win" };
+        string[] invalidSingleKeys = { "Tab", "Caps Lock" };
+
+        var modifierKeys = keys.Where(k => modifiers.Contains(k)).ToList();
+        var normalKeys = keys.Except(modifierKeys).ToList();
+
+        // 没有修饰键
+        if (modifierKeys.Count == 0)
+        {
+            // 只允许一个合法的普通键
+            return normalKeys.Count == 1 && !invalidSingleKeys.Contains(normalKeys[0]);
+        }
+
+        // 有修饰键但没有普通键，无效
+        if (normalKeys.Count == 0)
+            return false;
+
+        // 有修饰键且有普通键，有效
+        return true;
+    }
+
+}

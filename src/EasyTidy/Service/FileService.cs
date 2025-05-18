@@ -1,6 +1,5 @@
 ﻿using EasyTidy.Model;
 using EasyTidy.Util.UtilInterface;
-using EasyTidy.Util;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -39,6 +38,8 @@ public class FileService : IFileService
         {
             Directory.CreateDirectory(folderPath);
         }
+
+        var type = typeof(T);
 
         var fileContent = JsonSerializer.Serialize(content, AppDataJsonContext.Default.GetTypeInfo(typeof(T))).Replace("\\u002B", "+");
         File.WriteAllText(Path.Combine(folderPath, fileName), fileContent, Encoding.UTF8);

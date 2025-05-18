@@ -2132,6 +2132,46 @@
           <source>Set global shortcuts for the application</source>
           <target state="translated">設定應用的全局快捷鍵</target>
         </trans-unit>
+        <trans-unit id="Activation_Shortcut_Title" translate="yes" xml:space="preserve">
+          <source>Activation shortcut</source>
+          <target state="translated">激活快捷鍵</target>
+        </trans-unit>
+        <trans-unit id="Activation_Shortcut_Save" translate="yes" xml:space="preserve">
+          <source>Save</source>
+          <target state="translated">保存</target>
+        </trans-unit>
+        <trans-unit id="Activation_Shortcut_Reset" translate="yes" xml:space="preserve">
+          <source>Reset</source>
+          <target state="translated">重置</target>
+        </trans-unit>
+        <trans-unit id="Activation_Shortcut_Cancel" translate="yes" xml:space="preserve">
+          <source>Cancel</source>
+          <target state="translated">取消</target>
+        </trans-unit>
+        <trans-unit id="Activation_Shortcut_Description" translate="yes" xml:space="preserve">
+          <source>Press a combination of keys to change this shortcut</source>
+          <target state="translated">按下組合鍵以更改此快捷鍵</target>
+        </trans-unit>
+        <trans-unit id="Activation_Shortcut_With_Disable_Description" translate="yes" xml:space="preserve">
+          <source>Press a key combination to change this shortcut. Right-click to remove the key combination and disable the shortcut.</source>
+          <target state="translated">按下按鍵組合以更改此快捷鍵。右鍵點擊以移除按鍵組合並停用快捷鍵。</target>
+        </trans-unit>
+        <trans-unit id="Shortcut_Description.Text" translate="yes" xml:space="preserve">
+          <source>Supports key combinations starting with Windows, Ctrl, Alt, or Shift, as well as single, unmodified keys on their own</source>
+          <target state="translated">支持以 Windows、Ctrl、Alt 或 Shift 開頭的組合鍵，以及單獨的非修飾鍵</target>
+        </trans-unit>
+        <trans-unit id="InvalidShortcut.Title" translate="yes" xml:space="preserve">
+          <source>Invalid shortcut</source>
+          <target state="translated">無效的快捷鍵</target>
+        </trans-unit>
+        <trans-unit id="WarningShortcutAltGr.Title" translate="yes" xml:space="preserve">
+          <source>Possible shortcut interference with Alt Gr</source>
+          <target state="translated">可能與 Alt Gr 衝突的快速鍵</target>
+        </trans-unit>
+        <trans-unit id="RegisterFailed" translate="yes" xml:space="preserve">
+          <source>Shortcut key {0} registration failed, please check if there's a conflict with other programs!</source>
+          <target state="new">Shortcut key {0} registration failed, please check if there's a conflict with other programs!</target>
+        </trans-unit>
       </group>
     </body>
   </file>

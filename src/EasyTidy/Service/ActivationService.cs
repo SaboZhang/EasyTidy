@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.WinUI;
 using EasyTidy.Activation;
 using EasyTidy.Common.Database;
+using EasyTidy.Common.Extensions;
 using EasyTidy.Common.Model;
 using EasyTidy.Contracts.Service;
 using EasyTidy.Model;
@@ -38,6 +39,7 @@ public class ActivationService : IActivationService
         // Execute tasks before activation.
         await InitializeAsync();
         SetApplicationLanguage();
+        await RegisterHotKeyAsync();
 
         if (Settings.EnabledRightClick) ContextMenuRegistrar.TryRegister();
 
@@ -59,7 +61,6 @@ public class ActivationService : IActivationService
 
         // Handle activation via ActivationHandlers.
         await HandleActivationAsync(activationArgs);
-        await RegisterHotKeyAsync();
     }
 
     private async Task HandleActivationAsync(object activationArgs)
@@ -245,7 +246,7 @@ public class ActivationService : IActivationService
         var hotkeyActionRouter = App.GetService<HotkeyActionRouter>();
         hotkeyService.Initialize(App.MainWindow);
         await EnsureDefaultHotkeysAsync();
-        var hotkeySettings = await _localSettingsService.LoadSettingsAsync<HotkeysCollection>("Hotkeys.json");
+        var hotkeySettings = await _localSettingsService.LoadSettingsExtAsync<HotkeysCollection>();
 
         if (hotkeySettings?.Hotkeys == null || hotkeySettings.Hotkeys.Count == 0)
         {
@@ -255,16 +256,16 @@ public class ActivationService : IActivationService
 
         foreach (var config in hotkeySettings?.Hotkeys ?? Enumerable.Empty<Hotkey>())
         {
-            if (hotkeyService.TryParseGesture(config.KeyGesture, out var key, out var modifiers))
+            if (hotkeyService.TryParseGesture(config.KeyGesture, out var keys))
             {
-                bool success = hotkeyService.RegisterHotKey(
+                bool success = hotkeyService.RegisterMultiKeyHotkey(
                     config.Id,
-                    key, modifiers,
+                    keys,
                     () => hotkeyActionRouter.HandleAction(config.CommandName)
                 );
                 if (!success)
                 {
-                    var tips = new AppNotificationBuilder().AddText($"快捷键{config.KeyGesture}注册失败，请检查是否与其他程序冲突！");
+                    var tips = new AppNotificationBuilder().AddText(string.Format("RegisterFailed".GetLocalized(), config.KeyGesture));
                     App.GetService<IAppNotificationService>().Show(tips.BuildNotification().Payload);
                     Logger.Error($"Failed to register hotkey: {config.KeyGesture}");
                 }
@@ -274,7 +275,7 @@ public class ActivationService : IActivationService
 
     private async Task EnsureDefaultHotkeysAsync()
     {
-        var hotkeySettings = await _localSettingsService.LoadSettingsAsync<HotkeysCollection>("Hotkeys.json");
+        var hotkeySettings = await _localSettingsService.LoadSettingsExtAsync<HotkeysCollection>();
 
         if (hotkeySettings == null)
         {
@@ -282,7 +283,7 @@ public class ActivationService : IActivationService
             {
                 Hotkeys = DefaultHotkeys.Hotkeys.ToList() // 深拷贝一份
             };
-            await _localSettingsService.SaveSettingsAsync(hotkeySettings, "Hotkeys.json");
+            await _localSettingsService.SaveSettingsExtAsync(hotkeySettings);
             Logger.Info("Default hotkeys initialized and saved.");
         }
     }

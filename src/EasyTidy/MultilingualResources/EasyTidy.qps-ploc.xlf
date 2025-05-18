@@ -2132,6 +2132,46 @@
           <source>Set global shortcuts for the application</source>
           <target state="new">Set global shortcuts for the application</target>
         </trans-unit>
+        <trans-unit id="Activation_Shortcut_Title" translate="yes" xml:space="preserve">
+          <source>Activation shortcut</source>
+          <target state="new">Activation shortcut</target>
+        </trans-unit>
+        <trans-unit id="Activation_Shortcut_Save" translate="yes" xml:space="preserve">
+          <source>Save</source>
+          <target state="new">Save</target>
+        </trans-unit>
+        <trans-unit id="Activation_Shortcut_Reset" translate="yes" xml:space="preserve">
+          <source>Reset</source>
+          <target state="new">Reset</target>
+        </trans-unit>
+        <trans-unit id="Activation_Shortcut_Cancel" translate="yes" xml:space="preserve">
+          <source>Cancel</source>
+          <target state="new">Cancel</target>
+        </trans-unit>
+        <trans-unit id="Activation_Shortcut_Description" translate="yes" xml:space="preserve">
+          <source>Press a combination of keys to change this shortcut</source>
+          <target state="new">Press a combination of keys to change this shortcut</target>
+        </trans-unit>
+        <trans-unit id="Activation_Shortcut_With_Disable_Description" translate="yes" xml:space="preserve">
+          <source>Press a key combination to change this shortcut. Right-click to remove the key combination and disable the shortcut.</source>
+          <target state="new">Press a key combination to change this shortcut. Right-click to remove the key combination and disable the shortcut.</target>
+        </trans-unit>
+        <trans-unit id="Shortcut_Description.Text" translate="yes" xml:space="preserve">
+          <source>Supports key combinations starting with Windows, Ctrl, Alt, or Shift, as well as single, unmodified keys on their own</source>
+          <target state="new">Supports key combinations starting with Windows, Ctrl, Alt, or Shift, as well as single, unmodified keys on their own</target>
+        </trans-unit>
+        <trans-unit id="InvalidShortcut.Title" translate="yes" xml:space="preserve">
+          <source>Invalid shortcut</source>
+          <target state="new">Invalid shortcut</target>
+        </trans-unit>
+        <trans-unit id="WarningShortcutAltGr.Title" translate="yes" xml:space="preserve">
+          <source>Possible shortcut interference with Alt Gr</source>
+          <target state="new">Possible shortcut interference with Alt Gr</target>
+        </trans-unit>
+        <trans-unit id="RegisterFailed" translate="yes" xml:space="preserve">
+          <source>Shortcut key {0} registration failed, please check if there's a conflict with other programs!</source>
+          <target state="new">Shortcut key {0} registration failed, please check if there's a conflict with other programs!</target>
+        </trans-unit>
       </group>
     </body>
   </file>

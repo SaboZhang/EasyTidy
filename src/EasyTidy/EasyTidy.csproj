@@ -182,6 +182,8 @@
     <None Remove="Views\TrayIconView.xaml" />
     <None Remove="Views\UserControls\SettingsGroup.xaml" />
     <None Remove="Views\UserControls\SettingsPageControl.xaml" />
+    <None Remove="Views\UserControls\ShortcutControl\ShortcutControl.xaml" />
+    <None Remove="Views\UserControls\ShortcutControl\ShortcutWithTextLabelControl.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Manifest Include="$(ApplicationManifest)" />
@@ -306,6 +308,21 @@
     <None Update="Themes\Styles\TextBlock.xaml">
       <Generator>MSBuild:Compile</Generator>
     </None>
+    <None Update="Themes\Controls\KeyVisual.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <Page Update="Views\UserControls\ShortcutControl\ShortcutControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\UserControls\ShortcutControl\ShortcutWithTextLabelControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\UserControls\KeyVisual\KeyVisual.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\UserControls\ShortcutControl\ShortcutDialogContentControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Views\Settings\HotKeySettingPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -418,7 +435,7 @@
   </ItemGroup>
   <ItemGroup>
     <Page Remove="Themes\Styles\TextBlock.xaml" />
-    <Page Remove="Views\UserControls\ShortcutControl\ShortcutControl.xaml" />
+    <Page Remove="Views\UserControls\KeyVisual\KeyVisual.xaml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />
@@ -436,7 +453,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\AI\" />
-    <Folder Include="Themes\Controls\" />
   </ItemGroup>
   <ItemGroup>
     <Page Update="Themes\Styles\TextBlock.xaml">

@@ -1,16 +1,25 @@
 ﻿using CommunityToolkit.WinUI;
+using EasyTidy.Common.Extensions;
 using EasyTidy.Common.Model;
 using EasyTidy.Contracts.Service;
 using EasyTidy.Model;
 using EasyTidy.Service;
+using EasyTidy.Views.UserControls;
+using Microsoft.UI.Input;
+using Microsoft.UI.Xaml.Input;
+using ModelContextProtocol.Protocol.Types;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Windows.System;
+using Windows.UI.Core;
+using WinUIEx;
 using static EasyTidy.Service.HotkeyService;
+using static Org.BouncyCastle.Math.EC.ECCurve;
 
 namespace EasyTidy.ViewModels;
 
@@ -22,6 +31,9 @@ public partial class HotKeySettingViewModel : ObservableObject
 
     private readonly HotkeyService _hotkeyService;
     private readonly HotkeyActionRouter _hotkeyActionRouter;
+
+    [ObservableProperty]
+    private ObservableCollection<HotkeysCollection> _hotkeys;
 
     public ObservableCollection<Breadcrumb> Breadcrumbs { get; }
 
@@ -37,19 +49,39 @@ public partial class HotKeySettingViewModel : ObservableObject
             new("Settings".GetLocalized(), typeof(SettingsViewModel).FullName!),
             new("Settings_Hotkey_Header".GetLocalized(), typeof(HotKeySettingViewModel).FullName!),
         };
+        _ = LoadHotkeysAsync();
+
+    }
+
+    public async Task LoadHotkeysAsync()
+    {
+        var hotkeys = await _localSettingsService.LoadSettingsExtAsync<HotkeysCollection>();
+
+        if (hotkeys?.Hotkeys == null)
+            return;
+
+        Hotkeys = new ObservableCollection<HotkeysCollection>(new[] { hotkeys });
     }
 
     [RelayCommand]
-    private async Task RegisterUserDefinedHotkeyAsync()
+    private async Task RegisterUserDefinedHotkeyAsync(ObservableCollection<HotkeysCollection> collections)
     {
-        // 1. 接收用户自定义快捷键信息（示例占位）
-        VirtualKey key = VirtualKey.None;
-        VirtualKeyModifiers modifiers = VirtualKeyModifiers.None;
-        var hotkeyId = string.Empty;
-        var actionName = string.Empty;
+        var vk = new List<VirtualKey>();
+        var hotkeyId = "ToggleChildWindow";
+        var actionName = "ToggleChildWindow";
+        if (collections == null && collections.Count == 0) return;
+
+        var allHotkeys = collections.SelectMany(c => c.Hotkeys).ToList();
+        foreach (var hotkey in allHotkeys)
+        {
+            hotkeyId = hotkey.Id;
+            actionName = hotkey.CommandName;
+            _hotkeyService.TryParseGesture(hotkey.KeyGesture, out var keys);
+            vk.AddRange(keys);
+        }
 
         // 2. 加载已有的快捷键集合，没有就初始化
-        var hotkeys = await _localSettingsService.LoadSettingsAsync<HotkeysCollection>()
+        var hotkeys = await _localSettingsService.LoadSettingsExtAsync<HotkeysCollection>()
         ?? new HotkeysCollection { Hotkeys = [] };
 
         // 3. 查找是否已存在对应Id的快捷键
@@ -57,8 +89,9 @@ public partial class HotKeySettingViewModel : ObservableObject
 
         if (existingHotkey != null)
         {
+            _hotkeyService.UnregisterMultiKeyHotkey(existingHotkey.Id);
             // 更新已有的快捷键
-            existingHotkey.KeyGesture = ToGestureString(key, modifiers);
+            existingHotkey.KeyGesture = ToGestureString(vk);
             existingHotkey.CommandName = actionName;
         }
         else
@@ -67,51 +100,32 @@ public partial class HotKeySettingViewModel : ObservableObject
             hotkeys.Hotkeys.Add(new Hotkey
             {
                 Id = hotkeyId,
-                KeyGesture = ToGestureString(key, modifiers),
+                KeyGesture = ToGestureString(vk),
                 CommandName = actionName
             });
         }
 
         // 4. 保存修改后的快捷键集合
-        await _localSettingsService.SaveSettingsAsync(hotkeys);
+        await _localSettingsService.SaveSettingsExtAsync(hotkeys);
+        await LoadHotkeysAsync();
 
         // 5. 注册快捷键
-        bool success = _hotkeyService.RegisterHotKey(
+        bool success = _hotkeyService.RegisterMultiKeyHotkey(
             hotkeyId,
-            key,
-            ConvertToModifierKeys(modifiers),
+            vk,
             () => _hotkeyActionRouter.HandleAction(hotkeyId)
         );
 
         if (!success)
         {
-            Logger.Warn($"Failed to register hotkey: {ToGestureString(key, modifiers)}");
+            Logger.Warn($"Failed to register hotkey: {ToGestureString(vk)}");
         }
-    }
-
-    private static ModifierKeys ConvertToModifierKeys(VirtualKeyModifiers vkModifiers)
-    {
-        ModifierKeys result = ModifierKeys.None;
-
-        if (vkModifiers.HasFlag(VirtualKeyModifiers.Control))
-            result |= ModifierKeys.Control;
-
-        if (vkModifiers.HasFlag(VirtualKeyModifiers.Shift))
-            result |= ModifierKeys.Shift;
-
-        if (vkModifiers.HasFlag(VirtualKeyModifiers.Menu)) // Alt
-            result |= ModifierKeys.Alt;
-
-        if (vkModifiers.HasFlag(VirtualKeyModifiers.Windows))
-            result |= ModifierKeys.Win;
-
-        return result;
     }
 
     [RelayCommand]
     private async Task ClearAllHotKeysAsync()
     {
-        var hotkeySettings = await _localSettingsService.LoadSettingsAsync<HotkeysCollection>("Hotkeys.json");
+        var hotkeySettings = await _localSettingsService.LoadSettingsExtAsync<HotkeysCollection>();
         if (hotkeySettings != null)
         {
             // 清除所有已注册的快捷键
@@ -123,7 +137,7 @@ public partial class HotKeySettingViewModel : ObservableObject
             // 清空集合
             hotkeySettings.Hotkeys.Clear();
             // 保存修改后的快捷键集合
-            await _localSettingsService.SaveSettingsAsync(hotkeySettings);
+            await _localSettingsService.SaveSettingsExtAsync(hotkeySettings);
         }
     }
 
@@ -131,6 +145,36 @@ public partial class HotKeySettingViewModel : ObservableObject
     private async Task ResetAllHotkeys()
     {
         await _hotkeyService.ResetToDefaultHotkeysAsync();
+    }
+
+    [RelayCommand]
+    private async Task ResetDefault(string id)
+    {
+        Hotkeys?.Clear();
+        // 清除已注册的快捷键
+        _hotkeyService.UnregisterMultiKeyHotkey(id);
+        // 重置为默认值
+        var defaultHotkey = DefaultHotkeys.GetHotkeyById(id);
+        if (defaultHotkey != null)
+        {
+            var hotkeysCollection = new HotkeysCollection
+            {
+                Hotkeys = new List<Hotkey> { defaultHotkey }
+            };
+            Hotkeys = new ObservableCollection<HotkeysCollection>(new[] { hotkeysCollection });
+            // 保存修改后的快捷键集合
+            await _localSettingsService.SaveSettingsExtAsync(hotkeysCollection);
+            _hotkeyService.TryParseGesture(defaultHotkey.KeyGesture, out var keys);
+            bool success = _hotkeyService.RegisterMultiKeyHotkey(
+                defaultHotkey.Id,
+                keys,
+                () => _hotkeyActionRouter.HandleAction(defaultHotkey.CommandName));
+
+            if (!success)
+            {
+                Logger.Warn($"Failed to register hotkey: {ToGestureString(keys)}");
+            }
+        }
     }
 
 }
