@@ -1558,4 +1558,37 @@
   <data name="CopyStr.Text" xml:space="preserve">
     <value>タスクの複製</value>
   </data>
+  <data name="Settings_Hotkey_Header" xml:space="preserve">
+    <value>ショートカットキー</value>
+  </data>
+  <data name="Settings_Hotkey_Description" xml:space="preserve">
+    <value>アプリケーションのグローバルショートカットを設定する</value>
+  </data>
+  <data name="Activation_Shortcut_Title" xml:space="preserve">
+    <value>起動ショートカット</value>
+  </data>
+  <data name="Activation_Shortcut_Save" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="Activation_Shortcut_Reset" xml:space="preserve">
+    <value>リセット</value>
+  </data>
+  <data name="Activation_Shortcut_Cancel" xml:space="preserve">
+    <value>キャンセル</value>
+  </data>
+  <data name="Activation_Shortcut_Description" xml:space="preserve">
+    <value>このショートカットを変更するには、キーの組み合わせを押してください</value>
+  </data>
+  <data name="Activation_Shortcut_With_Disable_Description" xml:space="preserve">
+    <value>このショートカットを変更するには、キーの組み合わせを押してください。キーの組み合わせを削除してショートカットを無効にするには、右クリックしてください。</value>
+  </data>
+  <data name="Shortcut_Description.Text" xml:space="preserve">
+    <value>Windows、Ctrl、Alt、またはShiftから始まるキー組み合わせや、単一の未変更キーをサポート</value>
+  </data>
+  <data name="InvalidShortcut.Title" xml:space="preserve">
+    <value>無効なショートカット</value>
+  </data>
+  <data name="WarningShortcutAltGr.Title" xml:space="preserve">
+    <value>Alt Grキーとのショートカット競合の可能性</value>
+  </data>
 </root>

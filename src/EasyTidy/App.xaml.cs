@@ -103,6 +103,8 @@ public partial class App : Application
                 services.AddTransient<AiSettingsPage>();
                 services.AddTransient<AiSettingsViewModel>();
                 services.AddTransient<AIServiceFactory>();
+                services.AddTransient<HotKeySettingViewModel>();
+                services.AddTransient<HotKeySettingPage>();
 
                 // Register AppDbContext
                 services.AddDbContext<AppDbContext>(options =>
@@ -110,6 +112,9 @@ public partial class App : Application
 
                 // Configuration
                 services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));
+                // Register Hotkey
+                services.AddSingleton<HotkeyService>();
+                services.AddSingleton<HotkeyActionRouter>();
 
             })
             .Build();

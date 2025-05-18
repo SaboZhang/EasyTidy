@@ -18,8 +18,9 @@
         </i:EventTriggerBehavior>
     </i:Interaction.Behaviors>
 
-    <ScrollView Margin="0,-58,0,0"
-                VerticalScrollBarVisibility="Auto">
+    <ScrollViewer Margin="0,-58,0,0"
+                VerticalScrollBarVisibility="Hidden"
+                  x:Name="OuterScrollViewer">
         <StackPanel Margin="0,-42,0,0">
             <etc:SettingsPageControl
                 x:Name="ContentArea"
@@ -45,21 +46,26 @@
                             </StackPanel>
                         </ctk:SettingsCard>
                         <etc:SettingsGroup x:Uid="LogsGroup">
-                            <ListView ItemsSource="{x:Bind ViewModel.LogsListACV, Mode=TwoWay}"
-                                      SelectionMode="None"
-                                      MinHeight="100"
-                                      MaxHeight="580">
-                                <ListView.ItemTemplate>
-                                    <DataTemplate x:DataType="x:String">
-                                        <TextBlock Text="{x:Bind}"
-                                                   TextWrapping="Wrap"/>
-                                    </DataTemplate>
-                                </ListView.ItemTemplate>
-                            </ListView>
+                            <Border MinHeight="100"
+                                    MaxHeight="580">
+                                <ListView x:Name="LogsListView"
+                                          ItemsSource="{x:Bind ViewModel.LogsListACV, Mode=TwoWay}"
+                                          SelectionMode="None"
+                                          PointerEntered="LogsListView_PointerEntered"
+                                          PointerExited="LogsListView_PointerExited"
+                                          PointerWheelChanged="LogsListView_PointerWheelChanged">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate x:DataType="x:String">
+                                            <TextBlock Text="{x:Bind}"
+                                                       TextWrapping="Wrap"/>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </Border>
                         </etc:SettingsGroup>
                     </StackPanel>
                 </etc:SettingsPageControl.ModuleContent>
             </etc:SettingsPageControl>
         </StackPanel>
-    </ScrollView>
+    </ScrollViewer>
 </Page>

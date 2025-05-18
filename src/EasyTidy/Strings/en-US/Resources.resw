@@ -1695,4 +1695,40 @@
   <data name="CopyStr.Text" xml:space="preserve">
     <value>Duplicate Task</value>
   </data>
+  <data name="Settings_Hotkey_Header" xml:space="preserve">
+    <value>Shortcut key</value>
+  </data>
+  <data name="Settings_Hotkey_Description" xml:space="preserve">
+    <value>Set global shortcuts for the application</value>
+  </data>
+  <data name="Activation_Shortcut_Title" xml:space="preserve">
+    <value>Activation shortcut</value>
+  </data>
+  <data name="Activation_Shortcut_Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Activation_Shortcut_Reset" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="Activation_Shortcut_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Activation_Shortcut_Description" xml:space="preserve">
+    <value>Press a combination of keys to change this shortcut</value>
+  </data>
+  <data name="Activation_Shortcut_With_Disable_Description" xml:space="preserve">
+    <value>Press a key combination to change this shortcut. Right-click to remove the key combination and disable the shortcut.</value>
+  </data>
+  <data name="Shortcut_Description.Text" xml:space="preserve">
+    <value>Supports key combinations starting with Windows, Ctrl, Alt, or Shift, as well as single, unmodified keys on their own</value>
+  </data>
+  <data name="InvalidShortcut.Title" xml:space="preserve">
+    <value>Invalid shortcut</value>
+  </data>
+  <data name="WarningShortcutAltGr.Title" xml:space="preserve">
+    <value>Possible shortcut interference with Alt Gr</value>
+  </data>
+  <data name="RegisterFailed" xml:space="preserve">
+    <value>Shortcut key {0} registration failed, please check if there's a conflict with other programs!</value>
+  </data>
 </root>

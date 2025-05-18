@@ -2124,6 +2124,54 @@
           <source>Duplicate Task</source>
           <target state="translated">タスクの複製</target>
         </trans-unit>
+        <trans-unit id="Settings_Hotkey_Header" translate="yes" xml:space="preserve">
+          <source>Shortcut key</source>
+          <target state="translated">ショートカットキー</target>
+        </trans-unit>
+        <trans-unit id="Settings_Hotkey_Description" translate="yes" xml:space="preserve">
+          <source>Set global shortcuts for the application</source>
+          <target state="translated">アプリケーションのグローバルショートカットを設定する</target>
+        </trans-unit>
+        <trans-unit id="Activation_Shortcut_Title" translate="yes" xml:space="preserve">
+          <source>Activation shortcut</source>
+          <target state="translated">起動ショートカット</target>
+        </trans-unit>
+        <trans-unit id="Activation_Shortcut_Save" translate="yes" xml:space="preserve">
+          <source>Save</source>
+          <target state="translated">保存</target>
+        </trans-unit>
+        <trans-unit id="Activation_Shortcut_Reset" translate="yes" xml:space="preserve">
+          <source>Reset</source>
+          <target state="translated">リセット</target>
+        </trans-unit>
+        <trans-unit id="Activation_Shortcut_Cancel" translate="yes" xml:space="preserve">
+          <source>Cancel</source>
+          <target state="translated">キャンセル</target>
+        </trans-unit>
+        <trans-unit id="Activation_Shortcut_Description" translate="yes" xml:space="preserve">
+          <source>Press a combination of keys to change this shortcut</source>
+          <target state="translated">このショートカットを変更するには、キーの組み合わせを押してください</target>
+        </trans-unit>
+        <trans-unit id="Activation_Shortcut_With_Disable_Description" translate="yes" xml:space="preserve">
+          <source>Press a key combination to change this shortcut. Right-click to remove the key combination and disable the shortcut.</source>
+          <target state="translated">このショートカットを変更するには、キーの組み合わせを押してください。キーの組み合わせを削除してショートカットを無効にするには、右クリックしてください。</target>
+        </trans-unit>
+        <trans-unit id="Shortcut_Description.Text" translate="yes" xml:space="preserve">
+          <source>Supports key combinations starting with Windows, Ctrl, Alt, or Shift, as well as single, unmodified keys on their own</source>
+          <target state="translated">Windows、Ctrl、Alt、またはShiftから始まるキー組み合わせや、単一の未変更キーをサポート</target>
+        </trans-unit>
+        <trans-unit id="InvalidShortcut.Title" translate="yes" xml:space="preserve">
+          <source>Invalid shortcut</source>
+          <target state="translated">無効なショートカット</target>
+        </trans-unit>
+        <trans-unit id="WarningShortcutAltGr.Title" translate="yes" xml:space="preserve">
+          <source>Possible shortcut interference with Alt Gr</source>
+          <target state="translated">Alt Grキーとのショートカット競合の可能性</target>
+        </trans-unit>
+        <trans-unit id="RegisterFailed" translate="yes" xml:space="preserve">
+          <source>Shortcut key {0} registration failed, please check if there's a conflict with other programs!</source>
+          <target state="new">Shortcut key {0} registration failed, please check if there's a conflict with other programs!</target>
+        </trans-unit>
       </group>
     </body>
   </file>

@@ -1,8 +1,5 @@
-﻿using EasyTidy.Common.Extensions;
-using EasyTidy.Service;
+﻿using EasyTidy.Service;
 using H.NotifyIcon;
-using Microsoft.UI.Composition.SystemBackdrops;
-using Microsoft.UI.Xaml.Media;
 using System.Diagnostics;
 using WinUIEx;
 
@@ -44,26 +41,7 @@ public sealed partial class TrayIconView : UserControl
     /// Shows or hides the main window
     /// </summary>
     [RelayCommand]
-    private void ShowHideWindow()
-    {
-        // 如果窗口已经关闭，则重新创建
-        if (App.ChildWindow == null || App.ChildWindow.IsClosed())
-        {
-            App.ChildWindow = new WindowEx(); // 重新创建窗口
-        }
-        App.ChildWindow.Title = "EasyTidy";
-        App.ChildWindow.ExtendsContentIntoTitleBar = true;
-        var childWindow = App.ChildWindow;
-        var subPage = new MainPage();
-        childWindow.Content = subPage; // 使用你的自定义控件作为窗口内容
-        childWindow.MaxHeight = 340;
-        childWindow.MaxWidth = 300;
-        childWindow.MoveAndResize(1366, 768, 300, 340);
-        childWindow.IsMaximizable = false;
-        childWindow.SystemBackdrop = new MicaBackdrop() { Kind = MicaKind.Base };
-        childWindow.SetRequestedTheme(ViewModel.ThemeSelectorService.Theme);
-        childWindow.Activate();
-    }
+    private void ShowHideWindow() => ViewModel.ToggleChildWindow();
 
     /// <summary>
     /// Exits the application

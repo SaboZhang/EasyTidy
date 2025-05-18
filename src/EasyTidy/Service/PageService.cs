@@ -19,6 +19,7 @@ public class PageService : IPageService
         Configure<AppUpdateSettingViewModel, AppUpdateSettingPage>();
         Configure<AboutUsSettingViewModel, AboutUsSettingPage>();
         Configure<AiSettingsViewModel, AiSettingsPage>();
+        Configure<HotKeySettingViewModel, HotKeySettingPage>();
     }
 
     public Type GetPageType(string key)

@@ -41,8 +41,9 @@
                 <behaviors:StackedNotificationsBehavior x:Name="NotificationQueue"/>
             </i:Interaction.Behaviors>
         </InfoBar>
-        <ScrollView Margin="0,-58,0,0"
-                    VerticalScrollBarVisibility="Hidden">
+        <ScrollViewer Margin="0,-58,0,0"
+                    VerticalScrollBarVisibility="Hidden"
+                      x:Name="OuterScrollViewer">
             <StackPanel x:Name="ContentArea"
                     Margin="0,-58,0,0">
 
@@ -115,10 +116,14 @@
                                               CanReorderItems="True"
                                               CanDragItems="True"
                                               CanDrag="True"
+                                              PointerWheelChanged="LogsListView_PointerWheelChanged"
                                               SelectionMode="Single"
                                               DragItemsStarting="ListView_DragItemsStarting"
+                                              PointerEntered="LogsListView_PointerEntered"
+                                              PointerExited="LogsListView_PointerExited"
                                               ContainerContentChanging="TaskListView_ContainerContentChanging"
-                                              MinHeight="400">
+                                              MinHeight="400"
+                                              MaxHeight="800">
                                         <ListView.Header>
                                             <Grid Padding="16,12"
                                                   ColumnSpacing="16">
@@ -251,7 +256,7 @@
                 </etc:SettingsPageControl>
 
             </StackPanel>
-        </ScrollView>
+        </ScrollViewer>
     </Grid>
 
 </Page>

@@ -1,12 +1,16 @@
 ﻿using CommunityToolkit.WinUI;
 using EasyTidy.Activation;
 using EasyTidy.Common.Database;
+using EasyTidy.Common.Extensions;
+using EasyTidy.Common.Model;
 using EasyTidy.Contracts.Service;
 using EasyTidy.Model;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Windows.AppNotifications.Builder;
 using Microsoft.Windows.Globalization;
 using System.Data;
 using System.Diagnostics;
+using Windows.System;
 using WinUIEx;
 
 namespace EasyTidy.Service;
@@ -19,12 +23,15 @@ public class ActivationService : IActivationService
     private UIElement? _shell = null;
     private readonly AppDbContext _dbContext;
 
-    public ActivationService(ActivationHandler<LaunchActivatedEventArgs> defaultHandler, IEnumerable<IActivationHandler> activationHandlers, IThemeSelectorService themeSelectorService)
+    private readonly ILocalSettingsService _localSettingsService;
+
+    public ActivationService(ActivationHandler<LaunchActivatedEventArgs> defaultHandler, IEnumerable<IActivationHandler> activationHandlers, IThemeSelectorService themeSelectorService, ILocalSettingsService localSettingsService)
     {
         _defaultHandler = defaultHandler;
         _activationHandlers = activationHandlers;
         _themeSelectorService = themeSelectorService;
         _dbContext = App.GetService<AppDbContext>();
+        _localSettingsService = localSettingsService;
     }
 
     public async Task ActivateAsync(object activationArgs)
@@ -32,7 +39,8 @@ public class ActivationService : IActivationService
         // Execute tasks before activation.
         await InitializeAsync();
         SetApplicationLanguage();
-        
+        await RegisterHotKeyAsync();
+
         if (Settings.EnabledRightClick) ContextMenuRegistrar.TryRegister();
 
         // Set the MainWindow Content.
@@ -231,4 +239,53 @@ public class ActivationService : IActivationService
             Logger.Error($"启动监控失败：{ex}");
         }
     }
+
+    private async Task RegisterHotKeyAsync()
+    {
+        var hotkeyService = App.GetService<HotkeyService>();
+        var hotkeyActionRouter = App.GetService<HotkeyActionRouter>();
+        hotkeyService.Initialize(App.MainWindow);
+        await EnsureDefaultHotkeysAsync();
+        var hotkeySettings = await _localSettingsService.LoadSettingsExtAsync<HotkeysCollection>();
+
+        if (hotkeySettings?.Hotkeys == null || hotkeySettings.Hotkeys.Count == 0)
+        {
+            Logger.Info("No hotkeys configured. Skipping hotkey registration.");
+            return; // 文件存在但用户不配快捷键 → 直接跳过
+        }
+
+        foreach (var config in hotkeySettings?.Hotkeys ?? Enumerable.Empty<Hotkey>())
+        {
+            if (hotkeyService.TryParseGesture(config.KeyGesture, out var keys))
+            {
+                bool success = hotkeyService.RegisterMultiKeyHotkey(
+                    config.Id,
+                    keys,
+                    () => hotkeyActionRouter.HandleAction(config.CommandName)
+                );
+                if (!success)
+                {
+                    var tips = new AppNotificationBuilder().AddText(string.Format("RegisterFailed".GetLocalized(), config.KeyGesture));
+                    App.GetService<IAppNotificationService>().Show(tips.BuildNotification().Payload);
+                    Logger.Error($"Failed to register hotkey: {config.KeyGesture}");
+                }
+            }
+        }
+    }
+
+    private async Task EnsureDefaultHotkeysAsync()
+    {
+        var hotkeySettings = await _localSettingsService.LoadSettingsExtAsync<HotkeysCollection>();
+
+        if (hotkeySettings == null)
+        {
+            hotkeySettings = new HotkeysCollection
+            {
+                Hotkeys = DefaultHotkeys.Hotkeys.ToList() // 深拷贝一份
+            };
+            await _localSettingsService.SaveSettingsExtAsync(hotkeySettings);
+            Logger.Info("Default hotkeys initialized and saved.");
+        }
+    }
+
 }

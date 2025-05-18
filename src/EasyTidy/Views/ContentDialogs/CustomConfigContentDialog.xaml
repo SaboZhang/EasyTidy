@@ -174,6 +174,18 @@
                                x:Name="MonthlyDayValid"
                                Margin="160,0,0,0"
                                Visibility="Collapsed"/>
+                    <StackPanel
+                        Margin="0,10,0,0"
+                        Orientation="Horizontal"
+                        Spacing="8">
+                        <TextBlock Text="快捷定时(几时几分)"
+                                   Width="150"
+                                   Margin="0,5,0,0"/>
+                        <TimePicker ClockIdentifier="24HourClock"
+                                    Margin="0,0,10,0"
+                                    SelectedTime="{x:Bind QuickTime, Mode=TwoWay}"
+                                    SelectedTimeChanged="TimePicker_SelectedTimeChanged"/>
+                    </StackPanel>
                     <etc:Divider/>
                     <StackPanel Orientation="Horizontal"
                                 Spacing="20">

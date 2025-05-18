@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ev:ToolPage
+    xmlns:ev="using:EasyTidy.Common.Views"
+    x:Class="EasyTidy.Views.HotKeySettingPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:EasyTidy.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:etc="using:EasyTidy.Views.UserControls"
+    xmlns:ctk="using:CommunityToolkit.WinUI.Controls"
+    mc:Ignorable="d"
+    xmlns:behaviors="using:EasyTidy.Behaviors"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    behaviors:NavigationViewHeaderBehavior.HeaderTemplate="{StaticResource BreadcrumbBarDataTemplate}"
+    behaviors:NavigationViewHeaderBehavior.HeaderContext="{Binding}">
+
+    <StackPanel
+        Margin="10"
+        Spacing="5">
+
+        <StackPanel ChildrenTransitions="{StaticResource SettingsCardsAnimations}"
+                    Orientation="Vertical">
+            <etc:SettingsGroup MaxWidth="{ThemeResource MaxPageContentWidth}"
+                               Margin="{ThemeResource ContentPageMargin}"
+                               Header="全局热键">
+                <ctk:SettingsCard Header="拖拽窗口"
+                                  Description="设置显示拖拽窗口的快捷键">
+                    <ctk:SettingsCard.HeaderIcon>
+                        <FontIcon Glyph="&#xEB42;"/>
+                    </ctk:SettingsCard.HeaderIcon>
+                    <StackPanel Orientation="Horizontal">
+                        <etc:ShortcutControl
+                            x:Name="DragWindowShortcut"
+                            Parameters="ToggleChildWindow"
+                            HotkeySettings="{x:Bind ViewModel.Hotkeys, Mode=OneWay}"/>
+                    </StackPanel>
+                </ctk:SettingsCard>
+                <ctk:SettingsCard Header="执行任务"
+                                  Description="设置执行全部任务的快捷键">
+                    <ctk:SettingsCard.HeaderIcon>
+                        <FontIcon Glyph="&#xEB50;"/>
+                    </ctk:SettingsCard.HeaderIcon>
+                    <StackPanel Orientation="Horizontal">
+                        <etc:ShortcutControl
+                            x:Name="ExecuteTask"
+                            Parameters="ExecuteAllTasks"
+                            HotkeySettings="{x:Bind ViewModel.Hotkeys, Mode=OneWay}"/>
+                    </StackPanel>
+                </ctk:SettingsCard>
+                <ctk:SettingsCard Header="显示主窗口"
+                                  Description="设置应用程序的主窗口">
+                    <ctk:SettingsCard.HeaderIcon>
+                        <FontIcon Glyph="&#xF7ED;"/>
+                    </ctk:SettingsCard.HeaderIcon>
+                    <StackPanel Orientation="Horizontal">
+                        <etc:ShortcutControl
+                            x:Name="ShowMainWindowCard"
+                            Parameters="ShowMainWindow"
+                            HotkeySettings="{x:Bind ViewModel.Hotkeys, Mode=OneWay}"/>
+                    </StackPanel>
+                </ctk:SettingsCard>
+                <ctk:SettingsCard Header="设置窗口"
+                                  Description="打开应用的设置窗口">
+                    <ctk:SettingsCard.HeaderIcon>
+                        <FontIcon Glyph="&#xF210;"/>
+                    </ctk:SettingsCard.HeaderIcon>
+                    <StackPanel Orientation="Horizontal">
+                        <etc:ShortcutControl
+                            x:Name="SettingsWindow"
+                            Parameters="ToggleSettingsWindow"
+                            HotkeySettings="{x:Bind ViewModel.Hotkeys, Mode=OneWay}"/>
+                    </StackPanel>
+                </ctk:SettingsCard>
+                <ctk:SettingsCard Header="退出程序"
+                                  Description="设置退出应用程序的快捷键">
+                    <ctk:SettingsCard.HeaderIcon>
+                        <FontIcon Glyph="&#xF3B1;"/>
+                    </ctk:SettingsCard.HeaderIcon>
+                    <StackPanel Orientation="Horizontal">
+                        <etc:ShortcutControl
+                            x:Name="ExitAppCard"
+                            Parameters="ExitApp"
+                            HotkeySettings="{x:Bind ViewModel.Hotkeys, Mode=OneWay}"/>
+                    </StackPanel>
+                </ctk:SettingsCard>
+                <StackPanel
+                    Spacing="8"
+                    Orientation="Horizontal"
+                    Margin="0,20,0,0"
+                    HorizontalAlignment="Center">
+                    <Button Content="重置全部" FontSize="18" Command="{x:Bind ViewModel.ResetAllHotkeysCommand}"/>
+                    <Button Content="清空所有" FontSize="18" Command="{x:Bind ViewModel.ClearAllHotKeysCommand}"/>
+                </StackPanel>
+            </etc:SettingsGroup>
+        </StackPanel>
+    </StackPanel>
+</ev:ToolPage>
