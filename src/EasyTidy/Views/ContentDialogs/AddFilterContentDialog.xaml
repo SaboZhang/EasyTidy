@@ -13,6 +13,14 @@
     CornerRadius="{ThemeResource OverlayCornerRadius}"
     DefaultButton="Primary">
 
+    <ContentDialog.Resources>
+        <DataTemplate x:Key="ValidationTemplate"
+                  x:DataType="x:String">
+            <TextBlock Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+                   Text="{x:Bind}"/>
+        </DataTemplate>
+    </ContentDialog.Resources>
+
     <ScrollView VerticalScrollBarVisibility="Hidden">
         <StackPanel>
             <StackPanel Orientation="Horizontal"
@@ -22,14 +30,12 @@
                 <TextBox x:Name="NameTextBox"
                          Margin="38,0,0,0"
                          MinWidth="210"
-                         LostFocus="NameTextBox_LostFocus"
-                         Text="{x:Bind FilterName, Mode=TwoWay}"/>
+                         Text="{x:Bind FilterName, Mode=TwoWay}"
+                         etc:Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
+                         etc:Validation.ValidationPropertyName="FilterName"
+                         etc:Validation.ValidationProvider="{x:Bind}"
+                         Style="{StaticResource ValidatingTextBoxStyle}"/>
             </StackPanel>
-            <TextBlock x:Name="NameTextBoxError"
-                       Margin="130,0,0,0"
-                       VerticalAlignment="Center"
-                       Foreground="{ThemeResource SystemFillColorCriticalBrush}"
-                       Visibility="Collapsed"/>
             <etc:Divider x:Uid="DividerAttribute"
                          HorizontalContentAlignment="Left"/>
             <StackPanel x:Name="SizePropertyStackPanel"

@@ -2172,6 +2172,86 @@
           <source>Shortcut key {0} registration failed, please check if there's a conflict with other programs!</source>
           <target state="new">Shortcut key {0} registration failed, please check if there's a conflict with other programs!</target>
         </trans-unit>
+        <trans-unit id="ChatModelErrors" translate="yes" xml:space="preserve">
+          <source>The model name cannot be empty</source>
+          <target state="new">The model name cannot be empty</target>
+        </trans-unit>
+        <trans-unit id="CustomPrompt.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>Please describe your classification requirements</source>
+          <target state="new">Please describe your classification requirements</target>
+        </trans-unit>
+        <trans-unit id="BuiltInText.Content" translate="yes" xml:space="preserve">
+          <source>Built-in system</source>
+          <target state="new">Built-in system</target>
+        </trans-unit>
+        <trans-unit id="CustomTxt.Content" translate="yes" xml:space="preserve">
+          <source>Custom</source>
+          <target state="new">Custom</target>
+        </trans-unit>
+        <trans-unit id="FilterConditions" translate="yes" xml:space="preserve">
+          <source>At least one filtering condition must be set</source>
+          <target state="new">At least one filtering condition must be set</target>
+        </trans-unit>
+        <trans-unit id="AdvancedRules" translate="yes" xml:space="preserve">
+          <source>Advanced Rules</source>
+          <target state="new">Advanced Rules</target>
+        </trans-unit>
+        <trans-unit id="GlobalHotkey.Header" translate="yes" xml:space="preserve">
+          <source>Global Hotkey</source>
+          <target state="new">Global Hotkey</target>
+        </trans-unit>
+        <trans-unit id="DragWindowShortcutCard.Header" translate="yes" xml:space="preserve">
+          <source>Drag and drop window</source>
+          <target state="new">Drag and drop window</target>
+        </trans-unit>
+        <trans-unit id="DragWindowShortcutCard.Description" translate="yes" xml:space="preserve">
+          <source>Set shortcut key for displaying the drag window</source>
+          <target state="new">Set shortcut key for displaying the drag window</target>
+        </trans-unit>
+        <trans-unit id="ExecuteTaskCard.Header" translate="yes" xml:space="preserve">
+          <source>Execute task</source>
+          <target state="new">Execute task</target>
+        </trans-unit>
+        <trans-unit id="ExecuteTaskCard.Description" translate="yes" xml:space="preserve">
+          <source>Set shortcut key for executing all tasks</source>
+          <target state="new">Set shortcut key for executing all tasks</target>
+        </trans-unit>
+        <trans-unit id="ShowMainWindowSettingsCard.Header" translate="yes" xml:space="preserve">
+          <source>Show main window</source>
+          <target state="new">Show main window</target>
+        </trans-unit>
+        <trans-unit id="ShowMainWindowSettingsCard.Description" translate="yes" xml:space="preserve">
+          <source>Set shortcut key for displaying the application main window</source>
+          <target state="new">Set shortcut key for displaying the application main window</target>
+        </trans-unit>
+        <trans-unit id="SettingsWindowCard.Header" translate="yes" xml:space="preserve">
+          <source>settings window</source>
+          <target state="new">settings window</target>
+        </trans-unit>
+        <trans-unit id="SettingsWindowCard.Description" translate="yes" xml:space="preserve">
+          <source>Open the Settings window of the application</source>
+          <target state="new">Open the Settings window of the application</target>
+        </trans-unit>
+        <trans-unit id="ExitAppTxt.Header" translate="yes" xml:space="preserve">
+          <source>Exit App</source>
+          <target state="new">Exit App</target>
+        </trans-unit>
+        <trans-unit id="ExitAppTxt.Description" translate="yes" xml:space="preserve">
+          <source>Set up a shortcut key to exit the application</source>
+          <target state="new">Set up a shortcut key to exit the application</target>
+        </trans-unit>
+        <trans-unit id="ResetAllButton.Content" translate="yes" xml:space="preserve">
+          <source>Reset all</source>
+          <target state="new">Reset all</target>
+        </trans-unit>
+        <trans-unit id="ClearAllButton.Content" translate="yes" xml:space="preserve">
+          <source>Clear all</source>
+          <target state="new">Clear all</target>
+        </trans-unit>
+        <trans-unit id="WarningShortcutAltGr.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Shortcuts with **Ctrl** and **Alt** may remove functionality from some international keyboards, because **Ctrl** + **Alt** = **Alt Gr** in those keyboards.</source>
+          <target state="new">Shortcuts with **Ctrl** and **Alt** may remove functionality from some international keyboards, because **Ctrl** + **Alt** = **Alt Gr** in those keyboards.</target>
+        </trans-unit>
       </group>
     </body>
   </file>

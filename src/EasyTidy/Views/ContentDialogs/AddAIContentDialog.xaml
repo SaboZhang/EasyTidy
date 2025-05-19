@@ -6,10 +6,20 @@
     xmlns:local="using:EasyTidy.Views.ContentDialogs"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:etc="using:EasyTidy.Views.UserControls"
     CornerRadius="{ThemeResource OverlayCornerRadius}"
     DefaultButton="Primary"
+    Loaded="OnLoaded"
     SecondaryButtonClick="ContentDialog_SecondaryButtonClick"
     mc:Ignorable="d">
+
+    <ContentDialog.Resources>
+        <DataTemplate x:Key="ValidationTemplate"
+              x:DataType="x:String">
+            <TextBlock Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+               Text="{x:Bind}" />
+        </DataTemplate>
+    </ContentDialog.Resources>
 
     <ScrollView VerticalScrollBarVisibility="Hidden">
         <StackPanel Spacing="8">
@@ -38,11 +48,11 @@
             <TextBox
                 Text="{x:Bind ChatModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 MinWidth="260"
-                Margin="0,-6,0,0"/>
-            <TextBlock x:Name="ChatModelError"
-                Text="{x:Bind ErrorMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                Foreground="{ThemeResource SystemFillColorCriticalBrush}"
-                Visibility="Collapsed" />
+                Margin="0,-6,0,0"
+                etc:Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
+                etc:Validation.ValidationPropertyName="ChatModel"
+                etc:Validation.ValidationProvider="{x:Bind}"
+                Style="{StaticResource ValidatingTextBoxStyle}"/>
             <TextBox x:Uid="DialogName"
                     Text="{x:Bind ModelName, Mode=TwoWay}"
                     MinWidth="260"/>

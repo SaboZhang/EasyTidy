@@ -1731,4 +1731,64 @@
   <data name="RegisterFailed" xml:space="preserve">
     <value>Shortcut key {0} registration failed, please check if there's a conflict with other programs!</value>
   </data>
+  <data name="ChatModelErrors" xml:space="preserve">
+    <value>The model name cannot be empty</value>
+  </data>
+  <data name="CustomPrompt.PlaceholderText" xml:space="preserve">
+    <value>Please describe your classification requirements</value>
+  </data>
+  <data name="BuiltInText.Content" xml:space="preserve">
+    <value>Built-in system</value>
+  </data>
+  <data name="CustomTxt.Content" xml:space="preserve">
+    <value>Custom</value>
+  </data>
+  <data name="FilterConditions" xml:space="preserve">
+    <value>At least one filtering condition must be set</value>
+  </data>
+  <data name="AdvancedRules" xml:space="preserve">
+    <value>Advanced Rules</value>
+  </data>
+  <data name="GlobalHotkey.Header" xml:space="preserve">
+    <value>Global Hotkey</value>
+  </data>
+  <data name="DragWindowShortcutCard.Header" xml:space="preserve">
+    <value>Drag and drop window</value>
+  </data>
+  <data name="DragWindowShortcutCard.Description" xml:space="preserve">
+    <value>Set shortcut key for displaying the drag window</value>
+  </data>
+  <data name="ExecuteTaskCard.Header" xml:space="preserve">
+    <value>Execute task</value>
+  </data>
+  <data name="ExecuteTaskCard.Description" xml:space="preserve">
+    <value>Set shortcut key for executing all tasks</value>
+  </data>
+  <data name="ShowMainWindowSettingsCard.Header" xml:space="preserve">
+    <value>Show main window</value>
+  </data>
+  <data name="ShowMainWindowSettingsCard.Description" xml:space="preserve">
+    <value>Set shortcut key for displaying the application main window</value>
+  </data>
+  <data name="SettingsWindowCard.Header" xml:space="preserve">
+    <value>settings window</value>
+  </data>
+  <data name="SettingsWindowCard.Description" xml:space="preserve">
+    <value>Open the Settings window of the application</value>
+  </data>
+  <data name="ExitAppTxt.Header" xml:space="preserve">
+    <value>Exit App</value>
+  </data>
+  <data name="ExitAppTxt.Description" xml:space="preserve">
+    <value>Set up a shortcut key to exit the application</value>
+  </data>
+  <data name="ResetAllButton.Content" xml:space="preserve">
+    <value>Reset all</value>
+  </data>
+  <data name="ClearAllButton.Content" xml:space="preserve">
+    <value>Clear all</value>
+  </data>
+  <data name="WarningShortcutAltGr.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Shortcuts with **Ctrl** and **Alt** may remove functionality from some international keyboards, because **Ctrl** + **Alt** = **Alt Gr** in those keyboards.</value>
+  </data>
 </root>

@@ -23,9 +23,8 @@
                     Orientation="Vertical">
             <etc:SettingsGroup MaxWidth="{ThemeResource MaxPageContentWidth}"
                                Margin="{ThemeResource ContentPageMargin}"
-                               Header="全局热键">
-                <ctk:SettingsCard Header="拖拽窗口"
-                                  Description="设置显示拖拽窗口的快捷键">
+                               x:Uid="GlobalHotkey">
+                <ctk:SettingsCard x:Uid="DragWindowShortcutCard">
                     <ctk:SettingsCard.HeaderIcon>
                         <FontIcon Glyph="&#xEB42;"/>
                     </ctk:SettingsCard.HeaderIcon>
@@ -36,8 +35,7 @@
                             HotkeySettings="{x:Bind ViewModel.Hotkeys, Mode=OneWay}"/>
                     </StackPanel>
                 </ctk:SettingsCard>
-                <ctk:SettingsCard Header="执行任务"
-                                  Description="设置执行全部任务的快捷键">
+                <ctk:SettingsCard x:Uid="ExecuteTaskCard">
                     <ctk:SettingsCard.HeaderIcon>
                         <FontIcon Glyph="&#xEB50;"/>
                     </ctk:SettingsCard.HeaderIcon>
@@ -48,8 +46,7 @@
                             HotkeySettings="{x:Bind ViewModel.Hotkeys, Mode=OneWay}"/>
                     </StackPanel>
                 </ctk:SettingsCard>
-                <ctk:SettingsCard Header="显示主窗口"
-                                  Description="设置应用程序的主窗口">
+                <ctk:SettingsCard x:Uid="ShowMainWindowSettingsCard">
                     <ctk:SettingsCard.HeaderIcon>
                         <FontIcon Glyph="&#xF7ED;"/>
                     </ctk:SettingsCard.HeaderIcon>
@@ -60,8 +57,7 @@
                             HotkeySettings="{x:Bind ViewModel.Hotkeys, Mode=OneWay}"/>
                     </StackPanel>
                 </ctk:SettingsCard>
-                <ctk:SettingsCard Header="设置窗口"
-                                  Description="打开应用的设置窗口">
+                <ctk:SettingsCard x:Uid="SettingsWindowCard">
                     <ctk:SettingsCard.HeaderIcon>
                         <FontIcon Glyph="&#xF210;"/>
                     </ctk:SettingsCard.HeaderIcon>
@@ -72,8 +68,7 @@
                             HotkeySettings="{x:Bind ViewModel.Hotkeys, Mode=OneWay}"/>
                     </StackPanel>
                 </ctk:SettingsCard>
-                <ctk:SettingsCard Header="退出程序"
-                                  Description="设置退出应用程序的快捷键">
+                <ctk:SettingsCard x:Uid="ExitAppTxt">
                     <ctk:SettingsCard.HeaderIcon>
                         <FontIcon Glyph="&#xF3B1;"/>
                     </ctk:SettingsCard.HeaderIcon>
@@ -89,8 +84,8 @@
                     Orientation="Horizontal"
                     Margin="0,20,0,0"
                     HorizontalAlignment="Center">
-                    <Button Content="重置全部" FontSize="18" Command="{x:Bind ViewModel.ResetAllHotkeysCommand}"/>
-                    <Button Content="清空所有" FontSize="18" Command="{x:Bind ViewModel.ClearAllHotKeysCommand}"/>
+                    <Button x:Uid="ResetAllButton" FontSize="18" Command="{x:Bind ViewModel.ResetAllHotkeysCommand}"/>
+                    <Button x:Uid="ClearAllButton" FontSize="18" Command="{x:Bind ViewModel.ClearAllHotKeysCommand}"/>
                 </StackPanel>
             </etc:SettingsGroup>
         </StackPanel>

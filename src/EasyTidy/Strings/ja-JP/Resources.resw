@@ -1591,4 +1591,67 @@
   <data name="WarningShortcutAltGr.Title" xml:space="preserve">
     <value>Alt Grキーとのショートカット競合の可能性</value>
   </data>
+  <data name="RegisterFailed" xml:space="preserve">
+    <value>ショートカットキー {0} の登録に失敗しました。他のプログラムとの競合がないか確認してください！</value>
+  </data>
+  <data name="ChatModelErrors" xml:space="preserve">
+    <value>モデル名は空にできません</value>
+  </data>
+  <data name="CustomPrompt.PlaceholderText" xml:space="preserve">
+    <value>分類要件についてご説明ください</value>
+  </data>
+  <data name="BuiltInText.Content" xml:space="preserve">
+    <value>組み込みシステム</value>
+  </data>
+  <data name="CustomTxt.Content" xml:space="preserve">
+    <value>カスタム</value>
+  </data>
+  <data name="FilterConditions" xml:space="preserve">
+    <value>少なくとも1つのフィルタリング条件を設定する必要があります</value>
+  </data>
+  <data name="AdvancedRules" xml:space="preserve">
+    <value>高度なルール</value>
+  </data>
+  <data name="GlobalHotkey.Header" xml:space="preserve">
+    <value>グローバルホットキー</value>
+  </data>
+  <data name="DragWindowShortcutCard.Header" xml:space="preserve">
+    <value>ドラッグアンドドロップウィンドウ</value>
+  </data>
+  <data name="DragWindowShortcutCard.Description" xml:space="preserve">
+    <value>ドラッグウィンドウ表示のショートカットキーを設定する</value>
+  </data>
+  <data name="ExecuteTaskCard.Header" xml:space="preserve">
+    <value>タスクを実行する</value>
+  </data>
+  <data name="ExecuteTaskCard.Description" xml:space="preserve">
+    <value>すべてのタスクを実行するためのショートカットキーを設定する</value>
+  </data>
+  <data name="ShowMainWindowSettingsCard.Header" xml:space="preserve">
+    <value>メインウィンドウを表示</value>
+  </data>
+  <data name="ShowMainWindowSettingsCard.Description" xml:space="preserve">
+    <value>アプリケーションのメインウィンドウを表示するためのショートカットキーを設定する</value>
+  </data>
+  <data name="SettingsWindowCard.Header" xml:space="preserve">
+    <value>設定ウィンドウ</value>
+  </data>
+  <data name="SettingsWindowCard.Description" xml:space="preserve">
+    <value>アプリケーションの設定ウィンドウを開く</value>
+  </data>
+  <data name="ExitAppTxt.Header" xml:space="preserve">
+    <value>アプリを終了</value>
+  </data>
+  <data name="ExitAppTxt.Description" xml:space="preserve">
+    <value>アプリケーションを終了するためのショートカットキーを設定します</value>
+  </data>
+  <data name="ResetAllButton.Content" xml:space="preserve">
+    <value>すべてリセット</value>
+  </data>
+  <data name="ClearAllButton.Content" xml:space="preserve">
+    <value>すべてクリア</value>
+  </data>
+  <data name="WarningShortcutAltGr.ToolTipService.ToolTip" xml:space="preserve">
+    <value>**Ctrl**キーと**Alt**キーを使用したショートカットは、一部の国際キーボードでは機能が失われる可能性があります。これは、それらのキーボードでは**Ctrl** + **Alt** = **Alt Gr**となるためです。</value>
+  </data>
 </root>

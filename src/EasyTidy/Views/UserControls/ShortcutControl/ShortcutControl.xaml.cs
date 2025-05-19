@@ -5,6 +5,7 @@ using Microsoft.UI.Xaml.Automation;
 using Microsoft.UI.Xaml.Input;
 using System.Collections.ObjectModel;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 using Windows.System;
 using Windows.UI.Core;
 
@@ -177,14 +178,14 @@ public sealed partial class ShortcutControl : UserControl
     private void ShortcutDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
     {
         var keyGesture = string.Join(" + ", c.Keys);
-        // �����µ� Hotkey
+
         var newHotkey = new Hotkey
         {
             Id = Parameters,
             KeyGesture = keyGesture,
             CommandName = Parameters
         };
-        // ������ HotkeySettings ���ҵ���Ӧ�� HotkeysCollection
+
         var targetCollection = HotkeySettings.FirstOrDefault();
 
         if (targetCollection == null)
@@ -193,7 +194,7 @@ public sealed partial class ShortcutControl : UserControl
             HotkeySettings.Add(targetCollection);
         }
 
-        // ���ӻ��滻���п�ݼ����� Id Ψһ��
+
         var existing = targetCollection.Hotkeys.FirstOrDefault(h => h.Id == Parameters);
         if (existing != null)
         {
@@ -250,7 +251,7 @@ public sealed partial class ShortcutControl : UserControl
     {
         var key = e.Key;
 
-        // �����κη� Win ��ʱ���ֶ���� Win �Ƿ����ɿ�
+
         if (key != VirtualKey.LeftWindows && key != VirtualKey.RightWindows)
         {
             foreach (var winKey in new[] { VirtualKey.LeftWindows, VirtualKey.RightWindows })
@@ -259,14 +260,13 @@ public sealed partial class ShortcutControl : UserControl
 
                 if (!isStillDown)
                 {
-                    // �ֶ���� Win
+
                     _heldKeys.Remove(winKey);
                     _pressedSequence.Remove(winKey);
                 }
             }
         }
 
-        // ��ֹ�ظ�����ͬһ����
         if (_heldKeys.Add(key))
         {
             if (key == VirtualKey.LeftWindows || key == VirtualKey.RightWindows)
@@ -304,17 +304,44 @@ public sealed partial class ShortcutControl : UserControl
     {
         string[] modifierOrder = { "Win", "Ctrl", "Alt", "Shift" };
 
-        // ��˳�����μ���ǰ�棬��������ں���
         var formattedKeys = _pressedSequence
             .Select(FormatKey)
-            .OrderBy(k =>
-            {
-                int index = Array.IndexOf(modifierOrder, k);
-                return index >= 0 ? index : modifierOrder.Length;
-            })
             .ToList();
 
-        // ת��Ϊ object �б�����
+        // 过滤修饰键与普通键
+        var modifierKeys = formattedKeys.Where(k => modifierOrder.Contains(k)).ToList();
+        var normalKeys = formattedKeys.Except(modifierKeys).ToList();
+
+        // 判断是否是组合键
+        bool isCombination = modifierKeys.Count > 0;
+
+        if (isCombination)
+        {
+            // 只保留最后一个普通键
+            if (normalKeys.Count > 1)
+                normalKeys = new List<string> { normalKeys.Last() };
+
+            formattedKeys = modifierKeys
+                .Concat(normalKeys)
+                .OrderBy(k =>
+                {
+                    int index = Array.IndexOf(modifierOrder, k);
+                    return index >= 0 ? index : modifierOrder.Length;
+                })
+                .ToList();
+        }
+        else
+        {
+            // 单键：若不是 F1~F12，则不清除，只设为禁用
+            if (normalKeys.Count == 1 && !IsFunctionKey(normalKeys[0]))
+            {
+                // 保持原输入顺序
+                c.Keys = formattedKeys.Cast<object>().ToList();
+                DisableKeys();
+                return;
+            }
+        }
+
         c.Keys = formattedKeys.Cast<object>().ToList();
 
         bool isValid = IsValidKeyCombination(formattedKeys);
@@ -338,7 +365,7 @@ public sealed partial class ShortcutControl : UserControl
     private void DisableKeys()
     {
         shortcutDialog.IsPrimaryButtonEnabled = false;
-        // �ж��Ƿ��ǡ����������μ��������
+
         var formattedKeys = c.Keys?.Select(k => k.ToString()).ToList() ?? new();
         string[] modifiers = { "Ctrl", "Alt", "Shift", "Win" };
         string[] invalidSingleKeys = { "Tab", "Caps Lock" };
@@ -346,17 +373,22 @@ public sealed partial class ShortcutControl : UserControl
         var modifierKeys = formattedKeys.Where(k => modifiers.Contains(k)).ToList();
         var normalKeys = formattedKeys.Except(modifierKeys).ToList();
 
-        // ���� Tab �� CapsLock �������
-        if (normalKeys.Count == 1 && modifierKeys.Count == 0 &&
-            invalidSingleKeys.Contains(normalKeys[0]))
+        if (modifierKeys.Count == 0)
         {
-            c.IsError = true;
+            // 单键逻辑
+            if (normalKeys.Count == 1)
+            {
+                var key = normalKeys[0];
+                // 非 F1~F12，或非法键（如 Tab、Caps Lock）
+                if (!IsFunctionKey(key) || invalidSingleKeys.Contains(key))
+                {
+                    c.IsError = true;
+                    return;
+                }
+            }
         }
-        else
-        {
-            // �����Ƿ���ϲ���죨������
-            c.IsError = false;
-        }
+
+        c.IsError = false;
     }
 
     #endregion
@@ -423,19 +455,19 @@ public sealed partial class ShortcutControl : UserControl
 
         c.IsWarningAltGr = c.Keys.Contains("Ctrl") && c.Keys.Contains("Alt") && !c.Keys.Contains("Win") && normalKeys.Count > 0;
 
-        // û�����μ�
         if (modifierKeys.Count == 0)
         {
-            // ֻ����һ���Ϸ�����ͨ��
-            return normalKeys.Count == 1 && !invalidSingleKeys.Contains(normalKeys[0]);
+            // 单键，仅允许 F1~F12
+            return normalKeys.Count == 1 && IsFunctionKey(normalKeys[0]);
         }
 
-        // �����μ���û����ͨ������Ч
-        if (normalKeys.Count == 0)
-            return false;
+        // 组合键，必须包含一个普通键
+        return normalKeys.Count == 1;
+    }
 
-        // �����μ�������ͨ������Ч
-        return true;
+    private bool IsFunctionKey(string key)
+    {
+        return Regex.IsMatch(key, @"^F([1-9]|1[0-2])$");
     }
 
 }

@@ -1591,4 +1591,67 @@
   <data name="WarningShortcutAltGr.Title" xml:space="preserve">
     <value>Interférence possible de raccourci avec Alt Gr</value>
   </data>
+  <data name="RegisterFailed" xml:space="preserve">
+    <value>L'enregistrement du raccourci clavier {0} a échoué. Veuillez vérifier s'il y a un conflit avec d'autres programmes !</value>
+  </data>
+  <data name="ChatModelErrors" xml:space="preserve">
+    <value>Le nom du modèle ne peut pas être vide</value>
+  </data>
+  <data name="CustomPrompt.PlaceholderText" xml:space="preserve">
+    <value>Veuillez décrire vos exigences de classification</value>
+  </data>
+  <data name="BuiltInText.Content" xml:space="preserve">
+    <value>Système intégré</value>
+  </data>
+  <data name="CustomTxt.Content" xml:space="preserve">
+    <value>Personnalisé</value>
+  </data>
+  <data name="FilterConditions" xml:space="preserve">
+    <value>Au moins une condition de filtrage doit être définie</value>
+  </data>
+  <data name="AdvancedRules" xml:space="preserve">
+    <value>Règles avancées</value>
+  </data>
+  <data name="GlobalHotkey.Header" xml:space="preserve">
+    <value>Raccourci global</value>
+  </data>
+  <data name="DragWindowShortcutCard.Header" xml:space="preserve">
+    <value>Fenêtre de glisser-déposer</value>
+  </data>
+  <data name="DragWindowShortcutCard.Description" xml:space="preserve">
+    <value>Définir une touche de raccourci pour afficher la fenêtre de déplacement</value>
+  </data>
+  <data name="ExecuteTaskCard.Header" xml:space="preserve">
+    <value>Exécuter la tâche</value>
+  </data>
+  <data name="ExecuteTaskCard.Description" xml:space="preserve">
+    <value>Attribuer un raccourci clavier pour lancer toutes les tâches</value>
+  </data>
+  <data name="ShowMainWindowSettingsCard.Header" xml:space="preserve">
+    <value>Afficher la fenêtre principale</value>
+  </data>
+  <data name="ShowMainWindowSettingsCard.Description" xml:space="preserve">
+    <value>Attribuer un raccourci clavier pour afficher la fenêtre principale de l'application</value>
+  </data>
+  <data name="SettingsWindowCard.Header" xml:space="preserve">
+    <value>Fenêtre de configuration</value>
+  </data>
+  <data name="SettingsWindowCard.Description" xml:space="preserve">
+    <value>Ouvrez la fenêtre des Paramètres de l'application</value>
+  </data>
+  <data name="ExitAppTxt.Header" xml:space="preserve">
+    <value>Quitter l'application</value>
+  </data>
+  <data name="ExitAppTxt.Description" xml:space="preserve">
+    <value>Établissez un raccourci clavier pour quitter l'application</value>
+  </data>
+  <data name="ResetAllButton.Content" xml:space="preserve">
+    <value>Réinitialiser tout</value>
+  </data>
+  <data name="ClearAllButton.Content" xml:space="preserve">
+    <value>Tout effacer</value>
+  </data>
+  <data name="WarningShortcutAltGr.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Les raccourcis avec **Ctrl** et **Alt** peuvent supprimer des fonctionnalités de certains claviers internationaux, car **Ctrl** + **Alt** = **Alt Gr** sur ces claviers.</value>
+  </data>
 </root>

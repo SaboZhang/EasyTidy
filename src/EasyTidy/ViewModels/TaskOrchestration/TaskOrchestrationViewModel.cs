@@ -175,7 +175,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         try
         {
             var dialog = sender as AddTaskContentDialog;
-            if (!dialog.IsValid || string.IsNullOrEmpty(dialog.TaskRule) || string.IsNullOrEmpty(GroupTextName))
+            if (!dialog.IsValid || dialog.HasErrors || string.IsNullOrEmpty(dialog.TaskRule) || string.IsNullOrEmpty(GroupTextName))
             {
                 args.Cancel = true;
                 return;

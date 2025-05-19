@@ -50,6 +50,7 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
             {
                 _taskRule = value;
                 OnPropertyChanged();
+                ValidateTaskRule(_taskRule);
             }
         }
     }
@@ -176,6 +177,7 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
         RequestedTheme = ViewModel.ThemeSelectorService.Theme;
         PopulateMenu(ViewModel);
         ValidTextBlock.Visibility = Visibility.Collapsed;
+        ValidateTaskRule(_taskRule);
     }
 
     private void PopulateMenu(TaskOrchestrationViewModel viewModel)
@@ -280,7 +282,7 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
             errors.Add("GroupInformationVerification".GetLocalized());
             errors.Add("GroupInformationVerificationAdd".GetLocalized());
         }
-        SetErrors("GroupName", errors);
+        SetErrors("GroupTextName", errors);
     }
 
 
@@ -538,21 +540,14 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
         }
     }
 
-    private void TaskRuleBox_TextChanged(object sender, TextChangedEventArgs e)
+    private void ValidateTaskRule(string rule)
     {
-        var text = (sender as TextBox)?.Text;
-        IsValid = ValidateRuleString(text);
-        if (!IsValid && !string.IsNullOrWhiteSpace(text))
+        var errors = new List<string>(1);
+        if (!string.IsNullOrWhiteSpace(rule) && !ValidateRuleString(rule))
         {
-            // 验证未通过显示错误信息
-            TaskRuleBoxValid.Visibility = Visibility.Visible;
-            TaskRuleBoxValid.Text = "ValidRuleText".GetLocalized();
+            errors.Add("ValidRuleText".GetLocalized());
         }
-        else
-        {
-            // 隐藏错误提示框
-            TaskRuleBoxValid.Visibility = Visibility.Collapsed;
-        }
+        SetErrors("TaskRule", errors);
     }
 
     private void TaskGroupNameBox_LostFocus(object sender, RoutedEventArgs e)
@@ -567,23 +562,6 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
         else
         {
             ValidTextBlock.Visibility = Visibility.Collapsed;
-        }
-    }
-
-    private void TaskRuleBox_LostFocus(object sender, RoutedEventArgs e)
-    {
-        var text = (sender as TextBox)?.Text;
-        IsValid = ValidateRuleString(text);
-        if (!IsValid)
-        {
-            // 验证未通过显示错误信息
-            TaskRuleBoxValid.Visibility = Visibility.Visible;
-            TaskRuleBoxValid.Text = "ValidRuleText".GetLocalized();
-        }
-        else
-        {
-            // 隐藏错误提示框
-            TaskRuleBoxValid.Visibility = Visibility.Collapsed;
         }
     }
 

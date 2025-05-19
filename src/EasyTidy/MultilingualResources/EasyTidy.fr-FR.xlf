@@ -2170,7 +2170,87 @@
         </trans-unit>
         <trans-unit id="RegisterFailed" translate="yes" xml:space="preserve">
           <source>Shortcut key {0} registration failed, please check if there's a conflict with other programs!</source>
-          <target state="new">Shortcut key {0} registration failed, please check if there's a conflict with other programs!</target>
+          <target state="translated">L'enregistrement du raccourci clavier {0} a échoué. Veuillez vérifier s'il y a un conflit avec d'autres programmes !</target>
+        </trans-unit>
+        <trans-unit id="ChatModelErrors" translate="yes" xml:space="preserve">
+          <source>The model name cannot be empty</source>
+          <target state="translated">Le nom du modèle ne peut pas être vide</target>
+        </trans-unit>
+        <trans-unit id="CustomPrompt.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>Please describe your classification requirements</source>
+          <target state="translated">Veuillez décrire vos exigences de classification</target>
+        </trans-unit>
+        <trans-unit id="BuiltInText.Content" translate="yes" xml:space="preserve">
+          <source>Built-in system</source>
+          <target state="translated">Système intégré</target>
+        </trans-unit>
+        <trans-unit id="CustomTxt.Content" translate="yes" xml:space="preserve">
+          <source>Custom</source>
+          <target state="translated">Personnalisé</target>
+        </trans-unit>
+        <trans-unit id="FilterConditions" translate="yes" xml:space="preserve">
+          <source>At least one filtering condition must be set</source>
+          <target state="translated">Au moins une condition de filtrage doit être définie</target>
+        </trans-unit>
+        <trans-unit id="AdvancedRules" translate="yes" xml:space="preserve">
+          <source>Advanced Rules</source>
+          <target state="translated">Règles avancées</target>
+        </trans-unit>
+        <trans-unit id="GlobalHotkey.Header" translate="yes" xml:space="preserve">
+          <source>Global Hotkey</source>
+          <target state="translated">Raccourci global</target>
+        </trans-unit>
+        <trans-unit id="DragWindowShortcutCard.Header" translate="yes" xml:space="preserve">
+          <source>Drag and drop window</source>
+          <target state="translated">Fenêtre de glisser-déposer</target>
+        </trans-unit>
+        <trans-unit id="DragWindowShortcutCard.Description" translate="yes" xml:space="preserve">
+          <source>Set shortcut key for displaying the drag window</source>
+          <target state="translated">Définir une touche de raccourci pour afficher la fenêtre de déplacement</target>
+        </trans-unit>
+        <trans-unit id="ExecuteTaskCard.Header" translate="yes" xml:space="preserve">
+          <source>Execute task</source>
+          <target state="translated">Exécuter la tâche</target>
+        </trans-unit>
+        <trans-unit id="ExecuteTaskCard.Description" translate="yes" xml:space="preserve">
+          <source>Set shortcut key for executing all tasks</source>
+          <target state="translated">Attribuer un raccourci clavier pour lancer toutes les tâches</target>
+        </trans-unit>
+        <trans-unit id="ShowMainWindowSettingsCard.Header" translate="yes" xml:space="preserve">
+          <source>Show main window</source>
+          <target state="translated">Afficher la fenêtre principale</target>
+        </trans-unit>
+        <trans-unit id="ShowMainWindowSettingsCard.Description" translate="yes" xml:space="preserve">
+          <source>Set shortcut key for displaying the application main window</source>
+          <target state="translated">Attribuer un raccourci clavier pour afficher la fenêtre principale de l'application</target>
+        </trans-unit>
+        <trans-unit id="SettingsWindowCard.Header" translate="yes" xml:space="preserve">
+          <source>settings window</source>
+          <target state="translated">Fenêtre de configuration</target>
+        </trans-unit>
+        <trans-unit id="SettingsWindowCard.Description" translate="yes" xml:space="preserve">
+          <source>Open the Settings window of the application</source>
+          <target state="translated">Ouvrez la fenêtre des Paramètres de l'application</target>
+        </trans-unit>
+        <trans-unit id="ExitAppTxt.Header" translate="yes" xml:space="preserve">
+          <source>Exit App</source>
+          <target state="translated">Quitter l'application</target>
+        </trans-unit>
+        <trans-unit id="ExitAppTxt.Description" translate="yes" xml:space="preserve">
+          <source>Set up a shortcut key to exit the application</source>
+          <target state="translated">Établissez un raccourci clavier pour quitter l'application</target>
+        </trans-unit>
+        <trans-unit id="ResetAllButton.Content" translate="yes" xml:space="preserve">
+          <source>Reset all</source>
+          <target state="translated">Réinitialiser tout</target>
+        </trans-unit>
+        <trans-unit id="ClearAllButton.Content" translate="yes" xml:space="preserve">
+          <source>Clear all</source>
+          <target state="translated">Tout effacer</target>
+        </trans-unit>
+        <trans-unit id="WarningShortcutAltGr.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Shortcuts with **Ctrl** and **Alt** may remove functionality from some international keyboards, because **Ctrl** + **Alt** = **Alt Gr** in those keyboards.</source>
+          <target state="translated">Les raccourcis avec **Ctrl** et **Alt** peuvent supprimer des fonctionnalités de certains claviers internationaux, car **Ctrl** + **Alt** = **Alt Gr** sur ces claviers.</target>
         </trans-unit>
       </group>
     </body>

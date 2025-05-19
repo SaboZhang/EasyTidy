@@ -107,7 +107,7 @@ public partial class FilterViewModel : ObservableRecipient
         var dialog = new AddFilterContentDialog
         {
             ViewModel = this,
-            Title = "添加过滤器",
+            Title = "AdvancedRules".GetLocalized(),
             PrimaryButtonText = "SaveText".GetLocalized(),
             CloseButtonText = "CancelText".GetLocalized(),
         };
@@ -136,7 +136,7 @@ public partial class FilterViewModel : ObservableRecipient
                 && string.IsNullOrWhiteSpace(dialog.IncludedFiles) && !dialog.IsArchiveSelected && !dialog.IsHiddenSelected
                 && !dialog.IsReadOnlySelected && !dialog.IsSystemSelected && !dialog.IsTempSelected))
             {
-                _notificationQueue.ShowWithWindowExtension("至少需要设置一个过滤条件。", InfoBarSeverity.Warning);
+                _notificationQueue.ShowWithWindowExtension("FilterConditions".GetLocalized(), InfoBarSeverity.Warning);
                 _ = ClearNotificationAfterDelay(3000);
                 args.Cancel = true;
                 return;
@@ -287,7 +287,7 @@ public partial class FilterViewModel : ObservableRecipient
                         && string.IsNullOrWhiteSpace(dialog.IncludedFiles) && !dialog.IsArchiveSelected && !dialog.IsHiddenSelected
                         && !dialog.IsReadOnlySelected && !dialog.IsSystemSelected && !dialog.IsTempSelected))
                     {
-                        _notificationQueue.ShowWithWindowExtension("至少需要保留一个过滤条件。", InfoBarSeverity.Warning);
+                        _notificationQueue.ShowWithWindowExtension("FilterConditions".GetLocalized(), InfoBarSeverity.Warning);
                         _ = ClearNotificationAfterDelay(3000);
                         e.Cancel = true;
                         return;

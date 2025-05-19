@@ -1588,4 +1588,67 @@
   <data name="WarningShortcutAltGr.Title" xml:space="preserve">
     <value>可能與 Alt Gr 衝突的快速鍵</value>
   </data>
+  <data name="RegisterFailed" xml:space="preserve">
+    <value>快速鍵 {0} 註冊失敗，請檢查是否與其他程式衝突！</value>
+  </data>
+  <data name="ChatModelErrors" xml:space="preserve">
+    <value>模型名稱不能為空</value>
+  </data>
+  <data name="CustomPrompt.PlaceholderText" xml:space="preserve">
+    <value>請描述您的分類要求</value>
+  </data>
+  <data name="BuiltInText.Content" xml:space="preserve">
+    <value>系統內置</value>
+  </data>
+  <data name="CustomTxt.Content" xml:space="preserve">
+    <value>自定義</value>
+  </data>
+  <data name="FilterConditions" xml:space="preserve">
+    <value>必須設定至少一個篩選條件</value>
+  </data>
+  <data name="AdvancedRules" xml:space="preserve">
+    <value>高級規則</value>
+  </data>
+  <data name="GlobalHotkey.Header" xml:space="preserve">
+    <value>全局熱鍵</value>
+  </data>
+  <data name="DragWindowShortcutCard.Header" xml:space="preserve">
+    <value>拖放視窗</value>
+  </data>
+  <data name="DragWindowShortcutCard.Description" xml:space="preserve">
+    <value>設置顯示拖拽視窗的快捷鍵</value>
+  </data>
+  <data name="ExecuteTaskCard.Header" xml:space="preserve">
+    <value>執行任務</value>
+  </data>
+  <data name="ExecuteTaskCard.Description" xml:space="preserve">
+    <value>設定執行所有任務的快捷鍵</value>
+  </data>
+  <data name="ShowMainWindowSettingsCard.Header" xml:space="preserve">
+    <value>顯示主視窗</value>
+  </data>
+  <data name="ShowMainWindowSettingsCard.Description" xml:space="preserve">
+    <value>設定顯示應用程序主窗口的快捷鍵</value>
+  </data>
+  <data name="SettingsWindowCard.Header" xml:space="preserve">
+    <value>設置窗口</value>
+  </data>
+  <data name="SettingsWindowCard.Description" xml:space="preserve">
+    <value>打開應用程序的設置窗口</value>
+  </data>
+  <data name="ExitAppTxt.Header" xml:space="preserve">
+    <value>退出應用</value>
+  </data>
+  <data name="ExitAppTxt.Description" xml:space="preserve">
+    <value>設定退出應用程序的快速鍵</value>
+  </data>
+  <data name="ResetAllButton.Content" xml:space="preserve">
+    <value>重置全部</value>
+  </data>
+  <data name="ClearAllButton.Content" xml:space="preserve">
+    <value>清空所有</value>
+  </data>
+  <data name="WarningShortcutAltGr.ToolTipService.ToolTip" xml:space="preserve">
+    <value>使用 **Ctrl** 和 **Alt** 的快捷方式可能會刪除某些國際鍵盤的功能，因為在這些鍵盤中，**Ctrl** + **Alt** = **Alt Gr**。</value>
+  </data>
 </root>

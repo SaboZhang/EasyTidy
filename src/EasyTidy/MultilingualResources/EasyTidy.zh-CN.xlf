@@ -2170,7 +2170,87 @@
         </trans-unit>
         <trans-unit id="RegisterFailed" translate="yes" xml:space="preserve">
           <source>Shortcut key {0} registration failed, please check if there's a conflict with other programs!</source>
-          <target state="new">Shortcut key {0} registration failed, please check if there's a conflict with other programs!</target>
+          <target state="translated">快捷键 {0} 注册失败，请检查是否与其他程序冲突！</target>
+        </trans-unit>
+        <trans-unit id="ChatModelErrors" translate="yes" xml:space="preserve">
+          <source>The model name cannot be empty</source>
+          <target state="translated">模型名称不能为空</target>
+        </trans-unit>
+        <trans-unit id="CustomPrompt.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>Please describe your classification requirements</source>
+          <target state="translated">请描述您的分类要求</target>
+        </trans-unit>
+        <trans-unit id="BuiltInText.Content" translate="yes" xml:space="preserve">
+          <source>Built-in system</source>
+          <target state="translated">系统内置</target>
+        </trans-unit>
+        <trans-unit id="CustomTxt.Content" translate="yes" xml:space="preserve">
+          <source>Custom</source>
+          <target state="translated">自定义</target>
+        </trans-unit>
+        <trans-unit id="FilterConditions" translate="yes" xml:space="preserve">
+          <source>At least one filtering condition must be set</source>
+          <target state="translated">必须至少设置一个过滤条件</target>
+        </trans-unit>
+        <trans-unit id="AdvancedRules" translate="yes" xml:space="preserve">
+          <source>Advanced Rules</source>
+          <target state="translated">高级规则</target>
+        </trans-unit>
+        <trans-unit id="GlobalHotkey.Header" translate="yes" xml:space="preserve">
+          <source>Global Hotkey</source>
+          <target state="translated">全局热键</target>
+        </trans-unit>
+        <trans-unit id="DragWindowShortcutCard.Header" translate="yes" xml:space="preserve">
+          <source>Drag and drop window</source>
+          <target state="translated">拖放窗口</target>
+        </trans-unit>
+        <trans-unit id="DragWindowShortcutCard.Description" translate="yes" xml:space="preserve">
+          <source>Set shortcut key for displaying the drag window</source>
+          <target state="translated">设置显示拖拽窗口的快捷键</target>
+        </trans-unit>
+        <trans-unit id="ExecuteTaskCard.Header" translate="yes" xml:space="preserve">
+          <source>Execute task</source>
+          <target state="translated">执行任务</target>
+        </trans-unit>
+        <trans-unit id="ExecuteTaskCard.Description" translate="yes" xml:space="preserve">
+          <source>Set shortcut key for executing all tasks</source>
+          <target state="translated">设置执行所有任务的快捷键</target>
+        </trans-unit>
+        <trans-unit id="ShowMainWindowSettingsCard.Header" translate="yes" xml:space="preserve">
+          <source>Show main window</source>
+          <target state="translated">显示主窗口</target>
+        </trans-unit>
+        <trans-unit id="ShowMainWindowSettingsCard.Description" translate="yes" xml:space="preserve">
+          <source>Set shortcut key for displaying the application main window</source>
+          <target state="translated">设置显示应用程序主窗口的快捷键</target>
+        </trans-unit>
+        <trans-unit id="SettingsWindowCard.Header" translate="yes" xml:space="preserve">
+          <source>settings window</source>
+          <target state="translated">设置窗口</target>
+        </trans-unit>
+        <trans-unit id="SettingsWindowCard.Description" translate="yes" xml:space="preserve">
+          <source>Open the Settings window of the application</source>
+          <target state="translated">打开应用程序的设置窗口</target>
+        </trans-unit>
+        <trans-unit id="ExitAppTxt.Header" translate="yes" xml:space="preserve">
+          <source>Exit App</source>
+          <target state="translated">退出应用</target>
+        </trans-unit>
+        <trans-unit id="ExitAppTxt.Description" translate="yes" xml:space="preserve">
+          <source>Set up a shortcut key to exit the application</source>
+          <target state="translated">设置退出应用程序的快捷键</target>
+        </trans-unit>
+        <trans-unit id="ResetAllButton.Content" translate="yes" xml:space="preserve">
+          <source>Reset all</source>
+          <target state="translated">重置全部</target>
+        </trans-unit>
+        <trans-unit id="ClearAllButton.Content" translate="yes" xml:space="preserve">
+          <source>Clear all</source>
+          <target state="translated">清空所有</target>
+        </trans-unit>
+        <trans-unit id="WarningShortcutAltGr.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Shortcuts with **Ctrl** and **Alt** may remove functionality from some international keyboards, because **Ctrl** + **Alt** = **Alt Gr** in those keyboards.</source>
+          <target state="translated">使用 **Ctrl** 和 **Alt** 的快捷方式可能会删除某些国际键盘的功能，因为在这些键盘中，**Ctrl** + **Alt** = **Alt Gr**。</target>
         </trans-unit>
       </group>
     </body>

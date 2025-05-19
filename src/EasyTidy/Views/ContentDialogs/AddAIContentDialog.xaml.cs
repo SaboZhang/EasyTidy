@@ -1,7 +1,8 @@
+using CommunityToolkit.WinUI;
 using EasyTidy.Model;
 using System.Collections;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+using System.Runtime.CompilerServices;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -11,12 +12,8 @@ namespace EasyTidy.Views.ContentDialogs;
 /// <summary>
 /// An empty page that can be used on its own or navigated to within a Frame.
 /// </summary>
-public sealed partial class AddAIContentDialog : ContentDialog, INotifyPropertyChanged, INotifyDataErrorInfo
+public sealed partial class AddAIContentDialog : ContentDialog, INotifyDataErrorInfo, INotifyPropertyChanged
 {
-    public event PropertyChangedEventHandler PropertyChanged;
-    public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
-
-    private readonly Dictionary<string, List<string>> _errors = new();
     public AiSettingsViewModel ViewModel { get; set; }
     public AddAIContentDialog()
     {
@@ -24,6 +21,7 @@ public sealed partial class AddAIContentDialog : ContentDialog, INotifyPropertyC
         this.InitializeComponent();
         XamlRoot = App.MainWindow.Content.XamlRoot;
         RequestedTheme = ViewModel.ThemeSelectorService.Theme;
+        // ValidateChatModel(_chatModel);
     }
 
     public string ModelName { get; set; }
@@ -42,8 +40,6 @@ public sealed partial class AddAIContentDialog : ContentDialog, INotifyPropertyC
 
     private string _chatModel;
 
-    [Required(ErrorMessage = "模型名称不能为空")]
-    [StringLength(50, ErrorMessage = "模型名称不能超过50个字符")]
     public string ChatModel
     {
         get => _chatModel;
@@ -52,61 +48,69 @@ public sealed partial class AddAIContentDialog : ContentDialog, INotifyPropertyC
             if (_chatModel != value)
             {
                 _chatModel = value;
-                OnPropertyChanged(nameof(ChatModel));
-                ValidateProperty(value, nameof(ChatModel));
+                OnPropertyChanged();
+                ValidateChatModel(value);
+                if (_shouldValidate)
+                {
+                    
+                }
             }
         }
     }
 
     public double Temperature { get; set; } = 0.8;
 
-    public string ErrorMessage { get; set; } = string.Empty;
+    private bool _shouldValidate = false;
 
-    // 实现 INotifyDataErrorInfo 接口
-    public bool HasErrors => _errors.Any();
-
-    public IEnumerable GetErrors(string propertyName)
+    private void OnLoaded(object sender, RoutedEventArgs e)
     {
-        if (string.IsNullOrEmpty(propertyName))
-            return null;
-
-        return _errors.ContainsKey(propertyName) ? _errors[propertyName] : null;
+        _shouldValidate = true;
     }
 
-    private void OnPropertyChanged(string propertyName)
+    public void ValidateChatModel(string chatModel)
     {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        var errors = new List<string>(1);
+        if (string.IsNullOrWhiteSpace(chatModel))
+        {
+            errors.Add("ChatModelErrors".GetLocalized());
+        }
+        SetErrors("ChatModel", errors);
     }
+
+    public bool HasErrors => _validationErrors.Count > 0;
+
+    private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        => PropertyChanged?.Invoke(this, new(propertyName));
+
+    // Error validation
+    private readonly Dictionary<string, ICollection<string>> _validationErrors = [];
+
+    public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+    public event PropertyChangedEventHandler PropertyChanged;
 
     private void OnErrorsChanged(string propertyName)
     {
-        ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
+        ErrorsChanged?.Invoke(this, new(propertyName));
+        OnPropertyChanged(nameof(HasErrors));
     }
 
-    public void ValidateProperty(object value, string propertyName)
+    public IEnumerable GetErrors(string propertyName)
     {
-        var validationContext = new ValidationContext(this)
-        {
-            MemberName = propertyName
-        };
-        var results = new List<ValidationResult>();
+        if (string.IsNullOrEmpty(propertyName) ||
+            !_validationErrors.ContainsKey(propertyName))
+            return null;
 
-        if (!Validator.TryValidateProperty(value, validationContext, results))
-        {
-            _errors[propertyName] = results.Select(r => r.ErrorMessage).ToList();
-            foreach (var error in _errors[propertyName])
-            {
-                ChatModelError.Text = error;
-                ChatModelError.Visibility = Visibility.Visible;
-            }
-        }
+        return _validationErrors[propertyName];
+    }
+
+    private void SetErrors(string key, ICollection<string> errors)
+    {
+        if (errors.Any())
+            _validationErrors[key] = errors;
         else
-        {
-            _errors.Remove(propertyName);
-            ChatModelError.Visibility = Visibility.Collapsed;
-        }
+            _ = _validationErrors.Remove(key);
 
-        OnErrorsChanged(propertyName);
+        OnErrorsChanged(key);
     }
 
     private async void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
