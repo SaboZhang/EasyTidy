@@ -421,21 +421,21 @@ public sealed partial class ShortcutControl : UserControl
             VirtualKey.Left => "←",
             VirtualKey.Right => "→",
             VirtualKey.Up => "↑",
-            VirtualKey.Down => "下",
+            VirtualKey.Down => "↓",
             VirtualKey.Enter => "Enter",
             VirtualKey.CapitalLock => "Caps Lock",
             (VirtualKey)0xBC => ",",    // VK_OEM_COMMA
             (VirtualKey)0xBE => ".",    // VK_OEM_PERIOD
-            (VirtualKey)0xBA => ";",    // VK_OEM_1 
-            (VirtualKey)0xDE => "\"",   // VK_OEM_7 
-            (VirtualKey)0xBF => "?",    // VK_OEM_2 
+            (VirtualKey)0xBA => ";",    // VK_OEM_1
+            (VirtualKey)0xDE => "\"",   // VK_OEM_7
+            (VirtualKey)0xBF => "?",    // VK_OEM_2
             (VirtualKey)0xBD => "-",    // VK_OEM_MINUS
             (VirtualKey)0xBB => "+",    // VK_OEM_PLUS
             (VirtualKey)0xDB => "[",    // VK_OEM_4
             (VirtualKey)0xDD => "]",    // VK_OEM_6
             (VirtualKey)0xDC => "\\",   // VK_OEM_5
             (VirtualKey)0xC0 => "~",    // VK_OEM_3
-            _ => key.ToString() 
+            _ => key.ToString()
         };
     }
 
