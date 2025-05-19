@@ -14,6 +14,14 @@
     mc:Ignorable="d"
     SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
 
+    <ContentDialog.Resources>
+        <DataTemplate x:Key="ValidationTemplate"
+                      x:DataType="x:String">
+            <TextBlock Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+                       Text="{x:Bind}" />
+        </DataTemplate>
+    </ContentDialog.Resources>
+
     <ScrollView VerticalScrollBarVisibility="Hidden">
         <StackPanel>
             <TextBlock x:Uid="DialogFirst"
@@ -32,8 +40,10 @@
                          Margin="12,0,10,0"
                          MinWidth="180"
                          Text="{x:Bind Minute, Mode=TwoWay}"
-                         ui:TextBoxExtensions.Regex="^([1-9]|[1-5][0-9])(?:,([1-9]|[1-5][0-9]))*$"
-                         ui:TextBoxExtensions.IsValid="{x:Bind IsValid, Mode=TwoWay}"/>
+                         etc:Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
+                         etc:Validation.ValidationPropertyName="Minute"
+                         etc:Validation.ValidationProvider="{x:Bind}"
+                         Style="{StaticResource ValidatingTextBoxStyle}"/>
                 <TextBlock Text="(0 to 59)"/>
             </StackPanel>
             <TextBlock Foreground="{ThemeResource SystemFillColorCriticalBrush}"

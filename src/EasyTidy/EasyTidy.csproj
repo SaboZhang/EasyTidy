@@ -434,6 +434,7 @@
     <PRIResource Remove="Models\**" />
   </ItemGroup>
   <ItemGroup>
+    <Page Remove="Themes\Controls\Validation.xaml" />
     <Page Remove="Themes\Styles\TextBlock.xaml" />
     <Page Remove="Views\UserControls\KeyVisual\KeyVisual.xaml" />
   </ItemGroup>

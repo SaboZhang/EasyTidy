@@ -256,11 +256,12 @@ public class ActivationService : IActivationService
 
         foreach (var config in hotkeySettings?.Hotkeys ?? Enumerable.Empty<Hotkey>())
         {
-            if (hotkeyService.TryParseGesture(config.KeyGesture, out var keys))
+            if (hotkeyService.TryParseHotkey(config.KeyGesture, out var modifiers, out var vk))
             {
-                bool success = hotkeyService.RegisterMultiKeyHotkey(
+                bool success = hotkeyService.RegisterHotKey(
                     config.Id,
-                    keys,
+                    vk,
+                    modifiers,
                     () => hotkeyActionRouter.HandleAction(config.CommandName)
                 );
                 if (!success)
