@@ -11,6 +11,7 @@
     <cover:LineDashStrokeArrayConverter x:Key="LineDashStrokeArrayConverter" />
     <cover:BoolToEnumConverter x:Key="BoolToEnumConverter"/>
     <cover:EnumToImageConverter x:Key="EnumToImageConverter"/>
+    <cover:ValidationEnabledConverter x:Name="CanValidateConverter" />
 
     <converter:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
 
