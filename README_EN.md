@@ -94,6 +94,8 @@ We welcome feedback and contributions from everyone! If you have any suggestions
 
 If you like it, you can buy the author a cup of coffee.
 
+> Thank you to those who rewarded me [Sponsor List](Sponsor.md)
+
 | WeChatPay | AliPay | PayPal |
 | :--: | :--: | :--: |
 | ![wechcatpay](./image/WeChanQR.png) | ![alipay](./image/AliPayQR.png) | <a href="https://www.paypal.me/EasyTidy" target="_blank"><img align="center" alt="EasyTidy" width="240"  src="./image/paypal.png" /></a> |

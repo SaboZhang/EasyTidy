@@ -97,6 +97,8 @@ EasyTidy 是一款功能强大的文件管理软件，致力于自动化处理�
 
 觉得不错的话可以请作者喝杯阔落
 
+> 感谢打赏的朋友 [赞赏列表](Sponsor.md)
+
 | 微信 | 支付宝 | PayPal |
 | :--: | :--: | :--: |
 | ![wechcatpay](./image/WeChanQR.png) | ![alipay](./image/AliPayQR.png) | <a href="https://www.paypal.me/EasyTidy" target="_blank"><img align="center" alt="EasyTidy" width="280"  src="./image/paypal.png" /></a> |
