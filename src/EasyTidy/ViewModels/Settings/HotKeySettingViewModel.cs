@@ -125,7 +125,7 @@ public partial class HotKeySettingViewModel : ObservableObject
 
         if (!success)
         {
-            Logger.Warn($"Failed to register hotkey: {ToGestureString(vk)}");
+            Logger.Warn($"Failed to register hotkey: {keyString}");
         }
     }
 
