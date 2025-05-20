@@ -1720,7 +1720,7 @@
     <value>Press a key combination to change this shortcut. Right-click to remove the key combination and disable the shortcut.</value>
   </data>
   <data name="Shortcut_Description.Text" xml:space="preserve">
-    <value>Supports key combinations starting with Windows, Ctrl, Alt, or Shift, as well as single, unmodified keys on their own</value>
+    <value>Supports key combinations starting with Windows, Ctrl, Alt, or Shift, as well as single, unmodified keys on their own(F1-F12)</value>
   </data>
   <data name="InvalidShortcut.Title" xml:space="preserve">
     <value>Invalid shortcut</value>

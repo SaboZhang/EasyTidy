@@ -2157,8 +2157,8 @@
           <target state="translated">按下按鍵組合以更改此快捷鍵。右鍵點擊以移除按鍵組合並停用快捷鍵。</target>
         </trans-unit>
         <trans-unit id="Shortcut_Description.Text" translate="yes" xml:space="preserve">
-          <source>Supports key combinations starting with Windows, Ctrl, Alt, or Shift, as well as single, unmodified keys on their own</source>
-          <target state="translated">支持以 Windows、Ctrl、Alt 或 Shift 開頭的組合鍵，以及單獨的非修飾鍵</target>
+          <source>Supports key combinations starting with Windows, Ctrl, Alt, or Shift, as well as single, unmodified keys on their own(F1-F12)</source>
+          <target state="translated">支持以 Windows、Ctrl、Alt 或 Shift 開頭的組合鍵，以及單獨的非修飾鍵(F1-F12)</target>
         </trans-unit>
         <trans-unit id="InvalidShortcut.Title" translate="yes" xml:space="preserve">
           <source>Invalid shortcut</source>

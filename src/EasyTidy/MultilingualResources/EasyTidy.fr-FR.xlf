@@ -2157,8 +2157,8 @@
           <target state="translated">Appuyez sur une combinaison de touches pour modifier ce raccourci. Faites un clic droit pour supprimer la combinaison de touches et désactiver le raccourci.</target>
         </trans-unit>
         <trans-unit id="Shortcut_Description.Text" translate="yes" xml:space="preserve">
-          <source>Supports key combinations starting with Windows, Ctrl, Alt, or Shift, as well as single, unmodified keys on their own</source>
-          <target state="translated">Prend en charge les combinaisons de touches commençant par Windows, Ctrl, Alt ou Maj, ainsi que les touches uniques et non modifiées.</target>
+          <source>Supports key combinations starting with Windows, Ctrl, Alt, or Shift, as well as single, unmodified keys on their own(F1-F12)</source>
+          <target state="translated">Prend en charge les combinaisons de touches commençant par Windows, Ctrl, Alt ou Maj, ainsi que les touches uniques et non modifiées(F1-F12).</target>
         </trans-unit>
         <trans-unit id="InvalidShortcut.Title" translate="yes" xml:space="preserve">
           <source>Invalid shortcut</source>

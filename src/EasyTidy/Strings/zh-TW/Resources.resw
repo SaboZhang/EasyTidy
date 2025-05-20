@@ -1580,7 +1580,7 @@
     <value>按下按鍵組合以更改此快捷鍵。右鍵點擊以移除按鍵組合並停用快捷鍵。</value>
   </data>
   <data name="Shortcut_Description.Text" xml:space="preserve">
-    <value>支持以 Windows、Ctrl、Alt 或 Shift 開頭的組合鍵，以及單獨的非修飾鍵</value>
+    <value>支持以 Windows、Ctrl、Alt 或 Shift 開頭的組合鍵，以及單獨的非修飾鍵(F1-F12)</value>
   </data>
   <data name="InvalidShortcut.Title" xml:space="preserve">
     <value>無效的快捷鍵</value>

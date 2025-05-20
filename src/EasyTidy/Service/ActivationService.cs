@@ -248,10 +248,12 @@ public class ActivationService : IActivationService
         await EnsureDefaultHotkeysAsync();
         var hotkeySettings = await _localSettingsService.LoadSettingsExtAsync<HotkeysCollection>();
 
-        if (hotkeySettings?.Hotkeys == null || hotkeySettings.Hotkeys.Count == 0)
+        if (hotkeySettings?.Hotkeys == null || hotkeySettings.Hotkeys.Count == 0 || !hotkeySettings.Enabled)
         {
-            Logger.Info("No hotkeys configured. Skipping hotkey registration.");
-            return; // 文件存在但用户不配快捷键 → 直接跳过
+            // 文件存在但用户不配快捷键 → 直接跳过
+            // 用户禁用快捷键 → 直接跳过
+            Logger.Info("No hotkeys configured or hotkeys disable. Skipping hotkey registration.");
+            return;
         }
 
         foreach (var config in hotkeySettings?.Hotkeys ?? Enumerable.Empty<Hotkey>())

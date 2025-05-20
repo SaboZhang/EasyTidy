@@ -18,11 +18,26 @@ public sealed partial class TrayIconView : UserControl
     private bool _isWindowVisible;
 
     public MainViewModel ViewModel { get; }
+    public HotKeySettingViewModel HotKey { get; }
+
+    public string ToggleHotkeyText
+    {
+        get
+        {
+            return HotKey.IsHotkeyEnabled
+                ? "禁用热键"
+                : "启用热键";
+        }
+    }
+
+    public static TrayIconView Instance { get; private set; }
 
     public TrayIconView()
     {
         InitializeComponent();
         ViewModel = App.GetService<MainViewModel>();
+        HotKey = App.GetService<HotKeySettingViewModel>();
+        Instance = this;
     }
 
     [RelayCommand]
@@ -56,6 +71,11 @@ public sealed partial class TrayIconView : UserControl
         App.MainWindow?.Close();
     }
 
+    public void DisposeTrayIcon()
+    {
+        TrayIcon.Dispose();
+    }
+
     /// <summary>
     /// Restarts the application
     /// </summary>
@@ -70,7 +90,6 @@ public sealed partial class TrayIconView : UserControl
         TrayIcon.Dispose();
         App.ChildWindow?.Close();
         App.MainWindow?.Close();
-        // Environment.Exit(0);
     }
 
     /// <summary>
@@ -90,5 +109,12 @@ public sealed partial class TrayIconView : UserControl
     {
         await QuartzHelper.TriggerAllJobsOnceAsync();
         await ViewModel.ExecuteAllTaskAsync();
+    }
+
+    [RelayCommand]
+    private async Task DisableHotkeysAsync()
+    {
+        await HotKey.DisableHotkeysAsync();
+        OnPropertyChanged(nameof(ToggleHotkeyText));
     }
 }

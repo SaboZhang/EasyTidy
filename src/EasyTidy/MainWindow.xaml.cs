@@ -77,6 +77,8 @@ public sealed partial class MainWindow : WindowEx
             await SaveAppState();
             await QuartzHelper.StopAllJob();
             FileEventHandler.StopAllMonitoring();
+            var hotkeyService = App.GetService<HotkeyService>();
+            hotkeyService.Clear();
             Logger.Info($"{Constants.AppName}_v{Constants.Version} Closed...\n");
             LogService.UnRegister();
         }

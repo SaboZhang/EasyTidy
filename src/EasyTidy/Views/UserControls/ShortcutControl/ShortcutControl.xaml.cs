@@ -20,7 +20,7 @@ public sealed partial class ShortcutControl : UserControl
     private HashSet<VirtualKey> _heldKeys = new();
     private readonly List<VirtualKey> _pressedSequence = new();
 
-    public event EventHandler<ObservableCollection<HotkeysCollection>> SaveClicked;
+    public event EventHandler<Hotkey> SaveClicked;
     public event EventHandler ResetRequested;
     private bool _enabled;
     private bool _isActive;
@@ -186,26 +186,26 @@ public sealed partial class ShortcutControl : UserControl
             CommandName = Parameters
         };
 
-        var targetCollection = HotkeySettings.FirstOrDefault();
+        // var targetCollection = HotkeySettings.FirstOrDefault();
 
-        if (targetCollection == null)
-        {
-            targetCollection = new HotkeysCollection();
-            HotkeySettings.Add(targetCollection);
-        }
+        // if (targetCollection == null)
+        // {
+        //     targetCollection = new HotkeysCollection();
+        //     HotkeySettings.Add(targetCollection);
+        // }
 
 
-        var existing = targetCollection.Hotkeys.FirstOrDefault(h => h.Id == Parameters);
-        if (existing != null)
-        {
-            existing.KeyGesture = keyGesture;
-        }
-        else
-        {
-            targetCollection.Hotkeys.Add(newHotkey);
-        }
+        // var existing = targetCollection.Hotkeys.FirstOrDefault(h => h.Id == Parameters);
+        // if (existing != null)
+        // {
+        //     existing.KeyGesture = keyGesture;
+        // }
+        // else
+        // {
+        //     targetCollection.Hotkeys.Add(newHotkey);
+        // }
 
-        SaveClicked?.Invoke(this, HotkeySettings);
+        SaveClicked?.Invoke(this, newHotkey);
 
         shortcutDialog.Hide();
     }

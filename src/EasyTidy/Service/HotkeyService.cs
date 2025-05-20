@@ -167,7 +167,8 @@ public partial class HotkeyService(ILocalSettingsService localSettingsService, H
         // 修饰键排序优先级
         var modifierOrder = new List<VirtualKey>
         {
-            VirtualKey.LeftWindows, VirtualKey.RightWindows,
+            VirtualKey.LeftWindows,
+            VirtualKey.RightWindows,
             VirtualKey.Control,
             VirtualKey.Menu,
             VirtualKey.Shift,
@@ -184,6 +185,26 @@ public partial class HotkeyService(ILocalSettingsService localSettingsService, H
 
         return string.Join(" + ", sortedKeys.Select(k =>
             nameMap.TryGetValue(k, out var alias) ? alias : k.ToString()));
+    }
+
+    private static readonly Dictionary<string, VirtualKey> _punctuationKeyMap = new()
+    {
+        [","] = (VirtualKey)0xBC, // VK_OEM_COMMA
+        ["."] = (VirtualKey)0xBE, // VK_OEM_PERIOD
+        [";"] = (VirtualKey)0xBA, // VK_OEM_1
+        ["\""] = (VirtualKey)0xDE, // VK_OEM_7
+        ["?"] = (VirtualKey)0xBF, // VK_OEM_2
+        ["-"] = (VirtualKey)0xBD, // VK_OEM_MINUS
+        ["+"] = (VirtualKey)0xBB, // VK_OEM_PLUS
+        ["["] = (VirtualKey)0xDB, // VK_OEM_4
+        ["]"] = (VirtualKey)0xDD, // VK_OEM_6
+        ["\\"] = (VirtualKey)0xDC, // VK_OEM_5
+        ["~"] = (VirtualKey)0xC0, // VK_OEM_3
+    };
+
+    private bool TryParsePunctuationKey(string input, out VirtualKey key)
+    {
+        return _punctuationKeyMap.TryGetValue(input, out key);
     }
 
     public async Task ResetToDefaultHotkeysAsync()
@@ -255,13 +276,19 @@ public partial class HotkeyService(ILocalSettingsService localSettingsService, H
                     modifiers |= ModifierKeys.Win;
                     break;
                 default:
-                    if (Enum.TryParse<VirtualKey>(part, true, out var parsedKey))
+                    if (TryParsePunctuationKey(part, out var parsedKey))
                     {
                         if (mainKey == VirtualKey.None)
                             mainKey = parsedKey;
                     }
+                    else if (Enum.TryParse<VirtualKey>(part, true, out var fallbackKey))
+                    {
+                        if (mainKey == VirtualKey.None)
+                            mainKey = fallbackKey;
+                    }
                     else
                     {
+                        Logger.Debug($"无法解析热键: {part}");
                         return false; // 解析失败
                     }
                     break;

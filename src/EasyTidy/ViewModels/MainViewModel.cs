@@ -14,6 +14,7 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 namespace EasyTidy.ViewModels;
+
 public partial class MainViewModel : ObservableObject
 {
     private readonly AppDbContext _dbContext;
@@ -65,8 +66,8 @@ public partial class MainViewModel : ObservableObject
                 dispatcherQueue.TryEnqueue(async () =>
                 {
                     var list = await _dbContext.TaskOrchestration.Include(x => x.GroupName)
-                    .Where(x => string.IsNullOrEmpty(x.TaskSource) 
-                    || x.TaskSource == "DesktopText".GetLocalized() 
+                    .Where(x => string.IsNullOrEmpty(x.TaskSource)
+                    || x.TaskSource == "DesktopText".GetLocalized()
                     || x.TaskSource.Equals(desktopPath))
                     .GroupBy(x => x.GroupName)
                     .Select(g => g.First())

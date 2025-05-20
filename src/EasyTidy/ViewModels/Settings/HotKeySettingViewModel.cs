@@ -35,6 +35,9 @@ public partial class HotKeySettingViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<HotkeysCollection> _hotkeys;
 
+    [ObservableProperty]
+    private bool _isHotkeyEnabled;
+
     public ObservableCollection<Breadcrumb> Breadcrumbs { get; }
 
     public HotKeySettingViewModel(IThemeSelectorService themeSelectorService, ILocalSettingsService localSettingsService, HotkeyService hotkeyService, HotkeyActionRouter hotkeyActionRouter)
@@ -59,31 +62,29 @@ public partial class HotKeySettingViewModel : ObservableObject
 
         if (hotkeys?.Hotkeys == null)
             return;
+        
+        IsHotkeyEnabled = hotkeys.Enabled;
 
         Hotkeys = new ObservableCollection<HotkeysCollection>(new[] { hotkeys });
     }
 
     [RelayCommand]
-    private async Task RegisterUserDefinedHotkeyAsync(ObservableCollection<HotkeysCollection> collections)
+    private async Task RegisterUserDefinedHotkeyAsync(Hotkey hotkey)
     {
         var keyString = string.Empty;
         var modifiers = ModifierKeys.None;
         var mainKey = VirtualKey.None;
-        var hotkeyId = "ToggleChildWindow";
-        var actionName = "ToggleChildWindow";
-        if (collections == null && collections.Count == 0) return;
+        var hotkeyId = string.Empty;
+        var actionName = string.Empty;
+        if (hotkey == null ) return;
 
-        var allHotkeys = collections.SelectMany(c => c.Hotkeys).ToList();
-        foreach (var hotkey in allHotkeys)
+        hotkeyId = hotkey.Id;
+        actionName = hotkey.CommandName;
+        keyString = hotkey.KeyGesture;
+        if (_hotkeyService.TryParseHotkey(hotkey.KeyGesture, out var mod, out var mvk))
         {
-            hotkeyId = hotkey.Id;
-            actionName = hotkey.CommandName;
-            keyString = hotkey.KeyGesture;
-            if (_hotkeyService.TryParseHotkey(hotkey.KeyGesture, out var mod, out var mvk))
-            {
-                mainKey = mvk;
-                modifiers = mod;
-            }
+            mainKey = mvk;
+            modifiers = mod;
         }
 
         // 2. 加载已有的快捷键集合，没有就初始化
@@ -145,6 +146,7 @@ public partial class HotKeySettingViewModel : ObservableObject
             hotkeySettings.Hotkeys.Clear();
             // 保存修改后的快捷键集合
             await _localSettingsService.SaveSettingsExtAsync(hotkeySettings);
+            await LoadHotkeysAsync();
         }
     }
 
@@ -152,6 +154,7 @@ public partial class HotKeySettingViewModel : ObservableObject
     private async Task ResetAllHotkeys()
     {
         await _hotkeyService.ResetToDefaultHotkeysAsync();
+        await LoadHotkeysAsync();
     }
 
     [RelayCommand]
@@ -183,6 +186,24 @@ public partial class HotKeySettingViewModel : ObservableObject
                 Logger.Warn($"Failed to register hotkey: {defaultHotkey.KeyGesture}");
             }
         }
+    }
+
+    /// <summary>
+    /// 禁用热键
+    /// </summary>
+    /// <returns></returns>
+    public async Task DisableHotkeysAsync()
+    {
+        var hotkeys = await _localSettingsService.LoadSettingsExtAsync<HotkeysCollection>();
+        if (hotkeys == null) return;
+
+        foreach (var hotkey in hotkeys.Hotkeys)
+        {
+            _hotkeyService.UnregisterHotKey(hotkey.Id);
+        }
+        hotkeys.Enabled = !hotkeys.Enabled;
+        IsHotkeyEnabled = !IsHotkeyEnabled;
+        await _localSettingsService.SaveSettingsExtAsync(hotkeys);
     }
 
 }

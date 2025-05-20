@@ -2157,8 +2157,8 @@
           <target state="translated">このショートカットを変更するには、キーの組み合わせを押してください。キーの組み合わせを削除してショートカットを無効にするには、右クリックしてください。</target>
         </trans-unit>
         <trans-unit id="Shortcut_Description.Text" translate="yes" xml:space="preserve">
-          <source>Supports key combinations starting with Windows, Ctrl, Alt, or Shift, as well as single, unmodified keys on their own</source>
-          <target state="translated">Windows、Ctrl、Alt、またはShiftから始まるキー組み合わせや、単一の未変更キーをサポート</target>
+          <source>Supports key combinations starting with Windows, Ctrl, Alt, or Shift, as well as single, unmodified keys on their own(F1-F12)</source>
+          <target state="translated">Windows、Ctrl、Alt、またはShiftから始まるキー組み合わせや、単一の未変更キーをサポート(F1-F12)</target>
         </trans-unit>
         <trans-unit id="InvalidShortcut.Title" translate="yes" xml:space="preserve">
           <source>Invalid shortcut</source>

@@ -17,11 +17,10 @@ public class HotkeyActionRouter
         _actionMap = new Dictionary<string, Action>
         {
             ["ToggleChildWindow"] = () => MainViewModel.Instance?.ToggleChildWindow(),
-            ["ExitApp"] = () => Application.Current.Exit(),
+            ["ExitApp"] = ExitApp,
             ["ToggleSettingsWindow"] = ToggleSettingsWindow,
             ["ShowMainWindow"] = () => App.MainWindow.Activate(),
             ["ExecuteAllTasks"] = ExecuteAllTasks,
-            // 后续添加更多方法
         };
     }
 
@@ -47,5 +46,21 @@ public class HotkeyActionRouter
     {
         await QuartzHelper.TriggerAllJobsOnceAsync();
         await MainViewModel.Instance?.ExecuteAllTaskAsync();
+    }
+
+    private void ExitApp()
+    {
+        try
+        {
+            App._mutex?.ReleaseMutex();
+            App.HandleClosedEvents = false;
+            TrayIconView.Instance?.DisposeTrayIcon();
+            App.ChildWindow?.Close();
+            App.MainWindow?.Close();
+        }
+        catch
+        {
+            Environment.Exit(0);
+        }
     }
 }

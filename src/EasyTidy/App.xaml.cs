@@ -103,7 +103,7 @@ public partial class App : Application
                 services.AddTransient<AiSettingsPage>();
                 services.AddTransient<AiSettingsViewModel>();
                 services.AddTransient<AIServiceFactory>();
-                services.AddTransient<HotKeySettingViewModel>();
+                services.AddSingleton<HotKeySettingViewModel>();
                 services.AddTransient<HotKeySettingPage>();
 
                 // Register AppDbContext

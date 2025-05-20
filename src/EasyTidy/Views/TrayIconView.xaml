@@ -41,6 +41,10 @@
                     x:Uid="TrayIconScreen"/>
                 <MenuFlyoutSeparator/>
                 <MenuFlyoutItem
+                    Command="{x:Bind DisableHotkeysCommand}"
+                    Text="{x:Bind ToggleHotkeyText, Mode=OneWay}"/>
+                <MenuFlyoutSeparator/>
+                <MenuFlyoutItem
                     Command="{x:Bind RestartApplicationCommand}"
                     x:Uid="TrayIconRestart"/>
                 <MenuFlyoutItem

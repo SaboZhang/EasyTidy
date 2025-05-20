@@ -11,6 +11,7 @@ using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -34,20 +35,52 @@ public sealed partial class HotKeySettingPage : ToolPage
         this.InitializeComponent();
         ViewModel = App.GetService<HotKeySettingViewModel>();
         DataContext = ViewModel;
-        DragWindowShortcut.SaveClicked += DragWindowShortcut_SaveClicked;
-        DragWindowShortcut.ResetRequested += DragWindowShortcut_ResetRequested;
+        Loaded += RegisterShortcutEvents;
     }
 
-    private void DragWindowShortcut_ResetRequested(object sender, EventArgs e)
+    private void RegisterShortcutEvents(object sender, RoutedEventArgs e)
     {
-        DragWindowShortcut.HotkeySettings.Clear();
-        var hotkeyId = DragWindowShortcut.Parameters;
-        ViewModel.ResetDefaultCommand.Execute(hotkeyId);
-        DragWindowShortcut.HotkeySettings = ViewModel.Hotkeys;
+        foreach (var shortcut in FindVisualChildren<ShortcutControl>(this))
+        {
+            shortcut.SaveClicked += Shortcut_SaveClicked;
+            shortcut.ResetRequested += Shortcut_ResetRequested;
+        }
     }
 
-    private void DragWindowShortcut_SaveClicked(object sender, ObservableCollection<HotkeysCollection> e)
+    private void Shortcut_ResetRequested(object sender, EventArgs e)
+    {
+        if (sender is ShortcutControl shortcut)
+        {
+            var hotkeyId = shortcut.Parameters;
+            shortcut.HotkeySettings.Clear();
+            ViewModel.ResetDefaultCommand.Execute(hotkeyId);
+            shortcut.HotkeySettings = ViewModel.Hotkeys;
+        }
+    }
+
+    private void Shortcut_SaveClicked(object sender, Hotkey e)
     {
         ViewModel.RegisterUserDefinedHotkeyCommand.Execute(e);
     }
+
+    private static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
+    {
+        if (depObj != null)
+        {
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
+            {
+                DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
+                if (child != null && child is T t)
+                {
+                    yield return t;
+                }
+
+                foreach (T childOfChild in FindVisualChildren<T>(child))
+                {
+                    yield return childOfChild;
+                }
+            }
+        }
+    }
+
 }

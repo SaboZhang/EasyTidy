@@ -154,8 +154,6 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
 
     public string QuickTime { get; set; } = DateTime.Now.ToString("HH:mm");
 
-    public bool IsValid { get; set; }
-
     public bool DelayIsValid { get; set; }
     public bool MinuteIsValid { get; set; }
     public bool HourIsValid { get; set; }
@@ -163,7 +161,6 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
     public bool DayOfMonthIsValid { get; set; }
     public bool MonthlyDayIsValid { get; set; }
     public bool ModifiedFlg { get; set; }
-    private bool _isFirstLoad = true;
 
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
@@ -359,7 +356,6 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
 
     private void TimePicker_SelectedTimeChanged(TimePicker sender, TimePickerSelectedValueChangedEventArgs args)
     {
-        DateTime dateValue = DateTime.Parse(QuickTime);
         if (args.NewTime != null)
         {
             var time = args.NewTime.Value;
