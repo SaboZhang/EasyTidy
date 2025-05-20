@@ -1,4 +1,5 @@
-﻿using EasyTidy.Service;
+﻿using CommunityToolkit.WinUI;
+using EasyTidy.Service;
 using H.NotifyIcon;
 using System.Diagnostics;
 using WinUIEx;
@@ -25,8 +26,8 @@ public sealed partial class TrayIconView : UserControl
         get
         {
             return HotKey.IsHotkeyEnabled
-                ? "禁用热键"
-                : "启用热键";
+                ? "DisableHotkey".GetLocalized()
+                : "EnabledHotkey".GetLocalized();
         }
     }
 

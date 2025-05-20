@@ -1198,6 +1198,17 @@
   <data name="LogsFolder.Content" xml:space="preserve">
     <value>日誌目錄</value>
   </data>
+  <data name="AppNotificationPayloadInfo" xml:space="preserve">
+    <value>&lt;toast launch='meetingId=9813'&gt;
+    &lt;visual&gt;
+        &lt;binding template='ToastGeneric'&gt;
+            &lt;text&gt;&lt;/text&gt;
+            &lt;text&gt;{0}&lt;/text&gt;
+            &lt;text&gt;&lt;/text&gt;
+        &lt;/binding&gt;
+    &lt;/visual&gt;
+&lt;/toast&gt;</value>
+  </data>
   <data name="GeneralPrefixCard.Header" xml:space="preserve">
     <value>Webdav 上传前缀</value>
   </data>
@@ -1650,5 +1661,62 @@
   </data>
   <data name="WarningShortcutAltGr.ToolTipService.ToolTip" xml:space="preserve">
     <value>使用 **Ctrl** 和 **Alt** 的快捷方式可能會刪除某些國際鍵盤的功能，因為在這些鍵盤中，**Ctrl** + **Alt** = **Alt Gr**。</value>
+  </data>
+  <data name="NoDefaultGroup" xml:space="preserve">
+    <value>未找到預設分組。請先設置預設分組。</value>
+  </data>
+  <data name="Log_No_Rule" xml:space="preserve">
+    <value>檔案 {0} 規則不符，跳過處理。</value>
+  </data>
+  <data name="DisableHotkey" xml:space="preserve">
+    <value>禁用熱鍵</value>
+  </data>
+  <data name="EnabledHotkey" xml:space="preserve">
+    <value>啟用熱鍵</value>
+  </data>
+  <data name="ExceptionTxt" xml:space="preserve">
+    <value>異常信息</value>
+  </data>
+  <data name="Log_Add_Schedule" xml:space="preserve">
+    <value>時間表添加失敗</value>
+  </data>
+  <data name="Log_Custom_Fail" xml:space="preserve">
+    <value>添加自定義配置失敗</value>
+  </data>
+  <data name="Log_Info_Rule" xml:space="preserve">
+    <value>找到了 {0} 条高级规则记录</value>
+  </data>
+  <data name="InitializationLoadFailed" xml:space="preserve">
+    <value>初始化載入失敗</value>
+  </data>
+  <data name="Log_Exit_Exceut" xml:space="preserve">
+    <value>退出執行成功！</value>
+  </data>
+  <data name="Log_TaskScheduler" xml:space="preserve">
+    <value>任務調度程序啟動成功！</value>
+  </data>
+  <data name="All_Task_Trigger" xml:space="preserve">
+    <value>所有任務已成功觸發！</value>
+  </data>
+  <data name="Log_All_Task" xml:space="preserve">
+    <value>所有任務調度器已成功停止。</value>
+  </data>
+  <data name="Log_Start_Data" xml:space="preserve">
+    <value>EasyTidy 預設數據初始化完成！</value>
+  </data>
+  <data name="Log_Field_Execute" xml:space="preserve">
+    <value>表'{0}'中的字段'{1}'已存在，跳過腳本。</value>
+  </data>
+  <data name="Log_Initialized" xml:space="preserve">
+    <value>EasyTidy 初始化成功！</value>
+  </data>
+  <data name="Log_Move_Info_Lock" xml:space="preserve">
+    <value>移動操作已在進行中，跳過執行。</value>
+  </data>
+  <data name="Log_Move" xml:space="preserve">
+    <value>移動操作完成。</value>
+  </data>
+  <data name="Log_Move_Ex" xml:space="preserve">
+    <value>移動操作期間發生異常</value>
   </data>
 </root>

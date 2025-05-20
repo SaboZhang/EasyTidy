@@ -1,4 +1,5 @@
-﻿using EasyTidy.Model;
+﻿using CommunityToolkit.WinUI;
+using EasyTidy.Model;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -84,7 +85,7 @@ public partial class AppDbContext : DbContext
             }
         }
 
-        Logger.Info("EasyTidy 默认数据初始化完成！");
+        Logger.Info("Log_Start_Data".GetLocalized());
     }
 
     /// <summary>
@@ -101,7 +102,7 @@ public partial class AppDbContext : DbContext
         {
             if (await FieldExistsAsync(field.TableName, field.FieldName))
             {
-                Logger.Info($"Field '{field.FieldName}' in table '{field.TableName}' already exists, skipping script.");
+                Logger.Info(string.Format("Log_Field_Execute".GetLocalized(), field.TableName, field.FieldName));
                 return false; // 如果字段已存在，则跳过整个脚本
             }
         }

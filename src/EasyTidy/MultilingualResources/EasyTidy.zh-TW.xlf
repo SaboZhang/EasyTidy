@@ -1634,7 +1634,7 @@
         <ept id="3">&lt;/binding&gt;</ept>
     <ept id="2">&lt;/visual&gt;</ept>
 <ept id="1">&lt;/toast&gt;</ept></source>
-          <target state="new"><bpt id="1">&lt;toast launch='meetingId=9813'&gt;</bpt>
+          <target state="translated"><bpt id="1">&lt;toast launch='meetingId=9813'&gt;</bpt>
     <bpt id="2">&lt;visual&gt;</bpt>
         <bpt id="3">&lt;binding template='ToastGeneric'&gt;</bpt>
             <bpt id="4">&lt;text&gt;</bpt><ept id="4">&lt;/text&gt;</ept>
@@ -2168,89 +2168,165 @@
           <source>Possible shortcut interference with Alt Gr</source>
           <target state="translated">可能與 Alt Gr 衝突的快速鍵</target>
         </trans-unit>
-		  <trans-unit id="RegisterFailed" translate="yes" xml:space="preserve">
+        <trans-unit id="RegisterFailed" translate="yes" xml:space="preserve">
           <source>Shortcut key {0} registration failed, please check if there's a conflict with other programs!</source>
           <target state="translated">快速鍵 {0} 註冊失敗，請檢查是否與其他程式衝突！</target>
         </trans-unit>
-		  <trans-unit id="ChatModelErrors" translate="yes" xml:space="preserve">
+        <trans-unit id="ChatModelErrors" translate="yes" xml:space="preserve">
           <source>The model name cannot be empty</source>
           <target state="translated">模型名稱不能為空</target>
         </trans-unit>
-		  <trans-unit id="CustomPrompt.PlaceholderText" translate="yes" xml:space="preserve">
+        <trans-unit id="CustomPrompt.PlaceholderText" translate="yes" xml:space="preserve">
           <source>Please describe your classification requirements</source>
           <target state="translated">請描述您的分類要求</target>
         </trans-unit>
-		  <trans-unit id="BuiltInText.Content" translate="yes" xml:space="preserve">
+        <trans-unit id="BuiltInText.Content" translate="yes" xml:space="preserve">
           <source>Built-in system</source>
           <target state="translated">系統內置</target>
         </trans-unit>
-		  <trans-unit id="CustomTxt.Content" translate="yes" xml:space="preserve">
+        <trans-unit id="CustomTxt.Content" translate="yes" xml:space="preserve">
           <source>Custom</source>
           <target state="translated">自定義</target>
         </trans-unit>
-		  <trans-unit id="FilterConditions" translate="yes" xml:space="preserve">
+        <trans-unit id="FilterConditions" translate="yes" xml:space="preserve">
           <source>At least one filtering condition must be set</source>
           <target state="translated">必須設定至少一個篩選條件</target>
         </trans-unit>
-		  <trans-unit id="AdvancedRules" translate="yes" xml:space="preserve">
+        <trans-unit id="AdvancedRules" translate="yes" xml:space="preserve">
           <source>Advanced Rules</source>
           <target state="translated">高級規則</target>
         </trans-unit>
-		  <trans-unit id="GlobalHotkey.Header" translate="yes" xml:space="preserve">
+        <trans-unit id="GlobalHotkey.Header" translate="yes" xml:space="preserve">
           <source>Global Hotkey</source>
           <target state="translated">全局熱鍵</target>
         </trans-unit>
-		  <trans-unit id="DragWindowShortcutCard.Header" translate="yes" xml:space="preserve">
+        <trans-unit id="DragWindowShortcutCard.Header" translate="yes" xml:space="preserve">
           <source>Drag and drop window</source>
           <target state="translated">拖放視窗</target>
         </trans-unit>
-		  <trans-unit id="DragWindowShortcutCard.Description" translate="yes" xml:space="preserve">
+        <trans-unit id="DragWindowShortcutCard.Description" translate="yes" xml:space="preserve">
           <source>Set shortcut key for displaying the drag window</source>
           <target state="translated">設置顯示拖拽視窗的快捷鍵</target>
         </trans-unit>
-		  <trans-unit id="ExecuteTaskCard.Header" translate="yes" xml:space="preserve">
+        <trans-unit id="ExecuteTaskCard.Header" translate="yes" xml:space="preserve">
           <source>Execute task</source>
           <target state="translated">執行任務</target>
         </trans-unit>
-		  <trans-unit id="ExecuteTaskCard.Description" translate="yes" xml:space="preserve">
+        <trans-unit id="ExecuteTaskCard.Description" translate="yes" xml:space="preserve">
           <source>Set shortcut key for executing all tasks</source>
           <target state="translated">設定執行所有任務的快捷鍵</target>
         </trans-unit>
-		  <trans-unit id="ShowMainWindowSettingsCard.Header" translate="yes" xml:space="preserve">
+        <trans-unit id="ShowMainWindowSettingsCard.Header" translate="yes" xml:space="preserve">
           <source>Show main window</source>
           <target state="translated">顯示主視窗</target>
         </trans-unit>
-		  <trans-unit id="ShowMainWindowSettingsCard.Description" translate="yes" xml:space="preserve">
+        <trans-unit id="ShowMainWindowSettingsCard.Description" translate="yes" xml:space="preserve">
           <source>Set shortcut key for displaying the application main window</source>
           <target state="translated">設定顯示應用程序主窗口的快捷鍵</target>
         </trans-unit>
-		  <trans-unit id="SettingsWindowCard.Header" translate="yes" xml:space="preserve">
+        <trans-unit id="SettingsWindowCard.Header" translate="yes" xml:space="preserve">
           <source>settings window</source>
           <target state="translated">設置窗口</target>
         </trans-unit>
-		  <trans-unit id="SettingsWindowCard.Description" translate="yes" xml:space="preserve">
+        <trans-unit id="SettingsWindowCard.Description" translate="yes" xml:space="preserve">
           <source>Open the Settings window of the application</source>
           <target state="translated">打開應用程序的設置窗口</target>
         </trans-unit>
-		  <trans-unit id="ExitAppTxt.Header" translate="yes" xml:space="preserve">
+        <trans-unit id="ExitAppTxt.Header" translate="yes" xml:space="preserve">
           <source>Exit App</source>
           <target state="translated">退出應用</target>
         </trans-unit>
-		  <trans-unit id="ExitAppTxt.Description" translate="yes" xml:space="preserve">
+        <trans-unit id="ExitAppTxt.Description" translate="yes" xml:space="preserve">
           <source>Set up a shortcut key to exit the application</source>
           <target state="translated">設定退出應用程序的快速鍵</target>
         </trans-unit>
-		  <trans-unit id="ResetAllButton.Content" translate="yes" xml:space="preserve">
+        <trans-unit id="ResetAllButton.Content" translate="yes" xml:space="preserve">
           <source>Reset all</source>
           <target state="translated">重置全部</target>
         </trans-unit>
-		  <trans-unit id="ClearAllButton.Content" translate="yes" xml:space="preserve">
+        <trans-unit id="ClearAllButton.Content" translate="yes" xml:space="preserve">
           <source>Clear all</source>
           <target state="translated">清空所有</target>
         </trans-unit>
-		  <trans-unit id="WarningShortcutAltGr.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+        <trans-unit id="WarningShortcutAltGr.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
           <source>Shortcuts with **Ctrl** and **Alt** may remove functionality from some international keyboards, because **Ctrl** + **Alt** = **Alt Gr** in those keyboards.</source>
           <target state="translated">使用 **Ctrl** 和 **Alt** 的快捷方式可能會刪除某些國際鍵盤的功能，因為在這些鍵盤中，**Ctrl** + **Alt** = **Alt Gr**。</target>
+        </trans-unit>
+        <trans-unit id="NoDefaultGroup" translate="yes" xml:space="preserve">
+          <source>Default group not found. Please set a default group first.</source>
+          <target state="translated">未找到預設分組。請先設置預設分組。</target>
+        </trans-unit>
+        <trans-unit id="Log_No_Rule" translate="yes" xml:space="preserve">
+          <source>File {0} mismatched rule; skipping processing.</source>
+          <target state="translated">檔案 {0} 規則不符，跳過處理。</target>
+        </trans-unit>
+        <trans-unit id="DisableHotkey" translate="yes" xml:space="preserve">
+          <source>Disable hotkeys</source>
+          <target state="translated">禁用熱鍵</target>
+        </trans-unit>
+        <trans-unit id="EnabledHotkey" translate="yes" xml:space="preserve">
+          <source>Enable hotkeys</source>
+          <target state="translated">啟用熱鍵</target>
+        </trans-unit>
+        <trans-unit id="ExceptionTxt" translate="yes" xml:space="preserve">
+          <source>Exception</source>
+          <target state="translated">異常信息</target>
+        </trans-unit>
+        <trans-unit id="Log_Add_Schedule" translate="yes" xml:space="preserve">
+          <source>Failed to add schedule</source>
+          <target state="translated">時間表添加失敗</target>
+        </trans-unit>
+        <trans-unit id="Log_Custom_Fail" translate="yes" xml:space="preserve">
+          <source>Failed to add custom configuration</source>
+          <target state="translated">添加自定義配置失敗</target>
+        </trans-unit>
+        <trans-unit id="Log_Info_Rule" translate="yes" xml:space="preserve">
+          <source>Found {0} additional rule records</source>
+          <target state="translated">找到了 {0} 条高级规则记录</target>
+        </trans-unit>
+        <trans-unit id="InitializationLoadFailed" translate="yes" xml:space="preserve">
+          <source>Initialization load failed</source>
+          <target state="translated">初始化載入失敗</target>
+        </trans-unit>
+        <trans-unit id="Log_Exit_Exceut" translate="yes" xml:space="preserve">
+          <source>Exit executed successfully!</source>
+          <target state="translated">退出執行成功！</target>
+        </trans-unit>
+        <trans-unit id="Log_TaskScheduler" translate="yes" xml:space="preserve">
+          <source>Task scheduler started successfully!</source>
+          <target state="translated">任務調度程序啟動成功！</target>
+        </trans-unit>
+        <trans-unit id="All_Task_Trigger" translate="yes" xml:space="preserve">
+          <source>All tasks triggered successfully!</source>
+          <target state="translated">所有任務已成功觸發！</target>
+        </trans-unit>
+        <trans-unit id="Log_All_Task" translate="yes" xml:space="preserve">
+          <source>All tasks scheduler stopped successfully.</source>
+          <target state="translated">所有任務調度器已成功停止。</target>
+        </trans-unit>
+        <trans-unit id="Log_Start_Data" translate="yes" xml:space="preserve">
+          <source>EasyTidy default data initialization complete!</source>
+          <target state="translated">EasyTidy 預設數據初始化完成！</target>
+        </trans-unit>
+        <trans-unit id="Log_Field_Execute" translate="yes" xml:space="preserve">
+          <source>Field '{0}' in table '{1}' already exists, skipping script.</source>
+          <target state="translated">表'{0}'中的字段'{1}'已存在，跳過腳本。</target>
+        </trans-unit>
+        <trans-unit id="Log_Initialized" translate="yes" xml:space="preserve">
+          <source>EasyTidy Initialized Successfully!</source>
+          <target state="translated">EasyTidy 初始化成功！</target>
+        </trans-unit>
+        <trans-unit id="Log_Move_Info_Lock" translate="yes" xml:space="preserve">
+          <source>Move operation already in progress, skipping execution.</source>
+          <target state="translated">移動操作已在進行中，跳過執行。</target>
+        </trans-unit>
+        <trans-unit id="Log_Move" translate="yes" xml:space="preserve">
+          <source>Move operation completed.</source>
+          <target state="translated">移動操作完成。</target>
+        </trans-unit>
+        <trans-unit id="Log_Move_Ex" translate="yes" xml:space="preserve">
+          <source>Exception during move operation</source>
+          <target state="translated">移動操作期間發生異常</target>
         </trans-unit>
       </group>
     </body>

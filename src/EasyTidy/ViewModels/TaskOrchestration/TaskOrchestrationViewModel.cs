@@ -241,7 +241,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 {
                     _notificationQueue.ShowWithWindowExtension("CreateShortcutFailedText".GetLocalized(), InfoBarSeverity.Error);
                     _ = ClearNotificationAfterDelay(3000);
-                    Logger.Error($"TaskOrchestrationViewModel: OnAddTaskClick 创建桌面快捷方式失败");
+                    Logger.Error($"TaskOrchestrationViewModel: OnAddTaskClick {"CreateShortcutFailedText".GetLocalized()}");
                 }
             }
             await OnPageLoaded();
@@ -256,7 +256,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         {
             _notificationQueue.ShowWithWindowExtension("SaveFailedText".GetLocalized(), InfoBarSeverity.Error);
             _ = ClearNotificationAfterDelay(3000);
-            Logger.Error($"TaskOrchestrationViewModel: OnAddTaskClick 异常信息 {ex}");
+            Logger.Error($"TaskOrchestrationViewModel: OnAddTaskClick {"SaveFailedText".GetLocalized()} Exception: {ex}");
         }
 
     }
@@ -390,7 +390,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         catch (Exception ex)
         {
             TaskSource = "";
-            Logger.Error($"TaskOrchestrationViewModel: OnSelectSourcePath 异常信息 {ex}");
+            Logger.Error($"TaskOrchestrationViewModel: OnSelectSourcePath {"ExceptionTxt".GetLocalized()} {ex}");
         }
     }
 
@@ -405,7 +405,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         catch (Exception ex)
         {
             TaskSource = "";
-            Logger.Error($"TaskOrchestrationViewModel: OnSelectRunPath 异常信息 {ex}");
+            Logger.Error($"TaskOrchestrationViewModel: OnSelectRunPath {"ExceptionTxt".GetLocalized()} {ex}");
         }
     }
 
@@ -424,7 +424,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         catch (Exception ex)
         {
             TaskTarget = "";
-            Logger.Error($"TaskOrchestrationViewModel: OnSelectTargetPath 异常信息 {ex}");
+            Logger.Error($"TaskOrchestrationViewModel: OnSelectTargetPath {"ExceptionTxt".GetLocalized()} {ex}");
         }
     }
 
@@ -481,7 +481,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         }
         catch (Exception ex)
         {
-            Logger.Error($"TaskOrchestrationViewModel: OnPageLoad 异常信息 {ex}");
+            Logger.Error($"TaskOrchestrationViewModel: OnPageLoad {"ExceptionTxt".GetLocalized()} {ex}");
         }
         finally
         {
@@ -595,7 +595,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         {
             _notificationQueue.ShowWithWindowExtension("ModificationFailedText".GetLocalized(), InfoBarSeverity.Error);
             _ = ClearNotificationAfterDelay(3000);
-            Logger.Error($"TaskOrchestrationViewModel: OnUpdateTask 异常信息 {ex}");
+            Logger.Error($"TaskOrchestrationViewModel: OnUpdateTask {"ExceptionTxt".GetLocalized()} {ex}");
         }
 
     }
@@ -618,7 +618,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         }
         catch (Exception ex)
         {
-            Logger.Error($"TaskOrchestrationViewModel: GroupUpdateOrCreate 异常信息 {ex}");
+            Logger.Error($"TaskOrchestrationViewModel: GroupUpdateOrCreate {"ExceptionTxt".GetLocalized()} {ex}");
             return null;
         }
     }
@@ -631,7 +631,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         }
         catch (Exception ex)
         {
-            Logger.Error($"TaskOrchestrationViewModel: UpdateQuartzGroup 异常信息 {ex}");
+            Logger.Error($"TaskOrchestrationViewModel: UpdateQuartzGroup {"ExceptionTxt".GetLocalized()} {ex}");
         }
 
     }
@@ -683,7 +683,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         }
         catch (Exception ex)
         {
-            Logger.Error($"TaskOrchestrationViewModel: OnDeleteTask 异常信息 {ex}");
+            Logger.Error($"TaskOrchestrationViewModel: OnDeleteTask {"ExceptionTxt".GetLocalized()} {ex}");
             _notificationQueue.ShowWithWindowExtension("DeleteFailedText".GetLocalized(), InfoBarSeverity.Error);
             _ = ClearNotificationAfterDelay(3000);
         }
@@ -790,7 +790,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         {
             _notificationQueue.ShowWithWindowExtension("ExecutionFailedText".GetLocalized(), InfoBarSeverity.Error);
             _ = ClearNotificationAfterDelay(3000);
-            Logger.Error($"TaskOrchestrationViewModel: OnExecuteTask 异常信息 {ex}");
+            Logger.Error($"TaskOrchestrationViewModel: OnExecuteTask {"ExceptionTxt".GetLocalized()} {ex}");
             IsActive = false;
         }
         IsActive = false;
@@ -850,7 +850,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         {
             _notificationQueue.ShowWithWindowExtension("ExecutionFailedText".GetLocalized(), InfoBarSeverity.Error);
             _ = ClearNotificationAfterDelay(3000);
-            Logger.Error($"TaskOrchestrationViewModel: OnExecuteGroupTask 异常信息 {ex}");
+            Logger.Error($"TaskOrchestrationViewModel: OnExecuteGroupTask {"ExceptionTxt".GetLocalized()} {ex}");
             IsActive = false;
         }
     }
@@ -891,7 +891,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         {
             _notificationQueue.ShowWithWindowExtension("DisablingFailedText".GetLocalized(), InfoBarSeverity.Error);
             _ = ClearNotificationAfterDelay(3000);
-            Logger.Error($"FileExplorerViewModel: OnIsEnableTask 异常信息 {ex}");
+            Logger.Error($"FileExplorerViewModel: OnIsEnableTask {"ExceptionTxt".GetLocalized()} {ex}");
             IsActive = false;
         }
         IsActive = false;
@@ -979,7 +979,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         }
         catch (Exception ex)
         {
-            Logger.Error($"TaskOrchestrationViewModel: OnSelectedItemChanged 异常信息 {ex}");
+            Logger.Error($"TaskOrchestrationViewModel: OnSelectedItemChanged {"ExceptionTxt".GetLocalized()} {ex}");
         }
 
         return Task.CompletedTask;
@@ -1039,7 +1039,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         }
         catch (Exception ex)
         {
-            Logger.Error($"TaskOrchestrationViewModel: OnSelectedItemChanged 异常信息 {ex}");
+            Logger.Error($"TaskOrchestrationViewModel: OnSelectedItemChanged {"ExceptionTxt".GetLocalized()} {ex}");
         }
 
         await Task.CompletedTask;

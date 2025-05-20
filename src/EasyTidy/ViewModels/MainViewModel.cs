@@ -46,13 +46,16 @@ public partial class MainViewModel : ObservableObject
         get;
     }
 
+    private readonly IAppNotificationService _appNotificationService;
+
     public static MainViewModel Instance { get; private set; }
 
-    public MainViewModel()
+    public MainViewModel(IAppNotificationService appNotificationService)
     {
         _dbContext = App.GetService<AppDbContext>();
         _themeSelectorService = App.GetService<IThemeSelectorService>();
         Instance = this;
+        _appNotificationService = appNotificationService;
     }
 
     [RelayCommand]
@@ -106,7 +109,7 @@ public partial class MainViewModel : ObservableObject
 
         if (matchedTask == null)
         {
-            Logger.Warn($"文件 {sourcePath} 无匹配规则，跳过处理");
+            Logger.Warn(string.Format("Log_No_Rule".GetLocalized(), sourcePath));
             var fileName = Path.GetFileName(sourcePath);
             return fileName; // 没有匹配的任务，直接返回
         }
@@ -151,10 +154,20 @@ public partial class MainViewModel : ObservableObject
         { RuleName = item.TaskRule };
     }
 
+    /// <summary>
+    /// 右键执行任务
+    /// </summary>
+    /// <param name="path"></param>
+    /// <returns></returns>
     public async Task ExecuteTaskAsync(string path)
     {
         var group = await _dbContext.TaskGroup.Where(x => x.IsDefault == true).FirstOrDefaultAsync();
-        if (group == null) return;
+        if (group == null)
+        {
+            _appNotificationService.Show(string.Format("AppNotificationPayloadInfo".GetLocalized(), "NoDefaultGroup".GetLocalized()));
+            Logger.Error("NoDefaultGroup".GetLocalized());
+            return;
+        }
         var taskList = await GetTasksByGroupIdAsync(group.Id);
         if (taskList.Count == 0) return;
 
@@ -177,7 +190,7 @@ public partial class MainViewModel : ObservableObject
 
         if (matchedTask == null)
         {
-            Logger.Warn($"文件 {path} 无匹配规则，跳过处理");
+            Logger.Warn(string.Format("Log_No_Rule".GetLocalized(), path));
             var fileName = Path.GetFileName(path);
             return; // 没有匹配的任务，直接返回
         }

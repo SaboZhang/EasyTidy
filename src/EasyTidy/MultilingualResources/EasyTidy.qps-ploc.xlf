@@ -2252,6 +2252,82 @@
           <source>Shortcuts with **Ctrl** and **Alt** may remove functionality from some international keyboards, because **Ctrl** + **Alt** = **Alt Gr** in those keyboards.</source>
           <target state="new">Shortcuts with **Ctrl** and **Alt** may remove functionality from some international keyboards, because **Ctrl** + **Alt** = **Alt Gr** in those keyboards.</target>
         </trans-unit>
+        <trans-unit id="NoDefaultGroup" translate="yes" xml:space="preserve">
+          <source>Default group not found. Please set a default group first.</source>
+          <target state="new">Default group not found. Please set a default group first.</target>
+        </trans-unit>
+        <trans-unit id="Log_No_Rule" translate="yes" xml:space="preserve">
+          <source>File {0} mismatched rule; skipping processing.</source>
+          <target state="new">File {0} mismatched rule; skipping processing.</target>
+        </trans-unit>
+        <trans-unit id="DisableHotkey" translate="yes" xml:space="preserve">
+          <source>Disable hotkeys</source>
+          <target state="new">Disable hotkeys</target>
+        </trans-unit>
+        <trans-unit id="EnabledHotkey" translate="yes" xml:space="preserve">
+          <source>Enable hotkeys</source>
+          <target state="new">Enable hotkeys</target>
+        </trans-unit>
+        <trans-unit id="ExceptionTxt" translate="yes" xml:space="preserve">
+          <source>Exception</source>
+          <target state="new">Exception</target>
+        </trans-unit>
+        <trans-unit id="Log_Add_Schedule" translate="yes" xml:space="preserve">
+          <source>Failed to add schedule</source>
+          <target state="new">Failed to add schedule</target>
+        </trans-unit>
+        <trans-unit id="Log_Custom_Fail" translate="yes" xml:space="preserve">
+          <source>Failed to add custom configuration</source>
+          <target state="new">Failed to add custom configuration</target>
+        </trans-unit>
+        <trans-unit id="Log_Info_Rule" translate="yes" xml:space="preserve">
+          <source>Found {0} additional rule records</source>
+          <target state="new">Found {0} additional rule records</target>
+        </trans-unit>
+        <trans-unit id="InitializationLoadFailed" translate="yes" xml:space="preserve">
+          <source>Initialization load failed</source>
+          <target state="new">Initialization load failed</target>
+        </trans-unit>
+        <trans-unit id="Log_Exit_Exceut" translate="yes" xml:space="preserve">
+          <source>Exit executed successfully!</source>
+          <target state="new">Exit executed successfully!</target>
+        </trans-unit>
+        <trans-unit id="Log_TaskScheduler" translate="yes" xml:space="preserve">
+          <source>Task scheduler started successfully!</source>
+          <target state="new">Task scheduler started successfully!</target>
+        </trans-unit>
+        <trans-unit id="All_Task_Trigger" translate="yes" xml:space="preserve">
+          <source>All tasks triggered successfully!</source>
+          <target state="new">All tasks triggered successfully!</target>
+        </trans-unit>
+        <trans-unit id="Log_All_Task" translate="yes" xml:space="preserve">
+          <source>All tasks scheduler stopped successfully.</source>
+          <target state="new">All tasks scheduler stopped successfully.</target>
+        </trans-unit>
+        <trans-unit id="Log_Start_Data" translate="yes" xml:space="preserve">
+          <source>EasyTidy default data initialization complete!</source>
+          <target state="new">EasyTidy default data initialization complete!</target>
+        </trans-unit>
+        <trans-unit id="Log_Field_Execute" translate="yes" xml:space="preserve">
+          <source>Field '{0}' in table '{1}' already exists, skipping script.</source>
+          <target state="new">Field '{0}' in table '{1}' already exists, skipping script.</target>
+        </trans-unit>
+        <trans-unit id="Log_Initialized" translate="yes" xml:space="preserve">
+          <source>EasyTidy Initialized Successfully!</source>
+          <target state="new">EasyTidy Initialized Successfully!</target>
+        </trans-unit>
+        <trans-unit id="Log_Move_Info_Lock" translate="yes" xml:space="preserve">
+          <source>Move operation already in progress, skipping execution.</source>
+          <target state="new">Move operation already in progress, skipping execution.</target>
+        </trans-unit>
+        <trans-unit id="Log_Move" translate="yes" xml:space="preserve">
+          <source>Move operation completed.</source>
+          <target state="new">Move operation completed.</target>
+        </trans-unit>
+        <trans-unit id="Log_Move_Ex" translate="yes" xml:space="preserve">
+          <source>Exception during move operation</source>
+          <target state="new">Exception during move operation</target>
+        </trans-unit>
       </group>
     </body>
   </file>

@@ -308,52 +308,53 @@ public sealed partial class ShortcutControl : UserControl
             .Select(FormatKey)
             .ToList();
 
-        // 过滤修饰键与普通键
         var modifierKeys = formattedKeys.Where(k => modifierOrder.Contains(k)).ToList();
         var normalKeys = formattedKeys.Except(modifierKeys).ToList();
 
-        // 判断是否是组合键
-        bool isCombination = modifierKeys.Count > 0;
+        List<string> finalKeys;
 
-        if (isCombination)
+        if (modifierKeys.Count > 0)
         {
-            // 只保留最后一个普通键
-            if (normalKeys.Count > 1)
-                normalKeys = new List<string> { normalKeys.Last() };
-
-            formattedKeys = modifierKeys
-                .Concat(normalKeys)
-                .OrderBy(k =>
-                {
-                    int index = Array.IndexOf(modifierOrder, k);
-                    return index >= 0 ? index : modifierOrder.Length;
-                })
+            // 组合键：保留最后一个普通键，修饰键排序
+            var orderedModifiers = modifierKeys
+                .OrderBy(k => Array.IndexOf(modifierOrder, k))
                 .ToList();
+
+            var finalNormalKey = normalKeys.LastOrDefault();
+            finalKeys = finalNormalKey != null
+                ? orderedModifiers.Concat(new[] { finalNormalKey }).ToList()
+                : orderedModifiers;
         }
         else
         {
-            // 单键：若不是 F1~F12，则不清除，只设为禁用
-            if (normalKeys.Count == 1 && !IsFunctionKey(normalKeys[0]))
+            // 单键：只保留最后一个键
+            var finalNormalKey = normalKeys.LastOrDefault();
+
+            if (finalNormalKey != null)
             {
-                // 保持原输入顺序
-                c.Keys = formattedKeys.Cast<object>().ToList();
-                DisableKeys();
-                return;
+                finalKeys = new List<string> { finalNormalKey };
+                c.Keys = finalKeys.Cast<object>().ToList();
+
+                if (!IsFunctionKey(finalNormalKey))
+                {
+                    DisableKeys(); // 非 F1~F12，禁用
+                    return;
+                }
+            }
+            else
+            {
+                finalKeys = new List<string>();
             }
         }
 
-        c.Keys = formattedKeys.Cast<object>().ToList();
+        c.Keys = finalKeys.Cast<object>().ToList();
 
-        bool isValid = IsValidKeyCombination(formattedKeys);
+        bool isValid = IsValidKeyCombination(finalKeys);
 
         if (isValid)
-        {
             EnableKeys();
-        }
         else
-        {
             DisableKeys();
-        }
     }
 
     private void EnableKeys()

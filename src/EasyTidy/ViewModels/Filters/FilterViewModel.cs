@@ -85,13 +85,13 @@ public partial class FilterViewModel : ObservableRecipient
                     FiltersList = new(list);
                     FiltersListACV = new AdvancedCollectionView(FiltersList, true);
                     FiltersListACV.SortDescriptions.Add(new SortDescription("Id", SortDirection.Ascending));
-                    Logger.Info($"查询到 {list.Count} 条附加规则记录");
+                    Logger.Info(string.Format("Log_Info_Rule".GetLocalized(), FiltersList.Count));
                 });
             });
         }
         catch (Exception ex)
         {
-            Logger.Error($"FilterViewModel 初始化加载失败：{ex}");
+            Logger.Error($"FilterViewModel {"InitializationLoadFailed".GetLocalized()}：{ex}");
             IsActive = false;
         }
         IsActive = false;

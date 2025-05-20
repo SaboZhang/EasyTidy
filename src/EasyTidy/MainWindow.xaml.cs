@@ -1,3 +1,4 @@
+using CommunityToolkit.WinUI;
 using EasyTidy.Log;
 using EasyTidy.Model;
 using EasyTidy.Service;
@@ -95,7 +96,7 @@ public sealed partial class MainWindow : WindowEx
         if (Settings.AutomaticConfig.IsShutdownExecution)
         {
             await ShutdownService.OnShutdownAsync();
-            Logger.Info("退出执行成功！");
+            Logger.Info("Log_Exit_Exceut".GetLocalized());
         }
     }
 

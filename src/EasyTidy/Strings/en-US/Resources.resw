@@ -1791,4 +1791,61 @@
   <data name="WarningShortcutAltGr.ToolTipService.ToolTip" xml:space="preserve">
     <value>Shortcuts with **Ctrl** and **Alt** may remove functionality from some international keyboards, because **Ctrl** + **Alt** = **Alt Gr** in those keyboards.</value>
   </data>
+  <data name="NoDefaultGroup" xml:space="preserve">
+    <value>Default group not found. Please set a default group first.</value>
+  </data>
+  <data name="Log_No_Rule" xml:space="preserve">
+    <value>File {0} mismatched rule; skipping processing.</value>
+  </data>
+  <data name="DisableHotkey" xml:space="preserve">
+    <value>Disable hotkeys</value>
+  </data>
+  <data name="EnabledHotkey" xml:space="preserve">
+    <value>Enable hotkeys</value>
+  </data>
+  <data name="ExceptionTxt" xml:space="preserve">
+    <value>Exception</value>
+  </data>
+  <data name="Log_Add_Schedule" xml:space="preserve">
+    <value>Failed to add schedule</value>
+  </data>
+  <data name="Log_Custom_Fail" xml:space="preserve">
+    <value>Failed to add custom configuration</value>
+  </data>
+  <data name="Log_Info_Rule" xml:space="preserve">
+    <value>Found {0} additional rule records</value>
+  </data>
+  <data name="InitializationLoadFailed" xml:space="preserve">
+    <value>Initialization load failed</value>
+  </data>
+  <data name="Log_Exit_Exceut" xml:space="preserve">
+    <value>Exit executed successfully!</value>
+  </data>
+  <data name="Log_TaskScheduler" xml:space="preserve">
+    <value>Task scheduler started successfully!</value>
+  </data>
+  <data name="All_Task_Trigger" xml:space="preserve">
+    <value>All tasks triggered successfully!</value>
+  </data>
+  <data name="Log_All_Task" xml:space="preserve">
+    <value>All tasks scheduler stopped successfully.</value>
+  </data>
+  <data name="Log_Start_Data" xml:space="preserve">
+    <value>EasyTidy default data initialization complete!</value>
+  </data>
+  <data name="Log_Field_Execute" xml:space="preserve">
+    <value>Field '{0}' in table '{1}' already exists, skipping script.</value>
+  </data>
+  <data name="Log_Initialized" xml:space="preserve">
+    <value>EasyTidy Initialized Successfully!</value>
+  </data>
+  <data name="Log_Move_Info_Lock" xml:space="preserve">
+    <value>Move operation already in progress, skipping execution.</value>
+  </data>
+  <data name="Log_Move" xml:space="preserve">
+    <value>Move operation completed.</value>
+  </data>
+  <data name="Log_Move_Ex" xml:space="preserve">
+    <value>Exception during move operation</value>
+  </data>
 </root>

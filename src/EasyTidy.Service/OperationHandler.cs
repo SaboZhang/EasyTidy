@@ -90,7 +90,7 @@ public static class OperationHandler
         {
             if (_executedOperations.Contains(operationId))
             {
-                LogService.Logger.Info($"Move operation already in progress, skipping execution. {parameter.TargetPath}");
+                LogService.Logger.Info($"{"Log_Move_Info_Lock".GetLocalized()} {parameter.TargetPath}");
                 return;
             }
             _executedOperations.Add(operationId);
@@ -112,11 +112,11 @@ public static class OperationHandler
 
             });
 
-            LogService.Logger.Info("执行移动操作完成");
+            LogService.Logger.Info("Log_Move".GetLocalized());
         }
         catch (Exception ex)
         {
-            LogService.Logger.Error($"执行移动操作异常 {ex}");
+            LogService.Logger.Error($"{"Log_Move_Ex".GetLocalized()} {ex}");
         }
         finally
         {

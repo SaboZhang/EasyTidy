@@ -1634,7 +1634,7 @@
         <ept id="3">&lt;/binding&gt;</ept>
     <ept id="2">&lt;/visual&gt;</ept>
 <ept id="1">&lt;/toast&gt;</ept></source>
-          <target state="new"><bpt id="1">&lt;toast launch='meetingId=9813'&gt;</bpt>
+          <target state="translated"><bpt id="1">&lt;toast launch='meetingId=9813'&gt;</bpt>
     <bpt id="2">&lt;visual&gt;</bpt>
         <bpt id="3">&lt;binding template='ToastGeneric'&gt;</bpt>
             <bpt id="4">&lt;text&gt;</bpt><ept id="4">&lt;/text&gt;</ept>
@@ -2251,6 +2251,82 @@
         <trans-unit id="WarningShortcutAltGr.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
           <source>Shortcuts with **Ctrl** and **Alt** may remove functionality from some international keyboards, because **Ctrl** + **Alt** = **Alt Gr** in those keyboards.</source>
           <target state="translated">**Ctrl**キーと**Alt**キーを使用したショートカットは、一部の国際キーボードでは機能が失われる可能性があります。これは、それらのキーボードでは**Ctrl** + **Alt** = **Alt Gr**となるためです。</target>
+        </trans-unit>
+        <trans-unit id="NoDefaultGroup" translate="yes" xml:space="preserve">
+          <source>Default group not found. Please set a default group first.</source>
+          <target state="translated">デフォルトグループが見つかりません。まずデフォルトグループを設定してください。</target>
+        </trans-unit>
+        <trans-unit id="Log_No_Rule" translate="yes" xml:space="preserve">
+          <source>File {0} mismatched rule; skipping processing.</source>
+          <target state="translated">ファイル {0} がルールに合致しなかったため、処理をスキップします。</target>
+        </trans-unit>
+        <trans-unit id="DisableHotkey" translate="yes" xml:space="preserve">
+          <source>Disable hotkeys</source>
+          <target state="translated">ホットキーを無効にする</target>
+        </trans-unit>
+        <trans-unit id="EnabledHotkey" translate="yes" xml:space="preserve">
+          <source>Enable hotkeys</source>
+          <target state="translated">ホットキーを有効にする</target>
+        </trans-unit>
+        <trans-unit id="ExceptionTxt" translate="yes" xml:space="preserve">
+          <source>Exception</source>
+          <target state="translated">例外</target>
+        </trans-unit>
+        <trans-unit id="Log_Add_Schedule" translate="yes" xml:space="preserve">
+          <source>Failed to add schedule</source>
+          <target state="translated">スケジュールの追加に失敗しました</target>
+        </trans-unit>
+        <trans-unit id="Log_Custom_Fail" translate="yes" xml:space="preserve">
+          <source>Failed to add custom configuration</source>
+          <target state="translated">カスタム構成の追加に失敗しました</target>
+        </trans-unit>
+        <trans-unit id="Log_Info_Rule" translate="yes" xml:space="preserve">
+          <source>Found {0} additional rule records</source>
+          <target state="translated">他に{0}件のルールレコードが見つかりました</target>
+        </trans-unit>
+        <trans-unit id="InitializationLoadFailed" translate="yes" xml:space="preserve">
+          <source>Initialization load failed</source>
+          <target state="translated">初期化ロードに失敗しました</target>
+        </trans-unit>
+        <trans-unit id="Log_Exit_Exceut" translate="yes" xml:space="preserve">
+          <source>Exit executed successfully!</source>
+          <target state="translated">終了が正常に実行されました！</target>
+        </trans-unit>
+        <trans-unit id="Log_TaskScheduler" translate="yes" xml:space="preserve">
+          <source>Task scheduler started successfully!</source>
+          <target state="translated">タスクスケジューラが正常に起動しました！</target>
+        </trans-unit>
+        <trans-unit id="All_Task_Trigger" translate="yes" xml:space="preserve">
+          <source>All tasks triggered successfully!</source>
+          <target state="translated">すべてのタスクが正常にトリガーされました！</target>
+        </trans-unit>
+        <trans-unit id="Log_All_Task" translate="yes" xml:space="preserve">
+          <source>All tasks scheduler stopped successfully.</source>
+          <target state="translated">全てのタスクスケジューラは正常に停止しました。</target>
+        </trans-unit>
+        <trans-unit id="Log_Start_Data" translate="yes" xml:space="preserve">
+          <source>EasyTidy default data initialization complete!</source>
+          <target state="translated">EasyTidyのデフォルトデータ初期化が完了しました！</target>
+        </trans-unit>
+        <trans-unit id="Log_Field_Execute" translate="yes" xml:space="preserve">
+          <source>Field '{0}' in table '{1}' already exists, skipping script.</source>
+          <target state="translated">テーブル「{1}」のフィールド「{0}」は既に存在するため、スクリプトをスキップします。</target>
+        </trans-unit>
+        <trans-unit id="Log_Initialized" translate="yes" xml:space="preserve">
+          <source>EasyTidy Initialized Successfully!</source>
+          <target state="translated">EasyTidy が正常に初期化されました！</target>
+        </trans-unit>
+        <trans-unit id="Log_Move_Info_Lock" translate="yes" xml:space="preserve">
+          <source>Move operation already in progress, skipping execution.</source>
+          <target state="translated">移動操作はすでに進行中のため、実行をスキップします。</target>
+        </trans-unit>
+        <trans-unit id="Log_Move" translate="yes" xml:space="preserve">
+          <source>Move operation completed.</source>
+          <target state="translated">移動操作が完了しました。</target>
+        </trans-unit>
+        <trans-unit id="Log_Move_Ex" translate="yes" xml:space="preserve">
+          <source>Exception during move operation</source>
+          <target state="translated">移動操作中のエラー</target>
         </trans-unit>
       </group>
     </body>
