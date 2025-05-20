@@ -82,6 +82,8 @@ public partial class MainWindow : Window
         {
             SetStatus("更新完成！", false);
             Process.Start(System.IO.Path.Combine(unpath, "EasyTidy.exe"));
+            await Task.Delay(3000);
+            Environment.Exit(0);
         }
         else
         {
