@@ -8,9 +8,9 @@
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Assets\update.ico</ApplicationIcon>
     <AssemblyName>UpdateLauncher</AssemblyName>
-    <AssemblyVersion>1.0.2.208</AssemblyVersion>
-    <FileVersion>1.0.2.208</FileVersion>
-    <Version>1.0.2.208</Version>
+    <AssemblyVersion>1.0.3.520</AssemblyVersion>
+    <FileVersion>1.0.3.520</FileVersion>
+    <Version>1.0.3.520</Version>
     <Authors>EasyTidy</Authors>
     <Description>EasyTidy更新程序</Description>
     <Copyright>©2024-2025 EasyTidy All rights reserved.</Copyright>
