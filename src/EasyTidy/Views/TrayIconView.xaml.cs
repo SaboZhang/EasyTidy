@@ -105,7 +105,7 @@ public sealed partial class TrayIconView : UserControl
         Settings.Save();
         FileEventHandler.StopAllMonitoring();
         await QuartzHelper.StopAllJob();
-        TrayIconService.SetStatus(TrayIconStatus.Running);
+        TrayIconService.SetStatus(TrayIconStatus.Paused, "PausedMonitoring");
     }
 
     [RelayCommand]
@@ -123,7 +123,7 @@ public sealed partial class TrayIconView : UserControl
         bool isEnabled = HotKey.IsHotkeyEnabled;
         TrayIconService.SetStatus(
             isEnabled ? TrayIconStatus.Normal : TrayIconStatus.HotKey,
-            isEnabled ? "" : "DisableHotkey"
+            isEnabled ? "" : "DisableHotkeyIcon"
         );
     }
 }

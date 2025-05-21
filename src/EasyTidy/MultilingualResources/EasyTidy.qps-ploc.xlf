@@ -921,8 +921,8 @@
           <target state="new">Transparent</target>
         </trans-unit>
         <trans-unit id="TrayIconStopMonitoring.Text" translate="yes" xml:space="preserve">
-          <source>Stop monitoring</source>
-          <target state="new">Stop monitoring</target>
+          <source>Pause monitoring</source>
+          <target state="new">Pause monitoring</target>
         </trans-unit>
         <trans-unit id="TrayIconExecuteOnce.Text" translate="yes" xml:space="preserve">
           <source>Execute once</source>
@@ -2327,6 +2327,30 @@
         <trans-unit id="Log_Move_Ex" translate="yes" xml:space="preserve">
           <source>Exception during move operation</source>
           <target state="new">Exception during move operation</target>
+        </trans-unit>
+        <trans-unit id="DisableHotkeyIcon" translate="yes" xml:space="preserve">
+          <source>Shortcut keys disabled</source>
+          <target state="new">Shortcut keys disabled</target>
+        </trans-unit>
+        <trans-unit id="PausedMonitoring" translate="yes" xml:space="preserve">
+          <source>Monitoring task paused until next startup</source>
+          <target state="new">Monitoring task paused until next startup</target>
+        </trans-unit>
+        <trans-unit id="Log_Monitoring" translate="yes" xml:space="preserve">
+          <source>All monitoring has been stopped.</source>
+          <target state="new">All monitoring has been stopped.</target>
+        </trans-unit>
+        <trans-unit id="Log_Skipping_Hotkey" translate="yes" xml:space="preserve">
+          <source>No hotkeys configured or hotkeys disable. Skipping hotkey registration.</source>
+          <target state="new">No hotkeys configured or hotkeys disable. Skipping hotkey registration.</target>
+        </trans-unit>
+        <trans-unit id="Log_Hotkeys_Init" translate="yes" xml:space="preserve">
+          <source>Default hotkeys initialized and saved.</source>
+          <target state="new">Default hotkeys initialized and saved.</target>
+        </trans-unit>
+        <trans-unit id="Log_Failed_Register_Hotkey" translate="yes" xml:space="preserve">
+          <source>Failed to register hotkey: {0}</source>
+          <target state="new">Failed to register hotkey: {0}</target>
         </trans-unit>
       </group>
     </body>

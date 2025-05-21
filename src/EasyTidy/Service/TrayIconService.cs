@@ -14,7 +14,7 @@ public class TrayIconService
     {
         { TrayIconStatus.Normal,  "ms-appx:///Assets/Inactive.ico" },
         { TrayIconStatus.Running, "ms-appx:///Assets/Red.ico" },
-        { TrayIconStatus.Paused,  "ms-appx:///Assets/Yellow.ico" },
+        { TrayIconStatus.Paused,  "ms-appx:///Assets/Paused.ico" },
         { TrayIconStatus.Error,   "ms-appx:///Assets/Error.ico" },
         { TrayIconStatus.HotKey,  "ms-appx:///Assets/hotkey.ico" },
     };
@@ -41,10 +41,14 @@ public class TrayIconService
         {
             _trayIcon.IconSource = new BitmapImage(new Uri(iconPath));
         }
-        if (!string.IsNullOrEmpty(toolTipKey))
-        {
-            _trayIcon.ToolTipText = toolTipKey.GetLocalized();
-        }
+#if DEBUG
+        string baseToolTip = $"EasyTidyDev {Constants.Version}";
+#else
+        string baseToolTip = $"EasyTidy {Constants.Version}";
+#endif
+        _trayIcon.ToolTipText = string.IsNullOrWhiteSpace(toolTipKey)
+            ? baseToolTip
+            : $"{baseToolTip}\n{toolTipKey.GetLocalized()}";
     }
 
     public static TrayIconStatus CurrentStatus => _currentStatus;

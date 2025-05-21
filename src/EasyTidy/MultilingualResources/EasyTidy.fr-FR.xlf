@@ -921,8 +921,8 @@
           <target state="translated">Transparent</target>
         </trans-unit>
         <trans-unit id="TrayIconStopMonitoring.Text" translate="yes" xml:space="preserve">
-          <source>Stop monitoring</source>
-          <target state="translated">Arrêter la surveillance</target>
+          <source>Pause monitoring</source>
+          <target state="translated">Mettre en pause la surveillance</target>
         </trans-unit>
         <trans-unit id="TrayIconExecuteOnce.Text" translate="yes" xml:space="preserve">
           <source>Execute once</source>
@@ -2327,6 +2327,30 @@
         <trans-unit id="Log_Move_Ex" translate="yes" xml:space="preserve">
           <source>Exception during move operation</source>
           <target state="translated">Exception lors de l'opération de déplacement</target>
+        </trans-unit>
+        <trans-unit id="DisableHotkeyIcon" translate="yes" xml:space="preserve">
+          <source>Shortcut keys disabled</source>
+          <target state="translated">Touches de raccourci désactivées</target>
+        </trans-unit>
+        <trans-unit id="PausedMonitoring" translate="yes" xml:space="preserve">
+          <source>Monitoring task paused until next startup</source>
+          <target state="translated">Tâche de surveillance suspendue jusqu'au prochain démarrage</target>
+        </trans-unit>
+        <trans-unit id="Log_Monitoring" translate="yes" xml:space="preserve">
+          <source>All monitoring has been stopped.</source>
+          <target state="translated">Toute surveillance a été arrêtée.</target>
+        </trans-unit>
+        <trans-unit id="Log_Skipping_Hotkey" translate="yes" xml:space="preserve">
+          <source>No hotkeys configured or hotkeys disable. Skipping hotkey registration.</source>
+          <target state="translated">Aucune touche de raccourci configurée ou touches de raccourci désactivées. Enregistrement des touches de raccourci ignoré.</target>
+        </trans-unit>
+        <trans-unit id="Log_Hotkeys_Init" translate="yes" xml:space="preserve">
+          <source>Default hotkeys initialized and saved.</source>
+          <target state="translated">Les touches de raccourci par défaut ont été initialisées et enregistrées.</target>
+        </trans-unit>
+        <trans-unit id="Log_Failed_Register_Hotkey" translate="yes" xml:space="preserve">
+          <source>Failed to register hotkey: {0}</source>
+          <target state="translated">Échec d'enregistrement du raccourci clavier : {0}</target>
         </trans-unit>
       </group>
     </body>

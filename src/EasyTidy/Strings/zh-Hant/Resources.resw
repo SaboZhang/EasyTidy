@@ -699,7 +699,7 @@
     <value>透明</value>
   </data>
   <data name="TrayIconStopMonitoring.Text" xml:space="preserve">
-    <value>停止監控</value>
+    <value>暂停監控</value>
   </data>
   <data name="TrayIconExecuteOnce.Text" xml:space="preserve">
     <value>執行一次</value>
@@ -1718,5 +1718,23 @@
   </data>
   <data name="Log_Move_Ex" xml:space="preserve">
     <value>移動操作期間發生異常</value>
+  </data>
+  <data name="DisableHotkeyIcon" xml:space="preserve">
+    <value>快捷鍵禁用</value>
+  </data>
+  <data name="PausedMonitoring" xml:space="preserve">
+    <value>監控任務被暫停到下一次啟動</value>
+  </data>
+  <data name="Log_Monitoring" xml:space="preserve">
+    <value>所有監控已停止。</value>
+  </data>
+  <data name="Log_Skipping_Hotkey" xml:space="preserve">
+    <value>未配置熱鍵或熱鍵已停用。跳過熱鍵註冊。</value>
+  </data>
+  <data name="Log_Hotkeys_Init" xml:space="preserve">
+    <value>預設熱鍵已初始化並儲存。</value>
+  </data>
+  <data name="Log_Failed_Register_Hotkey" xml:space="preserve">
+    <value>註冊快捷鍵失敗: {0}</value>
   </data>
 </root>

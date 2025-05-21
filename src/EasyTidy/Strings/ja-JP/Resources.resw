@@ -699,7 +699,7 @@
     <value>透過性</value>
   </data>
   <data name="TrayIconStopMonitoring.Text" xml:space="preserve">
-    <value>監視の停止</value>
+    <value>モニタリングを一時停止</value>
   </data>
   <data name="TrayIconExecuteOnce.Text" xml:space="preserve">
     <value>1回実行</value>
@@ -1721,5 +1721,23 @@
   </data>
   <data name="Log_Move_Ex" xml:space="preserve">
     <value>移動操作中のエラー</value>
+  </data>
+  <data name="DisableHotkeyIcon" xml:space="preserve">
+    <value>ショートカットキーが無効化されています</value>
+  </data>
+  <data name="PausedMonitoring" xml:space="preserve">
+    <value>次回の起動まで監視タスクが一時停止されました</value>
+  </data>
+  <data name="Log_Monitoring" xml:space="preserve">
+    <value>すべてのモニタリングが停止されました。</value>
+  </data>
+  <data name="Log_Skipping_Hotkey" xml:space="preserve">
+    <value>ホットキーが設定されていないか、ホットキーが無効になっています。ホットキー登録をスキップします。</value>
+  </data>
+  <data name="Log_Hotkeys_Init" xml:space="preserve">
+    <value>デフォルトのホットキーが初期化され、保存されました。</value>
+  </data>
+  <data name="Log_Failed_Register_Hotkey" xml:space="preserve">
+    <value>ホットキーの登録に失敗しました：{0}</value>
   </data>
 </root>

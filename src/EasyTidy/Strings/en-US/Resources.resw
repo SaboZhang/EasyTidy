@@ -843,7 +843,7 @@
     <value>Transparent</value>
   </data>
   <data name="TrayIconStopMonitoring.Text" xml:space="preserve">
-    <value>Stop monitoring</value>
+    <value>Pause monitoring</value>
   </data>
   <data name="TrayIconExecuteOnce.Text" xml:space="preserve">
     <value>Execute once</value>
@@ -1847,5 +1847,23 @@
   </data>
   <data name="Log_Move_Ex" xml:space="preserve">
     <value>Exception during move operation</value>
+  </data>
+  <data name="DisableHotkeyIcon" xml:space="preserve">
+    <value>Shortcut keys disabled</value>
+  </data>
+  <data name="PausedMonitoring" xml:space="preserve">
+    <value>Monitoring task paused until next startup</value>
+  </data>
+  <data name="Log_Monitoring" xml:space="preserve">
+    <value>All monitoring has been stopped.</value>
+  </data>
+  <data name="Log_Skipping_Hotkey" xml:space="preserve">
+    <value>No hotkeys configured or hotkeys disable. Skipping hotkey registration.</value>
+  </data>
+  <data name="Log_Hotkeys_Init" xml:space="preserve">
+    <value>Default hotkeys initialized and saved.</value>
+  </data>
+  <data name="Log_Failed_Register_Hotkey" xml:space="preserve">
+    <value>Failed to register hotkey: {0}</value>
   </data>
 </root>

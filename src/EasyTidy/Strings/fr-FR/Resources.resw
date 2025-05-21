@@ -699,7 +699,7 @@
     <value>Transparent</value>
   </data>
   <data name="TrayIconStopMonitoring.Text" xml:space="preserve">
-    <value>Arrêter la surveillance</value>
+    <value>Mettre en pause la surveillance</value>
   </data>
   <data name="TrayIconExecuteOnce.Text" xml:space="preserve">
     <value>Exécuter une fois</value>
@@ -1721,5 +1721,23 @@
   </data>
   <data name="Log_Move_Ex" xml:space="preserve">
     <value>Exception lors de l'opération de déplacement</value>
+  </data>
+  <data name="DisableHotkeyIcon" xml:space="preserve">
+    <value>Touches de raccourci désactivées</value>
+  </data>
+  <data name="PausedMonitoring" xml:space="preserve">
+    <value>Tâche de surveillance suspendue jusqu'au prochain démarrage</value>
+  </data>
+  <data name="Log_Monitoring" xml:space="preserve">
+    <value>Toute surveillance a été arrêtée.</value>
+  </data>
+  <data name="Log_Skipping_Hotkey" xml:space="preserve">
+    <value>Aucune touche de raccourci configurée ou touches de raccourci désactivées. Enregistrement des touches de raccourci ignoré.</value>
+  </data>
+  <data name="Log_Hotkeys_Init" xml:space="preserve">
+    <value>Les touches de raccourci par défaut ont été initialisées et enregistrées.</value>
+  </data>
+  <data name="Log_Failed_Register_Hotkey" xml:space="preserve">
+    <value>Échec d'enregistrement du raccourci clavier : {0}</value>
   </data>
 </root>

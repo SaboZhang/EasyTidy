@@ -249,10 +249,10 @@ public class ActivationService : IActivationService
 
         if (hotkeySettings?.Hotkeys == null || hotkeySettings.Hotkeys.Count == 0 || !hotkeySettings.Enabled)
         {
-            if (!hotkeySettings.Enabled) TrayIconService.SetStatus(TrayIconStatus.HotKey, "HotkeyDisabled");
+            if (!hotkeySettings.Enabled) TrayIconService.SetStatus(TrayIconStatus.HotKey, "DisableHotkeyIcon");
             // 文件存在但用户不配快捷键 → 直接跳过
             // 用户禁用快捷键 → 直接跳过
-            Logger.Info("No hotkeys configured or hotkeys disable. Skipping hotkey registration.");
+            Logger.Info("Log_Skipping_Hotkey".GetLocalized());
             return;
         }
 
@@ -270,7 +270,7 @@ public class ActivationService : IActivationService
                 {
                     var tips = new AppNotificationBuilder().AddText(string.Format("RegisterFailed".GetLocalized(), config.KeyGesture));
                     App.GetService<IAppNotificationService>().Show(tips.BuildNotification().Payload);
-                    Logger.Error($"Failed to register hotkey: {config.KeyGesture}");
+                    Logger.Error(I18n.Format("Log_Failed_Register_Hotkey", config.KeyGesture));
                 }
             }
         }
@@ -287,7 +287,7 @@ public class ActivationService : IActivationService
                 Hotkeys = DefaultHotkeys.Hotkeys.ToList() // 深拷贝一份
             };
             await _localSettingsService.SaveSettingsExtAsync(hotkeySettings);
-            Logger.Info("Default hotkeys initialized and saved.");
+            Logger.Info("Log_Hotkeys_Init".GetLocalized());
         }
     }
 
