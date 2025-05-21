@@ -98,19 +98,15 @@ public static class OperationHandler
 
         try
         {
-            await Task.Run(async () =>
+            if (parameter.RuleModel.RuleType == TaskRuleType.FileRule)
             {
-                if (parameter.RuleModel.RuleType == TaskRuleType.FileRule)
-                {
-                    // 确保传递 OperationMode 参数
-                    await FileActuator.ExecuteFileOperationAsync(parameter);
-                }
-                else
-                {
-                    await FolderActuator.ExecuteFolderOperationAsync(parameter);
-                }
-
-            });
+                // 确保传递 OperationMode 参数
+                await FileActuator.ExecuteFileOperationAsync(parameter);
+            }
+            else
+            {
+                await FolderActuator.ExecuteFolderOperationAsync(parameter);
+            }
 
             LogService.Logger.Info("Log_Move".GetLocalized());
         }
@@ -130,49 +126,40 @@ public static class OperationHandler
 
     private static async Task CopyAsync(OperationParameters parameter)
     {
-        await Task.Run(async () =>
+        if (parameter.RuleModel.RuleType == TaskRuleType.FileRule)
         {
-            if (parameter.RuleModel.RuleType == TaskRuleType.FileRule)
-            {
-                await FileActuator.ExecuteFileOperationAsync(parameter);
-            }
-            else
-            {
-                await FolderActuator.ExecuteFolderOperationAsync(parameter);
-            }
-        });
+            await FileActuator.ExecuteFileOperationAsync(parameter);
+        }
+        else
+        {
+            await FolderActuator.ExecuteFolderOperationAsync(parameter);
+        }
         LogService.Logger.Info("执行复制操作完成");
     }
 
     private static async Task DeleteAsync(OperationParameters parameter)
     {
-        await Task.Run(async () =>
+        if (parameter.RuleModel.RuleType == TaskRuleType.FileRule)
         {
-            if (parameter.RuleModel.RuleType == TaskRuleType.FileRule)
-            {
-                await FileActuator.ExecuteFileOperationAsync(parameter);
-            }
-            else
-            {
-                await FolderActuator.ExecuteFolderOperationAsync(parameter);
-            }
-        });
+            await FileActuator.ExecuteFileOperationAsync(parameter);
+        }
+        else
+        {
+            await FolderActuator.ExecuteFolderOperationAsync(parameter);
+        }
         LogService.Logger.Info("执行删除操作完成");
     }
 
     private static async Task RenameAsync(OperationParameters parameter)
     {
-        await Task.Run(async () =>
+        if (parameter.RuleModel.RuleType == TaskRuleType.FileRule)
         {
-            if (parameter.RuleModel.RuleType == TaskRuleType.FileRule)
-            {
-                await FileActuator.ExecuteFileOperationAsync(parameter);
-            }
-            else
-            {
-                await FolderActuator.ExecuteFolderOperationAsync(parameter);
-            }
-        });
+            await FileActuator.ExecuteFileOperationAsync(parameter);
+        }
+        else
+        {
+            await FolderActuator.ExecuteFolderOperationAsync(parameter);
+        }
         LogService.Logger.Info("重命名任务执行完成");
     }
 
@@ -192,17 +179,14 @@ public static class OperationHandler
         }
         try
         {
-            await Task.Run(async () =>
+            if (parameter.RuleModel.RuleType == TaskRuleType.FileRule)
             {
-                if (parameter.RuleModel.RuleType == TaskRuleType.FileRule)
-                {
-                    await FileActuator.ExecuteFileOperationAsync(parameter);
-                }
-                else
-                {
-                    await FolderActuator.ExecuteFolderOperationAsync(parameter);
-                }
-            });
+                await FileActuator.ExecuteFileOperationAsync(parameter);
+            }
+            else
+            {
+                await FolderActuator.ExecuteFolderOperationAsync(parameter);
+            }
             LogService.Logger.Info("执行回收站任务完成");
         }
         finally
@@ -240,74 +224,59 @@ public static class OperationHandler
 
     private static async Task CompressedFileAsync(OperationParameters parameter)
     {
-        await Task.Run(async () =>
+        if (parameter.RuleModel.RuleType == TaskRuleType.FileRule)
         {
-            if (parameter.RuleModel.RuleType == TaskRuleType.FileRule)
-            {
-                await FileActuator.ExecuteFileOperationAsync(parameter);
-            }
-            else
-            {
-                await FolderActuator.ExecuteFolderOperationAsync(parameter);
-            }
-        });
+            await FileActuator.ExecuteFileOperationAsync(parameter);
+        }
+        else
+        {
+            await FolderActuator.ExecuteFolderOperationAsync(parameter);
+        }
         LogService.Logger.Info("执行压缩任务完成");
     }
 
     private static async Task UploadFileAsync(OperationParameters parameter)
     {
-        await Task.Run(async () =>
+        if (parameter.RuleModel.RuleType == TaskRuleType.FileRule)
         {
-            if (parameter.RuleModel.RuleType == TaskRuleType.FileRule)
-            {
-                await FileActuator.ExecuteFileOperationAsync(parameter);
-            }
-            else
-            {
-                await FolderActuator.ExecuteFolderOperationAsync(parameter);
-            }
-        });
+            await FileActuator.ExecuteFileOperationAsync(parameter);
+        }
+        else
+        {
+            await FolderActuator.ExecuteFolderOperationAsync(parameter);
+        }
         LogService.Logger.Info("执行上传任务完成");
     }
 
     private static async Task EncryptionAsync(OperationParameters parameters)
     {
-        await Task.Run(async () =>
+        if (parameters.RuleModel.RuleType == TaskRuleType.FileRule)
         {
-            if (parameters.RuleModel.RuleType == TaskRuleType.FileRule)
-            {
-                await FileActuator.ExecuteFileOperationAsync(parameters);
-            }
-            else
-            {
-                await FolderActuator.ExecuteFolderOperationAsync(parameters);
-            }
-        });
+            await FileActuator.ExecuteFileOperationAsync(parameters);
+        }
+        else
+        {
+            await FolderActuator.ExecuteFolderOperationAsync(parameters);
+        }
         LogService.Logger.Info("执行加密任务完成");
     }
 
     private static async Task CreateSoftLink(OperationParameters parameters)
     {
-        await Task.Run(async () =>
+        if (parameters.RuleModel.RuleType == TaskRuleType.FileRule)
         {
-            if (parameters.RuleModel.RuleType == TaskRuleType.FileRule)
-            {
-                await FileActuator.ExecuteFileOperationAsync(parameters);
-            }
-            else
-            {
-                await FolderActuator.ExecuteFolderOperationAsync(parameters);
-            }
-        });
+            await FileActuator.ExecuteFileOperationAsync(parameters);
+        }
+        else
+        {
+            await FolderActuator.ExecuteFolderOperationAsync(parameters);
+        }
         LogService.Logger.Info("执行软连接任务完成");
     }
 
     private static async Task CreateHandLink(OperationParameters parameters)
     {
-        await Task.Run(async () =>
-        {
-            await FileActuator.ExecuteFileOperationAsync(parameters);
-        });
+        await FileActuator.ExecuteFileOperationAsync(parameters);
         LogService.Logger.Info("执行硬连接任务完成");
     }
 
@@ -454,26 +423,17 @@ public static class OperationHandler
 
     private static async Task CreateAIClassification(OperationParameters parameters)
     {
-        await Task.Run(async () =>
-        {
-            await FileActuator.ExecuteFileOperationAsync(parameters);
-        });
+        await FileActuator.ExecuteFileOperationAsync(parameters);
     }
 
     private static async Task CreateAISummary(OperationParameters parameters)
     {
-        await Task.Run(async () =>
-        {
-            await FileActuator.ExecuteFileOperationAsync(parameters);
-        });
+        await FileActuator.ExecuteFileOperationAsync(parameters);
     }
 
     private static async Task RunExternalPrograms(OperationParameters parameters)
     {
-        await Task.Run(async () =>
-        {
-            await FileActuator.ExecuteFileOperationAsync(parameters);
-        });
+        await FileActuator.ExecuteFileOperationAsync(parameters);
     }
 
 }

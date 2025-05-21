@@ -1,6 +1,8 @@
-# 更新日志 (周日)
+# 更新日志 (小满)
 
 - 新增：快捷键
+- 新增：添加时间表计划时，可以快捷选择每天几点几分执行
+- 新增：托盘图标显示程序运行状态
 - 修复：不填写目标目录时AI任务执行失败的BUG
 - 优化：拖拽窗口的初始位置
 - 优化：AI分类时重命名的逻辑处理
@@ -17,7 +19,7 @@
 
 ## 更新日志详情
 
-- **[Full Changelog](https://github.com/SaboZhang/EasyTidy/compare/1.3.2.423...1.3.5.511)**
+- **[Full Changelog](https://github.com/SaboZhang/EasyTidy/compare/1.3.2.423...1.3.5.521)**
 
 ## 下载链接
 

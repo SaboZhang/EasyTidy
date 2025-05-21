@@ -61,6 +61,7 @@ public class ActivationService : IActivationService
 
         // Handle activation via ActivationHandlers.
         await HandleActivationAsync(activationArgs);
+        DeleteUpdateArtifactsAtStartup();
     }
 
     private async Task HandleActivationAsync(object activationArgs)
@@ -81,7 +82,6 @@ public class ActivationService : IActivationService
     private async Task InitializeAsync()
     {
         await _themeSelectorService.InitializeAsync().ConfigureAwait(false);
-        await Task.CompletedTask;
     }
 
     private async Task StartupAsync()
@@ -90,7 +90,6 @@ public class ActivationService : IActivationService
         await _themeSelectorService.SetRequestedThemeAsync();
         OnStartupExecutionAsync();
         OnStartAllMonitoring();
-        await Task.CompletedTask;
     }
 
     private async Task PerformStartupChecksAsync()
@@ -250,6 +249,7 @@ public class ActivationService : IActivationService
 
         if (hotkeySettings?.Hotkeys == null || hotkeySettings.Hotkeys.Count == 0 || !hotkeySettings.Enabled)
         {
+            if (!hotkeySettings.Enabled) TrayIconService.SetStatus(TrayIconStatus.HotKey, "HotkeyDisabled");
             // 文件存在但用户不配快捷键 → 直接跳过
             // 用户禁用快捷键 → 直接跳过
             Logger.Info("No hotkeys configured or hotkeys disable. Skipping hotkey registration.");

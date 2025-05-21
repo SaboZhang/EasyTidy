@@ -231,3 +231,12 @@ public enum PropertyCase
     PascalCase,
     CamelCase
 }
+
+public enum TrayIconStatus
+{
+    Normal,
+    Running,
+    Paused,
+    Error,
+    HotKey
+}

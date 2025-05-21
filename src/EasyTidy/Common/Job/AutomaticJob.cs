@@ -20,6 +20,7 @@ public class AutomaticJob : IJob
 
     public async Task Execute(IJobExecutionContext context)
     {
+        TrayIconService.SetStatus(TrayIconStatus.Running);
         var taskId = context.MergedJobDataMap.GetString("TaskId");
         var task = await GetTaskAsync(taskId, context);
 
@@ -61,6 +62,7 @@ public class AutomaticJob : IJob
         await Task.Run(async () =>
         {
             await OperationHandler.ExecuteOperationAsync(task.OperationMode, operationParameters);
+            TrayIconService.SetStatus(TrayIconStatus.Normal);
         });
     }
 
