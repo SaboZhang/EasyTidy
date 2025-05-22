@@ -1160,6 +1160,10 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
     private void InitializeRenameModel()
     {
         // 初始化日期时间方式
+        DateTimeModel.Add(new PatternSnippetModel("#S | #M | #C | #D", "末尾添加#C选择使用创建时间进行重命名"));
+        DateTimeModel.Add(new PatternSnippetModel("#M", "末尾添加#M选择使用修改时间进行重命名"));
+        DateTimeModel.Add(new PatternSnippetModel("#S", "末尾添加#S选择使用照片拍摄时间进行重命名"));
+        DateTimeModel.Add(new PatternSnippetModel("#D", "末尾添加#D选择使用当前时间进行重命名"));
         DateTimeModel.Add(new PatternSnippetModel("$YYYY", "DateTimeCheatSheet_FullYear".GetLocalized()));
         DateTimeModel.Add(new PatternSnippetModel("$YY", "DateTimeCheatSheet_YearLastTwoDigits".GetLocalized()));
         DateTimeModel.Add(new PatternSnippetModel("$Y", "DateTimeCheatSheet_YearLastDigit".GetLocalized()));

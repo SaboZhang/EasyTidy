@@ -149,7 +149,8 @@
                                           MaxHeight="320"
                                           IsItemClickEnabled="True"
                                           ItemClick="DialogFilterListView_ItemClick"
-                                          ItemsSource="{x:Bind ViewModel.FilterListACV, Mode=TwoWay}">
+                                          ItemsSource="{x:Bind ViewModel.FilterListACV, Mode=TwoWay}"
+                                          SelectedItem="{x:Bind ViewModel.SelectedFilter, Mode=TwoWay}">
                                     <ListView.ItemTemplate>
                                         <DataTemplate x:DataType="model:FilterTable">
                                             <TextBlock Text="{x:Bind FilterName}"/>
