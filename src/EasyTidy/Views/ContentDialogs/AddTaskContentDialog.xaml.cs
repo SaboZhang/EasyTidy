@@ -475,7 +475,46 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
         if (e.ClickedItem is PatternSnippetModel s)
         {
             RenameFlyout.Hide();
-            Target.Text += "\\" + s.Code;
+
+            string[] specialCodes = { "#C", "#M", "#S", "#D" };
+            string text = Target.Text ?? string.Empty;
+
+            // 检查是否已有特殊码
+            string existingSpecial = specialCodes.FirstOrDefault(code => text.EndsWith(code));
+
+            // 临时移除已有特殊码，后续重新添加
+            if (existingSpecial != null)
+            {
+                text = text.Substring(0, text.Length - existingSpecial.Length);
+            }
+
+            if (specialCodes.Contains(s.Code))
+            {
+                if (!text.Contains('$'))
+                {
+                    text += "${source}";
+                }
+                // 是特殊码，直接追加到最后（替换已有）
+                text += s.Code;
+            }
+            else
+            {
+                // 是普通码
+                if (!string.IsNullOrEmpty(text) && !text.Contains('$') && !text.EndsWith("\\"))
+                {
+                    text += "\\";
+                }
+
+                text += s.Code;
+
+                // 如果之前存在特殊码，重新追加到末尾
+                if (existingSpecial != null)
+                {
+                    text += existingSpecial;
+                }
+            }
+
+            Target.Text = text;
         }
     }
 

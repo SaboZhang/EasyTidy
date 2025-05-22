@@ -2336,21 +2336,37 @@
           <source>Monitoring task paused until next startup</source>
           <target state="translated">監控任務被暫停到下一次啟動</target>
         </trans-unit>
-		  <trans-unit id="Log_Monitoring" translate="yes" xml:space="preserve">
+        <trans-unit id="Log_Monitoring" translate="yes" xml:space="preserve">
           <source>All monitoring has been stopped.</source>
           <target state="translated">所有監控已停止。</target>
         </trans-unit>
-		  <trans-unit id="Log_Skipping_Hotkey" translate="yes" xml:space="preserve">
+        <trans-unit id="Log_Skipping_Hotkey" translate="yes" xml:space="preserve">
           <source>No hotkeys configured or hotkeys disable. Skipping hotkey registration.</source>
           <target state="translated">未配置熱鍵或熱鍵已停用。跳過熱鍵註冊。</target>
         </trans-unit>
-		  <trans-unit id="Log_Hotkeys_Init" translate="yes" xml:space="preserve">
+        <trans-unit id="Log_Hotkeys_Init" translate="yes" xml:space="preserve">
           <source>Default hotkeys initialized and saved.</source>
           <target state="translated">預設熱鍵已初始化並儲存。</target>
         </trans-unit>
-		  <trans-unit id="Log_Failed_Register_Hotkey" translate="yes" xml:space="preserve">
+        <trans-unit id="Log_Failed_Register_Hotkey" translate="yes" xml:space="preserve">
           <source>Failed to register hotkey: {0}</source>
           <target state="translated">註冊快捷鍵失敗: {0}</target>
+        </trans-unit>
+        <trans-unit id="AddAtTheEnd_Create" translate="yes" xml:space="preserve">
+          <source>When #C is added to the end or it's empty, use the creation time to rename according to rules</source>
+          <target state="new">When #C is added to the end or it's empty, use the creation time to rename according to rules</target>
+        </trans-unit>
+        <trans-unit id="AddAtTheEnd_Modify" translate="yes" xml:space="preserve">
+          <source>Append #M to the end to choose renaming using modification time</source>
+          <target state="new">Append #M to the end to choose renaming using modification time</target>
+        </trans-unit>
+        <trans-unit id="AddAtThenEnd_ShootingTime" translate="yes" xml:space="preserve">
+          <source>Add #S at the end to select using photo capture time for renaming</source>
+          <target state="new">Add #S at the end to select using photo capture time for renaming</target>
+        </trans-unit>
+        <trans-unit id="AddAtThenEnd_NowTime" translate="yes" xml:space="preserve">
+          <source>Append #D to select using the current time for renaming</source>
+          <target state="new">Append #D to select using the current time for renaming</target>
         </trans-unit>
       </group>
     </body>

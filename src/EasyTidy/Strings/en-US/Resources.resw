@@ -1866,4 +1866,16 @@
   <data name="Log_Failed_Register_Hotkey" xml:space="preserve">
     <value>Failed to register hotkey: {0}</value>
   </data>
+  <data name="AddAtTheEnd_Create" xml:space="preserve">
+    <value>When #C is added to the end or it's empty, use the creation time to rename according to rules</value>
+  </data>
+  <data name="AddAtTheEnd_Modify" xml:space="preserve">
+    <value>Append #M to the end to choose renaming using modification time</value>
+  </data>
+  <data name="AddAtThenEnd_ShootingTime" xml:space="preserve">
+    <value>Add #S at the end to select using photo capture time for renaming</value>
+  </data>
+  <data name="AddAtThenEnd_NowTime" xml:space="preserve">
+    <value>Append #D to select using the current time for renaming</value>
+  </data>
 </root>
