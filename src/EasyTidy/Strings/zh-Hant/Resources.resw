@@ -1737,4 +1737,16 @@
   <data name="Log_Failed_Register_Hotkey" xml:space="preserve">
     <value>註冊快捷鍵失敗: {0}</value>
   </data>
+  <data name="AddAtTheEnd_Create" xml:space="preserve">
+    <value>當末尾添加 #C 或為空時，使用創建時間按照規則重命名</value>
+  </data>
+  <data name="AddAtTheEnd_Modify" xml:space="preserve">
+    <value>在末尾添加 #M 以選擇使用修改時間進行重命名</value>
+  </data>
+  <data name="AddAtThenEnd_ShootingTime" xml:space="preserve">
+    <value>在末尾加入 #S 以選擇使用照片拍攝時間進行重命名</value>
+  </data>
+  <data name="AddAtThenEnd_NowTime" xml:space="preserve">
+    <value>在末尾添加 #D 以使用當前時間進行重命名</value>
+  </data>
 </root>

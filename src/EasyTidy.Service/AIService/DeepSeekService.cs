@@ -77,7 +77,7 @@ public partial class DeepSeekService : LLMServiceBase, IAIServiceLlm
             stream = true
         };
 
-        var jsonData = JsonConvert.SerializeObject(reqData);
+        var jsonData = Json.SerializeForModel(reqData, PropertyCase.CamelCase);
 
 
         try
