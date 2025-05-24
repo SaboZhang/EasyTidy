@@ -5,6 +5,7 @@ using Microsoft.UI.Xaml.Automation;
 using Microsoft.UI.Xaml.Input;
 using System.Collections.ObjectModel;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 using Windows.System;
 using Windows.UI.Core;
 
@@ -19,7 +20,7 @@ public sealed partial class ShortcutControl : UserControl
     private HashSet<VirtualKey> _heldKeys = new();
     private readonly List<VirtualKey> _pressedSequence = new();
 
-    public event EventHandler<ObservableCollection<HotkeysCollection>> SaveClicked;
+    public event EventHandler<Hotkey> SaveClicked;
     public event EventHandler ResetRequested;
     private bool _enabled;
     private bool _isActive;
@@ -177,34 +178,34 @@ public sealed partial class ShortcutControl : UserControl
     private void ShortcutDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
     {
         var keyGesture = string.Join(" + ", c.Keys);
-        // ´´½¨ĞÂµÄ Hotkey
+
         var newHotkey = new Hotkey
         {
             Id = Parameters,
             KeyGesture = keyGesture,
             CommandName = Parameters
         };
-        // ³¢ÊÔÔÚ HotkeySettings ÖĞÕÒµ½¶ÔÓ¦µÄ HotkeysCollection
-        var targetCollection = HotkeySettings.FirstOrDefault();
 
-        if (targetCollection == null)
-        {
-            targetCollection = new HotkeysCollection();
-            HotkeySettings.Add(targetCollection);
-        }
+        // var targetCollection = HotkeySettings.FirstOrDefault();
 
-        // Ìí¼Ó»òÌæ»»ÒÑÓĞ¿ì½İ¼ü£¨°´ Id Î¨Ò»£©
-        var existing = targetCollection.Hotkeys.FirstOrDefault(h => h.Id == Parameters);
-        if (existing != null)
-        {
-            existing.KeyGesture = keyGesture;
-        }
-        else
-        {
-            targetCollection.Hotkeys.Add(newHotkey);
-        }
+        // if (targetCollection == null)
+        // {
+        //     targetCollection = new HotkeysCollection();
+        //     HotkeySettings.Add(targetCollection);
+        // }
 
-        SaveClicked?.Invoke(this, HotkeySettings);
+
+        // var existing = targetCollection.Hotkeys.FirstOrDefault(h => h.Id == Parameters);
+        // if (existing != null)
+        // {
+        //     existing.KeyGesture = keyGesture;
+        // }
+        // else
+        // {
+        //     targetCollection.Hotkeys.Add(newHotkey);
+        // }
+
+        SaveClicked?.Invoke(this, newHotkey);
 
         shortcutDialog.Hide();
     }
@@ -250,7 +251,7 @@ public sealed partial class ShortcutControl : UserControl
     {
         var key = e.Key;
 
-        // °´ÏÂÈÎºÎ·Ç Win ¼üÊ±£¬ÊÖ¶¯¼ì²â Win ÊÇ·ñÒÑËÉ¿ª
+
         if (key != VirtualKey.LeftWindows && key != VirtualKey.RightWindows)
         {
             foreach (var winKey in new[] { VirtualKey.LeftWindows, VirtualKey.RightWindows })
@@ -259,14 +260,13 @@ public sealed partial class ShortcutControl : UserControl
 
                 if (!isStillDown)
                 {
-                    // ÊÖ¶¯Çå³ı Win
+
                     _heldKeys.Remove(winKey);
                     _pressedSequence.Remove(winKey);
                 }
             }
         }
 
-        // ·ÀÖ¹ÖØ¸´Ìí¼ÓÍ¬Ò»°´¼ü
         if (_heldKeys.Add(key))
         {
             if (key == VirtualKey.LeftWindows || key == VirtualKey.RightWindows)
@@ -304,31 +304,57 @@ public sealed partial class ShortcutControl : UserControl
     {
         string[] modifierOrder = { "Win", "Ctrl", "Alt", "Shift" };
 
-        // °´Ë³Ğò½«ĞŞÊÎ¼ü·ÅÇ°Ãæ£¬ÆäÓàµÄÅÅÔÚºóÃæ
         var formattedKeys = _pressedSequence
             .Select(FormatKey)
-            .OrderBy(k =>
-            {
-                int index = Array.IndexOf(modifierOrder, k);
-                return index >= 0 ? index : modifierOrder.Length;
-            })
             .ToList();
 
-        // ×ª»»Îª object ÁĞ±í±£´æ
-        c.Keys = formattedKeys.Cast<object>().ToList();
+        var modifierKeys = formattedKeys.Where(k => modifierOrder.Contains(k)).ToList();
+        var normalKeys = formattedKeys.Except(modifierKeys).ToList();
 
-        c.IsWarningAltGr = c.Keys.Contains("Ctrl") && c.Keys.Contains("Alt") && !c.Keys.Contains("Win");
+        List<string> finalKeys;
 
-        bool isValid = IsValidKeyCombination(formattedKeys);
-
-        if (isValid)
+        if (modifierKeys.Count > 0)
         {
-            EnableKeys();
+            // ç»„åˆé”®ï¼šä¿ç•™æœ€åä¸€ä¸ªæ™®é€šé”®ï¼Œä¿®é¥°é”®æ’åº
+            var orderedModifiers = modifierKeys
+                .OrderBy(k => Array.IndexOf(modifierOrder, k))
+                .ToList();
+
+            var finalNormalKey = normalKeys.LastOrDefault();
+            finalKeys = finalNormalKey != null
+                ? orderedModifiers.Concat(new[] { finalNormalKey }).ToList()
+                : orderedModifiers;
         }
         else
         {
-            DisableKeys();
+            // å•é”®ï¼šåªä¿ç•™æœ€åä¸€ä¸ªé”®
+            var finalNormalKey = normalKeys.LastOrDefault();
+
+            if (finalNormalKey != null)
+            {
+                finalKeys = new List<string> { finalNormalKey };
+                c.Keys = finalKeys.Cast<object>().ToList();
+
+                if (!IsFunctionKey(finalNormalKey))
+                {
+                    DisableKeys(); // é F1~F12ï¼Œç¦ç”¨
+                    return;
+                }
+            }
+            else
+            {
+                finalKeys = new List<string>();
+            }
         }
+
+        c.Keys = finalKeys.Cast<object>().ToList();
+
+        bool isValid = IsValidKeyCombination(finalKeys);
+
+        if (isValid)
+            EnableKeys();
+        else
+            DisableKeys();
     }
 
     private void EnableKeys()
@@ -340,7 +366,7 @@ public sealed partial class ShortcutControl : UserControl
     private void DisableKeys()
     {
         shortcutDialog.IsPrimaryButtonEnabled = false;
-        // ÅĞ¶ÏÊÇ·ñÊÇ¡°½öÁ½¸öĞŞÊÎ¼ü¡±µÄÇé¿ö
+
         var formattedKeys = c.Keys?.Select(k => k.ToString()).ToList() ?? new();
         string[] modifiers = { "Ctrl", "Alt", "Shift", "Win" };
         string[] invalidSingleKeys = { "Tab", "Caps Lock" };
@@ -348,17 +374,22 @@ public sealed partial class ShortcutControl : UserControl
         var modifierKeys = formattedKeys.Where(k => modifiers.Contains(k)).ToList();
         var normalKeys = formattedKeys.Except(modifierKeys).ToList();
 
-        // µ¥¸ö Tab »ò CapsLock ¼ü£¬±êºì
-        if (normalKeys.Count == 1 && modifierKeys.Count == 0 &&
-            invalidSingleKeys.Contains(normalKeys[0]))
+        if (modifierKeys.Count == 0)
         {
-            c.IsError = true;
+            // å•é”®é€»è¾‘
+            if (normalKeys.Count == 1)
+            {
+                var key = normalKeys[0];
+                // é F1~F12ï¼Œæˆ–éæ³•é”®ï¼ˆå¦‚ Tabã€Caps Lockï¼‰
+                if (!IsFunctionKey(key) || invalidSingleKeys.Contains(key))
+                {
+                    c.IsError = true;
+                    return;
+                }
+            }
         }
-        else
-        {
-            // ÆäËû·Ç·¨×éºÏ²»±êºì£¨ÔÊĞí£©
-            c.IsError = false;
-        }
+
+        c.IsError = false;
     }
 
     #endregion
@@ -388,31 +419,31 @@ public sealed partial class ShortcutControl : UserControl
             VirtualKey.RightWindows => "Win", // VirtualKey.RightWindows
             VirtualKey.Shift => "Shift",
             VirtualKey.Escape => "Esc",
-            VirtualKey.Left => "¡û",
-            VirtualKey.Right => "¡ú",
-            VirtualKey.Up => "¡ü",
-            VirtualKey.Down => "¡ı",
+            VirtualKey.Left => "â†",
+            VirtualKey.Right => "â†’",
+            VirtualKey.Up => "â†‘",
+            VirtualKey.Down => "â†“",
             VirtualKey.Enter => "Enter",
             VirtualKey.CapitalLock => "Caps Lock",
             (VirtualKey)0xBC => ",",    // VK_OEM_COMMA
             (VirtualKey)0xBE => ".",    // VK_OEM_PERIOD
-            (VirtualKey)0xBA => ";",    // VK_OEM_1 (ÃÀ¹ú¼üÅÌ·ÖºÅ)
-            (VirtualKey)0xDE => "\"",   // VK_OEM_7 (ÃÀ¹ú¼üÅÌÒıºÅ)
-            (VirtualKey)0xBF => "?",    // VK_OEM_2 (ÃÀ¹ú¼üÅÌĞ±¸Ü)
+            (VirtualKey)0xBA => ";",    // VK_OEM_1
+            (VirtualKey)0xDE => "\"",   // VK_OEM_7
+            (VirtualKey)0xBF => "?",    // VK_OEM_2
             (VirtualKey)0xBD => "-",    // VK_OEM_MINUS
             (VirtualKey)0xBB => "+",    // VK_OEM_PLUS
             (VirtualKey)0xDB => "[",    // VK_OEM_4
             (VirtualKey)0xDD => "]",    // VK_OEM_6
             (VirtualKey)0xDC => "\\",   // VK_OEM_5
             (VirtualKey)0xC0 => "~",    // VK_OEM_3
-            _ => key.ToString() // ÆäËû¼üÖ±½ÓÓÃÄ¬ÈÏÃû³Æ
+            _ => key.ToString()
         };
     }
 
     [DllImport("user32.dll")]
     private static extern short GetAsyncKeyState(int vKey);
 
-    private static bool IsValidKeyCombination(List<string> keys)
+    private bool IsValidKeyCombination(List<string> keys)
     {
         if (keys == null || keys.Count == 0)
             return false;
@@ -423,19 +454,21 @@ public sealed partial class ShortcutControl : UserControl
         var modifierKeys = keys.Where(k => modifiers.Contains(k)).ToList();
         var normalKeys = keys.Except(modifierKeys).ToList();
 
-        // Ã»ÓĞĞŞÊÎ¼ü
+        c.IsWarningAltGr = c.Keys.Contains("Ctrl") && c.Keys.Contains("Alt") && !c.Keys.Contains("Win") && normalKeys.Count > 0;
+
         if (modifierKeys.Count == 0)
         {
-            // Ö»ÔÊĞíÒ»¸öºÏ·¨µÄÆÕÍ¨¼ü
-            return normalKeys.Count == 1 && !invalidSingleKeys.Contains(normalKeys[0]);
+            // å•é”®ï¼Œä»…å…è®¸ F1~F12
+            return normalKeys.Count == 1 && IsFunctionKey(normalKeys[0]);
         }
 
-        // ÓĞĞŞÊÎ¼üµ«Ã»ÓĞÆÕÍ¨¼ü£¬ÎŞĞ§
-        if (normalKeys.Count == 0)
-            return false;
+        // ç»„åˆé”®ï¼Œå¿…é¡»åŒ…å«ä¸€ä¸ªæ™®é€šé”®
+        return normalKeys.Count == 1;
+    }
 
-        // ÓĞĞŞÊÎ¼üÇÒÓĞÆÕÍ¨¼ü£¬ÓĞĞ§
-        return true;
+    private bool IsFunctionKey(string key)
+    {
+        return Regex.IsMatch(key, @"^F([1-9]|1[0-2])$");
     }
 
 }

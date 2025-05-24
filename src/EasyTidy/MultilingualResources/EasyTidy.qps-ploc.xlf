@@ -921,8 +921,8 @@
           <target state="new">Transparent</target>
         </trans-unit>
         <trans-unit id="TrayIconStopMonitoring.Text" translate="yes" xml:space="preserve">
-          <source>Stop monitoring</source>
-          <target state="new">Stop monitoring</target>
+          <source>Pause monitoring</source>
+          <target state="new">Pause monitoring</target>
         </trans-unit>
         <trans-unit id="TrayIconExecuteOnce.Text" translate="yes" xml:space="preserve">
           <source>Execute once</source>
@@ -2157,8 +2157,8 @@
           <target state="new">Press a key combination to change this shortcut. Right-click to remove the key combination and disable the shortcut.</target>
         </trans-unit>
         <trans-unit id="Shortcut_Description.Text" translate="yes" xml:space="preserve">
-          <source>Supports key combinations starting with Windows, Ctrl, Alt, or Shift, as well as single, unmodified keys on their own</source>
-          <target state="new">Supports key combinations starting with Windows, Ctrl, Alt, or Shift, as well as single, unmodified keys on their own</target>
+          <source>Supports key combinations starting with Windows, Ctrl, Alt, or Shift, as well as single, unmodified keys on their own(F1-F12)</source>
+          <target state="new">Supports key combinations starting with Windows, Ctrl, Alt, or Shift, as well as single, unmodified keys on their own(F1-F12)</target>
         </trans-unit>
         <trans-unit id="InvalidShortcut.Title" translate="yes" xml:space="preserve">
           <source>Invalid shortcut</source>
@@ -2171,6 +2171,202 @@
         <trans-unit id="RegisterFailed" translate="yes" xml:space="preserve">
           <source>Shortcut key {0} registration failed, please check if there's a conflict with other programs!</source>
           <target state="new">Shortcut key {0} registration failed, please check if there's a conflict with other programs!</target>
+        </trans-unit>
+        <trans-unit id="ChatModelErrors" translate="yes" xml:space="preserve">
+          <source>The model name cannot be empty</source>
+          <target state="new">The model name cannot be empty</target>
+        </trans-unit>
+        <trans-unit id="CustomPrompt.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>Please describe your classification requirements</source>
+          <target state="new">Please describe your classification requirements</target>
+        </trans-unit>
+        <trans-unit id="BuiltInText.Content" translate="yes" xml:space="preserve">
+          <source>Built-in system</source>
+          <target state="new">Built-in system</target>
+        </trans-unit>
+        <trans-unit id="CustomTxt.Content" translate="yes" xml:space="preserve">
+          <source>Custom</source>
+          <target state="new">Custom</target>
+        </trans-unit>
+        <trans-unit id="FilterConditions" translate="yes" xml:space="preserve">
+          <source>At least one filtering condition must be set</source>
+          <target state="new">At least one filtering condition must be set</target>
+        </trans-unit>
+        <trans-unit id="AdvancedRules" translate="yes" xml:space="preserve">
+          <source>Advanced Rules</source>
+          <target state="new">Advanced Rules</target>
+        </trans-unit>
+        <trans-unit id="GlobalHotkey.Header" translate="yes" xml:space="preserve">
+          <source>Global Hotkey</source>
+          <target state="new">Global Hotkey</target>
+        </trans-unit>
+        <trans-unit id="DragWindowShortcutCard.Header" translate="yes" xml:space="preserve">
+          <source>Drag and drop window</source>
+          <target state="new">Drag and drop window</target>
+        </trans-unit>
+        <trans-unit id="DragWindowShortcutCard.Description" translate="yes" xml:space="preserve">
+          <source>Set shortcut key for displaying the drag window</source>
+          <target state="new">Set shortcut key for displaying the drag window</target>
+        </trans-unit>
+        <trans-unit id="ExecuteTaskCard.Header" translate="yes" xml:space="preserve">
+          <source>Execute task</source>
+          <target state="new">Execute task</target>
+        </trans-unit>
+        <trans-unit id="ExecuteTaskCard.Description" translate="yes" xml:space="preserve">
+          <source>Set shortcut key for executing all tasks</source>
+          <target state="new">Set shortcut key for executing all tasks</target>
+        </trans-unit>
+        <trans-unit id="ShowMainWindowSettingsCard.Header" translate="yes" xml:space="preserve">
+          <source>Show main window</source>
+          <target state="new">Show main window</target>
+        </trans-unit>
+        <trans-unit id="ShowMainWindowSettingsCard.Description" translate="yes" xml:space="preserve">
+          <source>Set shortcut key for displaying the application main window</source>
+          <target state="new">Set shortcut key for displaying the application main window</target>
+        </trans-unit>
+        <trans-unit id="SettingsWindowCard.Header" translate="yes" xml:space="preserve">
+          <source>settings window</source>
+          <target state="new">settings window</target>
+        </trans-unit>
+        <trans-unit id="SettingsWindowCard.Description" translate="yes" xml:space="preserve">
+          <source>Open the Settings window of the application</source>
+          <target state="new">Open the Settings window of the application</target>
+        </trans-unit>
+        <trans-unit id="ExitAppTxt.Header" translate="yes" xml:space="preserve">
+          <source>Exit App</source>
+          <target state="new">Exit App</target>
+        </trans-unit>
+        <trans-unit id="ExitAppTxt.Description" translate="yes" xml:space="preserve">
+          <source>Set up a shortcut key to exit the application</source>
+          <target state="new">Set up a shortcut key to exit the application</target>
+        </trans-unit>
+        <trans-unit id="ResetAllButton.Content" translate="yes" xml:space="preserve">
+          <source>Reset all</source>
+          <target state="new">Reset all</target>
+        </trans-unit>
+        <trans-unit id="ClearAllButton.Content" translate="yes" xml:space="preserve">
+          <source>Clear all</source>
+          <target state="new">Clear all</target>
+        </trans-unit>
+        <trans-unit id="WarningShortcutAltGr.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Shortcuts with **Ctrl** and **Alt** may remove functionality from some international keyboards, because **Ctrl** + **Alt** = **Alt Gr** in those keyboards.</source>
+          <target state="new">Shortcuts with **Ctrl** and **Alt** may remove functionality from some international keyboards, because **Ctrl** + **Alt** = **Alt Gr** in those keyboards.</target>
+        </trans-unit>
+        <trans-unit id="NoDefaultGroup" translate="yes" xml:space="preserve">
+          <source>Default group not found. Please set a default group first.</source>
+          <target state="new">Default group not found. Please set a default group first.</target>
+        </trans-unit>
+        <trans-unit id="Log_No_Rule" translate="yes" xml:space="preserve">
+          <source>File {0} mismatched rule; skipping processing.</source>
+          <target state="new">File {0} mismatched rule; skipping processing.</target>
+        </trans-unit>
+        <trans-unit id="DisableHotkey" translate="yes" xml:space="preserve">
+          <source>Disable hotkeys</source>
+          <target state="new">Disable hotkeys</target>
+        </trans-unit>
+        <trans-unit id="EnabledHotkey" translate="yes" xml:space="preserve">
+          <source>Enable hotkeys</source>
+          <target state="new">Enable hotkeys</target>
+        </trans-unit>
+        <trans-unit id="ExceptionTxt" translate="yes" xml:space="preserve">
+          <source>Exception</source>
+          <target state="new">Exception</target>
+        </trans-unit>
+        <trans-unit id="Log_Add_Schedule" translate="yes" xml:space="preserve">
+          <source>Failed to add schedule</source>
+          <target state="new">Failed to add schedule</target>
+        </trans-unit>
+        <trans-unit id="Log_Custom_Fail" translate="yes" xml:space="preserve">
+          <source>Failed to add custom configuration</source>
+          <target state="new">Failed to add custom configuration</target>
+        </trans-unit>
+        <trans-unit id="Log_Info_Rule" translate="yes" xml:space="preserve">
+          <source>Found {0} additional rule records</source>
+          <target state="new">Found {0} additional rule records</target>
+        </trans-unit>
+        <trans-unit id="InitializationLoadFailed" translate="yes" xml:space="preserve">
+          <source>Initialization load failed</source>
+          <target state="new">Initialization load failed</target>
+        </trans-unit>
+        <trans-unit id="Log_Exit_Exceut" translate="yes" xml:space="preserve">
+          <source>Exit executed successfully!</source>
+          <target state="new">Exit executed successfully!</target>
+        </trans-unit>
+        <trans-unit id="Log_TaskScheduler" translate="yes" xml:space="preserve">
+          <source>Task scheduler started successfully!</source>
+          <target state="new">Task scheduler started successfully!</target>
+        </trans-unit>
+        <trans-unit id="All_Task_Trigger" translate="yes" xml:space="preserve">
+          <source>All tasks triggered successfully!</source>
+          <target state="new">All tasks triggered successfully!</target>
+        </trans-unit>
+        <trans-unit id="Log_All_Task" translate="yes" xml:space="preserve">
+          <source>All tasks scheduler stopped successfully.</source>
+          <target state="new">All tasks scheduler stopped successfully.</target>
+        </trans-unit>
+        <trans-unit id="Log_Start_Data" translate="yes" xml:space="preserve">
+          <source>EasyTidy default data initialization complete!</source>
+          <target state="new">EasyTidy default data initialization complete!</target>
+        </trans-unit>
+        <trans-unit id="Log_Field_Execute" translate="yes" xml:space="preserve">
+          <source>Field '{0}' in table '{1}' already exists, skipping script.</source>
+          <target state="new">Field '{0}' in table '{1}' already exists, skipping script.</target>
+        </trans-unit>
+        <trans-unit id="Log_Initialized" translate="yes" xml:space="preserve">
+          <source>EasyTidy Initialized Successfully!</source>
+          <target state="new">EasyTidy Initialized Successfully!</target>
+        </trans-unit>
+        <trans-unit id="Log_Move_Info_Lock" translate="yes" xml:space="preserve">
+          <source>Move operation already in progress, skipping execution.</source>
+          <target state="new">Move operation already in progress, skipping execution.</target>
+        </trans-unit>
+        <trans-unit id="Log_Move" translate="yes" xml:space="preserve">
+          <source>Move operation completed.</source>
+          <target state="new">Move operation completed.</target>
+        </trans-unit>
+        <trans-unit id="Log_Move_Ex" translate="yes" xml:space="preserve">
+          <source>Exception during move operation</source>
+          <target state="new">Exception during move operation</target>
+        </trans-unit>
+        <trans-unit id="DisableHotkeyIcon" translate="yes" xml:space="preserve">
+          <source>Shortcut keys disabled</source>
+          <target state="new">Shortcut keys disabled</target>
+        </trans-unit>
+        <trans-unit id="PausedMonitoring" translate="yes" xml:space="preserve">
+          <source>Monitoring task paused until next startup</source>
+          <target state="new">Monitoring task paused until next startup</target>
+        </trans-unit>
+        <trans-unit id="Log_Monitoring" translate="yes" xml:space="preserve">
+          <source>All monitoring has been stopped.</source>
+          <target state="new">All monitoring has been stopped.</target>
+        </trans-unit>
+        <trans-unit id="Log_Skipping_Hotkey" translate="yes" xml:space="preserve">
+          <source>No hotkeys configured or hotkeys disable. Skipping hotkey registration.</source>
+          <target state="new">No hotkeys configured or hotkeys disable. Skipping hotkey registration.</target>
+        </trans-unit>
+        <trans-unit id="Log_Hotkeys_Init" translate="yes" xml:space="preserve">
+          <source>Default hotkeys initialized and saved.</source>
+          <target state="new">Default hotkeys initialized and saved.</target>
+        </trans-unit>
+        <trans-unit id="Log_Failed_Register_Hotkey" translate="yes" xml:space="preserve">
+          <source>Failed to register hotkey: {0}</source>
+          <target state="new">Failed to register hotkey: {0}</target>
+        </trans-unit>
+        <trans-unit id="AddAtTheEnd_Create" translate="yes" xml:space="preserve">
+          <source>When #C is added to the end or it's empty, use the creation time to rename according to rules</source>
+          <target state="new">When #C is added to the end or it's empty, use the creation time to rename according to rules</target>
+        </trans-unit>
+        <trans-unit id="AddAtTheEnd_Modify" translate="yes" xml:space="preserve">
+          <source>Append #M to the end to choose renaming using modification time</source>
+          <target state="new">Append #M to the end to choose renaming using modification time</target>
+        </trans-unit>
+        <trans-unit id="AddAtThenEnd_ShootingTime" translate="yes" xml:space="preserve">
+          <source>Add #S at the end to select using photo capture time for renaming</source>
+          <target state="new">Add #S at the end to select using photo capture time for renaming</target>
+        </trans-unit>
+        <trans-unit id="AddAtThenEnd_NowTime" translate="yes" xml:space="preserve">
+          <source>Append #D to select using the current time for renaming</source>
+          <target state="new">Append #D to select using the current time for renaming</target>
         </trans-unit>
       </group>
     </body>

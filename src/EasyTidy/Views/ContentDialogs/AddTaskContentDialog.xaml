@@ -8,10 +8,20 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     xmlns:model="using:EasyTidy.Model"
+    xmlns:val="using:EasyTidy.Views.UserControls"
     xmlns:ui="using:CommunityToolkit.WinUI"
-    xmlns:i="using:Microsoft.Xaml.Interactivity" xmlns:etc="using:EasyTidy.Behaviors"
+    xmlns:i="using:Microsoft.Xaml.Interactivity" 
+    xmlns:etc="using:EasyTidy.Behaviors"
     CornerRadius="{ThemeResource OverlayCornerRadius}"
     DefaultButton="Primary">
+
+    <ContentDialog.Resources>
+        <DataTemplate x:Key="ValidationTemplate"
+              x:DataType="x:String">
+            <TextBlock Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+               Text="{x:Bind}"/>
+        </DataTemplate>
+    </ContentDialog.Resources>
 
     <ScrollView VerticalScrollBarVisibility="Hidden">
         <StackPanel>
@@ -104,8 +114,10 @@
                          Margin="6,0,0,0"
                          Width="210"
                          Text="{x:Bind TaskRule, Mode=TwoWay}"
-                         TextChanged="TaskRuleBox_TextChanged"
-                         LostFocus="TaskRuleBox_LostFocus"/>
+                         val:Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
+                         val:Validation.ValidationPropertyName="TaskRule"
+                         val:Validation.ValidationProvider="{x:Bind}"
+                         Style="{StaticResource ValidatingTextBoxStyle}"/>
                 <Button x:Name="RuleButton"
                         Width="52"
                         Height="32"
@@ -137,7 +149,8 @@
                                           MaxHeight="320"
                                           IsItemClickEnabled="True"
                                           ItemClick="DialogFilterListView_ItemClick"
-                                          ItemsSource="{x:Bind ViewModel.FilterListACV, Mode=TwoWay}">
+                                          ItemsSource="{x:Bind ViewModel.FilterListACV, Mode=TwoWay}"
+                                          SelectedItem="{x:Bind ViewModel.SelectedFilter, Mode=TwoWay}">
                                     <ListView.ItemTemplate>
                                         <DataTemplate x:DataType="model:FilterTable">
                                             <TextBlock Text="{x:Bind FilterName}"/>
@@ -149,10 +162,6 @@
                     </Button.Resources>
                 </Button>
             </StackPanel>
-            <TextBlock Foreground="{ThemeResource SystemFillColorCriticalBrush}"
-                       x:Name="TaskRuleBoxValid"
-                       Margin="122,0,0,0"
-                       Visibility="Collapsed"/>
             <StackPanel x:Name="CustomPromptPanel"
                         Margin="0,20,0,0"
                         Orientation="Horizontal"
@@ -165,7 +174,7 @@
                              AcceptsReturn="True"
                              MaxHeight="120"
                              Margin="6,0,0,0"
-                             PlaceholderText="请描述你的分类需求">
+                             x:Uid="CustomPrompt">
                     <i:Interaction.Behaviors>
                         <etc:RichEditBoxBehavior
                             x:Name="RichEditBoxBehavior"
@@ -180,8 +189,8 @@
                 <TextBlock Text="Prompt:" Width="110"/>
                 <StackPanel Orientation="Horizontal"
                             Margin="4,-4,0,0">
-                    <RadioButton x:Name="BuiltIn" Content="系统内置" Checked="RadioButton_Checked" IsChecked="{x:Bind SelectedMode, Converter={StaticResource BoolToEnumConverter}, ConverterParameter=BuiltIn, Mode=TwoWay}"/>
-                    <RadioButton x:Name="Custom" Content="自定义" Checked="RadioButton_Checked" IsChecked="{x:Bind SelectedMode, Converter={StaticResource BoolToEnumConverter}, ConverterParameter=Custom, Mode=TwoWay}"/>
+                    <RadioButton x:Name="BuiltIn" x:Uid="BuiltInText" Checked="RadioButton_Checked" IsChecked="{x:Bind SelectedMode, Converter={StaticResource BoolToEnumConverter}, ConverterParameter=BuiltIn, Mode=TwoWay}"/>
+                    <RadioButton x:Name="Custom" x:Uid="CustomTxt" Checked="RadioButton_Checked" IsChecked="{x:Bind SelectedMode, Converter={StaticResource BoolToEnumConverter}, ConverterParameter=Custom, Mode=TwoWay}"/>
                 </StackPanel>
             </StackPanel>
             <StackPanel x:Name="PromptPanel"

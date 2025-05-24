@@ -20,7 +20,6 @@
         x:Name="TrayIcon"
         x:FieldModifier="public"
         ContextMenuMode="SecondWindow"
-        IconSource="{x:Bind IsWindowVisible, Converter={StaticResource BoolToImageSourceConverter}}"
         LeftClickCommand="{x:Bind ShowHideWindowCommand}"
         NoLeftClickDelay="True"
         ToolTipText="EasyTidy">
@@ -39,6 +38,10 @@
                 <MenuFlyoutItem
                     Command="{x:Bind ShowHideWindowCommand}"
                     x:Uid="TrayIconScreen"/>
+                <MenuFlyoutSeparator/>
+                <MenuFlyoutItem
+                    Command="{x:Bind DisableHotkeysCommand}"
+                    Text="{x:Bind ToggleHotkeyText, Mode=OneWay}"/>
                 <MenuFlyoutSeparator/>
                 <MenuFlyoutItem
                     Command="{x:Bind RestartApplicationCommand}"

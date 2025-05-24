@@ -15,4 +15,5 @@ public class Hotkey
 public class HotkeysCollection
 {
     public List<Hotkey> Hotkeys { get; set; } = new();
+    public bool Enabled { get; set; } = true;
 }

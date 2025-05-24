@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -30,7 +32,9 @@ public partial class Renamer
     /// <returns></returns>
     public static string ParseTemplate(string source, string target)
     {
-        DateTime? creationTime = File.Exists(source) ? File.GetCreationTime(source) : Directory.GetCreationTime(source);
+        var parseResult = ParseTargetWithDate(source, target);
+        target = parseResult.target;
+        DateTime? creationTime = parseResult.time;
 
         if (!target.Contains('$'))
         {
@@ -364,6 +368,50 @@ public partial class Renamer
         }
 
         return string.Concat(input.AsSpan(0, index), newValue, input.AsSpan(index + oldValue.Length));
+    }
+
+    private static DateTime? GetDataTime(string source, string matchValue)
+    {
+        return matchValue switch
+        {
+            "C" => File.Exists(source) ? File.GetCreationTime(source) : Directory.GetCreationTime(source),
+            "M" => File.Exists(source) ? File.GetLastWriteTime(source) : Directory.GetLastWriteTime(source),
+            "D" => DateTime.Now,
+            "S" => GetDateTakenFromImage(source) ?? DateTime.Now,
+            _ => File.Exists(source) ? File.GetCreationTime(source) : Directory.GetCreationTime(source),
+        };
+    }
+
+    private static DateTime? GetDateTakenFromImage(string path)
+    {
+        using (Image image = Image.FromFile(path))
+        {
+            // EXIF tag 36867 corresponds to DateTimeOriginal
+            const int PropertyTagExifDTOrig = 0x9003;
+
+            if (image.PropertyIdList.Contains(PropertyTagExifDTOrig))
+            {
+                PropertyItem propItem = image.GetPropertyItem(PropertyTagExifDTOrig);
+                string dateTakenStr = Encoding.ASCII.GetString(propItem.Value).Trim('\0');
+
+                if (DateTime.TryParseExact(dateTakenStr, "yyyy:MM:dd HH:mm:ss", null,
+                    System.Globalization.DateTimeStyles.None, out DateTime dateTaken))
+                {
+                    return dateTaken;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public static (string target, DateTime? time) ParseTargetWithDate(string source, string target)
+    {
+        string[] parts = target.Split('#');
+        string cleanTarget = parts[0];
+
+        DateTime? time = (parts.Length > 1) ? GetDataTime(source, parts[1].ToUpper()) : null;
+        return (cleanTarget, time);
     }
 
 }

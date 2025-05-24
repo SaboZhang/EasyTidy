@@ -248,7 +248,7 @@ public partial class AutomaticViewModel : ObservableRecipient
         catch (Exception ex)
         {
             IsActive = false;
-            Logger.Error($"AutomaticViewModel: OnPageLoad 异常信息 {ex}");
+            Logger.Error($"AutomaticViewModel: OnPageLoad {"ExceptionTxt".GetLocalized()} {ex}");
         }
 
         IsActive = false;
@@ -459,7 +459,7 @@ public partial class AutomaticViewModel : ObservableRecipient
         }
         catch (Exception ex)
         {
-            Logger.Error($"添加时间表失败：{ex}");
+            Logger.Error($"{"Log_Add_Schedule".GetLocalized()}：{ex}");
         }
     }
 
@@ -536,7 +536,7 @@ public partial class AutomaticViewModel : ObservableRecipient
         {
             _notificationQueue.ShowWithWindowExtension("SaveFailedText".GetLocalized(), InfoBarSeverity.Error);
             _ = ClearNotificationAfterDelay(3000);
-            Logger.Error($"AutomaticViewModel: OnSaveTaskConfig 异常信息 {ex}");
+            Logger.Error($"AutomaticViewModel: OnSaveTaskConfig {"ExceptionTxt".GetLocalized()} {ex}");
             IsActive = false;
         }
 
@@ -650,7 +650,7 @@ public partial class AutomaticViewModel : ObservableRecipient
         }
         catch (Exception ex)
         {
-            Logger.Error($"添加自定义配置失败：{ex}");
+            Logger.Error($"{"Log_Custom_Fail".GetLocalized()}：{ex}");
         }
     }
 
@@ -687,7 +687,7 @@ public partial class AutomaticViewModel : ObservableRecipient
         }
         catch (Exception ex)
         {
-            Logger.Error($"AutomaticViewModel: OnUpdateChecked 异常信息 {ex}");
+            Logger.Error($"AutomaticViewModel: OnUpdateChecked {"ExceptionTxt".GetLocalized()} {ex}");
         }
     }
 

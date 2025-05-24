@@ -35,6 +35,9 @@ public partial class HotKeySettingViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<HotkeysCollection> _hotkeys;
 
+    [ObservableProperty]
+    private bool _isHotkeyEnabled;
+
     public ObservableCollection<Breadcrumb> Breadcrumbs { get; }
 
     public HotKeySettingViewModel(IThemeSelectorService themeSelectorService, ILocalSettingsService localSettingsService, HotkeyService hotkeyService, HotkeyActionRouter hotkeyActionRouter)
@@ -59,25 +62,29 @@ public partial class HotKeySettingViewModel : ObservableObject
 
         if (hotkeys?.Hotkeys == null)
             return;
+        
+        IsHotkeyEnabled = hotkeys.Enabled;
 
         Hotkeys = new ObservableCollection<HotkeysCollection>(new[] { hotkeys });
     }
 
     [RelayCommand]
-    private async Task RegisterUserDefinedHotkeyAsync(ObservableCollection<HotkeysCollection> collections)
+    private async Task RegisterUserDefinedHotkeyAsync(Hotkey hotkey)
     {
-        var vk = new List<VirtualKey>();
-        var hotkeyId = "ToggleChildWindow";
-        var actionName = "ToggleChildWindow";
-        if (collections == null && collections.Count == 0) return;
+        var keyString = string.Empty;
+        var modifiers = ModifierKeys.None;
+        var mainKey = VirtualKey.None;
+        var hotkeyId = string.Empty;
+        var actionName = string.Empty;
+        if (hotkey == null ) return;
 
-        var allHotkeys = collections.SelectMany(c => c.Hotkeys).ToList();
-        foreach (var hotkey in allHotkeys)
+        hotkeyId = hotkey.Id;
+        actionName = hotkey.CommandName;
+        keyString = hotkey.KeyGesture;
+        if (_hotkeyService.TryParseHotkey(hotkey.KeyGesture, out var mod, out var mvk))
         {
-            hotkeyId = hotkey.Id;
-            actionName = hotkey.CommandName;
-            _hotkeyService.TryParseGesture(hotkey.KeyGesture, out var keys);
-            vk.AddRange(keys);
+            mainKey = mvk;
+            modifiers = mod;
         }
 
         // 2. 加载已有的快捷键集合，没有就初始化
@@ -89,9 +96,9 @@ public partial class HotKeySettingViewModel : ObservableObject
 
         if (existingHotkey != null)
         {
-            _hotkeyService.UnregisterMultiKeyHotkey(existingHotkey.Id);
+            _hotkeyService.UnregisterHotKey(existingHotkey.Id);
             // 更新已有的快捷键
-            existingHotkey.KeyGesture = ToGestureString(vk);
+            existingHotkey.KeyGesture = keyString;
             existingHotkey.CommandName = actionName;
         }
         else
@@ -100,7 +107,7 @@ public partial class HotKeySettingViewModel : ObservableObject
             hotkeys.Hotkeys.Add(new Hotkey
             {
                 Id = hotkeyId,
-                KeyGesture = ToGestureString(vk),
+                KeyGesture = keyString,
                 CommandName = actionName
             });
         }
@@ -110,15 +117,16 @@ public partial class HotKeySettingViewModel : ObservableObject
         await LoadHotkeysAsync();
 
         // 5. 注册快捷键
-        bool success = _hotkeyService.RegisterMultiKeyHotkey(
+        bool success = _hotkeyService.RegisterHotKey(
             hotkeyId,
-            vk,
+            mainKey,
+            modifiers,
             () => _hotkeyActionRouter.HandleAction(hotkeyId)
         );
 
         if (!success)
         {
-            Logger.Warn($"Failed to register hotkey: {ToGestureString(vk)}");
+            Logger.Warn($"Failed to register hotkey: {keyString}");
         }
     }
 
@@ -133,11 +141,12 @@ public partial class HotKeySettingViewModel : ObservableObject
             {
                 _hotkeyService.UnregisterHotKey(hotkey.Id);
             }
-
+            _hotkeyService.Clear();
             // 清空集合
             hotkeySettings.Hotkeys.Clear();
             // 保存修改后的快捷键集合
             await _localSettingsService.SaveSettingsExtAsync(hotkeySettings);
+            await LoadHotkeysAsync();
         }
     }
 
@@ -145,6 +154,7 @@ public partial class HotKeySettingViewModel : ObservableObject
     private async Task ResetAllHotkeys()
     {
         await _hotkeyService.ResetToDefaultHotkeysAsync();
+        await LoadHotkeysAsync();
     }
 
     [RelayCommand]
@@ -152,7 +162,7 @@ public partial class HotKeySettingViewModel : ObservableObject
     {
         Hotkeys?.Clear();
         // 清除已注册的快捷键
-        _hotkeyService.UnregisterMultiKeyHotkey(id);
+        _hotkeyService.UnregisterHotKey(id);
         // 重置为默认值
         var defaultHotkey = DefaultHotkeys.GetHotkeyById(id);
         if (defaultHotkey != null)
@@ -164,17 +174,36 @@ public partial class HotKeySettingViewModel : ObservableObject
             Hotkeys = new ObservableCollection<HotkeysCollection>(new[] { hotkeysCollection });
             // 保存修改后的快捷键集合
             await _localSettingsService.SaveSettingsExtAsync(hotkeysCollection);
-            _hotkeyService.TryParseGesture(defaultHotkey.KeyGesture, out var keys);
-            bool success = _hotkeyService.RegisterMultiKeyHotkey(
+            _hotkeyService.TryParseHotkey(defaultHotkey.KeyGesture, out var modifiers, out var vk);
+            bool success = _hotkeyService.RegisterHotKey(
                 defaultHotkey.Id,
-                keys,
+                vk,
+                modifiers,
                 () => _hotkeyActionRouter.HandleAction(defaultHotkey.CommandName));
 
             if (!success)
             {
-                Logger.Warn($"Failed to register hotkey: {ToGestureString(keys)}");
+                Logger.Warn($"Failed to register hotkey: {defaultHotkey.KeyGesture}");
             }
         }
+    }
+
+    /// <summary>
+    /// 禁用热键
+    /// </summary>
+    /// <returns></returns>
+    public async Task DisableHotkeysAsync()
+    {
+        var hotkeys = await _localSettingsService.LoadSettingsExtAsync<HotkeysCollection>();
+        if (hotkeys == null) return;
+
+        foreach (var hotkey in hotkeys.Hotkeys)
+        {
+            _hotkeyService.UnregisterHotKey(hotkey.Id);
+        }
+        hotkeys.Enabled = !hotkeys.Enabled;
+        IsHotkeyEnabled = !IsHotkeyEnabled;
+        await _localSettingsService.SaveSettingsExtAsync(hotkeys);
     }
 
 }

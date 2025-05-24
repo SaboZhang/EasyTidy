@@ -699,7 +699,7 @@
     <value>透過性</value>
   </data>
   <data name="TrayIconStopMonitoring.Text" xml:space="preserve">
-    <value>監視の停止</value>
+    <value>モニタリングを一時停止</value>
   </data>
   <data name="TrayIconExecuteOnce.Text" xml:space="preserve">
     <value>1回実行</value>
@@ -1201,6 +1201,17 @@
   <data name="LogsFolder.Content" xml:space="preserve">
     <value>ログフォルダー</value>
   </data>
+  <data name="AppNotificationPayloadInfo" xml:space="preserve">
+    <value>&lt;toast launch='meetingId=9813'&gt;
+    &lt;visual&gt;
+        &lt;binding template='ToastGeneric'&gt;
+            &lt;text&gt;&lt;/text&gt;
+            &lt;text&gt;{0}&lt;/text&gt;
+            &lt;text&gt;&lt;/text&gt;
+        &lt;/binding&gt;
+    &lt;/visual&gt;
+&lt;/toast&gt;</value>
+  </data>
   <data name="GeneralPrefixCard.Header" xml:space="preserve">
     <value>Webdavアップロードプリフィックス</value>
   </data>
@@ -1583,12 +1594,150 @@
     <value>このショートカットを変更するには、キーの組み合わせを押してください。キーの組み合わせを削除してショートカットを無効にするには、右クリックしてください。</value>
   </data>
   <data name="Shortcut_Description.Text" xml:space="preserve">
-    <value>Windows、Ctrl、Alt、またはShiftから始まるキー組み合わせや、単一の未変更キーをサポート</value>
+    <value>Windows、Ctrl、Alt、またはShiftから始まるキー組み合わせや、単一の未変更キーをサポート(F1-F12)</value>
   </data>
   <data name="InvalidShortcut.Title" xml:space="preserve">
     <value>無効なショートカット</value>
   </data>
   <data name="WarningShortcutAltGr.Title" xml:space="preserve">
     <value>Alt Grキーとのショートカット競合の可能性</value>
+  </data>
+  <data name="RegisterFailed" xml:space="preserve">
+    <value>ショートカットキー {0} の登録に失敗しました。他のプログラムとの競合がないか確認してください！</value>
+  </data>
+  <data name="ChatModelErrors" xml:space="preserve">
+    <value>モデル名は空にできません</value>
+  </data>
+  <data name="CustomPrompt.PlaceholderText" xml:space="preserve">
+    <value>分類要件についてご説明ください</value>
+  </data>
+  <data name="BuiltInText.Content" xml:space="preserve">
+    <value>組み込みシステム</value>
+  </data>
+  <data name="CustomTxt.Content" xml:space="preserve">
+    <value>カスタム</value>
+  </data>
+  <data name="FilterConditions" xml:space="preserve">
+    <value>少なくとも1つのフィルタリング条件を設定する必要があります</value>
+  </data>
+  <data name="AdvancedRules" xml:space="preserve">
+    <value>高度なルール</value>
+  </data>
+  <data name="GlobalHotkey.Header" xml:space="preserve">
+    <value>グローバルホットキー</value>
+  </data>
+  <data name="DragWindowShortcutCard.Header" xml:space="preserve">
+    <value>ドラッグアンドドロップウィンドウ</value>
+  </data>
+  <data name="DragWindowShortcutCard.Description" xml:space="preserve">
+    <value>ドラッグウィンドウ表示のショートカットキーを設定する</value>
+  </data>
+  <data name="ExecuteTaskCard.Header" xml:space="preserve">
+    <value>タスクを実行する</value>
+  </data>
+  <data name="ExecuteTaskCard.Description" xml:space="preserve">
+    <value>すべてのタスクを実行するためのショートカットキーを設定する</value>
+  </data>
+  <data name="ShowMainWindowSettingsCard.Header" xml:space="preserve">
+    <value>メインウィンドウを表示</value>
+  </data>
+  <data name="ShowMainWindowSettingsCard.Description" xml:space="preserve">
+    <value>アプリケーションのメインウィンドウを表示するためのショートカットキーを設定する</value>
+  </data>
+  <data name="SettingsWindowCard.Header" xml:space="preserve">
+    <value>設定ウィンドウ</value>
+  </data>
+  <data name="SettingsWindowCard.Description" xml:space="preserve">
+    <value>アプリケーションの設定ウィンドウを開く</value>
+  </data>
+  <data name="ExitAppTxt.Header" xml:space="preserve">
+    <value>アプリを終了</value>
+  </data>
+  <data name="ExitAppTxt.Description" xml:space="preserve">
+    <value>アプリケーションを終了するためのショートカットキーを設定します</value>
+  </data>
+  <data name="ResetAllButton.Content" xml:space="preserve">
+    <value>すべてリセット</value>
+  </data>
+  <data name="ClearAllButton.Content" xml:space="preserve">
+    <value>すべてクリア</value>
+  </data>
+  <data name="WarningShortcutAltGr.ToolTipService.ToolTip" xml:space="preserve">
+    <value>**Ctrl**キーと**Alt**キーを使用したショートカットは、一部の国際キーボードでは機能が失われる可能性があります。これは、それらのキーボードでは**Ctrl** + **Alt** = **Alt Gr**となるためです。</value>
+  </data>
+  <data name="NoDefaultGroup" xml:space="preserve">
+    <value>デフォルトグループが見つかりません。まずデフォルトグループを設定してください。</value>
+  </data>
+  <data name="Log_No_Rule" xml:space="preserve">
+    <value>ファイル {0} がルールに合致しなかったため、処理をスキップします。</value>
+  </data>
+  <data name="DisableHotkey" xml:space="preserve">
+    <value>ホットキーを無効にする</value>
+  </data>
+  <data name="EnabledHotkey" xml:space="preserve">
+    <value>ホットキーを有効にする</value>
+  </data>
+  <data name="ExceptionTxt" xml:space="preserve">
+    <value>例外</value>
+  </data>
+  <data name="Log_Add_Schedule" xml:space="preserve">
+    <value>スケジュールの追加に失敗しました</value>
+  </data>
+  <data name="Log_Custom_Fail" xml:space="preserve">
+    <value>カスタム構成の追加に失敗しました</value>
+  </data>
+  <data name="Log_Info_Rule" xml:space="preserve">
+    <value>他に{0}件のルールレコードが見つかりました</value>
+  </data>
+  <data name="InitializationLoadFailed" xml:space="preserve">
+    <value>初期化ロードに失敗しました</value>
+  </data>
+  <data name="Log_Exit_Exceut" xml:space="preserve">
+    <value>終了が正常に実行されました！</value>
+  </data>
+  <data name="Log_TaskScheduler" xml:space="preserve">
+    <value>タスクスケジューラが正常に起動しました！</value>
+  </data>
+  <data name="All_Task_Trigger" xml:space="preserve">
+    <value>すべてのタスクが正常にトリガーされました！</value>
+  </data>
+  <data name="Log_All_Task" xml:space="preserve">
+    <value>全てのタスクスケジューラは正常に停止しました。</value>
+  </data>
+  <data name="Log_Start_Data" xml:space="preserve">
+    <value>EasyTidyのデフォルトデータ初期化が完了しました！</value>
+  </data>
+  <data name="Log_Field_Execute" xml:space="preserve">
+    <value>テーブル「{1}」のフィールド「{0}」は既に存在するため、スクリプトをスキップします。</value>
+  </data>
+  <data name="Log_Initialized" xml:space="preserve">
+    <value>EasyTidy が正常に初期化されました！</value>
+  </data>
+  <data name="Log_Move_Info_Lock" xml:space="preserve">
+    <value>移動操作はすでに進行中のため、実行をスキップします。</value>
+  </data>
+  <data name="Log_Move" xml:space="preserve">
+    <value>移動操作が完了しました。</value>
+  </data>
+  <data name="Log_Move_Ex" xml:space="preserve">
+    <value>移動操作中のエラー</value>
+  </data>
+  <data name="DisableHotkeyIcon" xml:space="preserve">
+    <value>ショートカットキーが無効化されています</value>
+  </data>
+  <data name="PausedMonitoring" xml:space="preserve">
+    <value>次回の起動まで監視タスクが一時停止されました</value>
+  </data>
+  <data name="Log_Monitoring" xml:space="preserve">
+    <value>すべてのモニタリングが停止されました。</value>
+  </data>
+  <data name="Log_Skipping_Hotkey" xml:space="preserve">
+    <value>ホットキーが設定されていないか、ホットキーが無効になっています。ホットキー登録をスキップします。</value>
+  </data>
+  <data name="Log_Hotkeys_Init" xml:space="preserve">
+    <value>デフォルトのホットキーが初期化され、保存されました。</value>
+  </data>
+  <data name="Log_Failed_Register_Hotkey" xml:space="preserve">
+    <value>ホットキーの登録に失敗しました：{0}</value>
   </data>
 </root>

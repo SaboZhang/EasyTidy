@@ -61,8 +61,7 @@
                      IsClosable="False"
                      IsOpen="{x:Bind IsWarningAltGr, Mode=OneWay}"
                      IsTabStop="{x:Bind IsWarningAltGr, Mode=OneWay}"
-                     Severity="Warning"
-                     ToolTipService.ToolTip="Shortcuts with **Ctrl** and **Alt** may remove functionality from some international keyboards, because **Ctrl** + **Alt** = **Alt Gr** in those keyboards." />
+                     Severity="Warning" />
             </Grid>
             <TextBlock 
                 x:Uid="Shortcut_Description"

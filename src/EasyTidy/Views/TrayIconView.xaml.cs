@@ -1,4 +1,6 @@
-﻿using EasyTidy.Service;
+﻿using CommunityToolkit.WinUI;
+using EasyTidy.Service;
+using EasyTidy.Model;
 using H.NotifyIcon;
 using System.Diagnostics;
 using WinUIEx;
@@ -18,11 +20,27 @@ public sealed partial class TrayIconView : UserControl
     private bool _isWindowVisible;
 
     public MainViewModel ViewModel { get; }
+    public HotKeySettingViewModel HotKey { get; }
+
+    public string ToggleHotkeyText
+    {
+        get
+        {
+            return HotKey.IsHotkeyEnabled
+                ? "DisableHotkey".GetLocalized()
+                : "EnabledHotkey".GetLocalized();
+        }
+    }
+
+    public static TrayIconView Instance { get; private set; }
 
     public TrayIconView()
     {
         InitializeComponent();
         ViewModel = App.GetService<MainViewModel>();
+        HotKey = App.GetService<HotKeySettingViewModel>();
+        Instance = this;
+        TrayIconService.Initialize(TrayIcon);
     }
 
     [RelayCommand]
@@ -56,6 +74,11 @@ public sealed partial class TrayIconView : UserControl
         App.MainWindow?.Close();
     }
 
+    public void DisposeTrayIcon()
+    {
+        TrayIcon.Dispose();
+    }
+
     /// <summary>
     /// Restarts the application
     /// </summary>
@@ -70,7 +93,6 @@ public sealed partial class TrayIconView : UserControl
         TrayIcon.Dispose();
         App.ChildWindow?.Close();
         App.MainWindow?.Close();
-        // Environment.Exit(0);
     }
 
     /// <summary>
@@ -83,6 +105,7 @@ public sealed partial class TrayIconView : UserControl
         Settings.Save();
         FileEventHandler.StopAllMonitoring();
         await QuartzHelper.StopAllJob();
+        TrayIconService.SetStatus(TrayIconStatus.Paused, "PausedMonitoring");
     }
 
     [RelayCommand]
@@ -90,5 +113,17 @@ public sealed partial class TrayIconView : UserControl
     {
         await QuartzHelper.TriggerAllJobsOnceAsync();
         await ViewModel.ExecuteAllTaskAsync();
+    }
+
+    [RelayCommand]
+    private async Task DisableHotkeysAsync()
+    {
+        await HotKey.DisableHotkeysAsync();
+        OnPropertyChanged(nameof(ToggleHotkeyText));
+        bool isEnabled = HotKey.IsHotkeyEnabled;
+        TrayIconService.SetStatus(
+            isEnabled ? TrayIconStatus.Normal : TrayIconStatus.HotKey,
+            isEnabled ? "" : "DisableHotkeyIcon"
+        );
     }
 }

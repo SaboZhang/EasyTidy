@@ -2,15 +2,16 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:common="using:EasyTidy.Common"
                     xmlns:converter="using:CommunityToolkit.WinUI.Converters" 
-                    xmlns:cover="using:EasyTidy.Converters">
+                    xmlns:conv="using:EasyTidy.Converters">
 
-    <cover:EnumDisplayNameConverter x:Key="EnumDisplayNameConverter"/>
-    <cover:EnumToVisibilityConverter x:Key="EnumToVisibilityConverter" />
-    <cover:BoolToStringConverter x:Key="BoolToStringConverter" />
-    <cover:StringToBoolConverter x:Key="StringToBoolConverter" />
-    <cover:LineDashStrokeArrayConverter x:Key="LineDashStrokeArrayConverter" />
-    <cover:BoolToEnumConverter x:Key="BoolToEnumConverter"/>
-    <cover:EnumToImageConverter x:Key="EnumToImageConverter"/>
+    <conv:EnumDisplayNameConverter x:Key="EnumDisplayNameConverter"/>
+    <conv:EnumToVisibilityConverter x:Key="EnumToVisibilityConverter" />
+    <conv:BoolToStringConverter x:Key="BoolToStringConverter" />
+    <conv:StringToBoolConverter x:Key="StringToBoolConverter" />
+    <conv:LineDashStrokeArrayConverter x:Key="LineDashStrokeArrayConverter" />
+    <conv:BoolToEnumConverter x:Key="BoolToEnumConverter"/>
+    <conv:EnumToImageConverter x:Key="EnumToImageConverter"/>
+    <conv:ValidationEnabledConverter x:Name="CanValidateConverter" />
 
     <converter:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
 

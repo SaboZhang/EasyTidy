@@ -3,7 +3,6 @@
 
 using CommunityToolkit.WinUI;
 using EasyTidy.Model;
-using Quartz.Util;
 using System.Collections;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -28,7 +27,7 @@ public sealed partial class AddFilterContentDialog : ContentDialog, INotifyDataE
             {
                 _filterName = value;
                 OnPropertyChanged();
-                // ValidateFilterName(_filterName);
+                ValidateFilterName(_filterName);
             }
         }
     }
@@ -224,20 +223,20 @@ public sealed partial class AddFilterContentDialog : ContentDialog, INotifyDataE
         this.InitializeComponent();
         XamlRoot = App.MainWindow.Content.XamlRoot;
         RequestedTheme = ViewModel.ThemeSelectorService.Theme;
-        // ValidateFilterName(_filterName);
+        ValidateFilterName(_filterName);
     }
 
     #region Validation
-    //private void ValidateFilterName(string filterName)
-    //{
-    //    NameTextBoxError.Text = "FilterNameValidation".GetLocalized();
-    //    var errors = new List<string>(1);
-    //    if (string.IsNullOrWhiteSpace(filterName))
-    //    {
-    //        errors.Add("FilterNameValidation".GetLocalized());
-    //    }
-    //    SetErrors("FilterName", errors);
-    //}
+
+    public void ValidateFilterName(string filterName)
+    {
+        var errors = new List<string>(1);
+        if (string.IsNullOrWhiteSpace(filterName))
+        {
+            errors.Add("FilterNameValidation".GetLocalized());
+        }
+        SetErrors("FilterName", errors);
+    }
 
     public bool HasErrors => _validationErrors.Count > 0;
 
@@ -277,17 +276,4 @@ public sealed partial class AddFilterContentDialog : ContentDialog, INotifyDataE
 
     #endregion
 
-    private void NameTextBox_LostFocus(object sender, RoutedEventArgs e)
-    {
-        var text = (sender as TextBox)?.Text;
-        if (text.IsNullOrWhiteSpace())
-        {
-            NameTextBoxError.Text = "FilterNameValidation".GetLocalized();
-            NameTextBoxError.Visibility = Visibility.Visible;
-        }
-        else
-        {
-            NameTextBoxError.Visibility = Visibility.Collapsed;
-        }
-    }
 }

@@ -699,7 +699,7 @@
     <value>透明</value>
   </data>
   <data name="TrayIconStopMonitoring.Text" xml:space="preserve">
-    <value>停止監控</value>
+    <value>暂停監控</value>
   </data>
   <data name="TrayIconExecuteOnce.Text" xml:space="preserve">
     <value>執行一次</value>
@@ -1198,6 +1198,17 @@
   <data name="LogsFolder.Content" xml:space="preserve">
     <value>日誌目錄</value>
   </data>
+  <data name="AppNotificationPayloadInfo" xml:space="preserve">
+    <value>&lt;toast launch='meetingId=9813'&gt;
+    &lt;visual&gt;
+        &lt;binding template='ToastGeneric'&gt;
+            &lt;text&gt;&lt;/text&gt;
+            &lt;text&gt;{0}&lt;/text&gt;
+            &lt;text&gt;&lt;/text&gt;
+        &lt;/binding&gt;
+    &lt;/visual&gt;
+&lt;/toast&gt;</value>
+  </data>
   <data name="GeneralPrefixCard.Header" xml:space="preserve">
     <value>Webdav 上传前缀</value>
   </data>
@@ -1580,12 +1591,162 @@
     <value>按下按鍵組合以更改此快捷鍵。右鍵點擊以移除按鍵組合並停用快捷鍵。</value>
   </data>
   <data name="Shortcut_Description.Text" xml:space="preserve">
-    <value>支持以 Windows、Ctrl、Alt 或 Shift 開頭的組合鍵，以及單獨的非修飾鍵</value>
+    <value>支持以 Windows、Ctrl、Alt 或 Shift 開頭的組合鍵，以及單獨的非修飾鍵(F1-F12)</value>
   </data>
   <data name="InvalidShortcut.Title" xml:space="preserve">
     <value>無效的快捷鍵</value>
   </data>
   <data name="WarningShortcutAltGr.Title" xml:space="preserve">
     <value>可能與 Alt Gr 衝突的快速鍵</value>
+  </data>
+  <data name="RegisterFailed" xml:space="preserve">
+    <value>快速鍵 {0} 註冊失敗，請檢查是否與其他程式衝突！</value>
+  </data>
+  <data name="ChatModelErrors" xml:space="preserve">
+    <value>模型名稱不能為空</value>
+  </data>
+  <data name="CustomPrompt.PlaceholderText" xml:space="preserve">
+    <value>請描述您的分類要求</value>
+  </data>
+  <data name="BuiltInText.Content" xml:space="preserve">
+    <value>系統內置</value>
+  </data>
+  <data name="CustomTxt.Content" xml:space="preserve">
+    <value>自定義</value>
+  </data>
+  <data name="FilterConditions" xml:space="preserve">
+    <value>必須設定至少一個篩選條件</value>
+  </data>
+  <data name="AdvancedRules" xml:space="preserve">
+    <value>高級規則</value>
+  </data>
+  <data name="GlobalHotkey.Header" xml:space="preserve">
+    <value>全局熱鍵</value>
+  </data>
+  <data name="DragWindowShortcutCard.Header" xml:space="preserve">
+    <value>拖放視窗</value>
+  </data>
+  <data name="DragWindowShortcutCard.Description" xml:space="preserve">
+    <value>設置顯示拖拽視窗的快捷鍵</value>
+  </data>
+  <data name="ExecuteTaskCard.Header" xml:space="preserve">
+    <value>執行任務</value>
+  </data>
+  <data name="ExecuteTaskCard.Description" xml:space="preserve">
+    <value>設定執行所有任務的快捷鍵</value>
+  </data>
+  <data name="ShowMainWindowSettingsCard.Header" xml:space="preserve">
+    <value>顯示主視窗</value>
+  </data>
+  <data name="ShowMainWindowSettingsCard.Description" xml:space="preserve">
+    <value>設定顯示應用程序主窗口的快捷鍵</value>
+  </data>
+  <data name="SettingsWindowCard.Header" xml:space="preserve">
+    <value>設置窗口</value>
+  </data>
+  <data name="SettingsWindowCard.Description" xml:space="preserve">
+    <value>打開應用程序的設置窗口</value>
+  </data>
+  <data name="ExitAppTxt.Header" xml:space="preserve">
+    <value>退出應用</value>
+  </data>
+  <data name="ExitAppTxt.Description" xml:space="preserve">
+    <value>設定退出應用程序的快速鍵</value>
+  </data>
+  <data name="ResetAllButton.Content" xml:space="preserve">
+    <value>重置全部</value>
+  </data>
+  <data name="ClearAllButton.Content" xml:space="preserve">
+    <value>清空所有</value>
+  </data>
+  <data name="WarningShortcutAltGr.ToolTipService.ToolTip" xml:space="preserve">
+    <value>使用 **Ctrl** 和 **Alt** 的快捷方式可能會刪除某些國際鍵盤的功能，因為在這些鍵盤中，**Ctrl** + **Alt** = **Alt Gr**。</value>
+  </data>
+  <data name="NoDefaultGroup" xml:space="preserve">
+    <value>未找到預設分組。請先設置預設分組。</value>
+  </data>
+  <data name="Log_No_Rule" xml:space="preserve">
+    <value>檔案 {0} 規則不符，跳過處理。</value>
+  </data>
+  <data name="DisableHotkey" xml:space="preserve">
+    <value>禁用熱鍵</value>
+  </data>
+  <data name="EnabledHotkey" xml:space="preserve">
+    <value>啟用熱鍵</value>
+  </data>
+  <data name="ExceptionTxt" xml:space="preserve">
+    <value>異常信息</value>
+  </data>
+  <data name="Log_Add_Schedule" xml:space="preserve">
+    <value>時間表添加失敗</value>
+  </data>
+  <data name="Log_Custom_Fail" xml:space="preserve">
+    <value>添加自定義配置失敗</value>
+  </data>
+  <data name="Log_Info_Rule" xml:space="preserve">
+    <value>找到了 {0} 条高级规则记录</value>
+  </data>
+  <data name="InitializationLoadFailed" xml:space="preserve">
+    <value>初始化載入失敗</value>
+  </data>
+  <data name="Log_Exit_Exceut" xml:space="preserve">
+    <value>退出執行成功！</value>
+  </data>
+  <data name="Log_TaskScheduler" xml:space="preserve">
+    <value>任務調度程序啟動成功！</value>
+  </data>
+  <data name="All_Task_Trigger" xml:space="preserve">
+    <value>所有任務已成功觸發！</value>
+  </data>
+  <data name="Log_All_Task" xml:space="preserve">
+    <value>所有任務調度器已成功停止。</value>
+  </data>
+  <data name="Log_Start_Data" xml:space="preserve">
+    <value>EasyTidy 預設數據初始化完成！</value>
+  </data>
+  <data name="Log_Field_Execute" xml:space="preserve">
+    <value>表'{0}'中的字段'{1}'已存在，跳過腳本。</value>
+  </data>
+  <data name="Log_Initialized" xml:space="preserve">
+    <value>EasyTidy 初始化成功！</value>
+  </data>
+  <data name="Log_Move_Info_Lock" xml:space="preserve">
+    <value>移動操作已在進行中，跳過執行。</value>
+  </data>
+  <data name="Log_Move" xml:space="preserve">
+    <value>移動操作完成。</value>
+  </data>
+  <data name="Log_Move_Ex" xml:space="preserve">
+    <value>移動操作期間發生異常</value>
+  </data>
+  <data name="DisableHotkeyIcon" xml:space="preserve">
+    <value>快捷鍵禁用</value>
+  </data>
+  <data name="PausedMonitoring" xml:space="preserve">
+    <value>監控任務被暫停到下一次啟動</value>
+  </data>
+  <data name="Log_Monitoring" xml:space="preserve">
+    <value>所有監控已停止。</value>
+  </data>
+  <data name="Log_Skipping_Hotkey" xml:space="preserve">
+    <value>未配置熱鍵或熱鍵已停用。跳過熱鍵註冊。</value>
+  </data>
+  <data name="Log_Hotkeys_Init" xml:space="preserve">
+    <value>預設熱鍵已初始化並儲存。</value>
+  </data>
+  <data name="Log_Failed_Register_Hotkey" xml:space="preserve">
+    <value>註冊快捷鍵失敗: {0}</value>
+  </data>
+  <data name="AddAtTheEnd_Create" xml:space="preserve">
+    <value>當末尾添加 #C 或為空時，使用創建時間按照規則重命名</value>
+  </data>
+  <data name="AddAtTheEnd_Modify" xml:space="preserve">
+    <value>在末尾添加 #M 以選擇使用修改時間進行重命名</value>
+  </data>
+  <data name="AddAtThenEnd_ShootingTime" xml:space="preserve">
+    <value>在末尾加入 #S 以選擇使用照片拍攝時間進行重命名</value>
+  </data>
+  <data name="AddAtThenEnd_NowTime" xml:space="preserve">
+    <value>在末尾添加 #D 以使用當前時間進行重命名</value>
   </data>
 </root>

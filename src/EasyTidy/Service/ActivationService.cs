@@ -61,6 +61,7 @@ public class ActivationService : IActivationService
 
         // Handle activation via ActivationHandlers.
         await HandleActivationAsync(activationArgs);
+        DeleteUpdateArtifactsAtStartup();
     }
 
     private async Task HandleActivationAsync(object activationArgs)
@@ -81,7 +82,6 @@ public class ActivationService : IActivationService
     private async Task InitializeAsync()
     {
         await _themeSelectorService.InitializeAsync().ConfigureAwait(false);
-        await Task.CompletedTask;
     }
 
     private async Task StartupAsync()
@@ -90,7 +90,6 @@ public class ActivationService : IActivationService
         await _themeSelectorService.SetRequestedThemeAsync();
         OnStartupExecutionAsync();
         OnStartAllMonitoring();
-        await Task.CompletedTask;
     }
 
     private async Task PerformStartupChecksAsync()
@@ -248,26 +247,30 @@ public class ActivationService : IActivationService
         await EnsureDefaultHotkeysAsync();
         var hotkeySettings = await _localSettingsService.LoadSettingsExtAsync<HotkeysCollection>();
 
-        if (hotkeySettings?.Hotkeys == null || hotkeySettings.Hotkeys.Count == 0)
+        if (hotkeySettings?.Hotkeys == null || hotkeySettings.Hotkeys.Count == 0 || !hotkeySettings.Enabled)
         {
-            Logger.Info("No hotkeys configured. Skipping hotkey registration.");
-            return; // 文件存在但用户不配快捷键 → 直接跳过
+            if (!hotkeySettings.Enabled) TrayIconService.SetStatus(TrayIconStatus.HotKey, "DisableHotkeyIcon");
+            // 文件存在但用户不配快捷键 → 直接跳过
+            // 用户禁用快捷键 → 直接跳过
+            Logger.Info("Log_Skipping_Hotkey".GetLocalized());
+            return;
         }
 
         foreach (var config in hotkeySettings?.Hotkeys ?? Enumerable.Empty<Hotkey>())
         {
-            if (hotkeyService.TryParseGesture(config.KeyGesture, out var keys))
+            if (hotkeyService.TryParseHotkey(config.KeyGesture, out var modifiers, out var vk))
             {
-                bool success = hotkeyService.RegisterMultiKeyHotkey(
+                bool success = hotkeyService.RegisterHotKey(
                     config.Id,
-                    keys,
+                    vk,
+                    modifiers,
                     () => hotkeyActionRouter.HandleAction(config.CommandName)
                 );
                 if (!success)
                 {
                     var tips = new AppNotificationBuilder().AddText(string.Format("RegisterFailed".GetLocalized(), config.KeyGesture));
                     App.GetService<IAppNotificationService>().Show(tips.BuildNotification().Payload);
-                    Logger.Error($"Failed to register hotkey: {config.KeyGesture}");
+                    Logger.Error(I18n.Format("Log_Failed_Register_Hotkey", config.KeyGesture));
                 }
             }
         }
@@ -284,7 +287,7 @@ public class ActivationService : IActivationService
                 Hotkeys = DefaultHotkeys.Hotkeys.ToList() // 深拷贝一份
             };
             await _localSettingsService.SaveSettingsExtAsync(hotkeySettings);
-            Logger.Info("Default hotkeys initialized and saved.");
+            Logger.Info("Log_Hotkeys_Init".GetLocalized());
         }
     }
 

@@ -699,7 +699,7 @@
     <value>Transparent</value>
   </data>
   <data name="TrayIconStopMonitoring.Text" xml:space="preserve">
-    <value>Arrêter la surveillance</value>
+    <value>Mettre en pause la surveillance</value>
   </data>
   <data name="TrayIconExecuteOnce.Text" xml:space="preserve">
     <value>Exécuter une fois</value>
@@ -1201,6 +1201,17 @@
   <data name="LogsFolder.Content" xml:space="preserve">
     <value>Dossier Logs</value>
   </data>
+  <data name="AppNotificationPayloadInfo" xml:space="preserve">
+    <value>&lt;toast launch='meetingId=9813'&gt;
+    &lt;visual&gt;
+        &lt;binding template='ToastGeneric'&gt;
+            &lt;text&gt;&lt;/text&gt;
+            &lt;text&gt;{0}&lt;/text&gt;
+            &lt;text&gt;&lt;/text&gt;
+        &lt;/binding&gt;
+    &lt;/visual&gt;
+&lt;/toast&gt;</value>
+  </data>
   <data name="GeneralPrefixCard.Header" xml:space="preserve">
     <value>Préfixe de chargement Webdav</value>
   </data>
@@ -1583,12 +1594,150 @@
     <value>Appuyez sur une combinaison de touches pour modifier ce raccourci. Faites un clic droit pour supprimer la combinaison de touches et désactiver le raccourci.</value>
   </data>
   <data name="Shortcut_Description.Text" xml:space="preserve">
-    <value>Prend en charge les combinaisons de touches commençant par Windows, Ctrl, Alt ou Maj, ainsi que les touches uniques et non modifiées.</value>
+    <value>Prend en charge les combinaisons de touches commençant par Windows, Ctrl, Alt ou Maj, ainsi que les touches uniques et non modifiées(F1-F12).</value>
   </data>
   <data name="InvalidShortcut.Title" xml:space="preserve">
     <value>Raccourci non valide.</value>
   </data>
   <data name="WarningShortcutAltGr.Title" xml:space="preserve">
     <value>Interférence possible de raccourci avec Alt Gr</value>
+  </data>
+  <data name="RegisterFailed" xml:space="preserve">
+    <value>L'enregistrement du raccourci clavier {0} a échoué. Veuillez vérifier s'il y a un conflit avec d'autres programmes !</value>
+  </data>
+  <data name="ChatModelErrors" xml:space="preserve">
+    <value>Le nom du modèle ne peut pas être vide</value>
+  </data>
+  <data name="CustomPrompt.PlaceholderText" xml:space="preserve">
+    <value>Veuillez décrire vos exigences de classification</value>
+  </data>
+  <data name="BuiltInText.Content" xml:space="preserve">
+    <value>Système intégré</value>
+  </data>
+  <data name="CustomTxt.Content" xml:space="preserve">
+    <value>Personnalisé</value>
+  </data>
+  <data name="FilterConditions" xml:space="preserve">
+    <value>Au moins une condition de filtrage doit être définie</value>
+  </data>
+  <data name="AdvancedRules" xml:space="preserve">
+    <value>Règles avancées</value>
+  </data>
+  <data name="GlobalHotkey.Header" xml:space="preserve">
+    <value>Raccourci global</value>
+  </data>
+  <data name="DragWindowShortcutCard.Header" xml:space="preserve">
+    <value>Fenêtre de glisser-déposer</value>
+  </data>
+  <data name="DragWindowShortcutCard.Description" xml:space="preserve">
+    <value>Définir une touche de raccourci pour afficher la fenêtre de déplacement</value>
+  </data>
+  <data name="ExecuteTaskCard.Header" xml:space="preserve">
+    <value>Exécuter la tâche</value>
+  </data>
+  <data name="ExecuteTaskCard.Description" xml:space="preserve">
+    <value>Attribuer un raccourci clavier pour lancer toutes les tâches</value>
+  </data>
+  <data name="ShowMainWindowSettingsCard.Header" xml:space="preserve">
+    <value>Afficher la fenêtre principale</value>
+  </data>
+  <data name="ShowMainWindowSettingsCard.Description" xml:space="preserve">
+    <value>Attribuer un raccourci clavier pour afficher la fenêtre principale de l'application</value>
+  </data>
+  <data name="SettingsWindowCard.Header" xml:space="preserve">
+    <value>Fenêtre de configuration</value>
+  </data>
+  <data name="SettingsWindowCard.Description" xml:space="preserve">
+    <value>Ouvrez la fenêtre des Paramètres de l'application</value>
+  </data>
+  <data name="ExitAppTxt.Header" xml:space="preserve">
+    <value>Quitter l'application</value>
+  </data>
+  <data name="ExitAppTxt.Description" xml:space="preserve">
+    <value>Établissez un raccourci clavier pour quitter l'application</value>
+  </data>
+  <data name="ResetAllButton.Content" xml:space="preserve">
+    <value>Réinitialiser tout</value>
+  </data>
+  <data name="ClearAllButton.Content" xml:space="preserve">
+    <value>Tout effacer</value>
+  </data>
+  <data name="WarningShortcutAltGr.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Les raccourcis avec **Ctrl** et **Alt** peuvent supprimer des fonctionnalités de certains claviers internationaux, car **Ctrl** + **Alt** = **Alt Gr** sur ces claviers.</value>
+  </data>
+  <data name="NoDefaultGroup" xml:space="preserve">
+    <value>Groupe par défaut introuvable. Veuillez d'abord définir un groupe par défaut.</value>
+  </data>
+  <data name="Log_No_Rule" xml:space="preserve">
+    <value>Le fichier {0} ne correspond pas à la règle ; traitement ignoré.</value>
+  </data>
+  <data name="DisableHotkey" xml:space="preserve">
+    <value>Désactiver les raccourcis clavier</value>
+  </data>
+  <data name="EnabledHotkey" xml:space="preserve">
+    <value>Activer les raccourcis clavier</value>
+  </data>
+  <data name="ExceptionTxt" xml:space="preserve">
+    <value>Exception</value>
+  </data>
+  <data name="Log_Add_Schedule" xml:space="preserve">
+    <value>Échec de l'ajout du planning</value>
+  </data>
+  <data name="Log_Custom_Fail" xml:space="preserve">
+    <value>Échec de l'ajout de la configuration personnalisée</value>
+  </data>
+  <data name="Log_Info_Rule" xml:space="preserve">
+    <value>Trouvé {0} enregistrements de règles supplémentaires</value>
+  </data>
+  <data name="InitializationLoadFailed" xml:space="preserve">
+    <value>Échec du chargement d'initialisation</value>
+  </data>
+  <data name="Log_Exit_Exceut" xml:space="preserve">
+    <value>Sortie exécutée avec succès !</value>
+  </data>
+  <data name="Log_TaskScheduler" xml:space="preserve">
+    <value>Le planificateur de tâches a démarré avec succès !</value>
+  </data>
+  <data name="All_Task_Trigger" xml:space="preserve">
+    <value>Toutes les tâches ont été déclenchées avec succès !</value>
+  </data>
+  <data name="Log_All_Task" xml:space="preserve">
+    <value>Tous les planificateurs de tâches ont été arrêtés avec succès.</value>
+  </data>
+  <data name="Log_Start_Data" xml:space="preserve">
+    <value>Initialisation des données par défaut d'EasyTidy terminée !</value>
+  </data>
+  <data name="Log_Field_Execute" xml:space="preserve">
+    <value>Le champ '{0}' dans la table '{1}' existe déjà, script ignoré.</value>
+  </data>
+  <data name="Log_Initialized" xml:space="preserve">
+    <value>EasyTidy initialisé avec succès !</value>
+  </data>
+  <data name="Log_Move_Info_Lock" xml:space="preserve">
+    <value>Opération de déplacement déjà en cours, exécution ignorée.</value>
+  </data>
+  <data name="Log_Move" xml:space="preserve">
+    <value>Opération de déplacement terminée.</value>
+  </data>
+  <data name="Log_Move_Ex" xml:space="preserve">
+    <value>Exception lors de l'opération de déplacement</value>
+  </data>
+  <data name="DisableHotkeyIcon" xml:space="preserve">
+    <value>Touches de raccourci désactivées</value>
+  </data>
+  <data name="PausedMonitoring" xml:space="preserve">
+    <value>Tâche de surveillance suspendue jusqu'au prochain démarrage</value>
+  </data>
+  <data name="Log_Monitoring" xml:space="preserve">
+    <value>Toute surveillance a été arrêtée.</value>
+  </data>
+  <data name="Log_Skipping_Hotkey" xml:space="preserve">
+    <value>Aucune touche de raccourci configurée ou touches de raccourci désactivées. Enregistrement des touches de raccourci ignoré.</value>
+  </data>
+  <data name="Log_Hotkeys_Init" xml:space="preserve">
+    <value>Les touches de raccourci par défaut ont été initialisées et enregistrées.</value>
+  </data>
+  <data name="Log_Failed_Register_Hotkey" xml:space="preserve">
+    <value>Échec d'enregistrement du raccourci clavier : {0}</value>
   </data>
 </root>

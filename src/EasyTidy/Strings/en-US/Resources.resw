@@ -843,7 +843,7 @@
     <value>Transparent</value>
   </data>
   <data name="TrayIconStopMonitoring.Text" xml:space="preserve">
-    <value>Stop monitoring</value>
+    <value>Pause monitoring</value>
   </data>
   <data name="TrayIconExecuteOnce.Text" xml:space="preserve">
     <value>Execute once</value>
@@ -1720,7 +1720,7 @@
     <value>Press a key combination to change this shortcut. Right-click to remove the key combination and disable the shortcut.</value>
   </data>
   <data name="Shortcut_Description.Text" xml:space="preserve">
-    <value>Supports key combinations starting with Windows, Ctrl, Alt, or Shift, as well as single, unmodified keys on their own</value>
+    <value>Supports key combinations starting with Windows, Ctrl, Alt, or Shift, as well as single, unmodified keys on their own(F1-F12)</value>
   </data>
   <data name="InvalidShortcut.Title" xml:space="preserve">
     <value>Invalid shortcut</value>
@@ -1730,5 +1730,152 @@
   </data>
   <data name="RegisterFailed" xml:space="preserve">
     <value>Shortcut key {0} registration failed, please check if there's a conflict with other programs!</value>
+  </data>
+  <data name="ChatModelErrors" xml:space="preserve">
+    <value>The model name cannot be empty</value>
+  </data>
+  <data name="CustomPrompt.PlaceholderText" xml:space="preserve">
+    <value>Please describe your classification requirements</value>
+  </data>
+  <data name="BuiltInText.Content" xml:space="preserve">
+    <value>Built-in system</value>
+  </data>
+  <data name="CustomTxt.Content" xml:space="preserve">
+    <value>Custom</value>
+  </data>
+  <data name="FilterConditions" xml:space="preserve">
+    <value>At least one filtering condition must be set</value>
+  </data>
+  <data name="AdvancedRules" xml:space="preserve">
+    <value>Advanced Rules</value>
+  </data>
+  <data name="GlobalHotkey.Header" xml:space="preserve">
+    <value>Global Hotkey</value>
+  </data>
+  <data name="DragWindowShortcutCard.Header" xml:space="preserve">
+    <value>Drag and drop window</value>
+  </data>
+  <data name="DragWindowShortcutCard.Description" xml:space="preserve">
+    <value>Set shortcut key for displaying the drag window</value>
+  </data>
+  <data name="ExecuteTaskCard.Header" xml:space="preserve">
+    <value>Execute task</value>
+  </data>
+  <data name="ExecuteTaskCard.Description" xml:space="preserve">
+    <value>Set shortcut key for executing all tasks</value>
+  </data>
+  <data name="ShowMainWindowSettingsCard.Header" xml:space="preserve">
+    <value>Show main window</value>
+  </data>
+  <data name="ShowMainWindowSettingsCard.Description" xml:space="preserve">
+    <value>Set shortcut key for displaying the application main window</value>
+  </data>
+  <data name="SettingsWindowCard.Header" xml:space="preserve">
+    <value>settings window</value>
+  </data>
+  <data name="SettingsWindowCard.Description" xml:space="preserve">
+    <value>Open the Settings window of the application</value>
+  </data>
+  <data name="ExitAppTxt.Header" xml:space="preserve">
+    <value>Exit App</value>
+  </data>
+  <data name="ExitAppTxt.Description" xml:space="preserve">
+    <value>Set up a shortcut key to exit the application</value>
+  </data>
+  <data name="ResetAllButton.Content" xml:space="preserve">
+    <value>Reset all</value>
+  </data>
+  <data name="ClearAllButton.Content" xml:space="preserve">
+    <value>Clear all</value>
+  </data>
+  <data name="WarningShortcutAltGr.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Shortcuts with **Ctrl** and **Alt** may remove functionality from some international keyboards, because **Ctrl** + **Alt** = **Alt Gr** in those keyboards.</value>
+  </data>
+  <data name="NoDefaultGroup" xml:space="preserve">
+    <value>Default group not found. Please set a default group first.</value>
+  </data>
+  <data name="Log_No_Rule" xml:space="preserve">
+    <value>File {0} mismatched rule; skipping processing.</value>
+  </data>
+  <data name="DisableHotkey" xml:space="preserve">
+    <value>Disable hotkeys</value>
+  </data>
+  <data name="EnabledHotkey" xml:space="preserve">
+    <value>Enable hotkeys</value>
+  </data>
+  <data name="ExceptionTxt" xml:space="preserve">
+    <value>Exception</value>
+  </data>
+  <data name="Log_Add_Schedule" xml:space="preserve">
+    <value>Failed to add schedule</value>
+  </data>
+  <data name="Log_Custom_Fail" xml:space="preserve">
+    <value>Failed to add custom configuration</value>
+  </data>
+  <data name="Log_Info_Rule" xml:space="preserve">
+    <value>Found {0} additional rule records</value>
+  </data>
+  <data name="InitializationLoadFailed" xml:space="preserve">
+    <value>Initialization load failed</value>
+  </data>
+  <data name="Log_Exit_Exceut" xml:space="preserve">
+    <value>Exit executed successfully!</value>
+  </data>
+  <data name="Log_TaskScheduler" xml:space="preserve">
+    <value>Task scheduler started successfully!</value>
+  </data>
+  <data name="All_Task_Trigger" xml:space="preserve">
+    <value>All tasks triggered successfully!</value>
+  </data>
+  <data name="Log_All_Task" xml:space="preserve">
+    <value>All tasks scheduler stopped successfully.</value>
+  </data>
+  <data name="Log_Start_Data" xml:space="preserve">
+    <value>EasyTidy default data initialization complete!</value>
+  </data>
+  <data name="Log_Field_Execute" xml:space="preserve">
+    <value>Field '{0}' in table '{1}' already exists, skipping script.</value>
+  </data>
+  <data name="Log_Initialized" xml:space="preserve">
+    <value>EasyTidy Initialized Successfully!</value>
+  </data>
+  <data name="Log_Move_Info_Lock" xml:space="preserve">
+    <value>Move operation already in progress, skipping execution.</value>
+  </data>
+  <data name="Log_Move" xml:space="preserve">
+    <value>Move operation completed.</value>
+  </data>
+  <data name="Log_Move_Ex" xml:space="preserve">
+    <value>Exception during move operation</value>
+  </data>
+  <data name="DisableHotkeyIcon" xml:space="preserve">
+    <value>Shortcut keys disabled</value>
+  </data>
+  <data name="PausedMonitoring" xml:space="preserve">
+    <value>Monitoring task paused until next startup</value>
+  </data>
+  <data name="Log_Monitoring" xml:space="preserve">
+    <value>All monitoring has been stopped.</value>
+  </data>
+  <data name="Log_Skipping_Hotkey" xml:space="preserve">
+    <value>No hotkeys configured or hotkeys disable. Skipping hotkey registration.</value>
+  </data>
+  <data name="Log_Hotkeys_Init" xml:space="preserve">
+    <value>Default hotkeys initialized and saved.</value>
+  </data>
+  <data name="Log_Failed_Register_Hotkey" xml:space="preserve">
+    <value>Failed to register hotkey: {0}</value>
+  </data>
+  <data name="AddAtTheEnd_Create" xml:space="preserve">
+    <value>When #C is added to the end or it's empty, use the creation time to rename according to rules</value>
+  </data>
+  <data name="AddAtTheEnd_Modify" xml:space="preserve">
+    <value>Append #M to the end to choose renaming using modification time</value>
+  </data>
+  <data name="AddAtThenEnd_ShootingTime" xml:space="preserve">
+    <value>Add #S at the end to select using photo capture time for renaming</value>
+  </data>
+  <data name="AddAtThenEnd_NowTime" xml:space="preserve">
+    <value>Append #D to select using the current time for renaming</value>
   </data>
 </root>

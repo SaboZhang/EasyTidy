@@ -7,6 +7,7 @@ using Nucs.JsonSettings.Modulation.Recovery;
 using System.Security;
 
 namespace EasyTidy.Common;
+
 public static partial class AppHelper
 {
     public static AppConfig Settings = JsonSettings.Configure<AppConfig>()
@@ -95,6 +96,38 @@ public static partial class AppHelper
 
         xml += "</toast>";
         return xml;
+    }
+    
+    public static void DeleteUpdateArtifactsAtStartup()
+    {
+        // 在后台任务中延迟执行，不影响主线程
+        _ = Task.Run(async () =>
+        {
+            await Task.Delay(TimeSpan.FromMinutes(5));
+
+            try
+            {
+                string baseDir = Constants.ExecutePath;
+
+                // 删除 Update 文件夹
+                string updateFolderPath = Path.Combine(baseDir, "Update");
+                if (Directory.Exists(updateFolderPath))
+                {
+                    Directory.Delete(updateFolderPath, recursive: true);
+                }
+
+                // 删除 update.zip 文件
+                string updateZipPath = Path.Combine(baseDir, "update.zip");
+                if (File.Exists(updateZipPath))
+                {
+                    File.Delete(updateZipPath);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Warn("更新文件清理失败: " + ex.Message);
+            }
+        });
     }
 
 }

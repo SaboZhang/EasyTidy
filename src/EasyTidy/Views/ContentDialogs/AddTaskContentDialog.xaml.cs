@@ -50,6 +50,7 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
             {
                 _taskRule = value;
                 OnPropertyChanged();
+                ValidateTaskRule(_taskRule);
             }
         }
     }
@@ -176,6 +177,7 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
         RequestedTheme = ViewModel.ThemeSelectorService.Theme;
         PopulateMenu(ViewModel);
         ValidTextBlock.Visibility = Visibility.Collapsed;
+        ValidateTaskRule(_taskRule);
     }
 
     private void PopulateMenu(TaskOrchestrationViewModel viewModel)
@@ -280,7 +282,7 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
             errors.Add("GroupInformationVerification".GetLocalized());
             errors.Add("GroupInformationVerificationAdd".GetLocalized());
         }
-        SetErrors("GroupName", errors);
+        SetErrors("GroupTextName", errors);
     }
 
 
@@ -473,7 +475,46 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
         if (e.ClickedItem is PatternSnippetModel s)
         {
             RenameFlyout.Hide();
-            Target.Text += "\\" + s.Code;
+
+            string[] specialCodes = { "#C", "#M", "#S", "#D" };
+            string text = Target.Text ?? string.Empty;
+
+            // 检查是否已有特殊码
+            string existingSpecial = specialCodes.FirstOrDefault(code => text.EndsWith(code));
+
+            // 临时移除已有特殊码，后续重新添加
+            if (existingSpecial != null)
+            {
+                text = text.Substring(0, text.Length - existingSpecial.Length);
+            }
+
+            if (specialCodes.Contains(s.Code))
+            {
+                if (!text.Contains('$'))
+                {
+                    text += "${source}";
+                }
+                // 是特殊码，直接追加到最后（替换已有）
+                text += s.Code;
+            }
+            else
+            {
+                // 是普通码
+                if (!string.IsNullOrEmpty(text) && !text.Contains('$') && !text.EndsWith("\\"))
+                {
+                    text += "\\";
+                }
+
+                text += s.Code;
+
+                // 如果之前存在特殊码，重新追加到末尾
+                if (existingSpecial != null)
+                {
+                    text += existingSpecial;
+                }
+            }
+
+            Target.Text = text;
         }
     }
 
@@ -538,21 +579,14 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
         }
     }
 
-    private void TaskRuleBox_TextChanged(object sender, TextChangedEventArgs e)
+    private void ValidateTaskRule(string rule)
     {
-        var text = (sender as TextBox)?.Text;
-        IsValid = ValidateRuleString(text);
-        if (!IsValid && !string.IsNullOrWhiteSpace(text))
+        var errors = new List<string>(1);
+        if (!string.IsNullOrWhiteSpace(rule) && !ValidateRuleString(rule))
         {
-            // 验证未通过显示错误信息
-            TaskRuleBoxValid.Visibility = Visibility.Visible;
-            TaskRuleBoxValid.Text = "ValidRuleText".GetLocalized();
+            errors.Add("ValidRuleText".GetLocalized());
         }
-        else
-        {
-            // 隐藏错误提示框
-            TaskRuleBoxValid.Visibility = Visibility.Collapsed;
-        }
+        SetErrors("TaskRule", errors);
     }
 
     private void TaskGroupNameBox_LostFocus(object sender, RoutedEventArgs e)
@@ -567,23 +601,6 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
         else
         {
             ValidTextBlock.Visibility = Visibility.Collapsed;
-        }
-    }
-
-    private void TaskRuleBox_LostFocus(object sender, RoutedEventArgs e)
-    {
-        var text = (sender as TextBox)?.Text;
-        IsValid = ValidateRuleString(text);
-        if (!IsValid)
-        {
-            // 验证未通过显示错误信息
-            TaskRuleBoxValid.Visibility = Visibility.Visible;
-            TaskRuleBoxValid.Text = "ValidRuleText".GetLocalized();
-        }
-        else
-        {
-            // 隐藏错误提示框
-            TaskRuleBoxValid.Visibility = Visibility.Collapsed;
         }
     }
 

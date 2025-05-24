@@ -6,6 +6,7 @@ using Quartz;
 using System.Collections;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 
 namespace EasyTidy.Views.ContentDialogs;
 
@@ -33,7 +34,6 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
                 _delay = value;
                 ValidateDelay(_delay);
                 OnPropertyChanged();
-                UpdateIsValid();
             }
         }
     }
@@ -53,7 +53,6 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
                 _minute = value;
                 ValidateMinute(_minute);
                 OnPropertyChanged();
-                UpdateIsValid();
             }
         }
     }
@@ -73,7 +72,6 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
                 _hour = value;
                 ValidateHour(_hour);
                 OnPropertyChanged();
-                UpdateIsValid();
             }
         }
     }
@@ -93,7 +91,6 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
                 _dayOfWeek = value;
                 ValidateDayOfWeek(_dayOfWeek);
                 OnPropertyChanged();
-                UpdateIsValid();
             }
         }
     }
@@ -113,7 +110,6 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
                 _dayOfMonth = value;
                 ValidateDayOfMonth(_dayOfMonth);
                 OnPropertyChanged();
-                UpdateIsValid();
             }
         }
     }
@@ -133,7 +129,6 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
                 _monthlyDay = value;
                 ValidateMonthlyDay(_monthlyDay);
                 OnPropertyChanged();
-                UpdateIsValid();
             }
         }
     }
@@ -141,7 +136,7 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
     /// <summary>
     /// CRON 表达式
     /// </summary>
-    private string _expression;
+    private string _expression = string.Empty;
 
     public string Expression
     {
@@ -159,8 +154,6 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
 
     public string QuickTime { get; set; } = DateTime.Now.ToString("HH:mm");
 
-    public bool IsValid { get; set; }
-
     public bool DelayIsValid { get; set; }
     public bool MinuteIsValid { get; set; }
     public bool HourIsValid { get; set; }
@@ -168,17 +161,9 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
     public bool DayOfMonthIsValid { get; set; }
     public bool MonthlyDayIsValid { get; set; }
     public bool ModifiedFlg { get; set; }
-    private bool _isFirstLoad = true;
-
-    public void UpdateIsValid()
-    {
-        IsValid = DelayIsValid && MinuteIsValid && HourIsValid &&
-                  DayOfWeekIsValid && DayOfMonthIsValid && MonthlyDayIsValid;
-    }
 
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
-        _isFirstLoad = false;
         Minute = string.Empty;
         Hour = string.Empty;
     }
@@ -189,25 +174,22 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
         this.InitializeComponent();
         XamlRoot = App.MainWindow.Content.XamlRoot;
         RequestedTheme = ViewModel.ThemeSelectorService.Theme;
+        ValidateDelay(_delay);
+        ValidateCron(_expression);
+        ValidateMinute(_minute);
+        ValidateHour(_hour);
+        ValidateDayOfWeek(_dayOfWeek);
+        ValidateDayOfMonth(_dayOfMonth);
+        ValidateMonthlyDay(_monthlyDay);
     }
 
     private void ValidateDelay(string delay)
     {
-        var flg = ModifiedFlg;
-        if (flg && _isFirstLoad)
-        {
-            DelayIsValid = true;
-        }
         var errors = new List<string>(1);
-        if (!DelayIsValid && string.IsNullOrEmpty(delay) && ViewModel.CustomFileChange)
+        var pattern = new Regex(@"^\d+$");
+        if (!pattern.IsMatch(delay) && !string.IsNullOrWhiteSpace(delay))
         {
-            DelayValid.Text = "ValidateDelay".GetLocalized();
-            DelayValid.Visibility = Visibility.Visible;
             errors.Add("ValidateDelay".GetLocalized());
-        }
-        else
-        {
-            DelayValid.Visibility = Visibility.Collapsed;
         }
         SetErrors("Delay", errors);
     }
@@ -218,21 +200,11 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
     /// <param name="minute"></param>
     private void ValidateMinute(string minute)
     {
-        var flg = ModifiedFlg;
-        if (flg && _isFirstLoad)
-        {
-            MinuteIsValid = true;
-        }
         var errors = new List<string>(1);
-        if (!MinuteIsValid && !string.IsNullOrEmpty(minute))
+        var pattern = new Regex(@"^([1-9]|[1-5][0-9])(,(?=[1-9]|[1-5][0-9]))*$");
+        if (!pattern.IsMatch(minute) && !string.IsNullOrWhiteSpace(minute))
         {
-            MinuteValid.Text = "MinuteFormatInfo".GetLocalized();
-            MinuteValid.Visibility = Visibility.Visible;
             errors.Add("MinuteFormatInfo".GetLocalized());
-        }
-        else
-        {
-            MinuteValid.Visibility = Visibility.Collapsed;
         }
         SetErrors("Minute", errors);
     }
@@ -243,21 +215,11 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
     /// <param name="hour"></param>
     private void ValidateHour(string hour)
     {
-        var flg = ModifiedFlg;
-        if (flg && _isFirstLoad)
-        {
-            HourIsValid = true;
-        }
         var errors = new List<string>(1);
-        if (!HourIsValid && !string.IsNullOrEmpty(hour))
+        var pattern = new Regex(@"^(2[0-3]|[01]?[0-9])(,(2[0-3]|[01]?[0-9]))*$");
+        if (!pattern.IsMatch(hour) && !string.IsNullOrWhiteSpace(hour))
         {
-            HourValid.Text = "HourFormatInfo".GetLocalized();
-            HourValid.Visibility = Visibility.Visible;
             errors.Add("HourFormatInfo".GetLocalized());
-        }
-        else
-        {
-            HourValid.Visibility = Visibility.Collapsed;
         }
         SetErrors("Hour", errors);
     }
@@ -268,21 +230,11 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
     /// <param name="dayOfWeek"></param>
     private void ValidateDayOfWeek(string dayOfWeek)
     {
-        var flg = ModifiedFlg;
-        if (flg && _isFirstLoad)
-        {
-            DayOfWeekIsValid = true;
-        }
         var errors = new List<string>(1);
-        if (!DayOfWeekIsValid && !string.IsNullOrEmpty(dayOfWeek))
+        var pattern = new Regex(@"^(0|1|2|3|4|5|6)(,(0|1|2|3|4|5|6))*$");
+        if (!pattern.IsMatch(dayOfWeek) && !string.IsNullOrWhiteSpace(dayOfWeek))
         {
-            DayOfWeekValid.Text = "WeeksFormatInfo".GetLocalized();
-            DayOfWeekValid.Visibility = Visibility.Visible;
             errors.Add("WeeksFormatInfo".GetLocalized());
-        }
-        else
-        {
-            DayOfWeekValid.Visibility = Visibility.Collapsed;
         }
         SetErrors("DayOfWeek", errors);
     }
@@ -293,21 +245,11 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
     /// <param name="dayOfMonth"></param>
     private void ValidateDayOfMonth(string dayOfMonth)
     {
-        var flg = ModifiedFlg;
-        if (flg && _isFirstLoad)
-        {
-            DayOfMonthIsValid = true;
-        }
         var errors = new List<string>(1);
-        if (!DayOfMonthIsValid && !string.IsNullOrEmpty(dayOfMonth))
+        var pattern = new Regex(@"^(31|30|[12][0-9]|1?[1-9])(,(31|30|[12][0-9]|1?[1-9]))*$");
+        if (!pattern.IsMatch(dayOfMonth) && !string.IsNullOrWhiteSpace(dayOfMonth))
         {
-            DayOfMonthValid.Text = "DateFormatInfo".GetLocalized();
-            DayOfMonthValid.Visibility = Visibility.Visible;
             errors.Add("DateFormatInfo".GetLocalized());
-        }
-        else
-        {
-            DayOfMonthValid.Visibility = Visibility.Collapsed;
         }
         SetErrors("DayOfMonth", errors);
     }
@@ -318,21 +260,11 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
     /// <param name="monthlyDay"></param>
     private void ValidateMonthlyDay(string monthlyDay)
     {
-        var flg = ModifiedFlg;
-        if (flg && _isFirstLoad)
-        {
-            MonthlyDayIsValid = true;
-        }
         var errors = new List<string>(1);
-        if (!MonthlyDayIsValid && !string.IsNullOrEmpty(monthlyDay))
+        var pattern = new Regex(@"^(1|2|3|4|5|6|7|8|9|10|11|12)(,(1|2|3|4|5|6|7|8|9|10|11|12))*$");
+        if (!pattern.IsMatch(monthlyDay) && !string.IsNullOrWhiteSpace(monthlyDay))
         {
-            MonthlyDayValid.Text = "MonthFormatInfo".GetLocalized();
-            MonthlyDayValid.Visibility = Visibility.Visible;
             errors.Add("MonthFormatInfo".GetLocalized());
-        }
-        else
-        {
-            MonthlyDayValid.Visibility = Visibility.Collapsed;
         }
         SetErrors("MonthlyDay", errors);
     }
@@ -344,15 +276,9 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
     private void ValidateCron(string cron)
     {
         var errors = new List<string>(1);
-        if (!CronExpression.IsValidExpression(cron) && !string.IsNullOrEmpty(cron))
+        if (!CronExpression.IsValidExpression(cron) && !string.IsNullOrWhiteSpace(cron))
         {
-            ExpressionValid.Text = "CronExpressionInfo".GetLocalized();
-            ExpressionValid.Visibility = Visibility.Visible;
             errors.Add("CronExpressionInfo".GetLocalized());
-        }
-        else
-        {
-            ExpressionValid.Visibility = Visibility.Collapsed;
         }
         SetErrors("Expression", errors);
     }
@@ -428,18 +354,8 @@ public sealed partial class CustomConfigContentDialog : ContentDialog, INotifyDa
         }
     }
 
-    private void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)
-    {
-        var resutl = sender as ToggleSwitch;
-        if (!resutl.IsOn)
-        {
-            DelayValid.Visibility = Visibility.Collapsed;
-        }
-    }
-
     private void TimePicker_SelectedTimeChanged(TimePicker sender, TimePickerSelectedValueChangedEventArgs args)
     {
-        DateTime dateValue = DateTime.Parse(QuickTime);
         if (args.NewTime != null)
         {
             var time = args.NewTime.Value;

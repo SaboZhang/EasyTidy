@@ -103,7 +103,7 @@ public partial class App : Application
                 services.AddTransient<AiSettingsPage>();
                 services.AddTransient<AiSettingsViewModel>();
                 services.AddTransient<AIServiceFactory>();
-                services.AddTransient<HotKeySettingViewModel>();
+                services.AddSingleton<HotKeySettingViewModel>();
                 services.AddTransient<HotKeySettingPage>();
 
                 // Register AppDbContext
@@ -188,7 +188,7 @@ public partial class App : Application
         App.GetService<IAppNotificationService>().Show(string.Format("AppNotificationPayload".GetLocalized(), Constants.Version));
         await App.GetService<IActivationService>().ActivateAsync(args);
 
-        Logger.Info("EasyTidy Initialized Successfully!");
+        Logger.Info("Log_Initialized".GetLocalized());
     }
 
     private void InitializeLogging()

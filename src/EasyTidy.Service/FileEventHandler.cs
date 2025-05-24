@@ -258,7 +258,7 @@ public static class FileEventHandler
             watcher.Dispose();
         }
         _watchers.Clear();
-        LogService.Logger.Info("All monitoring has been stopped.");
+        LogService.Logger.Info("Log_Monitoring".GetLocalized());
     }
 
     /// <summary>
