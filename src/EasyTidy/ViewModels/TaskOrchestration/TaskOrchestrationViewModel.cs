@@ -201,7 +201,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 _ => string.Empty
             };
             string groupNameToUse = !string.IsNullOrEmpty(SelectedTaskGroupName) ? SelectedTaskGroupName : GroupTextName;
-            var group = !string.IsNullOrEmpty(groupNameToUse) 
+            var group = !string.IsNullOrEmpty(groupNameToUse)
                 && SelectedTaskGroupName != "AllText".GetLocalized()
                 ? await GetOrUpdateTaskGroupAsync(!string.IsNullOrEmpty(SelectedTaskGroupName) ? SelectedTaskGroupName : GroupTextName)
                 : new TaskGroupTable
@@ -239,8 +239,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                 var result = ShortcutUtil.CreateShortcutDesktop(dialog.TaskName, TaskTarget);
                 if (!result)
                 {
-                    _notificationQueue.ShowWithWindowExtension("CreateShortcutFailedText".GetLocalized(), InfoBarSeverity.Error);
-                    _ = ClearNotificationAfterDelay(3000);
+                    _notificationQueue.ShowWithWindowExtension("CreateShortcutFailedText".GetLocalized(), InfoBarSeverity.Error, 3000);
                     Logger.Error($"TaskOrchestrationViewModel: OnAddTaskClick {"CreateShortcutFailedText".GetLocalized()}");
                 }
             }
@@ -249,13 +248,11 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
             SelectedFilter = null;
             SelectedGroupName = "AllText".GetLocalized();
             GroupTextName = string.Empty;
-            _notificationQueue.ShowWithWindowExtension("SaveSuccessfulText".GetLocalized(), InfoBarSeverity.Success);
-            _ = ClearNotificationAfterDelay(3000);
+            _notificationQueue.ShowWithWindowExtension("SaveSuccessfulText".GetLocalized(), InfoBarSeverity.Success, 3000);
         }
         catch (Exception ex)
         {
-            _notificationQueue.ShowWithWindowExtension("SaveFailedText".GetLocalized(), InfoBarSeverity.Error);
-            _ = ClearNotificationAfterDelay(3000);
+            _notificationQueue.ShowWithWindowExtension("SaveFailedText".GetLocalized(), InfoBarSeverity.Error, 3000);
             Logger.Error($"TaskOrchestrationViewModel: OnAddTaskClick {"SaveFailedText".GetLocalized()} Exception: {ex}");
         }
 
@@ -582,8 +579,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                     oldTask.UserDefinePromptsJson = prompt;
                     await _dbContext.SaveChangesAsync();
                     await OnPageLoaded();
-                    _notificationQueue.ShowWithWindowExtension("ModifySuccessfullyText".GetLocalized(), InfoBarSeverity.Success);
-                    _ = ClearNotificationAfterDelay(3000);
+                    _notificationQueue.ShowWithWindowExtension("ModifySuccessfullyText".GetLocalized(), InfoBarSeverity.Success, 3000);
                 };
 
                 await dialog.ShowAsync();
@@ -593,8 +589,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         }
         catch (Exception ex)
         {
-            _notificationQueue.ShowWithWindowExtension("ModificationFailedText".GetLocalized(), InfoBarSeverity.Error);
-            _ = ClearNotificationAfterDelay(3000);
+            _notificationQueue.ShowWithWindowExtension("ModificationFailedText".GetLocalized(), InfoBarSeverity.Error, 3000);
             Logger.Error($"TaskOrchestrationViewModel: OnUpdateTask {"ExceptionTxt".GetLocalized()} {ex}");
         }
 
@@ -678,14 +673,12 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
             // 刷新页面并通知用户
             TaskListACV.Remove(task);
             TaskListACV.Refresh();
-            _notificationQueue.ShowWithWindowExtension("DeleteSuccessfulText".GetLocalized(), InfoBarSeverity.Success);
-            _ = ClearNotificationAfterDelay(3000);
+            _notificationQueue.ShowWithWindowExtension("DeleteSuccessfulText".GetLocalized(), InfoBarSeverity.Success, 3000);
         }
         catch (Exception ex)
         {
             Logger.Error($"TaskOrchestrationViewModel: OnDeleteTask {"ExceptionTxt".GetLocalized()} {ex}");
-            _notificationQueue.ShowWithWindowExtension("DeleteFailedText".GetLocalized(), InfoBarSeverity.Error);
-            _ = ClearNotificationAfterDelay(3000);
+            _notificationQueue.ShowWithWindowExtension("DeleteFailedText".GetLocalized(), InfoBarSeverity.Error, 3000);
         }
         finally
         {
@@ -782,14 +775,12 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                     ruleModel: new RuleModel { Filter = task.Filter, Rule = task.TaskRule, RuleType = task.RuleType })
                 { RuleName = task.TaskRule, AIServiceLlm = llm, Prompt = task.UserDefinePromptsJson, Argument = task.Argument, Language = language };
                 await OperationHandler.ExecuteOperationAsync(task.OperationMode, operationParameters);
-                _notificationQueue.ShowWithWindowExtension("ExecutionSuccessfulText".GetLocalized(), InfoBarSeverity.Success);
-                _ = ClearNotificationAfterDelay(3000);
+                _notificationQueue.ShowWithWindowExtension("ExecutionSuccessfulText".GetLocalized(), InfoBarSeverity.Success, 3000);
             }
         }
         catch (Exception ex)
         {
-            _notificationQueue.ShowWithWindowExtension("ExecutionFailedText".GetLocalized(), InfoBarSeverity.Error);
-            _ = ClearNotificationAfterDelay(3000);
+            _notificationQueue.ShowWithWindowExtension("ExecutionFailedText".GetLocalized(), InfoBarSeverity.Error, 3000);
             Logger.Error($"TaskOrchestrationViewModel: OnExecuteTask {"ExceptionTxt".GetLocalized()} {ex}");
             IsActive = false;
         }
@@ -838,8 +829,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                             ruleModel: new RuleModel { Filter = item.Filter, Rule = item.TaskRule, RuleType = item.RuleType })
                         { RuleName = item.TaskRule, AIServiceLlm = llm, Prompt = item.UserDefinePromptsJson, Argument = item.Argument, Language = language };
                         await OperationHandler.ExecuteOperationAsync(item.OperationMode, operationParameters);
-                        _notificationQueue.ShowWithWindowExtension("ExecutionSuccessfulText".GetLocalized(), InfoBarSeverity.Success);
-                        _ = ClearNotificationAfterDelay(3000);
+                        _notificationQueue.ShowWithWindowExtension("ExecutionSuccessfulText".GetLocalized(), InfoBarSeverity.Success, 3000);
 
                     }
                 }
@@ -848,8 +838,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         }
         catch (Exception ex)
         {
-            _notificationQueue.ShowWithWindowExtension("ExecutionFailedText".GetLocalized(), InfoBarSeverity.Error);
-            _ = ClearNotificationAfterDelay(3000);
+            _notificationQueue.ShowWithWindowExtension("ExecutionFailedText".GetLocalized(), InfoBarSeverity.Error, 3000);
             Logger.Error($"TaskOrchestrationViewModel: OnExecuteGroupTask {"ExceptionTxt".GetLocalized()} {ex}");
             IsActive = false;
         }
@@ -883,14 +872,12 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                     ? QuartzHelper.ResumeJob(task.TaskName + "#" + task.ID.ToString(), task.GroupName.GroupName)
                     : QuartzHelper.PauseJob(task.TaskName + "#" + task.ID.ToString(), task.GroupName.GroupName));
                 await OnPageLoaded();
-                _notificationQueue.ShowWithWindowExtension("DisabledSuccessfullyText".GetLocalized(), InfoBarSeverity.Success);
-                _ = ClearNotificationAfterDelay(3000);
+                _notificationQueue.ShowWithWindowExtension("DisabledSuccessfullyText".GetLocalized(), InfoBarSeverity.Success, 3000);
             }
         }
         catch (Exception ex)
         {
-            _notificationQueue.ShowWithWindowExtension("DisablingFailedText".GetLocalized(), InfoBarSeverity.Error);
-            _ = ClearNotificationAfterDelay(3000);
+            _notificationQueue.ShowWithWindowExtension("DisablingFailedText".GetLocalized(), InfoBarSeverity.Error, 3000);
             Logger.Error($"FileExplorerViewModel: OnIsEnableTask {"ExceptionTxt".GetLocalized()} {ex}");
             IsActive = false;
         }
@@ -1002,24 +989,40 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
     [RelayCommand]
     private async Task OnSetDefaultGroup()
     {
-        if (!string.IsNullOrEmpty(SelectedGroupName))
+        if (string.IsNullOrEmpty(SelectedGroupName))
         {
-            var group = await _dbContext.TaskGroup.FirstOrDefaultAsync(x => x.GroupName.Equals(SelectedGroupName));
-            if (group != null)
-            {
-                var defaultGroup = await _dbContext.TaskGroup.FirstOrDefaultAsync(x => x.IsDefault == true);
-                if (defaultGroup != null)
-                {
-                    defaultGroup.IsDefault = false;
-                }
-                if (!(group.Id == defaultGroup?.Id))
-                {
-                    group.IsDefault = true;
-                }
-            }
-            await _dbContext.SaveChangesAsync();
-            await OnGroupNameChanged();
+            _notificationQueue.ShowWithWindowExtension("请选择一个分组作为右键执行的默认分组", InfoBarSeverity.Warning, 3000);
+            return;
         }
+
+        var group = await _dbContext.TaskGroup.FirstOrDefaultAsync(x => x.GroupName == SelectedGroupName);
+        if (group == null || string.IsNullOrEmpty(SelectedGroupName))
+        {
+            _notificationQueue.ShowWithWindowExtension($"所选分组{SelectedGroupName}无法作为默认分组", InfoBarSeverity.Warning, 3000);
+            return;
+        }
+
+        var defaultGroup = await _dbContext.TaskGroup.FirstOrDefaultAsync(x => x.IsDefault);
+        bool hasChanges = false;
+
+        if (defaultGroup != null && defaultGroup.Id != group.Id)
+        {
+            defaultGroup.IsDefault = false;
+            group.IsDefault = true;
+            hasChanges = true;
+        }
+        else if (defaultGroup == null)
+        {
+            group.IsDefault = true;
+            hasChanges = true;
+        }
+
+        if (hasChanges)
+        {
+            await _dbContext.SaveChangesAsync();
+        }
+
+        await OnGroupNameChanged();
     }
 
     [RelayCommand]
@@ -1206,12 +1209,6 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         ReplaceModel.Add(new PatternSnippetModel("${replace=old,,false}", "ReplaceCheatSheet_ReplaceDelete".GetLocalized()));
         ReplaceModel.Add(new PatternSnippetModel("${regex=^foo,new}", "ReplaceCheatSheet_ReplaceRegex".GetLocalized()));
         ReplaceModel.Add(new PatternSnippetModel("${regex=^foo,}", "ReplaceCheatSheet_ReplaceRegexDelete".GetLocalized()));
-    }
-
-    private async Task ClearNotificationAfterDelay(int delayMilliseconds)
-    {
-        await Task.Delay(delayMilliseconds);  // 延迟指定的毫秒数
-        _notificationQueue?.Clear();  // 清除通知
     }
 
 }
