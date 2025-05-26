@@ -166,8 +166,6 @@
     <None Remove="Themes\BreadcrumbBar.xaml" />
     <None Remove="ViewModels\tmp.cs_back" />
     <None Remove="Views\Automatic\AutomaticPage.xaml" />
-    <None Remove="Views\ContentDialogs\AddFilterContentDialog.xaml" />
-    <None Remove="Views\ContentDialogs\AddTaskContentDialog.xaml" />
     <None Remove="Views\ContentDialogs\CustomConfigContentDialog.xaml" />
     <None Remove="Views\ContentDialogs\PlanExecutionContentDialog.xaml" />
     <None Remove="Views\ContentDialogs\PreviewContentDialog.xaml" />
@@ -326,7 +324,7 @@
     <Page Update="Views\Settings\HotKeySettingPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="Views\ContentDialogs\AddAIContentDialog.xaml">
+    <Page Update="Views\ContentDialogs\AIContentEditDialog.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Settings\AiSettingsPage.xaml">
@@ -368,10 +366,10 @@
     <Page Update="Views\UserControls\SettingsPageControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="Views\ContentDialogs\AddFilterContentDialog.xaml">
+    <Page Update="Views\ContentDialogs\FilterContentEditorDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="Views\ContentDialogs\AddTaskContentDialog.xaml">
+    <Page Update="Views\ContentDialogs\TaskContentEditorDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\ContentDialogs\CustomConfigContentDialog.xaml">

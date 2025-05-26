@@ -529,13 +529,11 @@ public partial class AutomaticViewModel : ObservableRecipient
             if (ai != null) llm = AIServiceFactory.CreateAIServiceLlm(ai);
             await OnPageLoaded();
             await AutomaticJob.AddTaskConfig(automatic, OnScheduleExecution, llm);
-            _notificationQueue.ShowWithWindowExtension("SaveSuccessfulText".GetLocalized(), InfoBarSeverity.Success);
-            _ = ClearNotificationAfterDelay(3000);
+            _notificationQueue.ShowWithWindowExtension("SaveSuccessfulText".GetLocalized(), InfoBarSeverity.Success, 3000);
         }
         catch (Exception ex)
         {
-            _notificationQueue.ShowWithWindowExtension("SaveFailedText".GetLocalized(), InfoBarSeverity.Error);
-            _ = ClearNotificationAfterDelay(3000);
+            _notificationQueue.ShowWithWindowExtension("SaveFailedText".GetLocalized(), InfoBarSeverity.Error, 3000);
             Logger.Error($"AutomaticViewModel: OnSaveTaskConfig {"ExceptionTxt".GetLocalized()} {ex}");
             IsActive = false;
         }
@@ -1116,14 +1114,4 @@ public partial class AutomaticViewModel : ObservableRecipient
 
     }
 
-    /// <summary>
-    /// 清除通知
-    /// </summary>
-    /// <param name="delayMilliseconds"></param>
-    /// <returns></returns>
-    public async Task ClearNotificationAfterDelay(int delayMilliseconds)
-    {
-        await Task.Delay(delayMilliseconds);  // 延迟指定的毫秒数
-        _notificationQueue?.Clear();  // 清除通知
-    }
 }

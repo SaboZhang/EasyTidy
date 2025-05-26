@@ -150,7 +150,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
     [RelayCommand]
     private async Task OnAddTaskClick(object sender)
     {
-        var dialog = new AddTaskContentDialog
+        var dialog = new TaskContentEditorDialog
         {
             ViewModel = this,
             Title = "AdditionalText".GetLocalized(),
@@ -174,7 +174,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
     {
         try
         {
-            var dialog = sender as AddTaskContentDialog;
+            var dialog = sender as TaskContentEditorDialog;
             if (!dialog.IsValid || dialog.HasErrors || string.IsNullOrEmpty(dialog.TaskRule) || string.IsNullOrEmpty(GroupTextName))
             {
                 args.Cancel = true;
@@ -504,7 +504,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         {
             if (dataContext != null)
             {
-                var dialog = new AddTaskContentDialog
+                var dialog = new TaskContentEditorDialog
                 {
                     ViewModel = this,
                     Title = "ModifyText".GetLocalized(),
