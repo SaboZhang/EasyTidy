@@ -34,16 +34,16 @@ public partial class FilterUtil
     /// <param name="rule"></param>
     /// <param name="ruleType"></param>
     /// <returns></returns>
-    public static List<Func<string, bool>> GeneratePathFilters(string rule, TaskRuleType ruleType)
+    public static List<FilterItem> GeneratePathFilters(string rule, TaskRuleType ruleType)
     {
-        var filters = new List<Func<string, bool>>();
+        var filters = new List<FilterItem>();
         // 策略模式
-        var filterFunctions = new Dictionary<TaskRuleType, Func<string, IEnumerable<Func<string, bool>>>>()
+        var filterFunctions = new Dictionary<TaskRuleType, Func<string, IEnumerable<FilterItem>>>()
         {
-            { TaskRuleType.FileRule, rule => new FileFilterStrategy().GenerateFilters(rule) },
-            { TaskRuleType.FolderRule, rule => new FolderFilterStrategy().GenerateFilters(rule) },
+            { TaskRuleType.FileRule, rule => new FileFilterStrategy().GenerateFilterItems(rule) },
+            { TaskRuleType.FolderRule, rule => new FolderFilterStrategy().GenerateFilterItems(rule) },
             { TaskRuleType.CustomRule, rule => new CustomFilterStrategy().GenerateFilters(rule) },
-            { TaskRuleType.ExpressionRules, rule => new ExpressionFilterStrategy().GenerateFilters(rule) }
+            { TaskRuleType.ExpressionRules, rule => new ExpressionFilterStrategy().GenerateFilterItems(rule) }
         };
 
         if (filterFunctions.TryGetValue(ruleType, out var generateFilters))
@@ -81,30 +81,35 @@ public partial class FilterUtil
     /// <param name="path"></param>
     /// <param name="pathFilter"></param>
     /// <returns></returns>
-    public static bool ShouldSkip(List<Func<string, bool>> dynamicFilters, string path, Func<string, bool>? pathFilter)
+    public static bool ShouldSkip(List<FilterItem> dynamicFilters, string path, Func<string, bool>? pathFilter)
     {
-        // 检查是否是快捷方式
+        // 过滤掉快捷方式
         if (Path.GetExtension(path).Equals(".lnk", StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        var matched = dynamicFilters.Where(f => f.Predicate(path)).ToList();
+
+        bool hasExclude = matched.Any(f => f.IsExclude);
+        bool hasInclude = matched.Any(f => !f.IsExclude);
+
+        bool satisfiesPathFilter = pathFilter?.Invoke(path) ?? true;
+
+        LogService.Logger.Debug($"Include: {hasInclude}, Exclude: {hasExclude}, PathFilter: {satisfiesPathFilter}");
+
+        // 排除规则匹配，立即跳过
+        if (hasExclude)
         {
-            return true; // 跳过快捷方式文件
+            bool matchAnyExclude = matched.Any(f => f.IsExclude && f.Predicate(path));
+            if (matchAnyExclude)
+                return true;
         }
 
-        // 规则1检查：dynamicFilters 列表中满足任意一个条件
-        bool satisfiesDynamicFilters = dynamicFilters != null && dynamicFilters.Any(filter => filter(path));
+        // 如果包含规则匹配且 pathFilter 为 null 或满足 pathFilter， 则不过滤
+        if (hasInclude && satisfiesPathFilter)
+            return false;
 
-        // 规则2检查：如果 pathFilter 不为 null，则它应返回 true
-        bool satisfiesPathFilter = pathFilter == null || pathFilter(path);
-
-        // 如果 pathFilter 为 null，仅根据 satisfiesDynamicFilters 的结果返回
-        if (pathFilter == null)
-        {
-            LogService.Logger.Debug($"satisfiesDynamicFilters (no pathFilter): {satisfiesDynamicFilters}");
-            return !satisfiesDynamicFilters;
-        }
-
-        // 如果 pathFilter 不为 null，要求 satisfiesDynamicFilters 和 satisfiesPathFilter 同时满足
-        LogService.Logger.Debug($"satisfiesDynamicFilters: {satisfiesDynamicFilters}, satisfiesPathFilter: {satisfiesPathFilter}");
-        return satisfiesDynamicFilters ^ satisfiesPathFilter;
+        // 其余情况都跳过
+        return true;
     }
 
     /// <summary>

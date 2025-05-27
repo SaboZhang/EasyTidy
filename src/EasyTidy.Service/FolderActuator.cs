@@ -146,7 +146,7 @@ public class FolderActuator
                 await RenameFolder(parameters.SourcePath, parameters.OldTargetPath);
                 break;
             case OperationMode.RecycleBin:
-                await FileActuator.MoveToRecycleBin(parameters.TargetPath, new List<Func<string, bool>>(parameters.Funcs),
+                await FileActuator.MoveToRecycleBin(parameters.TargetPath, new List<FilterItem>(parameters.Funcs),
                     parameters.PathFilter, parameters.RuleModel.RuleType, true, parameters.HandleSubfolders);
                 break;
             case OperationMode.UploadWebDAV:

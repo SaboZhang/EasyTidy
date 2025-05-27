@@ -496,7 +496,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         var currentTime = DateTime.Now;
         if ((currentTime - LastInvocationTime).TotalMilliseconds < 500) // 防抖时间间隔，单位为毫秒
         {
-            Logger.Info($"触发防抖了，鼠标坏了吧，500毫秒两次点击🤣🤣🤣");
+            Logger.Info("触发防抖了，鼠标坏了吧，500毫秒两次点击🤣🤣🤣");
             return;
         }
         LastInvocationTime = currentTime;

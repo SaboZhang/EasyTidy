@@ -14,7 +14,7 @@ public class OperationParameters
 
     public FileOperationType FileOperationType { get; set; }
 
-    public List<Func<string, bool>> Funcs { get; set; }
+    public List<FilterItem> Funcs { get; set; }
 
     public RuleModel RuleModel { get; set; }
 
@@ -43,7 +43,7 @@ public class OperationParameters
     public string RenamePattern { get; set; }
 
     public OperationParameters(OperationMode operationMode, string sourcePath, string targetPath, FileOperationType fileOperationType, bool handleSubfolders,
-        List<Func<string, bool>> funcs, Func<string, bool> pathFilter, RuleModel ruleModel = null)
+        List<FilterItem> funcs, Func<string, bool> pathFilter, RuleModel ruleModel = null)
     {
         OperationMode = operationMode;
         RuleModel = ruleModel;

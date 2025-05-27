@@ -165,7 +165,7 @@ public static class FileActuator
 
     private static bool ShouldSkipFile(string filePath, OperationParameters parameters)
     {
-        return FilterUtil.ShouldSkip(new List<Func<string, bool>>(parameters.Funcs), filePath, parameters.PathFilter);
+        return FilterUtil.ShouldSkip(new List<FilterItem>(parameters.Funcs), filePath, parameters.PathFilter);
     }
 
     private static OperationParameters CreateOperationParametersForFile(
@@ -318,7 +318,7 @@ public static class FileActuator
                 await RenameFile(parameters.OldSourcePath, parameters.OldTargetPath, parameters);
                 break;
             case OperationMode.RecycleBin:
-                await MoveToRecycleBin(parameters.TargetPath, new List<Func<string, bool>>(parameters.Funcs),
+                await MoveToRecycleBin(parameters.TargetPath, new List<FilterItem>(parameters.Funcs),
                     parameters.PathFilter, parameters.RuleModel.RuleType, parameters.HandleSubfolders);
                 break;
             case OperationMode.Extract:
@@ -838,7 +838,7 @@ public static class FileActuator
     /// <param name="ruleType"></param>
     /// <param name="deleteSubfolders"></param>
     /// <returns></returns>
-    internal static async Task MoveToRecycleBin(string path, List<Func<string, bool>> dynamicFilters,
+    internal static async Task MoveToRecycleBin(string path, List<FilterItem> dynamicFilters,
         Func<string, bool>? pathFilter, TaskRuleType ruleType, bool isFolder = false, bool deleteSubfolders = false)
     {
         await _semaphore.WaitAsync(); // 请求对文件操作的独占访问
