@@ -1,3 +1,4 @@
+using EasyTidy.Model;
 using EasyTidy.Util.UtilInterface;
 using System;
 using System.Collections.Generic;
@@ -9,43 +10,25 @@ namespace EasyTidy.Util.Strategy;
 
 public class FileFilterStrategy : IFilterStrategy
 {
-    private readonly Dictionary<Func<string, bool>, Func<string, IEnumerable<Func<string, bool>>>> _conditionHandlers;
+    private readonly Dictionary<Func<string, bool>, Func<string, IEnumerable<FilterItem>>> _conditionHandlers;
 
     public FileFilterStrategy()
     {
-        _conditionHandlers = new Dictionary<Func<string, bool>, Func<string, IEnumerable<Func<string, bool>>>>
+        _conditionHandlers = new Dictionary<Func<string, bool>, Func<string, IEnumerable<FilterItem>>>
         {
             { rule => rule.Contains('/'), GenerateIncludeExcludeFilter },
             { rule => rule.StartsWith('*') && rule.EndsWith('*'), GenerateContainsKeywordFilter },
             { rule => rule.Contains('*') && rule.Contains('.'), MatchesStartsWithAndEndsWith },
             { rule => rule.EndsWith('*'), GenerateStartsWithPrefixFilter },
             { rule => rule.StartsWith('*'), GenerateExtensionFilter },
-            { rule => true, _ => new Func<string, bool>[] { _ => false } } // 默认规则
+            { rule => true, _ => new FilterItem[] { } } // 默认规则
 
         };
     }
 
     public IEnumerable<Func<string, bool>> GenerateFilters(string rule)
     {
-        // 如果规则是 "*"，则返回一个文件存在检查器
-        if (IsWildcardRule(rule))
-        {
-            yield return filePath => File.Exists(filePath);
-        }
-        else if (IsNegatedRule(rule))
-        {
-            foreach (var filter in ProcessNegatedRule(rule))
-            {
-                yield return filePath => !filter(filePath);
-            }
-        }
-        else
-        {
-            foreach (var filter in GenerateFiltersForRule(rule))
-            {
-                yield return filter;
-            }
-        }
+        throw new NotImplementedException("Use GenerateFilterItems instead for file filters.");
     }
 
     /// <summary>
@@ -68,7 +51,7 @@ public class FileFilterStrategy : IFilterStrategy
         return rule.StartsWith('#');
     }
 
-    private IEnumerable<Func<string, bool>> ProcessNegatedRule(string rule)
+    private IEnumerable<FilterItem> ProcessNegatedRule(string rule)
     {
         var parts = rule.Split('&', StringSplitOptions.RemoveEmptyEntries)
                          .Select(part => part.TrimStart('#'));
@@ -86,7 +69,7 @@ public class FileFilterStrategy : IFilterStrategy
     /// </summary>
     /// <param name="rule"></param>
     /// <returns></returns>
-    private IEnumerable<Func<string, bool>> GenerateFiltersForRule(string rule)
+    private IEnumerable<FilterItem> GenerateFiltersForRule(string rule)
     {
         var conditions = rule.Split(new[] { ';', '|' }, StringSplitOptions.RemoveEmptyEntries);
 
@@ -113,7 +96,7 @@ public class FileFilterStrategy : IFilterStrategy
     /// </summary>
     /// <param name="rule"></param>
     /// <returns></returns>
-    private IEnumerable<Func<string, bool>> GenerateIncludeExcludeFilter(string rule)
+    private IEnumerable<FilterItem> GenerateIncludeExcludeFilter(string rule)
     {
         var parts = rule.Split('/');
         if (parts.Length != 2) yield break; // 如果规则不合法则跳过
@@ -121,11 +104,15 @@ public class FileFilterStrategy : IFilterStrategy
         string includePattern = parts[0].Trim();
         string excludePattern = parts[1].Trim();
 
-        yield return filePath =>
+        yield return new FilterItem
         {
-            string fileName = Path.GetFileName(filePath).ToLower();
-            return Regex.IsMatch(fileName, "^" + Regex.Escape(includePattern).Replace(@"\*", ".*") + "$") &&
-                   !Regex.IsMatch(fileName, "^" + Regex.Escape(excludePattern).Replace(@"\*", ".*") + "$");
+            Predicate = filePath =>
+            {
+                string fileName = Path.GetFileName(filePath).ToLower();
+                return Regex.IsMatch(fileName, "^" + Regex.Escape(includePattern).Replace(@"\*", ".*") + "$") &&
+                       !Regex.IsMatch(fileName, "^" + Regex.Escape(excludePattern).Replace(@"\*", ".*") + "$");
+            },
+            IsExclude = false
         };
     }
 
@@ -134,10 +121,14 @@ public class FileFilterStrategy : IFilterStrategy
     /// </summary>
     /// <param name="rule"></param>
     /// <returns></returns>
-    private IEnumerable<Func<string, bool>> GenerateContainsKeywordFilter(string rule)
+    private IEnumerable<FilterItem> GenerateContainsKeywordFilter(string rule)
     {
         string keyword = rule.Trim('*');
-        yield return filePath => Path.GetFileName(filePath).Contains(keyword, StringComparison.OrdinalIgnoreCase);
+        yield return new FilterItem
+        {
+            Predicate = filePath => Path.GetFileName(filePath).Contains(keyword, StringComparison.OrdinalIgnoreCase),
+            IsExclude = false
+        };
     }
 
     /// <summary>
@@ -145,13 +136,17 @@ public class FileFilterStrategy : IFilterStrategy
     /// </summary>
     /// <param name="rule"></param>
     /// <returns></returns>
-    private IEnumerable<Func<string, bool>> GenerateStartsWithPrefixFilter(string rule)
+    private IEnumerable<FilterItem> GenerateStartsWithPrefixFilter(string rule)
     {
         string prefix = rule.TrimEnd('*').ToLower();
-        yield return filePath =>
+        yield return new FilterItem
         {
-            string normalizedPath = Path.GetFileName(filePath).ToLower().Trim();
-            return normalizedPath.StartsWith(prefix);
+            Predicate = filePath =>
+            {
+                string normalizedPath = Path.GetFileName(filePath).ToLower().Trim();
+                return normalizedPath.StartsWith(prefix);
+            },
+            IsExclude = false
         };
     }
 
@@ -160,10 +155,14 @@ public class FileFilterStrategy : IFilterStrategy
     /// </summary>
     /// <param name="rule"></param>
     /// <returns></returns>
-    private IEnumerable<Func<string, bool>> GenerateExtensionFilter(string rule)
+    private IEnumerable<FilterItem> GenerateExtensionFilter(string rule)
     {
         string extension = rule.TrimStart('*').ToLower();
-        yield return filePath => Path.GetExtension(filePath).ToLower() == extension;
+        yield return new FilterItem
+        {
+            Predicate = filePath => Path.GetExtension(filePath).Equals(extension, StringComparison.CurrentCultureIgnoreCase),
+            IsExclude = false
+        };
     }
 
     /// <summary>
@@ -171,17 +170,51 @@ public class FileFilterStrategy : IFilterStrategy
     /// </summary>
     /// <param name="condition"></param>
     /// <returns></returns>
-    private IEnumerable<Func<string, bool>> MatchesStartsWithAndEndsWith(string condition)
+    private IEnumerable<FilterItem> MatchesStartsWithAndEndsWith(string condition)
     {
         string prefix = condition.Split('*')[0].ToLower();
         string suffix = condition.TrimStart('*').ToLower();  // 后缀部分
 
-        Func<string, bool> filter = filePath =>
+        FilterItem filter = new FilterItem
         {
-            string fileName = Path.GetFileName(filePath).ToLower();
-            return fileName.StartsWith(prefix) && fileName.EndsWith(suffix);
+            Predicate = filePath =>
+            {
+                string fileName = Path.GetFileName(filePath).ToLower();
+                return fileName.StartsWith(prefix) && fileName.EndsWith(suffix);
+            },
+            IsExclude = false
         };
 
-        return new Func<string, bool>[] { filter };
+        return new FilterItem[] { filter };
+    }
+
+    public IEnumerable<FilterItem> GenerateFilterItems(string rule)
+    {
+        if (IsWildcardRule(rule))
+    {
+        yield return new FilterItem
+        {
+            Predicate = filePath => File.Exists(filePath),
+            IsExclude = false
+        };
+    }
+    else if (IsNegatedRule(rule))
+    {
+        foreach (var item in ProcessNegatedRule(rule))
+        {
+            yield return new FilterItem
+            {
+                Predicate = item.Predicate,
+                IsExclude = true
+            };
+        }
+    }
+    else
+    {
+        foreach (var item in GenerateFiltersForRule(rule))
+        {
+            yield return item;
+        }
+    }
     }
 }

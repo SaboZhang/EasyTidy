@@ -1740,4 +1740,25 @@
   <data name="Log_Failed_Register_Hotkey" xml:space="preserve">
     <value>Échec d'enregistrement du raccourci clavier : {0}</value>
   </data>
+  <data name="AddAtTheEnd_Create" xml:space="preserve">
+    <value>Lorsque #C est ajouté à la fin ou si le champ est vide, utiliser la date de création pour</value>
+  </data>
+  <data name="AddAtTheEnd_Modify" xml:space="preserve">
+    <value>Ajoutez #M à la fin pour choisir le renommage en utilisant l'heure de modification</value>
+  </data>
+  <data name="AddAtThenEnd_ShootingTime" xml:space="preserve">
+    <value>Ajoutez #S à la fin pour sélectionner l'utilisation de l'heure de capture photo pour le renommage</value>
+  </data>
+  <data name="AddAtThenEnd_NowTime" xml:space="preserve">
+    <value>Ajoutez #D pour sélectionner en utilisant l'heure actuelle pour le renommage</value>
+  </data>
+  <data name="DefaultGroup_Warning" xml:space="preserve">
+    <value>Veuillez sélectionner un groupe par défaut pour les actions du clic droit</value>
+  </data>
+  <data name="InvalidGrouping_Warning" xml:space="preserve">
+    <value>Le groupe sélectionné [{0}] ne peut pas être défini comme le groupe par défaut</value>
+  </data>
+  <data name="RuleIllegal" xml:space="preserve">
+    <value>Les règles d'exclusion et les règles d'inclusion ne peuvent pas être mélangées.</value>
+  </data>
 </root>

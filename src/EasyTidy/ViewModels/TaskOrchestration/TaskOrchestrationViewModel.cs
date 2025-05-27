@@ -496,7 +496,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         var currentTime = DateTime.Now;
         if ((currentTime - LastInvocationTime).TotalMilliseconds < 500) // 防抖时间间隔，单位为毫秒
         {
-            Logger.Info($"触发防抖了，鼠标坏了吧，500毫秒两次点击🤣🤣🤣");
+            Logger.Info("触发防抖了，鼠标坏了吧，500毫秒两次点击🤣🤣🤣");
             return;
         }
         LastInvocationTime = currentTime;
@@ -991,14 +991,14 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
     {
         if (string.IsNullOrEmpty(SelectedGroupName))
         {
-            _notificationQueue.ShowWithWindowExtension("请选择一个分组作为右键执行的默认分组", InfoBarSeverity.Warning, 3000);
+            _notificationQueue.ShowWithWindowExtension("DefaultGroup_Warning".GetLocalized(), InfoBarSeverity.Warning, 3000);
             return;
         }
 
         var group = await _dbContext.TaskGroup.FirstOrDefaultAsync(x => x.GroupName == SelectedGroupName);
         if (group == null || string.IsNullOrEmpty(SelectedGroupName))
         {
-            _notificationQueue.ShowWithWindowExtension($"所选分组{SelectedGroupName}无法作为默认分组", InfoBarSeverity.Warning, 3000);
+            _notificationQueue.ShowWithWindowExtension(I18n.Format("InvalidGrouping_Warning", SelectedGroupName), InfoBarSeverity.Warning, 3000);
             return;
         }
 

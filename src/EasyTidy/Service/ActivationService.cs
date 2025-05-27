@@ -162,7 +162,7 @@ public class ActivationService : IActivationService
                             task.TaskTarget,
                             Settings.GeneralConfig.FileOperationType,
                             (bool)Settings.GeneralConfig.SubFolder,
-                            new List<Func<string, bool>>(FilterUtil.GeneratePathFilters(task.TaskRule, task.RuleType)),
+                            new List<FilterItem>(FilterUtil.GeneratePathFilters(task.TaskRule, task.RuleType)),
                             FilterUtil.GetPathFilters(task.Filter),
                             new RuleModel()
                             {

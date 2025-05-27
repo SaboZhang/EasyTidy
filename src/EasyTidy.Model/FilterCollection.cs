@@ -4,15 +4,15 @@ using System.Collections.Generic;
 
 namespace EasyTidy.Model;
 
-public partial class FilterCollection : IReadOnlyList<Func<string, bool>>
+public partial class FilterCollection : IReadOnlyList<FilterItem>
 {
-    private readonly List<Func<string, bool>> _filters = new();
+    private readonly List<FilterItem> _filters = new();
 
-    public Func<string, bool> this[int index] => _filters[index];
+    public FilterItem this[int index] => _filters[index];
     public int Count => _filters.Count;
 
-    public IEnumerator<Func<string, bool>> GetEnumerator() => _filters.GetEnumerator();
+    public IEnumerator<FilterItem> GetEnumerator() => _filters.GetEnumerator();
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-    public void Add(Func<string, bool> filter) => _filters.Add(filter);
+    public void Add(FilterItem filter) => _filters.Add(filter);
 }

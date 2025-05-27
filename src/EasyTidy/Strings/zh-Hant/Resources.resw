@@ -1749,4 +1749,13 @@
   <data name="AddAtThenEnd_NowTime" xml:space="preserve">
     <value>在末尾添加 #D 以使用當前時間進行重命名</value>
   </data>
+  <data name="DefaultGroup_Warning" xml:space="preserve">
+    <value>請選擇一個分組作為右鍵操作的默認分組</value>
+  </data>
+  <data name="InvalidGrouping_Warning" xml:space="preserve">
+    <value>所選分組 [{0}] 不能設置為默認分組</value>
+  </data>
+  <data name="RuleIllegal" xml:space="preserve">
+    <value>排除規則和包含規則不能混合使用。</value>
+  </data>
 </root>

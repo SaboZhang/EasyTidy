@@ -2368,6 +2368,18 @@
           <source>Append #D to select using the current time for renaming</source>
           <target state="translated">在末尾添加 #D 以使用当前时间进行重命名</target>
         </trans-unit>
+        <trans-unit id="DefaultGroup_Warning" translate="yes" xml:space="preserve">
+          <source>Please select a group to be the default for right-click actions</source>
+          <target state="translated">请选择一个分组作为右键操作的默认分组</target>
+        </trans-unit>
+        <trans-unit id="InvalidGrouping_Warning" translate="yes" xml:space="preserve">
+          <source>The selected group [{0}] cannot be set as the default group</source>
+          <target state="translated">所选分组 [{0}] 不能设置为默认分组</target>
+        </trans-unit>
+        <trans-unit id="RuleIllegal" translate="yes" xml:space="preserve">
+          <source>Exclusion rules and inclusion rules cannot be mixed.</source>
+          <target state="translated">排除规则和包含规则不能混合使用。</target>
+        </trans-unit>
       </group>
     </body>
   </file>

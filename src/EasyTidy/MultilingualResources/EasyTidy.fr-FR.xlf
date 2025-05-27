@@ -2354,19 +2354,31 @@
         </trans-unit>
         <trans-unit id="AddAtTheEnd_Create" translate="yes" xml:space="preserve">
           <source>When #C is added to the end or it's empty, use the creation time to rename according to rules</source>
-          <target state="new">When #C is added to the end or it's empty, use the creation time to rename according to rules</target>
+          <target state="translated">Lorsque #C est ajouté à la fin ou si le champ est vide, utiliser la date de création pour</target>
         </trans-unit>
         <trans-unit id="AddAtTheEnd_Modify" translate="yes" xml:space="preserve">
           <source>Append #M to the end to choose renaming using modification time</source>
-          <target state="new">Append #M to the end to choose renaming using modification time</target>
+          <target state="translated">Ajoutez #M à la fin pour choisir le renommage en utilisant l'heure de modification</target>
         </trans-unit>
         <trans-unit id="AddAtThenEnd_ShootingTime" translate="yes" xml:space="preserve">
           <source>Add #S at the end to select using photo capture time for renaming</source>
-          <target state="new">Add #S at the end to select using photo capture time for renaming</target>
+          <target state="translated">Ajoutez #S à la fin pour sélectionner l'utilisation de l'heure de capture photo pour le renommage</target>
         </trans-unit>
         <trans-unit id="AddAtThenEnd_NowTime" translate="yes" xml:space="preserve">
           <source>Append #D to select using the current time for renaming</source>
-          <target state="new">Append #D to select using the current time for renaming</target>
+          <target state="translated">Ajoutez #D pour sélectionner en utilisant l'heure actuelle pour le renommage</target>
+        </trans-unit>
+        <trans-unit id="DefaultGroup_Warning" translate="yes" xml:space="preserve">
+          <source>Please select a group to be the default for right-click actions</source>
+          <target state="translated">Veuillez sélectionner un groupe par défaut pour les actions du clic droit</target>
+        </trans-unit>
+        <trans-unit id="InvalidGrouping_Warning" translate="yes" xml:space="preserve">
+          <source>The selected group [{0}] cannot be set as the default group</source>
+          <target state="translated">Le groupe sélectionné [{0}] ne peut pas être défini comme le groupe par défaut</target>
+        </trans-unit>
+        <trans-unit id="RuleIllegal" translate="yes" xml:space="preserve">
+          <source>Exclusion rules and inclusion rules cannot be mixed.</source>
+          <target state="translated">Les règles d'exclusion et les règles d'inclusion ne peuvent pas être mélangées.</target>
         </trans-unit>
       </group>
     </body>
