@@ -2352,22 +2352,34 @@
           <source>Failed to register hotkey: {0}</source>
           <target state="translated">註冊快捷鍵失敗: {0}</target>
         </trans-unit>
-		<trans-unit id="AddAtTheEnd_Create" translate="yes" xml:space="preserve">
+        <trans-unit id="AddAtTheEnd_Create" translate="yes" xml:space="preserve">
           <source>When #C is added to the end or it's empty, use the creation time to rename according to rules</source>
           <target state="translated">當末尾添加 #C 或為空時，使用創建時間按照規則重命名</target>
         </trans-unit>
-		<trans-unit id="AddAtTheEnd_Modify" translate="yes" xml:space="preserve">
+        <trans-unit id="AddAtTheEnd_Modify" translate="yes" xml:space="preserve">
           <source>Append #M to the end to choose renaming using modification time</source>
           <target state="translated">在末尾添加 #M 以選擇使用修改時間進行重命名</target>
-       </trans-unit>
-		  <trans-unit id="AddAtThenEnd_ShootingTime" translate="yes" xml:space="preserve">
+        </trans-unit>
+        <trans-unit id="AddAtThenEnd_ShootingTime" translate="yes" xml:space="preserve">
           <source>Add #S at the end to select using photo capture time for renaming</source>
-       <target state="translated">在末尾加入 #S 以選擇使用照片拍攝時間進行重命名</target>
-       </trans-unit>
-	   <trans-unit id="AddAtThenEnd_NowTime" translate="yes" xml:space="preserve">
+          <target state="translated">在末尾加入 #S 以選擇使用照片拍攝時間進行重命名</target>
+        </trans-unit>
+        <trans-unit id="AddAtThenEnd_NowTime" translate="yes" xml:space="preserve">
           <source>Append #D to select using the current time for renaming</source>
           <target state="translated">在末尾添加 #D 以使用當前時間進行重命名</target>
-      </trans-unit>
+        </trans-unit>
+        <trans-unit id="DefaultGroup_Warning" translate="yes" xml:space="preserve">
+          <source>Please select a group to be the default for right-click actions</source>
+          <target state="translated">請選擇一個分組作為右鍵操作的默認分組</target>
+        </trans-unit>
+        <trans-unit id="InvalidGrouping_Warning" translate="yes" xml:space="preserve">
+          <source>The selected group [{0}] cannot be set as the default group</source>
+          <target state="translated">所選分組 [{0}] 不能設置為默認分組</target>
+        </trans-unit>
+        <trans-unit id="RuleIllegal" translate="yes" xml:space="preserve">
+          <source>Exclusion rules and inclusion rules cannot be mixed.</source>
+          <target state="translated">排除規則和包含規則不能混合使用。</target>
+        </trans-unit>
       </group>
     </body>
   </file>

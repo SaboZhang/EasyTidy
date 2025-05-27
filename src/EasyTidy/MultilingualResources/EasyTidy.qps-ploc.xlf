@@ -2368,6 +2368,18 @@
           <source>Append #D to select using the current time for renaming</source>
           <target state="new">Append #D to select using the current time for renaming</target>
         </trans-unit>
+        <trans-unit id="DefaultGroup_Warning" translate="yes" xml:space="preserve">
+          <source>Please select a group to be the default for right-click actions</source>
+          <target state="new">Please select a group to be the default for right-click actions</target>
+        </trans-unit>
+        <trans-unit id="InvalidGrouping_Warning" translate="yes" xml:space="preserve">
+          <source>The selected group [{0}] cannot be set as the default group</source>
+          <target state="new">The selected group [{0}] cannot be set as the default group</target>
+        </trans-unit>
+        <trans-unit id="RuleIllegal" translate="yes" xml:space="preserve">
+          <source>Exclusion rules and inclusion rules cannot be mixed.</source>
+          <target state="new">Exclusion rules and inclusion rules cannot be mixed.</target>
+        </trans-unit>
       </group>
     </body>
   </file>

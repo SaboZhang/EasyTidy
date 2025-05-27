@@ -1878,4 +1878,13 @@
   <data name="AddAtThenEnd_NowTime" xml:space="preserve">
     <value>Append #D to select using the current time for renaming</value>
   </data>
+  <data name="DefaultGroup_Warning" xml:space="preserve">
+    <value>Please select a group to be the default for right-click actions</value>
+  </data>
+  <data name="InvalidGrouping_Warning" xml:space="preserve">
+    <value>The selected group [{0}] cannot be set as the default group</value>
+  </data>
+  <data name="RuleIllegal" xml:space="preserve">
+    <value>Exclusion rules and inclusion rules cannot be mixed.</value>
+  </data>
 </root>

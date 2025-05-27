@@ -81,35 +81,47 @@ public partial class FilterUtil
     /// <param name="path"></param>
     /// <param name="pathFilter"></param>
     /// <returns></returns>
-    public static bool ShouldSkip(List<FilterItem> dynamicFilters, string path, Func<string, bool>? pathFilter)
+    public static bool ShouldSkip(List<FilterItem> dynamicFilters, string path, Func<string, bool>? attrMatching)
     {
-        // 过滤掉快捷方式
+        // 跳过快捷方式
         if (Path.GetExtension(path).Equals(".lnk", StringComparison.OrdinalIgnoreCase))
             return true;
 
-        var matched = dynamicFilters.Where(f => f.Predicate(path)).ToList();
+        if (dynamicFilters.Count == 0)
+            return true;
 
-        bool hasExclude = matched.Any(f => f.IsExclude);
-        bool hasInclude = matched.Any(f => !f.IsExclude);
-
-        bool satisfiesPathFilter = pathFilter?.Invoke(path) ?? true;
-
-        LogService.Logger.Debug($"Include: {hasInclude}, Exclude: {hasExclude}, PathFilter: {satisfiesPathFilter}");
-
-        // 排除规则匹配，立即跳过
-        if (hasExclude)
+        // 所有规则类型必须一致（只允许包含规则或排除规则之一）
+        bool isExcludeRule = dynamicFilters[0].IsExclude;
+        if (dynamicFilters.Any(f => f.IsExclude != isExcludeRule))
         {
-            bool matchAnyExclude = matched.Any(f => f.IsExclude && f.Predicate(path));
-            if (matchAnyExclude)
-                return true;
+            LogService.Logger.Error(I18n.Format("RuleIllegal"));
+            return true;
         }
 
-        // 如果包含规则匹配且 pathFilter 为 null 或满足 pathFilter， 则不过滤
-        if (hasInclude && satisfiesPathFilter)
-            return false;
+        // 判断匹配结果
+        var results = dynamicFilters.Select(f =>
+        {
+            bool matched = f.Predicate(path);
+            LogService.Logger.Debug($"[{(f.IsExclude ? "Exclude" : "Include")}] Predicate result: {matched} for path: {path}");
+            return matched;
+        }).ToList();
 
-        // 其余情况都跳过
-        return true;
+        bool attrAllowed = attrMatching?.Invoke(path) ?? true;
+
+        if (isExcludeRule)
+        {
+            // 任意排除规则为 false（匹配排除项）→ 跳过
+            if (results.Any(r => !r))
+                return true;
+
+            // 否则（全部为 true），仅当 attrAllowed 为 true/空时才保留
+            return !attrAllowed;
+        }
+        else
+        {
+            // 包含规则下：至少一个匹配 且 attrAllowed → 保留
+            return !(results.Any(r => r) && attrAllowed);
+        }
     }
 
     /// <summary>

@@ -67,7 +67,7 @@ public class FolderFilterStrategy : IFilterStrategy
             {
                 string excludeKeyword = cond.Substring(3).TrimEnd('*');
                 Debug.WriteLine($"Exclude keyword: {excludeKeyword}");
-                return folderPath => Directory.Exists(folderPath) && Path.GetFileName(folderPath).Contains(excludeKeyword);
+                return folderPath => Directory.Exists(folderPath) && !Path.GetFileName(folderPath).Contains(excludeKeyword);
             }),
             (cond => cond.StartsWith("**"), cond =>
             {
