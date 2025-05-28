@@ -11,19 +11,7 @@ public class FolderFilterStrategy : IFilterStrategy
 {
     public IEnumerable<Func<string, bool>> GenerateFilters(string rule)
     {
-        if (IsWildcardRule(rule))
-        {
-            yield return folderPath => Directory.Exists(folderPath);
-            yield break;
-        }
-
-        string[] conditions = rule.Split(new[] { ';', '|' }, StringSplitOptions.RemoveEmptyEntries);
-
-        foreach (var condition in conditions)
-        {
-            string normalizedCondition = condition.Trim();
-            yield return GenerateSingleFilter(normalizedCondition);
-        }
+        throw new NotImplementedException("FolderFilterStrategy does not support GenerateFilters method. Use GenerateFilterItems instead.");
     }
 
     private static bool IsWildcardRule(string rule)
@@ -43,13 +31,13 @@ public class FolderFilterStrategy : IFilterStrategy
             yield break;
         }
 
-        string[] conditions = rule.Split(new[] { ';', '|' }, StringSplitOptions.RemoveEmptyEntries);
+        string[] conditions = rule.Split([';', '|'], StringSplitOptions.RemoveEmptyEntries);
 
         foreach (var condition in conditions)
         {
             string normalized = condition.Trim();
             bool isExclude = normalized.StartsWith("**/");
-            string cleaned = isExclude ? normalized.Substring(3) : normalized;
+            string cleaned = isExclude ? normalized[3..] : normalized;
 
             yield return new FilterItem
             {

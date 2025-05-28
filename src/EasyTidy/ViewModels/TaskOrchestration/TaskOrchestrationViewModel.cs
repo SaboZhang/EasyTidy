@@ -175,6 +175,16 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         try
         {
             var dialog = sender as TaskContentEditorDialog;
+            var ai = await _dbContext.AIService.Where(x => x.IsDefault == true && x.IsEnabled == true).FirstOrDefaultAsync();
+            if (ai == null && (SelectedOperationMode == OperationMode.AIClassification || SelectedOperationMode == OperationMode.AISummary))
+            {
+                var tips = new AppNotificationBuilder().AddText("AI_Notice".GetLocalized())
+                    .AddButton(new AppNotificationButton("Settings".GetLocalized())
+                    .AddArgument("action", "AiSettings")).AddArgument("contentId", "351");
+                AppNotificationService.Show(tips.BuildNotification().Payload);
+                args.Cancel = true;
+                return;
+            }
             if (!dialog.IsValid || dialog.HasErrors || string.IsNullOrEmpty(dialog.TaskRule) || string.IsNullOrEmpty(GroupTextName))
             {
                 args.Cancel = true;
@@ -185,15 +195,6 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
             : Settings.EncryptedPassword;
             Settings.Encrypted = dialog.Encencrypted;
             Settings.OriginalFile = dialog.IsSourceFile;
-            var ai = await _dbContext.AIService.Where(x => x.IsDefault == true && x.IsEnabled == true).FirstOrDefaultAsync();
-            if (ai == null && (SelectedOperationMode == OperationMode.AIClassification || SelectedOperationMode == OperationMode.AISummary))
-            {
-                var tips = new AppNotificationBuilder().AddText("AI_Notice".GetLocalized())
-                    .AddButton(new AppNotificationButton("Settings".GetLocalized())
-                    .AddArgument("action", "AiSettings")).AddArgument("contentId", "351");
-                AppNotificationService.Show(tips.BuildNotification().Payload);
-                return;
-            }
             var prompt = SelectedOperationMode switch
             {
                 OperationMode.AIClassification => GetUserDefinePromptsJson(string.Empty, dialog.CustomPrompt, "分类"),

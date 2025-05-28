@@ -1445,7 +1445,7 @@ public static class FileActuator
             new RequestModel(content, lang),
             msg =>
             {
-                LogService.Logger.Info($"AI 服务返回: {msg}");
+                LogService.Logger.Debug($"AI 服务返回: {msg}");
                 aIServiceLlm.Data.IsSuccess = true;
                 aIServiceLlm.Data.Result += msg;
             },

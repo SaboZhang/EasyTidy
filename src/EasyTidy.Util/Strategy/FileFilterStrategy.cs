@@ -175,7 +175,7 @@ public class FileFilterStrategy : IFilterStrategy
         string prefix = condition.Split('*')[0].ToLower();
         string suffix = condition.TrimStart('*').ToLower();  // 后缀部分
 
-        FilterItem filter = new FilterItem
+        FilterItem filter = new()
         {
             Predicate = filePath =>
             {
@@ -191,30 +191,30 @@ public class FileFilterStrategy : IFilterStrategy
     public IEnumerable<FilterItem> GenerateFilterItems(string rule)
     {
         if (IsWildcardRule(rule))
-    {
-        yield return new FilterItem
-        {
-            Predicate = filePath => File.Exists(filePath),
-            IsExclude = false
-        };
-    }
-    else if (IsNegatedRule(rule))
-    {
-        foreach (var item in ProcessNegatedRule(rule))
         {
             yield return new FilterItem
             {
-                Predicate = item.Predicate,
-                IsExclude = true
+                Predicate = filePath => File.Exists(filePath),
+                IsExclude = false
             };
         }
-    }
-    else
-    {
-        foreach (var item in GenerateFiltersForRule(rule))
+        else if (IsNegatedRule(rule))
         {
-            yield return item;
+            foreach (var item in ProcessNegatedRule(rule))
+            {
+                yield return new FilterItem
+                {
+                    Predicate = item.Predicate,
+                    IsExclude = false
+                };
+            }
         }
-    }
+        else
+        {
+            foreach (var item in GenerateFiltersForRule(rule))
+            {
+                yield return item;
+            }
+        }
     }
 }

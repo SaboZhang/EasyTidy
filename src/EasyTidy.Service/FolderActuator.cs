@@ -94,7 +94,7 @@ public class FolderActuator
         {
             if (FilterUtil.ShouldSkip(parameters.Funcs, folder, parameters.PathFilter))
             {
-                LogService.Logger.Debug($"执行文件夹操作 ShouldSkip {parameters.TargetPath}");
+                LogService.Logger.Debug($"执行文件夹操作 ShouldSkip {parameters.SourcePath}");
                 continue;
             }
 
