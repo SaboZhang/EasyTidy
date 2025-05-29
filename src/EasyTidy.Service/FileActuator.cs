@@ -127,14 +127,20 @@ public static class FileActuator
 
     private static void EnsureTargetDirectory(OperationParameters parameters, string? directoryPath = null)
     {
-        if (!Directory.Exists(parameters.TargetPath) 
-            && parameters.OperationMode != OperationMode.Rename 
+        if (!Directory.Exists(parameters.TargetPath)
+            && parameters.OperationMode != OperationMode.Rename
             && parameters.OperationMode != OperationMode.AIClassification
+            && parameters.OperationMode != OperationMode.Delete
+            && parameters.OperationMode != OperationMode.RunExternalPrograms
+            && parameters.OperationMode != OperationMode.RecycleBin
             && string.IsNullOrEmpty(directoryPath))
         {
             Directory.CreateDirectory(parameters.TargetPath);
         }
-        if (!string.IsNullOrEmpty(directoryPath) && !Directory.Exists(directoryPath))
+        if (!string.IsNullOrEmpty(directoryPath)
+        && parameters.OperationMode != OperationMode.Delete
+        && parameters.OperationMode != OperationMode.RecycleBin
+        && !Directory.Exists(directoryPath))
         {
             Directory.CreateDirectory(directoryPath);
         }

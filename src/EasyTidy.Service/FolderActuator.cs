@@ -76,7 +76,10 @@ public class FolderActuator
     /// <returns></returns>
     private static async Task ProcessFoldersAsync(OperationParameters parameters)
     {
-        if (!Directory.Exists(parameters.TargetPath) && parameters.OperationMode != OperationMode.Rename)
+        if (!Directory.Exists(parameters.TargetPath)
+        && parameters.OperationMode != OperationMode.Rename
+        && parameters.OperationMode != OperationMode.Delete
+        && parameters.OperationMode != OperationMode.RecycleBin)
         {
             Directory.CreateDirectory(parameters.TargetPath);
         }
