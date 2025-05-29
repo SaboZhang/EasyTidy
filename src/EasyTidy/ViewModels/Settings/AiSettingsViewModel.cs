@@ -103,7 +103,7 @@ public partial class AiSettingsViewModel : ObservableObject
     [RelayCommand]
     private async Task AddAIClick(object sender)
     {
-        var dialog = new AddAIContentDialog
+        var dialog = new AIContentEditDialog
         {
             Title = "AddCustomChatModel".GetLocalized(),
 
@@ -121,7 +121,7 @@ public partial class AiSettingsViewModel : ObservableObject
     {
         try
         {
-            var dialog = sender as AddAIContentDialog;
+            var dialog = sender as AIContentEditDialog;
             dialog.ValidateChatModel(dialog.ChatModel);
             if (dialog.HasErrors)
             {
@@ -250,7 +250,7 @@ public partial class AiSettingsViewModel : ObservableObject
     {
         if (sender is Button button && button.DataContext is AIServiceTable aiService)
         {
-            var dialog = new AddAIContentDialog
+            var dialog = new AIContentEditDialog
             {
                 Title = "UpdateAIService".GetLocalized(),
                 ModelName = aiService.Name,
@@ -299,7 +299,7 @@ public partial class AiSettingsViewModel : ObservableObject
         var token = new CancellationToken();
         try
         {
-            var dialog = sender as AddAIContentDialog;
+            var dialog = sender as AIContentEditDialog;
             string baseUrl = dialog.BaseUrl;
             if (string.IsNullOrWhiteSpace(baseUrl))
             {

@@ -130,7 +130,7 @@ public partial class MainViewModel : ObservableObject
     }
 
     // 创建文件操作参数
-    private OperationParameters CreateOperationParameters(TaskOrchestrationTable item, string sourcePath, List<Func<string, bool>> filters)
+    private OperationParameters CreateOperationParameters(TaskOrchestrationTable item, string sourcePath, List<FilterItem> filters)
     {
         string resolvedSourcePath = sourcePath.Equals("DesktopText".GetLocalized())
             ? Environment.GetFolderPath(Environment.SpecialFolder.Desktop)

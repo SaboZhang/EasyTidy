@@ -31,6 +31,8 @@ public partial class AppUpdateSettingViewModel : ObservableObject
 
     private string DownloadUrl = string.Empty;
 
+    private string NewVersion = string.Empty;
+
     public ObservableCollection<Breadcrumb> Breadcrumbs { get; }
 
     public AppUpdateSettingViewModel(IThemeSelectorService themeSelectorService)
@@ -69,6 +71,7 @@ public partial class AppUpdateSettingViewModel : ObservableObject
                 var update = await UpdateHelper.CheckUpdateAsync(username, repo, new Version(App.Current.AppVersion));
                 if (update.IsExistNewVersion)
                 {
+                    NewVersion = update.TagName;
                     IsUpdateAvailable = true;
                     ChangeLog = update.Changelog;
                     DownloadUrl = update.Assets.FirstOrDefault(a => a.Url.EndsWith(".zip", StringComparison.OrdinalIgnoreCase))?.Url ?? "";
@@ -111,6 +114,7 @@ public partial class AppUpdateSettingViewModel : ObservableObject
                 var update = await UpdateHelper.CheckUpdateAsync(username, repo, new Version(App.Current.AppVersion));
                 if (update.IsExistNewVersion)
                 {
+                    NewVersion = update.TagName;
                     IsUpdateAvailable = true;
                     ChangeLog = update.Changelog;
                     LoadingStatus = string.Format("FoundANewVersion".GetLocalized(), update.TagName, update.CreatedAt, update.PublishedAt);
@@ -327,7 +331,7 @@ public partial class AppUpdateSettingViewModel : ObservableObject
                 }
 
                 // 确保所有文件都已复制后再执行更新
-                CommonUtil.ExecuteProgram(GetCachePath("UpdateLauncher.exe"), [Constants.Version]);
+                CommonUtil.ExecuteProgram(GetCachePath("UpdateLauncher.exe"), [NewVersion]);
             }
             else
             {

@@ -76,7 +76,10 @@ public class FolderActuator
     /// <returns></returns>
     private static async Task ProcessFoldersAsync(OperationParameters parameters)
     {
-        if (!Directory.Exists(parameters.TargetPath) && parameters.OperationMode != OperationMode.Rename)
+        if (!Directory.Exists(parameters.TargetPath)
+        && parameters.OperationMode != OperationMode.Rename
+        && parameters.OperationMode != OperationMode.Delete
+        && parameters.OperationMode != OperationMode.RecycleBin)
         {
             Directory.CreateDirectory(parameters.TargetPath);
         }
@@ -94,7 +97,7 @@ public class FolderActuator
         {
             if (FilterUtil.ShouldSkip(parameters.Funcs, folder, parameters.PathFilter))
             {
-                LogService.Logger.Debug($"执行文件夹操作 ShouldSkip {parameters.TargetPath}");
+                LogService.Logger.Debug($"执行文件夹操作 ShouldSkip {parameters.SourcePath}");
                 continue;
             }
 
@@ -146,7 +149,7 @@ public class FolderActuator
                 await RenameFolder(parameters.SourcePath, parameters.OldTargetPath);
                 break;
             case OperationMode.RecycleBin:
-                await FileActuator.MoveToRecycleBin(parameters.TargetPath, new List<Func<string, bool>>(parameters.Funcs),
+                await FileActuator.MoveToRecycleBin(parameters.TargetPath, new List<FilterItem>(parameters.Funcs),
                     parameters.PathFilter, parameters.RuleModel.RuleType, true, parameters.HandleSubfolders);
                 break;
             case OperationMode.UploadWebDAV:

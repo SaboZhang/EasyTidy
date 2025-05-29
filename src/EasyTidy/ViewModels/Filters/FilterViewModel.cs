@@ -104,7 +104,7 @@ public partial class FilterViewModel : ObservableRecipient
     [RelayCommand]
     private async Task OnAddFilterClickedAsync()
     {
-        var dialog = new AddFilterContentDialog
+        var dialog = new FilterContentEditorDialog
         {
             ViewModel = this,
             Title = "AdvancedRules".GetLocalized(),
@@ -127,7 +127,7 @@ public partial class FilterViewModel : ObservableRecipient
     {
         try
         {
-            var dialog = sender as AddFilterContentDialog;
+            var dialog = sender as FilterContentEditorDialog;
             var value = string.IsNullOrWhiteSpace(dialog.CreateDateValue);
             if (dialog.HasErrors || (!dialog.IsSizeSelected && !dialog.IsCreateDateSelected && !dialog.IsEditDateSelected
                 && !dialog.IsVisitDateSelected && !dialog.IsContentSelected && string.IsNullOrWhiteSpace(dialog.SizeValue)
@@ -136,8 +136,7 @@ public partial class FilterViewModel : ObservableRecipient
                 && string.IsNullOrWhiteSpace(dialog.IncludedFiles) && !dialog.IsArchiveSelected && !dialog.IsHiddenSelected
                 && !dialog.IsReadOnlySelected && !dialog.IsSystemSelected && !dialog.IsTempSelected))
             {
-                _notificationQueue.ShowWithWindowExtension("FilterConditions".GetLocalized(), InfoBarSeverity.Warning);
-                _ = ClearNotificationAfterDelay(3000);
+                _notificationQueue.ShowWithWindowExtension("FilterConditions".GetLocalized(), InfoBarSeverity.Warning, 3000);
                 args.Cancel = true;
                 return;
             }
@@ -178,14 +177,12 @@ public partial class FilterViewModel : ObservableRecipient
             });
             await _dbContext.SaveChangesAsync();
             await OnPageLoaded();
-            _notificationQueue.ShowWithWindowExtension("SaveSuccessfulText".GetLocalized(), InfoBarSeverity.Success);
-            _ = ClearNotificationAfterDelay(3000);
+            _notificationQueue.ShowWithWindowExtension("SaveSuccessfulText".GetLocalized(), InfoBarSeverity.Success, 3000);
         }
         catch (Exception ex)
         {
             Logger.Error($"添加过滤器失败：{ex}");
-            _notificationQueue.ShowWithWindowExtension("SaveSuccessfulText".GetLocalized(), InfoBarSeverity.Error);
-            _ = ClearNotificationAfterDelay(3000);
+            _notificationQueue.ShowWithWindowExtension("SaveSuccessfulText".GetLocalized(), InfoBarSeverity.Error, 3000);
         }
     }
 
@@ -210,14 +207,12 @@ public partial class FilterViewModel : ObservableRecipient
                 }
                 await _dbContext.SaveChangesAsync();
                 await OnPageLoaded();
-                _notificationQueue.ShowWithWindowExtension("DeleteSuccessfulText".GetLocalized(), InfoBarSeverity.Success);
-                _ = ClearNotificationAfterDelay(3000);
+                _notificationQueue.ShowWithWindowExtension("DeleteSuccessfulText".GetLocalized(), InfoBarSeverity.Success, 3000);
             }
         }
         catch (Exception ex)
         {
-            _notificationQueue.ShowWithWindowExtension("DeleteFailedText".GetLocalized(), InfoBarSeverity.Error);
-            _ = ClearNotificationAfterDelay(3000);
+            _notificationQueue.ShowWithWindowExtension("DeleteFailedText".GetLocalized(), InfoBarSeverity.Error, 3000);
             Logger.Error($"FilterViewModel: OnDeleteTask 异常信息 {ex}");
             IsActive = false;
         }
@@ -236,7 +231,7 @@ public partial class FilterViewModel : ObservableRecipient
         {
             if (dataContext != null)
             {
-                var dialog = new AddFilterContentDialog
+                var dialog = new FilterContentEditorDialog
                 {
                     ViewModel = this,
                     Title = "ModifyText".GetLocalized(),
@@ -287,8 +282,7 @@ public partial class FilterViewModel : ObservableRecipient
                         && string.IsNullOrWhiteSpace(dialog.IncludedFiles) && !dialog.IsArchiveSelected && !dialog.IsHiddenSelected
                         && !dialog.IsReadOnlySelected && !dialog.IsSystemSelected && !dialog.IsTempSelected))
                     {
-                        _notificationQueue.ShowWithWindowExtension("FilterConditions".GetLocalized(), InfoBarSeverity.Warning);
-                        _ = ClearNotificationAfterDelay(3000);
+                        _notificationQueue.ShowWithWindowExtension("FilterConditions".GetLocalized(), InfoBarSeverity.Warning, 3000);
                         e.Cancel = true;
                         return;
                     }
@@ -328,8 +322,7 @@ public partial class FilterViewModel : ObservableRecipient
 
                     await _dbContext.SaveChangesAsync();
                     await OnPageLoaded();
-                    _notificationQueue.ShowWithWindowExtension("ModifySuccessfullyText".GetLocalized(), InfoBarSeverity.Success);
-                    _ = ClearNotificationAfterDelay(3000);
+                    _notificationQueue.ShowWithWindowExtension("ModifySuccessfullyText".GetLocalized(), InfoBarSeverity.Success, 3000);
                 };
 
                 await dialog.ShowAsync();
@@ -339,17 +332,10 @@ public partial class FilterViewModel : ObservableRecipient
         }
         catch (Exception ex)
         {
-            _notificationQueue.ShowWithWindowExtension("ModificationFailedText".GetLocalized(), InfoBarSeverity.Error);
-            _ = ClearNotificationAfterDelay(3000);
+            _notificationQueue.ShowWithWindowExtension("ModificationFailedText".GetLocalized(), InfoBarSeverity.Error, 3000);
             Logger.Error($"FilterViewModel: OnUpdateTask 异常信息 {ex}");
         }
 
-    }
-
-    private async Task ClearNotificationAfterDelay(int delayMilliseconds)
-    {
-        await Task.Delay(delayMilliseconds);  // 延迟指定的毫秒数
-        _notificationQueue?.Clear();  // 清除通知
     }
 
 }

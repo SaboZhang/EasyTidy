@@ -13,7 +13,7 @@ namespace EasyTidy.Views.ContentDialogs;
 /// <summary>
 /// An empty page that can be used on its own or navigated to within a Frame.
 /// </summary>
-public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErrorInfo, INotifyPropertyChanged
+public sealed partial class TaskContentEditorDialog : ContentDialog, INotifyDataErrorInfo, INotifyPropertyChanged
 {
     public TaskOrchestrationViewModel ViewModel { get; set; }
 
@@ -169,7 +169,7 @@ public sealed partial class AddTaskContentDialog : ContentDialog, INotifyDataErr
 
     public string Argument { get; set; } = string.Empty;
 
-    public AddTaskContentDialog()
+    public TaskContentEditorDialog()
     {
         ViewModel = App.GetService<TaskOrchestrationViewModel>();
         this.InitializeComponent();

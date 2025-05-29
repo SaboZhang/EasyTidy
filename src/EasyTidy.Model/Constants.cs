@@ -32,8 +32,6 @@ public static class Constants
 
     public static readonly string LogPathName = Version;
 
-    public static readonly string LogPath = $"{ExecutePath}logs";
-
     private const string PortableConfig = "portable_config";
 
     /// <summary>
@@ -44,6 +42,8 @@ public static class Constants
     ///     * 使用批处理时获取路径为批处理文件所在目录
     /// </remarks>
     public static readonly string ExecutePath;
+
+    public static string LogPath => Path.Combine(ExecutePath, "logs");
 
     public static readonly string PortableCnfPath;
 

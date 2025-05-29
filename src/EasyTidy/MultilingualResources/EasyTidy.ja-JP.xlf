@@ -2354,19 +2354,31 @@
         </trans-unit>
         <trans-unit id="AddAtTheEnd_Create" translate="yes" xml:space="preserve">
           <source>When #C is added to the end or it's empty, use the creation time to rename according to rules</source>
-          <target state="new">When #C is added to the end or it's empty, use the creation time to rename according to rules</target>
+          <target state="translated">もし「#C」が末尾に付加されているか、あるいは空の場合は、作成時間に基づいて規則に従いリネームしてください</target>
         </trans-unit>
         <trans-unit id="AddAtTheEnd_Modify" translate="yes" xml:space="preserve">
           <source>Append #M to the end to choose renaming using modification time</source>
-          <target state="new">Append #M to the end to choose renaming using modification time</target>
+          <target state="translated">ファイル名の末尾に #M を追加して、更新時間を使ったリネームを選択します</target>
         </trans-unit>
         <trans-unit id="AddAtThenEnd_ShootingTime" translate="yes" xml:space="preserve">
           <source>Add #S at the end to select using photo capture time for renaming</source>
-          <target state="new">Add #S at the end to select using photo capture time for renaming</target>
+          <target state="translated">リネームの際に写真撮影時間を使用するには、末尾に#Sを追加してください</target>
         </trans-unit>
         <trans-unit id="AddAtThenEnd_NowTime" translate="yes" xml:space="preserve">
           <source>Append #D to select using the current time for renaming</source>
-          <target state="new">Append #D to select using the current time for renaming</target>
+          <target state="translated">現在の時刻を使用して名前を変更するには #D を追加します</target>
+        </trans-unit>
+        <trans-unit id="DefaultGroup_Warning" translate="yes" xml:space="preserve">
+          <source>Please select a group to be the default for right-click actions</source>
+          <target state="translated">右クリック時の既定グループを選択してください</target>
+        </trans-unit>
+        <trans-unit id="InvalidGrouping_Warning" translate="yes" xml:space="preserve">
+          <source>The selected group [{0}] cannot be set as the default group</source>
+          <target state="translated">選択されたグループ [{0}] をデフォルトグループとして設定することはできません。</target>
+        </trans-unit>
+        <trans-unit id="RuleIllegal" translate="yes" xml:space="preserve">
+          <source>Exclusion rules and inclusion rules cannot be mixed.</source>
+          <target state="translated">除外ルールと包含ルールは混在できません</target>
         </trans-unit>
       </group>
     </body>

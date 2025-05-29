@@ -1740,4 +1740,25 @@
   <data name="Log_Failed_Register_Hotkey" xml:space="preserve">
     <value>ホットキーの登録に失敗しました：{0}</value>
   </data>
+  <data name="AddAtTheEnd_Create" xml:space="preserve">
+    <value>もし「#C」が末尾に付加されているか、あるいは空の場合は、作成時間に基づいて規則に従いリネームしてください</value>
+  </data>
+  <data name="AddAtTheEnd_Modify" xml:space="preserve">
+    <value>ファイル名の末尾に #M を追加して、更新時間を使ったリネームを選択します</value>
+  </data>
+  <data name="AddAtThenEnd_ShootingTime" xml:space="preserve">
+    <value>リネームの際に写真撮影時間を使用するには、末尾に#Sを追加してください</value>
+  </data>
+  <data name="AddAtThenEnd_NowTime" xml:space="preserve">
+    <value>現在の時刻を使用して名前を変更するには #D を追加します</value>
+  </data>
+  <data name="DefaultGroup_Warning" xml:space="preserve">
+    <value>右クリック時の既定グループを選択してください</value>
+  </data>
+  <data name="InvalidGrouping_Warning" xml:space="preserve">
+    <value>選択されたグループ [{0}] をデフォルトグループとして設定することはできません。</value>
+  </data>
+  <data name="RuleIllegal" xml:space="preserve">
+    <value>除外ルールと包含ルールは混在できません</value>
+  </data>
 </root>

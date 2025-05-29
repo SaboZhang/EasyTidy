@@ -1,6 +1,8 @@
+using EasyTidy.Model;
 using EasyTidy.Util.UtilInterface;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 
 namespace EasyTidy.Util.Strategy;
@@ -9,24 +11,40 @@ public class FolderFilterStrategy : IFilterStrategy
 {
     public IEnumerable<Func<string, bool>> GenerateFilters(string rule)
     {
-        if (IsWildcardRule(rule))
-        {
-            yield return folderPath => Directory.Exists(folderPath);
-            yield break;
-        }
-
-        string[] conditions = rule.Split(new[] { ';', '|' }, StringSplitOptions.RemoveEmptyEntries);
-
-        foreach (var condition in conditions)
-        {
-            string normalizedCondition = condition.Trim();
-            yield return GenerateSingleFilter(normalizedCondition);
-        }
+        throw new NotImplementedException("FolderFilterStrategy does not support GenerateFilters method. Use GenerateFilterItems instead.");
     }
 
     private static bool IsWildcardRule(string rule)
     {
         return rule == "**";
+    }
+
+    public IEnumerable<FilterItem> GenerateFilterItems(string rule)
+    {
+        if (IsWildcardRule(rule))
+        {
+            yield return new FilterItem
+            {
+                Predicate = folderPath => Directory.Exists(folderPath),
+                IsExclude = false
+            };
+            yield break;
+        }
+
+        string[] conditions = rule.Split([';', '|'], StringSplitOptions.RemoveEmptyEntries);
+
+        foreach (var condition in conditions)
+        {
+            string normalized = condition.Trim();
+            bool isExclude = normalized.StartsWith("**/");
+            string cleaned = isExclude ? normalized[3..] : normalized;
+
+            yield return new FilterItem
+            {
+                Predicate = GenerateSingleFilter(normalized),
+                IsExclude = isExclude
+            };
+        }
     }
 
     private static Func<string, bool> GenerateSingleFilter(string condition)
@@ -35,7 +53,8 @@ public class FolderFilterStrategy : IFilterStrategy
         {
             (cond => cond.StartsWith("**/"), cond =>
             {
-                string excludeKeyword = cond.Substring(3);
+                string excludeKeyword = cond.Substring(3).TrimEnd('*');
+                Debug.WriteLine($"Exclude keyword: {excludeKeyword}");
                 return folderPath => Directory.Exists(folderPath) && !Path.GetFileName(folderPath).Contains(excludeKeyword);
             }),
             (cond => cond.StartsWith("**"), cond =>

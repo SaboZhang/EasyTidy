@@ -73,6 +73,22 @@ public static class StackedNotificationsBehaviorExtensions
         });
     }
 
+    public static void ShowWithWindowExtension(this StackedNotificationsBehavior behavior, string message, InfoBarSeverity severity, int autoClearDelayMs = 3000)
+    {
+        var dispatcherQueue = App.GetService<DispatcherQueue>();
+
+        dispatcherQueue?.EnqueueAsync(() =>
+        {
+            var notificationToShow = new Notification
+            {
+                Message = message,
+                Severity = severity,
+                Duration = autoClearDelayMs > 0 ? TimeSpan.FromMilliseconds(autoClearDelayMs) : TimeSpan.FromMilliseconds(3000),
+            };
+            behavior.Show(notificationToShow);
+        });
+    }
+
     public static void RemoveWithWindowExtension(this StackedNotificationsBehavior behavior, Notification notification)
     {
         var dispatcherQueue = App.GetService<DispatcherQueue>();
@@ -92,4 +108,11 @@ public static class StackedNotificationsBehaviorExtensions
             behavior.Clear();
         });
     }
+
+    private static bool TryGetDispatcherQueue(StackedNotificationsBehavior behavior, out DispatcherQueue dispatcher)
+    {
+        dispatcher = behavior.AssociatedObject?.DispatcherQueue!;
+        return dispatcher is not null;
+    }
+
 }

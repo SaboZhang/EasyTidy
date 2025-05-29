@@ -49,7 +49,9 @@ public class AutomaticJob : IJob
             sourcePath: task.TaskSource.Equals("DesktopText".GetLocalized())
             ? Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
             : task.TaskSource,
-            targetPath: task.TaskTarget,
+            targetPath: task.TaskTarget.Equals("DesktopText".GetLocalized())
+            ? Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
+            : task.TaskTarget,
             fileOperationType: Settings.GeneralConfig.FileOperationType,
             handleSubfolders: Settings.GeneralConfig.SubFolder ?? false,
             funcs: FilterUtil.GeneratePathFilters(rule, task.RuleType),
@@ -171,10 +173,12 @@ public class AutomaticJob : IJob
                     sourcePath: item.TaskSource.Equals("DesktopText".GetLocalized())
                     ? Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
                     : item.TaskSource,
-                    targetPath: item.TaskTarget,
+                    targetPath: item.TaskTarget.Equals("DesktopText".GetLocalized())
+                    ? Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
+                    : item.TaskTarget,
                     fileOperationType: Settings.GeneralConfig.FileOperationType,
                     handleSubfolders: Settings.GeneralConfig.SubFolder ?? false,
-                    funcs: new List<Func<string, bool>>(FilterUtil.GeneratePathFilters(item.TaskRule, item.RuleType)),
+                    funcs: [.. FilterUtil.GeneratePathFilters(item.TaskRule, item.RuleType)],
                     pathFilter: FilterUtil.GetPathFilters(item.Filter),
                     new RuleModel() { Filter = item.Filter, Rule = item.TaskRule, RuleType = item.RuleType })
                 {

@@ -529,13 +529,11 @@ public partial class AutomaticViewModel : ObservableRecipient
             if (ai != null) llm = AIServiceFactory.CreateAIServiceLlm(ai);
             await OnPageLoaded();
             await AutomaticJob.AddTaskConfig(automatic, OnScheduleExecution, llm);
-            _notificationQueue.ShowWithWindowExtension("SaveSuccessfulText".GetLocalized(), InfoBarSeverity.Success);
-            _ = ClearNotificationAfterDelay(3000);
+            _notificationQueue.ShowWithWindowExtension("SaveSuccessfulText".GetLocalized(), InfoBarSeverity.Success, 3000);
         }
         catch (Exception ex)
         {
-            _notificationQueue.ShowWithWindowExtension("SaveFailedText".GetLocalized(), InfoBarSeverity.Error);
-            _ = ClearNotificationAfterDelay(3000);
+            _notificationQueue.ShowWithWindowExtension("SaveFailedText".GetLocalized(), InfoBarSeverity.Error, 3000);
             Logger.Error($"AutomaticViewModel: OnSaveTaskConfig {"ExceptionTxt".GetLocalized()} {ex}");
             IsActive = false;
         }
@@ -1045,7 +1043,7 @@ public partial class AutomaticViewModel : ObservableRecipient
     /// <param name="rule">路径规则</param>
     /// <param name="filter">过滤条件</param>
     /// <param name="files">文件列表</param>
-    private static void ProcessFile(string filePath, List<Func<string, bool>> rule, Func<string, bool> filter, List<FileListModel> files)
+    private static void ProcessFile(string filePath, List<FilterItem> rule, Func<string, bool> filter, List<FileListModel> files)
     {
         // 如果文件应被跳过，直接返回
         if (FilterUtil.ShouldSkip(rule, filePath, filter))
@@ -1075,7 +1073,7 @@ public partial class AutomaticViewModel : ObservableRecipient
     /// <param name="rule">路径规则</param>
     /// <param name="filter">过滤条件</param>
     /// <param name="files">文件列表</param>
-    private static void ProcessFolder(DirectoryInfo directory, TaskRuleType ruleType, List<Func<string, bool>> rule, Func<string, bool> filter, List<FileListModel> files)
+    private static void ProcessFolder(DirectoryInfo directory, TaskRuleType ruleType, List<FilterItem> rule, Func<string, bool> filter, List<FileListModel> files)
     {
         // 如果文件夹应被跳过且规则类型为文件夹规则，直接返回
         if (FilterUtil.ShouldSkip(rule, directory.FullName, filter) && ruleType == TaskRuleType.FolderRule)
@@ -1116,14 +1114,4 @@ public partial class AutomaticViewModel : ObservableRecipient
 
     }
 
-    /// <summary>
-    /// 清除通知
-    /// </summary>
-    /// <param name="delayMilliseconds"></param>
-    /// <returns></returns>
-    public async Task ClearNotificationAfterDelay(int delayMilliseconds)
-    {
-        await Task.Delay(delayMilliseconds);  // 延迟指定的毫秒数
-        _notificationQueue?.Clear();  // 清除通知
-    }
 }

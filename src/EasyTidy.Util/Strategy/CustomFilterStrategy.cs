@@ -33,14 +33,14 @@ public class CustomFilterStrategy
     {
         if (FilterUtil.IsFolderRule(part))
         {
-            foreach (var filter in _folderFilterStrategy.GenerateFilters(part))
+            foreach (var filter in _folderFilterStrategy.GenerateFilterItems(part))
             {
                 filters.Add(filter);
             }
         }
         else
         {
-            foreach (var filter in _fileFilterStrategy.GenerateFilters(part))
+            foreach (var filter in _fileFilterStrategy.GenerateFilterItems(part))
             {
                 filters.Add(filter);
             }
