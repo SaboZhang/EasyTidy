@@ -130,6 +130,12 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         }
     }
 
+    [ObservableProperty]
+    private bool _isTipOpen;
+
+    [ObservableProperty]
+    private string _aiNotice = "AI_Notice".GetLocalized();
+
     private static DateTime LastInvocationTime = DateTime.MinValue;
 
     public void Initialize(StackedNotificationsBehavior notificationQueue)
@@ -182,6 +188,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                     .AddButton(new AppNotificationButton("Settings".GetLocalized())
                     .AddArgument("action", "AiSettings")).AddArgument("contentId", "351");
                 AppNotificationService.Show(tips.BuildNotification().Payload);
+                IsTipOpen = true;
                 args.Cancel = true;
                 return;
             }
