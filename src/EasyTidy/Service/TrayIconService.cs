@@ -41,15 +41,15 @@ public class TrayIconService
         if (IconPaths.TryGetValue(status, out var iconPath))
         {
             _trayIcon.IconSource = new BitmapImage(new Uri(iconPath));
-            _trayIcon?.ShowNotification(
-           title: "提示",
-           message: "EasyTidy 快捷键状态已变更",
-           icon: NotificationIcon.Info,
-           //largeIcon: LargeIconCheckBox.IsChecked ?? false,
-           sound: true,
-           respectQuietTime: true,
-           realtime: false,
-           timeout: null);
+        //     _trayIcon?.ShowNotification(
+        //    title: "提示",
+        //    message: "EasyTidy 快捷键状态已变更",
+        //    icon: NotificationIcon.Info,
+        //    //largeIcon: LargeIconCheckBox.IsChecked ?? false,
+        //    sound: true,
+        //    respectQuietTime: true,
+        //    realtime: false,
+        //    timeout: null);
         }
 #if DEBUG
         string baseToolTip = $"EasyTidyDev {Constants.Version}";

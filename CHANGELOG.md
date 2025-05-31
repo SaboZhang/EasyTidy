@@ -16,7 +16,7 @@
 
 ## 更新日志详情
 
-- **[Full Changelog](https://github.com/SaboZhang/EasyTidy/compare/1.3.2.423...1.3.5.521)**
+- **[Full Changelog](https://github.com/SaboZhang/EasyTidy/compare/1.3.5.524...1.3.6.531)**
 
 ## 下载链接
 

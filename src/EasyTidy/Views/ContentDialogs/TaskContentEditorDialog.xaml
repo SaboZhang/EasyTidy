@@ -10,16 +10,16 @@
     xmlns:model="using:EasyTidy.Model"
     xmlns:val="using:EasyTidy.Views.UserControls"
     xmlns:ui="using:CommunityToolkit.WinUI"
-    xmlns:i="using:Microsoft.Xaml.Interactivity" 
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:etc="using:EasyTidy.Behaviors"
     CornerRadius="{ThemeResource OverlayCornerRadius}"
     DefaultButton="Primary">
 
     <ContentDialog.Resources>
         <DataTemplate x:Key="ValidationTemplate"
-              x:DataType="x:String">
+                      x:DataType="x:String">
             <TextBlock Foreground="{ThemeResource SystemFillColorCriticalBrush}"
-               Text="{x:Bind}"/>
+                       Text="{x:Bind}"/>
         </DataTemplate>
     </ContentDialog.Resources>
 
@@ -124,7 +124,7 @@
                         x:Uid="DialogRuleButton">
                     <Button.Content>
                         <Image Source="/Assets/Fluent/rule.png"
-                                Stretch="Uniform"/>
+                               Stretch="Uniform"/>
                     </Button.Content>
                     <Button.Flyout>
                         <MenuFlyout x:Name="RuleFlyout"/>
@@ -137,7 +137,7 @@
                         Click="FilterButton_Click">
                     <Button.Content>
                         <Image Source="/Assets/Fluent/filter.png"
-                                Stretch="Uniform"/>
+                               Stretch="Uniform"/>
                     </Button.Content>
                     <Button.Resources>
                         <TeachingTip x:Name="FilterButtonTeachingTip"
@@ -186,11 +186,18 @@
                         Margin="0,20,0,0"
                         Orientation="Horizontal"
                         Spacing="8">
-                <TextBlock Text="Prompt:" Width="110"/>
+                <TextBlock Text="Prompt:"
+                        Width="110"/>
                 <StackPanel Orientation="Horizontal"
                             Margin="4,-4,0,0">
-                    <RadioButton x:Name="BuiltIn" x:Uid="BuiltInText" Checked="RadioButton_Checked" IsChecked="{x:Bind SelectedMode, Converter={StaticResource BoolToEnumConverter}, ConverterParameter=BuiltIn, Mode=TwoWay}"/>
-                    <RadioButton x:Name="Custom" x:Uid="CustomTxt" Checked="RadioButton_Checked" IsChecked="{x:Bind SelectedMode, Converter={StaticResource BoolToEnumConverter}, ConverterParameter=Custom, Mode=TwoWay}"/>
+                    <RadioButton x:Name="BuiltIn"
+                            x:Uid="BuiltInText"
+                            Checked="RadioButton_Checked"
+                            IsChecked="{x:Bind SelectedMode, Converter={StaticResource BoolToEnumConverter}, ConverterParameter=BuiltIn, Mode=TwoWay}"/>
+                    <RadioButton x:Name="Custom"
+                            x:Uid="CustomTxt"
+                            Checked="RadioButton_Checked"
+                            IsChecked="{x:Bind SelectedMode, Converter={StaticResource BoolToEnumConverter}, ConverterParameter=Custom, Mode=TwoWay}"/>
                 </StackPanel>
             </StackPanel>
             <StackPanel x:Name="PromptPanel"
@@ -200,7 +207,7 @@
                     <RichEditBox
                         Header="system"
                         Width="210"
-                        MaxHeight="120" >
+                        MaxHeight="120">
                         <i:Interaction.Behaviors>
                             <etc:RichEditBoxBehavior
                                 x:Name="SystemPromptEdit"
@@ -211,7 +218,7 @@
                         Margin="0,4,0,0"
                         Header="user"
                         Width="210"
-                        MaxHeight="120" >
+                        MaxHeight="120">
                         <i:Interaction.Behaviors>
                             <etc:RichEditBoxBehavior
                                 x:Name="UserPromptEdit"
@@ -300,7 +307,7 @@
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
                                 <TextBlock x:Uid="DateTimeCheatSheet"
-                                        FontWeight="SemiBold"/>
+                                           FontWeight="SemiBold"/>
                                 <ListView
                                     Grid.Row="1"
                                     IsItemClickEnabled="True"
@@ -310,7 +317,7 @@
                                     <ListView.ItemTemplate>
                                         <DataTemplate x:DataType="model:PatternSnippetModel">
                                             <Grid Margin="-10,0,0,0"
-                                                    ColumnSpacing="8">
+                                                  ColumnSpacing="8">
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="56"/>
                                                     <ColumnDefinition Width="*"/>
@@ -352,7 +359,7 @@
                                     <ListView.ItemTemplate>
                                         <DataTemplate x:DataType="model:PatternSnippetModel">
                                             <Grid Margin="-10,0,0,0"
-                                                    ColumnSpacing="8">
+                                                  ColumnSpacing="8">
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="Auto"/>
                                                     <ColumnDefinition Width="*"/>
@@ -395,7 +402,7 @@
                                     <ListView.ItemTemplate>
                                         <DataTemplate x:DataType="model:PatternSnippetModel">
                                             <Grid Margin="-10,0,0,0"
-                                                    ColumnSpacing="8">
+                                                  ColumnSpacing="8">
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="Auto"/>
                                                     <ColumnDefinition Width="*"/>
@@ -470,20 +477,24 @@
                 </Button>
             </StackPanel>
             <StackPanel x:Name="ArgumentPanel"
-                Orientation="Horizontal"
+                        Orientation="Horizontal"
                         Spacing="8"
                         Margin="0,10,0,0">
-                <TextBlock x:Uid="ExecutionParameters" Width="110" Margin="0,8,0,0"/>
-                <TextBox Margin="6,0,0,0" Text="{x:Bind Argument, Mode=TwoWay}" Width="210"/>
+                <TextBlock x:Uid="ExecutionParameters"
+                        Width="110"
+                        Margin="0,8,0,0"/>
+                <TextBox Margin="6,0,0,0"
+                        Text="{x:Bind Argument, Mode=TwoWay}"
+                        Width="210"/>
             </StackPanel>
             <StackPanel x:Name="EncryptedPanel"
-                    Spacing="8"
-                    Margin="0,8,0,0"
-                    Visibility="Collapsed">
+                        Spacing="8"
+                        Margin="0,8,0,0"
+                        Visibility="Collapsed">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock x:Uid="EncryptedText"
-                            Width="110"
-                            Margin="0,5,0,0"/>
+                               Width="110"
+                               Margin="0,5,0,0"/>
                     <ComboBox Margin="14,0,0,0"
                               ItemsSource="{x:Bind ViewModel.Encrypteds, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                               SelectedItem="{x:Bind Encencrypted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -508,9 +519,11 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock x:Uid="SourceFile"
-                            Width="110"
-                            Margin="0,5,0,0"/>
-                    <CheckBox Margin="14,0,0,0" IsChecked="{x:Bind IsSourceFile, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Uid="DeleteSourceFile"/>
+                               Width="110"
+                               Margin="0,5,0,0"/>
+                    <CheckBox Margin="14,0,0,0"
+                            IsChecked="{x:Bind IsSourceFile, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            x:Uid="DeleteSourceFile"/>
                 </StackPanel>
             </StackPanel>
             <StackPanel x:Name="TaskEnablePanel"
@@ -528,6 +541,14 @@
                           Margin="-64,0,0,0"
                           IsChecked="{x:Bind Shortcut, Mode=TwoWay}"></CheckBox>
             </StackPanel>
+            <TeachingTip
+                x:Name="ShowNotice"
+                PreferredPlacement="Top"
+                IsOpen="{x:Bind ViewModel.IsTipOpen, Mode=TwoWay}"
+                PlacementMargin="20"
+                IsLightDismissEnabled="True">
+                <TextBlock Text="{x:Bind ViewModel.AiNotice, Mode=OneWay}"/>
+            </TeachingTip>
         </StackPanel>
     </ScrollView>
 </ContentDialog>
