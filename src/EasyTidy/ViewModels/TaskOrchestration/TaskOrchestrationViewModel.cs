@@ -7,6 +7,7 @@ using EasyTidy.Common.Job;
 using EasyTidy.Contracts.Service;
 using EasyTidy.Model;
 using EasyTidy.Service;
+using EasyTidy.Util;
 using EasyTidy.Service.AIService;
 using EasyTidy.Views.ContentDialogs;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +18,7 @@ using System.Data;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using MigraDoc.DocumentObjectModel.Tables;
 
 namespace EasyTidy.ViewModels;
 
@@ -637,6 +639,56 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
             Logger.Error($"TaskOrchestrationViewModel: UpdateQuartzGroup {"ExceptionTxt".GetLocalized()} {ex}");
         }
 
+    }
+
+    [RelayCommand]
+    private async Task OnImportTask()
+    {
+        try
+        {
+            var file = await FileAndFolderPickerHelper.PickSingleFileAsync(App.MainWindow, [".xls", ".xlsx"]);
+            if (file == null || string.IsNullOrEmpty(file.Path))
+            {
+                _notificationQueue.ShowWithWindowExtension("FileNotSelectedText".GetLocalized(), InfoBarSeverity.Warning);
+                return;
+            }
+            var tasks = ExcelImportHelper.ImportFromExcel(file.Path, 1, row =>
+            {
+                try
+                {
+                    return new OrchestrationTask
+                    {
+                        GroupName = row.GetCellValue(0),
+                        TaskName = row.GetCellValue(1),
+                        Rule = row.GetCellValue(2),
+                        Action = row.GetCellValue(3),
+                        SourcePath = row.GetCellValue(4),
+                        TargetPath = row.GetCellValue(5),
+                    };
+                }
+                catch (Exception ex)
+                {
+                    Logger.Error($"TaskOrchestrationViewModel: OnImportTask {"ExceptionTxt".GetLocalized()} {ex}");
+                    return null;
+                }
+            });
+            await SaveImportedTasksAsync(tasks);
+        }
+        catch (Exception ex)
+        {
+            Logger.Error($"TaskOrchestrationViewModel: OnImportTask {"ExceptionTxt".GetLocalized()} {ex}");
+        }
+    }
+
+    private async Task SaveImportedTasksAsync(List<OrchestrationTask> tasks)
+    {
+        foreach (var task in tasks)
+        {
+            var group = await _dbContext.TaskGroup.Where(x => x.GroupName == task.GroupName).FirstOrDefaultAsync();
+            var newEntity = task.ToEntity(group);
+            await _dbContext.TaskOrchestration.AddAsync(newEntity);
+        }
+        await _dbContext.SaveChangesAsync();
     }
 
     /// <summary>

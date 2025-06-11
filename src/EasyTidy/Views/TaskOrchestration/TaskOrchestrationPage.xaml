@@ -60,6 +60,10 @@
                                 </ctk:SettingsCard.HeaderIcon>
                                 <StackPanel Orientation="Horizontal"
                                             Spacing="10">
+                                    <Button 
+                                        FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                        Content="&#xE8B5;"
+                                        Command="{x:Bind ViewModel.ImportTaskCommand}"/>
                                     <Button x:Uid="TaskAddTaskButton"
                                             Content="&#xED0E;"
                                             FontFamily="{ThemeResource SymbolThemeFontFamily}"
