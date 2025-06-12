@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using CommunityToolkit.WinUI;
 using EasyTidy.Log;
+using EasyTidy.Model;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.SS.Util;
@@ -81,6 +84,14 @@ public static class ExcelImportHelper
         };
     }
 
+    public static void CreateTemplate(IWorkbook workbook, ISheet sheet)
+    {
+        CreateDescriptionRow(workbook, sheet);
+        CreateHeaderRow(workbook, sheet);
+        var displayNames = GetLocalizedEnumOptions<OperationMode>();
+        AddDropDownList(sheet, displayNames, 2, 1000, 3, 3); // 第3列（索引3），行2开始（第3行）到第101行
+    }
+
     private static readonly string[] ColumnHeaders = new[]
     {
         "任务组名",
@@ -91,10 +102,30 @@ public static class ExcelImportHelper
         "目标路径"
     };
 
-    public static void CreateDescriptionRow(IWorkbook workbook, ISheet sheet)
+    private static string[] GetLocalizedEnumOptions<T>() where T : Enum
+    {
+        return Enum.GetValues(typeof(T))
+                   .Cast<Enum>()
+                   .Where(e => !e.ToString().Equals("None", StringComparison.OrdinalIgnoreCase))
+                   .Select(EnumHelper.GetDisplayName)
+                   .ToArray();
+    }
+
+
+    private static void AddDropDownList(ISheet sheet, string[] items, int firstRow, int lastRow, int firstCol, int lastCol)
+    {
+        var helper = new XSSFDataValidationHelper((XSSFSheet)sheet);
+        var constraint = helper.CreateExplicitListConstraint(items);
+        var addressList = new CellRangeAddressList(firstRow, lastRow, firstCol, lastCol);
+        var validation = helper.CreateValidation(constraint, addressList);
+        validation.ShowErrorBox = true;
+        sheet.AddValidationData(validation);
+    }
+
+    private static void CreateDescriptionRow(IWorkbook workbook, ISheet sheet)
     {
         var row = sheet.CreateRow(0);
-        row.HeightInPoints = 130;
+        row.HeightInPoints = 170;
 
         var cell = row.CreateCell(0);
         cell.SetCellValue("模板填写说明：\n" +
@@ -124,7 +155,7 @@ public static class ExcelImportHelper
     }
 
     // 创建表头行及样式
-    public static void CreateHeaderRow(IWorkbook workbook, ISheet sheet)
+    private static void CreateHeaderRow(IWorkbook workbook, ISheet sheet)
     {
         var header = sheet.CreateRow(1);
 
