@@ -61,6 +61,12 @@
                                 <StackPanel Orientation="Horizontal"
                                             Spacing="10">
                                     <Button 
+                                        ToolTipService.ToolTip="导出Excel模板"
+                                        FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                        Content="&#xEDE1;"
+                                        Command="{x:Bind ViewModel.SaveExcelTemplateCommand}"/>
+                                    <Button 
+                                        ToolTipService.ToolTip="导入任务"
                                         FontFamily="{ThemeResource SymbolThemeFontFamily}"
                                         Content="&#xE8B5;"
                                         Command="{x:Bind ViewModel.ImportTaskCommand}"/>

@@ -7,18 +7,21 @@ using EasyTidy.Common.Job;
 using EasyTidy.Contracts.Service;
 using EasyTidy.Model;
 using EasyTidy.Service;
-using EasyTidy.Util;
 using EasyTidy.Service.AIService;
 using EasyTidy.Views.ContentDialogs;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Primitives;
 using Microsoft.UI.Dispatching;
 using Microsoft.Windows.AppNotifications.Builder;
+using NPOI.SS.UserModel;
+using NPOI.SS.Util;
+using NPOI.XSSF.UserModel;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using MigraDoc.DocumentObjectModel.Tables;
 
 namespace EasyTidy.ViewModels;
 
@@ -48,7 +51,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
     }
 
     [ObservableProperty]
-    private IList<OperationMode> operationModes = Enum.GetValues(typeof(OperationMode)).Cast<OperationMode>().ToList();
+    private IList<OperationMode> operationModes = Enum.GetValues(typeof(OperationMode)).Cast<OperationMode>().Where(x => x != OperationMode.None).ToList();
 
     [ObservableProperty]
     private IList<Encrypted> _encrypteds = Enum.GetValues(typeof(Encrypted)).Cast<Encrypted>().ToList();
@@ -672,7 +675,8 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                     return null;
                 }
             });
-            await SaveImportedTasksAsync(tasks);
+            var importName = Path.GetFileNameWithoutExtension(file.Path);
+            await SaveImportedTasksAsync(tasks, importName);
         }
         catch (Exception ex)
         {
@@ -680,15 +684,173 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         }
     }
 
-    private async Task SaveImportedTasksAsync(List<OrchestrationTask> tasks)
+    private async Task SaveImportedTasksAsync(List<OrchestrationTask> tasks, string importName = "import")
     {
+        // 1. 收集所有不为空的组名
+        var groupNames = tasks
+            .Select(t => string.IsNullOrEmpty(t.GroupName) ? importName : t.GroupName)
+            .Distinct()
+            .ToList();
+
+        // 2. 一次性查出已有组
+        var existingGroups = await _dbContext.TaskGroup
+            .Where(g => groupNames.Contains(g.GroupName))
+            .ToListAsync();
+
+        // 3. 创建字典加快查找
+        var groupDict = existingGroups.ToDictionary(g => g.GroupName, g => g);
+
+        // 4. 逐个任务处理
+        var sb = new StringBuilder();
         foreach (var task in tasks)
         {
-            var group = await _dbContext.TaskGroup.Where(x => x.GroupName == task.GroupName).FirstOrDefaultAsync();
-            var newEntity = task.ToEntity(group);
-            await _dbContext.TaskOrchestration.AddAsync(newEntity);
+            var groupName = string.IsNullOrEmpty(task.GroupName) ? $"{importName}{DateTime.Now:yyyy-MM-dd}" : task.GroupName;
+
+            if (!groupDict.TryGetValue(groupName, out var group))
+            {
+                group = new TaskGroupTable
+                {
+                    GroupName = groupName,
+                    IsUsed = false,
+                    IsDefault = false
+                };
+                await _dbContext.TaskGroup.AddAsync(group);
+                groupDict[groupName] = group; // 添加到缓存中，防止后续重复创建
+            }
+
+            var entity = task.ToEntity(group);
+            if (entity.OperationMode == OperationMode.None)
+            {
+                sb.Append(entity.TaskName + ", ");
+            }
+            await _dbContext.TaskOrchestration.AddAsync(entity);
+        }
+        if (sb.Length > 0)
+        {
+            sb.Length -= 2; // 移除最后的逗号和空格
+            _notificationQueue.ShowWithWindowExtension($"以下任务已添加，但操作模式无法识别，执行时将会跳过：{sb}", InfoBarSeverity.Warning, 5000);
         }
         await _dbContext.SaveChangesAsync();
+    }
+
+    [RelayCommand]
+    private async Task OnSaveExcelTemplateAsync()
+    {
+        try
+        {
+            var fileTypeChoices = new Dictionary<string, IList<string>>
+            {
+                { "Excel 文件", new List<string> { ".xlsx", ".xls" } }
+            };
+            var file = await FileAndFolderPickerHelper.PickSaveFileAsync(App.MainWindow, fileTypeChoices, "EasyTidy(1.3.6.531)_任务导入模板.xlsx");
+            if (file != null)
+            {
+                using var stream = await file.OpenStreamForWriteAsync();
+                IWorkbook workbook = new XSSFWorkbook();
+                var sheet = workbook.CreateSheet("导入模板");
+
+                // 设置说明行
+                ExcelImportHelper.CreateDescriptionRow(workbook, sheet);
+
+                // 创建表头行
+                ExcelImportHelper.CreateHeaderRow(workbook, sheet);
+
+                // 写入文件
+                workbook.Write(stream);
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.Error($"TaskOrchestrationViewModel: OnSaveExcelTemplateAsync {"ExceptionTxt".GetLocalized()} {ex}");
+            _notificationQueue.ShowWithWindowExtension("SaveTemplateFailedText".GetLocalized(), InfoBarSeverity.Error, 3000);
+        }
+    }
+
+    private static readonly string[] ColumnHeaders = new[]
+    {
+        "任务组名",
+        "任务名称",
+        "处理规则",
+        "操作方式",
+        "源路径",
+        "目标路径"
+    };
+
+    private static void CreateDescriptionRow(IWorkbook workbook, ISheet sheet)
+    {
+        var row = sheet.CreateRow(0);
+        row.HeightInPoints = 130;
+
+        var cell = row.CreateCell(0);
+        cell.SetCellValue("模板填写说明：\n" +
+                          "1. 任务组名：可选，若不填写则默认为导入文件名加当前日期（例如：导入文件名为'测试模板'则组名为'测试模板2025-06-12'）。\n" +
+                          "2. 任务名称：必填，任务的唯一标识。\n" +
+                          "3. 处理规则：必选，规则与单个添加一致。\n" +
+                          "4. 操作方式：必填，支持的操作方式为添加单个任务时的所有规则，并且跟当前应用设置的语言有关（例如应用设置的英文，则操作方式填写Move等）。\n" +
+                          "5. 源路径：选填，任务源文件夹路径，为空时只能通过拖拽窗口执行任务。（路径格式为：D:\\db\\测试）\n" +
+                          "6. 目标路径：必填，任务目标文件夹路径。（路径格式为：D:\\db\\测试）\n");
+
+        // 设置样式
+        var style = workbook.CreateCellStyle();
+        var font = workbook.CreateFont();
+        font.FontHeightInPoints = 12;
+        style.SetFont(font);
+
+        style.WrapText = true;
+        // 设置背景色
+        style.FillForegroundColor = IndexedColors.LightYellow.Index; // 推荐色：淡黄色
+        style.FillPattern = FillPattern.SolidForeground;
+
+        // 设置边框
+        SetBorders(style);
+
+        cell.CellStyle = style;
+    }
+
+    // 创建表头行及样式
+    private static void CreateHeaderRow(IWorkbook workbook, ISheet sheet)
+    {
+        var header = sheet.CreateRow(1);
+
+        var greenStyle = workbook.CreateCellStyle();
+        var redStyle = workbook.CreateCellStyle();
+        var font = workbook.CreateFont();
+        font.IsBold = true;
+        font.FontHeightInPoints = 12;
+
+        // 设置绿色背景（表示可选项）
+        greenStyle.FillForegroundColor = IndexedColors.LightGreen.Index;
+        greenStyle.FillPattern = FillPattern.SolidForeground;
+        greenStyle.SetFont(font);
+        SetBorders(greenStyle);
+
+        // 设置红色背景（表示必填项）
+        redStyle.FillForegroundColor = IndexedColors.LightOrange.Index; // 或 LightOrange/LightRed 更柔和
+        redStyle.FillPattern = FillPattern.SolidForeground;
+        redStyle.SetFont(font);
+        SetBorders(redStyle);
+
+        for (int i = 0; i < ColumnHeaders.Length; i++)
+        {
+            var cell = header.CreateCell(i);
+            cell.SetCellValue(ColumnHeaders[i]);
+
+            // 设置第 0 和第 3 列为绿色，其余为红色
+            if (i == 0 || i == 4)
+                cell.CellStyle = greenStyle;
+            else
+                cell.CellStyle = redStyle;
+
+            sheet.SetColumnWidth(i, 20 * 256);
+        }
+    }
+
+    private static void SetBorders(ICellStyle style)
+    {
+        style.BorderTop = BorderStyle.Thin;
+        style.BorderBottom = BorderStyle.Thin;
+        style.BorderLeft = BorderStyle.Thin;
+        style.BorderRight = BorderStyle.Thin;
     }
 
     /// <summary>

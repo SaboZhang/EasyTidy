@@ -18,7 +18,7 @@ public class OrchestrationTask
             GroupName = groupTable,
             TaskName = TaskName,
             TaskRule = Rule,
-            OperationMode = Enum.TryParse<OperationMode>(Action, out var actionMode) ? actionMode : default,
+            OperationMode = EnumHelper.TryParseDisplayName<OperationMode>(Action, out var actionMode) ? actionMode : OperationMode.None,
             TaskTarget = TargetPath,
             TaskSource = SourcePath,
             IsEnabled = true,

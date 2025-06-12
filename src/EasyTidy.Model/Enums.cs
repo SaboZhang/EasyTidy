@@ -70,8 +70,9 @@ public enum OperationMode
 
     [Display(Name = "AIClassificationText")] AIClassification,
 
-    [Display(Name = "RunExternalProgramsText")] RunExternalPrograms
+    [Display(Name = "RunExternalProgramsText")] RunExternalPrograms,
 
+    None
 }
 
 public enum YesOrNo
