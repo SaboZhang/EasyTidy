@@ -10,10 +10,15 @@ using EasyTidy.Service;
 using EasyTidy.Service.AIService;
 using EasyTidy.Views.ContentDialogs;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Primitives;
 using Microsoft.UI.Dispatching;
 using Microsoft.Windows.AppNotifications.Builder;
+using NPOI.SS.UserModel;
+using NPOI.SS.Util;
+using NPOI.XSSF.UserModel;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -46,7 +51,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
     }
 
     [ObservableProperty]
-    private IList<OperationMode> operationModes = Enum.GetValues(typeof(OperationMode)).Cast<OperationMode>().ToList();
+    private IList<OperationMode> operationModes = Enum.GetValues(typeof(OperationMode)).Cast<OperationMode>().Where(x => x != OperationMode.None).ToList();
 
     [ObservableProperty]
     private IList<Encrypted> _encrypteds = Enum.GetValues(typeof(Encrypted)).Cast<Encrypted>().ToList();
@@ -637,6 +642,134 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
             Logger.Error($"TaskOrchestrationViewModel: UpdateQuartzGroup {"ExceptionTxt".GetLocalized()} {ex}");
         }
 
+    }
+
+    [RelayCommand]
+    private async Task OnImportTask()
+    {
+        try
+        {
+            var file = await FileAndFolderPickerHelper.PickSingleFileAsync(App.MainWindow, [".xls", ".xlsx"]);
+            if (file == null || string.IsNullOrEmpty(file.Path))
+            {
+                _notificationQueue.ShowWithWindowExtension("FileNotSelectedText".GetLocalized(), InfoBarSeverity.Warning);
+                return;
+            }
+            var tasks = ExcelImportHelper.ImportFromExcel(file.Path, 2, row =>
+            {
+                try
+                {
+                    return new OrchestrationTask
+                    {
+                        GroupName = row.GetCellValue(0),
+                        TaskName = row.GetCellValue(1),
+                        Rule = row.GetCellValue(2),
+                        IsRegex = row.GetCellValue(3),
+                        Action = row.GetCellValue(4),
+                        SourcePath = row.GetCellValue(5),
+                        TargetPath = row.GetCellValue(6),
+                    };
+                }
+                catch (Exception ex)
+                {
+                    Logger.Error($"TaskOrchestrationViewModel: OnImportTask {"ExceptionTxt".GetLocalized()} {ex}");
+                    return null;
+                }
+            });
+            var importName = Path.GetFileNameWithoutExtension(file.Path);
+            await SaveImportedTasksAsync(tasks, importName);
+        }
+        catch (Exception ex)
+        {
+            if (ex is ArgumentException)
+            {
+                _notificationQueue.ShowWithWindowExtension(ex.Message, InfoBarSeverity.Error, 3000);
+            }
+            if (ex is IOException)
+            {
+                _notificationQueue.ShowWithWindowExtension("无法读取 Excel 文件，可能已被其他程序独占锁定或无权限访问，请关闭相关程序或检查权限后重试", InfoBarSeverity.Error, 3000);
+            }
+            Logger.Error($"TaskOrchestrationViewModel: OnImportTask {"ExceptionTxt".GetLocalized()} {ex}");
+        }
+    }
+
+    private async Task SaveImportedTasksAsync(List<OrchestrationTask> tasks, string importName)
+    {
+        var defaultGroupName = $"{importName}{DateTime.Now:yyyy-MM-dd}";
+        // 1. 收集所有不为空的组名
+        var groupNames = tasks
+            .Select(t => string.IsNullOrEmpty(t.GroupName) ? defaultGroupName : t.GroupName)
+            .Distinct()
+            .ToList();
+
+        // 2. 一次性查出已有组
+        var existingGroups = await _dbContext.TaskGroup
+            .Where(g => groupNames.Contains(g.GroupName))
+            .ToListAsync();
+
+        // 3. 创建字典加快查找
+        var groupDict = existingGroups.ToDictionary(g => g.GroupName, g => g);
+
+        // 4. 逐个任务处理
+        var sb = new StringBuilder();
+        foreach (var task in tasks)
+        {
+            var groupName = string.IsNullOrEmpty(task.GroupName) ? defaultGroupName : task.GroupName;
+
+            if (!groupDict.TryGetValue(groupName, out var group))
+            {
+                group = new TaskGroupTable
+                {
+                    GroupName = groupName,
+                    IsUsed = false,
+                    IsDefault = false
+                };
+                await _dbContext.TaskGroup.AddAsync(group);
+                groupDict[groupName] = group; // 添加到缓存中，防止后续重复创建
+            }
+
+            var entity = task.ToEntity(group);
+            if (entity.OperationMode == OperationMode.None)
+            {
+                sb.Append(entity.TaskName + ", ");
+            }
+            await _dbContext.TaskOrchestration.AddAsync(entity);
+        }
+        if (sb.Length > 0)
+        {
+            sb.Length -= 2; // 移除最后的逗号和空格
+            _notificationQueue.ShowWithWindowExtension($"以下任务已添加，但操作模式无法识别，执行时将会跳过：{sb}", InfoBarSeverity.Warning, 5000);
+        }
+        await _dbContext.SaveChangesAsync();
+    }
+
+    [RelayCommand]
+    private async Task OnSaveExcelTemplateAsync()
+    {
+        try
+        {
+            var fileTypeChoices = new Dictionary<string, IList<string>>
+            {
+                { "Excel 文件", new List<string> { ".xlsx", ".xls" } }
+            };
+            var file = await FileAndFolderPickerHelper.PickSaveFileAsync(App.MainWindow, fileTypeChoices, "EasyTidy(1.3.6.531)_任务导入模板.xlsx");
+            if (file != null)
+            {
+                using var stream = await file.OpenStreamForWriteAsync();
+                IWorkbook workbook = new XSSFWorkbook();
+                var sheet = workbook.CreateSheet("导入模板");
+
+                ExcelImportHelper.CreateTemplate(workbook, sheet);
+
+                // 写入文件
+                workbook.Write(stream);
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.Error($"TaskOrchestrationViewModel: OnSaveExcelTemplateAsync {"ExceptionTxt".GetLocalized()} {ex}");
+            _notificationQueue.ShowWithWindowExtension("SaveTemplateFailedText".GetLocalized(), InfoBarSeverity.Error, 3000);
+        }
     }
 
     /// <summary>

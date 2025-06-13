@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.WinUI;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 
 namespace EasyTidy.Model;
 
@@ -34,6 +35,30 @@ public static class EnumHelper
             return result;
         }
         return null;
+    }
+
+    public static bool TryParseDisplayName<TEnum>(string input, out TEnum result) where TEnum : struct, Enum
+    {
+        foreach (var field in typeof(TEnum).GetFields(BindingFlags.Public | BindingFlags.Static))
+        {
+            // 比较 DisplayAttribute.Name
+            var displayAttr = field.GetCustomAttribute<DisplayAttribute>();
+            if (displayAttr != null && displayAttr.Name?.GetLocalized().Equals(input, StringComparison.OrdinalIgnoreCase) == true)
+            {
+                result = (TEnum)field.GetValue(null)!;
+                return true;
+            }
+
+            // 比较枚举名本身
+            if (field.Name.Equals(input, StringComparison.OrdinalIgnoreCase))
+            {
+                result = (TEnum)field.GetValue(null)!;
+                return true;
+            }
+        }
+
+        result = default;
+        return false;
     }
 
 }
