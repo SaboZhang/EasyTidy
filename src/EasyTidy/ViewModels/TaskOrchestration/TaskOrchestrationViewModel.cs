@@ -664,9 +664,10 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
                         GroupName = row.GetCellValue(0),
                         TaskName = row.GetCellValue(1),
                         Rule = row.GetCellValue(2),
-                        Action = row.GetCellValue(3),
-                        SourcePath = row.GetCellValue(4),
-                        TargetPath = row.GetCellValue(5),
+                        IsRegex = row.GetCellValue(3),
+                        Action = row.GetCellValue(4),
+                        SourcePath = row.GetCellValue(5),
+                        TargetPath = row.GetCellValue(6),
                     };
                 }
                 catch (Exception ex)
@@ -680,15 +681,24 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         }
         catch (Exception ex)
         {
+            if (ex is ArgumentException)
+            {
+                _notificationQueue.ShowWithWindowExtension(ex.Message, InfoBarSeverity.Error, 3000);
+            }
+            if (ex is IOException)
+            {
+                _notificationQueue.ShowWithWindowExtension("无法读取 Excel 文件，可能已被其他程序独占锁定或无权限访问，请关闭相关程序或检查权限后重试", InfoBarSeverity.Error, 3000);
+            }
             Logger.Error($"TaskOrchestrationViewModel: OnImportTask {"ExceptionTxt".GetLocalized()} {ex}");
         }
     }
 
-    private async Task SaveImportedTasksAsync(List<OrchestrationTask> tasks, string importName = "import")
+    private async Task SaveImportedTasksAsync(List<OrchestrationTask> tasks, string importName)
     {
+        var defaultGroupName = $"{importName}{DateTime.Now:yyyy-MM-dd}";
         // 1. 收集所有不为空的组名
         var groupNames = tasks
-            .Select(t => string.IsNullOrEmpty(t.GroupName) ? importName : t.GroupName)
+            .Select(t => string.IsNullOrEmpty(t.GroupName) ? defaultGroupName : t.GroupName)
             .Distinct()
             .ToList();
 
@@ -704,7 +714,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         var sb = new StringBuilder();
         foreach (var task in tasks)
         {
-            var groupName = string.IsNullOrEmpty(task.GroupName) ? $"{importName}{DateTime.Now:yyyy-MM-dd}" : task.GroupName;
+            var groupName = string.IsNullOrEmpty(task.GroupName) ? defaultGroupName : task.GroupName;
 
             if (!groupDict.TryGetValue(groupName, out var group))
             {

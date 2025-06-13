@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using CommunityToolkit.WinUI;
 using EasyTidy.Log;
 using EasyTidy.Model;
@@ -45,10 +47,12 @@ public static class ExcelImportHelper
         var sheet = workbook.GetSheetAt(0);
         if (sheet == null) return result;
 
+        int[] requiredIndexes = GetRequiredColumnIndexes<OrchestrationTask>(ColumnHeaders);
+
         for (int i = startRowIndex; i <= sheet.LastRowNum; i++)
         {
             var row = sheet.GetRow(i);
-            if (row == null) continue;
+            if (row == null || IsRequiredCellsEmpty(row, requiredIndexes)) continue;
 
             try
             {
@@ -64,6 +68,43 @@ public static class ExcelImportHelper
         }
 
         return result;
+    }
+
+    private static bool IsRequiredCellsEmpty(IRow row, int[] requiredColumnIndexes)
+    {
+        foreach (int index in requiredColumnIndexes)
+        {
+            var cell = row.GetCell(index);
+            if (cell != null && !string.IsNullOrWhiteSpace(cell.ToString()))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static int[] GetRequiredColumnIndexes<T>(string[] columnHeaders)
+    {
+        var requiredIndexes = new List<int>();
+        var props = typeof(T).GetProperties();
+
+        for (int i = 0; i < columnHeaders.Length; i++)
+        {
+            var header = columnHeaders[i];
+
+            var matchingProp = props.FirstOrDefault(prop =>
+            {
+                var displayAttr = prop.GetCustomAttribute<DisplayAttribute>();
+                return displayAttr != null && displayAttr.Name == header;
+            });
+
+            if (matchingProp != null && Attribute.IsDefined(matchingProp, typeof(RequiredAttribute)))
+            {
+                requiredIndexes.Add(i);
+            }
+        }
+
+        return requiredIndexes.ToArray();
     }
 
     public static string GetCellValue(this IRow row, int cellIndex)
@@ -89,14 +130,19 @@ public static class ExcelImportHelper
         CreateDescriptionRow(workbook, sheet);
         CreateHeaderRow(workbook, sheet);
         var displayNames = GetLocalizedEnumOptions<OperationMode>();
-        AddDropDownList(sheet, displayNames, 2, 1000, 3, 3); // 第3列（索引3），行2开始（第3行）到第101行
+        AddDropDownList(sheet, displayNames, 2, 65533, 4, 4); // 第3列（索引3），行2开始（第3行）到第101行
+        AddDropDownList(sheet, ActionOptions, 2, 65533, 3, 3); // 第6列（索引3），行2开始（第3行）到第101行
     }
 
+    /// <summary>
+    /// Excel 列头
+    /// </summary>
     private static readonly string[] ColumnHeaders = new[]
     {
         "任务组名",
         "任务名称",
         "处理规则",
+        "是否正则",
         "操作方式",
         "源路径",
         "目标路径"
@@ -111,6 +157,10 @@ public static class ExcelImportHelper
                    .ToArray();
     }
 
+    private static readonly string[] ActionOptions = new[]
+    {
+        "Y", "N"
+    };
 
     private static void AddDropDownList(ISheet sheet, string[] items, int firstRow, int lastRow, int firstCol, int lastCol)
     {
@@ -125,16 +175,17 @@ public static class ExcelImportHelper
     private static void CreateDescriptionRow(IWorkbook workbook, ISheet sheet)
     {
         var row = sheet.CreateRow(0);
-        row.HeightInPoints = 170;
+        row.HeightInPoints = 180;
 
         var cell = row.CreateCell(0);
         cell.SetCellValue("模板填写说明：\n" +
                           "1. 任务组名：可选，若不填写则默认为导入文件名加当前日期（例如：导入文件名为'测试模板'则组名为'测试模板2025-06-12'）。\n" +
                           "2. 任务名称：必填，任务的唯一标识。\n" +
                           "3. 处理规则：必选，规则与单个添加一致。\n" +
-                          "4. 操作方式：必填，支持的操作方式为添加单个任务时的所有规则，并且跟当前应用设置的语言有关（例如应用设置的英文，则操作方式填写Move等）。\n" +
-                          "5. 源路径：选填，任务源文件夹路径，为空时只能通过拖拽窗口执行任务。（路径格式为：D:\\db\\测试）\n" +
-                          "6. 目标路径：必填，任务目标文件夹路径。（路径格式为：D:\\db\\测试）\n");
+                          "4. 是否正则：必选，是否将规则按照正则表达式进行处理，选项为：Y/N。\n" +
+                          "5. 操作方式：必填，支持的操作方式为添加单个任务时的所有规则，并且跟当前应用设置的语言有关（例如应用设置的英文，则操作方式填写Move等）。\n" +
+                          "6. 源路径：选填，任务源文件/文件夹路径，为空时只能通过拖拽窗口执行任务。（路径格式为：D:\\db\\测试）\n" +
+                          "7. 目标路径：必填，任务目标文件/文件夹路径。（路径格式为：D:\\db\\测试）\n");
 
         // 设置样式
         var style = workbook.CreateCellStyle();
@@ -182,8 +233,8 @@ public static class ExcelImportHelper
             var cell = header.CreateCell(i);
             cell.SetCellValue(ColumnHeaders[i]);
 
-            // 设置第 0 和第 3 列为绿色，其余为红色
-            if (i == 0 || i == 4)
+            // 设置第 0 和第 5 列为绿色，其余为红色
+            if (i == 0 || i == 5)
                 cell.CellStyle = greenStyle;
             else
                 cell.CellStyle = redStyle;
@@ -194,9 +245,9 @@ public static class ExcelImportHelper
 
     private static void SetBorders(ICellStyle style)
     {
-        style.BorderTop = BorderStyle.Thin;
-        style.BorderBottom = BorderStyle.Thin;
-        style.BorderLeft = BorderStyle.Thin;
-        style.BorderRight = BorderStyle.Thin;
+        style.BorderTop = BorderStyle.Medium;
+        style.BorderBottom = BorderStyle.Medium;
+        style.BorderLeft = BorderStyle.Medium;
+        style.BorderRight = BorderStyle.Medium;
     }
 }
