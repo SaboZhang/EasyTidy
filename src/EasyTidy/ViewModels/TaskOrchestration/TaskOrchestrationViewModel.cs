@@ -678,6 +678,8 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
             });
             var importName = Path.GetFileNameWithoutExtension(file.Path);
             await SaveImportedTasksAsync(tasks, importName);
+            await OnPageLoaded();
+            _notificationQueue.ShowWithWindowExtension("ImportSuccessfullyText".GetLocalized(), InfoBarSeverity.Success, 3000);
         }
         catch (Exception ex)
         {
@@ -687,7 +689,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
             }
             if (ex is IOException)
             {
-                _notificationQueue.ShowWithWindowExtension("无法读取 Excel 文件，可能已被其他程序独占锁定或无权限访问，请关闭相关程序或检查权限后重试", InfoBarSeverity.Error, 3000);
+                _notificationQueue.ShowWithWindowExtension("ExclusivePermissionException".GetLocalized(), InfoBarSeverity.Error, 3000);
             }
             Logger.Error($"TaskOrchestrationViewModel: OnImportTask {"ExceptionTxt".GetLocalized()} {ex}");
         }
@@ -738,7 +740,7 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         if (sb.Length > 0)
         {
             sb.Length -= 2; // 移除最后的逗号和空格
-            _notificationQueue.ShowWithWindowExtension($"以下任务已添加，但操作模式无法识别，执行时将会跳过：{sb}", InfoBarSeverity.Warning, 5000);
+            _notificationQueue.ShowWithWindowExtension(I18n.Format("TaskCannotBeRecognized", sb.ToString()), InfoBarSeverity.Warning, 5000);
         }
         await _dbContext.SaveChangesAsync();
     }
@@ -750,19 +752,21 @@ public partial class TaskOrchestrationViewModel : ObservableRecipient
         {
             var fileTypeChoices = new Dictionary<string, IList<string>>
             {
-                { "Excel 文件", new List<string> { ".xlsx", ".xls" } }
+                { "Excel", new List<string> { ".xlsx", ".xls" } }
             };
-            var file = await FileAndFolderPickerHelper.PickSaveFileAsync(App.MainWindow, fileTypeChoices, "EasyTidy(1.3.6.531)_任务导入模板.xlsx");
+            var suggestedFilename = I18n.Format("SaveTemplate", Constants.AppName, Constants.Version);
+            var file = await FileAndFolderPickerHelper.PickSaveFileAsync(App.MainWindow, fileTypeChoices, suggestedFilename);
             if (file != null)
             {
                 using var stream = await file.OpenStreamForWriteAsync();
                 IWorkbook workbook = new XSSFWorkbook();
-                var sheet = workbook.CreateSheet("导入模板");
+                var sheet = workbook.CreateSheet("ImportTemplate".GetLocalized());
 
                 ExcelImportHelper.CreateTemplate(workbook, sheet);
 
                 // 写入文件
                 workbook.Write(stream);
+                _notificationQueue.ShowWithWindowExtension(I18n.Format("SaveTemplateSuccessText", file.Path), InfoBarSeverity.Success, 3000);
             }
         }
         catch (Exception ex)

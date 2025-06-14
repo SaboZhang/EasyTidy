@@ -2380,6 +2380,109 @@
           <source>Exclusion rules and inclusion rules cannot be mixed.</source>
           <target state="translated">Les règles d'exclusion et les règles d'inclusion ne peuvent pas être mélangées.</target>
         </trans-unit>
+        <trans-unit id="TaskGroupName" translate="yes" xml:space="preserve">
+          <source>Task Group Name</source>
+          <target state="translated">Groupe de Tâches</target>
+        </trans-unit>
+        <trans-unit id="TaskName" translate="yes" xml:space="preserve">
+          <source>Task Name</source>
+          <target state="translated">Nom de la tâche</target>
+        </trans-unit>
+        <trans-unit id="ProcessingRules" translate="yes" xml:space="preserve">
+          <source>Rules</source>
+          <target state="translated">Règles</target>
+        </trans-unit>
+        <trans-unit id="IsItRegular" translate="yes" xml:space="preserve">
+          <source>Is it regular</source>
+          <target state="translated">Est-ce régulier</target>
+        </trans-unit>
+        <trans-unit id="OperatingMode" translate="yes" xml:space="preserve">
+          <source>Action</source>
+          <target state="translated">Action</target>
+        </trans-unit>
+        <trans-unit id="SourcePath" translate="yes" xml:space="preserve">
+          <source>Source Path</source>
+          <target state="translated">Chemin source</target>
+        </trans-unit>
+        <trans-unit id="TargetPath" translate="yes" xml:space="preserve">
+          <source>Target Path</source>
+          <target state="translated">Chemin cible</target>
+        </trans-unit>
+        <trans-unit id="TemplateInstructions" translate="yes" xml:space="preserve">
+          <source>Template Completion Instructions:
+1. Task Group Name: Optional, if not filled in, defaults to the import file name plus the current date (e.g., if the import file name is 'Test Template', the group name will be 'Test Template 2025-06-12').
+2. Task Name: Required, the unique identifier for the task.
+3. Processing Rule: Required, rules are consistent with individual additions.
+4. Is Regular Expression: Optional, whether to process the rule as a regular expression, options are: Y/N.
+5. Operation Type: Required, supports all rules available when adding a single task, and relates to the language set in the current application (e.g., if the application is set to English, fill in 'Move', etc.).
+6. Source Path: Optional: The path to the source file(s) or folder(s) for the task. If left blank, the task can only be executed by dragging and dropping into the window or by using the right-click context menu. (Path format example: D:\db\test)
+7. Target Path: Required, the target file/folder path for the task. (Path format: D:\db\test)</source>
+          <target state="translated">Instructions pour la complétion du modèle :
+1. Nom du groupe de tâches : Optionnel, s'il n'est pas rempli, prend par défaut le nom du fichier d'importation plus la date actuelle (par exemple, si le nom du fichier d'importation est 'Modèle de test', le nom du groupe sera 'Modèle de test 2025-06-12').
+2. Nom de la tâche : Obligatoire, l'identifiant unique pour la tâche.
+3. Règle de traitement : Obligatoire, les règles sont cohérentes avec les ajouts individuels.
+4. Est une expression régulière : Optionnel, indique si la règle doit être traitée comme une expression régulière, options : Y/N.
+5. Type d'opération : Obligatoire, prend en charge toutes les règles disponibles lors de l'ajout d'une tâche unique, et se rapporte à la langue définie dans l'application actuelle (par exemple, si l'application est configurée en français, remplir 'Déplacer', etc.).
+6. Chemin source :Optionnel :Le chemin d'accès au(x) fichier(s) ou dossier(s) source(s) de la tâche.S'il est laissé vide, la tâche ne peut être exécutée que par glisser-déposer dans la fenêtre ou en utilisant le menu contextuel du clic droit.(Exemple de format de chemin : D:\db\test)
+7. Chemin cible : Obligatoire, le chemin du fichier/dossier cible pour la tâche. (Format du chemin : D:\db\test)</target>
+          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
+        </trans-unit>
+        <trans-unit id="ExcelImportError" translate="yes" xml:space="preserve">
+          <source>Error importing Excel file, row number: {0}. Please verify the data format.</source>
+          <target state="translated">Erreur lors de l'importation du fichier Excel, numéro de ligne : {0}. Veuillez vérifier le format des données.</target>
+        </trans-unit>
+        <trans-unit id="ExcelNotFound" translate="yes" xml:space="preserve">
+          <source>Cannot find the Excel file.</source>
+          <target state="translated">Impossible de trouver le fichier Excel.</target>
+        </trans-unit>
+        <trans-unit id="NotSupported" translate="yes" xml:space="preserve">
+          <source>Only supports .xls and .xlsx formats</source>
+          <target state="translated">Prend uniquement en charge les formats .xls et .xlsx</target>
+        </trans-unit>
+        <trans-unit id="ExclusivePermissionException" translate="yes" xml:space="preserve">
+          <source>Unable to read Excel file, it may be exclusively locked by another program or you do not have access permissions. Please close related programs or check permissions and try again</source>
+          <target state="translated">Impossible de lire le fichier Excel, il est peut-être exclusivement verrouillé par un autre programme ou vous n'avez pas les droits d'accès. Veuillez fermer les programmes associés ou vérifier les autorisations et réessayer</target>
+        </trans-unit>
+        <trans-unit id="TaskCannotBeRecognized" translate="yes" xml:space="preserve">
+          <source>The following tasks have been added, but the operating mode cannot be recognized and will be skipped during execution: {0}</source>
+          <target state="translated">Les tâches suivantes ont été ajoutées, mais le mode de fonctionnement ne peut pas être reconnu et sera ignoré lors de l'exécution : {0}</target>
+        </trans-unit>
+        <trans-unit id="SaveTemplate" translate="yes" xml:space="preserve">
+          <source>{0}({1})_Task_Import_Template.xlsx</source>
+          <target state="translated">{0}({1})_Modèle_Importation_Tâche.xlsx</target>
+        </trans-unit>
+        <trans-unit id="ImportTemplate" translate="yes" xml:space="preserve">
+          <source>Import Template</source>
+          <target state="translated">Modèle d'importation</target>
+        </trans-unit>
+        <trans-unit id="SaveTemplateFailedText" translate="yes" xml:space="preserve">
+          <source>Template generation failed</source>
+          <target state="translated">La génération de modèle a échoué</target>
+        </trans-unit>
+        <trans-unit id="FileNotSelectedText" translate="yes" xml:space="preserve">
+          <source>Please select the template file to import</source>
+          <target state="translated">Veuillez sélectionner le fichier de modèle à importer</target>
+        </trans-unit>
+        <trans-unit id="ExportTips.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Export Excel template</source>
+          <target state="translated">Exporter un modèle Excel</target>
+        </trans-unit>
+        <trans-unit id="ImportTaskPrompts.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Import Task</source>
+          <target state="translated">Tâche d'importation</target>
+        </trans-unit>
+        <trans-unit id="ParameterValidation" translate="yes" xml:space="preserve">
+          <source>{0} cannot be null or empty</source>
+          <target state="translated">{0} ne peut pas être nul ou vide</target>
+        </trans-unit>
+        <trans-unit id="ImportSuccessfullyText" translate="yes" xml:space="preserve">
+          <source>Task import successful</source>
+          <target state="translated">Importation de la tâche réussie</target>
+        </trans-unit>
+        <trans-unit id="SaveTemplateSuccessText" translate="yes" xml:space="preserve">
+          <source>Template file has been saved to {0}</source>
+          <target state="translated">Le fichier modèle a été enregistré à l'emplacement suivant : {0}</target>
+        </trans-unit>
       </group>
     </body>
   </file>

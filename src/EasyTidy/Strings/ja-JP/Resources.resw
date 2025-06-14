@@ -1761,4 +1761,77 @@
   <data name="RuleIllegal" xml:space="preserve">
     <value>除外ルールと包含ルールは混在できません</value>
   </data>
+  <data name="TaskGroupName" xml:space="preserve">
+    <value>タスクグループ名</value>
+  </data>
+  <data name="TaskName" xml:space="preserve">
+    <value>タスク名</value>
+  </data>
+  <data name="ProcessingRules" xml:space="preserve">
+    <value>ルール</value>
+  </data>
+  <data name="IsItRegular" xml:space="preserve">
+    <value>正則かどうか</value>
+  </data>
+  <data name="OperatingMode" xml:space="preserve">
+    <value>アクション</value>
+  </data>
+  <data name="SourcePath" xml:space="preserve">
+    <value>ソースパス</value>
+  </data>
+  <data name="TargetPath" xml:space="preserve">
+    <value>ターゲットパス</value>
+  </data>
+  <data name="TemplateInstructions" xml:space="preserve">
+    <value>テンプレート入力指示：
+1. タスクグループ名：任意、記入がない場合はインポートファイル名に現在の日付を追加したものがデフォルトになります（例：インポートファイル名が「Test Template」の場合、グループ名は「Test Template 2025-06-12」になります）。
+2. タスク名：必須、タスクの一意の識別子です。
+3. 処理ルール：必須、ルールは個別追加と一貫しています。
+4. 正規表現かどうか：任意、ルールを正規表現として処理するかどうか、選択肢は：Y/N。
+5. 操作タイプ：必須、単一タスク追加時に利用可能なすべてのルールをサポートし、現在のアプリケーションで設定されている言語に関連します（例：アプリケーションが英語に設定されている場合は「Move」などを入力）。
+6. ソースパス: 任意: タスクのためのソースファイルまたはフォルダのパス。空白のままにすると、タスクはウィンドウにドラッグアンドドロップするか、右クリックのコンテキストメニューを使用してのみ実行できます。(パス形式の例: D:\db\test)
+7. ターゲットパス：必須、タスクのターゲットファイル/フォルダパス。（パス形式：D:\db\test）</value>
+  </data>
+  <data name="ExcelImportError" xml:space="preserve">
+    <value>Excelファイルのインポートエラーが発生しました。{0}行目のデータ形式をご確認ください。</value>
+  </data>
+  <data name="ExcelNotFound" xml:space="preserve">
+    <value>Excelファイルが見つかりません。</value>
+  </data>
+  <data name="NotSupported" xml:space="preserve">
+    <value>.xlsおよび.xlsxフォーマットのみサポートしています。</value>
+  </data>
+  <data name="ExclusivePermissionException" xml:space="preserve">
+    <value>Excelファイルを読み取ることができません。他のプログラムによって独占的にロックされているか、アクセス権限がない可能性があります。関連するプログラムを閉じるか、権限を確認して再試行してください</value>
+  </data>
+  <data name="TaskCannotBeRecognized" xml:space="preserve">
+    <value>次のタスクが追加されましたが、操作モードが認識できないため、実行中にスキップされます: {0}</value>
+  </data>
+  <data name="SaveTemplate" xml:space="preserve">
+    <value>{0}({1})_タスクインポートテンプレート.xlsx</value>
+  </data>
+  <data name="ImportTemplate" xml:space="preserve">
+    <value>インポートテンプレート</value>
+  </data>
+  <data name="SaveTemplateFailedText" xml:space="preserve">
+    <value>テンプレート生成に失敗しました</value>
+  </data>
+  <data name="FileNotSelectedText" xml:space="preserve">
+    <value>インポートするテンプレートファイルを選択してください</value>
+  </data>
+  <data name="ExportTips.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Excelテンプレートのエクスポート</value>
+  </data>
+  <data name="ImportTaskPrompts.ToolTipService.ToolTip" xml:space="preserve">
+    <value>タスクのインポート</value>
+  </data>
+  <data name="ParameterValidation" xml:space="preserve">
+    <value>{0}はnullまたは空であってはなりません</value>
+  </data>
+  <data name="ImportSuccessfullyText" xml:space="preserve">
+    <value>タスクのインポートが成功しました</value>
+  </data>
+  <data name="SaveTemplateSuccessText" xml:space="preserve">
+    <value>テンプレートファイルが{0}に保存されました</value>
+  </data>
 </root>

@@ -2380,6 +2380,109 @@
           <source>Exclusion rules and inclusion rules cannot be mixed.</source>
           <target state="translated">排除規則和包含規則不能混合使用。</target>
         </trans-unit>
+        <trans-unit id="TaskGroupName" translate="yes" xml:space="preserve">
+          <source>Task Group Name</source>
+          <target state="translated">任務組名稱</target>
+        </trans-unit>
+        <trans-unit id="TaskName" translate="yes" xml:space="preserve">
+          <source>Task Name</source>
+          <target state="translated">任務名稱</target>
+        </trans-unit>
+        <trans-unit id="ProcessingRules" translate="yes" xml:space="preserve">
+          <source>Rules</source>
+          <target state="translated">處理規則</target>
+        </trans-unit>
+        <trans-unit id="IsItRegular" translate="yes" xml:space="preserve">
+          <source>Is it regular</source>
+          <target state="translated">是否正則</target>
+        </trans-unit>
+        <trans-unit id="OperatingMode" translate="yes" xml:space="preserve">
+          <source>Action</source>
+          <target state="translated">操作方式</target>
+        </trans-unit>
+        <trans-unit id="SourcePath" translate="yes" xml:space="preserve">
+          <source>Source Path</source>
+          <target state="translated">源路徑</target>
+        </trans-unit>
+        <trans-unit id="TargetPath" translate="yes" xml:space="preserve">
+          <source>Target Path</source>
+          <target state="translated">目標路徑</target>
+        </trans-unit>
+        <trans-unit id="TemplateInstructions" translate="yes" xml:space="preserve">
+          <source>Template Completion Instructions:
+1. Task Group Name: Optional, if not filled in, defaults to the import file name plus the current date (e.g., if the import file name is 'Test Template', the group name will be 'Test Template 2025-06-12').
+2. Task Name: Required, the unique identifier for the task.
+3. Processing Rule: Required, rules are consistent with individual additions.
+4. Is Regular Expression: Optional, whether to process the rule as a regular expression, options are: Y/N.
+5. Operation Type: Required, supports all rules available when adding a single task, and relates to the language set in the current application (e.g., if the application is set to English, fill in 'Move', etc.).
+6. Source Path: Optional: The path to the source file(s) or folder(s) for the task. If left blank, the task can only be executed by dragging and dropping into the window or by using the right-click context menu. (Path format example: D:\db\test)
+7. Target Path: Required, the target file/folder path for the task. (Path format: D:\db\test)</source>
+          <target state="translated">模板填寫說明：
+1. 任務組名稱：選填，若不填寫，預設為導入文件名稱加上當前日期（例如，導入文件名為'測試模板'，則組名為'測試模板 2025-06-12'）。
+2. 任務名稱：必填，任務的唯一識別名稱。
+3. 處理規則：必填，規則與單獨添加時一致。
+4. 是否正則：選填，是否將規則視為正則表達式處理，選項為：Y/N。
+5. 操作方式：必填，支援添加單個任務時的所有可用規則，並與當前應用程序中設定的語言相關（例如，若應用程序設定為英文，則填寫'Move'等）。
+6. 來源路徑：選填，任務的來源檔案/資料夾路徑，若為空，則任務只能通過拖拽至視窗執行。（路徑格式：D:\db\test）
+7. 目標路徑：必填，任務的目標檔案/資料夾路徑。（路徑格式：D:\db\test）</target>
+          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
+        </trans-unit>
+        <trans-unit id="ExcelImportError" translate="yes" xml:space="preserve">
+          <source>Error importing Excel file, row number: {0}. Please verify the data format.</source>
+          <target state="translated">導入Excel文件時出錯，行號：{0}。請驗證數據格式。</target>
+        </trans-unit>
+        <trans-unit id="ExcelNotFound" translate="yes" xml:space="preserve">
+          <source>Cannot find the Excel file.</source>
+          <target state="translated">找不到 Excel 檔案。</target>
+        </trans-unit>
+        <trans-unit id="NotSupported" translate="yes" xml:space="preserve">
+          <source>Only supports .xls and .xlsx formats</source>
+          <target state="translated">僅支持 .xls 和 .xlsx 格式</target>
+        </trans-unit>
+        <trans-unit id="ExclusivePermissionException" translate="yes" xml:space="preserve">
+          <source>Unable to read Excel file, it may be exclusively locked by another program or you do not have access permissions. Please close related programs or check permissions and try again</source>
+          <target state="translated">無法讀取Excel文件，可能被其他程序獨佔鎖定或您沒有訪問權限。請關閉相關程序或檢查權限，然後重試</target>
+        </trans-unit>
+        <trans-unit id="TaskCannotBeRecognized" translate="yes" xml:space="preserve">
+          <source>The following tasks have been added, but the operating mode cannot be recognized and will be skipped during execution: {0}</source>
+          <target state="translated">以下任務已新增，但作業模式無法辨識，執行時將會略過：{0}</target>
+        </trans-unit>
+        <trans-unit id="SaveTemplate" translate="yes" xml:space="preserve">
+          <source>{0}({1})_Task_Import_Template.xlsx</source>
+          <target state="translated">{0}({1})_任務導入模板.xlsx</target>
+        </trans-unit>
+        <trans-unit id="ImportTemplate" translate="yes" xml:space="preserve">
+          <source>Import Template</source>
+          <target state="translated">導入模板</target>
+        </trans-unit>
+        <trans-unit id="SaveTemplateFailedText" translate="yes" xml:space="preserve">
+          <source>Template generation failed</source>
+          <target state="translated">模板生成失敗</target>
+        </trans-unit>
+        <trans-unit id="FileNotSelectedText" translate="yes" xml:space="preserve">
+          <source>Please select the template file to import</source>
+          <target state="translated">請選擇要導入的模板文件</target>
+        </trans-unit>
+        <trans-unit id="ExportTips.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Export Excel template</source>
+          <target state="translated">導出Excel模板</target>
+        </trans-unit>
+        <trans-unit id="ImportTaskPrompts.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Import Task</source>
+          <target state="translated">導入任務</target>
+        </trans-unit>
+        <trans-unit id="ParameterValidation" translate="yes" xml:space="preserve">
+          <source>{0} cannot be null or empty</source>
+          <target state="translated">{0} 不能為空或空字串</target>
+        </trans-unit>
+        <trans-unit id="ImportSuccessfullyText" translate="yes" xml:space="preserve">
+          <source>Task import successful</source>
+          <target state="translated">任務導入成功</target>
+        </trans-unit>
+        <trans-unit id="SaveTemplateSuccessText" translate="yes" xml:space="preserve">
+          <source>Template file has been saved to {0}</source>
+          <target state="translated">模板文件已保存到 {0}</target>
+        </trans-unit>
       </group>
     </body>
   </file>

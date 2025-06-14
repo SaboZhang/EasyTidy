@@ -12,7 +12,7 @@
     <PublishProfile>win-$(Platform).pubxml</PublishProfile>
     <UseWinUI>true</UseWinUI>
     <EnableMsixTooling>true</EnableMsixTooling>
-    <Version>1.3.6.531</Version>
+    <Version>1.3.7.614</Version>
     <ImplicitUsings>true</ImplicitUsings>
     <SuportedOSPlatformsVersion>10.0.22621.0</SuportedOSPlatformsVersion>
     <WindowsSdkPackageVersion>10.0.22621.45</WindowsSdkPackageVersion>

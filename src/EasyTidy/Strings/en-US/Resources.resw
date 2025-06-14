@@ -1887,4 +1887,77 @@
   <data name="RuleIllegal" xml:space="preserve">
     <value>Exclusion rules and inclusion rules cannot be mixed.</value>
   </data>
+  <data name="TaskGroupName" xml:space="preserve">
+    <value>Task Group Name</value>
+  </data>
+  <data name="TaskName" xml:space="preserve">
+    <value>Task Name</value>
+  </data>
+  <data name="ProcessingRules" xml:space="preserve">
+    <value>Rules</value>
+  </data>
+  <data name="IsItRegular" xml:space="preserve">
+    <value>Is it regular</value>
+  </data>
+  <data name="OperatingMode" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="SourcePath" xml:space="preserve">
+    <value>Source Path</value>
+  </data>
+  <data name="TargetPath" xml:space="preserve">
+    <value>Target Path</value>
+  </data>
+  <data name="TemplateInstructions" xml:space="preserve">
+    <value>Template Completion Instructions:
+1. Task Group Name: Optional, if not filled in, defaults to the import file name plus the current date (e.g., if the import file name is 'Test Template', the group name will be 'Test Template 2025-06-12').
+2. Task Name: Required, the unique identifier for the task.
+3. Processing Rule: Required, rules are consistent with individual additions.
+4. Is Regular Expression: Optional, whether to process the rule as a regular expression, options are: Y/N.
+5. Operation Type: Required, supports all rules available when adding a single task, and relates to the language set in the current application (e.g., if the application is set to English, fill in 'Move', etc.).
+6. Source Path: Optional: The path to the source file(s) or folder(s) for the task. If left blank, the task can only be executed by dragging and dropping into the window or by using the right-click context menu. (Path format example: D:\db\test)
+7. Target Path: Required, the target file/folder path for the task. (Path format: D:\db\test)</value>
+  </data>
+  <data name="ExcelImportError" xml:space="preserve">
+    <value>Error importing Excel file, row number: {0}. Please verify the data format.</value>
+  </data>
+  <data name="ExcelNotFound" xml:space="preserve">
+    <value>Cannot find the Excel file.</value>
+  </data>
+  <data name="NotSupported" xml:space="preserve">
+    <value>Only supports .xls and .xlsx formats</value>
+  </data>
+  <data name="ExclusivePermissionException" xml:space="preserve">
+    <value>Unable to read Excel file, it may be exclusively locked by another program or you do not have access permissions. Please close related programs or check permissions and try again</value>
+  </data>
+  <data name="TaskCannotBeRecognized" xml:space="preserve">
+    <value>The following tasks have been added, but the operating mode cannot be recognized and will be skipped during execution: {0}</value>
+  </data>
+  <data name="SaveTemplate" xml:space="preserve">
+    <value>{0}({1})_Task_Import_Template.xlsx</value>
+  </data>
+  <data name="ImportTemplate" xml:space="preserve">
+    <value>Import Template</value>
+  </data>
+  <data name="SaveTemplateFailedText" xml:space="preserve">
+    <value>Template generation failed</value>
+  </data>
+  <data name="FileNotSelectedText" xml:space="preserve">
+    <value>Please select the template file to import</value>
+  </data>
+  <data name="ExportTips.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Export Excel template</value>
+  </data>
+  <data name="ImportTaskPrompts.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Import Task</value>
+  </data>
+  <data name="ParameterValidation" xml:space="preserve">
+    <value>{0} cannot be null or empty</value>
+  </data>
+  <data name="ImportSuccessfullyText" xml:space="preserve">
+    <value>Task import successful</value>
+  </data>
+  <data name="SaveTemplateSuccessText" xml:space="preserve">
+    <value>Template file has been saved to {0}</value>
+  </data>
 </root>

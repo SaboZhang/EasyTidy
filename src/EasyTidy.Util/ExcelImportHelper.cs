@@ -31,7 +31,7 @@ public static class ExcelImportHelper
         where T : class
     {
         if (!File.Exists(filePath))
-            throw new FileNotFoundException("找不到 Excel 文件", filePath);
+            throw new FileNotFoundException("ExcelNotFound".GetLocalized(), filePath);
 
         IWorkbook workbook;
         using var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
@@ -40,7 +40,7 @@ public static class ExcelImportHelper
         {
             ".xls" => new HSSFWorkbook(fs),
             ".xlsx" => new XSSFWorkbook(fs),
-            _ => throw new NotSupportedException("只支持 .xls 和 .xlsx 格式")
+            _ => throw new NotSupportedException("NotSupported".GetLocalized())
         };
 
         var result = new List<T>();
@@ -62,7 +62,7 @@ public static class ExcelImportHelper
             }
             catch
             {
-                LogService.Logger.Error($"导入 Excel 时出错，行号：{i + 1}，请检查数据格式。");
+                LogService.Logger.Error(I18n.Format("ExcelImportError", i + 1));
                 continue;
             }
         }
@@ -95,7 +95,7 @@ public static class ExcelImportHelper
             var matchingProp = props.FirstOrDefault(prop =>
             {
                 var displayAttr = prop.GetCustomAttribute<DisplayAttribute>();
-                return displayAttr != null && displayAttr.Name == header;
+                return displayAttr != null && displayAttr.Name.GetLocalized().Equals(header, StringComparison.OrdinalIgnoreCase);
             });
 
             if (matchingProp != null && Attribute.IsDefined(matchingProp, typeof(RequiredAttribute)))
@@ -139,13 +139,13 @@ public static class ExcelImportHelper
     /// </summary>
     private static readonly string[] ColumnHeaders = new[]
     {
-        "任务组名",
-        "任务名称",
-        "处理规则",
-        "是否正则",
-        "操作方式",
-        "源路径",
-        "目标路径"
+        "TaskGroupName".GetLocalized(),
+        "TaskName".GetLocalized(),
+        "ProcessingRules".GetLocalized(),
+        "IsItRegular".GetLocalized(),
+        "OperatingMode".GetLocalized(),
+        "SourcePath".GetLocalized(),
+        "TargetPath".GetLocalized()
     };
 
     private static string[] GetLocalizedEnumOptions<T>() where T : Enum
@@ -178,14 +178,7 @@ public static class ExcelImportHelper
         row.HeightInPoints = 180;
 
         var cell = row.CreateCell(0);
-        cell.SetCellValue("模板填写说明：\n" +
-                          "1. 任务组名：可选，若不填写则默认为导入文件名加当前日期（例如：导入文件名为'测试模板'则组名为'测试模板2025-06-12'）。\n" +
-                          "2. 任务名称：必填，任务的唯一标识。\n" +
-                          "3. 处理规则：必选，规则与单个添加一致。\n" +
-                          "4. 是否正则：必选，是否将规则按照正则表达式进行处理，选项为：Y/N。\n" +
-                          "5. 操作方式：必填，支持的操作方式为添加单个任务时的所有规则，并且跟当前应用设置的语言有关（例如应用设置的英文，则操作方式填写Move等）。\n" +
-                          "6. 源路径：选填，任务源文件/文件夹路径，为空时只能通过拖拽窗口执行任务。（路径格式为：D:\\db\\测试）\n" +
-                          "7. 目标路径：必填，任务目标文件/文件夹路径。（路径格式为：D:\\db\\测试）\n");
+        cell.SetCellValue("TemplateInstructions".GetLocalized());
 
         // 设置样式
         var style = workbook.CreateCellStyle();
@@ -234,7 +227,7 @@ public static class ExcelImportHelper
             cell.SetCellValue(ColumnHeaders[i]);
 
             // 设置第 0 和第 5 列为绿色，其余为红色
-            if (i == 0 || i == 5)
+            if (i == 0 || i == 3 || i == 5)
                 cell.CellStyle = greenStyle;
             else
                 cell.CellStyle = redStyle;
