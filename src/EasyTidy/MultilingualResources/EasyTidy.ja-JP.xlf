@@ -2380,6 +2380,109 @@
           <source>Exclusion rules and inclusion rules cannot be mixed.</source>
           <target state="translated">除外ルールと包含ルールは混在できません</target>
         </trans-unit>
+        <trans-unit id="TaskGroupName" translate="yes" xml:space="preserve">
+          <source>Task Group Name</source>
+          <target state="translated">タスクグループ名</target>
+        </trans-unit>
+        <trans-unit id="TaskName" translate="yes" xml:space="preserve">
+          <source>Task Name</source>
+          <target state="translated">タスク名</target>
+        </trans-unit>
+        <trans-unit id="ProcessingRules" translate="yes" xml:space="preserve">
+          <source>Rules</source>
+          <target state="translated">ルール</target>
+        </trans-unit>
+        <trans-unit id="IsItRegular" translate="yes" xml:space="preserve">
+          <source>Is it regular</source>
+          <target state="translated">正則かどうか</target>
+        </trans-unit>
+        <trans-unit id="OperatingMode" translate="yes" xml:space="preserve">
+          <source>Action</source>
+          <target state="translated">アクション</target>
+        </trans-unit>
+        <trans-unit id="SourcePath" translate="yes" xml:space="preserve">
+          <source>Source Path</source>
+          <target state="translated">ソースパス</target>
+        </trans-unit>
+        <trans-unit id="TargetPath" translate="yes" xml:space="preserve">
+          <source>Target Path</source>
+          <target state="translated">ターゲットパス</target>
+        </trans-unit>
+        <trans-unit id="TemplateInstructions" translate="yes" xml:space="preserve">
+          <source>Template Completion Instructions:
+1. Task Group Name: Optional, if not filled in, defaults to the import file name plus the current date (e.g., if the import file name is 'Test Template', the group name will be 'Test Template 2025-06-12').
+2. Task Name: Required, the unique identifier for the task.
+3. Processing Rule: Required, rules are consistent with individual additions.
+4. Is Regular Expression: Optional, whether to process the rule as a regular expression, options are: Y/N.
+5. Operation Type: Required, supports all rules available when adding a single task, and relates to the language set in the current application (e.g., if the application is set to English, fill in 'Move', etc.).
+6. Source Path: Optional: The path to the source file(s) or folder(s) for the task. If left blank, the task can only be executed by dragging and dropping into the window or by using the right-click context menu. (Path format example: D:\db\test)
+7. Target Path: Required, the target file/folder path for the task. (Path format: D:\db\test)</source>
+          <target state="translated">テンプレート入力指示：
+1. タスクグループ名：任意、記入がない場合はインポートファイル名に現在の日付を追加したものがデフォルトになります（例：インポートファイル名が「Test Template」の場合、グループ名は「Test Template 2025-06-12」になります）。
+2. タスク名：必須、タスクの一意の識別子です。
+3. 処理ルール：必須、ルールは個別追加と一貫しています。
+4. 正規表現かどうか：任意、ルールを正規表現として処理するかどうか、選択肢は：Y/N。
+5. 操作タイプ：必須、単一タスク追加時に利用可能なすべてのルールをサポートし、現在のアプリケーションで設定されている言語に関連します（例：アプリケーションが英語に設定されている場合は「Move」などを入力）。
+6. ソースパス: 任意: タスクのためのソースファイルまたはフォルダのパス。空白のままにすると、タスクはウィンドウにドラッグアンドドロップするか、右クリックのコンテキストメニューを使用してのみ実行できます。(パス形式の例: D:\db\test)
+7. ターゲットパス：必須、タスクのターゲットファイル/フォルダパス。（パス形式：D:\db\test）</target>
+          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
+        </trans-unit>
+        <trans-unit id="ExcelImportError" translate="yes" xml:space="preserve">
+          <source>Error importing Excel file, row number: {0}. Please verify the data format.</source>
+          <target state="translated">Excelファイルのインポートエラーが発生しました。{0}行目のデータ形式をご確認ください。</target>
+        </trans-unit>
+        <trans-unit id="ExcelNotFound" translate="yes" xml:space="preserve">
+          <source>Cannot find the Excel file.</source>
+          <target state="translated">Excelファイルが見つかりません。</target>
+        </trans-unit>
+        <trans-unit id="NotSupported" translate="yes" xml:space="preserve">
+          <source>Only supports .xls and .xlsx formats</source>
+          <target state="translated">.xlsおよび.xlsxフォーマットのみサポートしています。</target>
+        </trans-unit>
+        <trans-unit id="ExclusivePermissionException" translate="yes" xml:space="preserve">
+          <source>Unable to read Excel file, it may be exclusively locked by another program or you do not have access permissions. Please close related programs or check permissions and try again</source>
+          <target state="translated">Excelファイルを読み取ることができません。他のプログラムによって独占的にロックされているか、アクセス権限がない可能性があります。関連するプログラムを閉じるか、権限を確認して再試行してください</target>
+        </trans-unit>
+        <trans-unit id="TaskCannotBeRecognized" translate="yes" xml:space="preserve">
+          <source>The following tasks have been added, but the operating mode cannot be recognized and will be skipped during execution: {0}</source>
+          <target state="translated">次のタスクが追加されましたが、操作モードが認識できないため、実行中にスキップされます: {0}</target>
+        </trans-unit>
+        <trans-unit id="SaveTemplate" translate="yes" xml:space="preserve">
+          <source>{0}({1})_Task_Import_Template.xlsx</source>
+          <target state="translated">{0}({1})_タスクインポートテンプレート.xlsx</target>
+        </trans-unit>
+        <trans-unit id="ImportTemplate" translate="yes" xml:space="preserve">
+          <source>Import Template</source>
+          <target state="translated">インポートテンプレート</target>
+        </trans-unit>
+        <trans-unit id="SaveTemplateFailedText" translate="yes" xml:space="preserve">
+          <source>Template generation failed</source>
+          <target state="translated">テンプレート生成に失敗しました</target>
+        </trans-unit>
+        <trans-unit id="FileNotSelectedText" translate="yes" xml:space="preserve">
+          <source>Please select the template file to import</source>
+          <target state="translated">インポートするテンプレートファイルを選択してください</target>
+        </trans-unit>
+        <trans-unit id="ExportTips.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Export Excel template</source>
+          <target state="translated">Excelテンプレートのエクスポート</target>
+        </trans-unit>
+        <trans-unit id="ImportTaskPrompts.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Import Task</source>
+          <target state="translated">タスクのインポート</target>
+        </trans-unit>
+        <trans-unit id="ParameterValidation" translate="yes" xml:space="preserve">
+          <source>{0} cannot be null or empty</source>
+          <target state="translated">{0}はnullまたは空であってはなりません</target>
+        </trans-unit>
+        <trans-unit id="ImportSuccessfullyText" translate="yes" xml:space="preserve">
+          <source>Task import successful</source>
+          <target state="translated">タスクのインポートが成功しました</target>
+        </trans-unit>
+        <trans-unit id="SaveTemplateSuccessText" translate="yes" xml:space="preserve">
+          <source>Template file has been saved to {0}</source>
+          <target state="translated">テンプレートファイルが{0}に保存されました</target>
+        </trans-unit>
       </group>
     </body>
   </file>

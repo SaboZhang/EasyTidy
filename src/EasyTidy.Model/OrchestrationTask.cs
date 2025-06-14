@@ -1,3 +1,4 @@
+using CommunityToolkit.WinUI;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -5,53 +6,49 @@ namespace EasyTidy.Model;
 
 public class OrchestrationTask
 {
-    [Display(Name = "任务组名")]
+    [Display(Name = "TaskGroupName")]
     public string? GroupName { get; set; }
 
     [Required]
-    [Display(Name = "任务名称")]
+    [Display(Name = "TaskName")]
     public string TaskName { get; set; } = string.Empty;
 
     [Required]
-    [Display(Name = "处理规则")]
+    [Display(Name = "ProcessingRules")]
     public string Rule { get; set; } = string.Empty;
 
     [Required]
-    [Display(Name = "操作方式")]
+    [Display(Name = "OperatingMode")]
     public string Action { get; set; } = string.Empty;
 
     [Required]
-    [Display(Name = "目标路径")]
+    [Display(Name = "TargetPath")]
     public string TargetPath { get; set; } = string.Empty;
-    [Display(Name = "源路径")]
+    [Display(Name = "SourcePath")]
     public string? SourcePath { get; set; }
 
-    [Required]
-    [Display(Name = "是否正则")]
+    [Display(Name = "IsItRegular")]
     public string IsRegex { get; set; } = "N";
 
     public TaskOrchestrationTable ToEntity(TaskGroupTable groupTable)
     {
         if (string.IsNullOrEmpty(TaskName))
         {
-            throw new ArgumentException("TaskName cannot be null or empty.");
+            throw new ArgumentException(string.Format("ParameterValidation".GetLocalized(), "TaskName".GetLocalized()));
         }
         if (string.IsNullOrEmpty(Rule))
         {
-            throw new ArgumentException("Rule cannot be null or empty.");
+            throw new ArgumentException(string.Format("ParameterValidation".GetLocalized(), "ProcessingRules".GetLocalized()));
         }
         if (string.IsNullOrEmpty(Action))
         {
-            throw new ArgumentException("Action cannot be null or empty.");
+            throw new ArgumentException(string.Format("ParameterValidation".GetLocalized(), "OperatingMode".GetLocalized()));
         }
         if (string.IsNullOrEmpty(TargetPath))
         {
-            throw new ArgumentException("TargetPath cannot be null or empty.");
+            throw new ArgumentException(string.Format("ParameterValidation".GetLocalized(), "TargetPath".GetLocalized()));
         }
-        if (string.IsNullOrEmpty(IsRegex))
-        {
-            throw new ArgumentException("IsRegex cannot be null or empty.");
-        }
+
         return new TaskOrchestrationTable
         {
             GroupName = groupTable,

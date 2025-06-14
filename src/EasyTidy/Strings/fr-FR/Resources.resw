@@ -1761,4 +1761,77 @@
   <data name="RuleIllegal" xml:space="preserve">
     <value>Les règles d'exclusion et les règles d'inclusion ne peuvent pas être mélangées.</value>
   </data>
+  <data name="TaskGroupName" xml:space="preserve">
+    <value>Groupe de Tâches</value>
+  </data>
+  <data name="TaskName" xml:space="preserve">
+    <value>Nom de la tâche</value>
+  </data>
+  <data name="ProcessingRules" xml:space="preserve">
+    <value>Règles</value>
+  </data>
+  <data name="IsItRegular" xml:space="preserve">
+    <value>Est-ce régulier</value>
+  </data>
+  <data name="OperatingMode" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="SourcePath" xml:space="preserve">
+    <value>Chemin source</value>
+  </data>
+  <data name="TargetPath" xml:space="preserve">
+    <value>Chemin cible</value>
+  </data>
+  <data name="TemplateInstructions" xml:space="preserve">
+    <value>Instructions pour la complétion du modèle :
+1. Nom du groupe de tâches : Optionnel, s'il n'est pas rempli, prend par défaut le nom du fichier d'importation plus la date actuelle (par exemple, si le nom du fichier d'importation est 'Modèle de test', le nom du groupe sera 'Modèle de test 2025-06-12').
+2. Nom de la tâche : Obligatoire, l'identifiant unique pour la tâche.
+3. Règle de traitement : Obligatoire, les règles sont cohérentes avec les ajouts individuels.
+4. Est une expression régulière : Optionnel, indique si la règle doit être traitée comme une expression régulière, options : Y/N.
+5. Type d'opération : Obligatoire, prend en charge toutes les règles disponibles lors de l'ajout d'une tâche unique, et se rapporte à la langue définie dans l'application actuelle (par exemple, si l'application est configurée en français, remplir 'Déplacer', etc.).
+6. Chemin source :Optionnel :Le chemin d'accès au(x) fichier(s) ou dossier(s) source(s) de la tâche.S'il est laissé vide, la tâche ne peut être exécutée que par glisser-déposer dans la fenêtre ou en utilisant le menu contextuel du clic droit.(Exemple de format de chemin : D:\db\test)
+7. Chemin cible : Obligatoire, le chemin du fichier/dossier cible pour la tâche. (Format du chemin : D:\db\test)</value>
+  </data>
+  <data name="ExcelImportError" xml:space="preserve">
+    <value>Erreur lors de l'importation du fichier Excel, numéro de ligne : {0}. Veuillez vérifier le format des données.</value>
+  </data>
+  <data name="ExcelNotFound" xml:space="preserve">
+    <value>Impossible de trouver le fichier Excel.</value>
+  </data>
+  <data name="NotSupported" xml:space="preserve">
+    <value>Prend uniquement en charge les formats .xls et .xlsx</value>
+  </data>
+  <data name="ExclusivePermissionException" xml:space="preserve">
+    <value>Impossible de lire le fichier Excel, il est peut-être exclusivement verrouillé par un autre programme ou vous n'avez pas les droits d'accès. Veuillez fermer les programmes associés ou vérifier les autorisations et réessayer</value>
+  </data>
+  <data name="TaskCannotBeRecognized" xml:space="preserve">
+    <value>Les tâches suivantes ont été ajoutées, mais le mode de fonctionnement ne peut pas être reconnu et sera ignoré lors de l'exécution : {0}</value>
+  </data>
+  <data name="SaveTemplate" xml:space="preserve">
+    <value>{0}({1})_Modèle_Importation_Tâche.xlsx</value>
+  </data>
+  <data name="ImportTemplate" xml:space="preserve">
+    <value>Modèle d'importation</value>
+  </data>
+  <data name="SaveTemplateFailedText" xml:space="preserve">
+    <value>La génération de modèle a échoué</value>
+  </data>
+  <data name="FileNotSelectedText" xml:space="preserve">
+    <value>Veuillez sélectionner le fichier de modèle à importer</value>
+  </data>
+  <data name="ExportTips.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Exporter un modèle Excel</value>
+  </data>
+  <data name="ImportTaskPrompts.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Tâche d'importation</value>
+  </data>
+  <data name="ParameterValidation" xml:space="preserve">
+    <value>{0} ne peut pas être nul ou vide</value>
+  </data>
+  <data name="ImportSuccessfullyText" xml:space="preserve">
+    <value>Importation de la tâche réussie</value>
+  </data>
+  <data name="SaveTemplateSuccessText" xml:space="preserve">
+    <value>Le fichier modèle a été enregistré à l'emplacement suivant : {0}</value>
+  </data>
 </root>

@@ -1779,4 +1779,77 @@
   <data name="RuleIllegal" xml:space="preserve">
     <value>排除规则和包含规则不能混合使用。</value>
   </data>
+  <data name="TaskGroupName" xml:space="preserve">
+    <value>任务组名</value>
+  </data>
+  <data name="TaskName" xml:space="preserve">
+    <value>任务名称</value>
+  </data>
+  <data name="ProcessingRules" xml:space="preserve">
+    <value>处理规则</value>
+  </data>
+  <data name="IsItRegular" xml:space="preserve">
+    <value>是否正则</value>
+  </data>
+  <data name="OperatingMode" xml:space="preserve">
+    <value>操作方式</value>
+  </data>
+  <data name="SourcePath" xml:space="preserve">
+    <value>源路径</value>
+  </data>
+  <data name="TargetPath" xml:space="preserve">
+    <value>目标路径</value>
+  </data>
+  <data name="TemplateInstructions" xml:space="preserve">
+    <value>模板填写说明：
+1. 任务组名称：选填，如未填写，默认以导入文件名加当前日期命名（例如导入文件名为'测试模板'，则组名为'测试模板 2025-06-12'）。
+2. 任务名称：必填，任务的唯一标识。
+3. 处理规则：必填，规则与单条添加时一致。
+4. 是否正则：选填，是否将规则按正则表达式处理，选项为：Y/N。
+5. 操作类型：必填，支持单条添加任务时的所有规则，且与当前应用设置的语言相关（例如应用设置为英文时填写'Move'等）。
+6. 源路径：选填，任务的源文件/文件夹路径，若为空，则任务只能通过拖拽窗口执行或者右键菜单执行。（路径格式示例：D:\db\test）
+7. 目标路径：必填，任务的目标文件/文件夹路径。（路径格式示例：D:\db\test）</value>
+  </data>
+  <data name="ExcelImportError" xml:space="preserve">
+    <value>导入Excel文件错误，行号：{0}。请确认数据格式。</value>
+  </data>
+  <data name="ExcelNotFound" xml:space="preserve">
+    <value>找不到Excel文件。</value>
+  </data>
+  <data name="NotSupported" xml:space="preserve">
+    <value>仅支持.xls和.xlsx格式</value>
+  </data>
+  <data name="ExclusivePermissionException" xml:space="preserve">
+    <value>无法读取Excel文件，它可能被另一个程序独占锁定或者您没有访问权限。请关闭相关程序或检查权限，然后重试</value>
+  </data>
+  <data name="TaskCannotBeRecognized" xml:space="preserve">
+    <value>以下任务已添加，但无法识别操作模式，将在执行过程中被跳过：{0}</value>
+  </data>
+  <data name="SaveTemplate" xml:space="preserve">
+    <value>{0}({1})_任务导入模板.xlsx</value>
+  </data>
+  <data name="ImportTemplate" xml:space="preserve">
+    <value>导入模板</value>
+  </data>
+  <data name="SaveTemplateFailedText" xml:space="preserve">
+    <value>模板生成失败</value>
+  </data>
+  <data name="FileNotSelectedText" xml:space="preserve">
+    <value>请选择要导入的文件</value>
+  </data>
+  <data name="ExportTips.ToolTipService.ToolTip" xml:space="preserve">
+    <value>导出Excel模板</value>
+  </data>
+  <data name="ImportTaskPrompts.ToolTipService.ToolTip" xml:space="preserve">
+    <value>导入任务</value>
+  </data>
+  <data name="ParameterValidation" xml:space="preserve">
+    <value>{0} 不能为空或空白</value>
+  </data>
+  <data name="ImportSuccessfullyText" xml:space="preserve">
+    <value>任务导入成功</value>
+  </data>
+  <data name="SaveTemplateSuccessText" xml:space="preserve">
+    <value>模板文件已保存到 {0}</value>
+  </data>
 </root>
