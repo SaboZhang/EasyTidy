@@ -105,4 +105,6 @@ EasyTidy 是一款功能强大的文件管理软件，致力于自动化处理�
 
 ## 交流群(微信)
 
+>如需加入交流群，但因二维码失效无法加入，请发送邮件至[tao993859833@live.cn](mailto:tao993859833@live.cn)获取群二维码。
+
 <img align="center" alt="EasyTidy" width="260" src="./image/社区.jpg" />
