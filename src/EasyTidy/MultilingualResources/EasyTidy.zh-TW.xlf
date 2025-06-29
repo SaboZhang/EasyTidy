@@ -2425,7 +2425,6 @@
 5. 操作方式：必填，支援添加單個任務時的所有可用規則，並與當前應用程序中設定的語言相關（例如，若應用程序設定為英文，則填寫'Move'等）。
 6. 來源路徑：選填，任務的來源檔案/資料夾路徑，若為空，則任務只能通過拖拽至視窗執行。（路徑格式：D:\db\test）
 7. 目標路徑：必填，任務的目標檔案/資料夾路徑。（路徑格式：D:\db\test）</target>
-          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
         </trans-unit>
         <trans-unit id="ExcelImportError" translate="yes" xml:space="preserve">
           <source>Error importing Excel file, row number: {0}. Please verify the data format.</source>
@@ -2482,6 +2481,14 @@
         <trans-unit id="SaveTemplateSuccessText" translate="yes" xml:space="preserve">
           <source>Template file has been saved to {0}</source>
           <target state="translated">模板文件已保存到 {0}</target>
+        </trans-unit>
+        <trans-unit id="Settings_WebDav_Header" translate="yes" xml:space="preserve">
+          <source>WebDav Settings</source>
+          <target state="translated">WebDAV 設定</target>
+        </trans-unit>
+        <trans-unit id="Settings_WebDav_Description" translate="yes" xml:space="preserve">
+          <source>Set the account and password for app WebDav backup and WebDav upload</source>
+          <target state="translated">設定應用程式 WebDAV 備份和 WebDAV 上傳的帳號和密碼</target>
         </trans-unit>
       </group>
     </body>

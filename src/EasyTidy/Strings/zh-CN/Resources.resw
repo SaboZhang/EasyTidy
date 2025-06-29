@@ -1852,4 +1852,10 @@
   <data name="SaveTemplateSuccessText" xml:space="preserve">
     <value>模板文件已保存到 {0}</value>
   </data>
+  <data name="Settings_WebDav_Header" xml:space="preserve">
+    <value>WebDAV 设置</value>
+  </data>
+  <data name="Settings_WebDav_Description" xml:space="preserve">
+    <value>设置应用WebDav备份和WebDav上传的账号和密码</value>
+  </data>
 </root>
