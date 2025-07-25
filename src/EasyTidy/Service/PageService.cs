@@ -20,6 +20,7 @@ public class PageService : IPageService
         Configure<AboutUsSettingViewModel, AboutUsSettingPage>();
         Configure<AiSettingsViewModel, AiSettingsPage>();
         Configure<HotKeySettingViewModel, HotKeySettingPage>();
+        Configure<WebDavSettingViewModel, WebDavSettingPage>();
     }
 
     public Type GetPageType(string key)

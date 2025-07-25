@@ -2425,7 +2425,6 @@
 5. Type d'opération : Obligatoire, prend en charge toutes les règles disponibles lors de l'ajout d'une tâche unique, et se rapporte à la langue définie dans l'application actuelle (par exemple, si l'application est configurée en français, remplir 'Déplacer', etc.).
 6. Chemin source :Optionnel :Le chemin d'accès au(x) fichier(s) ou dossier(s) source(s) de la tâche.S'il est laissé vide, la tâche ne peut être exécutée que par glisser-déposer dans la fenêtre ou en utilisant le menu contextuel du clic droit.(Exemple de format de chemin : D:\db\test)
 7. Chemin cible : Obligatoire, le chemin du fichier/dossier cible pour la tâche. (Format du chemin : D:\db\test)</target>
-          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
         </trans-unit>
         <trans-unit id="ExcelImportError" translate="yes" xml:space="preserve">
           <source>Error importing Excel file, row number: {0}. Please verify the data format.</source>
@@ -2482,6 +2481,14 @@
         <trans-unit id="SaveTemplateSuccessText" translate="yes" xml:space="preserve">
           <source>Template file has been saved to {0}</source>
           <target state="translated">Le fichier modèle a été enregistré à l'emplacement suivant : {0}</target>
+        </trans-unit>
+        <trans-unit id="Settings_WebDav_Header" translate="yes" xml:space="preserve">
+          <source>WebDav Settings</source>
+          <target state="translated">Paramètres WebDav</target>
+        </trans-unit>
+        <trans-unit id="Settings_WebDav_Description" translate="yes" xml:space="preserve">
+          <source>Set the account and password for app WebDav backup and WebDav upload</source>
+          <target state="translated">Veuillez définir le compte et le mot de passe pour la sauvegarde WebDav de l'application et le transfert WebDav</target>
         </trans-unit>
       </group>
     </body>

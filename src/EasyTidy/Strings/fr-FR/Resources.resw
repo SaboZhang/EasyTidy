@@ -1834,4 +1834,10 @@
   <data name="SaveTemplateSuccessText" xml:space="preserve">
     <value>Le fichier modèle a été enregistré à l'emplacement suivant : {0}</value>
   </data>
+  <data name="Settings_WebDav_Header" xml:space="preserve">
+    <value>Paramètres WebDav</value>
+  </data>
+  <data name="Settings_WebDav_Description" xml:space="preserve">
+    <value>Veuillez définir le compte et le mot de passe pour la sauvegarde WebDav de l'application et le transfert WebDav</value>
+  </data>
 </root>

@@ -2482,6 +2482,14 @@
           <source>Template file has been saved to {0}</source>
           <target state="new">Template file has been saved to {0}</target>
         </trans-unit>
+        <trans-unit id="Settings_WebDav_Header" translate="yes" xml:space="preserve">
+          <source>WebDav Settings</source>
+          <target state="new">WebDav Settings</target>
+        </trans-unit>
+        <trans-unit id="Settings_WebDav_Description" translate="yes" xml:space="preserve">
+          <source>Set the account and password for app WebDav backup and WebDav upload</source>
+          <target state="new">Set the account and password for app WebDav backup and WebDav upload</target>
+        </trans-unit>
       </group>
     </body>
   </file>

@@ -1834,4 +1834,10 @@
   <data name="SaveTemplateSuccessText" xml:space="preserve">
     <value>テンプレートファイルが{0}に保存されました</value>
   </data>
+  <data name="Settings_WebDav_Header" xml:space="preserve">
+    <value>WebDav設定</value>
+  </data>
+  <data name="Settings_WebDav_Description" xml:space="preserve">
+    <value>アプリのWebDavバックアップとWebDavアップロード用のアカウントとパスワードを設定する</value>
+  </data>
 </root>

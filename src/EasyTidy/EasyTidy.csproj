@@ -175,6 +175,7 @@
     <None Remove="Views\NotificationView.xaml" />
     <None Remove="Views\Settings\AiSettingsPage.xaml" />
     <None Remove="Views\Settings\HotKeySettingPage.xaml" />
+    <None Remove="Views\Settings\WebDavSettingPage.xaml" />
     <None Remove="Views\ShellPage.xaml" />
     <None Remove="Views\TaskOrchestration\TaskOrchestrationPage.xaml" />
     <None Remove="Views\TrayIconView.xaml" />
@@ -309,6 +310,9 @@
     <None Update="Themes\Controls\KeyVisual.xaml">
       <Generator>MSBuild:Compile</Generator>
     </None>
+    <Page Update="Views\Settings\WebDavSettingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Views\UserControls\ShortcutControl\ShortcutControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

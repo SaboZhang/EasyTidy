@@ -1960,4 +1960,10 @@
   <data name="SaveTemplateSuccessText" xml:space="preserve">
     <value>Template file has been saved to {0}</value>
   </data>
+  <data name="Settings_WebDav_Header" xml:space="preserve">
+    <value>WebDav Settings</value>
+  </data>
+  <data name="Settings_WebDav_Description" xml:space="preserve">
+    <value>Set the account and password for app WebDav backup and WebDav upload</value>
+  </data>
 </root>

@@ -2425,7 +2425,6 @@
 5. 操作タイプ：必須、単一タスク追加時に利用可能なすべてのルールをサポートし、現在のアプリケーションで設定されている言語に関連します（例：アプリケーションが英語に設定されている場合は「Move」などを入力）。
 6. ソースパス: 任意: タスクのためのソースファイルまたはフォルダのパス。空白のままにすると、タスクはウィンドウにドラッグアンドドロップするか、右クリックのコンテキストメニューを使用してのみ実行できます。(パス形式の例: D:\db\test)
 7. ターゲットパス：必須、タスクのターゲットファイル/フォルダパス。（パス形式：D:\db\test）</target>
-          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
         </trans-unit>
         <trans-unit id="ExcelImportError" translate="yes" xml:space="preserve">
           <source>Error importing Excel file, row number: {0}. Please verify the data format.</source>
@@ -2482,6 +2481,14 @@
         <trans-unit id="SaveTemplateSuccessText" translate="yes" xml:space="preserve">
           <source>Template file has been saved to {0}</source>
           <target state="translated">テンプレートファイルが{0}に保存されました</target>
+        </trans-unit>
+        <trans-unit id="Settings_WebDav_Header" translate="yes" xml:space="preserve">
+          <source>WebDav Settings</source>
+          <target state="translated">WebDav設定</target>
+        </trans-unit>
+        <trans-unit id="Settings_WebDav_Description" translate="yes" xml:space="preserve">
+          <source>Set the account and password for app WebDav backup and WebDav upload</source>
+          <target state="translated">アプリのWebDavバックアップとWebDavアップロード用のアカウントとパスワードを設定する</target>
         </trans-unit>
       </group>
     </body>

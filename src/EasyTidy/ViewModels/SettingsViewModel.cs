@@ -26,6 +26,7 @@ public partial class SettingsViewModel : ObservableObject
         {
             new Setting("General", string.Empty, "Settings_General_Header".GetLocalized(), "Settings_General_Description".GetLocalized(), "ms-appx:///Assets/Fluent/general.png", false, false),
             new Setting("Hotkey", string.Empty, "Settings_Hotkey_Header".GetLocalized(), "Settings_Hotkey_Description".GetLocalized(), "ms-appx:///Assets/Fluent/keyboardManager.png", false, false),
+            new Setting("WebDav", string.Empty, "Settings_WebDav_Header".GetLocalized(), "Settings_WebDav_Description".GetLocalized(), "ms-appx:///Assets/Fluent/webdav.png", false, false),
             new Setting("AiSettings", string.Empty, "Settings_AI_Header".GetLocalized(), "Settings_AI_Description".GetLocalized(), "ms-appx:///Assets/Fluent/nlp2.png", false, false),
             new Setting("Theme", string.Empty, "ThemeSettingPage_Header".GetLocalized(), "ThemeSettingPage_Description".GetLocalized(), "ms-appx:///Assets/Fluent/theme.png", false, false),
             new Setting("AppUpdate", string.Empty, "AppUpdateSetting_Header".GetLocalized(), "AppUpdateSetting_Description".GetLocalized(), "ms-appx:///Assets/Fluent/update.png", false, false),
@@ -74,6 +75,9 @@ public partial class SettingsViewModel : ObservableObject
                 return;
             case "Hotkey":
                 navigationService.NavigateTo(typeof(HotKeySettingViewModel).FullName!);
+                return;
+            case "WebDav":
+                navigationService.NavigateTo(typeof(WebDavSettingViewModel).FullName!);
                 return;
             default:
                 return;

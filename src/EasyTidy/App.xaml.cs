@@ -105,6 +105,8 @@ public partial class App : Application
                 services.AddTransient<AIServiceFactory>();
                 services.AddSingleton<HotKeySettingViewModel>();
                 services.AddTransient<HotKeySettingPage>();
+                services.AddTransient<WebDavSettingPage>();
+                services.AddTransient<WebDavSettingViewModel>();
 
                 // Register AppDbContext
                 services.AddDbContext<AppDbContext>(options =>
