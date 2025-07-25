@@ -17,6 +17,8 @@ EasyTidy 是一款功能强大的文件管理软件，致力于自动化处理�
 - **灵活的执行模式**：不仅支持手动操作，还能自动执行。您可以设置延时启动、定时执行或通过 CRON 表达式自定义执行周期，满足不同场景下的文件管理需求。
 - **开源且免费**：完全免费且开源，欢迎大家参与并贡献代码。
 
+[EasyTidy使用问卷](https://wj.qq.com/s2/23278078/aafa/)
+
 ## 访问
 
 | 国外 | 国内 |
@@ -32,8 +34,6 @@ EasyTidy 是一款功能强大的文件管理软件，致力于自动化处理�
 [使用文档](https://easytidy.luckyits.com) | [腾讯ima AI文档](https://wiki.ima.qq.com/knowledge-base-share?shareId=42221d1323b5e77e5653c7f8caf063509f30412462e59a2cf27092f089c047e0)
 
 如果您觉得 DropIT 的任务监控无法满足需求，或 File Juggler 3 的定价不符合预算，不妨尝试 EasyTidy。目前，EasyTidy 正在积极开发中，欢迎提出您的需求，我会考虑并接受合理的功能请求。
-
-[EasyTidy使用问卷](https://wj.qq.com/s2/23278078/aafa/)
 
 ### 使用技术
 
