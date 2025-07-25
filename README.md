@@ -33,6 +33,8 @@ EasyTidy 是一款功能强大的文件管理软件，致力于自动化处理�
 
 如果您觉得 DropIT 的任务监控无法满足需求，或 File Juggler 3 的定价不符合预算，不妨尝试 EasyTidy。目前，EasyTidy 正在积极开发中，欢迎提出您的需求，我会考虑并接受合理的功能请求。
 
+[EasyTidy使用问卷](https://wj.qq.com/s2/23278078/aafa/)
+
 ### 使用技术
 
 - C#

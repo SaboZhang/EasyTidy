@@ -17,6 +17,8 @@ EasyTidy is a powerful file management software that automates the organization 
 - **Flexible Execution Modes**: Supports both manual and automatic execution. You can set delayed starts, periodic execution, or define custom schedules using CRON expressions, catering to different file management needs.
 - **Open Source and Free**: Fully open-source and free to use. We welcome contributions and feedback from the community.
 
+[EasyTidy Questionnaire](https://wj.qq.com/s2/23278078/aafa/)
+
 ## Access
 
 | Overseas | Domestic |
