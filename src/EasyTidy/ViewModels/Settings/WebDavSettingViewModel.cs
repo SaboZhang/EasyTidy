@@ -30,7 +30,14 @@ public partial class WebDavSettingViewModel : ObservableObject
     [RelayCommand]
     private async Task OnSaveWebDavUploadAsync()
     {
+        var old = Settings.BackupConfig;
         await Task.CompletedTask;
     }
-    
+
+    [RelayCommand]
+    private async Task OnSaveWebDavBackupAsync()
+    {
+        await Task.CompletedTask;
+    }
+
 }

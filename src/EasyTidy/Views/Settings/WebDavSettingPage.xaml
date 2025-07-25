@@ -49,10 +49,10 @@
                                         Grid.Row="0"
                                         Orientation="Vertical"
                                         Spacing="8">
-                                <TextBox Text=""/>
-                                <TextBox Text=""/>
-                                <PasswordBox />
-                                <TextBox Text=""/>
+                                <TextBox Text="{x:Bind ViewModel.Backup.ServerUrl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox Text="{x:Bind ViewModel.Backup.Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <PasswordBox Password="{x:Bind ViewModel.Backup.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  />
+                                <TextBox Text="{x:Bind ViewModel.Backup.BackupPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             </StackPanel>
                             <StackPanel Grid.ColumnSpan="2"
                                         Grid.Row="1"
@@ -60,7 +60,9 @@
                                         HorizontalAlignment="Center"
                                         Spacing="32"
                                         Margin="0,18,0,0">
-                                <Button Content="保存" Style="{StaticResource AccentButtonStyle}" />
+                                <Button Content="保存" 
+                                    Style="{StaticResource AccentButtonStyle}"
+                                    Command="{x:Bind ViewModel.SaveWebDavBackupCommand}" />
                                 <Button Content="测试" />
                                 <Button Content="重置" />
                             </StackPanel>
@@ -101,10 +103,10 @@
                                         Grid.Row="0"
                                         Orientation="Vertical"
                                         Spacing="8">
-                                <TextBox Text=""/>
-                                <TextBox Text=""/>
-                                <PasswordBox />
-                                <TextBox Text=""/>
+                                <TextBox Text="{x:Bind ViewModel.Upload.ServerUrl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox Text="{x:Bind ViewModel.Upload.Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <PasswordBox Password="{x:Bind ViewModel.Backup.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox Text="{x:Bind ViewModel.Upload.UploadPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             </StackPanel>
                             <StackPanel Grid.ColumnSpan="2"
                                         Grid.Row="1"
@@ -112,7 +114,9 @@
                                         HorizontalAlignment="Center"
                                         Spacing="32"
                                         Margin="0,18,0,0">
-                                <Button Content="保存" Style="{StaticResource AccentButtonStyle}" />
+                                <Button Content="保存" 
+                                    Style="{StaticResource AccentButtonStyle}"
+                                    Command="{x:Bind ViewModel.SaveWebDavUploadCommand}" />
                                 <Button Content="测试" />
                                 <Button Content="重置" />
                             </StackPanel>
